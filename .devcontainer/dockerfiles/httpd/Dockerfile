@@ -1,0 +1,25 @@
+# https://hub.docker.com/_/httpd?tab=description
+# https://www.docker.com/blog/how-to-use-the-apache-httpd-docker-official-image/
+# https://www.digitalocean.com/community/tutorials/how-to-install-the-apache-web-server-on-ubuntu-22-04#step-5-setting-up-virtual-hosts-recommended
+# This is from a debian image
+# FROM debian:12-slim
+FROM httpd:2.4
+RUN mkdir -p /usr/local/apache2/conf/sites/
+# health-check is for clients to determine if apache2 is running
+COPY conf/sites/health-check.conf /usr/local/apache2/conf/sites/health-check.conf
+# httpd-ssl.conf configures ssl default including a catch all virtual host
+COPY conf/extra/httpd-ssl.conf /usr/local/apache2/conf/extra/httpd-ssl.conf
+# main config file responsible for loading modules and including other config files.
+COPY conf/httpd.conf /usr/local/apache2/conf/httpd.conf
+# a convenient location for certificates and private keys.
+RUN mkdir -p /usr/local/apache2/conf/ssl.crt/
+RUN mkdir -p /usr/local/apache2/conf/ssl.key/
+COPY certs/ /usr/local/apache2/conf/ssl.crt/
+COPY private/ /usr/local/apache2/conf/ssl.key/
+
+COPY conf/extra/httpd-vhosts.conf /usr/local/apache2/conf/extra/httpd-vhosts.conf
+# the debian image locates the html files under /var/www 
+# but the docker image suggests /usr/local/apache2/docs/
+# im going to stick with /var/www so I don't have to change document root locations
+# RUN mkdir -p /var/www/moto.busche-cnc.com
+COPY document-root/ /usr/local/apache2/docs/

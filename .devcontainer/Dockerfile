@@ -1,0 +1,319 @@
+ARG UBUNTU_VER=22.04
+# ARG UBUNTU_VER=18.04
+# ARG CONDA_VER=py39_4.12.0 This was the latest linux version on 09/02/22
+# That was shown on the conda.io website
+# but during the build I saw it was superseded by conda-4.14.0-py39hf3d152e_0
+ARG CONDA_VER=latest
+ARG OPENSSL_VER=3.1.2
+ARG PY_VER=3.11.5 
+ARG PANDAS_VER=2.1.0
+ARG MYSQL_CONNECTOR_VER=8.0.32
+ARG FLASK_VER=2.3.3
+ARG FLASK_RESTFUL_VER=0.3.10 
+ARG REQUESTS_VER=2.31.0
+ARG REQUESTS_NTLM_VER=1.2.0
+ARG PIP=23.2.1
+ARG ZEEP_VER=4.2.1
+ARG PYODBC_VER=4.0.39 
+ARG SQLALCHEMY_VER=2.0.20
+ARG PYTHON_CRONTAB_VER=3.0.0
+ARG MARSHMALLOW_VER=3.20.1
+ARG XLSXWRITER_VER=3.1.2
+ARG PYMONGO_VER=4.5.0
+ARG NODE=reports11
+# ARG NODE=reports12
+# ARG NODE=reports13
+ARG OS_TYPE=x86_64
+ARG TF_VER=2.5.0
+ARG ANSIBLE_CORE_VERSION=2.15.1
+ARG ANSIBLE_VERSION=8.1.0
+ARG ANSIBLE_LINT=6.17.2
+ARG JMESPATH_VER=1.0.1
+ARG PYWINRM_VER=0.4.3
+ARG GUNICORN_VER=21.2.0
+# https://github.com/devcontainers/images/tree/main/src/base-ubuntu
+# Microsoft ODBC driver does not support Ubuntu except maybe for version 18.1
+# https://learn.microsoft.com/en-us/answers/questions/1071586/why-is-the-linux-odbc-driver-on-ubuntu-currently-n?page=1&orderby=helpful&comment=answer-1071804#newest-answer-comment
+# https://learn.microsoft.com/en-us/sql/connect/odbc/linux-mac/installing-the-microsoft-odbc-driver-for-sql-server?view=sql-server-ver16&tabs=ubuntu18-install%2Cdebian17-install%2Cdebian8-install%2Credhat7-13-install%2Crhel7-offline#ubuntu17
+
+# FROM mcr.microsoft.com/devcontainers/base:ubuntu 
+FROM mcr.microsoft.com/devcontainers/base:ubuntu-22.04
+
+# Many Microsoft dev container images are based upon debian and the microsoft ODBC driver supports debian and not Ubuntu but I found a fix on stackoverflow.
+# https://stackoverflow.com/questions/71688125/odbc-driver-18-for-sql-serverssl-provider-error1416f086
+# It's nothing to do with the TLS protocol version. When SQL Server gets
+# installed it is configured with a self-signed X.509 certificate. 
+# If you want to use encrypted connections (with Encrypt=yes; in the 
+# connection string, which is the default now) you'll either need to 
+# 1) get the X.509 certificate's public key from the server and add it to your trusted certificates store on the client 
+# or 2) use the TrustServerCertificate=yes; setting in your connection string. – 
+# AlwaysLearning
+
+# In addition to adding TrustServerCertificate=yes; to the connection string on Ubuntu 22.04 I also had to lower 
+# the default security level from 2 to 0 in the openssl config file.
+# sudo nvim /etc/ssl/openssl.cnf
+# [system_default_sect]
+# # CipherString = DEFAULT:@SECLEVEL=2
+
+# FROM mcr.microsoft.com/devcontainers/base:bullseye
+# FROM mcr.microsoft.com/devcontainers/go:1.20-bullseye
+# FROM mcr.microsoft.com/devcontainers/go:0-${templateOption:imageVariant}
+
+ENV DEBIAN_FRONTEND=noninteractive
+
+# Set the timezone
+ENV TZ=America/Fort_Wayne
+RUN apt-get update \ 
+    && apt-get install -yq tzdata locales \
+    && rm -rf /var/lib/apt/lists/* \    
+    && sed -i '/en_US.UTF-8/s/^# //g' /etc/locale.gen \
+    && locale-gen \
+    && ln -fs /usr/share/zoneinfo/${TZ} /etc/localtime \
+    && dpkg-reconfigure tzdata 
+
+ENV LANG en_US.UTF-8  
+ENV LANGUAGE en_US:en
+ENV LC_ALL en_US.UTF-8
+
+# https://github.com/golang/vscode-go/wiki/tools
+# [Optional] Uncomment this section to install additional OS packages.
+# RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
+RUN apt-get update && apt upgrade -y \
+    && apt-get -y install --no-install-recommends \
+    ksh \
+    neofetch \
+    vim
+    # golang-go this is an older version
+
+RUN apt-get install -yq \
+  software-properties-common \
+  curl \
+  wget 
+
+RUN apt-get install -yq \
+  dnsutils \
+  iputils-ping \
+  netcat 
+
+RUN apt-get install -yq \
+  tree \
+  curl \
+  vim \
+  jq 
+
+RUN apt-get install -yq \
+  msmtp \
+  msmtp-mta \
+  mailutils \ 
+  bsd-mailx
+
+RUN apt-get install -yq \
+  cron \
+  default-jre \
+  default-jdk \
+  maven \
+  && rm -rf /var/lib/apt/lists/*
+
+COPY ./install/mail/msmtprc /etc/msmtprc
+COPY ./install/mail/mail.rc /etc/mail.rc
+COPY ./install/mail/aliases /etc/aliases
+
+# DONT THINK I NEED THIS HERE INSTALLING MONGOSH LATER
+# WORKDIR /install/mongodb
+# COPY ./install/mongodb/libssl1.1_1.1.1f-1ubuntu2_amd64.deb .
+# RUN dpkg -i libssl1.1_1.1.1f-1ubuntu2_amd64.deb
+
+# Add mongo repo 
+RUN curl -fsSL https://www.mongodb.org/static/pgp/server-7.0.asc | apt-key add -
+# RUN echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu focal/mongodb-org/6.0 multiverse" | tee /etc/apt/sources.list.d/mongodb-org-6.0.list
+RUN echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu jammy/mongodb-org/7.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-7.0.list
+
+RUN apt-get update
+
+RUN apt-get install -yq \
+  dirmngr \
+  gnupg \
+  apt-transport-https \
+  ca-certificates \
+  mongodb-mongosh \
+  net-tools  \
+  iproute2
+  # mongodb-org \ don't believe i NEED THIS
+
+RUN apt-get install -yq lsb-release 
+
+# PHP Install
+RUN add-apt-repository ppa:ondrej/php 
+RUN apt-get update
+
+RUN apt-get install -yq \
+  php8.2 \
+  php8.2-mysql \
+  php8.2-pgsql \
+  php8.2-mbstring \
+  php8.2-xml \
+  php8.2-curl \ 
+  php8.2-xdebug \
+  && rm -rf /var/lib/apt/lists/*
+
+# USER root
+# [Optional] Uncomment this line to install global node packages.
+# RUN su vscode -c "source /usr/local/share/nvm/nvm.sh && npm install -g <your-package-here>" 2>&1
+
+# Add microsoft repo 
+RUN curl -fsSL https://packages.microsoft.com/keys/microsoft.asc | apt-key add -
+# RUN curl https://packages.microsoft.com/config/debian/11/prod.list > /etc/apt/sources.list.d/mssql-release.list
+RUN curl https://packages.microsoft.com/config/ubuntu/$(lsb_release -rs)/prod.list > /etc/apt/sources.list.d/mssql-release.list
+RUN apt-get update
+
+# Install Microsoft odbc utilities for Busche-sql which requires the older driver.
+RUN DEBIAN_FRONTEND=noninteractive ACCEPT_EULA=Y apt-get install -y msodbcsql17
+RUN DEBIAN_FRONTEND=noninteractive ACCEPT_EULA=Y apt-get install -y mssql-tools
+# RUN echo 'export PATH="$PATH:/opt/mssql-tools/bin"' >> ~/.bashrc
+ENV PATH=$PATH:/opt/mssql-tools/bin
+
+# Install Microsoft odbc utilities for Azure SQL which requires the older driver.
+RUN DEBIAN_FRONTEND=noninteractive ACCEPT_EULA=Y apt-get install -y msodbcsql18
+RUN DEBIAN_FRONTEND=noninteractive ACCEPT_EULA=Y apt-get install -y mssql-tools18
+# RUN echo 'export PATH="$PATH:/opt/mssql-tools18/bin"' >> ~/.bashrc
+ENV PATH=$PATH:/opt/mssql-tools18/bin
+
+RUN DEBIAN_FRONTEND=noninteractive apt-get install -y unixodbc-dev
+
+# Use the above args during building https://docs.docker.com/engine/reference/builder/#understand-how-arg-and-from-interact
+ARG CONDA_VER
+ARG OS_TYPE
+
+# Install miniconda to /miniconda
+RUN curl -LO "http://repo.continuum.io/miniconda/Miniconda3-${CONDA_VER}-Linux-${OS_TYPE}.sh"
+RUN bash Miniconda3-${CONDA_VER}-Linux-${OS_TYPE}.sh -p /miniconda -b
+RUN rm Miniconda3-${CONDA_VER}-Linux-${OS_TYPE}.sh
+ENV PATH=/miniconda/bin:${PATH}
+RUN conda update -y conda
+
+# Use the above args during building https://docs.docker.com/engine/reference/builder/#understand-how-arg-and-from-interact
+ARG PY_VER
+ARG ZEEP_VER
+ARG PYODBC_VER 
+ARG PANDAS_VER
+ARG SQLALCHEMY_VER
+ARG MYSQL_CONNECTOR_VER
+
+# Install packages from anaconda.
+RUN conda install -c conda-forge -y \
+    python=${PY_VER} \
+    flask=${FLASK_VER}  
+
+RUN conda install -c conda-forge -y \
+    sqlalchemy=${SQLALCHEMY_VER} 
+
+RUN conda install -c conda-forge -y \
+    requests=${REQUESTS_VER} 
+    # pyodbc=${PYODBC_VER} \ 
+
+# Install packages from conda-forge
+RUN conda install -c conda-forge -y \
+    mysql-connector-python=${MYSQL_CONNECTOR_VER}
+
+RUN conda install -c conda-forge -y \
+    pandas=${PANDAS_VER}
+
+RUN conda install -c conda-forge -y \
+    flask-restful=${FLASK_RESTFUL_VER} \ 
+    requests_ntlm=${REQUESTS_NTLM_VER} \
+    python-crontab=${PYTHON_CRONTAB_VER} \ 
+    marshmallow=${MARSHMALLOW_VER}
+    # zeep=${ZEEP_VER}  SEE ZEEP ISSUE INSTALL WITH PIP INSTEAD 
+
+RUN conda install -c conda-forge -y \
+    xlsxwriter=${XLSXWRITER_VER}
+
+# https://github.com/willhallonline/docker-ansible/blob/master/ansible-core/ubuntu2204/Dockerfile
+ENV ANSIBLE_CORE_VERSION ${ANSIBLE_CORE_VERSION}
+ENV ANSIBLE_VERSION ${ANSIBLE_VERSION}
+ENV ANSIBLE_LINT ${ANSIBLE_LINT}
+ENV JMESPATH_VER ${JMESPATH_VER}
+ENV PYWINRM_VER ${PYWINRM_VER}
+ENV GUNICORN_VER ${GUNICORN_VER}  
+
+RUN conda install -c conda-forge -y \
+    ansible-core=${ANSIBLE_CORE_VERSION} \
+    ansible=${ANSIBLE_VERSION} \
+    ansible-lint=${ANSIBLE_LINT} \
+    jmespath=${JMESPATH_VER} \
+    pywinrm=${PYWINRM_VER} \
+    gunicorn=${GUNICORN_VER}
+
+RUN conda install -c conda-forge -y \
+    openssl=${OPENSSL_VER} 
+
+RUN pip install pyodbc
+RUN pip install mitogen
+RUN pip install --upgrade pywinrm 
+
+RUN conda install -c conda-forge -y \
+    zeep=${ZEEP_VER}  
+
+# Install Plex ODBC driver
+WORKDIR /install/odbc
+COPY ./install/odbc/PROGRESS_DATADIRECT_OPENACCESS_OAODBC_8.1.0.HOTFIX_LINUX_64.tar .
+RUN tar -xf PROGRESS_DATADIRECT_OPENACCESS_OAODBC_8.1.0.HOTFIX_LINUX_64.tar
+COPY ./install/odbc/PlexDriverInstall.py ./
+RUN python PlexDriverInstall.py 
+COPY ./install/odbc/odbc.ini /etc/
+COPY ./install/odbc/odbc64.ini /usr/oaodbc81/
+ENV LD_LIBRARY_PATH="/usr/oaodbc81/lib64"
+ENV OASDK_ODBC_HOME="/usr/oaodbc81/lib64"
+ENV ODBCINI="/usr/oaodbc81/odbc64.ini"
+# Needed for ODBC to connect to local servers with self-signed certificates.
+RUN sed -i "s/CipherString = DEFAULT:@SECLEVEL=2/CipherString = DEFAULT:@SECLEVEL=0/g" /etc/ssl/openssl.cnf
+
+
+WORKDIR /tmp
+RUN rm -rf /usr/local/go 
+RUN wget https://go.dev/dl/go1.20.5.linux-amd64.tar.gz    
+RUN tar -C /usr/local -xzf go1.20.5.linux-amd64.tar.gz
+ENV PATH=$PATH:/usr/local/go/bin
+# ENV PATH=$PATH:/usr/local/go/bin:/opt/mssql-tools/bin:/opt/mssql-tools18/bin
+
+# # https://itsfoss.com/unable-to-parse-package-file/#:~:text=The%20%2Fvar%2Flib%2Fapt,list.
+RUN apt-get install -yq \
+  expect \
+  pssh \
+  sshpass \
+  postgresql-client \
+  && rm -rf /var/lib/apt/lists/*
+
+COPY ./install/ansible/ /etc/ansible/
+COPY ./install/pssh/ /etc/pssh/
+
+# https://github.com/Microsoft/vscode-dev-containers/tree/main/containers/kubernetes-helm
+
+# Install kubectl
+RUN curl -sSL -o /usr/local/bin/kubectl https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl \
+    && chmod +x /usr/local/bin/kubectl
+
+# Install Helm
+RUN curl -s https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash -
+
+COPY ./install/copy-kube-config.sh /usr/local/share/
+RUN echo "source /usr/local/share/copy-kube-config.sh" | tee -a /root/.bashrc >> /root/.zshrc
+RUN echo "source /usr/local/share/copy-kube-config.sh" | tee -a /home/vscode/.bashrc >> /home/vscode/.zshrc
+
+# https://stackoverflow.com/questions/53096984/how-to-stop-building-when-i-use-dockerfile-build-image
+# If you are using newer versions of docker with BuildKit, stdout from the build will need to be 
+# enabled with docker build . --progress=plain
+
+
+USER vscode
+WORKDIR /etc/ansible
+RUN /etc/ansible/keygen.sh
+# cannot remove '/etc/hosts': Device or resource busy
+# You can add other hosts into a container's /etc/hosts file by using one or more --add-host flags. This example adds a static address for a host named docker : $ docker build --add-host=docker:10.180.0.1
+# wont work because /etc/hosts can not be modified and does not have the build machines entries
+# RUN cat ~/.ssh/id_ed25519.pub | sshpass -ppassword parallel-ssh -O StrictHostKeyChecking=no -h .pssh_hosts_files -l remoteuser -A -I -i 'umask 077; mkdir -p ~/.ssh; afile=~/.ssh/authorized_keys; cat - >> $afile; sort -u $afile -o $afile'    
+RUN go install golang.org/x/tools/gopls@latest 
+RUN go install github.com/go-delve/delve/cmd/dlv@latest
+RUN go install honnef.co/go/tools/cmd/staticcheck@latest
+
+WORKDIR /workspaces/reports

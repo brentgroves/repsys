@@ -1,0 +1,68 @@
+{
+	"name": "reports",
+	"dockerComposeFile": "docker-compose.yml",
+	"service": "devcon",
+	"workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
+  // "shutdownAction": "stopCompose",
+
+	// Features to add to the dev container. More info: https://containers.dev/features.
+	// "features": {},
+  "features": {
+    "docker-from-docker": {
+        "version": "latest",
+        "moby": true,
+        "dockerDashComposeVersion": "v1"
+    }
+  },
+  "mounts": [
+    "source=/var/run/docker.sock,target=/var/run/docker-host.sock,type=bind",
+    "source=${env:HOME}${env:USERPROFILE}/.kube,target=/usr/local/share/kube-localhost,type=bind"
+  ],
+  "remoteEnv": {
+      "SYNC_LOCALHOST_KUBECONFIG": "true"
+  },  
+	// Configure tool-specific properties.
+	// "customizations": {},
+	"customizations": {
+		// Configure properties specific to VS Code.
+		"vscode": {
+			"settings": {},
+			"extensions": [
+				"streetsidesoftware.code-spell-checker",
+				"golang.Go",
+				"ms-azuretools.vscode-docker",
+				"DEVSENSE.composer-php-vscode",
+				"ryannaddy.laravel-artisan",
+				"ms-python.python",
+				"ms-python.isor",
+				"vscjava.vscode-java-pack",
+				"vscjava.vscode-java-debug",
+				"redhat.java",
+        "redhat.fabric8-analytics",
+        "dgileadi.java-decompiler",
+        "xdebug.php-debug"
+			]
+		}
+	},
+  // https://containers.dev/implementors/json_reference/#general-properties
+	// Use 'forwardPorts' to make a list of ports inside the container available locally.
+	// "forwardPorts": [5432,3000]
+	"forwardPorts": [5432,3000,"httpd:80","httpd:90","httpd:443"]
+
+  // 5432 is postgress
+  // 3000 is ?
+  // 80 is Apache2 HTTPD
+  // "appPort": ["80:80"]
+	// Use 'postCreateCommand' to run commands after the container is created.
+	// "postCreateCommand": "go version",
+
+	// Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
+	// "remoteUser": "root"
+// https://github.com/Microsoft/vscode-dev-containers/tree/main/containers/kubernetes-helm
+// https://github.com/microsoft/vscode-dev-containers/blob/main/script-library/docs/docker.md
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the
+// README at: https://github.com/devcontainers/templates/tree/main/src/go-postgres
+// https://github.com/qdm12/godevcontainer
+// https://github.com/golang/vscode-go
+
+}

@@ -1,0 +1,15 @@
+# https://hub.docker.com/_/httpd?tab=description
+# https://www.docker.com/blog/how-to-use-the-apache-httpd-docker-official-image/
+# https://www.digitalocean.com/community/tutorials/how-to-install-the-apache-web-server-on-ubuntu-22-04#step-5-setting-up-virtual-hosts-recommended
+# This is from a debian image
+# FROM debian:12-slim
+FROM httpd:2.4
+RUN mkdir -p /usr/local/apache2/conf/sites/
+COPY health-check.conf /usr/local/apache2/conf/sites/health-check.conf
+COPY httpd-ssl.conf /usr/local/apache2/conf/extra/httpd-ssl.conf
+COPY my-httpd.conf /usr/local/apache2/conf/httpd.conf
+RUN mkdir -p /usr/local/apache2/conf/ssl.crt/
+RUN mkdir -p /usr/local/apache2/conf/ssl.key/
+COPY certs/moto.busche-cnc.com.san.cert.pem /usr/local/apache2/conf/ssl.crt/
+COPY certs/ca-chain-bundle.cert.pem /usr/local/apache2/conf/ssl.crt/
+COPY private/moto.busche-cnc.com.san.key.pem /usr/local/apache2/conf/ssl.key/

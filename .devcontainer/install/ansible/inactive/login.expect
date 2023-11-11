@@ -1,0 +1,8 @@
+#!/usr/bin/expect -f
+# use auth.ssh instead of this slow and clumsy method
+spawn ssh-copy-id $argv
+expect "(yes/no/\[fingerprint\])?"
+send "yes\n"
+expect "password:"
+send "YOUR_PASSWORD\n"
+expect eof

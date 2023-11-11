@@ -1,0 +1,7 @@
+# https://hub.docker.com/_/httpd?tab=description
+# https://www.docker.com/blog/how-to-use-the-apache-httpd-docker-official-image/
+# https://www.digitalocean.com/community/tutorials/how-to-install-the-apache-web-server-on-ubuntu-22-04#step-5-setting-up-virtual-hosts-recommended
+# This is from a debian image
+# FROM debian:12-slim
+FROM httpd:2.4
+COPY index.html /usr/local/apache2/htdocs/index.html

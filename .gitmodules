@@ -1,0 +1,33 @@
+[submodule "git"]
+	path = git
+	url = git@github.com:brentgroves/git
+[submodule "projects"]
+	path = projects
+	url = git@github.com:brentgroves/projects.git
+[submodule "status"]
+	path = status
+	url = git@github.com:brentgroves/status.git
+[submodule "volumes/ansible/rsapb"]
+	path = volumes/ansible/rsapb
+	url = git@github.com:brentgroves/rsapb.git
+[submodule "volumes/bash/rsbsh"]
+	path = volumes/bash/rsbsh
+	url = git@github.com:brentgroves/rsbsh.git
+[submodule "volumes/go/replib"]
+	path = volumes/go/replib
+	url = git@github.com:brentgroves/replib
+[submodule "volumes/go/runner"]
+	path = volumes/go/runner
+	url = git@github.com:brentgroves/runner
+[submodule "volumes/java/etlj"]
+	path = volumes/java/etlj
+	url = git@github.com:brentgroves/etlj
+[submodule "volumes/pki"]
+	path = volumes/pki
+	url = git@github.com:brentgroves/pki.git
+[submodule "volumes/python/tutorials/flask_cert"]
+	path = volumes/python/tutorials/flask_cert
+	url = git@github.com:brentgroves/flask_cert.git
+[submodule "volumes/python/tbetl"]
+	path = volumes/python/tbetl
+	url = git@github.com:brentgroves/tbetl.git

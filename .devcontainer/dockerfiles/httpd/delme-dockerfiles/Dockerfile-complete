@@ -1,0 +1,62 @@
+# https://hub.docker.com/_/httpd?tab=description
+# https://www.docker.com/blog/how-to-use-the-apache-httpd-docker-official-image/
+# https://www.digitalocean.com/community/tutorials/how-to-install-the-apache-web-server-on-ubuntu-22-04#step-5-setting-up-virtual-hosts-recommended
+# This is from a debian image
+# FROM debian:12-slim
+FROM httpd:2.4
+ENV DEBIAN_FRONTEND=noninteractive
+
+# Set the timezone
+ENV TZ=America/Fort_Wayne
+RUN apt-get update \ 
+    && apt-get install -yq tzdata locales \
+    && rm -rf /var/lib/apt/lists/* \    
+    && sed -i '/en_US.UTF-8/s/^# //g' /etc/locale.gen \
+    && locale-gen \
+    && ln -fs /usr/share/zoneinfo/${TZ} /etc/localtime \
+    && dpkg-reconfigure tzdata 
+
+ENV LANG en_US.UTF-8  
+ENV LANGUAGE en_US:en
+ENV LC_ALL en_US.UTF-8
+
+RUN apt-get update \
+    && apt-get -y install --no-install-recommends \
+    neofetch \
+    vim
+
+RUN apt-get install -yq \
+  curl \
+  wget 
+
+RUN apt-get install -yq \
+  dnsutils \
+  iputils-ping \
+  net-tools  \
+  iproute2
+# netstat -plunt |grep ":80"
+
+
+RUN apt-get install -yq \
+  tree \
+  curl \
+  vim 
+
+COPY ./public-html/ /usr/local/apache2/htdocs/
+COPY ./conf/httpd.conf /usr/local/apache2/conf/httpd.conf
+COPY ./conf/httpd-ssl.conf /usr/local/apache2/conf/extra/httpd-ssl.conf
+
+RUN mkdir -p /usr/local/apache2/conf/sites/
+COPY ./conf/sites/health-check.conf /usr/local/apache2/conf/sites/health-check.conf
+
+
+
+# $ docker run --rm brentgroves/httpd:1.0 cat /usr/local/apache2/conf/httpd.conf > ./conf/httpd.conf
+
+# RUN mkdir -p /var/www/port
+COPY ./document-root/ /var/www/port/
+COPY ./document-root2/ /var/www/port2/
+
+COPY ./certs /usr/local/apache2/conf/
+# scp server.key.pem server.cert.pem /root/tls/intermediate/certs/ca-chain-bundle.cert.pem  centos8-3:/etc/httpd/conf.d/certs/
+CMD ["apachectl", "-D", "FOREGROUND"]
