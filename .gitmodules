@@ -31,3 +31,9 @@
 [submodule "volumes/python/tbetl"]
 	path = volumes/python/tbetl
 	url = git@github.com:brentgroves/tbetl.git
+[submodule "volumes/sql/tbsql"]
+	path = volumes/sql/tbsql
+	url = git@github.com:brentgroves/tbsql.git
+[submodule "linux"]
+	path = linux
+	url = git@github.com:brentgroves/linux.git

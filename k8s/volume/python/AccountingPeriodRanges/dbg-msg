@@ -1,0 +1,6 @@
+AccountingPeriodRanges.py: Current Time: 18:30:35
+AccountingPeriodRanges.py: call sproc123681_11728751_2112421 - rowcount=<pyodbc.Cursor object at 0x7f982ed66330>
+AccountingPeriodRanges.py: call sproc123681_11728751_2112421 - messages=[]
+AccountingPeriodRanges.py: fetch_time=0:00:02.124860
+AccountingPeriodRanges.py: delete from Plex.accounting_period_ranges where pcn in (123681,300758) - rowcount=2
+AccountingPeriodRanges.py: total time: 0:00:02.190355

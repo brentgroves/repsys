@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  annotations:
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"v1","kind":"ConfigMap","metadata":{"annotations":{},"name":"nginx-ingress-tcp-microk8s-conf","namespace":"ingress"}}
+  creationTimestamp: "2023-11-03T20:29:46Z"
+  name: nginx-ingress-tcp-microk8s-conf
+  namespace: ingress
+  resourceVersion: "2864"
+  uid: 309a4c6c-1064-477b-af7f-53b85d913a71
+data:
+  3306: "default/mycluster:3306"

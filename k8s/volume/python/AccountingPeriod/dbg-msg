@@ -1,0 +1,6 @@
+AccountingPeriod.py: Current Time: 18:30:29
+AccountingPeriod.py: fetch_time=0:00:04.449551
+length=638
+AccountingPeriod.py: delete from Plex.accounting_period where pcn in (123681,300758) and ordinal = 0 - rowcount=638
+AccountingPeriod.py: update Plex.accounting_period set ordinal=0 where pcn in (123681,300758) and ordinal = 1 - rowcount=638
+AccountingPeriod.py: total time: 0:00:05.658134

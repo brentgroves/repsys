@@ -1,0 +1,4 @@
+AccountPeriodBalanceRecreateOpenPeriodRange.py: Current Time: 18:32:13
+AccountPeriodBalanceRecreateOpenPeriodRange.py: call Plex.account_period_balance_delete_open_period_range(300758) - rowcount=1
+AccountPeriodBalanceRecreateOpenPeriodRange.py: call Plex.account_period_balance_append_open_period_range(300758) - rowcount=1
+AccountPeriodBalanceRecreateOpenPeriodRange.py: total time: 0:00:00.460804
