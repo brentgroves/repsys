@@ -104,7 +104,7 @@ kubectl get pods -n ingress -o wide
 # test ingress with small micro-service
 # Reference: https://fabianlee.org/2021/07/29/kubernetes-microk8s-with-multiple-metallb-endpoints-and-nginx-ingress-controllers/
 
-pushd ~/src/reports/k8s
+pushd ~/src/repsys/k8s
 kubectl apply -f ./manifests/ingress/golang-hello-world/deployment/golang-hello-world-web.yaml
 service/golang-hello-world-web-service created
 deployment.apps/golang-hello-world-web created
@@ -142,7 +142,7 @@ Host: 10.152.183.171:8080
 **[generate and install certs](../volume/pki/gen-and-install-certs.md)**
 
 ```bash
-kubectl create -n default secret tls tls-credential --key=/home/brent/src/reports/volume/pki/intermediateCA/private/reports11.busche-cnc.com.san.key.pem --cert=/home/brent/src/reports/volume/pki/intermediateCA/certs/server-chain/reports11.busche-cnc.com-ca-chain-bundle.cert.pem
+kubectl create -n default secret tls tls-credential --key=/home/brent/src/repsys/volumes/pki/intermediateCA/private/reports11.busche-cnc.com.san.key.pem --cert=/home/brent/src/repsys/volumes/pki/intermediateCA/certs/server-chain/reports11.busche-cnc.com-ca-chain-bundle.cert.pem
 secret/tls-credential created
 
 # shows both tls secrets
@@ -181,7 +181,7 @@ openssl s_client -showcerts -connect reports11.busche-cnc.com:443 -servername re
 # https://phoenixnap.com/kb/microk8s-ingress
 # https://mswis.com/configure-microk8s-kubernetes-load-balancer-with-tls/
 
-curl -v --cacert /home/brent/src/reports/volume/pki/intermediateCA/certs/ca-chain/ca-chain-bundle.cert.pem https://reports11.busche-cnc.com/myhello/
+curl -v --cacert /home/brent/src/repsys/volumes/pki/intermediateCA/certs/ca-chain/ca-chain-bundle.cert.pem https://reports11.busche-cnc.com/myhello/
 
 curl -v https://reports11.busche-cnc.com/myhello/
 
