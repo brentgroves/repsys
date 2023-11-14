@@ -13,11 +13,11 @@ metadata:
 spec:
   tls:
   - hosts: 
-    - reports11.busche-cnc.com
+    - reports51.busche-cnc.com
     # secret must be in same namespace
     secretName: tls-credential
   rules:
-  - host: reports11.busche-cnc.com
+  - host: reports51.busche-cnc.com
     http:
       paths:
       - pathType: Prefix #Exact

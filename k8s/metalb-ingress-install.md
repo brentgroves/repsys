@@ -119,18 +119,17 @@ golang-hello-world-web-service   ClusterIP   10.152.183.232   <none>        8080
 primaryPodIP=$(kubectl get pods -l app=golang-hello-world-web -o=jsonpath="{.items[0].status.podIPs[0].ip}")
 
 # check pod using internal IP
-curl http://${primaryPodIP}:8080/myhello/
+curl "http://${primaryPodIP}:8080/myhello/"
 Hello, World
 request 0 GET /myhello/
 Host: 10.1.75.133:8080
 
 # With internal pod IP proven out, move up to the IP at the  Service level.
-
 # IP of primary service
 primaryServiceIP=$(microk8s kubectl get service/golang-hello-world-web-service -o=jsonpath="{.spec.clusterIP}")
 
 # check primary service
-curl http://${primaryServiceIP}:8080/myhello/
+curl "http://${primaryServiceIP}:8080/myhello/"
 Hello, World
 request 1 GET /myhello/
 Host: 10.152.183.171:8080
@@ -142,7 +141,8 @@ Host: 10.152.183.171:8080
 **[generate and install certs](../volume/pki/gen-and-install-certs.md)**
 
 ```bash
-kubectl create -n default secret tls tls-credential --key=/home/brent/src/repsys/volumes/pki/intermediateCA/private/reports11.busche-cnc.com.san.key.pem --cert=/home/brent/src/repsys/volumes/pki/intermediateCA/certs/server-chain/reports11.busche-cnc.com-ca-chain-bundle.cert.pem
+# make sure kubectl is pointing to the correct K8s cluster
+kubectl create -n default secret tls tls-credential --key=/home/brent/src/repsys/volumes/pki/intermediateCA/private/reports51.busche-cnc.com.san.key.pem --cert=/home/brent/src/repsys/volumes/pki/intermediateCA/certs/server-chain/reports51.busche-cnc.com-ca-chain-bundle.cert.pem
 secret/tls-credential created
 
 # shows both tls secrets
@@ -155,8 +155,10 @@ kubectl get secret -n default tls-credential -o json | jq -r '.data."tls.crt"' |
 # show server cert key
 kubectl get secret -n default tls-credential -o json | jq -r '.data."tls.key"' | base64 -d
 
-# create fqdn primary ingress
+# Update host property in the ingres yaml. 
 pushd ~/src/reports/k8s
+code ./manifests/ingress/golang-hello-world/ingress/golang-hello-world-web-on-nginx-fqdn.yaml
+# Now that the host property has the same value as that of one of the alt names in SAN certificate previously deployed to the cluster, create the ingress object.
 kubectl apply -f ./manifests/ingress/golang-hello-world/ingress/golang-hello-world-web-on-nginx-fqdn.yaml
 Warning: annotation "kubernetes.io/ingress.class" is deprecated, please use 'spec.ingressClassName' instead
 ingress.networking.k8s.io/golang-hello-world-web-service created
@@ -168,11 +170,11 @@ golang-hello-world-web-service   <none>   reports11.busche-cnc.com   127.0.0.1  
 
 # verify certificates
 # https://curl.se/docs/sslcerts.html
-<!-- https://www.baeldung.com/linux/curl-https-connection -->
-# Make sure cert chain was added to linux cert store.  See gen-and-install-certs.md
-# **[generate and install certs](../volume//pki/gen-and-install-certs.md)**
+# https://www.baeldung.com/linux/curl-https-connection 
+# Make sure cert chain was added to linux cert store.  
+- See **[gen-and-install-certs.md](../volumes/pki/gen-and-install-certs.md)**
 # verify the cert chain from our PKI is returned using this command:
-openssl s_client -showcerts -connect reports11.busche-cnc.com:443 -servername reports11.busche-cnc.com -CApath /etc/ssl/certs 
+openssl s_client -showcerts -connect reports51.busche-cnc.com:443 -servername reports51.busche-cnc.com -CApath /etc/ssl/certs 
 
 # https://unix.stackexchange.com/questions/421969/openssl-fetches-different-ssl-certificate-than-the-one-obtained-via-a-browser
 # s_client by default does not send SNI (Server Name Indication) data but a browser does. The server may choose to respond with a different certificate based on the contents of that SNI - or if no SNI is present then it will serve a default certificate. Solution is to add -servername param.
@@ -181,59 +183,14 @@ openssl s_client -showcerts -connect reports11.busche-cnc.com:443 -servername re
 # https://phoenixnap.com/kb/microk8s-ingress
 # https://mswis.com/configure-microk8s-kubernetes-load-balancer-with-tls/
 
-curl -v --cacert /home/brent/src/repsys/volumes/pki/intermediateCA/certs/ca-chain/ca-chain-bundle.cert.pem https://reports11.busche-cnc.com/myhello/
+curl -v --cacert /home/brent/src/repsys/volumes/pki/intermediateCA/certs/ca-chain/ca-chain-bundle.cert.pem https://reports51.busche-cnc.com/myhello/
 
-curl -v https://reports11.busche-cnc.com/myhello/
+curl -v https://reports51.busche-cnc.com/myhello/
 
 # Delete test deployment
 
 kubectl delete deployment.apps/golang-hello-world-web
 kubectl delete service/golang-hello-world-web-service
 kubectl delete ingress golang-hello-world-web-service
-
-# I believe it is best to follow the official install rather than this!!
-# deploy a percona mysql operator to test nginx ingress controller is passing through port 3306 to innoDB router
-# https://www.percona.com/blog/expose-databases-on-kubernetes-with-ingress
-# I believe this is now almost the same as the official mysql-operator with have install instructions for.
-kubectl apply -f https://raw.githubusercontent.com/spron-in/blog-data/master/operators-and-ingress/bundle.yaml
-# deploy mysql cluster
-kubectl apply -f https://raw.githubusercontent.com/spron-in/blog-data/master/operators-and-ingress/cr-minimal.yaml
-
-# Delete this
-
-kubectl delete deployment.apps/mycluster-router 
-kubectl delete statefulset mycluster 
-kubectl delete svc mycluster
-kubectl delete pvc datadir-mycluster-0
-# I dont know if the CRD is installed but I think it is
-kubectl delete InnoDBCluster mycluster
-
-# This is going to deploy a highly available ingress-nginx controller. 
-
-# controller.replicaCount=2 – defines that we want to have at least two Pods of ingress controller. This is to provide a highly available setup.
-# tcp flags do two things:
-# expose ports 3306-3308 on the ingress’s load balancer
-# instructs ingress controller to forward traffic to corresponding services which were created by Percona Operator for PXC clusters. For example, port 3307 is the one to use to connect to minimal-cluster2. Read more about this configuration in ingress documentation.
-
-kubectl -n ingress-nginx get service
-
-kubectl get secrets/minimal-cluster-secrets --template={{.data.password}} | base64
-PG5vIHZhbHVlPg==
-
-
-# get with https://pkg.go.dev/text/template go templates
-kubectl get secrets/minimal-cluster-secrets -o go-template='
-{{range $k,$v := .data}}{{printf "%s: " $k}}{{if not $v}}{{$v}}{{else}}{{$v | base64decode}}{{end}}{{"\n"}}{{end}}'
-
-
-clustercheck: VzZ60H7w8VlJHUx6Bh
-monitor: jubkkkrudtoSiitkJC
-operator: SqCtmvnjzca5T9oi
-proxyadmin: IACZT513jTxh25yh
-replication: Fu9Gxy6q0hdqIxWSPAr
-root: TT8uuqyEaTh0Wkw2EO
-xtrabackup: f4plqRTCQlhxeWlXtc
-
-mysql -u root -h 10.1.0.110 --port 3306  -p
 
 ```
