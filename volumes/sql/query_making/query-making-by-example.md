@@ -1,5 +1,5 @@
 # Query Making by Example
-
+## A Step-by-Step Approach 
 - What do we want to know? How many hours of vacation each person took from Jan 1 to Oct 31, 2023.
 
 ## References
@@ -9,9 +9,18 @@
 
 ## Query Making Process
 
-- Review Plex views
-
 - Open Plex SDE and view summary screens.
+- Create a SPROC in the Plex SDE to use in reviewing Plex views for the report, time_off_review_plex_views.sql.
+- Locate a Plex screen that closely resembles the report being created and note it in time_off_review_plex_views.sql as Plex validation screens.
+- Review Plex views you think you need becoming familiar with their data and how they are used in the time_off_review_plex_views.sql SPROC.
+- Describe the records you want on the report in detail.
+- Create the final key set for the report in a CTE view chain in the time_off_review_plex_views.sql SPROC.
+- Move the final key set CTE view chain into a new Plex SDE SPROC called time_off_final_key_set.sql leaving out SQL used to review Plex views.
+- Describe what aggregate values you wish to calculate and display along with each record in the final key set
+- Create a SPROC in the Plex SDE for each aggegate value you wish to calculate you may combine multiple aggrete value calculations per SPROC if desired. Copy the final key set CTE view chain into each aggregate value SPROC created calling them something like time_off_hours_aggregate.sql.
+-  
+
+
 
 ```sql
 -- Employee

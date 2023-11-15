@@ -8,6 +8,6 @@
 - **[Maintenance](./maintenance/maintenance.md)**
 - **[Backups](./backups/backups.md)**
 - **[Tech](./tech/tech.md)**
-- **[Query Making](./volumes/sql/query_making/query-making.md)**
+- **[Query Making Process](./volumes/sql/query_making/query-making-by-example.md)**
 - **[Status](./status/status.md)**
 - **[Meeting Notes](./meetings/meetings.md)**
