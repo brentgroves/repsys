@@ -1,5 +1,7 @@
 # Query Making by Example
-## A Step-by-Step Approach 
+
+## A Step-by-Step Approach
+
 - What do we want to know? How many hours of vacation each person took from Jan 1 to Oct 31, 2023.
 
 ## References
@@ -19,8 +21,6 @@
 - Describe what aggregate values you wish to calculate and display along with each record in the final key set
 - Create a SPROC in the Plex SDE for each aggegate value you wish to calculate you may combine multiple aggrete value calculations per SPROC if desired. Copy the final key set CTE view chain into each aggregate value SPROC created calling them something like time_off_hours_aggregate.sql.
 -  
-
-
 
 ```sql
 -- Employee
@@ -88,10 +88,11 @@ select todp.time_off_day_period_key,todp.pcn
 ,todp.time_off_day_key
 ,todp.time_off_period_key
 from personnel_v_time_off_day_period_e todp
-where todp.time_off_day_key in (2609694,2609695,	2609693)
+where todp.time_off_day_key in (2609694,2609695, 2609693)
 ```
 
 Identify the records and fields in our final result.
+
 - Create a record for each time off type for every active employee.
 
 ```sql
@@ -184,40 +185,41 @@ on aks.pcn=tot.pcn
 and aks.time_off_type_key=tot.time_off_type_key
 order by aks.pun,aks.time_off_type_key
 
- 	pcn	pun	employee_no	common_name	payroll_no	time_off_type
-1	123681	104389	003287	Kim	P0Y003287	PTO
-2	123681	104389	003287	Kim	P0Y003287	ADA
-3	123681	104389	003287	Kim	P0Y003287	Non-Scheduled Day
-4	123681	104389	003287	Kim	P0Y003287	Birthday
-5	123681	104389	003287	Kim	P0Y003287	UPTO
-6	123681	104389	003287	Kim	P0Y003287	PTO Rollover
-7	123681	104389	003287	Kim	P0Y003287	LOA
-8	123681	104389	003287	Kim	P0Y003287	Non-Scheduled Weekend Day
-9	123681	104389	003287	Kim	P0Y003287	Sick Time Off
-10	123681	104389	003287	Kim	P0Y003287	Holiday Float
-11	123681	107037	003350	Dean	D63003350	PTO
-12	123681	107037	003350	Dean	D63003350	ADA
-13	123681	107037	003350	Dean	D63003350	Non-Scheduled Day
-14	123681	107037	003350	Dean	D63003350	Birthday
-15	123681	107037	003350	Dean	D63003350	UPTO
-16	123681	107037	003350	Dean	D63003350	PTO Rollover
-17	123681	107037	003350	Dean	D63003350	LOA
-18	123681	107037	003350	Dean	D63003350	Non-Scheduled Weekend Day
-19	123681	107037	003350	Dean	D63003350	Sick Time Off
-20	123681	107037	003350	Dean	D63003350	Holiday Float
-21	123681	107046	003385	Rocky	D63003385	PTO
-22	123681	107046	003385	Rocky	D63003385	ADA
-23	123681	107046	003385	Rocky	D63003385	Non-Scheduled Day
-24	123681	107046	003385	Rocky	D63003385	Birthday
-25	123681	107046	003385	Rocky	D63003385	UPTO
-26	123681	107046	003385	Rocky	D63003385	PTO Rollover
-27	123681	107046	003385	Rocky	D63003385	LOA
-28	123681	107046	003385	Rocky	D63003385	Non-Scheduled Weekend Day
-29	123681	107046	003385	Rocky	D63003385	Sick Time Off
-30	123681	107046	003385	Rocky	D63003385	Holiday Float
+  pcn pun employee_no common_name payroll_no time_off_type
+1 123681 104389 003287 Kim P0Y003287 PTO
+2 123681 104389 003287 Kim P0Y003287 ADA
+3 123681 104389 003287 Kim P0Y003287 Non-Scheduled Day
+4 123681 104389 003287 Kim P0Y003287 Birthday
+5 123681 104389 003287 Kim P0Y003287 UPTO
+6 123681 104389 003287 Kim P0Y003287 PTO Rollover
+7 123681 104389 003287 Kim P0Y003287 LOA
+8 123681 104389 003287 Kim P0Y003287 Non-Scheduled Weekend Day
+9 123681 104389 003287 Kim P0Y003287 Sick Time Off
+10 123681 104389 003287 Kim P0Y003287 Holiday Float
+11 123681 107037 003350 Dean D63003350 PTO
+12 123681 107037 003350 Dean D63003350 ADA
+13 123681 107037 003350 Dean D63003350 Non-Scheduled Day
+14 123681 107037 003350 Dean D63003350 Birthday
+15 123681 107037 003350 Dean D63003350 UPTO
+16 123681 107037 003350 Dean D63003350 PTO Rollover
+17 123681 107037 003350 Dean D63003350 LOA
+18 123681 107037 003350 Dean D63003350 Non-Scheduled Weekend Day
+19 123681 107037 003350 Dean D63003350 Sick Time Off
+20 123681 107037 003350 Dean D63003350 Holiday Float
+21 123681 107046 003385 Rocky D63003385 PTO
+22 123681 107046 003385 Rocky D63003385 ADA
+23 123681 107046 003385 Rocky D63003385 Non-Scheduled Day
+24 123681 107046 003385 Rocky D63003385 Birthday
+25 123681 107046 003385 Rocky D63003385 UPTO
+26 123681 107046 003385 Rocky D63003385 PTO Rollover
+27 123681 107046 003385 Rocky D63003385 LOA
+28 123681 107046 003385 Rocky D63003385 Non-Scheduled Weekend Day
+29 123681 107046 003385 Rocky D63003385 Sick Time Off
+30 123681 107046 003385 Rocky D63003385 Holiday Float
 1
 1
 ```
+
 ## Create a single view chain, CTE, per desired aggregate function
 
 Note: In the following process do not include any columns except for identifying keys and a way to visualize them. For example, if a filter view has a primary key of time-off-day-period-key only include the primary key and a very few columns such as the employee,period type, and period or date.
@@ -229,5 +231,3 @@ Note: In the following process do not include any columns except for identifying
 5. Create the final result set from the mininum view chain by using the identifying keys to join to Plex views.
 (Only do step 6 on very complicated queries)
 6. Only if you can not perform all of the aggregate functions in just one view chain insert the records of this result set into a temp table. Then repeat the steps above until all the aggregate functions have been ran and finally join the temp tables into the final result set.
-
-
