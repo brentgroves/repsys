@@ -103,21 +103,11 @@ as
 )
 -- 2636 records
 --select count(*) from time_off_type_hours
---select toth.pcn,toth.pun,toth.time_off_type_key,toth.time_off_type_hours
---,e.customer_employee_no employee_no, e.common_name, e.payroll_no
---SELECT cgm.plexus_customer_code, ei.plexus_user_no, ei.employee_no, ei.payroll_no, ei.employee_status, usr.last_name, 
---usr.first_name, ei.pay_type, tt.time_off_type, tps.active as period_active, tps.time_off_period_key, tps.period_begin, tps.period_end, 
---tps.allowed_hours, tps.accrued_hours, ISNULL(at.dayhours, 0) as used_before_november
--- records: 7362
---SELECT cgm.plexus_customer_code, ei.plexus_user_no, ei.employee_no, ei.payroll_no, ei.employee_status, usr.last_name, 
---usr.first_name, ei.pay_type, tt.time_off_type, tps.active as period_active, tps.time_off_period_key, tps.period_begin, tps.period_end, 
---tps.allowed_hours, tps.accrued_hours, ISNULL(at.dayhours, 0) as used_before_november
-
 SELECT cgm.plexus_customer_code, fks.pun, e.customer_employee_no  employee_no
 ,e.payroll_no, e.employee_status, usr.last_name, usr.first_name, e.pay_type
 ,tot.time_off_type,p.active period_active,p.time_off_period_key,p.period_begin,p.period_end
 ,p.allowed_hours,p.accrued_hours,isnull(toth.hours,0) used_before_november
-
+-- records: 7362
 -- select count(*) cnt
 from final_key_set fks
 left outer join time_off_type_hours toth
