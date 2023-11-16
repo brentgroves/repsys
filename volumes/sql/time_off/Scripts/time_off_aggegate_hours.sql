@@ -39,17 +39,27 @@ as
   WHERE (e.employee_status = 'Active' or employee_status = 'ADA')
 --  and e.plexus_customer_no = 123681 -- 132 records
 ),
+time_off_period
+as
+(
+  select tope.time_off_period_key,tope.pcn,tope.pun,tope.time_off_type_key
+  -- records: 8733
+  -- select count(*) cnt
+  from personnel_v_time_off_period_e tope
+  where tope.active=1
+),
 final_key_set
 as
 (
 --  select count(*) cnt
   select tope.pcn,tope.time_off_period_key,tope.pun,tope.time_off_type_key
-  from personnel_v_time_off_period_e tope
-  join employee e
-  on tope.pcn=e.pcn
-  and tope.pun=e.pun
+  from employee e
+  join time_off_period tope
+  on e.pcn=tope.pcn
+  and e.pun=tope.pun
 
 )
+
 -- records 7362
 --select count(*) cnt from final_key_set
 ,time_off_day
@@ -136,3 +146,5 @@ join personnel_v_time_off_period_e p
 on fks.pcn = p.pcn
 and fks.time_off_period_key=p.time_off_period_key
 
+-- where usr.last_name in ('Groves') 
+order by fks.pcn,usr.last_name,tot.time_off_type

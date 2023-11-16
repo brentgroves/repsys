@@ -96,7 +96,7 @@ as
 )
 -- records: 16,601 we loss time_off_day records unless we change the 
 -- applied_date range to start one month before the earliest time_off_day
--- select count(*) cnt from time_off_day_time_off
+-- select count(*) cnt from timeoffday_timeoff
 -- still need time_off_type and this info is in the time_off_period_view
 ,time_off_day_period
 as
@@ -130,50 +130,45 @@ as
 )
 -- 2636 records
 -- select count(*) from time_off_type_hours
---SELECT cgm.plexus_customer_code, fks.pun plexus_user_no, e.customer_employee_no  employee_no
---,e.payroll_no, e.employee_status, usr.last_name, usr.first_name, e.pay_type
---,tot.time_off_type,p.active period_active,p.time_off_period_key,p.period_begin,p.period_end
---,p.allowed_hours,p.accrued_hours,isnull(toth.hours,0) used_before_november
--- records: 1978/7361 the reduction went away after I ran the query about 20 times
-select count(*) cnt
--- select distinct cgm.plexus_customer_no,cgm.plexus_customer_code
---1	123681	Linamar Southfield
---2	295932	Linamar Fruitport
---3	297638	Linamar Technical Center
---4	300757	Linamar Hartselle
---5	300758	Linamar Albion
---6	306766	Linamar Edon
---7	310507	Linamar Avilla
---8	312055	Linamar Workholding
--- records: 2075
+SELECT cgm.plexus_customer_code, fks.pun plexus_user_no, e.customer_employee_no  employee_no
+,e.payroll_no, e.employee_status, usr.last_name, usr.first_name, e.pay_type
+,tot.time_off_type,p.active period_active,p.time_off_period_key,p.period_begin,p.period_end
+,p.allowed_hours,p.accrued_hours,isnull(toth.hours,0) used_before_november
+-- records: 7361
+-- select count(*) cnt
 from final_key_set fks
--- records: 2075
 left outer join time_off_type_hours toth
 on fks.pcn=toth.pcn
 and fks.pun=toth.pun
 and fks.time_off_period_key=toth.time_off_period_key
 and fks.time_off_type_key=toth.time_off_type_key
--- records: 2075
+-- records: 7361
 JOIN plexus_control_v_plexus_user_e as usr
 on fks.pun = usr.plexus_user_no
 and fks.pcn = usr.plexus_customer_no
--- records: 2075
+-- records: 7361
 join personnel_v_employee_e e
 on fks.pcn=e.plexus_customer_no
 and fks.pun=e.plexus_user_no
--- records: 2075
+-- records: 7361
 join personnel_v_time_off_type_e tot
 on fks.pcn=tot.pcn
 and fks.time_off_type_key=tot.time_off_type_key
--- records: 2075
+-- records: 7361
 join personnel_v_time_off_period_e p
 on fks.pcn = p.pcn
 and fks.time_off_period_key=p.time_off_period_key
--- records: 2075
+-- records: 7361
+--left outer JOIN plexus_control_v_customer_group_member as cgm
+--on fks.pcn = cgm.plexus_customer_no
+-- records: 1978 the reduction went away after I ran the query about 20 times
 JOIN plexus_control_v_customer_group_member as cgm
 on fks.pcn = cgm.plexus_customer_no
--- records: 1978/7361 the reduction went away after I ran the query about 20 times
---JOIN plexus_control_v_customer_group_member as cgm
---on fks.pcn = cgm.plexus_customer_no
--- order by cgm.plexus_customer_code desc
---where cgm.plexus_customer_code is null -- 0 records
+
+where usr.last_name in ('Groves') 
+
+--Groves, Brent	bg.brentgroves	12/6/2004	
+--Non-Scheduled Weekend	1/1/2023 - 12/31/2023	208.00	0.00	208.00
+--PTO	1/1/2023 - 12/31/2023	120.00	72.00	48.00
+--PTO Rollover	1/1/2023 - 12/31/2023	28.00	24.00	4.00
+--Sick Time Off	1/1/2023 - 12/31/2023	40.00	16.00	24.00

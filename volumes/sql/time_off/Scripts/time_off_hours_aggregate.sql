@@ -39,17 +39,29 @@ as
   WHERE (e.employee_status = 'Active' or employee_status = 'ADA')
 --  and e.plexus_customer_no = 123681 -- 132 records
 ),
+time_off_period
+as
+(
+  select tope.time_off_period_key,tope.pcn,tope.pun,tope.time_off_type_key
+  -- records: 8733
+  -- select count(*) cnt
+  from personnel_v_time_off_period_e tope
+  where tope.active=1
+),
 final_key_set
 as
 (
 --  select count(*) cnt
   select tope.pcn,tope.time_off_period_key,tope.pun,tope.time_off_type_key
-  from personnel_v_time_off_period_e tope
-  join employee e
-  on tope.pcn=e.pcn
-  and tope.pun=e.pun
+  from employee e
+  join time_off_period tope
+  on e.pcn=tope.pcn
+  and e.pun=tope.pun
 
 )
+-- records: 2075
+-- select count(*) cnt from final_key_set
+
 -- Start of view chain to find the aggregate of time_off_day.hours for each time_off_type created by HR for the employee
 -- records 7361
 --select count(*) cnt from final_key_set
@@ -120,7 +132,7 @@ as
   group by toe.pcn,toe.time_off_period_key,toe.pun,toe.time_off_type_key
 )
 -- 2636 records
--- select count(*) from time_off_type_hours
+--select count(*) from time_off_type_hours
 SELECT cgm.plexus_customer_code, fks.pun plexus_user_no, e.customer_employee_no  employee_no
 ,e.payroll_no, e.employee_status, usr.last_name, usr.first_name, e.pay_type
 ,tot.time_off_type,p.active period_active,p.time_off_period_key,p.period_begin,p.period_end
@@ -155,3 +167,5 @@ and fks.time_off_period_key=p.time_off_period_key
 -- records: 1978 the reduction went away after I ran the query about 20 times
 JOIN plexus_control_v_customer_group_member as cgm
 on fks.pcn = cgm.plexus_customer_no
+order by fks.pcn,usr.last_name,tot.time_off_type
+-- where usr.last_name in ('Groves') 
