@@ -11,8 +11,8 @@
 ## Summary
 
 - Result set has 7361 records of which 5385 used_before_november are 0
-- Are any active employees that have been here awhile not showing in time off.
-- Dropped some records when joining time_off_day to time_off_day_period which contains the pun and time_off_type_key
+- Are any active employees that have been here awhile not showing in time off. To do.
+- Dropped 300 records when joining time_off_day to time_off_day_period which contains the pun and time_off_type_key
 
 ```sql
 -- records 16,601
