@@ -10,6 +10,7 @@
 
 ## Summary
 
+- Result set has 7361 records of which 5385 used_before_november are 0
 - Dropped some records when joining time_off_day to time_off_day_period which contains the pun and time_off_type_key
 
 ```sql
@@ -95,7 +96,7 @@ as
 
 ``````
 
-- Dropped many records when joining to the plexus_control_v_plexus_user_e  view.
+- Dropped many records when joining to the plexus_control_v_plexus_user_e  view. This issue went away after doing a left outer join and also running the query about 20 times and then changing back to an inner join.
 
 ```sql
 SELECT cgm.plexus_customer_code, fks.pun, e.customer_employee_no  employee_no
