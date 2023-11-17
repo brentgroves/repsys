@@ -3,6 +3,16 @@
 ## References
 
 <https://medium.com/israeli-tech-radar/how-to-create-a-monitoring-stack-using-kube-prometheus-stack-part-1-eff8bf7ba9a9>
+<https://grafana.com/docs/grafana/latest/setup-grafana/installation/kubernetes/>
+<https://stackoverflow.com/questions/67373856/unable-to-access-prometheus-dashboard-port-forwarding-doesnt-work>
+
+<https://grafana.com/docs/grafana/latest/setup-grafana/sign-in-to-grafana/#:~:text=To%20sign%20in%20to%20Grafana%20for%20the%20first%20time%2C%20follow,admin%20for%20username%20and%20password>.
+
+<https://gitlab.tikalk.dev/matan.amiel/kube-prometheus-stack/-/tree/main>
+
+## Uninstall Helm Chart
+
+microk8s helm uninstall kube-prometheus-stack -n monitoring
 
 ## Introduction
 
@@ -68,7 +78,7 @@ Update Complete. ⎈Happy Helming!⎈
 
 ```block
     ruleSelectorNilUsesHelmValues: false
-    serviceMonitorSelectorNilUsesHelmValues: false
+    ruleSelectorNilUsesHelmValues: false
     podMonitorSelectorNilUsesHelmValues: false
     probeSelectorNilUsesHelmValues: false
     scrapeConfigSelectorNilUsesHelmValues: false
@@ -81,7 +91,101 @@ Please use these **[values](https://gitlab.tikalk.dev/matan.amiel/kube-prometheu
 ```bash
 
 pushd
-cd /home/brent/src/repsys/k8s/kube-prometheus-stack
+cd ~/src/repsys/k8s/kube-prometheus-stack
+microk8s helm install prom-test prometheus-community/kube-prometheus-stack
 microk8s helm upgrade --install -f values.yaml kube-prometheus-stack prometheus-community/kube-prometheus-stack -n monitoring
+Release "kube-prometheus-stack" does not exist. Installing it now.
+NAME: kube-prometheus-stack
+LAST DEPLOYED: Fri Nov 17 22:09:18 2023
+NAMESPACE: monitoring
+STATUS: deployed
+REVISION: 1
+NOTES:
+kube-prometheus-stack has been installed. Check its status by running:
+  kubectl --namespace monitoring get pods -l "release=kube-prometheus-stack"
+kubectl get all -n monitoring
+Visit https://github.com/prometheus-operator/kube-prometheus for instructions on how to create & configure Alertmanager and Prometheus instances using the Operator.
+
+kubectl get all -n monitoring
 popd
+```
+
+After we deploy the Kube-Prometheus stack, we get as default apps:
+
+- Grafana
+- Prometheus
+- Alert Manager.
+
+## Testing
+
+```bash
+kubectl port-forward svc/prometheus-operated 9090:9090 -n monitoring
+```
+
+You’ll have to look at the Prometheus and Grafana dashboard.
+
+**![Prometheus dashboard](https://miro.medium.com/v2/resize:fit:720/format:webp/1*wyHyaosqq0aQO11ECxy9QQ.png)**
+
+```bash
+kubectl port-forward svc/prom-test-grafana 3000:80 
+admin/
+kubectl port-forward svc/kube-prometheus-stack-grafana 3000:3000 -n monitoring
+
+kubectl  get services --all-namespaces
+NAMESPACE        NAME                                             TYPE           CLUSTER-IP       EXTERNAL-IP   PORT(S)                                                                    AGE
+monitoring       kube-prometheus-stack-grafana                    ClusterIP      10.152.183.181   <none>        80/TCP                                                                     14m
+monitoring       kube-prometheus-stack-prometheus                 ClusterIP      10.152.183.131   <none>        9090/TCP,8080/TCP                                                          14m
+monitoring       alertmanager-operated                            ClusterIP      None             <none>        9093/TCP,9094/TCP,9094/UDP                                                 14m
+
+```
+
+## Create a self ServiceMonitor
+
+- The ServiceMonitor defines an application that scrapes metrics from Kubernetes.
+
+```yaml
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: prometheus-self
+  labels:
+    app: kube-prometheus-stack-prometheus
+spec:
+  endpoints:
+  - interval: 30s
+    port: web
+  selector:
+    matchLabels:
+      app: kube-prometheus-stack-prometheus
+```
+
+- Run ServiceMonitor manifest in this command:
+
+```bash
+kubectl get all -l app=kube-prometheus-stack-prometheus
+kubectl apply -f service-monitor.yaml -n monitoring
+
+```
+
+## Integration of Promtail and Loki to Grafana
+
+### Intro to Loki
+
+Loki uses Promtail as its primary log collector, but it can also accept log flows from other sources, such as Syslog or other log senders.
+It offers high uptime and supports data replication across multiple replicas for durability and fault tolerance. Loki is tightly integrated with Grafana, allowing you to visualize log metrics.
+
+```bash
+# Add a new Helm Repository
+microk8s helm repo add grafana https://grafana.github.io/helm-charts
+"grafana" has been added to your repositories
+helm repo update
+```
+
+## Run the Helm Deployment Command
+
+<https://github.com/grafana/helm-charts/tree/main/charts/loki-distributed>
+helm repo add grafana <https://grafana.github.io/helm-charts>
+
+```bash
+microk8s helm upgrade --install -f loki-distributed.yaml loki grafana/loki-distributed -n monitoring
 ```
