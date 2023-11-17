@@ -1,21 +1,16 @@
 # Kured
 
-## Kubernetes Reboot Daemon
-
 **[Kubernetes Reboot Daemon](https://kured.dev/docs/)**
-"
+
 Watches for the presence of a reboot sentinel file e.g. /var/run/reboot-required or the successful run of a sentinel command.
 Cordons & drains worker nodes before reboot, uncordoning them after.
 Utilises a lock in the API server to ensure only one node reboots at a time.
 Optionally defers reboots in the presence of active Prometheus alerts or selected pods.
-"
 
 ## Install Kured
 
 **[Install Kured](https://kured.dev/docs/installation/)**
 
-"
-Installation
 To obtain a default installation without Prometheus alerting interlock or Slack notifications:
 
 ```bash
@@ -30,9 +25,7 @@ serviceaccount/kured created
 daemonset.apps/kured created
 ```
 
-If you want to customise the installation, download the manifest and edit it in accordance with the following section before application.
-
-"
+If you want to customise the installation, download the manifest and edit it in accordance with the following **[section](https://kured.dev/docs/installation/)** before application.
 
 ## Operation
 
@@ -46,7 +39,7 @@ kured-rbcmj                                  1/1     Running   0               3
 kured-p88rs                                  1/1     Running   0               3m58s
 
 # we can use prometheus metrics to control Kured
-I didn't create the svc to access this
+# I didn't create the svc to access this
 curl metrics-ip:8080/metrics
 
 # For a test edit the daemonset

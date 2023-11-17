@@ -1,12 +1,33 @@
 # Install Observability stack
 
+It is probably better to install this using the "kube-prometheus-stack" because the microk8s admin does not seem to provide much docs on configuration changes and versions.
+
+## References
+
+**[Tutorial on kube-prometheus-stack](https://medium.com/israeli-tech-radar/how-to-create-a-monitoring-stack-using-kube-prometheus-stack-part-1-eff8bf7ba9a9)**
+
+**[kube-prometheus-stack](https://github.com/prometheus-community/helm-charts/blob/main/charts/kube-prometheus-stack/README.md)**
+
+**[kube-prometheus](https://github.com/prometheus-operator/kube-prometheus)**
+
+**[Grafana](https://github.com/grafana/helm-charts/tree/main/charts/grafana#grafana-helm-chart)**
+
 **[k8s Observability](https://komodor.com/learn/kubernetes-observability/)**
 
 **[microK8s Observability](https://betterprogramming.pub/observability-with-microk8s-14c1f0ff5183)**
 
-# MicroK8s Observability
+**[Configure Microk8s Observability Addon](https://github.com/canonical/microk8s-core-addons/issues/125)**
 
-**[microK8s Observability](https://betterprogramming.pub/observability-with-microk8s-14c1f0ff5183)**
+**[Connecting to external metrics server](https://microk8s.io/docs/external-lma)**
+
+## How to configure it
+
+Yes can use microk8s enable observability -f values.yaml command to deploy your own custom config.
+For values.yaml file, you can read more detail on **[this](https://github.com/prometheus-community/helm-charts/blob/main/charts/kube-prometheus-stack/values.yaml)**.
+
+I assume you familiar with helm chart and values file.
+
+## Microk8s Observability
 
 Microk8s has an observability stack built-in. But it still requires some set-up and finessing, which I will review in this article.
 
