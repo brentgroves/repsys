@@ -187,5 +187,8 @@ helm repo update
 helm repo add grafana <https://grafana.github.io/helm-charts>
 
 ```bash
+pushd
+cd ~/src/repsys/k8s/kube-prometheus-stack
 microk8s helm upgrade --install -f loki-distributed.yaml loki grafana/loki-distributed -n monitoring
+popd
 ```
