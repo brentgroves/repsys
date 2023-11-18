@@ -2,6 +2,9 @@
 
 ## References
 
+<https://docs.syseleven.de/metakube-accelerator/building-blocks/observability-monitoring/kube-prometheus-stack>
+<https://spacelift.io/blog/prometheus-kubernetes>
+<https://github.com/digitalocean/Kubernetes-Starter-Kit-Developers/blob/main/04-setup-observability/prometheus-stack.md>
 <https://medium.com/israeli-tech-radar/how-to-create-a-monitoring-stack-using-kube-prometheus-stack-part-1-eff8bf7ba9a9>
 <https://grafana.com/docs/grafana/latest/setup-grafana/installation/kubernetes/>
 <https://stackoverflow.com/questions/67373856/unable-to-access-prometheus-dashboard-port-forwarding-doesnt-work>
@@ -13,6 +16,7 @@
 ## Uninstall Helm Chart
 
 microk8s helm uninstall kube-prometheus-stack -n monitoring
+microk8s helm uninstall loki
 
 ## Introduction
 
@@ -120,6 +124,10 @@ After we deploy the Kube-Prometheus stack, we get as default apps:
 
 ```bash
 kubectl port-forward svc/prometheus-operated 9090:9090 -n monitoring
+Verify the application is working by running these commands:
+* kubectl --namespace monitoring port-forward daemonset/promtail 3101
+* curl http://127.0.0.1:3101/metrics
+
 ```
 
 You’ll have to look at the Prometheus and Grafana dashboard.
@@ -190,5 +198,29 @@ helm repo add grafana <https://grafana.github.io/helm-charts>
 pushd
 cd ~/src/repsys/k8s/kube-prometheus-stack
 microk8s helm upgrade --install -f loki-distributed.yaml loki grafana/loki-distributed -n monitoring
+
+coalesce.go:223: warning: destination for loki-distributed.compactor.affinity is a table. Ignoring non-table value (podAntiAffinity:
+  requiredDuringSchedulingIgnoredDuringExecution:
+    - labelSelector:
+        matchLabels:
+          {{- include "loki.compactorSelectorLabels" . | nindent 10 }}
+      topologyKey: kubernetes.io/hostname
+  preferredDuringSchedulingIgnoredDuringExecution:
+    - weight: 100
+      podAffinityTerm:
+        labelSelector:
+          matchLabels:
+            {{- include "loki.compactorSelectorLabels" . | nindent 12 }}
+        topologyKey: failure-domain.beta.kubernetes.io/zone
+)
 popd
 ```
+
+After we deploy Loki, we need to update the Kube-Prometheus-stack values file to add additional Data Sources.
+
+This configuration defines a default additional data source that connects to a Loki log aggregation system. It specifies the URL for accessing Loki and sets the access method to the proxy.
+
+```bash
+```
+
+microk8s helm upgrade loki-distributed --install -f values.yaml --set loki.structuredConfig.storage_config.aws.bucketnames=my-loki-bucket
