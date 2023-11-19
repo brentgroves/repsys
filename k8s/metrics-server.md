@@ -22,6 +22,21 @@ Note: The Metrics API, and the metrics pipeline that it enables, only offers the
 kubectl top nodes
 error: Metrics API not available
 microk8s enable metrics-server
+Infer repository core for addon metrics-server
+Enabling Metrics-Server
+serviceaccount/metrics-server created
+clusterrole.rbac.authorization.k8s.io/system:aggregated-metrics-reader created
+clusterrole.rbac.authorization.k8s.io/system:metrics-server created
+rolebinding.rbac.authorization.k8s.io/metrics-server-auth-reader created
+clusterrolebinding.rbac.authorization.k8s.io/metrics-server:system:auth-delegator created
+clusterrolebinding.rbac.authorization.k8s.io/system:metrics-server created
+service/metrics-server created
+deployment.apps/metrics-server created
+apiservice.apiregistration.k8s.io/v1beta1.metrics.k8s.io created
+clusterrolebinding.rbac.authorization.k8s.io/microk8s-admin created
+Metrics-Server is enabled
+
+kubectl top nodes
 NAME        CPU(cores)   CPU%   MEMORY(bytes)   MEMORY%   
 reports11   223m         2%     2077Mi          26%       
 reports12   396m         4%     2351Mi          30%       
