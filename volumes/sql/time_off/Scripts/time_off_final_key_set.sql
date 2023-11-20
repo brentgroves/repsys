@@ -48,6 +48,7 @@ as
   -- select count(*) cnt
   from personnel_v_time_off_period_e tope
   where tope.active=1
+  -- This is probably not correct.  Using the time_off_period view may be good but the filter needs to be adjusted to include other inactive records.
 ),
 final_key_set
 as

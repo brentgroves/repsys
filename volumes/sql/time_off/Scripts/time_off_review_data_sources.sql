@@ -1,19 +1,5 @@
 --What do we want to know? How many hours of vacation each person took
 
---SELECT tod.pcn, todp.time_off_period_key, SUM(tod.hours) as dayhours
---FROM personnel_v_time_off_day_e as tod
---
---JOIN TIMEOFF as toff
---ON tod.time_off_key = toff.time_off_key
---AND tod.pcn = toff.pcn
---
---JOIN personnel_v_time_off_day_period_e as todp
---ON tod.time_off_day_key = todp.time_off_day_key
---AND tod.pcn = todp.pcn
---
---GROUP BY tod.pcn, todp.time_off_period_key
-
-
 --Review our Plex views
 
 -- Employee
@@ -86,11 +72,3 @@ and tope.time_off_period_key = 446008
 --from personnel_v_time_off_day_period_e todp
 --where todp.time_off_day_key in (2609694,2609695,	2609693)
 
--- - Identify the records and fields in our final result.
--- Create a record for each time off type for every active or ADA employee.
--- pcn,pun,employee_no,common_name,payroll_no, time_off_type, sum of hours taken between '2023-01-01' and '2023-11-01'
--- Time_Off_Period
--- The period_begin and period_end columns can have any value
--- An HR person creates the time_off_period record at the beginning of the year or when they are hired or switch jobs.
--- The HR person does not create a time_off_period record for time_off_types unelligible to that person.
--- So this Plex view is a good candidate for the final key set.
