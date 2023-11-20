@@ -2,6 +2,8 @@
 
 ## Work on
 
+**[Deep Dive Metrics](./linux/prometheus/metrics.md)**
+
 **[Prometheus](./linux/prometheus/getting-started.md)**
 
 ## References
