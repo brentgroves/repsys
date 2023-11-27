@@ -181,7 +181,7 @@ click run go mod tidy
 
 ## run main
 
-pushd ~/src/reports/volume/go/runner
+pushd ~/src/repsys/volumes/go/runner
 go run main/main.go
 
 ## debug program
@@ -202,9 +202,13 @@ open main.go and set a breakpoint and run the debugger.
 
 ## build runner
 
-cd main
+```bash
+pushd .
+
+cd ~/src/repsys/volumes/go/runner/main
 go build -o ../bin/runner
 ../bin/runner
+```
 
 ## install your program
 
@@ -212,23 +216,35 @@ The go install command behaves almost identically to go build, but instead of le
 
 To find where your $GOPATH directory is located, run the following command:
 
+```bash
 go env GOPATH
 /home/brent/go
 
-we can run below commands to generate binary executable with the desired name and path:
-optional if you want dep to be downloaded and installed
+#we can run below commands to generate binary executable with the desired name and path:
+# optional if you want dep to be downloaded and installed
 go install
-// installs main instead of runner so do 2 extra steps.
+# installs main instead of runner so do 2 extra steps.
 go build -o ~/go/bin/runner
 rm ~/go/bin/main
+
+```
+
+go work use ./volumes/go/tutorials/database/mysql/access
+go work use ./volumes/go/tutorials/database/mysql/insert
+go work use ./volumes/go/tutorials/database/mysql/prepared_statement
+go work use ./volumes/go/tutorials/database/mysql/query
 
 ## tutorial from web
 
 <https://go.dev/doc/tutorial/getting-started>
+
+```bash
+pushd .
 go version go1.20 linux/amd64
-cd /home/brent/src/reports/volume/go
+cd /home/brent/src/repsys/volumes/go
 mkdir hello
 cd hello
+```
 
 # enable dependancy tracking
 

@@ -3,4 +3,8 @@ go 1.20
 use (
 	./volumes/go/replib
 	./volumes/go/runner
+	./volumes/go/tutorials/database/mysql/access
+	./volumes/go/tutorials/database/mysql/insert
+	./volumes/go/tutorials/database/mysql/prepared_statement
+	./volumes/go/tutorials/database/mysql/query
 )
