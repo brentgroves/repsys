@@ -3,7 +3,7 @@
 ## create replib repo with a license and readme and clone it
 
 ```bash
-pushd ~/src/reports/volume/go
+pushd ~/src/repsys/volumes/go
 git clone git@github.com:brentgroves/replib.git 
 cd replib
 ```
@@ -64,32 +64,39 @@ The most important part here is the package replib. Since this file is at the to
 ## check in the code
 
 ```bash
-pushd /home/brent/src/reports/volume/go/replib
+pushd ~/src/repsys/volumes/go/replib
 git add -A
 git commit -m "added code"
 git push origin main
 
+git remote -v
+origin  git@github.com:brentgroves/replib (fetch)
+origin  git@github.com:brentgroves/replib (push)
+
 ```
 
-## add replib submodule
+## add replib submodule to the repsys repo
 
 ```bash
-pushd ~/src/reports
-git submodule add git@github.com:brentgroves/replib volume/go/replib
+pushd ~/src/repsys
+git submodule add git@github.com:brentgroves/replib volumes/go/replib
 ```
 
 ## add replib module to go.work
 
+<https://go.dev/doc/tutorial/workspaces>
+This tutorial introduces the basics of multi-module workspaces in Go. With multi-module workspaces, you can tell the Go command that you’re writing code in multiple modules at the same time and easily build and run code in those modules.
+
 ```bash
-pushd ~/src/reports
-go work use ./volume/go/runner
-git rm -r --cached volume/go/runner
+pushd ~/src/repsys
+go work init ./volumes/go/replib
+# git rm -r --cached volumes/go/runner
 ```
 
 ## create the report system runner repo with a license and readme and clone it
 
 ```bash
-pushd ~/src/reports/volume/go
+pushd ~/src/repsys/volumes/go
 git clone git@github.com:brentgroves/runner.git
 cd runner
 ```
@@ -145,7 +152,7 @@ func main() {
 ## check in runner code
 
 ```bash
-pushd /home/brent/src/reports/volume/go/runner
+pushd /home/brent/src/repsys/volumes/go/runner
 git add -A
 git commit -m "added code"
 git push origin main
@@ -156,15 +163,15 @@ git push origin main
 
 ```bash
 pushd ~/src/reports
-git submodule add git@github.com:brentgroves/runner volume/go/runner
+git submodule add git@github.com:brentgroves/runner volumes/go/runner
 ```
 
 ## add runner module to go.work
 
 ```bash
-pushd ~/src/reports
-go work use ./volume/go/runner
-git rm -r --cached volume/go/runner
+pushd ~/src/repsys
+go work use ./volumes/go/runner
+# git rm -r --cached volumes/go/runner
 ```
 
 ## tidy runner go.mod
