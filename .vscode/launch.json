@@ -5,6 +5,14 @@
   "version": "0.2.0",
   "configurations": [
     {
+      "name": "Python: Current File",
+      "type": "python",
+      "request": "launch",
+      "program": "${file}",
+      "console": "integratedTerminal",
+      "justMyCode": true
+    },
+    {
       "name": "Go: Launch open file",
       "type": "go",
       "request": "launch",
@@ -33,14 +41,6 @@
         "${workspaceFolder}/volume/java/etl_lib/target/classes",
         "${workspaceFolder}/volume/java/lib/*"
       ]
-    },
-    {
-      "name": "Python: Current File",
-      "type": "python",
-      "request": "launch",
-      "program": "${file}",
-      "console": "integratedTerminal",
-      "justMyCode": true
     }
   ]
 }

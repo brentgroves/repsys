@@ -229,10 +229,13 @@ rm ~/go/bin/main
 
 ```
 
+pushd .
+cd ~/src/repsys
 go work use ./volumes/go/tutorials/database/mysql/access
 go work use ./volumes/go/tutorials/database/mysql/insert
 go work use ./volumes/go/tutorials/database/mysql/prepared_statement
 go work use ./volumes/go/tutorials/database/mysql/query
+go work use ./volumes/go/tutorials/prometheus/counter
 
 ## tutorial from web
 
