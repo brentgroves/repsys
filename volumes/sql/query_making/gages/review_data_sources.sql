@@ -13,8 +13,11 @@ Add a required date for past calibrations.
 -- G.Next_Calibration_Date, 
 -- G.Calibration_Frequency, 
 
-
-
+Assumption:
+- Since the next calibration date is a calculated value it is not stored in the database.  
+- The only calibration date stored in Plex is dbo.gage.Last_Calibration_Date
+- No calibration history table exists.
+- If we want to keep track of previous calibration due dates we would have to collect that info in the DW.
 
 --Review our Plex views
 
