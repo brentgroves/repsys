@@ -2,8 +2,9 @@
 
 ## Topics
 
-- Install **[Prometheus and Grafana](../volumes/go/tutorials/prometheus/counter/go-server-metrics.md)**
-- Create time-series data point for Prometheus to scrape
+- Install **[Prometheus and Grafana](../k8s/kube-prometheus-stack-install.md)**
+- Create **[counter](../volumes/go/tutorials/prometheus/counter/go-server-metrics.md)**
+- Create **[histogram](../volumes/go/tutorials/prometheus/histogram/histogram.md)** time-series data point for Prometheus to scrape
 
 Notes from this meeting will be located at: ~/src/repsys/meeting/week48.md
 To get a fresh copy please run ~/freshstart.sh at a command prompt.
