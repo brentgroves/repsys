@@ -11,9 +11,11 @@
 
 ## Query Making Process
 
-- Open Plex SDE and view summary screens.
+- Open Plex on test server.
 - Create a SPROC in the Plex SDE to use in reviewing Plex views for the report, time_off_review_plex_views.sql.
-- Locate a Plex screen that closely resembles the report being created and note it in time_off_review_plex_views.sql as Plex validation screens.
+- Locate a Plex screen(s) that closely resembles the report being created and note it in time_off_review_plex_views.sql as Plex validation screens.
+- From the Plex screen(s) view data sources and take note of Plex views you might need.
+- If needed use the Plex screens to create some test data to better familiarize yourself with whatever part of the database your are working on.
 - Review Plex views you think you need becoming familiar with their data and how they are used in the **[time_off_review_plex_views.sql SPROC](../time_off/Scripts/time_off_review_data_sources.sql)**.
 - Describe the **[records](../time_off/Scripts/time_off_records.md)** you want on the report in detail.
 - Create the **[final key set](../time_off/Scripts/time_off_final_key_set.sql)** for the report in a CTE view chain in the time_off_final_key_set.sql SPROC. Only include primary keys or keys necessary to join to other Plex views. The fields used to display on the report will be added during the very last step in the process.  This will make for a faster query and help you focus the task at hand and not the final result.

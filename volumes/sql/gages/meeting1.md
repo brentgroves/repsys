@@ -2,6 +2,7 @@
 
 ## topics
 
+- **[Sam discuss his SPROC](./sj_get_gage2.sql)**
 - **[review_data_sources](./review_data_sources.sql)**
 - **[final_key_set](./final_key_set.sql)**
 
