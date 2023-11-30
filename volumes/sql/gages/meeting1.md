@@ -4,7 +4,7 @@
 
 - **[Sam discuss his SPROC](./sj_get_gage2.sql)**
 - **[review_data_sources](./review_data_sources.sql)**
-- **[final_key_set](./final_key_set.sql)**
+- **[final_key_set](./final_key_set.md)**
 
 Notes from this meeting will be located at: ~/src/repsys/volumes/sql/gages/meeting1.md
 To get a fresh copy please run ~/freshstart.sh at a command prompt.

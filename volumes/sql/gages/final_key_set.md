@@ -14,6 +14,7 @@ quality_v_gage:
 
 - gage_no: primary key
 - calibration_frequency
+filter: active=1
 
 quality_v_gage_record:
 
@@ -26,7 +27,4 @@ Quality_v_Gage_Measurement
 
 ## Plex Screens
 
-master gage list
-calibration manager
-gage control
-
+gage control = master gage list
