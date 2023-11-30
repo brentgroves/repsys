@@ -3,9 +3,7 @@
 ## Topics
 
 - Install **[Prometheus and Grafana](../k8s/kube-prometheus-stack-install.md)**
-- Create **[counter](../volumes/go/tutorials/prometheus/counter/go-server-metrics.md)**
-- Create **[histogram](../volumes/go/tutorials/prometheus/histogram/histogram.md)** time-series data point for Prometheus to scrape
-- Use grafana with a **[mysql](https://www.techrepublic.com/article/how-to-connect-grafana-to-a-remote-mysql-database/)** data source
+- Export, Scrape, and visualize **[metrics](../volumes/go/tutorials/prometheus/tutorials.md)**
 
 ![dashboard](../linux/grafana/dashboard.png)
 
@@ -14,6 +12,8 @@ To get a fresh copy please run ~/freshstart.sh at a command prompt.
 It can be viewed by logging into devcon2 as bcieslik,bcook,sjackson,cstangland,jdavis,or kyoung with password k8sAdmin1! and opening week48.md from visual studio code and pressing shift-ctrl-v
 
 ## Reference
+
+- Use grafana with a **[mysql](https://www.techrepublic.com/article/how-to-connect-grafana-to-a-remote-mysql-database/)** data source
 
 <https://www.youtube.com/watch?v=BatCdEsJgEo>
 <https://jonathangazeley.com/2020/09/10/building-a-hyperconverged-kubernetes-cluster-with-microk8s-and-ceph/>

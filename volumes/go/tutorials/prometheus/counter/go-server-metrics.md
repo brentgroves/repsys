@@ -5,6 +5,7 @@ In this tutorial we will create a simple Go HTTP server and instrumentation it b
 ## references
 
 <https://prometheus.io/docs/tutorials/instrumenting_http_server_in_go/>
+<https://pkg.go.dev/github.com/prometheus/client_golang/prometheus>
 
 ## Simple server
 
@@ -33,7 +34,7 @@ Compile and run the server
 
 ```bash
 pushd .
-cd ~/src/repsys/volumes/go/tutorials/metrics
+cd ~/src/repsys/volumes/go/tutorials/prometheus/counter
 go build server.go
 ./server
 curl http://localhost:8090/ping
@@ -127,14 +128,6 @@ go run server.go
 
 ```
 
-- Run the example
-
-```bash
-go mod init prom_example
-go mod tidy
-go run server.go
-```
-
 Now hit the <http://localhost:8090/ping> endpoint a couple of times and sending a request to <http://localhost:8090/metrics> will provide the metrics.
 
 Here the ping_request_count shows that /ping endpoint was called 3 times.
@@ -164,6 +157,15 @@ cd ~/src/repsys/volumes/go/tutorials/prometheus/counter
 go run server.go
 cd ~/prometheus-2.45.1.linux-amd64
 ./prometheus --config.file=prom-counter.yml
+
+```
+
+Now hit the <http://localhost:8090/ping> endpoint a couple of times and sending a request to <http://localhost:8090/metrics> will provide the metrics.
+
+```bash
+curl http://localhost:8090/ping
+curl http://localhost:8090/ping
+curl http://localhost:8090/ping
 ```
 
 open the browser on <http://0.0.0.0:9090>

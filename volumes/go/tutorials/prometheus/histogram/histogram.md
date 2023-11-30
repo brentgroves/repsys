@@ -137,7 +137,7 @@ Let’s update our Prometheus config to scrape the metrics from our server.
 global:
   scrape_interval: 10s
 scrape_configs:
-  - job_name: application
+  - job_name: hist_app
     static_configs:
       - targets:
         - "application:8080"
