@@ -5,6 +5,9 @@
 - Install **[Prometheus and Grafana](../k8s/kube-prometheus-stack-install.md)**
 - Create **[counter](../volumes/go/tutorials/prometheus/counter/go-server-metrics.md)**
 - Create **[histogram](../volumes/go/tutorials/prometheus/histogram/histogram.md)** time-series data point for Prometheus to scrape
+- Use grafana with a **[mysql](https://www.techrepublic.com/article/how-to-connect-grafana-to-a-remote-mysql-database/)** data source
+
+![dashboard](../linux/grafana/dashboard.png)
 
 Notes from this meeting will be located at: ~/src/repsys/meeting/week48.md
 To get a fresh copy please run ~/freshstart.sh at a command prompt.
