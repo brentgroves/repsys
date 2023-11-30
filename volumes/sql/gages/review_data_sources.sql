@@ -13,10 +13,13 @@ Add a required date for past calibrations.
 -- G.Next_Calibration_Date, 
 -- G.Calibration_Frequency, 
 
+-- quality_v_gage_record:
+-- - add_date: what the next_calibration_date is based on.
+
 --Review our Plex views
 Gage_Record
 select top 1000 * from Quality_v_Gage_Record
--- Add Date = Record By Date/Date Added has time of day
+-- Add Date = Record By Date
 -- Return Date = Issue Date
 -- Record Date = Record Date
 -- Gage_Record_Type has table with Calibration flag
