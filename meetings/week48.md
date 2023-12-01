@@ -15,10 +15,14 @@
 
 - **[OpenStack](../linux/openstack/openstack-on-kubernetes.md)** on Kubernetes 
 
-
 Notes from this meeting will be located at: ~/src/repsys/meeting/week48.md
 To get a fresh copy please run ~/freshstart.sh at a command prompt.
 It can be viewed by logging into devcon2 as bcieslik,bcook,sjackson,cstangland,jdavis,or kyoung with password k8sAdmin1! and opening week48.md from visual studio code and pressing shift-ctrl-v
+
+## Grafana vs Power BI
+
+- Use Grafana for time series databases - PromQL time-series language
+- Use Power BI for SQL databases - TSQL for SQL databases
 
 ## Reference
 
