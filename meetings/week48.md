@@ -4,6 +4,7 @@
 
 - Install **[Prometheus and Grafana](../k8s/kube-prometheus-stack-install.md)**
 - Export, Scrape, and visualize **[metrics](../volumes/go/tutorials/prometheus/tutorials.md)**
+- Metric Alerts
 
 ![dashboard](../linux/grafana/dashboard.png)
 
