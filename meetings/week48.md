@@ -7,10 +7,13 @@
 
 ![dashboard](../linux/grafana/dashboard.png)
 
+- **[Backup and Restore  Prometheus](https://devopstales.github.io/kubernetes/backup-and-retore-prometheus/)**
+
 - **[Time Series Analysis](../linux/time-series-analysis/time-series-analysis.md)**
 - **[Grafana vs Power BI](https://www.metricfire.com/blog/grafana-vs-power-bi/)**
 
 - **[OpenStack](../linux/openstack/openstack-on-kubernetes.md)** on Kubernetes 
+
 
 Notes from this meeting will be located at: ~/src/repsys/meeting/week48.md
 To get a fresh copy please run ~/freshstart.sh at a command prompt.
