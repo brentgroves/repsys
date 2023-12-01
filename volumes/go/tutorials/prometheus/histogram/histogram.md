@@ -139,8 +139,7 @@ global:
 scrape_configs:
   - job_name: hist_app
     static_configs:
-      - targets:
-        - "application:8080"
+      - targets: ["localhost:8080"]
 ```
 
 ## test
