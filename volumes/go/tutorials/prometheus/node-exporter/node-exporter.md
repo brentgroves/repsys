@@ -20,10 +20,15 @@ The Prometheus Node Exporter is a single static binary that you can install via 
 ```bash
 # NOTE: Replace the URL with one from the above mentioned "downloads" page.
 # <VERSION>, <OS>, and <ARCH> are placeholders.
+pushd .
+cd ~
 wget https://github.com/prometheus/node_exporter/releases/download/v<VERSION>/node_exporter-<VERSION>.<OS>-<ARCH>.tar.gz
+wget https://github.com/prometheus/node_exporter/releases/download/v1.7.0/node_exporter-1.7.0.linux-amd64.tar.gz
 tar xvfz node_exporter-*.*-amd64.tar.gz
 cd node_exporter-*.*-amd64
 ./node_exporter
+# ./node_exporter --web.listen-address 127.0.0.1:8080
+
 ```
 
 You should see output like this indicating that the Node Exporter is now running and exposing metrics on port 9100:

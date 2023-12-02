@@ -231,12 +231,15 @@ The histogram_quantile operator calculates the φ-quantile (0 ≤ φ ≤ 1) from
 
 Examples
 histogram_quantile(.99)
+histogram_quantile(0.99, rate(histogram_metric_bucket[1m]))
 
 histogram_quantile(.5)
+histogram_quantile(0.5, rate(histogram_metric_bucket[1m]))
 
 The following PromQL query to measure the 99th quantile of the apiserver_request_latencies histogram:
 
 histogram_quantile(0.99, rate(apiserver_request_latencies_bucket{}[5m]))
+histogram_quantile(0.99, rate(histogram_metric_bucket[1m]))
 
 ## Summary <<--that's a Prometheus pun
 

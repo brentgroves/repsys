@@ -13,4 +13,4 @@
 
 - Visualize metrics with **[grafana](./counter/visualizing_metrics_using_grafana.md)**
 
-- **[Alert based on metrics](https://prometheus.io/docs/tutorials/alerting_based_on_metrics/)
+- **[Alert based on metrics](./alert_manager/alerting_based_on_metrics.md)
