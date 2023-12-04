@@ -19,6 +19,7 @@
 - Review Plex views you think you need becoming familiar with their data and how they are used in the **[time_off_review_plex_views.sql SPROC](../time_off/Scripts/time_off_review_data_sources.sql)**.
 - Describe the **[records](../time_off/Scripts/time_off_records.md)** you want on the report in detail.
 - Create the **[final key set](../time_off/Scripts/time_off_final_key_set.sql)** for the report in a CTE view chain in the time_off_final_key_set.sql SPROC. Only include primary keys or keys necessary to join to other Plex views. The fields used to display on the report will be added during the very last step in the process.  This will make for a faster query and help you focus the task at hand and not the final result.
+- List a description of the columns needed on each record of the final key set.
 - Describe what aggregate values you wish to calculate and display along with each record in the final key set
 - Move the final key set CTE view chain into a new Plex SDE SPROC called **[time_off_hours_aggregate.sql](../time_off/Scripts/time_off_hours_aggregate.sql)**.
 - Calculate the needed aggregate values in more views appended to the final key set view chain. Again only add the primary keys and any necessary fields that you must in order to calculate the aggregate function(s).
