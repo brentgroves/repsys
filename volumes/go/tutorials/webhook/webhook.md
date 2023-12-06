@@ -152,7 +152,7 @@ To make things easier and simple we will use Docker for this project. We will ha
 - webhook: the name of the service written in Golang. We will build an application that listens to data coming from a Redis channel and then process the payload and send it to the URL passed in the payload. As we are dealing with HTTP requests and we understand that other services can be unavailable, we will implement a retry mechanism (exponential backoff) and make it robust using Golang queues. The setup will take some time so I will advise just to clone the base of the project using this command :
 
 ```bash
-git clone --branch base <https://github.com/koladev32/golang-wehook.git>
+git clone --branch base https://github.com/koladev32/golang-wehook.git
 ```
 
 This will clone the base branch of the project that already comes with a working Flask project and docker-compose.yaml file.
@@ -204,3 +204,157 @@ def payment():
 if __name__ == '__main__':  
     app.run(host='0.0.0.0', port=8000)
 ```
+
+First, we are creating a function that will generate a random payload called get_payment. This function will return a random payload with the following structure:
+
+```json
+{
+    "url": "http://example.com/webhook",
+    "webhookId": "52d2fc2c7f25454c8d6f471a22bdfea9",
+    "data": {
+        "id": "97caab9b6f924f13a94b23a960b2fff2",
+        "payment": "PY-QZPCQ",
+        "event": "accepted",
+        "date": "13/08/2023, 00:03:46"
+    }
+}
+```
+
+After that, we initialize the connection to the Redis using the REDIS_ADDRESS environment variable.
+
+```python
+...
+
+redis_address = os.getenv("REDIS_ADDRESS", "")  
+host, port = redis_address.split(":")  
+port = int(port)  
+# Create a connection to the Redis server  
+redis_connection = redis.StrictRedis(host=host, port=port)  
+
+...
+```
+
+The redis_address is split because the REDIS_ADDRESS will normally look like this localhost:6379 or redis:6379 (if we are using Redis containers). After that, we have the route handler function payment that sends a random payload webhook_payload_json formatted with the json.dumps method, through the Redis channel called payments, and then return the random payload.
+
+This is a simple implementation of a Payment API gateway or just to put it simply a Mock. Now that we understand the base of the project, let's quickly discuss the architecture of the solution, and the implementation of some concepts to make it robust. We will discuss their drawbacks at the end of the article.
+
+## The architecture of the solution
+
+The architecture of the solution is quite simple:
+
+- We have an API that acts as a Payment Gateway. A request on the endpoint of this API will return a payload but this payload is also sent through a Redis channel called payments. Thus all services listening to this channel will receive the data sent.
+- We then have the webhook service written in Golang. This service listens to the payments Redis channel. If data is received, the payload is formatted to be sent to the URL indicated on the payload. If the request fails due to timeout or any other errors, there is a retry mechanism using Golang channel queuing and exponential backoff to retry the request.
+
+## Writing the Golang service
+
+We will write the logic of the webhook service using Golang in the webhook directory. Here is the structure we will attain at the end of this section.
+
+```tree
+webhook
+├── Dockerfile          # Defines the Docker container for the project
+├── go.mod              # Module dependencies file for the Go project
+├── go.sum              # Contains the expected cryptographic checksums of the content of specific module versions
+├── main.go             # Main entry point for the application
+├── queue
+│   └── worker.go       # Contains the logic for queuing and processing tasks
+├── redis
+│   └── redis.go        # Handles the connection and interaction with Redis
+├── sender
+    └── webhook.go      # Responsible for sending the webhook reque
+```
+
+Let's start by creating the Go project.
+
+```bash
+go mod init .
+```
+
+To create a go project, you can use the go mod init name-of-the-project. In our case, adding the dot . at the end of the command tells Go to use the name of the directory as the name of the module.
+
+Once the module is created, let's install the required dependencies such as redis.
+
+```bash
+go get github.com/go-redis/redis/v8
+```
+
+## Adding webhook sending logic
+
+Starting a bit unconventionally, we'll first write the webhook sending logic. Since we're using Golang queuing, and to streamline the development process, we'll begin by adding the system's first dependency: the function to send the webhook.
+
+```bash
+mkdir sender && cd sender
+touch webhook.go
+```
+
+Inside the newly created file, let's add the required naming and imports and structs.
+
+```go
+package sender  
+
+import (  
+   "bytes"  
+   "encoding/json"  
+   "errors"  
+   "io"  
+   "log"  
+   "net/http"  
+)  
+
+// Payload represents the structure of the data expected to be sent as a webhook  
+type Payload struct {  
+   Event   string  
+   Date    string  
+   Id      string  
+   Payment string  
+}
+```
+
+Next, let's create a function SendWebhook that will send a JSON POST request to an URL.
+
+```go
+// SendWebhook sends a JSON POST request to the specified URL and updates the event status in the database  
+func SendWebhook(data interface{}, url string, webhookId string) error {  
+   // Marshal the data into JSON  
+   jsonBytes, err := json.Marshal(data)  
+   if err != nil {  
+      return err  
+   }  
+
+   // Prepare the webhook request  
+   req, err := http.NewRequest("POST", url, bytes.NewBuffer(jsonBytes))  
+   if err != nil {  
+      return err  
+   }  
+   req.Header.Set("Content-Type", "application/json")  
+
+   // Send the webhook request  
+   client := &http.Client{}  
+   resp, err := client.Do(req)  
+   if err != nil {  
+      return err  
+   }  
+   defer func(Body io.ReadCloser) {  
+      if err := Body.Close(); err != nil {  
+         log.Println("Error closing response body:", err)  
+      }  
+   }(resp.Body)  
+
+   // Determine the status based on the response code  
+   status := "failed"  
+   if resp.StatusCode == http.StatusOK {  
+      status = "delivered"  
+   }  
+
+   log.Println(status)  
+
+   if status == "failed" {  
+      return errors.New(status)  
+   }  
+
+   return nil  
+}
+```
+
+## Start here
+
+<https://stackoverflow.com/questions/45751608/why-is-http-client-prefixed-with>
