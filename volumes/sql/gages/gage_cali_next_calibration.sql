@@ -12,7 +12,7 @@ order by g.plexus_customer_no,g.gage_no,gr.record_date desc
 ,g.gage_no
 ,gr.record_date actual_calibration
 ,g.calibration_frequency freq
-,DATEADD(day, 365, gr.record_date) next_calibration_required
+,DATEADD(day, g.calibration_frequency, gr.record_date) next_calibration_required
 from quality_v_gage g
 join quality_v_gage_record gr
 on g.plexus_customer_no= gr.plexus_customer_no

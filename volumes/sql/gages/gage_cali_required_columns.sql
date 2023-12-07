@@ -3,7 +3,7 @@
 -- gage_id
 -- calibration_frequency, 
 -- last_calibration_date_required: calculated from quality_v_gage_record.add_date and quality_v_gage.calibration_frequency (required calibration frequency in days)	
-
+-- Gage ID	Brand	Gage Type	Description	Status	Mfg Serial No	Location	User	Note	Calibration	Next Calibration Date
 select top 10 g.plexus_customer_no,g.gage_no,g.gage_id,
 gr.record_date,g.calibration_frequency, 
 --SELECT DATEADD(year, 1, '2017/08/25') AS DateAdd;

@@ -13,6 +13,26 @@ Notes from this meeting will be located at: ~/src/repsys/volumes/sql/gages/meeti
 To get a fresh copy please run ~/freshstart.sh at a command prompt.
 It can be viewed by logging into devcon2 as bcieslik,bcook,sjackson,cstangland,jdavis,or kyoung with password k8sAdmin1! and opening meeting1.md from visual studio code and pressing shift-ctrl-v
 
+## Meeting Notes
+
+Kevin talked about hypervisors. Sam talked about recursive functions.  I talked about different smoothing (averaging) techniques. Was going to ask you to talk a little about the rank function or some other cool topic.
+
+## Smoothing techniques reference
+
+**[How to compute MA in SQL](https://learnsql.com/blog/moving-average-in-sql/)**
+
+```sql
+select *,
+  avg(Price) OVER(ORDER BY Date
+     ROWS BETWEEN 2 PRECEDING AND CURRENT ROW )
+     as moving_average
+from stock_price;
+```
+
+<https://www.itl.nist.gov/div898/handbook/pmc/section4/pmc42.htm>
+
+## What are Moving Average
+
 **[How to compute MA in SQL](https://learnsql.com/blog/moving-average-in-sql/)**
 
 ```sql
