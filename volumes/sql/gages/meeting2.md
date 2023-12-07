@@ -1,7 +1,8 @@
 # gage report
 
-## topics
+## Gage report and plex admin, Intelliplex, or SQL tech share from anyone
 
+- Plex admin, Intelliplex, or SQL tech share from anyone
 - **[final_key_set](./gage_cali_final_key_set.sql)**
 - **[required columns](./gage_cali_required_columns.sql)**
 - **[Ask Sam to go over his recursive function](./sj_get_gage2.sql)**
