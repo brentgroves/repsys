@@ -266,7 +266,9 @@ webhook
 Let's start by creating the Go project.
 
 ```bash
-go mod init .
+pushd .
+cd ~/src/repsys/volumes/go/tutorials/webhook/webhook
+go mod init webhook
 ```
 
 To create a go project, you can use the go mod init name-of-the-project. In our case, adding the dot . at the end of the command tells Go to use the name of the directory as the name of the module.
@@ -354,6 +356,62 @@ func SendWebhook(data interface{}, url string, webhookId string) error {
    return nil  
 }
 ```
+
+Let's explain what is hapenning here.
+
+1. Marshal the Data into JSON: The data passed to the function is marshaled into a JSON byte array. If there's an error during this process, it returns the error.
+
+```golang
+   jsonBytes, err := json.Marshal(data)
+   if err != nil {
+       return err
+   }
+```
+
+- Prepare the Webhook Request: A new HTTP POST request is created with the JSON data as the body. The "Content-Type" header is set to application/json.
+
+```golang
+    req, err := http.NewRequest("POST", url, bytes.NewBuffer(jsonBytes))
+    if err != nil {
+    return err
+    }
+    req.Header.Set("Content-Type", "application/json")
+```
+
+- Send the Webhook Request: An HTTP client sends the prepared request. If there's an error sending the request, it returns the error. The response body is also deferred to close after processing.
+
+```golang
+    client := &http.Client{}
+    resp, err := client.Do(req)
+    if err != nil {
+        return err
+    }
+    defer func(Body io.ReadCloser) {
+        if err := Body.Close(); err != nil {
+            log.Println("Error closing response body:", err)
+        }
+    }(resp.Body)
+```
+
+- Determine the Status Based on the Response Code: The status of the webhook is determined based on the HTTP response code. If the status code is 200 (OK), the status is set to "delivered"; otherwise, it's set to "failed", then an error is returned with the status code.
+
+```golang
+...
+status := "failed"
+if resp.StatusCode == http.StatusOK {
+    status = "delivered"
+}
+log.Println(status)
+if status == "failed" {
+    return errors.New(status)
+}
+...
+
+```
+
+- Return Success: If everything is successful, the function returns nil, indicating that the webhook was sent successfully.
+
+This is the logic for sending the request. Nothing yet complicated yet, but we are getting into the juiciest parts 🤫. Let's add the package to handle listening to the payments Redis channel.
 
 ## Start here
 
