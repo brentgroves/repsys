@@ -315,6 +315,7 @@ Next, let's create a function SendWebhook that will send a JSON POST request to 
 
 ```go
 // SendWebhook sends a JSON POST request to the specified URL and updates the event status in the database  
+// An interface variable can hold values of any type that provides methods with the signatures from the interface declaration. Since interface{} doesn't specify any methods, such a variable can store values of any type.1
 func SendWebhook(data interface{}, url string, webhookId string) error {  
    // Marshal the data into JSON  
    jsonBytes, err := json.Marshal(data)  
@@ -330,6 +331,8 @@ func SendWebhook(data interface{}, url string, webhookId string) error {
    req.Header.Set("Content-Type", "application/json")  
 
    // Send the webhook request  
+   // we don't want another copy of Client but just an easier
+   // way to call it.
    client := &http.Client{}  
    resp, err := client.Do(req)  
    if err != nil {  
@@ -412,6 +415,10 @@ if status == "failed" {
 - Return Success: If everything is successful, the function returns nil, indicating that the webhook was sent successfully.
 
 This is the logic for sending the request. Nothing yet complicated yet, but we are getting into the juiciest parts 🤫. Let's add the package to handle listening to the payments Redis channel.
+
+## Listening to the Redis channel
+
+Another important aspect of the webhook service is that it should be actively listening to the payments Redis channel. It is the concept of the pub/sub feature of Redis. The Flask service publishes data into a channel, then all services subscribed to this channel receive the data.
 
 ## Start here
 

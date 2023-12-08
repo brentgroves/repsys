@@ -7,8 +7,10 @@
 ## Webhooks
 
 - The Report Requestor Web App subscribes to a user channel through a websocket.
+- The Report Requestor API publishes the report request on the Redis TB channel.
+- The Report Runner, which subscribes to the Redis TB channel, recieves the TB request and runs them in order using the TB GoRoutine thread.
 - The Report Runner calls the Report Requestor's webhook with the report result as a payload.
-- The Report Requestor API publishes the report result to the the appropriate user channel thereby notifying the customer to the results of there report request.
+- The Report Requestor API publishes the report result to the the appropriate websocket user channel thereby notifying the customer through the Report Requestor Web App to the results of thier report request.
 
 Here's a diagram representing the restaurant analogy for queuing with channels in Golang:
 
