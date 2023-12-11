@@ -18,6 +18,79 @@ It can be viewed by logging into devcon2 as bcieslik,bcook,sjackson,cstangland,j
 - **[Time Series Analysis](../linux/time-series-analysis/time-series-analysis.md)**
 - **[Grafana vs Power BI](https://www.metricfire.com/blog/grafana-vs-power-bi/)**
 - **[OpenStack](../linux/openstack/openstack-on-kubernetes.md)** on Kubernetes 
+- **[JuJu](https://juju.is/docs/juju)**
+
+## Multipass
+
+https://multipass.run/docs#:~:text=Multipass%20is%20a%20tool%20to,your%20own%20local%20mini%2Dcloud.
+
+Multipass is a tool to generate cloud-style Ubuntu VMs quickly on Linux, macOS, and Windows. It gives you a simple but powerful CLI that allows you to quickly access an Ubuntu command line or create your own local mini-cloud.
+
+Cloud-style VMs at your fingertips
+Spin up cloud instances with a single command
+
+Launch instances of Ubuntu and initialise them with cloud-init metadata in the same way you would on AWS, Azure, Google, IBM and Oracle. Simulate your own cloud deployment on your workstation.
+
+## JuJu
+
+JuJu manages the life-cycle of software deployed to public clouds using charms.
+
+### Juju supports all of the following clouds
+
+Amazon EC2
+Amazon EKS
+Equinix Metal
+Google GCE
+Google GKE
+LXD
+MAAS
+Manual
+MicroK8s
+Microsoft Azure
+Microsoft AKS
+OpenStack (see also the OpenStack website; or MicroStack)
+Oracle OCI
+VMware vSphere
+
+https://juju.is/docs/juju/tutorial
+
+- Use Multipass to launch an Ubuntu VM with the charm-dev blueprint
+
+```bash
+multipass launch --cpus 4 --memory 8G --disk 30G --name tutorial-vm charm-dev
+```
+
+Use multipass shell tutorial-vm to open a shell into the VM. Sample session:
+
+```bash
+$ multipass shell tutorial-vm
+```
+Your VM comes with MicroK8s preinstalled.
+Your VM comes with the Juju CLI client preinstalled.
+
+Add your cloud definition to Juju
+Juju has automatically used your MicroK8s’s .kube/config file to define a cloud called microk8s.
+
+Run juju clouds to verify. Sample session:
+
+```bash
+ubuntu@tutorial-vm:~$ juju clouds
+Only clouds with registered credentials are shown.
+There are more clouds, use --all to see them.
+
+Clouds available on the controller:
+Cloud     Regions  Default    Type
+microk8s  1        localhost  k8s  
+
+Clouds available on the client:
+Cloud      Regions  Default    Type  Credentials  Source    Description
+localhost  1        localhost  lxd   1            built-in  LXD Container Hypervisor
+microk8s   1        localhost  k8s   1            built-in  A Kubernetes Cluster
+
+```
+
+LXD is a system container and virtual machine manager
+
 
 
 ## Grafana vs Power BI
