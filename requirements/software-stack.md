@@ -21,3 +21,4 @@ In-house software:
 - Report requestor web app
 - Report requestor RESTful API
 - Report runner
+- SMTP Server
