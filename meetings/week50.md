@@ -9,18 +9,22 @@
 
 ![dashboard](../linux/grafana/dashboard.png)
 
-Notes from this meeting will be located at: ~/src/repsys/meeting/week50.md
-To get a fresh copy please run ~/freshstart.sh at a command prompt.
-It can be viewed by logging into devcon2 as bcieslik,bcook,sjackson,cstangland,jdavis,or kyoung with password k8sAdmin1! and opening week50.md from visual studio code and pressing shift-ctrl-v
+About Friday's meeting,
 
-- Sam something about Mach2 or Kep ServerEx
-- Brendan anything you want :-)
-- Brent Web Hooks
+Hi guys.  I'm hoping we can have some fun in this meeting!  If there is any tech or thoughts about current trends you could share I'm sure it would be appreciated by the group, but no pressure if you would rather not :-)
+
+- Sam something about Mach2 or Kep ServerEx if you want :-)
+- Brendan something about Microsoft server admin or anything you want :-)
+- Brent Web Hooks example to be used in the report system.
 - Can Open Source compete in server arena? Dell needs to make money so Microsoft Server hardware drivers will work first, then VMWare ESXi, Red Hat, SuSu Novell, and finally debian Canonical.
 - What is the main Open Source project competing in the server/cloud arena?
 OpenStack 3rd most popular Open Source project. With the great help of Carl and Jared I'm attempting to install Canonical's implementation on Dell PowerEdge R620s.
 - Data analysis used in reporting can drive business decisions.  What should I learn?  Study statistics, Microsoft PowerBI, IBM SPSS, R, and Python.
 - New data analysis and machine learning ideas are available first in R and is used more in acedemics but Python is also greatly used and has the advantage of being a general purpose language which is easier to make software with.  
+
+Notes from this meeting will be located at: ~/src/repsys/meeting/week50.md
+To get a fresh copy please run ~/freshstart.sh at a command prompt.
+It can be viewed by logging into devcon2 as bcieslik,bcook,sjackson,cstangland,jdavis,or kyoung with password k8sAdmin1! and opening week50.md from visual studio code and pressing shift-ctrl-v
 
 - **[Backup and Restore  Prometheus](https://devopstales.github.io/kubernetes/backup-and-retore-prometheus/)**
 - **[Time Series Analysis](../linux/time-series-analysis/time-series-analysis.md)**
