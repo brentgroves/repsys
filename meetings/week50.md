@@ -13,6 +13,13 @@ Notes from this meeting will be located at: ~/src/repsys/meeting/week50.md
 To get a fresh copy please run ~/freshstart.sh at a command prompt.
 It can be viewed by logging into devcon2 as bcieslik,bcook,sjackson,cstangland,jdavis,or kyoung with password k8sAdmin1! and opening week50.md from visual studio code and pressing shift-ctrl-v
 
+- Sam something about Mach2 or Kep ServerEx
+- Brendan anything you want :-)
+- Brent Web Hooks
+- Can Open Source compete in server arena? Dell needs to make money so Microsoft Server drivers will work first, then VMWare ESXi, Red Hat, SuSu Novell, and finally debian Canonical.
+- What is the main Open Source project competing in the server/cloud arena.
+OpenStack 3rd most popular Open Source project.
+- Statistics used in reporting can drive business decisions.  Which system should I learn?  Study statistics, Microsoft PowerBI, IBM SPSS, R, and Python.
 
 - **[Backup and Restore  Prometheus](https://devopstales.github.io/kubernetes/backup-and-retore-prometheus/)**
 - **[Time Series Analysis](../linux/time-series-analysis/time-series-analysis.md)**

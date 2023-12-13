@@ -6,6 +6,7 @@ Third party software:
 
 - OpenStack
 - Kubernetes
+- Nginx Ingress Controller
 - Ceph
 - MinIO
 - Prometheus
