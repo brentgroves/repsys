@@ -16,10 +16,11 @@ It can be viewed by logging into devcon2 as bcieslik,bcook,sjackson,cstangland,j
 - Sam something about Mach2 or Kep ServerEx
 - Brendan anything you want :-)
 - Brent Web Hooks
-- Can Open Source compete in server arena? Dell needs to make money so Microsoft Server drivers will work first, then VMWare ESXi, Red Hat, SuSu Novell, and finally debian Canonical.
-- What is the main Open Source project competing in the server/cloud arena.
-OpenStack 3rd most popular Open Source project.
-- Statistics used in reporting can drive business decisions.  Which system should I learn?  Study statistics, Microsoft PowerBI, IBM SPSS, R, and Python.
+- Can Open Source compete in server arena? Dell needs to make money so Microsoft Server hardware drivers will work first, then VMWare ESXi, Red Hat, SuSu Novell, and finally debian Canonical.
+- What is the main Open Source project competing in the server/cloud arena?
+OpenStack 3rd most popular Open Source project. With the great help of Carl and Jared I'm attempting to install Canonical's implementation on Dell PowerEdge R620s.
+- Data analysis used in reporting can drive business decisions.  What should I learn?  Study statistics, Microsoft PowerBI, IBM SPSS, R, and Python.
+- New data analysis and machine learning ideas are available first in R and is used more in acedemics but Python is also greatly used and has the advantage of being a general purpose language which is easier to make software with.  
 
 - **[Backup and Restore  Prometheus](https://devopstales.github.io/kubernetes/backup-and-retore-prometheus/)**
 - **[Time Series Analysis](../linux/time-series-analysis/time-series-analysis.md)**
