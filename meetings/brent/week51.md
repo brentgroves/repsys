@@ -1,16 +1,22 @@
-# Azure services
+# Mobex report summary
 
 This is a markdown file if it looks a little strange. You could use visual studio code or an online viewer such as <https://dillinger.io/>
 
+We use IntelliPlex/Web Focus to create Plex dashboards and data warehouses for long-running, multiple data sources, or reports requiring live data.
+
+## Goal
+
+I am hoping we can use data science to give our decision-makers focused information that they can act on.
+
 ## Is IntelliPlex/Web Focus designed for data science tasks?
 
-When you study data science the following software is mentioned alot:
+When you study data science the following software is mentioned a lot:
 
 Minitab, SPSS, PowerBI, R, Python
 
 In traditional reporting managers look at dashboards to get an overview of the business.
 
-In data science time series data is collected to make forcasts and answer questions.
+In data science time series data is collected to make forecasts and answer questions.
 
 We all have seen traditional dashboards so let's instead look at an example of how to use data science software.
 
@@ -29,26 +35,26 @@ docker compose up
 
 ## Report system
 
-The report system is meant to give customers the ability run reports using data residing in our data warehouses.  Rather than running reports from individual databases, we use ETL scripts to pull data into our data warehouses so that we can have all the data in one place. Non ERP data sources include tooling inventory and usage data collected by our MSC vending machines and tool life data collected from UDP servers attached to our CNC.  The tool life data collection process was successfully created and tested but has not been put into production as of yet.  It will require a possible vlan for our Okuma CNC, Moxa UDP servers, and small network swithes or multiplexors at each cell.
+The reporting system is meant to give customers the ability to run reports using data residing in our data warehouses.  Rather than running reports from individual databases, we use ETL scripts to pull data into our data warehouses so that we can have all the data in one place. Non-ERP data sources include tooling inventory and usage data collected by our MSC vending machines and tool life data collected from UDP servers attached to our CNC.  The tool life data collection process was successfully created and tested but has not been put into production as of yet.  It will require a possible vlan for our Okuma CNC, Moxa UDP servers, and small network switches or multiplexors at each cell.
 
-## Show example of an ETL script
+## Show an example of an ETL script
 
 Run the TB report
 
 ## Azure services and options
 
-Only use this for PowerBI to be able to access our data.  A more cost effective alternative it put our Postgres and MySQL data warehouse in our DMZ.
+Only use this for PowerBI to be able to access our data.  A more cost-effective alternative it put our Postgres and MySQL data warehouse in our DMZ.
 
 - Azure SQL Server **[managed instance](https://intercept.cloud/en/news/azure-sql-sql-managed-instance-or-sql-server/)**
 - Azure **[Managed Kubernetes service](https://azure.microsoft.com/en-us/products/kubernetes-service)**
 - Azure App registration
-- PowerBI tabulated report license in addition to reqular license
+- PowerBI tabulated report license in addition to regular license
 
 ## Software Stack
 
 This list of software is mostly running on a Kubernetes Cluster.
 
-Third party software:
+Third-party software:
 
 - OpenStack
 - Kubernetes
