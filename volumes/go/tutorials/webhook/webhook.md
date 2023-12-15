@@ -630,6 +630,8 @@ Let's understand the code above. The function called ProcessWebhooks takes a Go 
 
 - First, we loop through the list of items in the webhookQueue channel. As long there will be items in the list, we will keep processing the data.
 
+<https://gobyexample.com/range-over-channels>
+
 ```go
 for payload := range webhookQueue {
     // processing code
@@ -849,6 +851,13 @@ REDIS_ADDRESS=redis:6379
 WEBHOOK_ADDRESS=<WEBHOOK_ADDRESS>
 ```
 
+Replace <WEBHOOK_ADDRESS> with the webhook URL provided by <https://webhook.site>.
+
+Then, build and start the container with docker compose up -d --build.
+
+Once the build is finished, you can use the docker compose logs -f command to track the logs of the webhook service.
+
 ## Start here
 
+<https://dev.to/koladev/building-a-robust-webhook-server-with-golang-a-comprehensive-guide-4oa0>
 <https://stackoverflow.com/questions/45751608/why-is-http-client-prefixed-with>

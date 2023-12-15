@@ -10,6 +10,7 @@ import (
 )
 
 func ProcessWebhooks(ctx context.Context, webhookQueue chan redisClient.WebhookPayload) {
+	// https://gobyexample.com/range-over-channels
 	for payload := range webhookQueue {
 		go func(p redisClient.WebhookPayload) {
 			// https://stackoverflow.com/questions/41503758/conversion-of-time-duration-type-microseconds-value-to-milliseconds/41503910#41503910
