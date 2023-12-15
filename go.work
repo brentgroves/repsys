@@ -8,4 +8,5 @@ use (
 	./volumes/go/tutorials/database/mysql/prepared_statement
 	./volumes/go/tutorials/database/mysql/query
 	./volumes/go/tutorials/prometheus/counter
+	./volumes/go/tutorials/webhook/webhook
 )

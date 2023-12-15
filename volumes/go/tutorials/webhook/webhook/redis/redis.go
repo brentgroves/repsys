@@ -23,6 +23,7 @@ type WebhookPayload struct {
 
 // Subscribe subscribes to the "webhooks" channel in Redis, listens for messages,
 // unmarshals them into the WebhookPayload type, and sends them to the specified URL.
+// Context provides a mechanism to control the lifecycle, cancellation, and propagation of requests across multiple goroutines
 func Subscribe(ctx context.Context, client *redis.Client, webhookQueue chan WebhookPayload) error {
 	// Subscribe to the "webhooks" channel in Redis
 	pubSub := client.Subscribe(ctx, "payments")

@@ -320,7 +320,7 @@ Next, let's create a function SendWebhook that will send a JSON POST request to 
 
 ```go
 // SendWebhook sends a JSON POST request to the specified URL and updates the event status in the database  
-// An interface variable can hold values of any type that provides methods with the signatures from the interface declaration. Since interface{} doesn't specify any methods, such a variable can store values of any type.1
+// An interface variable can hold values of any type that provides methods with the signatures from the interface declaration. Since interface{} doesn't specify any methods, such a variable can store values of any type.
 func SendWebhook(data interface{}, url string, webhookId string) error {  
    // Marshal the data into JSON  
    jsonBytes, err := json.Marshal(data)  

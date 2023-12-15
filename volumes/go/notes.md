@@ -133,16 +133,18 @@ git push origin main
 
 this helps the tooling and vscode to keep track of all your modules
 <https://go.dev/doc/tutorial/workspaces>
-pushd ~/src/reports
+pushd ~/src/repsys
 go work init ./volume/go/hello
 go work use ./volume/go/greetings  
 go work use ./volume/go/replib
+go work use ./volume/go/greetings  
+go work use ./volumes/go/tutorials/webhook/webhook
 
-# cant add other main packages
+## cant add other main packages
 
 go work use ./volume/go/channels/simple  
 
-# run main
+## run main
 
 pushd /home/brent/src/reports/volume/go/hello
 go run .

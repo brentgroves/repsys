@@ -4,6 +4,10 @@
 
 ![dashboard](../linux/grafana/dashboard.png)
 
+Summary,
+
+Sam talked about KepServerEx and Mach2, Brenden talked about Microsoft deployment service, and Robert Decker joined our meeting.
+
 About Friday's meeting,
 
 Hi guys.  I'm hoping we can have some fun in this meeting!  If there is any tech or thoughts about current trends you could share I'm sure it would be appreciated by the group, but no pressure if you would rather not :-)
