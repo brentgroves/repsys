@@ -2,11 +2,6 @@
 
 ## Report System and IT Admin, Hardware, or Software Topics
 
-- Share anything related to IT Admin, hardware, or software with group
-- Install **[Prometheus and Grafana](../k8s/kube-prometheus-stack-install.md)**
-- Export, Scrape, and visualize **[metrics](../volumes/go/tutorials/prometheus/tutorials.md)** example
-- Metric Alerts
-
 ![dashboard](../linux/grafana/dashboard.png)
 
 About Friday's meeting,
@@ -15,7 +10,8 @@ Hi guys.  I'm hoping we can have some fun in this meeting!  If there is any tech
 
 - Sam something about Mach2 or Kep ServerEx if you want :-)
 - Brendan something about Microsoft server admin or anything you want :-)
-- Brent Web Hooks example to be used in the report system.
+- Brent G. Web Hooks **[example](../volumes/go/tutorials/webhook/webhook.md)** to be used in the report system. In setting up the report systems observability software I came across the need to understand webhooks. Prometheus rules can be created to monitor data points from our applications.  When a rule condition is satisfied for example the number of http requests exceeds a certain rate then a webhook is called.  The webhook listener can then increase the number of web app instances running in our k8s, send an email, or whatever other action is required.
+
 - Can Open Source compete in server arena? Dell needs to make money so Microsoft Server hardware drivers will work first, then VMWare ESXi, Red Hat, SuSu Novell, and finally debian Canonical.
 - What is the main Open Source project competing in the server/cloud arena?
 OpenStack 3rd most popular Open Source project. With the great help of Carl and Jared I'm attempting to install Canonical's implementation on Dell PowerEdge R620s.
@@ -26,15 +22,20 @@ Notes from this meeting will be located at: ~/src/repsys/meeting/week50.md
 To get a fresh copy please run ~/freshstart.sh at a command prompt.
 It can be viewed by logging into devcon2 as bcieslik,bcook,sjackson,cstangland,jdavis,or kyoung with password k8sAdmin1! and opening week50.md from visual studio code and pressing shift-ctrl-v
 
+- Share anything related to IT Admin, hardware, or software with group
+- Install **[Prometheus and Grafana](../k8s/kube-prometheus-stack-install.md)**
+- Export, Scrape, and visualize **[metrics](../volumes/go/tutorials/prometheus/tutorials.md)** example
+- Metric Alerts
+
 - **[Backup and Restore  Prometheus](https://devopstales.github.io/kubernetes/backup-and-retore-prometheus/)**
 - **[Time Series Analysis](../linux/time-series-analysis/time-series-analysis.md)**
 - **[Grafana vs Power BI](https://www.metricfire.com/blog/grafana-vs-power-bi/)**
-- **[OpenStack](../linux/openstack/openstack-on-kubernetes.md)** on Kubernetes 
+- **[OpenStack](../linux/openstack/openstack-on-kubernetes.md)** on Kubernetes
 - **[JuJu](https://juju.is/docs/juju)**
 
 ## Multipass
 
-https://multipass.run/docs#:~:text=Multipass%20is%20a%20tool%20to,your%20own%20local%20mini%2Dcloud.
+<https://multipass.run/docs#:~:text=Multipass%20is%20a%20tool%20to,your%20own%20local%20mini%2Dcloud>.
 
 Multipass is a tool to generate cloud-style Ubuntu VMs quickly on Linux, macOS, and Windows. It gives you a simple but powerful CLI that allows you to quickly access an Ubuntu command line or create your own local mini-cloud.
 
@@ -64,7 +65,7 @@ OpenStack (see also the OpenStack website; or MicroStack)
 Oracle OCI
 VMware vSphere
 
-https://juju.is/docs/juju/tutorial
+<https://juju.is/docs/juju/tutorial>
 
 - Use Multipass to launch an Ubuntu VM with the charm-dev blueprint
 
@@ -75,8 +76,9 @@ multipass launch --cpus 4 --memory 8G --disk 30G --name tutorial-vm charm-dev
 Use multipass shell tutorial-vm to open a shell into the VM. Sample session:
 
 ```bash
-$ multipass shell tutorial-vm
+multipass shell tutorial-vm
 ```
+
 Your VM comes with MicroK8s preinstalled.
 Your VM comes with the Juju CLI client preinstalled.
 
@@ -102,8 +104,6 @@ microk8s   1        localhost  k8s   1            built-in  A Kubernetes Cluster
 ```
 
 LXD is a system container and virtual machine manager
-
-
 
 ## Grafana vs Power BI
 

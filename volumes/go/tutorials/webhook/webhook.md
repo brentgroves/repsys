@@ -85,6 +85,11 @@ In the context of building a webhook service, Golang's strengths in concurrency,
 Goroutines: Golang concurrency on steroids
 Goroutines can be likened to supercharged threads but much lighter. They allow functions to run concurrently with others, enabling efficient multitasking.
 
+Rob Pike:
+don't (let computations) communicate by sharing memory, (let them) share memory by communicating (through channels).
+
+Go provides a unique concurrency synchronization technique, channel. Channels make goroutines share memory by communicating. We can view a channel as an internal FIFO (first in, first out) queue within a program. Some goroutines send values to the queue (the channel) and some other goroutines receive values from the queue.
+
 To better understand Golang, here is a simple analogy.
 
 Imagine a large restaurant during peak dining hours. In a traditional threading model, you might have a few waiters (threads) responsible for taking orders, serving food, and handling payments. If the restaurant is packed, these waiters might become overwhelmed, leading to slow service and unhappy customers. Now, consider the goroutine model in this restaurant scenario.
@@ -419,6 +424,430 @@ This is the logic for sending the request. Nothing yet complicated yet, but we a
 ## Listening to the Redis channel
 
 Another important aspect of the webhook service is that it should be actively listening to the payments Redis channel. It is the concept of the pub/sub feature of Redis. The Flask service publishes data into a channel, then all services subscribed to this channel receive the data.
+
+In the root of the webhook directory project, create a new directory called redis. Inside this directory created a new file called redis.go. This file will contain the logic that will subscribe and listen to incoming data in the payments channel but also format the payload, and send it to a Golang queue channel.
+
+```go
+package redis  
+
+import (  
+   "context"  
+   "encoding/json"  
+   "log"  
+
+   "github.com/go-redis/redis/v8"  
+)  
+
+// WebhookPayload defines the structure of the data expected  
+// to be received from Redis, including URL, Webhook ID, and relevant data.  
+// The content inside the backticks are tags:
+
+// A field declaration may be followed by an optional string literal tag, which becomes an attribute for all the fields in the corresponding field declaration. The tags are made visible through a reflection interface and take part in type identity for structs but are otherwise ignored.
+
+type WebhookPayload struct {  
+   Url       string `json:"url"`  
+   WebhookId string `json:"webhookId"`  
+   Data      struct {  
+      Id      string `json:"id"`  
+      Payment string `json:"payment"`  
+      Event   string `json:"event"`  
+      Date    string `json:"created"`  
+   } `json:"data"`  
+}
+```
+
+Let's write the Subscribe function.
+
+Rob Pike:
+don't (let computations) communicate by sharing memory, (let them) share memory by communicating (through channels).
+
+Go provides a unique concurrency synchronization technique, channel. Channels make goroutines share memory by communicating. We can view a channel as an internal FIFO (first in, first out) queue within a program. Some goroutines send values to the queue (the channel) and some other goroutines receive values from the queue.
+
+```golang
+func Subscribe(ctx context.Context, client *redis.Client, webhookQueue chan WebhookPayload) error {  
+   // Subscribe to the "webhooks" channel in Redis  
+   pubSub := client.Subscribe(ctx, "payments")  
+
+   // Ensure that the PubSub connection is closed when the function exits  
+   defer func(pubSub *redis.PubSub) {  
+      if err := pubSub.Close(); err != nil {  
+         log.Println("Error closing PubSub:", err)  
+      }  
+   }(pubSub)  
+
+   var payload WebhookPayload  
+
+   // Infinite loop to continuously receive messages from the "webhooks" channel  
+   for {  
+      // Receive a message from the channel  
+      msg, err := pubSub.ReceiveMessage(ctx)  
+      if err != nil {  
+         return err // Return the error if there's an issue receiving the message  
+      }  
+
+      // Unmarshal the JSON payload into the WebhookPayload structure  
+      err = json.Unmarshal([]byte(msg.Payload), &payload)  
+      if err != nil {  
+         log.Println("Error unmarshalling payload:", err)  
+         continue // Continue with the next message if there's an error unmarshalling  
+      }  
+
+      webhookQueue <- payload // Sending the payload to the channel  
+   }  
+}
+```
+
+- This code defines a function called Subscribe, which subscribes to a specific Redis channel ("payments") and continuously listens for messages on that channel. When a message is received, it processes the message and sends it to a Go channel for further handling.
+
+```go
+pubSub := client.Subscribe(ctx, "payments")
+```
+
+Then, we ensure that the PubSub (publish-subscribe) connection to Redis is closed when the function exits, whether it ends normally or due to an error. This is important for cleaning up resources.
+
+```go
+defer func(pubSub *redis.PubSub) {
+    if err := pubSub.Close(); err != nil {
+        log.Println("Error closing PubSub:", err)
+    }
+ }(pubSub)
+```
+
+- The for loop here runs indefinitely, allowing the function to keep listening for messages as long as the program is running.
+
+```go
+for {
+    // ...
+ }
+ 
+```
+
+- Inside the loop, the code waits to receive a message from the Redis channel. If there's an error receiving the message, mostly in the deserialization of the payload, the function logs the error and we continue the execution of the function.
+
+```go
+err = json.Unmarshal([]byte(msg.Payload), &payload)
+if err != nil {
+    log.Println("Error unmarshalling payload:", err)
+    continue // Continue with the next message if there's an error unmarshalling
+}
+```
+
+Once a message is received, the code attempts to convert the message payload from JSON into a Go structure (WebhookPayload). If there's an error in this process, it logs the error and continues to the next message.
+
+- Finally, the code sends the processed payload to a Go channel (webhookQueue). This channel will be used in the queue package to handle the payload.
+
+```go
+webhookQueue <- payload // Sending the payload to the channel
+```
+
+To put it simply, this function acts like a radio receiver tuned to a specific station (payments channel in Redis). It continuously listens for messages (like songs on the radio) and processes them (like adjusting the sound quality), then passes them along to another part of the program (like speakers playing the music). (Okay! I am trying my best with these weird analogies!😤)
+
+Now that we have the Subscribe method, let's add the queuing logic. This is where we will implement the retry logic.
+
+## Adding the queuing logic
+
+A queue is a data structure that follows the First-In-First-Out (FIFO) principle. Think of it like a line of people waiting at a bank; the first person in line gets served first, and new people join the line at the end.
+
+In Golang, you can work with queues in two principal ways:
+
+- Slices: Slices are dynamically-sized arrays in Go. You can use them to create simple queues by adding items to the end and removing them from the beginning.
+
+- Channels: Channels are more complex but offer greater possibilities. They allow two goroutines (concurrent functions) to communicate and synchronize their execution. You can use a channel as a queue, where one goroutine sends data into the channel (enqueue), and another receives data from it (dequeue).
+
+In our specific case, we'll use channel-based queuing. Here's why:
+
+- Concurrency: Channels are designed to handle concurrent operations, making them suitable for scenarios where multiple functions need to communicate or synchronize.
+
+- Capacity Control: You can set a capacity for a channel, controlling how many items it can hold at once. This helps in managing resources and flow control.
+
+- Blocking and Non-Blocking Operations: Channels can be used in both blocking and non-blocking ways, giving you control over how sending and receiving operations behave.
+
+We'll use a channel to send data from the Subscribe function and then process this data in the ProcessWebhooks function, which we'll write next. By using channels, we ensure smooth communication between different parts of our program, allowing us to handle webhooks efficiently and reliably.
+
+## Writing the queuing logic
+
+At the root of the webhook project, create a directory called queue. Inside this directory, add a file called worker.go. This file will contain the logic to process the data received in the queue.
+
+```bash
+mkdir queue && cd queue
+touch worker.go
+```
+
+As usual, let's first start with the imports.
+
+```go
+package queue  
+
+import (  
+   "context"  
+   "log"  
+   "time"  
+   "webhook/sender"  
+
+   redisClient "webhook/redis"  
+)
+```
+
+And then add the function to process the webhooks data, ProcessWebhooks.
+
+```go
+func ProcessWebhooks(ctx context.Context, webhookQueue chan redisClient.WebhookPayload) {  
+   for payload := range webhookQueue {  
+      go func(p redisClient.WebhookPayload) {  
+         backoffTime := time.Second  // starting backoff time  
+         maxBackoffTime := time.Hour // maximum backoff time  
+         retries := 0  
+         maxRetries := 5  
+
+         for {  
+            err := sender.SendWebhook(p.Data, p.Url, p.WebhookId)  
+            if err == nil {  
+               break  
+            }  
+            log.Println("Error sending webhook:", err)  
+
+            retries++  
+            if retries >= maxRetries {  
+               log.Println("Max retries reached. Giving up on webhook:", p.WebhookId)  
+               break  
+            }  
+
+            time.Sleep(backoffTime)  
+
+            // Double the backoff time for the next iteration, capped at the max  
+            backoffTime *= 2  
+            log.Println(backoffTime)  
+            if backoffTime > maxBackoffTime {  
+               backoffTime = maxBackoffTime  
+            }  
+         }  
+      }(payload)  
+   }  
+}
+```
+
+Let's understand the code above. The function called ProcessWebhooks takes a Go channel containing webhook payloads and processes them. If sending a webhook fails, it retries using an exponential backoff strategy.
+
+- First, we loop through the list of items in the webhookQueue channel. As long there will be items in the list, we will keep processing the data.
+
+```go
+for payload := range webhookQueue {
+    // processing code
+}
+```
+
+For each payload, a new goroutine (a lightweight thread) is started. This allows multiple webhooks to be processed simultaneously.
+
+```go
+go func(p redisClient.WebhookPayload) {
+```
+
+- Next, we initialize the variables to control the retry logic. If sending a webhook fails, the code will wait (backoffTime) before trying again. This wait time doubles after each failure, up to a maximum (maxBackoffTime). The process will be retried up to maxRetries times.
+
+```go
+backoffTime := time.Second  // starting backoff time
+maxBackoffTime := time.Hour // maximum backoff time
+retries := 0
+maxRetries := 5
+```
+
+- In the next part, we attempt to send the webhook using the SendWebhook function. If it succeeds (err == nil), the loop breaks and the process moves to the next payload.
+
+```go
+err := sender.SendWebhook(p.Data, p.Url, p.WebhookId)
+if err == nil {
+    break
+}
+log.Println("Error sending webhook:", err)
+```
+
+- If sending the webhook fails, the code logs the error, increments the retry count, and waits for the backoffTime before trying again. The backoff time doubles with each failure but is capped at maxBackoffTime.
+
+```go
+retries++
+if retries >= maxRetries {
+    log.Println("Max retries reached. Giving up on webhook:", p.WebhookId)
+    break
+}
+time.Sleep(backoffTime)
+backoffTime *= 2
+if backoffTime > maxBackoffTime {
+    backoffTime = maxBackoffTime
+}
+```
+
+The ProcessWebhooks function is designed to process a queue of webhook payloads. It attempts to send each webhook, and if it fails, it retries using an exponential backoff strategy. By using goroutines, it can handle multiple webhooks concurrently, making the process more efficient.
+
+In simple terms, this function is like a post office worker trying to deliver packages (webhooks). If a delivery fails, the worker waits a bit longer each time before trying again, up to a certain number of tries. If all attempts fail, the worker moves on to the next package.
+
+We have written the most important parts of the service. Let's put all of them together.
+
+## Putting everything together
+
+It is time to put everything we have written together. Inside the main.go file, we will add the logic to create a Redis client to start the connection, create the channel that will act as the queue, and then start the required processes.
+
+```go
+package main  
+
+import (  
+   "context"  
+   "log"  
+   "os"  
+
+   redisClient "webhook/redis"  
+
+   "webhook/queue"  
+
+   "github.com/go-redis/redis/v8" // Make sure to use the correct version  
+)  
+
+func main() {  
+   // Create a context  
+   ctx, cancel := context.WithCancel(context.Background())  
+   defer cancel()  
+
+   // Initialize the Redis client  
+   client := redis.NewClient(&redis.Options{  
+      Addr:     os.Getenv("REDIS_ADDRESS"), // Use an environment variable to set the address  
+      Password: "",                         // No password  
+      DB:       0,                          // Default DB  
+   })  
+
+   // Create a channel to act as the queue  
+   webhookQueue := make(chan redisClient.WebhookPayload, 100) // Buffer size 100  
+
+   go queue.ProcessWebhooks(ctx, webhookQueue)  
+
+   // Subscribe to the "transactions" channel  
+   err := redisClient.Subscribe(ctx, client, webhookQueue)  
+
+   if err != nil {  
+      log.Println("Error:", err)  
+   }  
+
+   select {}  
+
+}
+```
+
+Let's explain the code above.
+
+- We first start with the package declaration and the imports
+
+```go
+package main
+
+import (
+    "context"
+    "log"
+    "os"
+    redisClient "webhook/redis"
+    "webhook/queue"
+    "github.com/go-redis/redis/v8" // Make sure to use the correct version
+)
+```
+
+Then, we declare the main function that will first create a context.
+
+<https://medium.com/@jamal.kaksouri/the-complete-guide-to-context-in-golang-efficient-concurrency-management-43d722f6eaea>
+
+Context is a built-in package in the Go standard library that provides a powerful toolset for managing concurrent operations. It enables the propagation of cancellation signals, deadlines, and values across goroutines, ensuring that related operations can gracefully terminate when necessary. With context, you can create a hierarchy of goroutines and pass important information down the chain.
+
+Consider a scenario where you need to fetch data from multiple APIs concurrently. By using context, you can ensure that all the API requests are canceled if any of them exceeds a specified timeout.
+
+```go
+ctx, cancel := context.WithCancel(context.Background())
+defer cancel()
+```
+
+A context is created to manage cancellation signals across different parts of the program. This is useful for gracefully shutting down processes if needed.
+
+- We then initialize the Redis client by creating a connection to the Redis server using the address in the environment variable.
+
+```go
+client := redis.NewClient(&redis.Options{
+    Addr:     os.Getenv("REDIS_ADDRESS"), // Use an environment variable to set the address
+    Password: "",                         // No password
+    DB:       0,                          // Default DB
+})
+```
+
+- The next parts are absolutely important because we first start by creating a channel that will act as a queue for the webhook payloads.
+
+```go
+webhookQueue := make(chan redisClient.WebhookPayload, 100) // Buffer size 100
+go queue.ProcessWebhooks(ctx, webhookQueue)
+
+```
+
+It has a buffer size of 100, meaning it can hold up to 100 items at once. We start a goroutine to process webhooks from the webhookQueue channel. The processing logic is defined in the ProcessWebhooks function.
+
+- Then, we subscribe to a Redis channel called payments and listen for messages. When a message is received, it's added to the webhookQueue channel for processing.
+
+```go
+err := redisClient.Subscribe(ctx, client, webhookQueue)
+if err != nil {
+    log.Println("Error:", err)
+}
+```
+
+- Then at the end of the function, we create an infinite loop that keeps the program running.
+
+The select statement lets a goroutine wait on multiple communication operations. A select blocks until one of its cases can run, then it executes
+
+```go
+select {}
+
+```
+
+Without this, the program would exit immediately after starting the goroutines, and they wouldn't have a chance to run.
+
+To put it simply, this code sets up a simple webhook processing system using Redis. It initializes a connection to Redis, creates a channel to act as a queue, starts a goroutine to process webhooks, and subscribes to a Redis channel to receive new webhook payloads. The program then enters an infinite loop, allowing the goroutines to continue running and processing webhooks as they arrive.
+
+Now that we have all the files required for the webhook service to work. We can dockerize the application and start the docker containers.
+
+## Running the project
+
+It is time to run the project. Let's add a Dockerfile and the needed environment variables. In the webhook go project, add the following Dockerfile.
+
+```docker
+# Start from a Debian-based Golang official image  
+FROM golang:1.21-alpine as builder  
+
+# Set the working directory inside the container  
+WORKDIR /app  
+
+# Copy the go mod and sum files  
+COPY go.mod go.sum ./  
+
+# Download all dependencies  
+RUN go mod download  
+
+# Copy the source code from your host to your image filesystem.  
+COPY . .  
+
+# Build the Go app  
+RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o main .  
+
+# Use a minimal alpine image for the final stage  
+FROM alpine:latest  
+
+# Set the working directory inside the container  
+WORKDIR /root/  
+
+# Copy the binary from the builder stage  
+COPY --from=builder /app/main .  
+
+# Run the binary  
+CMD ["./main"]
+```
+
+With the Dockerfile written we can now start the docker containers, but first, you need to have a webhook URL to try this project. You can easily get a free one at <https://webhook.site>. Once it is done, create a file called .env at the root of the project, where the docker-compose.yaml file is present. Then, make sure to have similar content.
+
+```go
+REDIS_ADDRESS=redis:6379  
+WEBHOOK_ADDRESS=<WEBHOOK_ADDRESS>
+```
 
 ## Start here
 
