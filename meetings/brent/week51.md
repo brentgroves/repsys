@@ -50,7 +50,7 @@ Only use this for PowerBI to be able to access our data.  A more cost-effective 
 - Azure App registration
 - PowerBI tabulated report license in addition to regular license
 - S3-compatible storage
-- PKI for secure browser connections to Mach2 and Report requestor web apps and API. Certificates alt-names currently set to busche-cnc.com
+- PKI for secure browser connections to Mach2 and Report requestor web apps and API. AD GPO for root and intermediate certificates alt-names currently set to busche-cnc.com
 
 ## Software Stack
 
