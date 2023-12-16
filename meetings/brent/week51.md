@@ -43,11 +43,11 @@ Run the TB report
 
 ## Azure services and options
 
-Only use this for PowerBI to be able to access our data.  A more cost-effective alternative is to put our Postgres, MySQL, MongoDB, and Prometheus databases and S3-compatible storage in our DMZ.
+Only use this for PowerBI to be able to access our data.  A more cost-effective alternative is to put our Postgres, MySQL, MongoDB, and Prometheus databases, R Server, and S3-compatible storage in our DMZ.
 
 - Azure SQL Server **[managed instance](https://intercept.cloud/en/news/azure-sql-sql-managed-instance-or-sql-server/)**
 - Azure **[Managed Kubernetes service](https://azure.microsoft.com/en-us/products/kubernetes-service)**
-- Azure App registration
+- Azure App registration to enable our Apps to access the Azure API.
 - PowerBI tabulated report license in addition to regular license
 - S3-compatible storage
 - PKI for secure browser connections to Mach2 and Report requestor web apps and API. AD GPO for root and intermediate certificates alt-names currently set to busche-cnc.com
@@ -69,6 +69,7 @@ Third-party software:
 - MySQL InnoDB Cluster
 - Azure SQL Server
 - Redis
+- R Server
 
 In-house software:
 
@@ -76,3 +77,4 @@ In-house software:
 - Report requestor RESTful API
 - Report runner
 - SMTP Server
+- Jupyter Notebooks
