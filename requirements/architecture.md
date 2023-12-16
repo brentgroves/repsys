@@ -2,7 +2,7 @@
 
 The architecture of the solution is quite simple:
 
-- A customer authenticates to AD using our report gateway.  The report gateway is composed of a React.js front-end which is linked to a Node.js API.  The Node.js API framework is Feather.js which features a great client library which makes programming on the client side almost identical to the coding on the server.  This library also smoothly handles authentication and renewal of JWT tokens ensuring secure access to our report gateway.  This library also makes using websockets almost transparent to the programmer.
+- A customer authenticates to AD using our report gateway via OAuth2.  The report gateway is composed of a React.js front-end which is linked to a Node.js API.  The Node.js API framework is Feather.js which features a great client library which makes programming on the client side almost identical to the coding on the server.  This library also smoothly handles authentication and renewal of JWT tokens ensuring secure access to our report gateway.  This library also makes using websockets almost transparent to the programmer.
 
 - Once the customer has authenticated the React.js app subscribes to the users own websocket channel.  This enables Feathers.js framework to notify the customer of events involving all of their report request.s
 
