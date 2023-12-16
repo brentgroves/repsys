@@ -37,9 +37,10 @@ docker compose up
 
 The reporting system is meant to give customers the ability to run reports using data residing in our data warehouses.  Rather than running reports from individual databases, we use ETL scripts to pull data into our data warehouses so that we can have all the data in one place. Non-ERP data sources include tooling inventory and usage data collected by our MSC vending machines and tool life data collected from UDP servers attached to our CNC.  The tool life data collection process was successfully created and tested but has not been put into production as of yet.  It will require a possible vlan for our Okuma CNC, Moxa UDP servers, and small network switches or multiplexors at each cell.
 
-## Show an example of an ETL script
+## Microsoft Teams hosted
 
-Run the TB report
+- PowerBI reports
+- In-house apps
 
 ## Azure services and options
 
