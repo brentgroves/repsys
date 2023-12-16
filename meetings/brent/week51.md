@@ -75,8 +75,11 @@ Third-party software:
 
 In-house software:
 
-- Report requestor web app
-- Report requestor RESTful API
-- Report runner
+- **[Report System](../../requirements/architecture.md)**
 - SMTP Server
+
+Reports:
+
+- PowerBI both regular and tabular
+- Grafana
 - Jupyter Notebooks
