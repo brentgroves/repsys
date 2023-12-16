@@ -49,6 +49,7 @@ Only use this for PowerBI to be able to access our data.  A more cost-effective 
 - Azure SQL Server **[managed instance](https://intercept.cloud/en/news/azure-sql-sql-managed-instance-or-sql-server/)**
 - Azure **[Managed Kubernetes service](https://azure.microsoft.com/en-us/products/kubernetes-service)**
 - Azure App registration to enable our Apps to access the Azure API.
+- Azure Dev Ops
 - PowerBI tabulated report license in addition to regular license
 - S3-compatible storage
 - PKI for secure browser connections to Mach2 and Report requestor web apps and API. AD GPO for root and intermediate certificates alt-names currently set to busche-cnc.com
