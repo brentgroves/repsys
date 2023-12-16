@@ -71,7 +71,7 @@ Third-party software:
 - MySQL InnoDB Cluster
 - Azure SQL Server
 - Redis
-- R Server
+- R Server - Run outside of k8s.
 
 In-house software:
 
