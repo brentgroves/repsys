@@ -2,6 +2,9 @@
 
 ## Report System and IT Admin, Hardware, or Software Topics
 
+This markdown file is located at: ~/src/linux-utils/status/report_system/week45.md
+It can be viewed by logging into devcon2 as bcieslik,bcook,sjackson,cstangland,rdecker,bhall,jdavis,or kyoung with password k8sAdmin1! and opening week45.md from visual studio code and pressing shift-ctrl-v
+
 ![dashboard](../linux/grafana/dashboard.png)
 
 Summary,
