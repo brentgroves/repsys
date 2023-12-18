@@ -2,6 +2,7 @@
 
 ## Report System and IT Admin, Hardware, or Software Topics
 
+R
 ![dashboard](../linux/grafana/dashboard.png)
 
 Summary,
