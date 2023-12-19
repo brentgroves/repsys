@@ -42,4 +42,4 @@ v5 <- filter(flights, dep_delay > 60 & ((arr_time + 30) < sched_arr_time))
 # dep_time
 
 v6 <- filter(flights,((dep_time==2400) | (dep_time <= 600)) )
-
+.libPaths()
