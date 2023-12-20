@@ -12,6 +12,10 @@ https://www3.technologyevaluation.com/research/article/plex-manufacturing-cloud-
 
 https://www.facebook.com/watch/?v=429019737979745
 
+## Why discuss this
+
+To look at some of the features that make Mach2 a good choice for companies using Plex.
+
 ## topics
 
 - What is a state machine
