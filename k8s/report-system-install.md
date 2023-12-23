@@ -15,3 +15,4 @@
 - **[MySQL InnoDB Cluster](./mysql-innodb-cluster-install.md)**
 - **[Postgres Operator](./postgres-operator-install.md)**
 - **[MetalB load balancer and NGINX ingress controller](./metalb-ingress-install.md)**
+- **[Redis Operator](./redis_operator-install.md)**
