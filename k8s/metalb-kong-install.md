@@ -1,32 +1,12 @@
-# MetalB and Nginx Ingress Controll Install
+# MetalB and Kong Ingress Controll Install
 
 Ingress is a Kubernetes API object that defines DNS routing rules for external traffic coming into a Kubernetes cluster. Using Ingress, cluster administrators set up granular load balancing, SSL/TLS termination, and name-based virtual hosting for their cluster services.
 
-**![External Load Balancer/Gateway](https://fabianlee.org/wp-content/uploads/2021/07/microk8s-3node.png)**
-**![Service Load Balancer](https://www.densify.com/wp-content/uploads/article-k8s-capacity-kubernetes-service-overview.svg)**
-
-## Issues
-
-When the Load Balancer is enabled external kubectl connections become slower and timeout.  You can update the ~/.kube/config file to use an IP address of a node that is not occupied by the load balancer but it's still slow.
-
 ## References
 
-<https://www.densify.com/kubernetes-autoscaling/kubernetes-service-load-balancer/>
 <https://microk8s.io/docs/addon-metallb>
-<https://fabianlee.org/2021/07/29/kubernetes-microk8s-with-multiple-metallb-endpoints-and-nginx-ingress-controllers/>
-<https://marcolenzo.eu/configure-microk8s-nginx-ingress/>
-<https://marcolenzo.eu/expose-tcp-and-udp-services-with-the-kubernetes-nginx-ingress-controller/>
-<https://github.com/canonical/microk8s/issues/1500>
-<https://benbrougher.tech/posts/microk8s-ingress/>
-<https://kubernetes.github.io/ingress-nginx/user-guide/exposing-tcp-udp-services/>
-<https://www.percona.com/blog/expose-databases-on-kubernetes-with-ingress>
-<https://phoenixnap.com/kb/microk8s-ingress>
-<https://mswis.com/configure-microk8s-kubernetes-load-balancer-with-tls/>
-<https://www.percona.com/blog/expose-databases-on-kubernetes-with-ingress>
 
-## Remove Ingress
-
-microk8s disable ingress
+## Remove Kong Ingress Controller
 
 ## Remove MetalB
 
@@ -37,23 +17,101 @@ microk8s disable metallb
 The MetalB is lv 4 and the ingress is lv 7 of the osi model
 so the traffic is first seen by the metalb loadbalancer which then sends it to one of the ingress controllers through the service you define to decide which pod to send it to using an ingress object.
 
+<https://microk8s.io/docs/addon-metallb>
+
 ```bash
 # Scan sub-network for IPs to be used as load balancer.
 nmap -sP 172.20.88.0/22
 nmap -sP 10.1.0.0/22
-
-microk8s enable metallb:172.20.88.59-172.20.88.60
+# enable metallb
+ssh brent@reports11
 microk8s enable metallb:10.1.0.8-10.1.0.9
 
-
+pushd .
+cd ~/src/repsys/k8s
+scc.sh reports1.yaml microk8s
 # Check load balancer
 kubectl get all -n metallb-system -o wide
-# Ping load balancer
-ping 10.1.0.8
-PING 10.1.0.8 (10.1.0.8) 56(84) bytes of data.
-From 10.1.0.112 icmp_seq=2 Redirect Host(New nexthop: 10.1.0.8)
 
 ```
+
+## Install Kong using gateway operator
+
+<https://docs.konghq.com/gateway-operator/latest/get-started/kic/install/>
+
+```bash
+# Below command installs all Gateway API resources that have graduated to GA or beta, including GatewayClass, Gateway, HTTPRoute, and ReferenceGrant.
+kubectl apply -f https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.0.0/standard-install.yaml
+
+# If you want to use experimental resources and fields such as TCPRoutes and UDPRoutes, please run this command.
+
+kubectl apply -f https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.0.0/experimental-install.yaml
+
+# To install Kong specific CRDs, run the following command.
+kubectl apply -k https://github.com/Kong/kubernetes-ingress-controller/config/crd
+
+# To install Kong Gateway Operator use kubectl apply:
+kubectl apply -f https://docs.konghq.com/assets/gateway-operator/v1.1.0/crds.yaml --server-side
+kubectl apply -f https://docs.konghq.com/assets/gateway-operator/v1.1.0/all_controllers.yaml
+
+# You can wait for the operator to be ready using kubectl wait:
+kubectl -n kong-system wait --for=condition=Available=true --timeout=120s deployment/gateway-operator-controller-manager
+
+kubectl  get deployments                                
+NAME                            READY   UP-TO-DATE   AVAILABLE   AGE
+dataplane-kong-nntfm-q5cx5      1/1     1            1           64m
+controlplane-kong-sx7pj-fmpjc   1/1     1            1           64m
+
+kubectl  get deployments -n kong-system
+NAME                                  READY   UP-TO-DATE   AVAILABLE   AGE
+gateway-operator-controller-manager   1/1     1            1           83m
+
+```
+
+## Create a GatewayClass
+
+<https://docs.konghq.com/gateway-operator/latest/get-started/kic/create-gateway/>
+
+To use the Gateway API resources to configure your routes, you need to create a GatewayClass instance and create a Gateway resource that listens on the ports that you need.
+
+```bash
+kubectl apply -f ./manifests/kong/gatewayclass.yaml
+
+# Run kubectl get gateway kong -n default to get the IP address for the gateway and set that as the value for the variable PROXY_IP.
+
+export PROXY_IP=$(kubectl get gateway kong -n default -o jsonpath='{.status.addresses[0].value}')
+```
+
+## Create a Route
+
+<https://docs.konghq.com/gateway-operator/latest/get-started/kic/create-route/>
+
+After you’ve installed all of the required components and configured a GatewayClass you can route some traffic to a service in your Kubernetes cluster.
+
+## Configure the echo service
+
+In order to route a request using Kong Gateway we need a service running in our cluster. Install an echo service using the following command:
+
+```bash
+kubectl apply -f https://docs.konghq.com/assets/kubernetes-ingress-controller/examples/echo-service.yaml
+```
+
+Create a HTTPRoute to send any requests that start with /echo to the echo service.
+
+```bash
+kubectl apply -f ./manifests/kong/echo_route.yaml
+kubectl delete httproute echo
+```
+
+## Test the configuration
+
+```bash
+# To test the configuration, make a call to the $PROXY_IP that you configured.
+curl $PROXY_IP/echo
+```
+
+``````
+<https://github.com/Kong/charts/tree/main/charts/kong>
 
 ## Enable Nginx Ingress Controller
 
