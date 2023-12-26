@@ -10,6 +10,12 @@ https://medium.com/@shujaamarwat/securing-react-apps-with-oauth-and-jwt-22a82490
 https://oauth.net/code/nodejs/
 https://codeculturepro.medium.com/implementing-authentication-in-nodejs-app-using-oauth2-0-59fee8f63798
 
+## Goal
+
+Use a server to perform OAuth2 authentication.
+Use redis to distribute private part to each API.
+Clients may access any API with a single JWT token.
+
 ## REST API authentication
 
 https://stackoverflow.blog/2021/10/06/best-practices-for-authentication-and-authorization-for-rest-apis/
