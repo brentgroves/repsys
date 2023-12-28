@@ -4,6 +4,7 @@ Ingress is a Kubernetes API object that defines DNS routing rules for external t
 
 ## References
 
+<https://callistaenterprise.se/blogg/teknik/2023/04/20/kong-api-gateway-part1/>
 <https://microk8s.io/docs/addon-metallb>
 
 ## Remove Kong Ingress Controller
@@ -109,6 +110,8 @@ kubectl delete httproute echo
 # To test the configuration, make a call to the $PROXY_IP that you configured.
 curl $PROXY_IP/echo
 ```
+
+IT EQUIPMENT BUY/SELL SERVERS/SWITCHES FACEBOOK
 
 ``````
 <https://github.com/Kong/charts/tree/main/charts/kong>
