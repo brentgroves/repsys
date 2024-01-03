@@ -1,2 +1,4 @@
 
-**[start_here](./api_management/openid_connect/oidc_azure/identity_platform/oidc_microsoft_identity_platform.md)**
+<https://www.hcl-software.com/blog/versionvault/how-to-configure-microsoft-azure-active-directory-as-keycloak-identity-provider-to-enable-single-sign-on-for-hcl-compass>
+
+<https://callistaenterprise.se/blogg/teknik/2023/04/20/kong-api-gateway-part1/>
