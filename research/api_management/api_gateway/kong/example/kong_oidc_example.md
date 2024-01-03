@@ -48,3 +48,5 @@ The API is available on port 80, but we are not exposing this port on the host n
 We’ll use a Keycloak docker container as OAuth 2.0/OIDC server.
 
 <https://www.hcl-software.com/blog/versionvault/how-to-configure-microsoft-azure-active-directory-as-keycloak-identity-provider-to-enable-single-sign-on-for-hcl-compass>
+
+<https://www.keycloak.org/2017/03/how-to-setup-ms-ad-fs-30-as-brokered>
