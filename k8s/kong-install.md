@@ -151,12 +151,16 @@ kubectl apply -f https://docs.konghq.com/assets/kubernetes-ingress-controller/ex
 
 ```
 
-To remove echo service:
+To remove echo service and deployment:
 
 ```bash
 kubectl get svc
 echo                  ClusterIP   10.152.183.249   <none>        1025/TCP,1026/TCP,1027/TCP  
 kubectl delete svc echo
+
+kubectl get deployments    
+echo                            1/1     1            1           9d
+kubectl delete deployment echo  
 ```
 
 Add routing configuration

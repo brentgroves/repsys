@@ -45,6 +45,27 @@ nmap -sP 10.1.0.0/22
 microk8s enable metallb:172.20.88.59-172.20.88.60
 microk8s enable metallb:10.1.0.8-10.1.0.9
 
+kubectl get IPAddressPool -A                           
+NAMESPACE        NAME                  AGE
+metallb-system   default-addresspool   9d
+
+kubectl describe IPAddressPool default-addresspool -n metallb-system
+Name:         default-addresspool
+Namespace:    metallb-system
+Labels:       <none>
+Annotations:  <none>
+API Version:  metallb.io/v1beta1
+Kind:         IPAddressPool
+Metadata:
+  Creation Timestamp:  2023-12-26T19:17:39Z
+  Generation:          1
+  Resource Version:    9991658
+  UID:                 5b96a489-699c-46f4-a029-fa4671dcaa98
+Spec:
+  Addresses:
+    10.1.0.8-10.1.0.9
+  Auto Assign:  true
+Events:         <none>
 
 # Check load balancer
 kubectl get all -n metallb-system -o wide
