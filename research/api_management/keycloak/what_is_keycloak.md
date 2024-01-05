@@ -2,6 +2,9 @@
 
 ## references
 
+https://www.keycloak.org/
+https://www.keycloak.org/operator/installation
+https://www.hcl-software.com/blog/versionvault/how-to-configure-microsoft-azure-active-directory-as-keycloak-identity-provider-to-enable-single-sign-on-for-hcl-compass
 <https://www.keycloak.org/>
 <https://www.keycloak.org/server/reverseproxy>
 <https://discuss.istio.io/t/how-to-implement-istio-authorization-using-oauth2-and-keycloak/13707/4>
