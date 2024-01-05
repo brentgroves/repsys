@@ -2,6 +2,8 @@
 
 ## references
 
+https://dev.to/aws-builders/keycloak-with-nginx-ingress-6fo
+https://www.talkingquickly.co.uk/webapp-authentication-keycloak-OAuth2-proxy-nginx-ingress-kubernetes
 https://www.keycloak.org/
 https://www.keycloak.org/operator/installation
 https://www.hcl-software.com/blog/versionvault/how-to-configure-microsoft-azure-active-directory-as-keycloak-identity-provider-to-enable-single-sign-on-for-hcl-compass
