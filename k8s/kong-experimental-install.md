@@ -1,10 +1,10 @@
-# Kong experimental install
+# Tech preview experimental install of Kong Ingress Controller and Gateway
 
 ## references
 
 <https://docs.konghq.com/gateway-operator/latest/get-started/kic/install/>
 
-## k
+## Install Kong Ingress Controller
 
 Install the Gateway API CRDs before installing Kong Ingress Controller.
 
@@ -12,11 +12,35 @@ Install the Gateway API CRDs before installing Kong Ingress Controller.
 kubectl apply -f <https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.0.0/standard-install.yaml>
 ```
 
+To remove standard resources:
+
+```bash
+kubectl get crd
+kubectl delete crd gatewayclasses.gateway.networking.k8s.io
+kubectl delete crd gateways.gateway.networking.k8s.io
+kubectl delete crd httproutes.gateway.networking.k8s.io
+kubectl delete crd referencegrants.gateway.networking.k8s.io
+```
+
 If you want to use experimental resources and fields such as TCPRoutes and UDPRoutes, please run this command.
 
 ```bash
 kubectl apply -f https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.0.0/experimental-install.yaml
 
+```
+
+To remove experimental resources:
+
+```bash
+kubectl delete crd backendtlspolicies.gateway.networking.k8s.io
+kubectl delete crd gatewayclasses.gateway.networking.k8s.io
+kubectl delete crd gateways.gateway.networking.k8s.io
+kubectl delete crd grpcroutes.gateway.networking.k8s.io
+kubectl delete crd httproutes.gateway.networking.k8s.io
+kubectl delete crd referencegrants.gateway.networking.k8s.io
+kubectl delete crd tcproutes.gateway.networking.k8s.io
+kubectl delete crd tlsroutes.gateway.networking.k8s.io
+kubectl delete crd udproutes.gateway.networking.k8s.io
 ```
 
 To install Kong specific CRDs, run the following command.
@@ -101,6 +125,20 @@ spec:
     port: 80
 
 ' | kubectl apply -f -
+```
+
+To remove Gateway and GatewayClass:
+
+```bash
+kubectl get gateway
+NAME   CLASS   ADDRESS        PROGRAMMED   AGE
+kong   kong    172.20.88.60   True         18h
+kubectl delete gateway kong
+
+kubectl get gatewayclass
+NAME   CONTROLLER                          ACCEPTED   AGE
+kong   konghq.com/kic-gateway-controller   True       18h
+kubectl delete gatewayclass kong
 ```
 
 Run kubectl get gateway kong -n default to get the IP address for the gateway and set that as the value for the variable PROXY_IP.
