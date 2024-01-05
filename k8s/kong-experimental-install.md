@@ -556,11 +556,60 @@ kubectl delete kongconsumer alex
 Make a request to the API and provide your apikey:
 
 ```bash
+# test http connection
 curl -H 'apikey: hello_world' $PROXY_IP/echo
 Welcome, you are connected to node reports52.
 Running on Pod echo-74c66b778-j2n45.
 In namespace default.
 With IP address 10.1.184.161.
+
+# test https connection
+curl -H 'apikey: hello_world' https://10.1.0.8/echo
+curl: (60) SSL certificate problem: self-signed certificate
+More details here: https://curl.se/docs/sslcerts.html
+
+curl failed to verify the legitimacy of the server and therefore could not
+establish a secure connection to it. To learn more about this situation and
+how to fix it, please visit the web page mentioned above.
+```
+
+## change default ssl certificate
+
+```bash
+# https://support.konghq.com/support/s/article/How-to-setup-Kong-to-serve-an-SSL-certificate-for-API-requests
+
+curl -k -X POST \
+  https://kong.lan:8444/certificates \
+  -H 'Content-Type: multipart/form-data' \
+  -F cert=@./kong.lan.pem \
+  -F key=@./kong.lan.key \
+  -F snis[]=kong.lan
+  
+# https://stackoverflow.com/questions/71998636/kong-api-gateway-ssl-tls-certificates
+
+curl -X POST \
+  http://example.com:8001/certificates \
+  -H 'Content-Type: multipart/form-data' \
+  -F cert=@./kong.ca-bundle \
+  -F key=@./kong.key \
+  -F snis[]=example.com
+```
+
+```bash
+pushd .
+cd ~/src/repsys/k8s/certs
+cp ~/src/repsys/volumes/pki/intermediateCA/certs/server-chain/reports1.busche-cnc.com-ca-chain-bundle.cert.pem .
+cp ~/src/repsys/volumes/pki/intermediateCA/private/reports1.busche-cnc.com.san.key.pem .
+
+curl -X POST \
+  http://$PROXY_IP:8001/certificates \
+  -H 'Content-Type: multipart/form-data' \
+  -F "cert=@./reports1.busche-cnc.com-ca-chain-bundle.cert.pem" \
+  -F "key=@./reports1.busche-cnc.com.san.key.pem" \
+  -F "snis[]=reports1.busche-cnc.com"
+
+curl: (7) Failed to connect to 10.1.0.8 port 8001 after 10367 ms: No route to host
+  zsh: no matches found: snis[]=reports1.busche-cnc.com
 
 ```
 
