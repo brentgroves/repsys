@@ -556,6 +556,9 @@ kubectl delete kongconsumer alex
 Make a request to the API and provide your apikey:
 
 ```bash
+export PROXY_IP=$(kubectl get gateway kong -n default -o jsonpath='{.status.addresses[0].value}')
+echo $PROXY_IP
+
 # test http connection
 curl -H 'apikey: hello_world' $PROXY_IP/echo
 Welcome, you are connected to node reports52.
@@ -571,6 +574,28 @@ More details here: https://curl.se/docs/sslcerts.html
 curl failed to verify the legitimacy of the server and therefore could not
 establish a secure connection to it. To learn more about this situation and
 how to fix it, please visit the web page mentioned above.
+```
+
+## Kong Ingress **[HTTPS Redirect](https://docs.konghq.com/kubernetes-ingress-controller/latest/guides/services/https-redirect/)**
+
+Learn to configure the Kong Ingress Controller to redirect HTTP requests to HTTPS so that all communication from the external world to your APIs and microservices is encrypted.
+
+## Add TLS configuration
+
+The routing configuration can include a certificate to present when clients connect over HTTPS. This is not required, as Kong Gateway will serve a default certificate if it cannot find another, but including TLS configuration along with routing configuration is typical.
+
+1. **[Create a certificate](../volumes/pki/gen-and-install-certs.md)** for the reports1.busche-cnc.com hostname.
+2. Update your routing configuration to use this certificate.
+
+```bash
+kubectl patch --type json ingress echo -p='[{
+    "op":"add",
+ "path":"/spec/tls",
+ "value":[{
+        "hosts":["kong.example"],
+  "secretName":"kong.example"
+    }]
+}]'
 ```
 
 ## change default ssl certificate
