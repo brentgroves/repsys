@@ -16,7 +16,65 @@ Hi guys.  I'm hoping we can have some fun in this meeting!  If there is any tech
 
 - Sam something about Mach2 or Kep ServerEx if you want :-)
 - Brendan something about IT Administration or anything you want :-)
-- Brent G. KeyCloak OpenID Connect Server
+- Brent G. Plex and Report System Federated with Microsoft Entra ID
+
+Note: Azure Active Directory is now Microsoft Entra ID
+
+## What is **[Federated Identity](https://www.onelogin.com/learn/federated-identity#:~:text=Federated%20identity%20allows%20authorized%20users,different%20applications%20securely%20and%20efficiently)**
+
+FIM is a secure system for user authorization, authentication, and digital identity management. When a user tries to access an application, they don’t provide their credentials to the SP. Instead, the SP “trusts” the IdP to validate these credentials and authorize the user. Thus, the user never provides their credentials to anyone but the IdP who securely stores and maintains their credentials.
+
+### How it Works and Benefits
+
+Federated identity allows authorized users to access multiple applications and domains using a single set of credentials. It links a user’s identity across multiple identity management systems so they can access different applications securely and efficiently.
+
+When organizations implement federated identity solutions, their users can access web applications, partner websites, Active Directory, and other applications without logging in separately every time.
+
+## How Does Federated Identity Work?
+
+SERVICE PROVIDERS AND IDENTITY PROVIDERS IN A FEDERATED SYSTEM
+
+Federated identity – also known as Federated Identity Management (FIM) – works on the basis of mutual trust relationships between a Service Provider (SP) such as an application vendor and an external party or Identity Provider (IdP).
+
+The IdP creates and manages user credentials and the SP and IdP agree on an authentication process. Multiple SPs can participate in a federated identity agreement with a single IdP. The IdP has mutual trust agreements with all these organizations.
+
+## Technologies Used in Federated Identity
+
+Federated identity works by using several standard protocols. These include:
+
+- Security Assertion Markup Language (SAML). The SAML protocol simplifies password management and user authentication in a federated system. It uses Extensible Markup Language (XML) to standardize communications between multiple systems.
+SAML enables IdPs to securely send users’ login information to SPs. SAML authorization authenticates a user and tells the SP what access togrant them, which allows users to access multiple domains using one set of credentials.
+- Open Authentication (OAuth). The OAuth authorization protocol allows third-party services like websites and applications to exchange user information without the user needing to give away their password to these services. These different services trust each other, which allows them to share information while also protecting the user. For instance, a user can allow onelogin.com to access their Facebook profile without having to share their Facebook password.
+OAuth will not share the user’s Facebook password with OneLogin. Rather, it uses authorization tokens to prove the user’s identity to OneLogin. This system allows users to securely connect with third-party services and approve one application interacting with another on the user’s behalf.
+- OpenID Connect (OIDC). The OIDC authentication protocol adds an identity layer on top of the OAuth 2.0 protocol. It allows third-party applications to verify a user’s identity and give the user one login for multiple applications.
+
+The basic login flow for OIDC and SAML is the same. However, SAML is a self-contained authentication and authorization protocol, while OIDC adds an authentication layer on top of an authorization protocol. OIDC is also gaining popularity over SAML, since it works for consumer and native mobile applications, e.g., gaming and productivity apps.
+
+## Examples of Federated Identity
+
+One example of federated identity is when a user logs into a third-party website by using their Gmail login credentials. With FIM, they don’t have to create new credentials to access multiple websites that have a federated agreement with Google, such as:
+
+- YouTube
+- Fitbit
+- Waze
+- Picasa
+- Blogger
+
+Similarly, a user can use their Facebook credentials to log into many websites that are federated with Facebook, like:
+
+- Instagram
+- Netflix
+- Disney+
+
+## Is Federated Identity Secure?
+
+FIM is a secure system for user authorization, authentication, and digital identity management. When a user tries to access an application, they don’t provide their credentials to the SP. Instead, the SP “trusts” the IdP to validate these credentials and authorize the user. Thus, the user never provides their credentials to anyone but the IdP who securely stores and maintains their credentials.
+
+## Federated Identity vs Single Sign-on
+
+FIM and Single Sign-on (SSO) enable organizations to minimize password-related risks and secure their data and improve user experiences. Both kinds of solutions require a single set of credentials to grant the user access to multiple applications. But despite this similarity, these systems operate differently.
+
+With SSO, users can access multiple applications within the same organization or domain using a single set of credentials. Federated identity goes a step further. It enables users to access applications or platforms across multiple enterprise domains that are part of the federated configuration. Thus, FIM supports SSO and also extends SSO to multiple domains. Also, SSO is a function of FIM, but implementing it doesn’t necessarily allow for FIM.
 
 ## Active Directory B2C
 
@@ -34,7 +92,7 @@ Can not yet test this with Microsoft Development Account since it requires a new
 
 ## **[OpenID](https://konghq.com/blog/engineering/openid-vs-oauth-what-is-the-difference)** Authentication
 
-OpenID is an open standard that enables decentralized digital identity, allowing users to log into different websites using the same identity provider. For example, there are SSO options where you can use your Google or Facebook account to sign in to various sites across the web, without needing to create new usernames and passwords for each one. 
+OpenID is an open standard that enables decentralized digital identity, allowing users to log into different websites using the same identity provider. For example, there are SSO options where you can use your Google or Facebook account to sign in to various sites across the web, without needing to create new usernames and passwords for each one.
 
 ## **[OAuth2](https://auth0.com/intro-to-iam/what-is-oauth-2#:~:text=OAuth%202.0%2C%20which%20stands%20for,industry%20standard%20for%20online%20authorization.)** Authorization
 
@@ -57,4 +115,3 @@ API gateways are becoming increasingly more popular, and for good reasons. As th
 **[Relying Party](https://openid.net/developers/how-connect-works/)** (RP). RP stands for Relying Party, an application or website that outsources its user authentication function to an IDP.
 
 Keycloak can be configured to rely on **[Microsoft's identity provider](https://www.hcl-software.com/blog/versionvault/how-to-configure-microsoft-azure-active-directory-as-keycloak-identity-provider-to-enable-single-sign-on-for-hcl-compass)**.
-

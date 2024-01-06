@@ -1,5 +1,9 @@
 # Next
 
+<https://docs.konghq.com/kubernetes-ingress-controller/latest/guides/services/https-redirect/>
+
+<https://www.redhat.com/architect/oauth-20-authentication-keycloak>
+
 ## custom plugins
 
 <https://docs.konghq.com/kubernetes-ingress-controller/latest/plugins/custom/>
