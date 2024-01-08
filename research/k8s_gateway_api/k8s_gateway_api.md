@@ -79,3 +79,11 @@ It should be clear that while Ana, Chihiro, and Ian do not necessarily see eye-t
 The example **[use cases](https://gateway-api.sigs.k8s.io/concepts/use-cases)** show this role-oriented model at work. Its flexibility allows the API to adapt to vastly different organizational models and implementations while remaining a portable and standard API.
 
 The use cases presented are deliberately cast in terms of the roles presented above. Ultimately Gateway API is meant for use by humans, which means that it must fit the uses to which each of Ana, Chihiro, and Ian will put it.
+
+## What's the difference between Gateway API and an API Gateway?¶
+
+An API Gateway is a general concept that describes anything that exposes capabilities of a backend service, while providing extra capabilities for traffic routing and manipulation, such as load balancing, request and response transformation, and sometimes more advanced features like authentication and authorization, rate limiting, and circuit breaking i.e. Kong API gateway
+
+Gateway API is an interface, or set of resources, that model service networking in Kubernetes. One of the main resources is a Gateway, which declares the Gateway type (or class) to instantiate and its configuration. As a Gateway Provider, you can implement Gateway API to model Kubernetes service networking in an expressive, extensible, and role-oriented way.
+
+Most Gateway API implementations are API Gateways to some extent, but not all API Gateways are Gateway API implementations.
