@@ -37,6 +37,10 @@ microk8s disable metallb
 The MetalB is lv 4 and the ingress is lv 7 of the osi model
 so the traffic is first seen by the metalb loadbalancer which then sends it to one of the ingress controllers through the service you define to decide which pod to send it to using an ingress object.
 
+## why use multiple node in Metallb's resource pool
+
+If one node goes down network connections will still be possible. I don't know if this **[layer2](../research/metallb/metalb_layer2.md)** or BPG fail-over works without additional configuration.
+
 ```bash
 # Scan sub-network for IPs to be used as load balancer.
 nmap -sP 172.20.88.0/22

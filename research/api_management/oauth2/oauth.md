@@ -80,6 +80,18 @@ Scopes are what you see on the authorization screens when an app requests permis
 
 ![](https://developer.okta.com/assets-jekyll/blog/oauth/oauth-scopes-7ea53a0efe6c05a8113671297f641baae7486dfb6ab8b8357c74cb6e6f8371ce.png)
 
+## OAuth permissions for OpenStack.org
+
+OpenStack.org website
+
+This app would like to:
+Allow access to your profile info.
+Allow access to your email info.
+Allow access to your address info.
+Use Openid Connect Protocol
+Allow to emit refresh tokens (offline access without user presence).
+** OpenStack.org website Application and OpenInfra Foundation will use this information in accordance with their respective terms of service and privacy policies.
+
 Scopes decouple authorization policy decisions from enforcement. This is the first key aspect of OAuth. The permissions are front and center. They’re not hidden behind the app layer that you have to reverse engineer. They’re often listed in the API docs: here are the scopes that this app requires.
 
 You have to capture this consent. This is called trusting on first use. It’s a pretty significant user experience change on the web. Most people before OAuth were just used to name and password dialog boxes. Now you have this new screen that comes up and you have to train users to use. Retraining the internet population is difficult. There are all kinds of users from the tech-savvy young folk to grandparents that aren’t familiar with this flow. It’s a new concept on the web that’s now front and center. Now you have to authorize and bring consent.

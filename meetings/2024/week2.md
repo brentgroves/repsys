@@ -4,6 +4,8 @@
 
 This markdown file is located at: ~/src/repsys/meetings/2024/week2.md To get a fresh copy please run ~/freshstart.sh at a command prompt. It can be viewed by logging into devcon2 as bcieslik,bcook,sjackson,cstangland,rdecker,bhall,jdavis,or kyoung with password k8sAdmin1! and opening week45.md from visual studio code and pressing shift-ctrl-v
 
+![](https://www.nist.gov/sites/default/files/styles/480_x_480_limit/public/images/2018/10/24/cloudlogo_1000px.jpg?itok=OJQI8yc1)
+
 ![Grafana dashboard](https://grafana.com/api/dashboards/1860/images/7994/image)
 
 Last meeting summary,
@@ -23,6 +25,8 @@ Note: Azure Active Directory is now Microsoft Entra ID
 ## What is **[Federated Identity](https://www.onelogin.com/learn/federated-identity#:~:text=Federated%20identity%20allows%20authorized%20users,different%20applications%20securely%20and%20efficiently)**
 
 FIM is a secure system for user authorization, authentication, and digital identity management. When a user tries to access an application, they don’t provide their credentials to the SP. Instead, the SP “trusts” the IdP to validate these credentials and authorize the user. Thus, the user never provides their credentials to anyone but the IdP who securely stores and maintains their credentials.
+
+Identity federation means being able to ingest identity credentials from external identity providers. This can be used to provide single sign-on (SSO) – a very useful capability. SSO allows a single authentication method to access different systems within external identity providers based on mutual trust.
 
 ### How it Works and Benefits
 
