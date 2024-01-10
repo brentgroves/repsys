@@ -45,6 +45,12 @@ In the United States, the National Security Agency (NSA) utilizes the power of O
 
 Moreover, the role of OpenStack in government security for the United States is good for OpenStack users. Why? Because the NSA has such strong security requirements, it developed systems to accommodate these requirements. From securing APIs and guest OSes to developing code to suit their needs, the OpenStack community can experience the security benefits for themselves.
 
+## The NIST Cloud Federation Reference Architecture
+
+The **[National Institute of Standards and Technology](https://www.nist.gov/)** is an agency of the United States Department of Commerce whose mission is to promote American innovation and industrial competitiveness.
+
+This document presents the NIST Federated Cloud Reference Architecture model. This actor/role- based model used the guiding principles of the NIST Cloud Computing Reference Architecture to develop an eleven component model. This document describes these components individually and how they function as an ensemble. There are many possible deployments and governance options which lend themselves to create a suite of federation options from simple to complex. The basics of cloud federation can be described through the interactions of the actors in a layered three planes representation of trust, security, and resource sharing and usage. A discussion on possible future standards and use cases are also described in great detail.
+
 Note: Azure Active Directory is now Microsoft Entra ID
 
 ## What is **[Federated Identity](https://www.onelogin.com/learn/federated-identity#:~:text=Federated%20identity%20allows%20authorized%20users,different%20applications%20securely%20and%20efficiently)**

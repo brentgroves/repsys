@@ -1,10 +1,13 @@
 # The NIST Cloud Federation Reference Architecture
 
+The **[National Institute of Standards and Technology](https://www.nist.gov/)** is an agency of the United States Department of Commerce whose mission is to promote American innovation and industrial competitiveness.
+
 This document presents the NIST Federated Cloud Reference Architecture model. This actor/role- based model used the guiding principles of the NIST Cloud Computing Reference Architecture to develop an eleven component model. This document describes these components individually and how they function as an ensemble. There are many possible deployments and governance options which lend themselves to create a suite of federation options from simple to complex. The basics of cloud federation can be described through the interactions of the actors in a layered three planes representation of trust, security, and resource sharing and usage. A discussion on possible future standards and use cases are also described in great detail.
 
 ## references
 
 <https://www.nist.gov/publications/nist-cloud-federation-reference-architecture>
+
 
 ## 1.1 Background
 
