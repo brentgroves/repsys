@@ -4,7 +4,19 @@
 
 This markdown file is located at: ~/src/repsys/meetings/2024/week2.md To get a fresh copy please run ~/freshstart.sh at a command prompt. It can be viewed by logging into devcon2 as bcieslik,bcook,sjackson,cstangland,rdecker,bhall,jdavis,or kyoung with password k8sAdmin1! and opening week45.md from visual studio code and pressing shift-ctrl-v
 
-![](https://www.nist.gov/sites/default/files/styles/480_x_480_limit/public/images/2018/10/24/cloudlogo_1000px.jpg?itok=OJQI8yc1)
+## What is **[OpenStack](https://www.openstack.org/software/)**
+
+OpenStack is a an open source cloud operating system managing compute, storage, and networking resources throughout a datacenter using APIs.
+
+![](https://object-storage-ca-ymq-1.vexxhost.net/swift/v1/6e4619c416ff4bd19e1c087f27a43eea/www-images-prod/openstack-logo/2016R/OpenStack-Logo-Horizontal.SVG)
+
+![](https://object-storage-ca-ymq-1.vexxhost.net/swift/v1/6e4619c416ff4bd19e1c087f27a43eea/www-assets-prod/learn/homepage-OpenStack-SFAs.svg)
+
+## OpenStack Logical Diagram
+
+![](https://docs.openstack.org/install-guide/_images/openstack_kilo_conceptual_arch.png)
+
+## Grafana Dashboard
 
 ![Grafana dashboard](https://grafana.com/api/dashboards/1860/images/7994/image)
 
