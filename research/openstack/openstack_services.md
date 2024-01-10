@@ -10,14 +10,10 @@ An OpenStack deployment contains a number of components providing APIs to access
 
 ## Compute
 
-NOVA
-Compute Service
-ZUN
-Containers Service
+NOVA Compute Service
+ZUN Containers Service
 
 ## Hardware Lifecycle
 
-IRONIC
-Bare Metal Provisioning Service
-CYBORG
-Lifecycle management of accelerators
+IRONIC Bare Metal Provisioning Service
+CYBORG Lifecycle management of accelerators
