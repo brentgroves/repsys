@@ -23,16 +23,12 @@ To look at some of the features that make Mach2 a good choice for companies usin
 - What is Mach2
 - Linamar Manufacturing Monitoring System (LMMS)
 
-## Manufacturing Execution System
-
-<https://www.plex.com/products/manufacturing-execution-system>
+## **[Manufacturing Execution System](https://www.plex.com/products/manufacturing-execution-system)**
 
 - people still manually enter much of their data.
 - For every action on the plant floor, there is a transaction in Plex.
 
-## State machine
-
-<https://www.itemis.com/en/products/itemis-create/documentation/user-guide/overview_what_are_state_machines>
+## **[State machine](https://www.itemis.com/en/products/itemis-create/documentation/user-guide/overview_what_are_state_machines)**
 
 A state machine is a behavior model. It consists of a finite number of states and is therefore also called finite-state machine (FSM). Based on the current state and a given input the machine performs state transitions and produces outputs. There are basic types like Mealy and Moore machines and more complex types like Harel and UML statecharts.
 
@@ -42,9 +38,7 @@ A state machine is a behavior model. It consists of a finite number of states an
 
 ![](https://sparxsystems.com/images/screenshots/uml2_tutorial/sm01.GIF)
 
-## Niagara Framework
-
-<https://www.tridium.com/us/en/Products/niagara>
+## **[Niagara](https://www.tridium.com/us/en/Products/niagara)** Framework
 
 Niagara provides the critical, cyber-secure device connectivity and data normalization capabilities needed to acquire and unlock operational data from device-level and equipment-level silos. The control engine at the core of Niagara enables users to not just monitor data flows, but to create logic sequences that effect controls programming based on data observation. Systems integrators use the data management and user presentation applications built into Niagara to manage histories, schedules and alarms. They can create custom user interfaces for end users with the tools built into Niagara, or purchase graphical UI templates and components from the many Niagara partners that specialize in graphics and dashboarding.
 
