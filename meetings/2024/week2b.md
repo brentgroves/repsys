@@ -8,13 +8,15 @@ The world's love is performance based, but my love is unconditional. The world's
 
 **Last meeting summary**,
 
-Sam talked about KepServerEx and Mach2, Brenden talked about Microsoft deployment service, and Robert Decker joined our meeting.
+Mach2 rebranded to Automation and Orchestration.
+Brent H. discussed his understanding of Mach2 and Mobex Azure requirements.
+Kevin talked about Plex IAM and discussed Mach2.
 
 About Friday's meeting,
 
 Hi guys.  I'm hoping we can have some fun in this meeting!  If there is any tech or thoughts about current trends you could share I'm sure it would be appreciated by the group, but no pressure if you would rather not :-)
 
-- Kevin what software and hardware is needed to virtualize graphics intense software. Something about Plex IAM.
+- Kevin something about Plex IAM.
 - Brad how what software does Fruitport machines use?
 - Sam something about Mach2 or Kep ServerEx if you want :-)
 - Brendan something about IT Administration or anything you want :-)
