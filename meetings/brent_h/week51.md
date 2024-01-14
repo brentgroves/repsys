@@ -19,7 +19,7 @@ These are internal links.
 
 ## Azure services and options
 
-Only need Azure services to enable customers to access our report gateway and PowerBI reports through Microsoft Teams.  A more cost-effective alternative is to put our databases and object storage in our DMZ.
+Only need Azure services to enable customers to access our report gateway and PowerBI reports through Microsoft Teams.  
 
 - Azure SQL Server **[managed instance](https://intercept.cloud/en/news/azure-sql-sql-managed-instance-or-sql-server)**
 - How to create **[Azure SQL Server managed instance](https://learn.microsoft.com/en-us/azure/azure-sql/managed-instance/instance-create-quickstart?view=azuresql)**
