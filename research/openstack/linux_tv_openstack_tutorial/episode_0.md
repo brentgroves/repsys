@@ -2,8 +2,8 @@
 
 ## NEXT
 
-<https://www.youtube.com/watch?v=IseEhw-Dxrc>
-START AT 11:11
+<https://www.youtube.com/watch?v=IseEhw-Dxrc> Done.
+<https://www.youtube.com/watch?v=NLlZwbFgGjU&t=1s>
 
 ## references
 
@@ -37,8 +37,18 @@ With OpenStack you know exactly how it works because you are the one building it
 - can install OpenStack on one server for development but since all the services our on one server expect to need about 32 GB of RAM.
 - Runs best when you split up its components between servers.
 
+ProxMox allows you to add nodes to the cluster.  This node has all the software components.  OpenStack's components can be installed on separate nodes.
+
 ## How to Install
 
-There are many installation options.
+There are many installation options.  You could use a service provider such as OpenMetal which handles the installation for you or you could install OpenStack yourself using DevStack.
+
+## OpenMetal K8s instance
+
+- create a public key pair
+- create a security group
+- 4 node setup. 1 controller and 4 workers.
 
 - **[DevStack](https://docs.openstack.org/devstack/latest/)**
+
+<https://www.youtube.com/watch?v=NLlZwbFgGjU&t=1s>
