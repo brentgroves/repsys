@@ -1,5 +1,9 @@
 # Next OpenStack
 
+## Summary 01-18-2024
+
+Studied multipass and virtual networking.  Go through the tutorial on virtual networking my son.
+
 ## Summary 01-17-2024
 
 <https://juju.is/docs/juju/tutorial>
