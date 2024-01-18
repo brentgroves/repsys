@@ -21,7 +21,7 @@ Hi guys.  I'm hoping we can have some fun in this meeting!  If there is any tech
 - Sam something about Mach2 or Kep ServerEx or Fruitport caster code if you want :-)
 - Brendan something about IT Administration or anything you want :-)
 - Brent H. something about Azure tenant migration.
-- Brent G. Report System API Gateway, IAM, and Microsoft Entra ID
+- Brent G. Report System API Gateway, Azure Bastion
 
 ## What is **[IAM](https://www.techtarget.com/searchsecurity/definition/identity-access-management-IAM-system)**, Identity and Access management?
 
@@ -85,3 +85,72 @@ OpenID Connect is an authentication protocol that extends OAuth 2.0 and can be u
 It employs OAuth 2.0 flows for the authentication request and response enabling a seamless single sign-on experience similar to OpenID. Additionally, it incorporates an OAuth 2.0 token that allows clients to access APIs and retrieve user information.
 
 Consequently, OpenID Connect offers both identity verification and delegated authorization capabilities enabling clients to securely access user data. By augmenting OAuth 2.0 with an identity layer featuring user profile claims OpenID Connect provides a means of achieving single sign-on functionality on top of the authorization framework offered by OAuth.
+
+## Azure Summary
+
+The plan is to ask for space on an Azure SQL Managed Instance, Power BI, single node AKS cluster, app registration, and access to an Azure DevOps repository.  Hopefully, I am wrong, but I believe the Azure Bastion won't be able to provide a secure TCP connection to our on-premises API gateway which routes traffic to our report system UI and reporting micro-services.
+
+I do not believe Azure Bastion is a **[SOCKs5 proxy server](https://securityintelligence.com/posts/socks-proxy-primer-what-is-socks5-and-why-should-you-use-it/)** which we could use to create a secure TCP connection to our API Gateway. Instead, it is only usable to create a secure RDP/SSH connection to an on-premise server.
+
+- Azure SQL Server **[managed instance](https://intercept.cloud/en/news/azure-sql-sql-managed-instance-or-sql-server)**
+- How to create **[Azure SQL Server managed instance](https://learn.microsoft.com/en-us/azure/azure-sql/managed-instance/instance-create-quickstart?view=azuresql)**
+- Azure **[Managed Kubernetes service](https://azure.microsoft.com/en-us/products/kubernetes-service)**
+- How to deploy an **[AKS cluster](https://learn.microsoft.com/en-us/azure/aks/tutorial-kubernetes-deploy-cluster?tabs=azure-cli)**
+- Azure **[App registration](../../linux/azure/app_registration/app_registration.md)** to enable our Apps to access the Azure API.
+- How to register and **[app](https://learn.microsoft.com/en-us/entra/identity-platform/quickstart-register-app)**
+- Azure **[repos](https://azure.microsoft.com/en-us/products/devops/repos/)**
+- How to create an Azure **[repo](https://learn.microsoft.com/en-us/azure/devops/repos/git/create-new-repo?view=azure-devops)**
+- What are PowerBI paginated reports **[comparison](https://learn.microsoft.com/en-us/power-bi/paginated-reports/paginated-reports-report-builder-power-bi)**
+- **[When to use paginated reports](https://learn.microsoft.com/en-us/power-bi/guidance/report-paginated-or-power-bi)**
+- License **[requirements](https://learn.microsoft.com/en-us/power-bi/paginated-reports/paginated-reports-report-builder-power-bi#prerequisites)** to use PowerBI paginated reports
+
+## What is a Bastion Host?
+
+![](https://discover.strongdm.com/hs-fs/hubfs/Imported_Blog_Media/605d2e18679dad4a2e0b7df4_StrongDM-1-AWS-bastion-host-user-flow-3.jpg?width=780&height=438&name=605d2e18679dad4a2e0b7df4_StrongDM-1-AWS-bastion-host-user-flow-3.jpg)
+
+A bastion host is a server used to manage access to an internal or private network from an external network - sometimes called a jump box or jump server. Because bastion hosts often sit on the Internet, they typically run a minimum amount of services to reduce their attack surface. They are also commonly used to proxy and log communications, such as SSH sessions.
+
+<https://docs.oracle.com/en-us/iaas/Content/Bastion/Tasks/managingsessions.htm#managingsessions>
+
+Oracle Bastion allows connection to on-premises servers via a Sock5 dynamic port forwarding session, but I believe the Microsoft Azure Bastion is only meant for secure SSH/RDP sessions.
+
+A **[SOCKs5 proxy server](https://securityintelligence.com/posts/socks-proxy-primer-what-is-socks5-and-why-should-you-use-it/)** creates a Transmission Control Protocol (TCP) connection to another server behind the firewall on the client’s behalf, then exchanges network packets between the client and the actual server. The SOCKS proxy server doesn’t interpret the network traffic between client and server in any way; it is often used because clients are behind a firewall and are not permitted to establish TCP connections to outside servers unless they do it through the SOCKS proxy server. Therefore, a SOCKS proxy relays a user’s TCP and User Datagram Protocol (UDP) session over a firewall.
+
+SOCKS is a layer 5 protocol, and it doesn’t care about anything below that layer in the Open Systems Interconnection (OSI) model — meaning you can’t use it to tunnel protocols operating below layer 5. This includes ping, Address Resolution Protocol (ARP), etc. From a security perspective, it won’t allow attackers to perform scans using tools such as Nmap if they are scanning based on half-open connections because it works at layer 5.
+
+![](https://www.imperva.com/learn/wp-content/uploads/sites/13/2020/02/OSI-vs.-TCPIP-models.jpg.webp)
+
+Since SOCKS sits at layer 5, between SSL (layer 7) and TCP/UDP (layer 4), it can handle several request types, including HTTP, HTTPS, POP3, SMTP, and FTP. As a result, SOCKS can be used for email, web browsing, peer-to-peer sharing, file transfers, and more.
+
+Other proxies built for specific protocols at layer 7, such as an HTTP proxy that is used to interpret and forward HTTP or HTTPS traffic between client and server, are often referred to as application proxies.
+
+There are only two versions: SOCKS4 and SOCKs5. The main differences between SOCKs5 and SOCKS4 are:
+
+- SOCKS4 doesn’t support authentication, while SOCKs5 supports a variety of authentication methods; and
+- SOCKS4 doesn’t support UDP proxies, while SOCKs5 does.
+
+## What is Azure Bastion?
+
+I do not believe Azure Bastion is a **[SOCKs5 proxy server](https://securityintelligence.com/posts/socks-proxy-primer-what-is-socks5-and-why-should-you-use-it/)** which we could use to create a secure TCP connection to our API Gateway. Instead, it is only usable to create a secure RDP/SSH connection to an on-premise server.
+
+Is our Bastion host configured to provide SSH tunneling (Dynamic Port Forwarding) from an Azure Public IP to a VM or computer within our company's network, remote port forwarding, taking care of TLS termination?
+
+![](https://learn.microsoft.com/en-us/azure/bastion/media/connect-ip-address/ip-address.png)
+
+<https://docs.oracle.com/en-us/iaas/Content/Bastion/Tasks/managingsessions.htm#managingsessions>
+
+## **[Azure Bastion Native Client Support](https://codyburkard.com/blog/bastionabuse/)**
+
+Instead of logging in through the Azure Portal, Azure Bastion now allows users to connect using their native RDP or SSH clients.
+
+If so I believe Bastion can be setup to route traffic to our K8s-hosted API gateway which has its own routing, throttling, TLS termination, and IAM authentication and authorization scheme.
+
+If TLS termination is done by our Bastion host then we will probably need to pay for a Public IP and a TLS certificate. Once this is done I believe we will be able to access our data warehouse reporting UI and micro-services from a Microsoft Teams reporting app.
+
+Azure Bastion is a fully managed PaaS service that you provision to securely connect to virtual machines via a private IP address. It provides secure and seamless RDP/SSH connectivity to your virtual machines directly over TLS from the Azure portal, or via the native SSH or RDP client already installed on your local computer. When you connect via Azure Bastion, your virtual machines don't need a public IP address, agent, or special client software.
+
+Bastion provides secure RDP and SSH connectivity to all of the VMs in the virtual network for which it's provisioned. Using Azure Bastion protects your virtual machines from exposing RDP/SSH ports to the outside world, while still providing secure access using RDP/SSH.
+
+The following diagram shows connections to virtual machines via a Bastion deployment that uses a Basic or Standard SKU.
+
+![](https://learn.microsoft.com/en-us/azure/bastion/media/bastion-overview/architecture.png)
