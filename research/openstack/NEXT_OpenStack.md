@@ -1,5 +1,9 @@
 # Next OpenStack
 
+## Summary 01-20-2024
+
+studying virtual networking tutorial.
+
 ## Summary 01-18-2024
 
 Studied multipass and virtual networking.  Go through the tutorial on virtual networking my son.
