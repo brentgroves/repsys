@@ -8,6 +8,8 @@
 
 Gateway API is an official Kubernetes project focused on L4 and L7 routing in Kubernetes. This project represents the next generation of Kubernetes Ingress, Load Balancing, and Service Mesh APIs. From the outset, it has been designed to be generic, expressive, and role-oriented.
 
+![](https://www.imperva.com/learn/wp-content/uploads/sites/13/2020/02/OSI-7-layers.jpg)
+
 The overall resource model focuses on 3 separate personas and corresponding resources that they are expected to manage:
 
 ![](https://gateway-api.sigs.k8s.io/images/resource-model.png)
@@ -40,7 +42,7 @@ Whether you are a user interested in using Gateway API or an implementer interes
 - API reference spec
 - Community links and developer guide
 
-## Gateway API concepts¶
+## Gateway API concepts
 
 The following design goals drive the concepts of Gateway API. These demonstrate how Gateway aims to improve upon current standards like Ingress.
 
@@ -56,7 +58,7 @@ The following design goals drive the concepts of Gateway API. These demonstrate 
 - **Typed Routes and typed backends** - Gateway API supports typed Route resources and also different types of backends. This allows the API to be flexible in supporting various protocols (like HTTP and gRPC) and various backend targets (like Kubernetes Services, storage buckets, or functions).
 - **Experimental Service mesh support with the GAMMA** initiative - Gateway API supports associating routing resources with Service resources, to configure service meshes as well as ingress controllers.
 
-## Why does a role-oriented API matter?¶
+## Why does a role-oriented API matter?
 
 Whether it’s roads, power, data centers, or Kubernetes clusters, infrastructure is built to be shared. However, shared infrastructure raises a common challenge - how to provide flexibility to users of the infrastructure while maintaining control by owners of the infrastructure?
 
@@ -74,13 +76,13 @@ Personas
 
 It should be clear that while Ana, Chihiro, and Ian do not necessarily see eye-to-eye about everything, they need to work together to keep things running smoothly. This is the core challenge of Gateway API in a nutshell.
 
-## Use Cases¶
+## Use Cases
 
 The example **[use cases](https://gateway-api.sigs.k8s.io/concepts/use-cases)** show this role-oriented model at work. Its flexibility allows the API to adapt to vastly different organizational models and implementations while remaining a portable and standard API.
 
 The use cases presented are deliberately cast in terms of the roles presented above. Ultimately Gateway API is meant for use by humans, which means that it must fit the uses to which each of Ana, Chihiro, and Ian will put it.
 
-## What's the difference between Gateway API and an API Gateway?¶
+## What's the difference between Gateway API and an API Gateway?
 
 An API Gateway is a general concept that describes anything that exposes capabilities of a backend service, while providing extra capabilities for traffic routing and manipulation, such as load balancing, request and response transformation, and sometimes more advanced features like authentication and authorization, rate limiting, and circuit breaking i.e. Kong API gateway
 

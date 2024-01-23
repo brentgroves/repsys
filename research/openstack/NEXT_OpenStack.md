@@ -1,5 +1,11 @@
 # Next OpenStack
 
+Continue Microstack study by learning **[juju](../juju/tutorial.md)**
+
+## Summary 01-23-2024
+
+studied tap devices.
+
 ## Summary 01-20-2024
 
 studying virtual networking tutorial.
