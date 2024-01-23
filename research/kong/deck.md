@@ -3,6 +3,7 @@
 ## references
 
 <https://docs.konghq.com/deck/latest/>
+<https://docs.konghq.com/deck/latest/installation/>
 
 # decK
 
