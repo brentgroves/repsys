@@ -18,7 +18,7 @@ This means that CRDs for both the Gateway API and Kong Ingress Controller have t
 Below command installs all Gateway API resources that have graduated to GA or beta, including GatewayClass, Gateway, HTTPRoute, and ReferenceGrant.
 
 ```bash
-kubectl apply -f <https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.0.0/standard-install.yaml>
+kubectl apply -f https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.0.0/standard-install.yaml
 ```
 
 To remove standard resources:
@@ -78,6 +78,14 @@ To install Kong Gateway Operator use kubectl apply:
 ```bash
 kubectl apply -f https://docs.konghq.com/assets/gateway-operator/v1.1.0/crds.yaml --server-side
 kubectl apply -f https://docs.konghq.com/assets/gateway-operator/v1.1.0/all_controllers.yaml
+
+kubectl get gateway          
+NAME   CLASS   ADDRESS    PROGRAMMED   AGE
+kong   kong    10.1.0.8   True         30d
+
+kubectl get gatewayclass                                
+NAME   CONTROLLER                    ACCEPTED   AGE
+kong   konghq.com/gateway-operator   True       30d
 
 ```
 
@@ -185,7 +193,31 @@ export PROXY_IP=$(kubectl get gateway kong -n default -o jsonpath='{.status.addr
 echo $PROXY_IP
 ```
 
-## Create a Route
+Ensure that you can call the proxy IP:
+
+```bash
+curl -i $PROXY_IP
+```
+
+The results should look like this:
+
+```bash
+HTTP/1.1 404 Not Found
+Date: Thu, 25 Jan 2024 21:26:15 GMT
+Content-Type: application/json; charset=utf-8
+Connection: keep-alive
+Content-Length: 103
+X-Kong-Response-Latency: 0
+Server: kong/3.5.0
+X-Kong-Request-Id: 8eb9430616a37001820d8b3717281a00
+
+{
+  "message":"no Route matched with those values",
+  "request_id":"8eb9430616a37001820d8b3717281a00"
+}%          
+```
+
+## **[Create a Route](https://docs.konghq.com/gateway-operator/latest/get-started/kic/create-route/)**
 
 This feature is released as a tech preview (alpha-quality) and should not be depended upon in a production environment.
 After you’ve installed all of the required components and configured a GatewayClass you can route some traffic to a service in your Kubernetes cluster.
@@ -211,6 +243,7 @@ kubectl delete deployment echo
 ```
 
 Create a HTTPRoute to send any requests that start with /echo to the echo service.
+NOTE: no Ingress was applied but an ingress was created.
 
 ```bash
 echo '
@@ -233,6 +266,10 @@ spec:
           port: 1027
 ' | kubectl apply -f -
 
+kubectl get ingress
+NAME   CLASS   HOSTS   ADDRESS    PORTS   AGE
+echo   kong    *       10.1.0.8   80      20d
+
 ```
 
 To remove echo route:
@@ -242,6 +279,7 @@ kubectl get httproute
 NAME   HOSTNAMES   AGE
 echo               18h
 kubectl delete httproute echo
+
 ```
 
 ## Test the configuration
@@ -263,9 +301,15 @@ Now that you have a running DataPlane configured using Gateway API resources, yo
 - **[Configuring Kong Gateway plugins using Kong Ingress Controller](https://docs.konghq.com/kubernetes-ingress-controller/latest/guides/using-kongplugin-resource/)**
 - **[Upgrading Kong Gateway Operator managed data planes](https://docs.konghq.com/gateway-operator/1.1.x/production/upgrade/data-plane/rolling/)**
 
-<https://docs.konghq.com/kubernetes-ingress-controller/3.0.x/get-started/rate-limiting/>
+## **[Rate Limiting](https://docs.konghq.com/kubernetes-ingress-controller/3.0.x/get-started/rate-limiting/)**
 
-## Create a rate-limiting KongPlugin
+<https://docs.konghq.com/hub/kong-inc/rate-limiting/>
+
+Rate limiting is used to control the rate of requests sent to an upstream service. It can be used to prevent **[DoS attacks](<https://www.paloaltonetworks.com/cyberpedia/what-is-a-denial-of-service-attack-dos#:~:text=A%20Denial%2Dof%2DService%20(,information%20that%20triggers%20a%20crash>.)**, limit web scraping, and other forms of overuse. Without rate limiting, clients have unlimited access to your upstream services, which may negatively impact availability.
+
+Kong Gateway imposes rate limits on clients through the Rate Limiting plugin. When rate limiting is enabled, clients are restricted in the number of requests that can be made in a configurable period of time. The plugin supports identifying clients as consumers based on authentication or by the client IP address of the requests.
+
+## Create a **[rate-limiting](https://docs.konghq.com/kubernetes-ingress-controller/3.0.x/get-started/rate-limiting/)** KongPlugin
 
 Configuring plugins with Kong Ingress Controller is different compared to how you’d do it with . Rather than attaching a configuration directly to a service or route, you create a KongPlugin definition and then annotate your Kubernetes resource with the konghq.com/plugins annotation.
 
@@ -299,6 +343,12 @@ Plugins can be linked to a service or a route. Adding a rate limit plugin to a s
 
 ```bash
 kubectl annotate service echo konghq.com/plugins=rate-limit-5-min
+
+kubectl describe svc echo                        
+Name:              echo
+Namespace:         default
+Labels:            app=echo
+Annotations:       konghq.com/plugins: rate-limit-5-min
 ```
 
 Alternatively you can add the rate limit plugin to a route. Adding a rate limit plugin to a route sets a rate limit per-route.
@@ -331,7 +381,8 @@ for i in `seq 6`; do curl -sv $PROXY_IP/echo 2>&1 | grep "< HTTP"; done
 
 This shows that the rate limiting plugin is preventing the request from reaching the upstream service.
 
-Further reading
+## Further reading
+
 For more information about rate limiting, see **[scale to multiple pods](https://docs.konghq.com/kubernetes-ingress-controller/3.0.x/plugins/rate-limiting/#scale-to-multiple-pods)** in the Rate Limiting plugin documentation.
 
 ## Proxy Caching

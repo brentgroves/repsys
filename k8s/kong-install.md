@@ -2,6 +2,8 @@
 
 ## references
 
+<https://docs.konghq.com/kubernetes-ingress-controller/3.0.x/get-started/>
+<https://docs.konghq.com/kubernetes-ingress-controller/3.0.x/get-started/services-and-routes/>
 <https://docs.konghq.com/gateway/latest/install/kubernetes/kubectl/>
 <https://docs.konghq.com/gateway/latest/kong-manager-oss/>
 <https://dev.to/robincher/securing-your-site-via-oidc-powered-by-kong-and-keycloak-2ccc>
@@ -10,6 +12,7 @@
 ## Install Kong Ingress Controller
 
 <https://docs.konghq.com/gateway/latest/install/kubernetes/kubectl/>
+<https://docs.konghq.com/kubernetes-ingress-controller/3.0.x/get-started/>
 
 Install the Gateway API CRDs before installing Kong Ingress Controller.
 
@@ -128,9 +131,7 @@ The results should look like this:
  {"message":"no Route matched with those values"}
 ```
 
-<https://docs.konghq.com/kubernetes-ingress-controller/3.0.x/get-started/services-and-routes/>
-
-## Services and Routes
+## **[Services and Routes](https://docs.konghq.com/kubernetes-ingress-controller/3.0.x/get-started/services-and-routes/)**
 
 A Service inside Kubernetes is a way to abstract an application that is running on a set of Pods. This maps to two objects in Kong: Service and Upstream.
 
@@ -163,7 +164,8 @@ echo                            1/1     1            1           9d
 kubectl delete deployment echo  
 ```
 
-Add routing configuration
+## Add routing configuration
+
 Create routing configuration to proxy /echo requests to the echo server:
 
 ```yaml
@@ -230,7 +232,8 @@ echo   kong    *       172.20.88.60   80      18h
 kubectl delete ingress echo
 ```
 
-Test the configuration
+## Test the configuration
+
 To test the configuration, make a call to the $PROXY_IP that you configured.
 
 ```bash
@@ -240,17 +243,15 @@ curl $PROXY_IP/echo
 
 ```
 
-<https://docs.konghq.com/kubernetes-ingress-controller/3.0.x/get-started/rate-limiting/>
+## **[Rate Limiting](https://docs.konghq.com/kubernetes-ingress-controller/3.0.x/get-started/rate-limiting/)**
 
-## Rate Limiting
+<https://docs.konghq.com/hub/kong-inc/rate-limiting/>
 
 Rate limiting is used to control the rate of requests sent to an upstream service. It can be used to prevent **[DoS attacks](<https://www.paloaltonetworks.com/cyberpedia/what-is-a-denial-of-service-attack-dos#:~:text=A%20Denial%2Dof%2DService%20(,information%20that%20triggers%20a%20crash>.)**, limit web scraping, and other forms of overuse. Without rate limiting, clients have unlimited access to your upstream services, which may negatively impact availability.
 
 Kong Gateway imposes rate limits on clients through the Rate Limiting plugin. When rate limiting is enabled, clients are restricted in the number of requests that can be made in a configurable period of time. The plugin supports identifying clients as consumers based on authentication or by the client IP address of the requests.
 
-<https://docs.konghq.com/hub/kong-inc/rate-limiting/>
-
-## Create a rate-limiting KongPlugin
+## Create a **[rate-limiting](https://docs.konghq.com/kubernetes-ingress-controller/3.0.x/get-started/rate-limiting/)** KongPlugin
 
 Configuring plugins with Kong Ingress Controller is different compared to how you’d do it with . Rather than attaching a configuration directly to a service or route, you create a KongPlugin definition and then annotate your Kubernetes resource with the konghq.com/plugins annotation.
 
@@ -284,6 +285,12 @@ Plugins can be linked to a service or a route. Adding a rate limit plugin to a s
 
 ```bash
 kubectl annotate service echo konghq.com/plugins=rate-limit-5-min
+
+kubectl describe svc echo                        
+Name:              echo
+Namespace:         default
+Labels:            app=echo
+Annotations:       konghq.com/plugins: rate-limit-5-min
 ```
 
 Alternatively you can add the rate limit plugin to a route. Adding a rate limit plugin to a route sets a rate limit per-route.
@@ -314,7 +321,8 @@ for i in `seq 6`; do curl -sv $PROXY_IP/echo 2>&1 | grep "< HTTP"; done
 
 This shows that the rate limiting plugin is preventing the request from reaching the upstream service.
 
-Further reading
+## Further reading
+
 For more information about rate limiting, see **[scale to multiple pods](https://docs.konghq.com/kubernetes-ingress-controller/3.0.x/plugins/rate-limiting/#scale-to-multiple-pods)** in the Rate Limiting plugin documentation.
 
 ## Proxy Caching
