@@ -1,5 +1,9 @@
 # Dummy Interface
 
+## references
+
+<https://unix.stackexchange.com/questions/152331/how-can-i-create-a-virtual-ethernet-interface-on-a-machine-without-a-physical-ad>
+
 ## **[Configuring virtual network interfaces](https://linuxconfig.org/configuring-virtual-network-interfaces-in-linux)**
 
 The methods for creating a virtual network interface have changed a bit through the years. There is more than one way to do this, but we will be using the “dummy” kernel module to set up our virtual interface in these steps.
