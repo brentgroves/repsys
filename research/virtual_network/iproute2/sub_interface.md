@@ -14,6 +14,12 @@ At a packet level any traffic for lo:100 flows through lo. This is different to 
 
 Subinterfaces are logical divisions of a physical interface on a router or a layer 3 switch. Each subinterface can be assigned a different IP address, subnet mask, and VLAN ID. Subinterfaces allow a single physical interface to act as multiple virtual interfaces, each connected to a different VLAN. For example, if you have a router with one interface connected to a switch that has four VLANs, you can create four subinterfaces on the router interface, each with a different VLAN ID and IP address, and configure the switch to use 802.1Q trunking to send VLAN-tagged frames to the router. This way, the router can route packets between the VLANs using the subinterfaces.
 
+Netplan does not have aliases ("sub-interface" per your wording) but does allow labeling of interfaces.
+
+<https://askubuntu.com/questions/1432883/how-to-create-sub-interface>
+
+Netplan does not have aliases ("sub-interface" per your wording) but does allow labeling of interfaces.
+
 ## How to create Ethernet interface at a specific IP address that I can ping and force to sometimes reply and sometimes not?
 
 3 answers received (my own included), and all 3 answers work!:

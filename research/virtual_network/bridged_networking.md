@@ -75,5 +75,11 @@ To show the interfaces which are part of the bridge, we can use the ip command a
 
 ```bash
 ip link show master virbr0
+# on reports51
+ip link show master br-742c7d722f37
+8: vethff79956@if7: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue master br-742c7d722f37 state UP mode DEFAULT group default 
+    link/ether 6a:4b:3a:e2:e1:5e brd ff:ff:ff:ff:ff:ff link-netnsid 1
+10: veth7314d37@if9: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue master br-742c7d722f37 state UP mode DEFAULT group default 
+    link/ether ba:cc:4a:d1:b0:df brd ff:ff:ff:ff:ff:ff link-netnsid 0
 
 ```
