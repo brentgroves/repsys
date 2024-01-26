@@ -651,6 +651,8 @@ kubectl patch --type json ingress echo -p='[{
 
 ## change default ssl certificate
 
+<https://devopscube.com/configure-ingress-tls-kubernetes/>
+
 ```bash
 # https://support.konghq.com/support/s/article/How-to-setup-Kong-to-serve-an-SSL-certificate-for-API-requests
 
