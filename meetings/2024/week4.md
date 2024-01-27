@@ -16,11 +16,11 @@ About Friday's meeting,
 
 Hi guys.  I'm hoping we can have some fun in this meeting!  If there is any tech or thoughts about current trends you could share I'm sure it would be appreciated by the group, but no pressure if you would rather not :-)
 
-- Kevin something about Plex IAM.
+- Kevin something about Plex.
 - Brad something about Fruitport casters or other machines if you want :-)
 - Sam something about Mach2 or Kep ServerEx or Fruitport caster code if you want :-)
 - Brendan something about IT Administration or anything you want :-)
-- Brent H. something about Azure tenant migration.
+- Brent H. something about Azure tenant migration, or anything you want :-)
 - Brent G. Report System API Gateway, Azure Bastion
 
 ## What is **[IAM](https://www.techtarget.com/searchsecurity/definition/identity-access-management-IAM-system)**, Identity and Access management?
