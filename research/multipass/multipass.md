@@ -15,6 +15,35 @@ Local development and testing is a pain, but Multipass makes it easier by automa
 
 Developers can use Multipass to prototype cloud deployments and to create fresh, customized Linux dev environments on any machine. Mac and Windows users can use Multipass as the quickest way to get an Ubuntu command line on their system. New Ubuntu users can use it as a sandbox to try new things without affecting their host machine, and without the need to dual boot.
 
+## **[Install Multipass](https://multipass.run/docs/installing-on-linux#heading--install-upgrade-uninstall)**
+
+To install Multipass, simply execute:
+
+```bash
+$ snap install multipass
+multipass 1.13.0 from Canonical✓ installed
+```
+
+For architectures other than amd64, you’ll need the beta channel at the moment.
+
+You can also use the edge channel to get the latest development build:
+
+```bash
+snap install multipass --edge
+```
+
+Make sure you’re part of the group that Multipass gives write access to its **[socket](../sockets/unix_domain_sockets.md)** (sudo in this case, but it may also be adm or admin, depending on your distribution):
+
+Make sure you’re part of the group that Multipass gives write access to its socket (sudo in this case, but it may also be adm or admin, depending on your distribution):
+
+```bash
+$ ls -l /var/snap/multipass/common/multipass_socket
+srw-rw---- 1 root sudo 0 Dec 19 09:47 /var/snap/multipass/common/multipass_socket
+$ groups | grep sudo
+brent adm cdrom sudo dip plugdev lpadmin lxd sambashare docker
+
+```
+
 ## Create an instance
 
 <https://multipass.run/docs/create-an-instance#heading--create-an-instance>
