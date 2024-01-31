@@ -227,6 +227,8 @@ The final thing to note is that when a HTTP 429 request is returned by the rate-
 
 We have K8s clusters spanning 3 dell Optiplexes in both Avilla and Albion. So, if one machine breaks the cluster continues to run the report system on the other two.  We also have K8s clusters on various virtual machines on Nutanix and WMware vSphere hypervisors. If one of those virtual machines go down K8s maybe able to run the software on the other nodes but we have not tested this.  If we create an OpenStack cluster on three or more bare Dell R620s we can ensure the report system stays running even if one or more nodes goes down.
 
+How OpenStack differs from other hypervisors is its API.  It is made to be automated and controlled by clients through it's API.
+
 ## service mesh vs. API gateway
 
 Here are the key things to know about service mesh vs. API gateway:
