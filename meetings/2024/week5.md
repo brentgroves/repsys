@@ -1,8 +1,17 @@
 # Father's directions
 
-The world's love is performance based, but my love is unconditional. The world's system promotes fear to be better than your neighbor.  I say help your neighbor and especially help the ones that are struggling. Do not worry about your own status.  Do not promote yourself instead think of others and help them in their work.
+The world's love is performance based, but my love is unconditional. The world's system promotes fear you must perform better than your neighbor.  I say help your neighbor and especially help the ones that are struggling. Do not worry about your own status.  Do not promote yourself instead think of others and help them in their work.
 
 Report System IT Admin, Hardware, or Software Topics of Interest
+
+## NEXT
+
+- continue on **[k8s httproute](../../research/gateway_api/httproute.md)**
+
+Update HTTPRoute to use certificate
+
+1. **[Create a certificate](../volumes/pki/gen-and-install-certs.md)** for the reports1.busche-cnc.com hostname.
+2. Update httproute object configuration to use this certificate.
 
 ## Grafana Dashboard
 
@@ -29,6 +38,222 @@ Hi guys.  I'm hoping we can have some fun in this meeting!  If there is any tech
 
 An API Gateway is an architectural pattern which introduces a transparent placeholder between API clients and the APIs, where Cross Cutting Concerns such as Access Control, Monitoring, Logging, Caching and Rate Limiting can be implemented.
 
+### Ingress to Kubernetes cluster
+
+Kubernetes lives in a virtual network. To access k8s services from outside of the cluster:
+
+- static IPs apart from any of the host IPs are used.
+- K8s network interface uses the drivers of host NICs.
+- Network packets sent to K8s IP/MAC addresses are forwarded to the Kubernetes API gateway for to be processed.
+
+### Resolving MAC Address from IP Address in Linux
+
+If you just want to find out the MAC address of a given IP address you can use the command arp to look it up, once you've pinged the system 1 time.
+
+```bash
+# Find mac address of reports1 load-balancer ip
+# ping from reports-alb
+ping -c1 10.1.0.8 
+PING 10.1.0.8 (10.1.0.8) 56(84) bytes of data.
+From 10.1.0.112 icmp_seq=1 Destination Host Unreachable
+
+--- 10.1.0.8 ping statistics ---
+1 packets transmitted, 0 received, +1 errors, 100% packet loss, time 0ms
+```
+
+Now look up in the ARP table:
+
+```bash
+# Find mac address of reports1 load-balancer 
+$ arp -a
+reports13 (10.1.0.112) at 98:90:96:c3:f4:83 [ether] on enp0s25
+reports1.busche-cnc.com (10.1.0.8) at 98:90:96:c3:f4:83 [ether] on enp0s25
+```
+
+## Install **[Kong API Gateway](../../k8s/kong-experimental-install.md)**
+
+## K8s HTTP Routing examples
+
+Incoming requests are matched against hostnames before the HTTPRoute rules are evaluated. If no hostname is specified, traffic is routed based on HTTPRoute rules and filters (optional).
+
+```yaml
+# The following example defines hostname "my.example.com":
+apiVersion: gateway.networking.k8s.io/v1beta1
+kind: HTTPRoute
+metadata:
+  name: httproute-example
+spec:
+  hostnames:
+  - my.example.com
+```
+
+## Rules
+
+Rules define semantics for matching an HTTP request based on conditions, optionally executing additional processing steps, and optionally forwarding the request to an API object.
+
+## Matches
+
+Matches define conditions used for matching an HTTP request. Each match is independent, i.e. this rule will be matched if any single match is satisfied.
+
+Take the following matches configuration as an example:
+
+```yaml
+apiVersion: gateway.networking.k8s.io/v1beta1
+kind: HTTPRoute
+...
+spec:
+  rules:
+  - matches:
+    - path:
+        value: "/foo"
+      headers:
+      - name: "version"
+        value: "2"
+    - path:
+        value: "/v2/foo"
+```
+
+## Key Authentication
+
+Authentication is the process of verifying that a requester has permissions to access a resource. API gateway authentication authenticates the flow of data to and from your upstream services.
+
+Kong Gateway has a library of plugins that support the most widely used methods of API gateway **[authentication](https://docs.konghq.com/hub/#authentication)**.
+
+Common authentication methods include:
+
+- Key Authentication
+- Basic Authentication
+- OAuth 2.0 Authentication (Kong for free) <https://docs.konghq.com/hub/kong-inc/oauth2/>
+- LDAP Authentication Advanced
+- OpenID Connect
+
+Run kubectl get gateway kong -n default to get the IP address for the gateway and set that as the value for the variable PROXY_IP.
+
+```bash
+export PROXY_IP=$(kubectl get gateway kong -n default -o jsonpath='{.status.addresses[0].value}')
+echo $PROXY_IP
+```
+
+Test that the API is secure by sending a request using curl -i $PROXY_IP/echo. Observe that a HTTP 401 is returned with this message:
+
+```bash
+curl -i $PROXY_IP/echo
+HTTP/1.1 401 Unauthorized
+Date: Fri, 05 Jan 2024 17:48:36 GMT
+Content-Type: application/json; charset=utf-8
+Connection: keep-alive
+WWW-Authenticate: Key realm="kong"
+Content-Length: 96
+X-Kong-Response-Latency: 1
+Server: kong/3.5.0
+X-Kong-Request-Id: 2e0dbd1ac29f85282b68067dc25f032e
+
+{
+  "message":"No API key found in request",
+  "request_id":"2e0dbd1ac29f85282b68067dc25f032e"
+}% 
+```
+
+## test http connection with API key
+
+```bash
+curl -H 'apikey: hello_world' $PROXY_IP/echo
+Welcome, you are connected to node reports52.
+Running on Pod echo-74c66b778-j2n45.
+In namespace default.
+With IP address 10.1.184.161.
+```
+
+## Rate limiting
+
+## Test the rate-limiting plugin
+
+To test the rate-limiting plugin, rapidly send six requests to $PROXY_IP/echo:
+
+```bash
+for i in `seq 6`; do curl -H 'apikey: hello_world' -sv $PROXY_IP/echo 2>&1 | grep "< HTTP"; done
+< HTTP/1.1 200 OK
+< HTTP/1.1 200 OK
+< HTTP/1.1 200 OK
+< HTTP/1.1 200 OK
+< HTTP/1.1 200 OK
+< HTTP/1.1 429 Too Many Requests
+```
+
+This shows that the rate limiting plugin is preventing the request from reaching the upstream service.
+
+## Test the proxy-cache plugin
+
+To test the proxy-cache plugin, send another six requests to $PROXY_IP/echo:
+
+```bash
+for i in `seq 6`; do curl -H 'apikey: hello_world' -sv $PROXY_IP/echo 2>&1 | grep -E "(Status|< HTTP)"; done
+< HTTP/1.1 200 OK
+< X-Cache-Status: Miss
+< HTTP/1.1 200 OK
+< X-Cache-Status: Hit
+< HTTP/1.1 200 OK
+< X-Cache-Status: Hit
+< HTTP/1.1 200 OK
+< X-Cache-Status: Hit
+< HTTP/1.1 200 OK
+< X-Cache-Status: Hit
+< HTTP/1.1 429 Too Many Requests
+
+```
+
+The first request results in X-Cache-Status: Miss. This means that the request is sent to the upstream service. The next four responses return X-Cache-Status: Hit which indicates that the request was served from a cache.
+
+The X-Cache-Status header can return the following cache results:
+
+| STATE   | DESCRIPTION                                                                                                                                        |
+|---------|----------------------------------------------------------------------------------------------------------------------------------------------------|
+| Miss    | The request could be satisfied in cache, but an entry for the resource was not found in cache, and the request was proxied upstream.               |
+| Hit     | The request was satisfied and served from the cache.                                                                                               |
+| Refresh | The resource was found in cache, but could not satisfy the request, due to Cache-Control behaviors or reaching its hard-coded cache_ttl threshold. |
+| Bypass  | The request could not be satisfied from cache based on plugin configuration.                                                                       |
+
+The final thing to note is that when a HTTP 429 request is returned by the rate-limit plugin, you do not see a X-Cache-Status header. This is because rate-limiting executes before proxy-cache. For more information, see **[plugin priority](https://docs.konghq.com/gateway/latest/plugin-development/custom-logic/#kong-plugins)**.
+
+## Kong Ingress **[HTTPS Redirect](https://docs.konghq.com/kubernetes-ingress-controller/latest/guides/services/https-redirect/)**
+
+Learn to configure the Kong Ingress Controller to redirect HTTP requests to HTTPS so that all communication from the external world to your APIs and microservices is encrypted.
+
+## Update HTTPRoute to use certificate
+
+1. **[Create a certificate](../volumes/pki/gen-and-install-certs.md)** for the reports1.busche-cnc.com hostname.
+2. Update your routing configuration to use this certificate.
+
+## Add TLS configuration
+
+The routing configuration can include a certificate to present when clients connect over HTTPS. This is not required, as Kong Gateway will serve a default certificate if it cannot find another, but including TLS configuration along with routing configuration is typical.
+
+1. **[Create a certificate](../volumes/pki/gen-and-install-certs.md)** for the reports1.busche-cnc.com hostname.
+2. Update your routing configuration to use this certificate.
+
+```bash
+kubectl patch --type json ingress echo -p='[{
+    "op":"add",
+ "path":"/spec/tls",
+ "value":[{
+        "hosts":["kong.example"],
+  "secretName":"kong.example"
+    }]
+}]'
+```
+
+## Why **[OpenStack](https://microstack.run/)**
+
+We have K8s clusters spanning 3 dell Optiplexes in both Avilla and Albion. So, if one machine breaks the cluster continues to run the report system on the other two.  We also have K8s clusters on various virtual machines on Nutanix and WMware vSphere hypervisors. If one of those virtual machines go down K8s maybe able to run the software on the other nodes but we have not tested this.  If we create an OpenStack cluster on three or more bare Dell R620s we can ensure the report system stays running even if one or more nodes goes down.
+
+How OpenStack differs from other hypervisors is its API.  It is made to be automated and controlled by clients through it's API.
+
+## service mesh vs. API gateway
+
+Here are the key things to know about service mesh vs. API gateway:
+
+- Service mesh acts as a centralized infrastructure layer for efficient microservices communication, simplifying tasks like service discovery and load balancing.
+- API gateways, on the other hand, serves as the entry point for external clients to access microservices, managing functions like request routing and authentication.
 
 ## Introduction to Linux interfaces for **[virtual networking](https://developers.redhat.com/blog/2018/10/22/introduction-to-linux-interfaces-for-virtual-networking)**
 
@@ -102,139 +327,6 @@ enp3s0:
     - 10.100.1.39/24:
         label: "enp3s0:some-label"
 ```
-
-### Resolving MAC Address from IP Address in Linux
-
-There are at least 3 methods above to create a virtual network on a linux host but the Kubernetes load-balancer we use does not seem to use any of them.  So I'm thinking it attaches itself to the network driver like a network interfaces and uses the arp protocol to respond to IP to mac requests. And also assigns a random Mac address for itself to use.
-
-If you just want to find out the MAC address of a given IP address you can use the command arp to look it up, once you've pinged the system 1 time.
-
-```bash
-# Find mac address of reports1 load-balancer ip
-# ping from reports-alb
-ping -c1 10.1.0.8 
-PING 10.1.0.8 (10.1.0.8) 56(84) bytes of data.
-From 10.1.0.112 icmp_seq=1 Destination Host Unreachable
-
---- 10.1.0.8 ping statistics ---
-1 packets transmitted, 0 received, +1 errors, 100% packet loss, time 0ms
-```
-
-Now look up in the ARP table:
-
-```bash
-# Find mac address of reports1 load-balancer 
-$ arp -a
-reports13 (10.1.0.112) at 98:90:96:c3:f4:83 [ether] on enp0s25
-? (10.1.0.32) at cc:70:ed:1b:4f:c0 [ether] on enp0s25
-Super-PLT-7.BUSCHE-CNC.com (10.1.0.170) at 4c:91:7a:64:0f:ad [ether] on enp0s25
-reports1.busche-cnc.com (10.1.0.8) at 98:90:96:c3:f4:83 [ether] on enp0s25
-```
-## Key Authentication
-
-Authentication is the process of verifying that a requester has permissions to access a resource. API gateway authentication authenticates the flow of data to and from your upstream services.
-
-Kong Gateway has a library of plugins that support the most widely used methods of API gateway **[authentication](https://docs.konghq.com/hub/#authentication)**.
-
-Common authentication methods include:
-
-- Key Authentication
-- Basic Authentication
-- OAuth 2.0 Authentication (Kong for free) <https://docs.konghq.com/hub/kong-inc/oauth2/>
-- LDAP Authentication Advanced
-- OpenID Connect
-
-Test that the API is secure by sending a request using curl -i $PROXY_IP/echo. Observe that a HTTP 401 is returned with this message:
-
-```bash
-curl -i $PROXY_IP/echo
-HTTP/1.1 401 Unauthorized
-Date: Fri, 05 Jan 2024 17:48:36 GMT
-Content-Type: application/json; charset=utf-8
-Connection: keep-alive
-WWW-Authenticate: Key realm="kong"
-Content-Length: 96
-X-Kong-Response-Latency: 1
-Server: kong/3.5.0
-X-Kong-Request-Id: 2e0dbd1ac29f85282b68067dc25f032e
-
-{
-  "message":"No API key found in request",
-  "request_id":"2e0dbd1ac29f85282b68067dc25f032e"
-}% 
-```
-
-## test http connection with API key
-
-curl -H 'apikey: hello_world' $PROXY_IP/echo
-Welcome, you are connected to node reports52.
-Running on Pod echo-74c66b778-j2n45.
-In namespace default.
-With IP address 10.1.184.161.
-
-## Rate limiting
-
-## Test the rate-limiting plugin
-
-To test the rate-limiting plugin, rapidly send six requests to $PROXY_IP/echo:
-
-```bash
-for i in `seq 6`; do curl -H 'apikey: hello_world' -sv $PROXY_IP/echo 2>&1 | grep "< HTTP"; done
-< HTTP/1.1 200 OK
-< HTTP/1.1 200 OK
-< HTTP/1.1 200 OK
-< HTTP/1.1 200 OK
-< HTTP/1.1 200 OK
-< HTTP/1.1 429 Too Many Requests
-```
-
-This shows that the rate limiting plugin is preventing the request from reaching the upstream service.
-
-## Test the proxy-cache plugin
-
-To test the proxy-cache plugin, send another six requests to $PROXY_IP/echo:
-
-```bash
-for i in `seq 6`; do curl -sv $PROXY_IP/echo 2>&1 | grep -E "(Status|< HTTP)"; done
-< HTTP/1.1 200 OK
-< X-Cache-Status: Miss
-< HTTP/1.1 200 OK
-< X-Cache-Status: Hit
-< HTTP/1.1 200 OK
-< X-Cache-Status: Hit
-< HTTP/1.1 200 OK
-< X-Cache-Status: Hit
-< HTTP/1.1 200 OK
-< X-Cache-Status: Hit
-< HTTP/1.1 429 Too Many Requests
-
-```
-
-The first request results in X-Cache-Status: Miss. This means that the request is sent to the upstream service. The next four responses return X-Cache-Status: Hit which indicates that the request was served from a cache.
-
-The X-Cache-Status header can return the following cache results:
-
-| STATE   | DESCRIPTION                                                                                                                                        |
-|---------|----------------------------------------------------------------------------------------------------------------------------------------------------|
-| Miss    | The request could be satisfied in cache, but an entry for the resource was not found in cache, and the request was proxied upstream.               |
-| Hit     | The request was satisfied and served from the cache.                                                                                               |
-| Refresh | The resource was found in cache, but could not satisfy the request, due to Cache-Control behaviors or reaching its hard-coded cache_ttl threshold. |
-| Bypass  | The request could not be satisfied from cache based on plugin configuration.                                                                       |
-
-The final thing to note is that when a HTTP 429 request is returned by the rate-limit plugin, you do not see a X-Cache-Status header. This is because rate-limiting executes before proxy-cache. For more information, see **[plugin priority](https://docs.konghq.com/gateway/latest/plugin-development/custom-logic/#kong-plugins)**.
-
-## Why **[OpenStack](https://microstack.run/)**
-
-We have K8s clusters spanning 3 dell Optiplexes in both Avilla and Albion. So, if one machine breaks the cluster continues to run the report system on the other two.  We also have K8s clusters on various virtual machines on Nutanix and WMware vSphere hypervisors. If one of those virtual machines go down K8s maybe able to run the software on the other nodes but we have not tested this.  If we create an OpenStack cluster on three or more bare Dell R620s we can ensure the report system stays running even if one or more nodes goes down.
-
-How OpenStack differs from other hypervisors is its API.  It is made to be automated and controlled by clients through it's API.
-
-## service mesh vs. API gateway
-
-Here are the key things to know about service mesh vs. API gateway:
-
-- Service mesh acts as a centralized infrastructure layer for efficient microservices communication, simplifying tasks like service discovery and load balancing.
-- API gateways, on the other hand, serves as the entry point for external clients to access microservices, managing functions like request routing and authentication.
 
 A **[SOCKs5 proxy server](https://securityintelligence.com/posts/socks-proxy-primer-what-is-socks5-and-why-should-you-use-it/)** creates a Transmission Control Protocol (TCP) connection to another server behind the firewall on the client’s behalf, then exchanges network packets between the client and the actual server. The SOCKS proxy server doesn’t interpret the network traffic between client and server in any way; it is often used because clients are behind a firewall and are not permitted to establish TCP connections to outside servers unless they do it through the SOCKS proxy server. Therefore, a SOCKS proxy relays a user’s TCP and User Datagram Protocol (UDP) session over a firewall.
 
