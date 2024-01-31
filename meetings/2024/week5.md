@@ -223,6 +223,10 @@ The X-Cache-Status header can return the following cache results:
 
 The final thing to note is that when a HTTP 429 request is returned by the rate-limit plugin, you do not see a X-Cache-Status header. This is because rate-limiting executes before proxy-cache. For more information, see **[plugin priority](https://docs.konghq.com/gateway/latest/plugin-development/custom-logic/#kong-plugins)**.
 
+## Why **[OpenStack](https://microstack.run/)**
+
+We have K8s clusters spanning 3 dell Optiplexes in both Avilla and Albion. So, if one machine breaks the cluster continues to run the report system on the other two.  We also have K8s clusters on various virtual machines on Nutanix and WMware vSphere hypervisors. If one of those virtual machines go down K8s maybe able to run the software on the other nodes but we have not tested this.  If we create an OpenStack cluster on three or more bare Dell R620s we can ensure the report system stays running even if one or more nodes goes down.
+
 ## service mesh vs. API gateway
 
 Here are the key things to know about service mesh vs. API gateway:
