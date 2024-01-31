@@ -226,3 +226,7 @@ HTTPRoute Rules include a Timeouts field. If unspecified, timeout behavior is im
 HTTPRoute Rules include a Timeouts field. If unspecified, timeout behavior is implementation-specific.
 
 There are 2 kinds of timeouts that can be configured in an HTTPRoute Rule:
+
+## Next
+
+<https://gateway-api.sigs.k8s.io/api-types/httproute/>
