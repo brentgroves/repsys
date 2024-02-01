@@ -229,4 +229,26 @@ There are 2 kinds of timeouts that can be configured in an HTTPRoute Rule:
 
 ## Next
 
+<https://kubernetes.io/blog/2023/11/28/gateway-api-ga/>
+<https://gateway-api.sigs.k8s.io/reference/spec/#gateway.networking.k8s.io/v1alpha2.BackendTLSPolicy>
 <https://gateway-api.sigs.k8s.io/api-types/httproute/>
+
+## Using Explicit CA Certificates
+
+In this example, the BackendTLSPolicy is configured to use certificates defined in the configuration map auth-cert to connect with a TLS-encrypted upstream connection where Pods backing the auth Service are expected to serve a valid certificate for auth.example.com.
+
+apiVersion: gateway.networking.k8s.io/v1alpha2
+kind: BackendTLSPolicy
+metadata:
+  name: tls-upstream-auth
+spec:
+  targetRef:
+    kind: Service
+    name: auth-service
+    group: ""
+  tls:
+    caCertRefs:
+      - kind: ConfigMapReference
+        name: auth-cert
+        group: ""
+    hostname: auth.example.com
