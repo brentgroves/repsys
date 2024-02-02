@@ -19,15 +19,14 @@ Update HTTPRoute to use certificate
 
 **Last meeting summary**,
 
-Mach2 rebranded to Automation and Orchestration.
-Brent H. discussed his understanding of Mach2 and Mobex Azure requirements.
-Kevin talked about Plex IAM and discussed Mach2.
+Brad Cook and Robert Decker attended.
+Brent G. discussed the Report System API Gateway
 
 About Friday's meeting,
 
 Hi guys.  I'm hoping we can have some fun in this meeting!  If there is any tech or thoughts about current trends you could share I'm sure it would be appreciated by the group, but no pressure if you would rather not :-)
 
-- Kevin something about Plex.
+- Kevin something about Plex or other machines if you want :-)
 - Brad something about Fruitport casters or other machines if you want :-)
 - Sam something about Mach2 or Kep ServerEx or Fruitport caster code if you want :-)
 - Brendan something about IT Administration or anything you want :-)
