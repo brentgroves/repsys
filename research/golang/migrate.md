@@ -50,7 +50,7 @@ Notes
 ```bash
 # https://pkg.go.dev/cmd/go
 # https://go.dev/ref/mod#go-get
-
+# https://github.com/golang-migrate/migrate/releases
 # go get supports the following flags:
 
 # The -d flag tells go get NOT to build or install packages. When -d is used, go get will only manage dependencies in go.mod. Using go get without -d to build and install packages is deprecated (as of Go 1.17). In Go 1.18, -d will always be enabled.
@@ -58,25 +58,13 @@ Notes
 # The -u flag tells go get to upgrade modules providing packages imported directly or indirectly by packages named on the command line. Each module selected by -u will be upgraded to its latest version unless it is already required at a higher version (a pre-release).
 
 
-go get -tags 'postgres' -u github.com/golang-migrate/migrate/v4/cmd/migrate/
-go get -u -d github.com/golang-migrate/migrate/v4/cmd/migrate/
-
-go get -u -d github.com/golang-migrate/migrate/cmd/migrate
-cd $GOPATH/src/github.com/golang-migrate/migrate/cmd/migrate
-git checkout $TAG  # e.g. v4.1.0
-# Go 1.15 and below
-go build -tags 'postgres' -ldflags="-X main.Version=$(git describe --tags)" -o $GOPATH/bin/migrate $GOPATH/src/github.com/golang-migrate/migrate/cmd/migrate
-# Go 1.16+
-go install -tags 'postgres' github.com/golang-migrate/migrate/v4/cmd/migrate@$TAG
-```
-
-## linux install
-
-```bash
-curl -L https://packagecloud.io/golang-migrate/migrate/gpgkey | apt-key add -
-$ echo "deb https://packagecloud.io/golang-migrate/migrate/ubuntu/ $(lsb_release -sc) main" > /etc/apt/sources.list.d/migrate.list
-$ apt-get update
-$ apt-get install -y migrate
+go install -tags 'mysql' github.com/golang-migrate/migrate/v4/cmd/migrate@v4.17.0
+go install -tags 'mysql' github.com/golang-migrate/migrate/v4/cmd/migrate@latest
+ls $HOME/go/bin/
+dlv  go1.20  gomodifytags  go-outline  goplay  gopls  gotests  hello  impl  migrate  runner  staticcheck
+cd internal/pkg/db/migrations/
+migrate create -ext sql -dir mysql -seq create_users_table
+migrate create -ext sql -dir mysql -seq create_links_table
 ```
 
 How to Create a New Migration
