@@ -619,6 +619,7 @@ With IP address 10.1.184.161.
 
 # test https connection
 curl -H 'apikey: hello_world' https://10.1.0.8/echo
+curl -v -H 'apikey: hello_world' https://$PROXY_IP/echo
 curl: (60) SSL certificate problem: self-signed certificate
 More details here: https://curl.se/docs/sslcerts.html
 
@@ -636,9 +637,42 @@ Learn to configure the Kong Ingress Controller to redirect HTTP requests to HTTP
 The routing configuration can include a certificate to present when clients connect over HTTPS. This is not required, as Kong Gateway will serve a default certificate if it cannot find another, but including TLS configuration along with routing configuration is typical.
 
 1. **[Create a certificate](../volumes/pki/gen-and-install-certs.md)** for the reports1.busche-cnc.com hostname.
-2. Update your routing configuration to use this certificate.
+2. create TLS secret
 
 ```bash
+pushd .
+cd ~/src/repsys/volumes/pki/intermediateCA 
+kubectl create secret tls reports1 --cert=./certs/server-chain/reports1.busche-cnc.com-ca-chain-bundle.cert.pem --key=./private/reports1.busche-cnc.com.san.key.pem
+
+# https://www.sslshopper.com/certificate-decoder.html
+kubectl get secret reports1 -o json | jq -r '.data."tls.key"' | base64 -d
+kubectl get secret reports1 -o json | jq -r '.data."tls.crt"' | base64 -d
+
+
+```
+
+## NEXT
+
+<https://docs.konghq.com/kubernetes-ingress-controller/latest/guides/services/https-redirect/>
+
+3. Update your routing configuration to use this certificate.
+
+```bash
+kubectl describe ingress echo                                            
+Name:             echo
+Labels:           <none>
+Namespace:        default
+Address:          10.1.0.8
+Ingress Class:    kong
+Default backend:  <default>
+Rules:
+  Host        Path  Backends
+  ----        ----  --------
+  *           
+              /echo   echo:1027 (10.1.102.213:1027)
+Annotations:  konghq.com/strip-path: true
+Events:       <none>
+
 kubectl patch --type json ingress echo -p='[{
     "op":"add",
  "path":"/spec/tls",
@@ -647,10 +681,23 @@ kubectl patch --type json ingress echo -p='[{
   "secretName":"kong.example"
     }]
 }]'
+
+# reports1
+# https://kubernetes.io/docs/concepts/services-networking/ingress/#tls
+kubectl patch --type json ingress echo -p='[{
+    "op":"add",
+ "path":"/spec/tls",
+ "value":[{
+        "hosts":["reports1.busche-cnc.com"],
+  "secretName":"reports1"
+    }]
+}]'
+
 ```
 
 ## change default ssl certificate
 
+<https://semaphoreci.com/blog/kubernetes-ssl-tls>
 <https://devopscube.com/configure-ingress-tls-kubernetes/>
 
 ```bash
