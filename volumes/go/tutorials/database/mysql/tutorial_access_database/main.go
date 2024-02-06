@@ -65,6 +65,9 @@ func main() {
 
 }
 
+// https://stackoverflow.com/questions/73056245/calling-stored-procedure-in-golang-with-queryrowcontent
+// query := "CALL usp_GetUserByUsername(?)"
+
 // albumsByArtist queries for albums that have the specified artist name.
 func albumsByArtist(name string) ([]Album, error) {
 	// An albums slice to hold data from returned rows.
