@@ -58,6 +58,8 @@ In fact, this won’t work. You’ll get the following error: Error 1312: PROCED
 <https://gist.github.com/cbess/d14f8ec78bf239b72645246c9ee3f67b>
 <https://learningprogramming.net/golang/golang-and-mysql/call-stored-procedure-with-parameters-in-golang-and-mysql-database/>
 
+<https://stackoverflow.com/questions/73056245/calling-stored-procedure-in-golang-with-queryrowcontent>
+
 A stored procedure that saves (insert/update) a URL, then returns the id for the record.
 
 Works in Go v1.11.6+ and MySQL 5.7+.
@@ -152,4 +154,34 @@ for rows.Next() {
 }
 
 // Go doesn’t stop you from trying, though. For that reason, you may wind up with a corrupted connection if you attempt to perform another statement before the first has released its resources and cleaned up after itself. This also means that each statement in a transaction results in a separate set of network round-trips to the database.
+```
+
+<https://stackoverflow.com/questions/73056245/calling-stored-procedure-in-golang-with-queryrowcontent>
+
+```sql
+import (
+"database/sql"
+"net/http"
+)
+
+func VerifyUser(user User) (*User, string, error) {
+  db, ctx := db.GetDB()
+  query := "CALL usp_GetUserByUsername(?)"
+
+stmt, err := db.Prepare(query)
+if err != nil {
+    log.Errorln("Error in preparing statement. " + err.Error())
+    return nil, "Error in preparing statement.", err
+}
+defer stmt.Close()
+
+row := stmt.QueryRowContext(ctx, user.Email)
+
+var retUser User
+err = row.Scan(&retUser.ID, &retUser.Email, &retUser.Password, &retUser.Status)
+if err != nil {
+    log.Warningln("Unknown Email: " + user.Email + ". " + err.Error())
+    return nil, "Invalid user.", err
+}
+
 ```

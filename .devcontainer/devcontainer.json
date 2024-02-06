@@ -38,9 +38,10 @@
 				"vscjava.vscode-java-pack",
 				"vscjava.vscode-java-debug",
 				"redhat.java",
-        "redhat.fabric8-analytics",
-        "dgileadi.java-decompiler",
-        "xdebug.php-debug"
+				"redhat.fabric8-analytics",
+				"dgileadi.java-decompiler",
+				"xdebug.php-debug",
+				"formulahendry.vscode-mysql"
 			]
 		}
 	},
