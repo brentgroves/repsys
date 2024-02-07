@@ -449,8 +449,24 @@ Run the code
 
 From the command line in the directory containing main.go, run the code.
 
+```bash
 $ go run .
 Connected!
 Albums found: [{1 Blue Train John Coltrane 56.99} {2 Giant Steps John Coltrane 63.99}]
 Album found: {2 Giant Steps John Coltrane 63.99}
 ID of added album: 5
+```
+
+## stored procedures
+
+```sql
+call recordings.getAlbumsByName( "John Coltrane")
+-- drop procedure recordings.getAlbumsByName;
+create procedure recordings.getAlbumsByName
+(
+ in v_name varchar(25)
+)
+begin
+SELECT * FROM recordings.album WHERE artist = v_name;
+end;
+```

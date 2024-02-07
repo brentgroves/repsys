@@ -4,7 +4,6 @@ import (
 	"database/sql"
 	"fmt"
 	"log"
-	"os"
 
 	"github.com/go-sql-driver/mysql"
 )
@@ -21,13 +20,18 @@ type Album struct {
 func main() {
 	// Capture connection properties.
 	cfg := mysql.Config{
-		User:                 os.Getenv("DBUSER"),
-		Passwd:               os.Getenv("DBPASS"),
+		// User:                 os.Getenv("DBUSER"),
+		// Passwd:               os.Getenv("DBPASS"),
+		User:                 "root",
+		Passwd:               "dbpass",
 		Net:                  "tcp",
 		Addr:                 "127.0.0.1:3306",
 		DBName:               "recordings",
 		AllowNativePasswords: true,
 	}
+	// The key is the connection string. Make sure multiStatements=true and autocommit=true are present.
+	// myDb, err := sql.Open("mysql", "user:password@/somedb?multiStatements=true&autocommit=true")
+
 	// Get a database handle.
 	var err error
 	db, err = sql.Open("mysql", cfg.FormatDSN())
@@ -63,10 +67,67 @@ func main() {
 	}
 	fmt.Printf("ID of added album: %v\n", albID)
 
+	var name string = "Gerry Mulligan"
+	alb1, err := getAlbumsByArtist(name)
+	if err != nil {
+		log.Fatal(err)
+	}
+	fmt.Printf("Album found: %v\n", alb1)
+
+	albums2, err := getAlbumsByArtist("John Coltrane")
+	if err != nil {
+		log.Fatal(err)
+	}
+	fmt.Printf("Albums found: %v\n", albums2)
+
 }
 
 // https://stackoverflow.com/questions/73056245/calling-stored-procedure-in-golang-with-queryrowcontent
 // query := "CALL usp_GetUserByUsername(?)"
+
+func getAlbumsByArtist(name string) ([]Album, error) {
+	// An albums slice to hold data from returned rows.
+	var albums []Album
+
+	// rows, err := db.QueryRow("EXEC PRCENVIACOMANDO @IDVEICULO=?, @CMD=?", name, 2).Scan(&album,&ret)
+	rows, err := db.Query(
+		"CALL getAlbumsByArtist(?)",
+		name,
+	)
+	if err != nil {
+		return nil, fmt.Errorf("albumsByArtist %q: %v", name, err)
+	}
+	defer rows.Close()
+	// Loop through rows, using Scan to assign column data to struct fields.
+	for rows.Next() {
+		var alb Album
+		if err := rows.Scan(&alb.ID, &alb.Title, &alb.Artist, &alb.Price); err != nil {
+			return nil, fmt.Errorf("albumsByArtist %q: %v", name, err)
+		}
+		albums = append(albums, alb)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, fmt.Errorf("albumsByArtist %q: %v", name, err)
+	}
+	return albums, nil
+}
+
+// albumsByArtist queries for albums that have the specified artist name.
+func getAlbumByArtist(name string) (Album, error) {
+	// An albums slice to hold data from returned rows.
+	// var albums []Album
+	var alb Album
+
+	// rows, err := db.QueryRow("EXEC PRCENVIACOMANDO @IDVEICULO=?, @CMD=?", name, 2).Scan(&album,&ret)
+	row := db.QueryRow(
+		"CALL getAlbumsByArtist(?)",
+		name,
+	)
+	if err := row.Scan(&alb.ID, &alb.Title, &alb.Artist, &alb.Price); err != nil {
+		return alb, fmt.Errorf("unable to find album: %s", err)
+	}
+	return alb, nil
+}
 
 // albumsByArtist queries for albums that have the specified artist name.
 func albumsByArtist(name string) ([]Album, error) {
