@@ -60,9 +60,14 @@ Scope: L4 operates at the transport layer and manages end-to-end communication b
 Responsibilities:End-to-end communication: L4 is responsible for establishing, maintaining, and terminating connections between devices.Segmentation and reassembly: It divides data into smaller segments for efficient transmission and reassembles them at the receiving end.Error detection and correction: L4 protocols like TCP (Transmission Control Protocol) provide error detection and recovery mechanisms.Port and session management: L4 uses port numbers to distinguish different services running on a device (e.g., HTTP on port 80, FTP on port 21).
 Protocols: Prominent L4 protocols include TCP (connection-oriented) and UDP (connectionless).
 
-## Differences
+## OSI Networking Differences
 
 - **Layer Focus**: L2: Local network communication, data frames, and MAC addressing.L3: Inter-network communication, logical addressing (IP), and routing.L4: End-to-end communication, data segmentation, error handling, and port-based addressing.
 - **Addressing**: L2: Uses MAC addresses for physical device identification within the local network.L3: Uses IP addresses for logical device identification, allowing routing between networks.L4: Utilizes port numbers to distinguish different services on a device.
 - **Communication** Scope:L2: Local network (e.g., LAN) communication.L3: Inter-network (e.g., internet) communication.L4: End-to-end communication across networks.
 - **Error Handling**:L2: Basic error detection (CRC), but limited error correction capabilities.L3: No error handling, but relies on L4 for error detection (e.g., ICMP for error reporting).L4: Provides error detection and correction (e.g., TCP's acknowledgment and retransmission mechanisms).
+
+![](https://cf-assets.www.cloudflare.com/slt3lc6tev37/6ZH2Etm3LlFHTgmkjLmkxp/59ff240fb3ebdc7794ffaa6e1d69b7c2/osi_model_7_layers.png)
+
+## K8s mappings to OSI Model
+
