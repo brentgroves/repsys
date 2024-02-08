@@ -16,16 +16,20 @@ It can be viewed from <https://markdownlivepreview.com/> or by logging into devc
 Talked to Aamir Ghaffar and Vishal Kumar Medavarapu
 
 - Send email of PowerBI paginated (rdx) report to Vishal
-- How to access My Service Request app
 
-## Sql Server
+## On-Premise Sql Server
 
+- Periodic reports
 - Export result dataset from ETL pipeline to Lanimar data warehouse
-- Export DDL for Tables
+- Export DDL for Tables and create a service request.
 
-## Azure Sql Server for ETL
+## Postgres and MySQL
 
-- SAS not managed instance Azure Sql Server for running ETL scripts probably should use one of our local SQL Server also for a backup.
+- Dynamic archivable reports such as TB
+
+## **[Azure Sql Server](https://learn.microsoft.com/en-us/azure/azure-sql/database/features-comparison?view=azuresql) for ETL
+
+- Azure Sql Server for running ETL scripts and Teams Power BI app access to dynamic archivable reports.
 
 About Friday's meeting,
 
