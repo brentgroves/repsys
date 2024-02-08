@@ -62,12 +62,41 @@ Financial
 
 Need **[paginated report](https://learn.microsoft.com/en-us/power-bi/paginated-reports/paginated-reports-faq)** license.
 
-service license
-e-3 need e-5 license
+## Power BI license
+
+e-3 need e-5 license to publish Power BI paginated report
+Just send it to someone with an e-5 license
 
 This article answers frequently asked questions about paginated reports. These reports are highly formatted, print-ready output optimized for printing or PDF generation. They're called "paginated" because they're formatted to fit well on multiple pages. Paginated reports are based on the RDL report technology in SQL Server Reporting Services.
 
 This article answers many common questions people have about paginated reports in Power BI, and about Power BI Report Builder, the standalone tool for authoring paginated reports. You don't need a Premium Per User (PPU) license or a Power BI Pro license to publish paginated reports to My Workspace. You do need a **[PPU](https://learn.microsoft.com/en-us/power-bi/enterprise/service-premium-per-user-faq)** or **[Power BI Pro license](https://learn.microsoft.com/en-us/power-bi/fundamentals/service-self-service-signup-for-power-bi)** and write access to publish to other workspaces. Users with free, Pro, and PPU licenses can view the content. To learn more about licensing, see Licensing the Power BI service for users in your organization
+
+## Scan your LAN for available IP
+
+<https://nmap.org/book/port-scanning-tutorial.html>
+<https://www.techrepublic.com/article/how-to-scan-for-ip-addresses-on-your-network-with-linux/>
+
+```bash
+sudo snap install nmap
+sudo apt-get install nmap -y
+
+# Once the installation completes, you are ready to scan your LAN with nmap. To find out what addresses are in use, issue the command:
+
+nmap -sP 172.20.88.0/22
+nmap -sP 10.1.0.0/22
+nmap 172.20.88.115
+<https://172.20.88.115-118>
+
+# Note: You will need to alter the IP address scheme to match yours.
+
+# The output of the command (Figure B), will show you each address found on your LAN.
+
+sudo nmap -vv -sS -O -n 172.20.88.0/22
+```
+
+While this simple command is often all that is needed, advanced users often go much further. In Example 4.3, the scan is modified with four options. -p0- asks Nmap to scan every possible TCP port, -v asks Nmap to be verbose about it, -A enables aggressive tests such as remote OS detection, service/version detection, and the Nmap Scripting Engine (NSE). Finally, -T4 enables a more aggressive timing policy to speed up the scan.
+
+nmap p0- -v -A -T4 172.20.88.115
 
 ## Network connectivity issues
 
