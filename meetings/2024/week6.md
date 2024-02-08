@@ -29,7 +29,7 @@ Talked to Aamir Ghaffar and Vishal Kumar Medavarapu
 
 ## **[Azure Sql Server](https://learn.microsoft.com/en-us/azure/azure-sql/database/features-comparison?view=azuresql) for ETL
 
-- Azure Sql Server for running ETL scripts and Teams Power BI app access to dynamic archivable reports.
+- Azure Sql Server for Teams Report requestor and Power BI app access to dynamic archivable reports.
 
 About Friday's meeting,
 
