@@ -25,7 +25,7 @@ Hi guys.  I'm hoping we can have some fun in these meetings!  If there is any te
 - Sam something about Mach2 or Kep ServerEx or Fruitport caster code if you want :-)
 - Brendan something about IT Administration or anything you want :-)
 - Brent H. something about Azure tenant migration, or anything you want :-)
-- Brent G. Microsoft Data Analytics team
+- Brent G. Microsoft Data Analytics team, Network connectivity trouble-shooting
 
 ## Create Microsoft Team
 
@@ -50,6 +50,42 @@ Need **[paginated report](https://learn.microsoft.com/en-us/power-bi/paginated-r
 This article answers frequently asked questions about paginated reports. These reports are highly formatted, print-ready output optimized for printing or PDF generation. They're called "paginated" because they're formatted to fit well on multiple pages. Paginated reports are based on the RDL report technology in SQL Server Reporting Services.
 
 This article answers many common questions people have about paginated reports in Power BI, and about Power BI Report Builder, the standalone tool for authoring paginated reports. You don't need a Premium Per User (PPU) license or a Power BI Pro license to publish paginated reports to My Workspace. You do need a **[PPU](https://learn.microsoft.com/en-us/power-bi/enterprise/service-premium-per-user-faq)** or **[Power BI Pro license](https://learn.microsoft.com/en-us/power-bi/fundamentals/service-self-service-signup-for-power-bi)** and write access to publish to other workspaces. Users with free, Pro, and PPU licenses can view the content. To learn more about licensing, see Licensing the Power BI service for users in your organization
+
+## Network connectivity issues
+
+Complex expressions
+You can also combine filters by using the logical operators and and or to create more complex expressions. For example, to filter packets from source IP address 192.168.122.98 and service HTTP only, use this command:
+
+```bash
+# from reports13
+# Protocol filter
+# sudo tcpdump -i any -c5 icmp
+# Host filter
+# sudo tcpdump -i any -c5 -nn host 10.1.0.112
+# port filter
+# sudo tcpdump -i any -c5 -nn port 80
+# Source IP/hostname
+# sudo tcpdump -i any -c5 -nn src 10.1.0.8 and port 80
+# sudo tcpdump -i any -c5 -nn dst reports-alb and port 80
+# Complex expression
+# sudo tcpdump -i any -c5 -nn "port 80 and (src reports-alb or dst reports1.busche-cnc.com)"
+# Checking packet content
+# sudo tcpdump -i any -c10 -nn -A port 80
+
+# from reports-alb
+export PROXY_IP=$(kubectl get gateway kong -n default -o jsonpath='{.status.addresses[0].value}')
+curl -v -H 'apikey: hello_world' http://$PROXY_IP/echo
+# output on reports13
+tcpdump: data link type LINUX_SLL2
+tcpdump: verbose output suppressed, use -v[v]... for full protocol decode
+listening on any, link-type LINUX_SLL2 (Linux cooked v2), snapshot length 262144 bytes
+19:38:32.817363 eno1  Out IP 10.1.0.8.80 > 10.1.0.113.39876: Flags [S.], seq 1746092061, ack 3164218779, win 64308, options [mss 1410,sackOK,TS val 2714916 ecr 1409505967,nop,wscale 7], length 0
+19:38:32.817878 eno1  Out IP 10.1.0.8.80 > 10.1.0.113.39876: Flags [.], ack 98, win 502, options [nop,nop,TS val 2714916 ecr 1409505968], length 0
+19:38:32.819661 eno1  Out IP 10.1.0.8.80 > 10.1.0.113.39876: Flags [P.], seq 1:629, ack 98, win 502, options [nop,nop,TS val 2714918 ecr 1409505968], length 628: HTTP: HTTP/1.1 200 OK
+19:38:32.820735 eno1  Out IP 10.1.0.8.80 > 10.1.0.113.39876: Flags [F.], seq 629, ack 99, win 502, options [nop,nop,TS val 2714919 ecr 1409505970], length 0
+
+
+```
 
 ## Why **[OpenStack](https://microstack.run/)**
 
