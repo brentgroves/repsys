@@ -11,10 +11,21 @@ It can be viewed from <https://markdownlivepreview.com/> or by logging into devc
 
 ![Grafana dashboard](https://grafana.com/api/dashboards/1860/images/7994/image)
 
-**Last meeting summary**,
+## Meeting Summary
 
-Brad Cook and Robert Decker attended.
-Brent G. discussed the Report System API Gateway
+Talked to Aamir Ghaffar and Vishal Kumar Medavarapu
+
+- Send email of PowerBI paginated (rdx) report to Vishal
+- How to access My Service Request app
+
+## Sql Server
+
+- Export result dataset from ETL pipeline to Lanimar data warehouse
+- Export DDL for Tables
+
+## Azure Sql Server for ETL
+
+- SAS not managed instance Azure Sql Server for running ETL scripts probably should use one of our local SQL Server also for a backup.
 
 About Friday's meeting,
 
@@ -46,6 +57,9 @@ Financial
 ```
 
 Need **[paginated report](https://learn.microsoft.com/en-us/power-bi/paginated-reports/paginated-reports-faq)** license.
+
+service license
+e-3 need e-5 license
 
 This article answers frequently asked questions about paginated reports. These reports are highly formatted, print-ready output optimized for printing or PDF generation. They're called "paginated" because they're formatted to fit well on multiple pages. Paginated reports are based on the RDL report technology in SQL Server Reporting Services.
 

@@ -2,6 +2,13 @@
 
 This is a markdown file if it looks a little strange. You could use visual studio code or an online viewer such as <https://dillinger.io/>
 
+## Meeting Summary
+
+Talked to Aamir Ghaffar and Vishal Kumar Medavarapu
+
+- Table, Index, SPROC requirements to Aamir
+- Send email of PowerBI paginated (rdx) report to Vishal
+
 ## Report system
 
 Why do we need a report system besides the one that comes standard with Plex?
@@ -22,6 +29,7 @@ These are internal links.
 Only need Azure services to enable customers to access our report gateway and PowerBI reports through Microsoft Teams.  
 
 - Azure SQL Server **[managed instance](https://intercept.cloud/en/news/azure-sql-sql-managed-instance-or-sql-server)**
+
 - How to create **[Azure SQL Server managed instance](https://learn.microsoft.com/en-us/azure/azure-sql/managed-instance/instance-create-quickstart?view=azuresql)**
 - Azure **[Managed Kubernetes service](https://azure.microsoft.com/en-us/products/kubernetes-service)**
 - How to deploy an **[AKS cluster](https://learn.microsoft.com/en-us/azure/aks/tutorial-kubernetes-deploy-cluster?tabs=azure-cli)**
