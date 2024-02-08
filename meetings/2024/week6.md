@@ -7,30 +7,6 @@ Report System IT Admin, Hardware, or Software Topics of Interest
 This markdown file is located at: ~/src/repsys/meetings/2024/week6.md
 It can be viewed from <https://markdownlivepreview.com/> or by logging into devcon2(10.1.0.120) as bcieslik,bcook,sjackson,cstangland,rdecker,bhall,jdavis,or kyoung with password k8sAdmin1! and opening week45.md from visual studio code and pressing shift-ctrl-v.
 
-## Grafana Dashboard
-
-![Grafana dashboard](https://grafana.com/api/dashboards/1860/images/7994/image)
-
-## Meeting Summary
-
-Talked to Aamir Ghaffar and Vishal Kumar Medavarapu
-
-- Send email of PowerBI paginated (rdx) report to Vishal
-
-## On-Premise Sql Server
-
-- Periodic reports
-- Export result dataset from ETL pipeline to Lanimar data warehouse
-- Export DDL for Tables and create a service request.
-
-## Postgres and MySQL
-
-- Dynamic archivable reports such as TB
-
-## **[Azure Sql Server](https://learn.microsoft.com/en-us/azure/azure-sql/database/features-comparison?view=azuresql) for ETL
-
-- Azure Sql Server for Teams Report requestor and Power BI app access to dynamic archivable reports.
-
 About Friday's meeting,
 
 Hi guys.  I'm hoping we can have some fun in these meetings!  If there is any tech or thoughts about current trends you could share I'm sure it would be appreciated by the group, but no pressure if you would rather not :-)
@@ -41,6 +17,36 @@ Hi guys.  I'm hoping we can have some fun in these meetings!  If there is any te
 - Brendan something about IT Administration or anything you want :-)
 - Brent H. something about Azure tenant migration, or anything you want :-)
 - Brent G. Microsoft Data Analytics team, Network connectivity trouble-shooting
+
+## Grafana Dashboard
+
+![Grafana dashboard](https://grafana.com/api/dashboards/1860/images/7994/image)
+
+## Last Meeting Summary
+
+Talked to Aamir Ghaffar and Vishal Kumar Medavarapu
+
+- Send email of PowerBI paginated (rdx) report to Vishal
+
+## WebFocus Report
+
+- Short running reports
+- Periodic reports
+
+## On-Premise Sql Server
+
+- Periodic reports
+- Export result dataset from ETL pipeline to Lanimar data warehouse
+- Export DDL for Tables and create a service request.
+
+## Postgres and MySQL
+
+- Live archivable reports such as TB
+- Long running reports such as mean time between failure
+
+## **[Azure Sql Server](https://learn.microsoft.com/en-us/azure/azure-sql/database/features-comparison?view=azuresql) for ETL
+
+- Azure Sql Server for Teams Report requestor and Power BI app access to dynamic archivable reports.
 
 ## Create Microsoft Team
 
@@ -130,8 +136,6 @@ listening on any, link-type LINUX_SLL2 (Linux cooked v2), snapshot length 262144
 19:38:32.817878 eno1  Out IP 10.1.0.8.80 > 10.1.0.113.39876: Flags [.], ack 98, win 502, options [nop,nop,TS val 2714916 ecr 1409505968], length 0
 19:38:32.819661 eno1  Out IP 10.1.0.8.80 > 10.1.0.113.39876: Flags [P.], seq 1:629, ack 98, win 502, options [nop,nop,TS val 2714918 ecr 1409505968], length 628: HTTP: HTTP/1.1 200 OK
 19:38:32.820735 eno1  Out IP 10.1.0.8.80 > 10.1.0.113.39876: Flags [F.], seq 629, ack 99, win 502, options [nop,nop,TS val 2714919 ecr 1409505970], length 0
-
-
 ```
 
 ## Why **[OpenStack](https://microstack.run/)**
