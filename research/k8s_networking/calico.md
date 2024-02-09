@@ -1,4 +1,20 @@
-# What is **[Calico](https://docs.tigera.io/calico/latest/about/)**?
+# Calico k8s
+
+## references
+
+<https://qdnqn.com/networking-on-kubernetes-calico-and-ebpf/>
+<https://docs.tigera.io/calico/latest/about/>
+
+## Kubernetes Network
+
+Introduction
+Kubernetes networking is a complex topic. There are multiple layers present — from the containers to the underlying infrastructure. Let’s dig in.
+
+Kubernetes defined the network model and the network drivers are implementations of that model. In that way, you can have multiple network drivers implementing the model which makes it modularised. Similar thing to what Docker did.
+
+What does that mean? It means Kubernetes is decoupled from network implementation and it is on the network driver to provide networking functionality but the network driver.
+
+## What is **[Calico](https://docs.tigera.io/calico/latest/about/)**?
 
 Calico is a networking and security solution that enables Kubernetes workloads and non-Kubernetes/legacy workloads to communicate seamlessly and securely.
 

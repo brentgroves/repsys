@@ -2,7 +2,7 @@
 
 The world's love is performance based, but my love is unconditional. The world's system promotes fear you must perform better than your neighbor.  I say help your neighbor and especially help the ones that are struggling. Do not worry about your own status.  Do not promote yourself instead think of others and help them in their work.
 
-Report System IT Admin, Hardware, or Software Topics of Interest
+## Report System IT Admin, Hardware, or Software Topics of Interest
 
 This markdown file is located at: ~/src/repsys/meetings/2024/week6.md
 It can be viewed from <https://markdownlivepreview.com/> or by logging into devcon2(10.1.0.120) as bcieslik,bcook,sjackson,cstangland,rdecker,bhall,jdavis,or kyoung with password k8sAdmin1! and opening week45.md from visual studio code and pressing shift-ctrl-v.
@@ -32,6 +32,7 @@ Talked to Aamir Ghaffar and Vishal Kumar Medavarapu
 
 - Short running reports
 - Periodic reports
+- email reports
 
 ## On-Premise Sql Server
 
@@ -44,9 +45,19 @@ Talked to Aamir Ghaffar and Vishal Kumar Medavarapu
 - Live archivable reports such as current shift and TB
 - Long running reports such as mean time between failure
 
-## **[Azure Sql Server](https://learn.microsoft.com/en-us/azure/azure-sql/database/features-comparison?view=azuresql) for ETL
+## **[Azure Sql Server](https://learn.microsoft.com/en-us/azure/azure-sql/database/features-comparison?view=azuresql)** for ETL
 
 - Azure Sql Server for Teams Report requestor and Power BI app access to dynamic archivable reports.
+
+## Linamar data warehouse
+
+- only has the result set
+
+## Linamar Power BI report viewers
+
+- write report
+- connect to data warehouse
+- export excel
 
 ## Create Microsoft Team
 
@@ -103,6 +114,21 @@ sudo nmap -vv -sS -O -n 172.20.88.0/22
 While this simple command is often all that is needed, advanced users often go much further. In Example 4.3, the scan is modified with four options. -p0- asks Nmap to scan every possible TCP port, -v asks Nmap to be verbose about it, -A enables aggressive tests such as remote OS detection, service/version detection, and the Nmap Scripting Engine (NSE). Finally, -T4 enables a more aggressive timing policy to speed up the scan.
 
 nmap p0- -v -A -T4 172.20.88.115
+
+# **[arping](https://github.com/ThomasHabets/arping)**
+
+The arping utility sends ARP and/or ICMP requests to the specified host and displays the replies. The host may be specified by its hostname, its IP address, or ...
+
+Arping is a util to find out if a specific IP address on the LAN is 'taken'
+and what MAC address owns it. Sure, you *could* just use 'ping' to find out if
+it's taken and even if the computer blocks ping (and everything else) you still
+get an entry in your ARP cache. But what if you aren't on a routable net? Or
+the host blocks ping (all ICMP even)? Then you're screwed. Or you use arping.
+
+## usage
+
+```bash
+arping [-AbDfhqUV] [-c count] [-w deadline] [-i interval] [-s source] [-I interface] {destination}
 
 ## Network connectivity issues
 

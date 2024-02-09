@@ -4,6 +4,20 @@
 
 <https://www.tigera.io/learn/guides/kubernetes-networking/>
 <https://docs.tigera.io/calico/latest/about/>
+<https://opensource.com/article/22/6/kubernetes-networking-fundamentals>
+
+## **[A visual guide to Kubernetes networking fundamentals](https://opensource.com/article/22/6/kubernetes-networking-fundamentals)**
+
+Networking within Kubernetes isn't so different from networking in the physical world. Remember networking basics, and you'll have no trouble enabling communication between containers, Pods, and Services.
+
+Moving from physical networks using switches, routers, and ethernet cables to virtual networks using software-defined networks (SDN) and virtual interfaces involves a slight learning curve. Of course, the principles remain the same, but there are different specifications and best practices. Kubernetes has its own set of rules, and if you're dealing with containers and the cloud, it helps to understand how Kubernetes networking works.
+
+The Kubernetes Network Model has a few general rules to keep in mind:
+
+- Every Pod gets its own IP address: There should be no need to create links between Pods and no need to map container ports to host ports.
+- NAT is not required: Pods on a node should be able to communicate with all Pods on all nodes without NAT.
+- Agents get all-access passes: Agents on a node (system daemons, Kubelet) can communicate with all the Pods in that node.
+- Shared namespaces: Containers within a Pod share a network namespace (IP and MAC address), so they can communicate with each other using the loopback address.
 
 ## **[Kubernetes Networking: The Complete Guide](https://www.tigera.io/learn/guides/kubernetes-networking)**
 
