@@ -71,6 +71,8 @@ You have already started mysql instance in the previous step. Now we will need t
 
 ```bash
 docker exec -it mysql bash
+# or
+# docker container start 9769fb1ed027
 
 # It will open the bash terminal inside mysql instance.
 
@@ -146,6 +148,8 @@ In this code, you:
 
 - Import the MySQL driver github.com/go-sql-driver/mysql.
 
+## Can go use the Plex **[ODBC driver](https://www.easysoft.com/support/kb/kb01045.html)**
+
 With the driver imported, you’ll start writing code to access the database.
 
 ## Get a database handle and connect
@@ -173,6 +177,9 @@ func main() {
         Addr:   "127.0.0.1:3306",
         DBName: "recordings",
     }
+   // The key is the connection string. Make sure multiStatements=true and autocommit=true are present.
+ // myDb, err := sql.Open("mysql", "user:password@/somedb?multiStatements=true&autocommit=true")
+
     // Get a database handle.
     var err error
     db, err = sql.Open("mysql", cfg.FormatDSN())
@@ -322,9 +329,11 @@ Print the result.
 Run the code
 From the command line in the directory containing main.go, run the code.
 
+```bash
 $ go run .
 Connected!
 Albums found: [{1 Blue Train John Coltrane 56.99} {2 Giant Steps John Coltrane 63.99}]
+```
 
 Next, you’ll query for a single row.
 
@@ -383,10 +392,12 @@ Print the album ID returned.
 Run the code
 From the command line in the directory containing main.go, run the code.
 
+```bash
 $ go run .
 Connected!
 Albums found: [{1 Blue Train John Coltrane 56.99} {2 Giant Steps John Coltrane 63.99}]
 Album found: {2 Giant Steps John Coltrane 63.99}
+```
 
 Next, you’ll add an album to the database.
 
@@ -457,7 +468,7 @@ Album found: {2 Giant Steps John Coltrane 63.99}
 ID of added album: 5
 ```
 
-## stored procedures
+## stored procedure no param
 
 ```sql
 call recordings.getAlbumsByName( "John Coltrane")
@@ -470,3 +481,21 @@ begin
 SELECT * FROM recordings.album WHERE artist = v_name;
 end;
 ```
+
+## stored procedure in,out param
+
+<https://pkg.go.dev/database/sql#DB.Conn>
+<https://www.digitalocean.com/community/tutorials/how-to-use-contexts-in-go>
+
+```go
+var outArg string
+_, err := db.ExecContext(ctx, "ProcName", sql.Named("Arg1", sql.Out{Dest: &outArg}))
+```
+
+## Next
+
+Working with **[contexts](https://www.digitalocean.com/community/tutorials/how-to-use-contexts-in-go)**
+
+Test **[output params](https://pkg.go.dev/database/sql#Out)**
+
+## can go use the Plex **[ODBC driver](https://www.easysoft.com/support/kb/kb01045.html)**

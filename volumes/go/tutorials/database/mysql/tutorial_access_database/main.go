@@ -82,6 +82,18 @@ func main() {
 
 }
 
+func getStartPeriod(pcn string) (int, error) {
+	// https://pkg.go.dev/database/sql#Out
+	// https://pkg.go.dev/database/sql#DB.ExecContext
+	var outArg int
+	_, err := db.ExecContext(ctx, "ProcName", sql.Named("Arg1", sql.Out{Dest: &outArg}))
+	// rows, err := db.QueryRow("EXEC PRCENVIACOMANDO @IDVEICULO=?, @CMD=?", name, 2).Scan(&album,&ret)
+	if err != nil {
+		return 0, fmt.Errorf("getStartPeriod %q: %v", pcn, err)
+	}
+	return outArg, nil
+}
+
 // https://stackoverflow.com/questions/73056245/calling-stored-procedure-in-golang-with-queryrowcontent
 // query := "CALL usp_GetUserByUsername(?)"
 
