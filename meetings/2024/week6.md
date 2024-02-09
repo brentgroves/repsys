@@ -41,7 +41,7 @@ Talked to Aamir Ghaffar and Vishal Kumar Medavarapu
 
 ## Postgres and MySQL
 
-- Live archivable reports such as TB
+- Live archivable reports such as current shift and TB
 - Long running reports such as mean time between failure
 
 ## **[Azure Sql Server](https://learn.microsoft.com/en-us/azure/azure-sql/database/features-comparison?view=azuresql) for ETL
