@@ -58,7 +58,7 @@ Exporting a BACPAC file to Azure premium storage using the methods discussed in 
 - Currently, the Import/Export service does not support Microsoft Entra ID authentication when MFA is required.
 - Import\Export services only support SQL authentication and Microsoft Entra ID. Import\Export is not compatible with Microsoft Identity application registration.
 
-## next
+## Install dotnet sdk
 
 <https://learn.microsoft.com/en-us/sql/tools/sqlpackage/sqlpackage-download?view=sql-server-ver16#installation-zip-download>
 
@@ -68,7 +68,7 @@ Exporting a BACPAC file to Azure premium storage using the methods discussed in 
 sudo apt update && sudo apt install -y dotnet-sdk-7.0
 ```
 
-## Linux
+## Install SqlPackage
 
 Download **[SqlPackage for Linux](https://aka.ms/sqlpackage-linux)**.
 
