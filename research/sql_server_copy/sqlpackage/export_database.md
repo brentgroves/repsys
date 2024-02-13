@@ -2,6 +2,10 @@
 
 When you need to export a database for archiving or for moving to another platform, you can export the database schema and data to a BACPAC file. A BACPAC file is a ZIP file with an extension of BACPAC containing the metadata and data from the database. A BACPAC file can be stored in Azure Blob storage or in local storage in an on-premises location and later imported back into Azure SQL Database, Azure SQL Managed Instance, or a SQL Server instance.
 
+BACPAC files contain data that is exported using BCP's "native" file format, which is a binary type file. The data for the table is simply exported across multiple files, rather than one big file. If you look through the .bcp files across different tables, you'll find that the file size will vary, with skew in size related to variation in different rows having different data width. For example, when I create a bacpac of AdventureWorks, the .bcp files for Purchasing.PurchaseOrderDetail range from 39kb to 62kb.
+
+BCP (and thus BACPAC generation) does not back up data by copying data pages like a standard backup, but rather is doing table-level querying & exporting.
+
 ## references
 
 <https://learn.microsoft.com/en-us/sql/tools/sqlpackage/sqlpackage-export?view=sql-server-ver16>
@@ -31,17 +35,6 @@ EXPORT a database from an Azure Managed Instance by creating a .bacpac file usin
 ```bash
 pushd .
 cd ~/sqlpackage
-sqlpackage /a:export /ssn:tcp:mgsqlmi.public.48d444e7f69b.database.windows.net,3342 /sdn:mgdw /p:TableData=ETL.script_history /su:mgadmin /sp:WeDontSharePasswords1! /tf:/home/brent/backups/mi/mgdw.bacpac /p:VerifyExtraction=false /p:Storage=File
-
-s1! /tf:/home/brent/backups/mi/mgdw.bacpac /p:VerifyExtraction=false /p:Storage=File
-
-Connecting to database 'mgdw' on server 'tcp:mgsqlmi.public.48d444e7f69b.database.windows.net,3342'.
-Extracting schema
-Extracting schema from database
-Time elapsed 0:00:08.70
-*** An unexpected failure occurred: .NET Core should not be using a file backed model..
-
-
 # You can remove /p:Storage=File. This worked for me.
 # /p:Storage=File : is used to redirect the backing storage for the schema model used during extraction, this helpful with large databases that may cause out-of-memory exception if the default memory location is used. 
 # It seems that the file backed model uses a feature which is only available on the windows platform and in full .NET, not in Core. (github.com/microsoft/azuredatastudio/issues/12754) 
