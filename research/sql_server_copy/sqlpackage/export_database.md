@@ -32,6 +32,8 @@ sqlpackage /Action:Export /TargetFile:"C:\AdventureWorksLT.bacpac" \
 
 EXPORT a database from an Azure Managed Instance by creating a .bacpac file using SqlPackage.exe:
 
+Note: Make sure you exit out of dbeaver before exporting database.
+
 ```bash
 pushd .
 cd ~/sqlpackage
@@ -59,9 +61,6 @@ Time elapsed 0:00:48.00
 
 ```
 
-          '/p:TableData=[dbo].[QRTZ_CALENDARS]',
-          '/p:TableData=[dbo].[QRTZ_SCHEDULER_STATE]'
-
 ```bash
 *use the following T-SQL command to get your server name:
 PRINT @@SERVERNAME
@@ -75,4 +74,30 @@ Abbreviations:
 /Properties:         /p
 ```
 
-SqlPackage.exe /Action:Export /ssn:tcp:yourmanagedinstance.public.12345qwerty.database.windows.net,3342 /sdn:YourDatabaseName /su:yourusername /sp:YourP@$$word! /tf:C:\temp\YourDatabaseName.bacpac /p:VerifyExtraction=false /p:Storage=File
+## How to export a database from Azure SQL database
+
+EXPORT a database from an Azure Managed Instance by creating a .bacpac file using SqlPackage.exe:
+
+```bash
+pushd .
+cd ~/sqlpackage
+# You can remove /p:Storage=File. This worked for me.
+# /p:Storage=File : is used to redirect the backing storage for the schema model used during extraction, this helpful with large databases that may cause out-of-memory exception if the default memory location is used. 
+# It seems that the file backed model uses a feature which is only available on the windows platform and in full .NET, not in Core. (github.com/microsoft/azuredatastudio/issues/12754) 
+# https://dba.stackexchange.com/questions/255163/ms-azure-remote-back-up-with-sqlpackage
+
+sqlpackage /a:export /ssn:tcp:mgsqlsrv.database.windows.net /sdn:mgdw /p:TableData=AlbSPS.Import /su:mgadmin /sp:WeDontSharePasswords1! /tf:/home/brent/backups/mgsqlsvr/mgdw.bacpac /p:VerifyExtraction=false
+Connecting to database 'mgdw' on server 'tcp:mgsqlsrv.database.windows.net'.
+Extracting schema
+Extracting schema from database
+Resolving references in schema model
+Validating schema model for data package
+Validating schema
+Exporting data from database
+Exporting data
+Processing Export.
+Processing Table '[AlbSPS].[Import]'.
+Successfully exported database and saved it to file '/home/brent/backups/mgsqlsvr/mgdw.bacpac'.
+Changes to connection setting default values were incorporated in a recent release.  More information is available at https://aka.ms/dacfx-connection
+Time elapsed 0:02:34.06
+```
