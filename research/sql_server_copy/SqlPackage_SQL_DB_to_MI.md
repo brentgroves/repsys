@@ -4,7 +4,20 @@ When you need to export a database for archiving or for moving to another platfo
 
 ## references
 
+<https://www.madeiradata.com/post/how-to-export-a-database-from-azure-managed-instance-to-sql-server-using-sqlpackage-exe>
+
+<https://www.youtube.com/watch?v=1yZ70VhftnI>
+
 <https://learn.microsoft.com/en-us/azure/azure-sql/database/database-export?view=azuresql>
+
+## How to export a database from Azure Managed Instance to your local SQL Server instance
+
+EXPORT a database from an Azure Managed Instance by creating a .bacpac file using SqlPackage.exe:
+
+```bash
+```
+
+SqlPackage.exe /Action:Export /ssn:tcp:yourmanagedinstance.public.12345qwerty.database.windows.net,3342 /sdn:YourDatabaseName /su:yourusername /sp:YourP@$$word! /tf:C:\temp\YourDatabaseName.bacpac /p:VerifyExtraction=false /p:Storage=File
 
 When you need to export a database for archiving or for moving to another platform, you can export the database schema and data to a BACPAC file. A BACPAC file is a ZIP file with an extension of BACPAC containing the metadata and data from the database. A BACPAC file can be stored in Azure Blob storage or in local storage in an on-premises location and later imported back into Azure SQL Database, Azure SQL Managed Instance, or a SQL Server instance.
 
@@ -37,9 +50,9 @@ We recommend the use of the SQLPackage utility for scale and performance in most
 
 To export a database in SQL Database using the SQLPackage command-line utility, see Export parameters and properties. The SQLPackage utility is available for Windows, macOS, and Linux.
 
-This example shows how to export a database using SqlPackage with Active Directory Universal Authentication:
+![alt text](image.png)
 
-Windows Command Prompt
+This example shows how to export a database using SqlPackage with Active Directory Universal Authentication:
 
 Copy
 SqlPackage /a:Export /tf:testExport.BACPAC /scs:"Data Source=apptestserver.database.windows.net;Initial Catalog=MyDB;" /ua:True /tid:"apptest.onmicrosoft.com"

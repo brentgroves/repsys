@@ -3,6 +3,42 @@
 ## references
 
 <https://ubuntu.com/core/docs/networkmanager/routing-tables>
+<https://www.techtarget.com/searchnetworking/definition/routing-table>
+
+## What is a routing table?
+
+A routing table is a set of rules, often viewed in table format, that's used to determine where data packets traveling over an Internet Protocol (IP) network will be directed. This table is usually stored inside the Random Access Memory of forwarding devices, such as routers and network switches.
+
+In computer networking, each routing table is unique and acts as an address map for networks. It stores the source and destination IP addresses of the routing devices in the form of prefixes along with the default gateway addresses and corresponding routing information.
+
+Routing tables are typically updated dynamically through network routing protocols. But sometimes network administrators might add static entries manually.
+
+## Routing table entries
+
+Each routing table might contain different entries and information, such as IPv4 or IPv6 address classes. But the primary fields of all routing tables stay the same.
+
+The following are the main entries of a routing table:
+
+- **Destination**: This is the IP address of the packet's final destination.
+- **Subnet mask**: Also known as the netmask, this is a 32-bit network address that identifies whether a host belongs to the local or remote network. To enhance routing efficiency and reduce the size of the broadcast domain, administrators can apply a custom subnet mask through the process of subnetting, which can divide a network into two or smaller connected networks.
+- **Gateway**: This is the next hop, or the neighboring device's IP address to which the packet is forwarded.
+- **Interface:** Routers typically use Ethernet interfaces to connect to other devices on the same network, such as eth0 or eth1, and serial interfaces to connect to outside wide area networks (WANs). The routing table lists the inbound network interface, also known as the outgoing interface, that the device should use when forwarding the packet to the next hop.
+
+A **serial network interface** is a serial port that acts as a network interface. They can be used to connect two routers back-to-back but are most commonly used to connect to either a modem or a DSU
+
+## What Is CSU/DSU (Channel Service Unit/Data Service Unit)?
+
+A **CSU/DSU** is a digital-interface device used to connect data terminal equipment, such as a router, to a digital circuit, such as a Digital Signal 1 T1 line. The CSU/DSU implements two different functions.
+
+- **Metric:** This entry assigns a value to each available route to a specific network. The value ensures that the router can choose the most effective path. In some cases, the metric is the number of routers that a data packet must cross before it gets to the destination address. If multiple routes exist to the same destination network, the path with the lowest metric is given precedence.
+
+- **Routes:** This includes directly attached subnets, indirect subnets that aren't attached to the device but can be accessed through one or more hops, and default routes to use for certain types of traffic or when information is lacking.
+
+![](https://cdn.ttgtmedia.com/rms/onlineimages/routing_table-f.jpg)
+
+## How does a routing table work?
+
+The main purpose of a routing table is to help routers make effective routing decisions. Whenever a packet is sent through a router to be forwarded to a host on another network, the router consults the routing table to find the IP address of the destination device and the best path to reach it. The packet is then directed to a neighboring router -- or the next hop listed in the table -- until it reaches its final destination.
 
 ## Routing Tables
 
