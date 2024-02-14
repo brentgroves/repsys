@@ -1,5 +1,7 @@
 # Azure database copy between subscriptions
 
+I am going to use SqlPackage instead because we are going from an Azure SQL Mangaged Instance to an Azure SQL database SAS.
+
 ## prelim work
 
 - identify database in Azure SQL managed instance to copy

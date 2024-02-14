@@ -1,10 +1,38 @@
 # IPv6
 
-![](https://cdn.ttgtmedia.com/rms/onlineimages/whatis-ipv6_address-h.png)
-
 ## references
 
 <https://www.techtarget.com/iotagenda/definition/IPv6-address#:~:text=In%20precise%20terms%2C%20an%20IPv6,groups%20are%20separated%20by%20colons.&text=An%20IPv6%20address%20is%20split,network%20and%20a%20node%20component>.
+
+<https://www.ipaddressguide.com/ipv6-cidr>
+
+## IP6 Address assignment
+
+![](https://cdn.ttgtmedia.com/rms/onlineimages/whatis-ipv6_address-h.png)
+
+Overall, the process in IPv6 is usually completely different.
+
+In IPv6 primary address auto-configuration mechanism (SLAAC) is completely stateless: the router does not issue individual addresses; it only periodically advertises the subnet address prefix and each host just combines it with its own chosen suffix. The router cannot limit hosts to just a specific sub-range; in fact the router does not receive any feedback about hosts' chosen address at all.
+
+(Depending on each device's OS, the suffix might be a MAC address in traditional RFC4862 SLAAC; it might be a static hash value in RFC7217; it might be completely random in RFC4941 "Privacy Extensions"; and it might even be a user-provided value if the OS allows that.)
+
+For example, the router advertises 2001:db8:123:456::/64 as the LAN address prefix; client A combines it with its own MAC address and begins using 2001:db8:123:456:6af2:68fe:ff7c:e25c.
+
+That said, DHCP does exist in the IPv6 world and handles address leases in much the same way as IPv4 DHCP does. That means you can create DHCPv6 address pools, you can configure static address leases in DHCPv6, and so on. But not all clients support DHCPv6 at all (e.g. Android does not), so having SLAAC alongside is almost unavoidable.
+
+So if you have a DHCPv6-capable client on a DHCPv6-capable network, chances are it'll have both a nice DHCPv6-assigned address and a longer SLAAC-autoconfigured address.
+
+```bash
+ip -6 neighbour | grep router
+fe80::9a90:96ff:fec3:f483 dev enp0s25 lladdr 98:90:96:c3:f4:83 router STALE
+
+ping6 -I enp0s25 fe80::9a90:96ff:fec3:f483
+ping6 -I enp0s25 fe80::9a90:96ff:fec3:f483
+10.1.1.205
+https://superuser.com/questions/1321276/how-to-access-router-with-ipv6-address
+```
+
+## **[ipv6-cidr](https://www.ipaddressguide.com/ipv6-cidr)**
 
 ## IPv6 address
 
@@ -19,6 +47,39 @@ It has been a concern for some time that the IPv4 addressing scheme was running 
 ## Format of an IPv6 address
 
 In precise terms, an IPv6 address is 128 bits long and is arranged in eight groups, each of which is 16 bits. Each group is expressed as four hexadecimal digits and the groups are separated by colons.
+
+```bash
+ping alb-utl.busche-cnc.com               
+PING alb-utl.busche-cnc.com (10.1.1.150) 56(84) bytes of data.
+64 bytes from ALB-UTL.BUSCHE-CNC.com (10.1.1.150): icmp_seq=1 ttl=128 time=1.29 ms
+64 bytes from ALB-UTL.BUSCHE-CNC.com (10.1.1.150): icmp_seq=2 ttl=128 time=0.707 ms
+^C
+--- alb-utl.busche-cnc.com ping statistics ---
+2 packets transmitted, 2 received, 0% packet loss, time 1001ms
+rtt min/avg/max/mdev = 0.707/0.997/1.288/0.290 ms
+
+dig AAAA alb-utl.busche-cnc.com
+
+
+; <<>> DiG 9.18.18-0ubuntu0.22.04.2-Ubuntu <<>> AAAA alb-utl.busche-cnc.com
+;; global options: +cmd
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 44755
+;; flags: qr rd ra; QUERY: 1, ANSWER: 0, AUTHORITY: 1, ADDITIONAL: 1
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: 65494
+;; QUESTION SECTION:
+;alb-utl.busche-cnc.com.                IN      AAAA
+
+;; AUTHORITY SECTION:
+busche-cnc.com.         3600    IN      SOA     alb-ad01.busche-cnc.com. . 3201245 900 600 86400 3600
+
+;; Query time: 3 msec
+;; SERVER: 127.0.0.53#53(127.0.0.53) (UDP)
+;; WHEN: Wed Feb 14 14:42:31 EST 2024
+;; MSG SIZE  rcvd: 95
+```
 
 An example of a full IPv6 address could be:
 
