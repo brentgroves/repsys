@@ -78,6 +78,10 @@ Abbreviations:
 
 EXPORT a database from an Azure Managed Instance by creating a .bacpac file using SqlPackage.exe:
 
+## Note
+
+Both server names are identical for different tenants and subscriptions.  Maybe the API gateway takes care of this routing.
+
 ```bash
 pushd .
 cd ~/sqlpackage
@@ -100,4 +104,8 @@ Processing Table '[AlbSPS].[Import]'.
 Successfully exported database and saved it to file '/home/brent/backups/mgsqlsvr/mgdw.bacpac'.
 Changes to connection setting default values were incorporated in a recent release.  More information is available at https://aka.ms/dacfx-connection
 Time elapsed 0:02:34.06
+
+sqlpackage /a:export /ssn:tcp:mgsqlsrv.database.windows.net /sdn:myDW /p:TableData=Kors.email_hours /su:kors /sp:t`8V8Uj\/*ht>;M6 /tf:/home/brent/backups/mydw/email_hours.bacpac /p:VerifyExtraction=false
+
+myDW/kors/t`8V8Uj\/*ht>;M6
 ```
