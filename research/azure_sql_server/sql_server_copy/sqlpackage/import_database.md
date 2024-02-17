@@ -9,14 +9,17 @@ BCP (and thus BACPAC generation) does not back up data by copying data pages lik
 ## example import to Azure SQL Database using SQL authentication and a connection string
 
 ```bash
-SqlPackage /Action:Import /SourceFile:"C:\AdventureWorksLT.bacpac" \
-    /TargetConnectionString:"Server=tcp:{yourserver}.database.windows.net,1433;Initial Catalog=AdventureWorksLT;Persist Security Info=False;User ID=sqladmin;Password={your_password};MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"
-```
-
 ```bash
 pushd .
 cd ~/sqlpackage
-sqlpackage /a:import /ssn:tcp:mgsqlsrv.database.windows.net /sdn:test /su:mgadmin /sp:WeDontSharePasswords1! /tf:/home/brent/backups/mi/mgdw.bacpac 
+sqlpackage /a:import /tsn:tcp:bgtest.database.windows.net /tdn:test /tu:mgadmin /tp:WeDontSharePasswords1! /sf:/home/brent/backups/mi/script_history.bacpac 
+
+*** Error importing database:Data cannot be imported into target because it contains one or more user objects. Import should be performed against a new, empty database.
+Warning SQL0: A project which specifies SQL Server 2022 or Azure SQL Database Managed Instance as the target platform may experience compatibility issues with Microsoft Azure SQL Database v12.
+Error SQL71659: Data cannot be imported into target because it contains one or more user objects. Import should be performed against a new, empty database.
+
+Time elapsed 0:01:00.35
+
 ```
 
 ```bash

@@ -30,14 +30,12 @@ Both server names are identical for different tenants and subscriptions.  Maybe 
 ## mobex global
 
 mgdw/mgadmin/WeDontSharePasswords1!
-Server=tcp:mgsqlsrv.database.windows.net,1433;Initial Catalog=mgdw;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;
+sqlpackage /a:export /ssn:tcp:mgsqlsrv.database.windows.net /sdn:mgdw /p:TableData=AlbSPS.Import /su:mgadmin /sp:WeDontSharePasswords1! /tf:/home/brent/backups/mgsqlsvr/mgdw.bacpac /p:VerifyExtraction=false
 
 ## <brent.groves@outlook.com>
 
-myDW/kors/t`8V8Uj\/*ht>;M6
-Server=tcp:mgsqlserver.database.windows.net,1433;Initial Catalog=myDW;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;
-
-sqlpackage /a:export /ssn:tcp:mgsqlsrv.database.windows.net,1433 /sdn:myDW /p:TableData=Kors.email_hours /su:kors /sp:'t`8V8Uj\/*ht>;M6' /tf:/home/brent/backups/mydw/email_hours.bacpac /p:VerifyExtraction=false
+test/mgadmin/WeDontSharePasswords1!
+sqlpackage /a:export /ssn:tcp:bgtest.database.windows.net /sdn:test /p:TableData=SalesLT.Address /su:mgadmin /sp:WeDontSharePasswords1! /tf:/home/brent/backups/mgsqlsvr/test.bacpac /p:VerifyExtraction=false
 
 ```bash
 *use the following T-SQL command to get your server name:
@@ -51,5 +49,3 @@ Abbreviations:
 /TargetFile:         /tf
 /Properties:         /p
 ```
-
-sqlpackage /a:export /ssn:tcp:mgsqlsrv.database.windows.net /sdn:mgdw /p:TableData=AlbSPS.Import /su:mgadmin /sp:WeDontSharePasswords1! /tf:/home/brent/backups/mgsqlsvr/mgdw.bacpac /p:VerifyExtraction=false

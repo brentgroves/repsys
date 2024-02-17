@@ -105,7 +105,22 @@ Successfully exported database and saved it to file '/home/brent/backups/mgsqlsv
 Changes to connection setting default values were incorporated in a recent release.  More information is available at https://aka.ms/dacfx-connection
 Time elapsed 0:02:34.06
 
-sqlpackage /a:export /ssn:tcp:mgsqlsrv.database.windows.net /sdn:myDW /p:TableData=Kors.email_hours /su:kors /sp:t`8V8Uj\/*ht>;M6 /tf:/home/brent/backups/mydw/email_hours.bacpac /p:VerifyExtraction=false
+[SalesLT].[Address]
 
-myDW/kors/t`8V8Uj\/*ht>;M6
+sqlpackage /a:export /ssn:tcp:bgtest.database.windows.net /sdn:test /p:TableData=SalesLT.Address /su:mgadmin /sp:WeDontSharePasswords1! /tf:/home/brent/backups/mgsqlsvr/test.bacpac /p:VerifyExtraction=false
+
+Connecting to database 'test' on server 'tcp:bgtest.database.windows.net'.
+Extracting schema
+Extracting schema from database
+Resolving references in schema model
+Validating schema model for data package
+Validating schema
+Exporting data from database
+Exporting data
+Processing Export.
+Processing Table '[SalesLT].[Address]'.
+Successfully exported database and saved it to file '/home/brent/backups/mgsqlsvr/test.bacpac'.
+Changes to connection setting default values were incorporated in a recent release.  More information is available at https://aka.ms/dacfx-connection
+Time elapsed 0:00:31.38
+
 ```
