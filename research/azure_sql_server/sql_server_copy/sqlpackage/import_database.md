@@ -9,12 +9,18 @@ BCP (and thus BACPAC generation) does not back up data by copying data pages lik
 ## example import to Azure SQL Database using SQL authentication and a connection string
 
 <https://stackoverflow.com/questions/63906108/reference-to-database-and-or-server-name-is-not-supported-in-this-version-of-sql>
+<https://stackoverflow.com/questions/47213938/azure-sql-server-bacpac-import-failed>
 
 ```bash
 ```bash
 pushd .
 cd ~/sqlpackage
 sqlpackage /a:import /tsn:tcp:bgtest.database.windows.net /tdn:test /tu:mgadmin /tp:WeDontSharePasswords1! /sf:/home/brent/backups/mi/script_history.bacpac 
+
+sqlpackage /a:import /tsn:tcp:bgtest.database.windows.net /tdn:test /tu:mgadmin /tp:WeDontSharePasswords1! /sf:/home/brent/backups/mi/script_history.bacpac /p:DatabaseEdition=Premium /p:DatabaseServiceObjective=P6
+https://techcommunity.microsoft.com/t5/azure-database-support-blog/lesson-learned-307-reference-to-database-and-or-server-name-is/ba-p/3726508
+
+qlpackage.exe /a:import /tcs:"Data Source=abc.database.windows.net;Initial Catalog=clientdbname;User Id=admin;Password=abc@123" /sf:"C:\Users\User\Downloads\clientdb.bacpac" /p:DatabaseEdition=Premium /p:DatabaseServiceObjective=P6
 
 *** Error importing database:Could not import package.
 Warning SQL0: A project which specifies SQL Server 2022 or Azure SQL Database Managed Instance as the target platform may experience compatibility issues with Microsoft Azure SQL Database v12.
