@@ -8,6 +8,8 @@ BCP (and thus BACPAC generation) does not back up data by copying data pages lik
 
 ## example import to Azure SQL Database using SQL authentication and a connection string
 
+<https://stackoverflow.com/questions/63906108/reference-to-database-and-or-server-name-is-not-supported-in-this-version-of-sql>
+
 ```bash
 ```bash
 pushd .
