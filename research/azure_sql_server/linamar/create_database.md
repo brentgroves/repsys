@@ -8,10 +8,10 @@
 # Create a single database and configure a firewall rule
 # Variable block
 export location="East US"
-export resourceGroup="kors"
+export resourceGroup="repsys"
 export tag="create-and-configure-database"
-export server="mgsqlsvr"
-export database="migrate"
+export server="repsys"
+export database="dw"
 export login="bgroves@mobexglobal.com"
 export password='Spirit1$!'
 # Specify appropriate IP address values for your environment
@@ -70,9 +70,16 @@ az sql server firewall-rule create --resource-group $resourceGroup --server $ser
 # https://learn.microsoft.com/en-us/cli/azure/sql/db?view=azure-cli-latest#az-sql-db-create
 echo "Creating $database on $server..."
 # Create a Standard SO 10 DTU database
-az sql db create -g $resourceGroup -s $server -n $database --service-objective S0
+az sql db create -g $resourceGroup -s $server -n $database --edition Standard --service-objective S1 --backup-storage-redundancy Geo --max-size 20GB
+
+az sql db list-editions -l westus --service-objective P1 --show-details max-size
+
+az sql db update -g mygroup -s myserver -n mydb --edition Standard --capacity 10 --max-size 250GB
+
 # create basic db
 az sql db create --resource-group $resourceGroup --server $server --name $database --sample-name AdventureWorksLT --edition GeneralPurpose --family Gen5 --capacity 2 --zone-redundant true # zone redundancy is only supported on premium and business critical service tiers
+
+az sql db restore --dest-name MyDest --edition GeneralPurpose --name MyAzureSQLDatabase --resource-group MyResourceGroup --server myserver --subscription MySubscription --time "2018-05-20T05:34:22" --backup-storage-redundancy Geo
 ```
 
 <https://portal.azure.com/#home>
