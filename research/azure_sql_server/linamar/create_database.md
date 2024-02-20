@@ -65,6 +65,8 @@ az sql server create --name $server --resource-group $resourceGroup --location "
   "workspaceFeature": null
 }
 
+Can I drop my tenant and create Azure SQL database on dev tenant?
+Add contributor role to repsys resource group.
 echo "Configuring firewall..."
 az sql server firewall-rule create --resource-group $resourceGroup --server $server -n AllowYourIp --start-ip-address $startIp --end-ip-address $endIp
 # https://learn.microsoft.com/en-us/cli/azure/sql/db?view=azure-cli-latest#az-sql-db-create
