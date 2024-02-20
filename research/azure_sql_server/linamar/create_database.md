@@ -7,20 +7,11 @@
 ```bash
 # Create a single database and configure a firewall rule
 # Variable block
-export location="East US"
-export resourceGroup="repsys"
-export tag="create-and-configure-database"
-export server="repsys"
-export database="dw"
-export login="bgroves@mobexglobal.com"
-export password='Spirit1$!'
-# Specify appropriate IP address values for your environment
-# to limit access to the SQL Database server
-export startIp=69.21.242.34
-export endIp=69.21.242.34
+source ./vars.sh
 # https://linuxize.com/post/bash-printf-command/
 
-printf "location=%s \
+printf "subscription=%s \
+\nlocation=%s \
 \nresourceGroup=%s \
 \ntag=%s \
 \nserver=%s \
@@ -29,13 +20,16 @@ printf "location=%s \
 \npassword=%s \
 \nstartIp=%s \
 \nendIp=%s" \
-$location $resourceGroup \
+$subscription $location $resourceGroup \
 $tag $server $database $login \
 $password $startIp $endIp
+az account set -s $subscription # ...or use 'az login'
 echo "Using resource group $resourceGroup with login: $login, password: $password..."
 echo "Creating $resourceGroup in $location..."
 az group create --name $resourceGroup --location "$location" --tags $tag
 echo "Creating $server in $location..."
+# https://learn.microsoft.com/en-us/cli/azure/sql/server?view=azure-cli-latest#az-sql-server-create
+# requirements: SQL authentication
 az sql server create --name $server --resource-group $resourceGroup --location "$location" --admin-user $login --admin-password $password
 
 {
@@ -65,7 +59,16 @@ az sql server create --name $server --resource-group $resourceGroup --location "
   "workspaceFeature": null
 }
 
-Can I drop my tenant and create Azure SQL database on dev tenant?
+# Can I drop my tenant and create Azure SQL database on dev tenant? No this is not supported
+# https://github.com/MicrosoftDocs/azure-docs/blob/main/articles/role-based-access-control/role-assignments-list-cli.md
+az role assignment list --all --assignee bgroves@mobexglobal.com --output json --query '[].{principalName:principalName, roleDefinitionName:roleDefinitionName, scope:scope}'
+[
+  {
+    "principalName": "bgroves@mobexglobal.com",
+    "roleDefinitionName": "Contributor",
+    "scope": "/subscriptions/f7d0cfcb-65b9-4f1c-8c9d-f8f993e4722a"
+  }
+]
 Add contributor role to repsys resource group.
 echo "Configuring firewall..."
 az sql server firewall-rule create --resource-group $resourceGroup --server $server -n AllowYourIp --start-ip-address $startIp --end-ip-address $endIp
