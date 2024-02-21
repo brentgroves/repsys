@@ -7,6 +7,8 @@
 ```bash
 # Create a single database and configure a firewall rule
 # Variable block
+pushd .
+cd ~/src/repsys/research/azure_sql_server/linamar
 source ./vars.sh
 # https://linuxize.com/post/bash-printf-command/
 
@@ -26,11 +28,156 @@ $password $startIp $endIp
 az account set -s $subscription # ...or use 'az login'
 echo "Using resource group $resourceGroup with login: $login, password: $password..."
 echo "Creating $resourceGroup in $location..."
+# https://learn.microsoft.com/en-us/cli/azure/group?view=azure-cli-latest#az-group-create
 az group create --name $resourceGroup --location "$location" --tags $tag
+{
+  "id": "/subscriptions/f7d0cfcb-65b9-4f1c-8c9d-f8f993e4722a/resourceGroups/repsys",
+  "location": "eastus",
+  "managedBy": null,
+  "name": "repsys",
+  "properties": {
+    "provisioningState": "Succeeded"
+  },
+  "tags": {
+    "create-and-configure-database": ""
+  },
+  "type": "Microsoft.Resources/resourceGroups"
+}
+
+# Add user to contributor role of resource
+az role assignment create --assignee "bGroves@linamar.com" \
+--role "Contributor" \
+--scope "/subscriptions/f7d0cfcb-65b9-4f1c-8c9d-f8f993e4722a/resourceGroups/repsys"
+
+# Verify role has been added
+az role assignment list --resource-group repsys --assignee bGroves@linamar.com --output json --query '[].{principalName:principalName, roleDefinitionName:roleDefinitionName, scope:scope}'
+
+
 echo "Creating $server in $location..."
 # https://learn.microsoft.com/en-us/cli/azure/sql/server?view=azure-cli-latest#az-sql-server-create
 # requirements: SQL authentication
 az sql server create --name $server --resource-group $resourceGroup --location "$location" --admin-user $login --admin-password $password
+{
+  "administratorLogin": "mgadmin",
+  "administratorLoginPassword": null,
+  "administrators": null,
+  "externalGovernanceStatus": "Disabled",
+  "federatedClientId": null,
+  "fullyQualifiedDomainName": "repsys.database.windows.net",
+  "id": "/subscriptions/f7d0cfcb-65b9-4f1c-8c9d-f8f993e4722a/resourceGroups/repsys/providers/Microsoft.Sql/servers/repsys",
+  "identity": null,
+  "isIPv6Enabled": null,
+  "keyId": null,
+  "kind": "v12.0",
+  "location": "eastus",
+  "minimalTlsVersion": "None",
+  "name": "repsys",
+  "primaryUserAssignedIdentityId": null,
+  "privateEndpointConnections": [],
+  "publicNetworkAccess": "Enabled",
+  "resourceGroup": "repsys",
+  "restrictOutboundNetworkAccess": "Disabled",
+  "state": "Ready",
+  "tags": null,
+  "type": "Microsoft.Sql/servers",
+  "version": "12.0",
+  "workspaceFeature": null
+}
+
+# Can I drop my tenant and create Azure SQL database on dev tenant? No this is not supported
+echo "Configuring firewall..."
+az sql server firewall-rule create --resource-group $resourceGroup --server $server -n AllowYourIp --start-ip-address $startIp --end-ip-address $endIp
+{
+  "endIpAddress": "64.184.36.240",
+  "id": "/subscriptions/f7d0cfcb-65b9-4f1c-8c9d-f8f993e4722a/resourceGroups/repsys/providers/Microsoft.Sql/servers/repsys/firewallRules/AllowYourIp",
+  "name": "AllowYourIp",
+  "resourceGroup": "repsys",
+  "startIpAddress": "64.184.36.240",
+  "type": "Microsoft.Sql/servers/firewallRules"
+}
+
+echo "Creating $database on $server..."
+# https://learn.microsoft.com/en-us/azure/azure-sql/database/scripts/create-and-configure-database-cli?view=azuresql
+# az sql db list-editions -l eastus --service-objective S1 --show-details max-size
+
+# Create a Standard 20 DTU database
+az sql db create -g $resourceGroup -s $server -n $database --edition Standard --capacity 20 --backup-storage-redundancy Geo --max-size 20GB
+
+{
+  "autoPauseDelay": null,
+  "availabilityZone": "NoPreference",
+  "catalogCollation": "SQL_Latin1_General_CP1_CI_AS",
+  "collation": "SQL_Latin1_General_CP1_CI_AS",
+  "createMode": null,
+  "creationDate": "2024-02-21T23:29:22.433000+00:00",
+  "currentBackupStorageRedundancy": "Geo",
+  "currentServiceObjectiveName": "S1",
+  "currentSku": {
+    "capacity": 20,
+    "family": null,
+    "name": "Standard",
+    "size": null,
+    "tier": "Standard"
+  },
+  "databaseId": "850684a6-e516-4857-8f09-747fd1b81a6e",
+  "defaultSecondaryLocation": "westus",
+  "earliestRestoreDate": null,
+  "edition": "Standard",
+  "elasticPoolId": null,
+  "elasticPoolName": null,
+  "encryptionProtector": null,
+  "encryptionProtectorAutoRotation": null,
+  "failoverGroupId": null,
+  "federatedClientId": null,
+  "freeLimitExhaustionBehavior": null,
+  "highAvailabilityReplicaCount": null,
+  "id": "/subscriptions/f7d0cfcb-65b9-4f1c-8c9d-f8f993e4722a/resourceGroups/repsys/providers/Microsoft.Sql/servers/repsys/databases/rsdw",
+  "identity": null,
+  "isInfraEncryptionEnabled": false,
+  "keys": null,
+  "kind": "v12.0,user",
+  "ledgerOn": false,
+  "licenseType": null,
+  "location": "eastus",
+  "longTermRetentionBackupResourceId": null,
+  "maintenanceConfigurationId": "/subscriptions/f7d0cfcb-65b9-4f1c-8c9d-f8f993e4722a/providers/Microsoft.Maintenance/publicMaintenanceConfigurations/SQL_Default",
+  "managedBy": null,
+  "manualCutover": null,
+  "maxLogSizeBytes": null,
+  "maxSizeBytes": 21474836480,
+  "minCapacity": null,
+  "name": "rsdw",
+  "pausedDate": null,
+  "performCutover": null,
+  "preferredEnclaveType": null,
+  "readScale": "Disabled",
+  "recoverableDatabaseId": null,
+  "recoveryServicesRecoveryPointId": null,
+  "requestedBackupStorageRedundancy": "Geo",
+  "requestedServiceObjectiveName": "S1",
+  "resourceGroup": "repsys",
+  "restorableDroppedDatabaseId": null,
+  "restorePointInTime": null,
+  "resumedDate": null,
+  "sampleName": null,
+  "secondaryType": null,
+  "sku": {
+    "capacity": 20,
+    "family": null,
+    "name": "Standard",
+    "size": null,
+    "tier": "Standard"
+  },
+  "sourceDatabaseDeletionDate": null,
+  "sourceDatabaseId": null,
+  "sourceResourceId": null,
+  "status": "Online",
+  "tags": null,
+  "type": "Microsoft.Sql/servers/databases",
+  "useFreeLimit": null,
+  "zoneRedundant": false
+}
+az sql db restore --dest-name MyDest --edition GeneralPurpose --name MyAzureSQLDatabase --resource-group MyResourceGroup --server myserver --subscription MySubscription --time "2018-05-20T05:34:22" --backup-storage-redundancy Geo
 
 {
   "administratorLogin": "bgroves@mobexglobal.com",
@@ -59,32 +206,6 @@ az sql server create --name $server --resource-group $resourceGroup --location "
   "workspaceFeature": null
 }
 
-# Can I drop my tenant and create Azure SQL database on dev tenant? No this is not supported
-# https://github.com/MicrosoftDocs/azure-docs/blob/main/articles/role-based-access-control/role-assignments-list-cli.md
-az role assignment list --all --assignee bgroves@mobexglobal.com --output json --query '[].{principalName:principalName, roleDefinitionName:roleDefinitionName, scope:scope}'
-[
-  {
-    "principalName": "bgroves@mobexglobal.com",
-    "roleDefinitionName": "Contributor",
-    "scope": "/subscriptions/f7d0cfcb-65b9-4f1c-8c9d-f8f993e4722a"
-  }
-]
-Add contributor role to repsys resource group.
-echo "Configuring firewall..."
-az sql server firewall-rule create --resource-group $resourceGroup --server $server -n AllowYourIp --start-ip-address $startIp --end-ip-address $endIp
-# https://learn.microsoft.com/en-us/cli/azure/sql/db?view=azure-cli-latest#az-sql-db-create
-echo "Creating $database on $server..."
-# Create a Standard SO 10 DTU database
-az sql db create -g $resourceGroup -s $server -n $database --edition Standard --service-objective S1 --backup-storage-redundancy Geo --max-size 20GB
-
-az sql db list-editions -l westus --service-objective P1 --show-details max-size
-
-az sql db update -g mygroup -s myserver -n mydb --edition Standard --capacity 10 --max-size 250GB
-
-# create basic db
-az sql db create --resource-group $resourceGroup --server $server --name $database --sample-name AdventureWorksLT --edition GeneralPurpose --family Gen5 --capacity 2 --zone-redundant true # zone redundancy is only supported on premium and business critical service tiers
-
-az sql db restore --dest-name MyDest --edition GeneralPurpose --name MyAzureSQLDatabase --resource-group MyResourceGroup --server myserver --subscription MySubscription --time "2018-05-20T05:34:22" --backup-storage-redundancy Geo
 ```
 
 <https://portal.azure.com/#home>

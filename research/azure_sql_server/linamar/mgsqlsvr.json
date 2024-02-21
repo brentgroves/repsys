@@ -1,0 +1,18 @@
+{
+    "kind": "v12.0",
+    "properties": {
+        "administratorLogin": "mgadmin",
+        "version": "12.0",
+        "state": "Ready",
+        "fullyQualifiedDomainName": "mgsqlsrv.database.windows.net",
+        "privateEndpointConnections": [],
+        "minimalTlsVersion": "1.2",
+        "publicNetworkAccess": "Enabled",
+        "restrictOutboundNetworkAccess": "Disabled"
+    },
+    "location": "eastus",
+    "tags": {},
+    "id": "/subscriptions/f7d0cfcb-65b9-4f1c-8c9d-f8f993e4722a/resourceGroups/kors/providers/Microsoft.Sql/servers/mgsqlsrv",
+    "name": "mgsqlsrv",
+    "type": "Microsoft.Sql/servers"
+}
