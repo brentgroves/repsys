@@ -83,10 +83,28 @@ az sql server create --name $server --resource-group $resourceGroup --location "
   "version": "12.0",
   "workspaceFeature": null
 }
+az sql server list --output json --query '[].{administratorLogin:administratorLogin,fullyQualifiedDomainName:fullyQualifiedDomainName,location:location,id:id,name:name,version:version}'
+[
+  {
+    "administratorLogin": "mgadmin",
+    "fullyQualifiedDomainName": "repsys.database.windows.net",
+    "id": "/subscriptions/f7d0cfcb-65b9-4f1c-8c9d-f8f993e4722a/resourceGroups/repsys/providers/Microsoft.Sql/servers/repsys",
+    "location": "eastus",
+    "name": "repsys",
+    "version": "12.0"
+  }
+]
+
+# https://learn.microsoft.com/en-us/answers/questions/995338/sql-azure-version
+Azure SQL Database has its version number that is not related to SQL Server version numbers. However it runs the latest features and updates that run the latest version of SQL Server. 
 
 # Can I drop my tenant and create Azure SQL database on dev tenant? No this is not supported
 echo "Configuring firewall..."
 az sql server firewall-rule create --resource-group $resourceGroup --server $server -n AllowYourIp --start-ip-address $startIp --end-ip-address $endIp
+
+az sql server firewall-rule create --resource-group $resourceGroup --server $server -n AllowHomeIp --start-ip-address 64.184.119.118
+ --end-ip-address 64.184.119.118
+
 {
   "endIpAddress": "64.184.36.240",
   "id": "/subscriptions/f7d0cfcb-65b9-4f1c-8c9d-f8f993e4722a/resourceGroups/repsys/providers/Microsoft.Sql/servers/repsys/firewallRules/AllowYourIp",
@@ -95,6 +113,11 @@ az sql server firewall-rule create --resource-group $resourceGroup --server $ser
   "startIpAddress": "64.184.36.240",
   "type": "Microsoft.Sql/servers/firewallRules"
 }
+
+az sql server firewall-rule create --resource-group $resourceGroup --server $server -n AllowHomeIp --start-ip-address 64.184.119.118
+ --end-ip-address 64.184.119.118
+
+az sql server firewall-rule list --resource-group repsys --server repsys --output json --query '[].{name:name,id:id,starIpAddress:startIpAddress,endIpAddress:endIpAddress}'
 
 echo "Creating $database on $server..."
 # https://learn.microsoft.com/en-us/azure/azure-sql/database/scripts/create-and-configure-database-cli?view=azuresql
@@ -177,6 +200,28 @@ az sql db create -g $resourceGroup -s $server -n $database --edition Standard --
   "useFreeLimit": null,
   "zoneRedundant": false
 }
+
+az sql db list --resource-group repsys --server repsys --output json --query '[].{currentSku:currentSku,id:id,databaseId:databaseId,maxSizeBytes:maxSizeBytes}'
+# Verify all resources in repsys resource group
+az resource list --resource-group $resourceGroup --output json --query '[].{name:name,type:type,id:id}'
+[
+  {
+    "id": "/subscriptions/f7d0cfcb-65b9-4f1c-8c9d-f8f993e4722a/resourceGroups/repsys/providers/Microsoft.Sql/servers/repsys",
+    "name": "repsys",
+    "type": "Microsoft.Sql/servers"
+  },
+  {
+    "id": "/subscriptions/f7d0cfcb-65b9-4f1c-8c9d-f8f993e4722a/resourceGroups/repsys/providers/Microsoft.Sql/servers/repsys/databases/master",
+    "name": "repsys/master",
+    "type": "Microsoft.Sql/servers/databases"
+  },
+  {
+    "id": "/subscriptions/f7d0cfcb-65b9-4f1c-8c9d-f8f993e4722a/resourceGroups/repsys/providers/Microsoft.Sql/servers/repsys/databases/rsdw",
+    "name": "repsys/rsdw",
+    "type": "Microsoft.Sql/servers/databases"
+  }
+]
+
 az sql db restore --dest-name MyDest --edition GeneralPurpose --name MyAzureSQLDatabase --resource-group MyResourceGroup --server myserver --subscription MySubscription --time "2018-05-20T05:34:22" --backup-storage-redundancy Geo
 
 {
