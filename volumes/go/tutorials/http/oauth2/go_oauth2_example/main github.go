@@ -47,10 +47,6 @@ func main() {
 
 		// Next, lets for the HTTP request to call the github oauth endpoint
 		// to get our access token
-		// https: //login.microsoftonline.com/5269b021-533e-4702-b9d9-72acbc852c97/oauth2/v2.0/token
-		// https: //stackoverflow.com/questions/63852734/azure-oauth-getting-html-body-instead-of-code-from-angular-get-request
-	// https: //stackoverflow.com/questions/67247541/how-to-acquire-oauth2-0-token-from-azure-ad-in-go
-	// https: //github.com/mcordell/go-ms-graph/blob/master/auth/auth.go
 		reqURL := fmt.Sprintf("https://github.com/login/oauth/access_token?client_id=%s&client_secret=%s&code=%s", clientID, clientSecret, code)
 		req, err := http.NewRequest(http.MethodPost, reqURL, nil)
 		if err != nil {
@@ -86,38 +82,6 @@ func main() {
 	})
 
 	http.ListenAndServe(":8080", nil)
-}
-
-This could be done in html instead of golang
-https://stackoverflow.com/questions/63852734/azure-oauth-getting-html-body-instead-of-code-from-angular-get-request
-
-func GetTokens(c AuthorizationConfig, authCode AuthorizationCode, scope string) (t Tokens, err error) {
-    formVals := url.Values{}
-    formVals.Set("code", authCode.Value)
-    formVals.Set("grant_type", "authorization_code")
-    formVals.Set("redirect_uri", c.RedirectURL())
-    formVals.Set("scope", scope)
-    if c.ClientSecret != "" {
-        formVals.Set("client_secret", c.ClientSecret)
-    }
-    formVals.Set("client_id", c.ClientID)
-    response, err := http.PostForm(TokenURL, formVals)
-
-    if err != nil {
-        return t, errors.Wrap(err, "error while trying to get tokens")
-    }
-    body, err := ioutil.ReadAll(response.Body)
-
-    if err != nil {
-        return t, errors.Wrap(err, "error while trying to read token json body")
-    }
-
-    err = json.Unmarshal(body, &t)
-    if err != nil {
-        return t, errors.Wrap(err, "error while trying to parse token json body")
-    }
-
-    return
 }
 
 type OAuthAccessResponse struct {

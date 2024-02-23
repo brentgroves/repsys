@@ -78,10 +78,13 @@ OAuth service providers normally have a portal in which you can register your co
 - Start the server by executing go run main.go
 - Navigate to <http://localhost:8080> on your browser.
 
+Register a new OAuth application
+go_oauth2_example
+
 Client ID
-d5e55eb0a1a9b98502f5
+4e83a11fd0182d7cbb02
 Client secrets
-20c790ef413d5f5b276868709c615fecf4ba2973
+58870f5f28410c3fce3ea5c0bd5fe6e1cbb41cfc
 
 ## Setup go progam
 
@@ -116,3 +119,175 @@ go run main.go
 ```
 
 Once you click on the “Login with github” link, you will be redirected to the familiar OAuth page to register with Github. However, once you authenticate, you will be redirected to <http://localhost:8080/oauth/redirect>, which will lead to a 404 page on the server.
+
+## Adding a Redirect Route
+
+Once the user authenticates with Github, they get redirected to the redirect URL that was specified earlier.
+
+The service provider also adds a request token along with the url. In this case, Github adds this as the code parameter, so the redirect URL will actually be something like <http://localhost:8080/oauth/redirect?code=mycode123>, where mycode123 is the request token.
+
+We need this request token and our client secret to get the access token, which is the token that is actually used to get information about the user. We get this access token by making a POST HTTP call to <https://github.com/login/oauth/access_token> along with the mentioned information.
+
+You can view the **[documentation page](https://docs.github.com/en/developers/apps/building-oauth-apps/authorizing-oauth-apps#2-users-are-redirected-back-to-your-site-by-github)** for the details of the information Github provides to the redirect URL, and the information we need for provide with the POST /login/oauth/access_token HTTP call.
+
+## **[Enabling OAuth 2.0 Authentication with Azure Active Directory](https://support.smartbear.com/readyapi/docs/requests/auth/types/oauth2/tutorial-azure.html)**
+
+When you use OAuth 2.0 authentication, you get access to a web service from a client application. The way you do this depends on the grant you use. In this tutorial, we will show how to configure the client credentials grant type for applications in Azure Active Directory. In the Client Credentials Grant type, the client application gets access to the web service by using its own credentials.
+
+1. Register applications in Azure Active Directory
+To be able to perform OAuth 2.0 authentication by using the client credentials grant type, you need to register both the web service and the client applications in Azure Active Directory. To learn how to do this, see the **[Microsoft documentation](https://docs.microsoft.com/en-us/graph/auth-register-app-v2)**.
+
+Dev Account Client Application
+Client Id:e0e65e2b-9f59-495a-81fd-b6738ab023fc
+value:nRH8Q~HGjz4eSmS~~nGPxOdbILLOZfLM62~iScss
+Application ID URI=api://b08211fd-0bcf-4700-a70a-e600bc0bcf77
+scope=api://b08211fd-0bcf-4700-a70a-e600bc0bcf77/Files.Read
+redirect uri:<http://localhost:8080/oauth/redirect>
+
+b08211fd-0bcf-4700-a70a-e600bc0bcf77
+
+Outlook Client Application
+Client Id:2e2f796f-09ce-4800-8267-3c5a2d85ec78
+value:t4U8Q~Pvrih6CSyS_CX1ztrVzdeuWevudbvycdk7
+Application ID URI=api://4c914e6c-f56e-4a77-a59f-733d6d37942e
+redirect uri:<http://localhost:8080/oauth/redirect>
+<http://localhost:8080/oauth/redirect>
+Let’s add the /oauth/redirect route to the main.go file:
+
+```go
+const clientID = "<your client id>"
+const clientSecret = "<your client secret>"
+
+func main() {
+ fs := httNow the redirect URL is functional, and will redirect the user to the welcome page, along with the access token.
+
+## Redirecting to the Welcome Page
+The welcome page is the page we show the user after they have logged in. Now that we have the users access token, we can obtain their account information on their behalf as authorized Github users.
+ll be using `httpClient` to make external HTTP requests later in our code
+ httpClient := http.Client{}
+
+ // Create a new redirect route route
+ http.HandleFunc("/oauth/redirect", func(w http.ResponseWriter, r *http.Request) {
+  // First, we need to get the value of the `code` query param
+  err := r.ParseForm()
+  if err != nil {
+   fmt.Fprintf(os.Stdout, "could not parse query: %v", err)
+   w.WriteHeader(http.StatusBadRequest)
+   return
+  }
+  code := r.FormValue("code")
+
+  // Next, lets for the HTTP request to call the github oauth endpoint
+  // to get our access token
+  reqURL := fmt.Sprintf("https://github.com/login/oauth/access_token?client_id=%s&client_secret=%s&code=%s", clientID, clientSecret, code)
+  req, err := http.NewRequest(http.MethodPost, reqURL, nil)
+  if err != nil {
+   fmt.Fprintf(os.Stdout, "could not create HTTP request: %v", err)
+   w.WriteHeader(http.StatusBadRequest)
+   return
+  }
+  // We set this header since we want the response
+  // as JSON
+  req.Header.Set("accept", "application/json")
+
+  // Send out the HTTP request
+  res, err := httpClient.Do(req)
+  if err != nil {
+   fmt.Fprintf(os.Stdout, "could not send HTTP request: %v", err)
+   w.WriteHeader(http.StatusInternalServerError)
+   return
+  }
+  defer res.Body.Close()
+Now the redirect URL is functional, and will redirect the user to the welcome page, along with the access token.
+
+## Redirecting to the Welcome Page
+The welcome page is the page we show the user after they have logged in. Now that we have the users access token, we can obtain their account information on their behalf as authorized Github users.
+eHeader(http.StatusBadRequest)
+   return
+  }
+
+  // Finally, send a response to redirect the user to the "welcome" page
+  // with the access token
+  w.Header().Set("Location", "/welcome.html?access_token="+t.AccessToken)
+  w.WriteHeader(http.StatusFound)
+ })
+
+ http.ListenAndServe(":8080", nil)
+}
+
+type OAuthAccessResponse struct {
+ AccessToken string `json:"access_token"`
+}
+
+```
+
+Now the redirect URL is functional, and will redirect the user to the welcome page, along with the access token.
+
+## Redirecting to the Welcome Page
+
+The welcome page is the page we show the user after they have logged in. Now that we have the users access token, we can obtain their account information on their behalf as authorized Github users.
+
+For a list of all APIs available, you can see the **[Github API Documentation](https://docs.github.com/en/rest/reference/users)**
+
+We will be using the /user API to get basic info about the user and say hi to them on our welcome page. Create a new file public/welcome.html:
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Hello</title>
+  </head>
+
+  <body></body>
+  <script>
+    // We can get the token from the "access_token" query
+    // param, available in the browsers "location" global
+    const query = window.location.search.substring(1);
+    const token = query.split("access_token=")[1];
+
+    // Call the user info API using the fetch browser library
+    fetch("https://api.github.com/user", {
+      headers: {
+        // This header informs the Github API about the API version
+        Accept: "application/vnd.github.v3+json",
+        // Include the token in the Authorization header
+        Authorization: "token " + token,
+      },
+    })
+      // Parse the response as JSON
+      .then((res) => res.json())
+      .then((res) => {
+        // Once we get the response (which has many fields)
+        // Documented here: https://developer.github.com/v3/users/#get-the-authenticated-user
+        // Write "Welcome <user name>" to the documents body
+        const nameNode = document.createTextNode(`Welcome, ${res.name}`);
+        document.body.appendChild(nameNode);
+      });
+  </script>
+</html>
+
+```
+
+With the addition of the welcome page, our OAuth implementation is now complete!
+
+Once the app starts, we can visit <http://localhost:8080/> , authorize with Github, and end up on the welcome page, which displays the greeting. My name on my github profile is “Soham Kamani”, so the welcome page will display Welcome, Soham Kamani once I login.
+<https://stackoverflow.com/questions/63852734/azure-oauth-getting-html-body-instead-of-code-from-angular-get-request>
+
+<https://login.microsoftonline.com/5269b021-533e-4702-b9d9-72acbc852c97/oauth2/v2.0/authorize>
+AADSTS900144: The request body must contain the following parameter: 'client_id'.
+
+There are usually two causes for this error.
+The parameter: ‘client_id’ is missing from the request, therefore ensure the authentication request includes the required parameter.
+
+If you are hitting the token endpoint (i.e. <https://login.microsoftonline.com/common/oauth2/token> ), the Content Type is not set correctly. Ensure the content type is 'application/x-www-form-urlencoded' as a header in the request body.
+
+<https://github.com/login/oauth/authorize?client_id=myclientid123&redirect_uri=http://localhost:8080/oauth/redirect>
+
+![alt](https://www.sohamkamani.com/golang/oauth/oauth-flow.drawio.svg)
+
+<https://github.com/login/oauth/authorize?client_id=myclientid123&redirect_uri=http://localhost:8080/oauth/redirect>
+
+<https://github.com/login/oauth/authorize?client_id=myclientid123&redirect_uri=http://localhost:8080/oauth/redirect>
