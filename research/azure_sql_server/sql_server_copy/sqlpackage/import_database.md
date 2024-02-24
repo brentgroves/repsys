@@ -28,7 +28,90 @@ cd ~/sqlpackage
 
 sqlpackage /a:export /ssn:tcp:mgsqlmi.public.48d444e7f69b.database.windows.net,3342 /sdn:mgdw /p:TableData=ETL.script_history /su:mgadmin /sp:WeDontSharePasswords1! /tf:/home/brent/backups/mi/mgdw.bacpac /p:VerifyExtraction=false
 
-sqlpackage /a:import /tsn:tcp:mgsqlsvr.database.windows.net /tdn:mgdw /tu:mgadmin /tp:WeDontSharePasswords1! /sf:/home/brent/backups/mi/script_history.bacpac 
+sqlpackage /TargetTrustServerCertificate:True /a:import /tsn:tcp:localhost /tdn:rsdw /tu:sa /tp:WeDontSharePasswords1! /sf:/home/brent/backups/mi/script_history.bacpac 
+
+*** Error importing database:Could not import package.
+Error SQL72014: Core Microsoft SqlClient Data Provider: Msg 207, Level 16, State 1, Procedure datasource_view, Line 30 Invalid column name 'datasource_type_key'.
+Error SQL72045: Script execution error.  The executed script:
+CREATE VIEW DataSource.datasource_view
+AS
+SELECT ds.name AS datasource_name,
+       mp.friendly_name AS mobex_procedure,
+       mpr.name AS mobex_procedure_repo,
+       mpp.name AS mobex_project,
+       es.name AS etl_script,
+       esr.name AS etl_script_repo,
+       esp.name AS etl_project
+FROM   DataSource.datasource AS ds
+       INNER JOIN
+       DataSource.datasource_type AS dst
+       ON ds.datasource_type_key = dst.datasource_type_key
+       INNER JOIN
+       DataSource.base_source AS b
+       ON ds.base_source_key = b.base_source_key
+       INNER JOIN
+       DataSource.base_source_type AS bt
+       ON b.base_source_type_key = bt.base_source_type_key
+       INNER JOIN
+       DataSource.datasource_warehouse AS dsw
+       ON ds.datasource_key = dsw.datasource_key
+       INNER JOIN
+       DataSource.data_warehouse AS dw
+       ON dsw.data_warehouse_key = dw.data_warehouse_key
+       INNER JOIN
+       DataSource.dw_schema AS sc
+       ON dw.dw_schema_key = sc.dw_schema_key
+       INNER JOIN
+       DataSour
+
+busche-sql.busche-cnc.com
+sqlpackage /TargetTrustServerCertificate:True /a:import /tsn:tcp:busche-sql.busche-cnc.com /tdn:rsdw /tu:sa /tp:buschecnc1 /sf:/home/brent/backups/mi/script_history.bacpac 
+*** Error importing database:Data cannot be imported into target because it contains one or more user objects. Import should be performed against a new, empty database.
+
+sqlpackage /a:import /tsn:tcp:repsys.database.windows.net /tdn:rsdw /tu:mgadmin /tp:WeDontSharePasswords1! /sf:/home/brent/backups/mi/script_history.bacpac 
+
+Importing to database 'rsdw' on server 'tcp:repsys.database.windows.net'.
+Creating deployment plan
+Initializing deployment
+*** A project which specifies SQL Server 2022 or Azure SQL Database Managed Instance as the target platform may experience compatibility issues with Microsoft Azure SQL Database v12.
+*** Error importing database:Could not import package.
+Warning SQL0: A project which specifies SQL Server 2022 or Azure SQL Database Managed Instance as the target platform may experience compatibility issues with Microsoft Azure SQL Database v12.
+Warning SQL72012: The object [data_0] exists in the target, but it will not be dropped even though you selected the 'Generate drop statements for objects that are in the target database but that are not in the source' check box.
+Warning SQL72012: The object [log] exists in the target, but it will not be dropped even though you selected the 'Generate drop statements for objects that are in the target database but that are not in the source' check box.
+Error SQL72014: Core Microsoft SqlClient Data Provider: Msg 40515, Level 15, State 1, Procedure production_twohour_p, Line 16 Reference to database and/or server name in 'mgdw.Plex.Detailed_Production_History' is not supported in this version of SQL Server.
+Error SQL72045: Script execution error.  The executed script:
+CREATE PROCEDURE Plex.production_twohour_p
+AS
+BEGIN
+    CREATE TABLE #casterrewq (
+        part     INT,
+        quantity INT
+    );
+    INSERT INTO #casterrewq (part, quantity)
+    (SELECT   [Part_No],
+              sum([Quantity])
+     FROM     [mgdw].[Plex].[Detailed_Production_History]
+     WHERE    [PCN] LIKE '295932'
+              AND ([Record_Date] <= CURRENT_TIMESTAMP
+                   AND [Record_Date] >= dateadd(hour, -2, CURRENT_TIMESTAMP))
+              AND [Workcenter_Code] LIKE 'cast%'
+     GROUP BY [Part_No]);
+    CREATE TABLE #xrayrewq (
+        part     INT,
+        quantity INT
+    );
+    INSERT INTO #xrayrewq (part, quantity)
+    (SELECT   [Part_No],
+              sum([Quantity])
+     FROM     [mgdw].[Plex].[Detailed_Production_History]
+     WHERE    [PCN] LIKE '295932'
+              AND ([Record_Date] <= CURRENT_TIMESTAMP
+                   AND [Record_Date] >= dateadd(hour, -2, CURRENT_TIMESTAMP))
+              AND [Workcenter_Code] LIKE 'x%ray%'
+     GROUP BY [Part_No]);
+    CREATE TABL
+
+Time elapsed 0:01:23.50
 
 Importing to database 'mgdw' on server 'tcp:mgsqlsvr.database.windows.net'.
 Creating deployment plan

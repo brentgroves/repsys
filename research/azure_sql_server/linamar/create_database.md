@@ -44,6 +44,9 @@ az group create --name $resourceGroup --location "$location" --tags $tag
   "type": "Microsoft.Resources/resourceGroups"
 }
 
+# Verify resource group
+az group show --resource-group $resourceGroup
+
 # Add user to contributor role of resource
 az role assignment create --assignee "bGroves@linamar.com" \
 --role "Contributor" \
@@ -51,6 +54,7 @@ az role assignment create --assignee "bGroves@linamar.com" \
 
 # Verify role has been added
 az role assignment list --resource-group repsys --assignee bGroves@linamar.com --output json --query '[].{principalName:principalName, roleDefinitionName:roleDefinitionName, scope:scope}'
+az role assignment list --assignee bgroves@mobexglobal.com --output json --query '[].{principalName:principalName, roleDefinitionName:roleDefinitionName, scope:scope}'
 
 
 echo "Creating $server in $location..."
@@ -96,31 +100,26 @@ az sql server list --output json --query '[].{administratorLogin:administratorLo
 ]
 
 # https://learn.microsoft.com/en-us/answers/questions/995338/sql-azure-version
-Azure SQL Database has its version number that is not related to SQL Server version numbers. However it runs the latest features and updates that run the latest version of SQL Server. 
+# Azure SQL Database has its version number that is not related to SQL Server version numbers. However it runs the latest features and updates that run the latest version of SQL Server. 
 
-# Can I drop my tenant and create Azure SQL database on dev tenant? No this is not supported
 echo "Configuring firewall..."
-az sql server firewall-rule create --resource-group $resourceGroup --server $server -n AllowYourIp --start-ip-address $startIp --end-ip-address $endIp
+az sql server firewall-rule create --resource-group $resourceGroup --server $server -n AllowWorkIp --start-ip-address $startIp --end-ip-address $endIp
 
-az sql server firewall-rule create --resource-group $resourceGroup --server $server -n AllowHomeIp --start-ip-address 64.184.119.118
- --end-ip-address 64.184.119.118
+az sql server firewall-rule create --resource-group $resourceGroup --server $server -n AllowHomeIp --start-ip-address 64.184.119.118 --end-ip-address 64.184.119.118
 
 {
   "endIpAddress": "64.184.36.240",
   "id": "/subscriptions/f7d0cfcb-65b9-4f1c-8c9d-f8f993e4722a/resourceGroups/repsys/providers/Microsoft.Sql/servers/repsys/firewallRules/AllowYourIp",
-  "name": "AllowYourIp",
+  "name": "AllowWorkIp",
   "resourceGroup": "repsys",
   "startIpAddress": "64.184.36.240",
   "type": "Microsoft.Sql/servers/firewallRules"
 }
 
-az sql server firewall-rule create --resource-group $resourceGroup --server $server -n AllowHomeIp --start-ip-address 64.184.119.118
- --end-ip-address 64.184.119.118
-
 az sql server firewall-rule list --resource-group repsys --server repsys --output json --query '[].{name:name,id:id,starIpAddress:startIpAddress,endIpAddress:endIpAddress}'
 
 echo "Creating $database on $server..."
-# https://learn.microsoft.com/en-us/azure/azure-sql/database/scripts/create-and-configure-database-cli?view=azuresql
+# https://learn.microsoft.com/en-us/cli/azure/sql/db?view=azure-cli-latest#az-sql-db-create
 # az sql db list-editions -l eastus --service-objective S1 --show-details max-size
 
 # Create a Standard 20 DTU database
