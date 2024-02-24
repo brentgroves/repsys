@@ -3,6 +3,7 @@
 ## references
 
 <https://www.sohamkamani.com/golang/oauth/>
+<https://github.com/twitchdev/authentication-go-sample/blob/main/oidc-authorization-code/main.go>
 
 ## Creating an OAuth2 Client in Golang (With Full Examples)
 
@@ -254,6 +255,15 @@ We will be using the /user API to get basic info about the user and say hi to th
 With the addition of the welcome page, our OAuth implementation is now complete!
 
 Once the app starts, we can visit <http://localhost:8080/> , authorize with Github, and end up on the welcome page, which displays the greeting. My name on my github profile is “Soham Kamani”, so the welcome page will display Welcome, Soham Kamani once I login.
+
+## Next
+
+Attempt to get this to work for Azure
+<https://github.com/coreos/go-oidc>
+<https://pkg.go.dev/golang.org/x/oauth2>
+<https://github.com/twitchdev/authentication-go-sample/blob/main/oidc-authorization-code/main.go>
+<https://github.com/twitchdev/authentication-go-sample/blob/main/oauth-authorization-code/main.go>
+
 <https://stackoverflow.com/questions/63852734/azure-oauth-getting-html-body-instead-of-code-from-angular-get-request>
 
 <https://login.microsoftonline.com/5269b021-533e-4702-b9d9-72acbc852c97/oauth2/v2.0/authorize>
