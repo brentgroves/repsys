@@ -3,6 +3,7 @@ go 1.20
 use (
 	./volumes/go/replib
 	./volumes/go/runner
+	./volumes/go/tutorials/azure_sdk/01-azstart
 	./volumes/go/tutorials/database/mysql/access
 	./volumes/go/tutorials/database/mysql/insert
 	./volumes/go/tutorials/database/mysql/prepared_statement
@@ -10,7 +11,7 @@ use (
 	./volumes/go/tutorials/database/mysql/tutorial_access_database
 	./volumes/go/tutorials/http/basics/fileserver
 	./volumes/go/tutorials/http/basics/webapp/gowiki
-	./volumes/go/tutorials/http/oauth2/go_oauth2_example
+	./volumes/go/tutorials/oauth2/go_oauth2_example
 	./volumes/go/tutorials/prometheus/counter
 	./volumes/go/tutorials/webhook/webhook
 )

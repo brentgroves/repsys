@@ -63,15 +63,15 @@ Enter into index.html
 
 The link URL has three key parts:
 
-- https//github.com/login/oauth/authorize is the OAuth gateway for Github’s OAuth flow. All OAuth providers have a gateway URL that you have to send the user to in order to proceed.
+- https//github.com/login/oauth/authorize is the OAuth gateway for Github’s **OAuth flow**. All OAuth providers have a gateway URL that you have to send the user to in order to proceed.
 
-- client_id=myclientid123 - this specifies the client ID of the application. This ID will tell Github about the identity of the consumer who is trying to use their OAuth service.
+- client_id=myclientid123 - this specifies the client ID of the application. This ID will tell Github about the identity of the consumer who is trying to use their OAuth service. Maybe the client_id is the id of the app registered with github.
 
-OAuth service providers normally have a portal in which you can register your consumer. On registration, you will receive a client ID (which we are using here as myclientid123), and a client secret (which we will use later on). For Github, the portal to register new applications can be found on <https://github.com/settings/applications/new>.
+  OAuth service providers normally have a portal in which you can register your consumer. On registration, you will receive a client ID (which we are using here as myclientid123), and a client secret (which we will use later on). For Github, the portal to register new applications can be found on <https://github.com/settings/applications/new>.
 
 - redirect_uri=<http://localhost:8080/oauth/redirect> - specifies the URL to redirect to with the request token, once the user has been authenticated by the service provider. Normally, you will have to set this value on the registration portal as well, to prevent anyone from setting malicious callback URLs.
 
-## register app
+## register app with Github
 
 - Register your new application on Github : <https://github.com/settings/applications/new>. In the "callback URL" field, enter "<http://localhost:8080/oauth/redirect>". Once you register, you will get a client ID and client secret.
 - Replace the values of the clientID and clientSecret variables in the main.go file and also the index.html file
@@ -85,6 +85,8 @@ Client ID
 4e83a11fd0182d7cbb02
 Client secrets
 58870f5f28410c3fce3ea5c0bd5fe6e1cbb41cfc
+
+## **[register app with Azure](./azure_oauth_registriation.md)**
 
 ## Setup go progam
 
@@ -130,28 +132,6 @@ We need this request token and our client secret to get the access token, which 
 
 You can view the **[documentation page](https://docs.github.com/en/developers/apps/building-oauth-apps/authorizing-oauth-apps#2-users-are-redirected-back-to-your-site-by-github)** for the details of the information Github provides to the redirect URL, and the information we need for provide with the POST /login/oauth/access_token HTTP call.
 
-## **[Enabling OAuth 2.0 Authentication with Azure Active Directory](https://support.smartbear.com/readyapi/docs/requests/auth/types/oauth2/tutorial-azure.html)**
-
-When you use OAuth 2.0 authentication, you get access to a web service from a client application. The way you do this depends on the grant you use. In this tutorial, we will show how to configure the client credentials grant type for applications in Azure Active Directory. In the Client Credentials Grant type, the client application gets access to the web service by using its own credentials.
-
-1. Register applications in Azure Active Directory
-To be able to perform OAuth 2.0 authentication by using the client credentials grant type, you need to register both the web service and the client applications in Azure Active Directory. To learn how to do this, see the **[Microsoft documentation](https://docs.microsoft.com/en-us/graph/auth-register-app-v2)**.
-
-Dev Account Client Application
-Client Id:e0e65e2b-9f59-495a-81fd-b6738ab023fc
-value:nRH8Q~HGjz4eSmS~~nGPxOdbILLOZfLM62~iScss
-Application ID URI=api://b08211fd-0bcf-4700-a70a-e600bc0bcf77
-scope=api://b08211fd-0bcf-4700-a70a-e600bc0bcf77/Files.Read
-redirect uri:<http://localhost:8080/oauth/redirect>
-
-b08211fd-0bcf-4700-a70a-e600bc0bcf77
-
-Outlook Client Application
-Client Id:2e2f796f-09ce-4800-8267-3c5a2d85ec78
-value:t4U8Q~Pvrih6CSyS_CX1ztrVzdeuWevudbvycdk7
-Application ID URI=api://4c914e6c-f56e-4a77-a59f-733d6d37942e
-redirect uri:<http://localhost:8080/oauth/redirect>
-<http://localhost:8080/oauth/redirect>
 Let’s add the /oauth/redirect route to the main.go file:
 
 ```go

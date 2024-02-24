@@ -28,7 +28,7 @@ It is split into two parts, the authorization flow that runs in the browser wher
 
 ## User Authentication
 
-The user is authenticated during the a part of the flow. This may involve multiple factors and is not defined by the specification. In the Curity Identity Server all user authentication is configured in the Authentication Service and is configured per client.
+The user is authenticated during this part of the flow. This may involve multiple factors and is not defined by the specification. In the Curity Identity Server all user authentication is configured in the Authentication Service and is configured per client.
 
 ## Client Authentication
 
