@@ -64,6 +64,12 @@ FROM   DataSource.datasource AS ds
        INNER JOIN
        DataSour
 
+NEXT: Try reexporting after altering this view.
+1. manually create view and see were error is 
+2. change view
+3. reexport and import
+4. goto 1
+
 busche-sql.busche-cnc.com
 sqlpackage /TargetTrustServerCertificate:True /a:import /tsn:tcp:busche-sql.busche-cnc.com /tdn:rsdw /tu:sa /tp:buschecnc1 /sf:/home/brent/backups/mi/script_history.bacpac 
 *** Error importing database:Data cannot be imported into target because it contains one or more user objects. Import should be performed against a new, empty database.
