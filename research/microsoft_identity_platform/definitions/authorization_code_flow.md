@@ -3,6 +3,7 @@
 ## references
 
 <https://curity.io/resources/learn/openid-code-flow/>
+https://learn.microsoft.com/en-us/entra/identity-platform/v2-oauth2-auth-code-flow
 
 ## What is the OpenID Connect Authorization Code Flow?
 

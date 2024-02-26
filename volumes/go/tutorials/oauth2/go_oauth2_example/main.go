@@ -11,6 +11,7 @@ import (
 // const clientID = "4e83a11fd0182d7cbb02"
 // const clientSecret = "58870f5f28410c3fce3ea5c0bd5fe6e1cbb41cfc"
 // Azure IAM app
+const tenantId = "5269b021-533e-4702-b9d9-72acbc852c97"
 const clientID = "e0e65e2b-9f59-495a-81fd-b6738ab023fc"
 const clientSecret = "nRH8Q~HGjz4eSmS~~nGPxOdbILLOZfLM62~iScss"
 
@@ -44,8 +45,8 @@ func main() {
 			return
 		}
 		code := r.FormValue("code")
-
-		// Next, lets for the HTTP request to call the github oauth endpoint
+		
+		// Next, call the microsoft oauth endpoint
 		// to get our access token
 		// https: //login.microsoftonline.com/5269b021-533e-4702-b9d9-72acbc852c97/oauth2/v2.0/token
 		// https: //stackoverflow.com/questions/63852734/azure-oauth-getting-html-body-instead-of-code-from-angular-get-request
@@ -55,9 +56,22 @@ func main() {
 		// Azure way
 		// https://stackoverflow.com/questions/67247541/how-to-acquire-oauth2-0-token-from-azure-ad-in-go
 		// See GetTokens() below and test
-
 		// Github only
-		reqURL := fmt.Sprintf("https://github.com/login/oauth/access_token?client_id=%s&client_secret=%s&code=%s", clientID, clientSecret, code)
+		// reqURL := fmt.Sprintf("https://github.com/login/oauth/access_token?client_id=%s&client_secret=%s&code=%s", clientID, clientSecret, code)
+
+		reqURL := fmt.Sprintf("https://login.microsoftonline.com/%s/", tenantId)
+
+		// reqURL = `https://login.microsoftonline.com/${config.auth.tenantId}/oauth2/v2.0/token`;
+
+// const tokenRequestBody = {
+// 		grant_type    : 'authorization_code',
+// 		client_id     : xxxxxxx,
+// 		code          : _accessCode,
+// 		redirect_uri  : xxxxxxx,
+// 		scope         : xxxxxxx,
+// 		client_secret : xxxxxxx     //Only required for web apps
+// };
+
 		req, err := http.NewRequest(http.MethodPost, reqURL, nil)
 		if err != nil {
 			fmt.Fprintf(os.Stdout, "could not create HTTP request: %v", err)
@@ -93,6 +107,29 @@ func main() {
 
 	http.ListenAndServe(":8080", nil)
 }
+
+https://stackoverflow.com/questions/63852734/azure-oauth-getting-html-body-instead-of-code-from-angular-get-request
+// const tokenRequestUrl = `https://login.microsoftonline.com/${config.auth.tenantId}/oauth2/v2.0/token`;
+
+// const tokenRequestBody = {
+// 		grant_type    : 'authorization_code',
+// 		client_id     : xxxxxxx,
+// 		code          : _accessCode,
+// 		redirect_uri  : xxxxxxx,
+// 		scope         : xxxxxxx,
+// 		client_secret : xxxxxxx     //Only required for web apps
+// };
+
+// request.post(
+// 		{ url: tokenRequestUrl, form: tokenRequestBody },
+// 		(err, httpResponse, body) => {
+// 				if (!err) {
+// 						console.log('Token Received!\n', body);
+// 				} else {
+// 						// Probably throw an error? 
+// 				}
+// 		}
+// );
 
 // This could be done in html instead of golang
 // https://stackoverflow.com/questions/63852734/azure-oauth-getting-html-body-instead-of-code-from-angular-get-request

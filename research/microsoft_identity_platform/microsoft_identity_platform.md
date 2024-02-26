@@ -2,6 +2,8 @@
 
 ## references
 
+https://learn.microsoft.com/en-us/entra/identity-platform/v2-oauth2-auth-code-flow
+
 <https://learn.microsoft.com/en-us/entra/identity-platform/quickstart-web-app-python-sign-in?tabs=windows>
 
 <https://learn.microsoft.com/en-us/entra/identity-platform/v2-protocols-oidc>
