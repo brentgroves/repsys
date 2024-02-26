@@ -1,7 +1,7 @@
 # Azure report system status
 
 Good morning everyone,
-I hope everyone is doing well this week and enjoying the spring weather :-)  This is the status of the Azure reporting system activity.  Please feel free to reach out to me anytime at home or at work. If any of the following is not what you wish please say so :-)
+I hope everyone is doing well this week and enjoying the spring weather :-)  This is the week 9 status of the Azure reporting system activity.  Please feel free to reach out to me anytime at home or work. If any of the following is not what you wish please say so :-)
 
 Sincerely yours,
 Brent G.
@@ -15,10 +15,9 @@ The goal is to get Azure resource costs to be approximately $500 per month. Also
 
 - Create an Excel file showing the estimated monthly cost of all Azure resources.
 - Contact IT and IS team to gather any resource needs I may be unaware of.
-- Back up our Azure SQL work and data warehouse database schemas.
-- Test recovering these schemas to an Azure SQL database in the mobex tenant in the "repsys" resource group.
+- Back up our Azure SQL work and data warehouse database schemas to a  on-premise SQL Server 2022 running in a Docker container.
+- Create a bash script and the Azure CLI to create all Azure resources.
 - Conduct meetings as-needed with Brent H. Amir, Jarod, and Kevin.
-- Create a bash script that uses the Azure CLI to create all Azure resources.
 
 ## sample script
 
