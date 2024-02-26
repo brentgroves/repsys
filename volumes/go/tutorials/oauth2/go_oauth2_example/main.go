@@ -34,7 +34,7 @@ func main() {
 	// We will be using `httpClient` to make external HTTP requests later in our code
 	httpClient := http.Client{}
 
-	// Create a new redirect route route
+	// Create a new redirect route
 	http.HandleFunc("/oauth/redirect", func(w http.ResponseWriter, r *http.Request) {
 		// First, we need to get the value of the `code` query param
 		err := r.ParseForm()
@@ -51,6 +51,12 @@ func main() {
 		// https: //stackoverflow.com/questions/63852734/azure-oauth-getting-html-body-instead-of-code-from-angular-get-request
 		// https: //stackoverflow.com/questions/67247541/how-to-acquire-oauth2-0-token-from-azure-ad-in-go
 		// https: //github.com/mcordell/go-ms-graph/blob/master/auth/auth.go
+
+		// Azure way
+		// https://stackoverflow.com/questions/67247541/how-to-acquire-oauth2-0-token-from-azure-ad-in-go
+		// See GetTokens() below and test
+
+		// Github only
 		reqURL := fmt.Sprintf("https://github.com/login/oauth/access_token?client_id=%s&client_secret=%s&code=%s", clientID, clientSecret, code)
 		req, err := http.NewRequest(http.MethodPost, reqURL, nil)
 		if err != nil {

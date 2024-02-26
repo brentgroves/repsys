@@ -62,6 +62,24 @@ Enter into index.html
 </html>
 ```
 
+## Disect Azure Identity Management URL
+
+<https://login.microsoftonline.com/5269b021-533e-4702-b9d9-72acbc852c97/oauth2/v2.0/authorize?response_type=code&client_id=b08211fd-0bcf-4700-a70a-e600bc0bcf77&scope=api://b08211fd-0bcf-4700-a70a-e600bc0bcf77/Files.Read>
+
+- **tenant:** 5269b021-533e-4702-b9d9-72acbc852c97
+- **response_type:** code
+
+## **[The Authorization Response](https://www.oauth.com/oauth2-servers/authorization/the-authorization-response/)**
+
+Once the user has finished logging in and approving the request, the authorization server is ready to redirect the user back to the application.
+Authorization Code Response
+
+If the request is valid and the user grants the authorization request, the authorization server generates an authorization code and redirects the user back to the application, adding the authorization code and the application’s “state” value to the redirect URL.
+
+## Generating the Authorization Code
+
+The authorization code must expire shortly after it is issued. The OAuth 2.0 spec recommends a maximum lifetime of 10 minutes, but in practice, most services set the expiration much shorter, around 30-60 seconds. The authorization code itself can be of any length, but the length of the codes should be documented.
+
 The link URL has three key parts:
 
 - https//github.com/login/oauth/authorize is the OAuth gateway for Github’s **OAuth flow**. All OAuth providers have a gateway URL that you have to send the user to in order to proceed.
@@ -71,6 +89,10 @@ The link URL has three key parts:
   OAuth service providers normally have a portal in which you can register your consumer. On registration, you will receive a client ID (which we are using here as myclientid123), and a client secret (which we will use later on). For Github, the portal to register new applications can be found on <https://github.com/settings/applications/new>.
 
 - redirect_uri=<http://localhost:8080/oauth/redirect> - specifies the URL to redirect to with the request token, once the user has been authenticated by the service provider. Normally, you will have to set this value on the registration portal as well, to prevent anyone from setting malicious callback URLs.
+
+Azure example:
+
+href="<https://login.microsoftonline.com/5269b021-533e-4702-b9d9-72acbc852c97/oauth2/v2.0/authorize?response_type=code&client_id=b08211fd-0bcf-4700-a70a-e600bc0bcf77&scope=api://b08211fd-0bcf-4700-a70a-e600bc0bcf77/Files.Read">>
 
 ## register app with Github
 
