@@ -22,3 +22,9 @@ Try executing this request and more in Postman -- don't forget to replace tokens
 This diagram shows a high-level view of the authentication flow:
 
 ![alt](https://learn.microsoft.com/en-us/entra/identity-platform/media/v2-oauth2-auth-code-flow/convergence-scenarios-native.svg)
+
+## Request an authorization code
+
+The authorization code flow begins with the client directing the user to the /authorize endpoint. In this request, the client requests the openid, offline_access, and <https://graph.microsoft.com/mail.read> permissions from the user.
+
+Some permissions are admin-restricted, for example, writing data to an organization's directory by using Directory.ReadWrite.All. If your application requests access to one of these permissions from an organizational user, the user receives an error message that says they're not authorized to consent to your app's permissions. To request access to admin-restricted scopes, you should request them directly from a Global Administrator. For more information, see Admin-restricted permissions.

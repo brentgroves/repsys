@@ -62,7 +62,7 @@ func main() {
 		reqURL := fmt.Sprintf("https://login.microsoftonline.com/%s/", tenantId)
 
 		// reqURL = `https://login.microsoftonline.com/${config.auth.tenantId}/oauth2/v2.0/token`;
-
+		https://login.microsoftonline.com/organizations/oauth2/v2.0/authorize?redirect_uri=https%3A%2F%2Fportal.azure.com%2Fsignin%2Findex%2F&response_type=code%20id_token&scope=https%3A%2F%2Fmanagement.core.windows.net%2F%2Fuser_impersonation%20openid%20email%20profile&state=OpenIdConnect.AuthenticationProperties%3Df1H9Bx6T6cw2VkIwVFsGQvaUFaxKzi7PJxpHc0MoJ5q7Pql8XiNJUarbW2Cs89npSMx1VtXa86pc5zRbsFjIcnGfKvDZMCjQxImI0Zj3_gv-hRoCBLw89IrVoF-VW0fLqyHfQipBW5gklsCdcAHQC_fYP-jmbd-geEZ0ulIdYDCB-9l9vOYilbEnS0zWtKR83sPNJTR7zCywsZH6VhsxQv_nKzCp6oQpCGXqXTx3y_wUY-N-RtNN4gkN6c4ugPFPom7BqCzYjoob_U-2QayiiHXqDa3nr0eKS923z0j6FxF5RX5zNmnGZwD4d_HhhMlgyPXMNGWnXKqtJxG1ktSDM9uhVxQ-D-rZBTy1AjRmd2sb2VR6_kw9x3Hp3w1BPlR1bofr7d_KbHK5YXywX-wwIXm6aMfPyBZy4Dp9ic0kH0SoCIRBwn3-FA1LalQb1iaNRXX-vlvWAhggKwpmrPxkgGwzbviLamkFzKZ1Rb_ai5YZbjsJK_d60gqW1zK0zbed&response_mode=form_post&nonce=638446532632968419.Y2M4ZmQzMDMtYTYzOC00ZjMzLWE4MzgtOTgwZTY4YjJlZjdhY2Q0YmZkNmUtMWY5OC00N2JlLTkzZDEtNDUzMTZkYjU2NWY3&client_id=c44b4083-3bb0-49c1-b47d-974e53cbdf3c&site_id=501430&client-request-id=231ad948-1673-431c-a2d8-2b6e82507744&x-client-SKU=ID_NET472&x-client-ver=6.34.0.0
 // const tokenRequestBody = {
 // 		grant_type    : 'authorization_code',
 // 		client_id     : xxxxxxx,
