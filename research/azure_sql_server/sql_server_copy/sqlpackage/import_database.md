@@ -22,7 +22,6 @@ Error SQL72014: Core Microsoft SqlClient Data Provider: Msg 40515, Level 15, Sta
 <https://stackoverflow.com/questions/47213938/azure-sql-server-bacpac-import-failed>
 
 ```bash
-```bash
 pushd .
 cd ~/sqlpackage
 
@@ -30,56 +29,67 @@ sqlpackage /a:export /ssn:tcp:mgsqlmi.public.48d444e7f69b.database.windows.net,3
 
 sqlpackage /TargetTrustServerCertificate:True /a:import /tsn:tcp:localhost /tdn:rsdw /tu:sa /tp:WeDontSharePasswords1! /sf:/home/brent/backups/mi/script_history.bacpac 
 
-*** Error importing database:Could not import package.
-Error SQL72014: Core Microsoft SqlClient Data Provider: Msg 207, Level 16, State 1, Procedure datasource_view, Line 30 Invalid column name 'datasource_type_key'.
+sqlpackage /a:export /ssn:tcp:mgsqlmi.public.48d444e7f69b.database.windows.net,3342 /sdn:mgdw /p:TableData=ETL.script_history /su:mgadmin /sp:WeDontSharePasswords1! /tf:/home/brent/backups/mi/mgdw_try_2.bacpac /p:VerifyExtraction=false
+
+sqlpackage /TargetTrustServerCertificate:True /a:import /tsn:tcp:localhost /tdn:rsdw /tu:sa /tp:WeDontSharePasswords1! /sf:/home/brent/backups/mi/mgdw_try_11.bacpac 
+
 Error SQL72045: Script execution error.  The executed script:
-CREATE VIEW DataSource.datasource_view
+CREATE VIEW Plex.account_period_low (
+    pcn,
+    account_key,
+    account_no,
+    period,
+    next_period
+)
 AS
-SELECT ds.name AS datasource_name,
-       mp.friendly_name AS mobex_procedure,
-       mpr.name AS mobex_procedure_repo,
-       mpp.name AS mobex_project,
-       es.name AS etl_script,
-       esr.name AS etl_script_repo,
-       esp.name AS etl_project
-FROM   DataSource.datasource AS ds
-       INNER JOIN
-       DataSource.datasource_type AS dst
-       ON ds.datasource_type_key = dst.datasource_type_key
-       INNER JOIN
-       DataSource.base_source AS b
-       ON ds.base_source_key = b.base_source_key
-       INNER JOIN
-       DataSource.base_source_type AS bt
-       ON b.base_source_type_key = bt.base_source_type_key
-       INNER JOIN
-       DataSource.datasource_warehouse AS dsw
-       ON ds.datasource_key = dsw.datasource_key
-       INNER JOIN
-       DataSource.data_warehouse AS dw
-       ON dsw.data_warehouse_key = dw.data_warehouse_key
-       INNER JOIN
-       DataSource.dw_schema AS sc
-       ON dw.dw_schema_key = sc.dw_schema_key
-       INNER JOIN
-       DataSour
+WITH   fiscal_period (pcn, year, period)
+AS     (SELECT pcn,
+               year(begin_date) AS year,
+               period
+        FROM   Plex.accounting_period
+        WHERE  pcn = 123681),
+       max_fiscal_period (pcn, year, max_fiscal_period)
+AS     (SELECT   pcn,
+                 year,
+                 max(period) AS max_fiscal_period
+        FROM     fiscal_period
+        GROUP BY pcn, year),
+       anchor_member (pcn, account_key, account_no, period, next_period)
+AS     (SELECT a.pcn,
+               a.account_key,
+               a.account_no,
+               a.start_period AS period,
+               CASE WHEN a.start_period < m.max_fiscal_period THEN a.start_period + 1 ELSE ((a.start_period / 100 + 1) * 100) + 1 END AS next_period
+        FROM   Plex.accounting_account AS a
+               INNER JOIN
+               Plex.max_fiscal_period AS m
+               ON a.pcn = m.pcn
+                  A
+
+
+```
 
 NEXT: Try reexporting after altering this view.
-1. manually create view and see were error is 
+
+1. manually create view and see were error is
 2. change view
 3. reexport and import
 4. goto 1
 
+```bash
+docker container start 293a5cf683c8
+```
+
 busche-sql.busche-cnc.com
-sqlpackage /TargetTrustServerCertificate:True /a:import /tsn:tcp:busche-sql.busche-cnc.com /tdn:rsdw /tu:sa /tp:buschecnc1 /sf:/home/brent/backups/mi/script_history.bacpac 
+sqlpackage /TargetTrustServerCertificate:True /a:import /tsn:tcp:busche-sql.busche-cnc.com /tdn:rsdw /tu:sa /tp:buschecnc1 /sf:/home/brent/backups/mi/script_history.bacpac
 *** Error importing database:Data cannot be imported into target because it contains one or more user objects. Import should be performed against a new, empty database.
 
-sqlpackage /a:import /tsn:tcp:repsys.database.windows.net /tdn:rsdw /tu:mgadmin /tp:WeDontSharePasswords1! /sf:/home/brent/backups/mi/script_history.bacpac 
+sqlpackage /a:import /tsn:tcp:repsys.database.windows.net /tdn:rsdw /tu:mgadmin /tp:WeDontSharePasswords1! /sf:/home/brent/backups/mi/script_history.bacpac
 
 Importing to database 'rsdw' on server 'tcp:repsys.database.windows.net'.
 Creating deployment plan
 Initializing deployment
-*** A project which specifies SQL Server 2022 or Azure SQL Database Managed Instance as the target platform may experience compatibility issues with Microsoft Azure SQL Database v12.
+***A project which specifies SQL Server 2022 or Azure SQL Database Managed Instance as the target platform may experience compatibility issues with Microsoft Azure SQL Database v12.
 *** Error importing database:Could not import package.
 Warning SQL0: A project which specifies SQL Server 2022 or Azure SQL Database Managed Instance as the target platform may experience compatibility issues with Microsoft Azure SQL Database v12.
 Warning SQL72012: The object [data_0] exists in the target, but it will not be dropped even though you selected the 'Generate drop statements for objects that are in the target database but that are not in the source' check box.
@@ -124,20 +134,25 @@ Creating deployment plan
 Initializing deployment
 *** A network-related or instance-specific error occurred while establishing a connection to SQL Server. The server was not found or was not accessible. Verify that the instance name is correct and that SQL Server is configured to allow remote connections. (provider: TCP Provider, error: 35 - An internal exception was caught)
 
-https://stackoverflow.com/questions/69410984/copy-data-from-azure-sql-managed-instance-db-to-azure-sql-server-db
+<https://stackoverflow.com/questions/69410984/copy-data-from-azure-sql-managed-instance-db-to-azure-sql-server-db>
 
 SQL MI to a SQL DB
-https://learn.microsoft.com/en-us/azure/azure-sql/managed-instance/managed-instance-link-feature-overview?view=azuresql
-https://blog.devart.com/export-azure-sql-database.html#ssms
-# Cant import MI bacpac to Azure SQL database because Azure SQL database does not accept 3 part-names generated by MI generated bacpac
-sqlpackage /a:import /tsn:tcp:bgtest.database.windows.net /tdn:test /tu:mgadmin /tp:WeDontSharePasswords1! /sf:/home/brent/backups/mi/script_history.bacpac 
+<https://learn.microsoft.com/en-us/azure/azure-sql/managed-instance/managed-instance-link-feature-overview?view=azuresql>
+<https://blog.devart.com/export-azure-sql-database.html#ssms>
 
+# Cant import MI bacpac to Azure SQL database because Azure SQL database does not accept 3 part-names generated by MI generated bacpac
+
+sqlpackage /a:import /tsn:tcp:bgtest.database.windows.net /tdn:test /tu:mgadmin /tp:WeDontSharePasswords1! /sf:/home/brent/backups/mi/script_history.bacpac
 
 # Azure SQL database bacpac to Another Azure SQL database
+
 # Attempt: Did not create database
+
 # result copied mgdw from mgsqlsvr to bgtest without problem
+
 # the whole database was imported although I thought I only backed up the Import schema?
-sqlpackage /a:import /tsn:tcp:bgtest.database.windows.net /tdn:mgdw /tu:mgadmin /tp:WeDontSharePasswords1! /sf:/home/brent/backups/mydw/import.bacpac 
+
+sqlpackage /a:import /tsn:tcp:bgtest.database.windows.net /tdn:mgdw /tu:mgadmin /tp:WeDontSharePasswords1! /sf:/home/brent/backups/mydw/import.bacpac
 
 Importing to database 'mgdw' on server 'tcp:bgtest.database.windows.net'.
 Creating deployment plan
@@ -183,10 +198,10 @@ Processing Table '[Plex].[purchasing_item_summary]'.
 Processing Table '[ssis].[ScriptComplete]'.
 Enabling indexes.
 Successfully imported database.
-Changes to connection setting default values were incorporated in a recent release.  More information is available at https://aka.ms/dacfx-connection
+Changes to connection setting default values were incorporated in a recent release.  More information is available at <https://aka.ms/dacfx-connection>
 Time elapsed 0:02:44.16
 
-https://techcommunity.microsoft.com/t5/azure-database-support-blog/lesson-learned-307-reference-to-database-and-or-server-name-is/ba-p/3726508
+<https://techcommunity.microsoft.com/t5/azure-database-support-blog/lesson-learned-307-reference-to-database-and-or-server-name-is/ba-p/3726508>
 
 qlpackage.exe /a:import /tcs:"Data Source=abc.database.windows.net;Initial Catalog=clientdbname;User Id=admin;Password=abc@123" /sf:"C:\Users\User\Downloads\clientdb.bacpac" /p:DatabaseEdition=Premium /p:DatabaseServiceObjective=P6
 

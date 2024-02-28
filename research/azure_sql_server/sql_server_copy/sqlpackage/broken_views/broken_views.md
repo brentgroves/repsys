@@ -1,0 +1,8 @@
+Plex.Cost_Gross_Margin_Daily_View
+Plex.price_list
+Plex.account_period_low
+Plex.accounting_account123
+Plex.accounting_period_low_view
+Report.daily_metrics_pivot_view
+Scratch.accounting_period_balance_low
+Plex.daily_shift_report_data_daily_metrics_criteria_view

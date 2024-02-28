@@ -42,7 +42,12 @@ cd ~/sqlpackage
 # It seems that the file backed model uses a feature which is only available on the windows platform and in full .NET, not in Core. (github.com/microsoft/azuredatastudio/issues/12754) 
 # https://dba.stackexchange.com/questions/255163/ms-azure-remote-back-up-with-sqlpackage
 
-sqlpackage /a:export /ssn:tcp:mgsqlmi.public.48d444e7f69b.database.windows.net,3342 /sdn:mgdw /p:TableData=ETL.script_history /su:mgadmin /sp:WeDontSharePasswords1! /tf:/home/brent/backups/mi/mgdw.bacpac /p:VerifyExtraction=false
+# https://learn.microsoft.com/en-us/sql/tools/sqlpackage/sqlpackage-export?view=sql-server-ver16#properties-specific-to-the-export-action
+# /p: TableData=(STRING) Indicates the table from which data will be extracted. Specify the table name with or without the brackets surrounding the name parts in the following format: schema_name.table_identifier. This property may be specified multiple times to indicate multiple options.
+
+sqlpackage /a:export /ssn:tcp:mgsqlmi.public.48d444e7f69b.database.windows.net,3342 /sdn:mgdw /p:TableData=ETL.script_history /su:mgadmin /sp:WeDontSharePasswords1! /tf:/home/brent/backups/mi/mgdw_full.bacpac /p:VerifyExtraction=false
+
+sqlpackage /a:export /ssn:tcp:mgsqlmi.public.48d444e7f69b.database.windows.net,3342 /sdn:mgdw /su:mgadmin /sp:WeDontSharePasswords1! /tf:/home/brent/backups/mi/mgdw_full.bacpac /p:VerifyExtraction=false
 
 s1! /tf:/home/brent/backups/mi/mgdw.bacpac /p:VerifyExtraction=false
 Connecting to database 'mgdw' on server 'tcp:mgsqlmi.public.48d444e7f69b.database.windows.net,3342'.
