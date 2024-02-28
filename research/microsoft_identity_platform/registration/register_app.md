@@ -1,4 +1,6 @@
-# **[Quickstart: Register an app with the Microsoft identity platform](https://learn.microsoft.com/en-us/entra/identity-platform/quickstart-register-app)**
+# **[Quickstart: Register an app or web api with the Microsoft identity platform](https://learn.microsoft.com/en-us/entra/identity-platform/quickstart-register-app)**
+
+Do this when you have a web app that uses the the oauth2 or oidc authentication flows to identify a user. If you want a web api to have access to azure services such as sending email then go to **[expose web api](expose_web_api.md)**
 
 Get started with the Microsoft identity platform by registering an application in the Azure portal.
 
@@ -16,7 +18,7 @@ Follow these steps to create the app registration:
 
 1. Sign in to the Microsoft Entra admin center as at least a Cloud Application Administrator.
 2. f you have access to multiple tenants, use the Settings icon  in the top menu to switch to the tenant in which you want to register the application from the Directories + subscriptions menu.
-3. Browse to Identity > Applications > App registrations and select New registration.
+3. From **[all services](https://portal.azure.com/#allservices)** Browse to Identity > Applications > App registrations and select New registration. Just try to search for app registration :-)
 
 4. Enter a display Name for your application. Users of your application might see the display name when they use the app, for example during sign-in. You can change the display name at any time and multiple app registrations can share the same name. The app registration's automatically generated Application (client) ID, not its display name, uniquely identifies your app within the identity platform.
 5. Specify who can use the application, sometimes called its sign-in audience.
@@ -38,6 +40,33 @@ When registration finishes, the Microsoft Entra admin center displays the app re
 
 New app registrations are hidden to users by default. When you are ready for users to see the app on their My Apps page you can enable it. To enable the app, in the Microsoft Entra admin center navigate to Identity > Applications > Enterprise applications and select the app. Then on the Properties page toggle Visible to users? to Yes.
 
+Dev Account Client Application
+secret/client id:e0e65e2b-9f59-495a-81fd-b6738ab023fc
+value:nRH8Q~HGjz4eSmS~~nGPxOdbILLOZfLM62~iScss
+expires: 8/21/2024
+Application:b08211fd-0bcf-4700-a70a-e600bc0bcf77
+Application ID URI=api://b08211fd-0bcf-4700-a70a-e600bc0bcf77
+scope=api://b08211fd-0bcf-4700-a70a-e600bc0bcf77/Files.Read
+redirect uri:<http://localhost:8080/oauth/redirect>
+Visible to users? Yes
+directory name: MSFT
+domain: 1hkt5t.onmicrosoft.com
+directory id:5269b021-533e-4702-b9d9-72acbc852c97
+tenant: 5269b021-533e-4702-b9d9-72acbc852c97
+
+Outlook Client Application
+secret/client id:2e2f796f-09ce-4800-8267-3c5a2d85ec78
+value:t4U8Q~Pvrih6CSyS_CX1ztrVzdeuWevudbvycdk7
+expires: 8/21/2024
+Application ID:4c914e6c-f56e-4a77-a59f-733d6d37942e
+Application ID URI=api://4c914e6c-f56e-4a77-a59f-733d6d37942e
+redirect uri:<http://localhost:8080/oauth/redirect>
+Visible to users? Yes
+directory name: default directory
+domain: brentgrovesoutlook.onmicrosoft.com
+directory id: 07476fd3-6a57-4e3f-80ab-a1be2af5d10a
+tenant: 07476fd3-6a57-4e3f-80ab-a1be2af5d10a
+
 Your application's code, or more typically an authentication library used in your application, also uses the client ID. The ID is used as part of validating the security tokens it receives from the identity platform.
 
 ![alt](https://learn.microsoft.com/en-us/entra/identity-platform/media/quickstart-register-app/portal-03-app-reg-02.png#lightbox)
@@ -45,6 +74,16 @@ Your application's code, or more typically an authentication library used in you
 ## Add a redirect URI
 
 A redirect URI is the location where the Microsoft identity platform redirects a user's client and sends security tokens after authentication.
+
+        Note: the client_id is microsoft application id.
+
+        ### Dev Account Client Application
+        web redirect uri: http://localhost:8080/oauth/redirect
+        oath2 server: href="https://login.microsoftonline.com/5269b021-533e-4702-b9d9-72acbc852c97/oauth2/v2.0/authorize?response_type=code&client_id=b08211fd-0bcf-4700-a70a-e600bc0bcf77&scope=api://b08211fd-0bcf-4700-a70a-e600bc0bcf77/Files.Read">
+
+        ### Outlook Client Application
+        web redirect uri: http://localhost:8080/oauth/redirect
+        oath2 server: href="https://login.microsoftonline.com/07476fd3-6a57-4e3f-80ab-a1be2af5d10a/oauth2/v2.0/authorize?response_type=code&client_id=4c914e6c-f56e-4a77-a59f-733d6d37942e&scope=api://4c914e6c-f56e-4a77-a59f-733d6d37942e/Files.Read">
 
 In a production web application, for example, the redirect URI is often a public endpoint where your app is running, like <https://contoso.com/auth-response>. During development, it's common to also add the endpoint where you run your app locally, like <https://127.0.0.1/auth-response> or <http://localhost/auth-response>. Be sure that any unnecessary development environments/redirect URIs are not exposed in the production app. This can be done by having separate app registrations for development and production.
 
@@ -159,3 +198,40 @@ If your scenario requires more redirect URIs than the maximum limit allowed, con
 ## Use a state parameter
 
 If you have several subdomains and your scenario requires that, upon successful authentication, you redirect users to the same page from which they started, using a state parameter might be helpful.
+
+## Add credentials
+
+Credentials are used by confidential client applications that access a web API. Examples of confidential clients are web apps, other web APIs, or service-type and daemon-type applications. Credentials allow your application to authenticate as itself, requiring no interaction from a user at runtime.
+
+You can add certificates, client secrets (a string), or federated identity credentials as credentials to your confidential client app registration.
+
+![alt](https://learn.microsoft.com/en-us/entra/identity-platform/media/quickstart-register-app/portal-05-app-reg-04-credentials.png#lightbox)
+
+## Add a certificate
+
+Sometimes called a public key, a certificate is the recommended credential type because they're considered more secure than client secrets. For more information about using a certificate as an authentication method in your application, see **[Microsoft identity platform application authentication certificate credentials](https://learn.microsoft.com/en-us/entra/identity-platform/certificate-credentials)**.
+
+## Add a client secret
+
+Sometimes called an application password, a client secret is a string value your app can use in place of a certificate to identity itself.
+
+Client secrets are considered less secure than certificate credentials. Application developers sometimes use client secrets during local app development because of their ease of use. However, you should use certificate credentials for any of your applications that are running in production.
+
+1. In the Microsoft Entra admin center, in App registrations, select your application.
+2. Select Certificates & secrets > Client secrets > New client secret.
+3. Add a description for your client secret.
+4. Select an expiration for the secret or specify a custom lifetime.
+5. Client secret lifetime is limited to two years (24 months) or less. You can't specify a custom lifetime longer than 24 months.
+6. Microsoft recommends that you set an expiration value of less than 12 months.
+7. Select Add.
+8. Record the secret's value for use in your client application code. This secret value is never displayed again after you leave this page.
+
+## Next steps
+
+Client applications typically need to access resources in a web API. You can protect your client application by using the Microsoft identity platform. You can also use the platform for authorizing scoped, permissions-based access to your web API.
+
+Go to the next quickstart in the series to create another app registration for your web API and expose its scopes.
+
+**[expose web api](./expose_web_api.md)**
+
+Use this when you want to access Azure resources from an API that does not need a user to authenticate to grant access.

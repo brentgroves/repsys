@@ -45,24 +45,14 @@ cd ~/sqlpackage
 # https://learn.microsoft.com/en-us/sql/tools/sqlpackage/sqlpackage-export?view=sql-server-ver16#properties-specific-to-the-export-action
 # /p: TableData=(STRING) Indicates the table from which data will be extracted. Specify the table name with or without the brackets surrounding the name parts in the following format: schema_name.table_identifier. This property may be specified multiple times to indicate multiple options.
 
+# ddl and insert 1 tables records
 sqlpackage /a:export /ssn:tcp:mgsqlmi.public.48d444e7f69b.database.windows.net,3342 /sdn:mgdw /p:TableData=ETL.script_history /su:mgadmin /sp:WeDontSharePasswords1! /tf:/home/brent/backups/mi/mgdw_full.bacpac /p:VerifyExtraction=false
 
+# full backup
 sqlpackage /a:export /ssn:tcp:mgsqlmi.public.48d444e7f69b.database.windows.net,3342 /sdn:mgdw /su:mgadmin /sp:WeDontSharePasswords1! /tf:/home/brent/backups/mi/mgdw_full.bacpac /p:VerifyExtraction=false
-
-s1! /tf:/home/brent/backups/mi/mgdw.bacpac /p:VerifyExtraction=false
-Connecting to database 'mgdw' on server 'tcp:mgsqlmi.public.48d444e7f69b.database.windows.net,3342'.
-Extracting schema
-Extracting schema from database
-Resolving references in schema model
-Validating schema model for data package
-Validating schema
-Exporting data from database
-Exporting data
-Processing Export.
-Processing Table '[ETL].[Script_History]'.
-Successfully exported database and saved it to file '/home/brent/backups/mi/mgdw.bacpac'.
+Successfully exported database and saved it to file '/home/brent/backups/mi/mgdw_full.bacpac'.
 Changes to connection setting default values were incorporated in a recent release.  More information is available at https://aka.ms/dacfx-connection
-Time elapsed 0:00:48.00
+Time elapsed 0:08:21.68
 
 ```
 

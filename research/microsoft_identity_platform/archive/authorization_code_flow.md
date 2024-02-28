@@ -1,5 +1,7 @@
 # Microsoft identity platform and **[OAuth 2.0 authorization code flow](https://learn.microsoft.com/en-us/entra/identity-platform/v2-oauth2-auth-code-flow)**
 
+For repsys the web app will use openid_connect flow instead.
+
 The OAuth 2.0 authorization code grant type, or auth code flow, enables a client application to obtain authorized access to protected resources like web APIs. The auth code flow requires a user-agent that supports redirection from the authorization server (the Microsoft identity platform) back to your application. For example, a web browser, desktop, or mobile application operated by a user to sign in to your app and access their data.
 
 This article describes low-level protocol details required only when manually crafting and issuing raw HTTP requests to execute the flow, which we do not recommend. Instead, use a Microsoft-built and supported authentication library to get security tokens and call protected web APIs in your apps.

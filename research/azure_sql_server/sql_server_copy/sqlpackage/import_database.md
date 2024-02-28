@@ -25,6 +25,16 @@ Error SQL72014: Core Microsoft SqlClient Data Provider: Msg 40515, Level 15, Sta
 pushd .
 cd ~/sqlpackage
 
+# full backup
+sqlpackage /a:export /ssn:tcp:mgsqlmi.public.48d444e7f69b.database.windows.net,3342 /sdn:mgdw /su:mgadmin /sp:WeDontSharePasswords1! /tf:/home/brent/backups/mi/mgdw_full.bacpac /p:VerifyExtraction=false
+Successfully exported database and saved it to file '/home/brent/backups/mi/mgdw_full.bacpac'.
+Changes to connection setting default values were incorporated in a recent release.  More information is available at https://aka.ms/dacfx-connection
+Time elapsed 0:08:21.68
+# full import
+docker container start 293a5cf683c8
+sqlpackage /TargetTrustServerCertificate:True /a:import /tsn:tcp:localhost /tdn:rsdw /tu:sa /tp:WeDontSharePasswords1! /sf:/home/brent/backups/mi/mgdw_full.bacpac 
+
+
 sqlpackage /a:export /ssn:tcp:mgsqlmi.public.48d444e7f69b.database.windows.net,3342 /sdn:mgdw /p:TableData=ETL.script_history /su:mgadmin /sp:WeDontSharePasswords1! /tf:/home/brent/backups/mi/mgdw.bacpac /p:VerifyExtraction=false
 
 sqlpackage /TargetTrustServerCertificate:True /a:import /tsn:tcp:localhost /tdn:rsdw /tu:sa /tp:WeDontSharePasswords1! /sf:/home/brent/backups/mi/script_history.bacpac 

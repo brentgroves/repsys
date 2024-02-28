@@ -1,8 +1,10 @@
 # OAuth2
 
+Now using this to test oidc as well.
+
 ## references
 
-https://learn.microsoft.com/en-us/entra/identity-platform/v2-oauth2-auth-code-flow
+<https://learn.microsoft.com/en-us/entra/identity-platform/v2-oauth2-auth-code-flow>
 <https://www.sohamkamani.com/golang/oauth/>
 <https://github.com/twitchdev/authentication-go-sample/blob/main/oidc-authorization-code/main.go>
 
@@ -116,7 +118,7 @@ Client secrets
 
 ```bash
 pushd .
-cd ~/src/repsys/volumes/go/tutorials/http/oauth2/go_oauth2_example
+cd ~/src/repsys/volumes/go/tutorials/oauth2/go_oauth2_example
 go mod init go_oauth2_example
 pushd .
 cd ~/src/repsys
