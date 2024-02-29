@@ -4,6 +4,7 @@ Now using this to test oidc as well.
 
 ## references
 
+<https://pkg.go.dev/github.com/hashicorp/cap/jwt>
 <https://learn.microsoft.com/en-us/entra/identity-platform/v2-oauth2-auth-code-flow>
 <https://www.sohamkamani.com/golang/oauth/>
 <https://github.com/twitchdev/authentication-go-sample/blob/main/oidc-authorization-code/main.go>

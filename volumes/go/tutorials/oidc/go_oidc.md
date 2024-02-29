@@ -1,6 +1,9 @@
-<https://pkg.go.dev/github.com/coreos/go-oidc/v3/example>
-<https://github.com/coreos/go-oidc/blob/v3.9.0/example/idtoken/app.go>
-<https://github.com/coreos/go-oidc>
+# Oidc
 
-<https://auth0.com/docs/quickstart/webapp/golang/interactive>
-<https://gin-gonic.com/>
+## references
+
+<https://thedevelopercafe.com/articles/jwt-with-go-52d6bbcaa2bf>
+
+## next
+
+reproduce go_oath2_example with changes to use oidc.
