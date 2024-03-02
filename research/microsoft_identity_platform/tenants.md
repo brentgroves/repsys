@@ -10,6 +10,7 @@ Supported account types:My organization only
 platform: web
 OpenID Connect metadata document
 scope=api://d6b668c7-e181-4415-b6fe-fb7a76d48d4a
+tenant: 5269b021-533e-4702-b9d9-72acbc852c97
 
 Dev Account Client Application
 Client Id:e0e65e2b-9f59-495a-81fd-b6738ab023fc

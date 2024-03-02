@@ -1,5 +1,33 @@
 # **[OpenID Connect on the Microsoft identity platform](https://learn.microsoft.com/en-us/entra/identity-platform/v2-protocols-oidc)**
 
+## references
+
+<https://github.com/MicahParks/keyfunc>
+<https://stackoverflow.com/questions/48786606/oid-claim-is-missing-in-microsoft-id-token-claims>
+
+## **[Important Claim note](https://stackoverflow.com/questions/48786606/oid-claim-is-missing-in-microsoft-id-token-claims)**
+
+You must request the profile scope to see the oid claim
+
+```http
+href="https://login.microsoftonline.com/5269b021-533e-4702-b9d9-72acbc852c97/oauth2/v2.0/authorize?
+client_id=d6b668c7-e181-4415-b6fe-fb7a76d48d4a
+&response_type=id_token
+&redirect_uri=http%3A%2F%2Flocalhost%3A8080%2Foauth%2Fredirect
+&response_mode=form_post
+&scope=openid profile
+&state=12345
+&nonce=678910
+```
+
+<https://login.microsoftonline.com/5269b021-533e-4702-b9d9-72acbc852c97/discovery/keys>
+<https://learn.microsoft.com/en-us/answers/questions/1359059/signature-validation-of-my-access-token-private-key>
+
+<https://login.microsoftonline.com/5269b021-533e-4702-b9d9-72acbc852c97/discovery/keys?appid=d6b668c7-e181-4415-b6fe-fb7a76d48d4a>
+ "appId": "d6b668c7-e181-4415-b6fe-fb7a76d48d4a",
+
+## OpenID Connect
+
 Do this when you have a web app that needs to identify a user. If you want a web api to have access to azure services such as sending email then go to **[expose web api](../../registration/expose_web_api.md)** or just and/or use a library such as masl.
 
 OpenID Connect (OIDC) extends the OAuth 2.0 authorization protocol for use as an additional authentication protocol. You can use OIDC to enable single sign-on (SSO) between your OAuth-enabled applications by using a security token called an ID token.
@@ -190,8 +218,6 @@ id_token=eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6Ik1uQ19WWmNB...&state=12345
 openid config document: <https://login.microsoftonline.com/5269b021-533e-4702-b9d9-72acbc852c97/v2.0/.well-known/openid-configuration>
 
 repsys requestor
-Secret/Client Id: c5b8ce87-0941-464a-aa0c-b531d8d835f6
-Secret value: sxE8Q~Sf6kH~2oZZEpoFL7v27E_HFZtNAIkCQaZa
 Application (client) Id: d6b668c7-e181-4415-b6fe-fb7a76d48d4a
 Object Id: a9251d7f-ad2a-4d38-8540-1999682ff935
 Directory (tenant) Id: 5269b021-533e-4702-b9d9-72acbc852c97
@@ -199,6 +225,7 @@ Supported account types:My organization only
 platform: web
 OpenID Connect metadata document
 api://d6b668c7-e181-4415-b6fe-fb7a76d48d4a
+tenant: 5269b021-533e-4702-b9d9-72acbc852c97
 
 ## Personal Account
 
@@ -210,30 +237,3 @@ Object Id: 26d30dca-23e8-471c-b4f0-5377cf2844be
 Directory (tenant) Id: 07476fd3-6a57-4e3f-80ab-a1be2af5d10a
 Supported account types:My organization only
 platform: web
-
-Dev Account Client Application
-secret/client id:e0e65e2b-9f59-495a-81fd-b6738ab023fc
-value:nRH8Q~HGjz4eSmS~~nGPxOdbILLOZfLM62~iScss
-expires: 8/21/2024
-Application:b08211fd-0bcf-4700-a70a-e600bc0bcf77
-Application ID URI=api://b08211fd-0bcf-4700-a70a-e600bc0bcf77
-scope=api://b08211fd-0bcf-4700-a70a-e600bc0bcf77/Files.Read
-redirect uri:<http://localhost:8080/oauth/redirect>
-Visible to users? Yes
-directory name: MSFT
-domain: 1hkt5t.onmicrosoft.com
-directory id:5269b021-533e-4702-b9d9-72acbc852c97
-tenant: 5269b021-533e-4702-b9d9-72acbc852c97
-
-Outlook Client Application
-secret/client id:2e2f796f-09ce-4800-8267-3c5a2d85ec78
-value:t4U8Q~Pvrih6CSyS_CX1ztrVzdeuWevudbvycdk7
-expires: 8/21/2024
-Application ID:4c914e6c-f56e-4a77-a59f-733d6d37942e
-Application ID URI=api://4c914e6c-f56e-4a77-a59f-733d6d37942e
-redirect uri:<http://localhost:8080/oauth/redirect>
-Visible to users? Yes
-directory name: default directory
-domain: brentgrovesoutlook.onmicrosoft.com
-directory id: 07476fd3-6a57-4e3f-80ab-a1be2af5d10a
-tenant: 07476fd3-6a57-4e3f-80ab-a1be2af5d10a
