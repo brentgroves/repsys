@@ -1,0 +1,18 @@
+{
+    "aud": "d6b668c7-e181-4415-b6fe-fb7a76d48d4a",
+    "iss": "https://login.microsoftonline.com/5269b021-533e-4702-b9d9-72acbc852c97/v2.0",
+    "iat": 1709579906,
+    "nbf": 1709579906,
+    "exp": 1709583806,
+    "aio": "AWQAm/8WAAAA4htaw8fhW9iJmVYo855ofaerFPz0joQec5c3RENfvTIrLUXASW9dmYTOPe0GCZtQJZiwJUiHQrnX9ciOqVvfLqh4HL8spAQm5ZtHu+7qFnax7quu7GmaH8tb5oOCTc/v",
+    "email": "brentgroves@1hkt5t.onmicrosoft.com",
+    "name": "Brent Groves",
+    "nonce": "678910",
+    "oid": "9accfa89-9872-4b66-9d70-b75f2342f3ba",
+    "preferred_username": "brentgroves@1hkt5t.onmicrosoft.com",
+    "rh": "0.AXwAIbBpUj5TAke52XKsvIUsl8dottaB4RVEtv77enbUjUrMALI.",
+    "sub": "wIhkjk3OmT5qW6XMDMY-DS0LeYRKwQNzPNMr2v4kMAI",
+    "tid": "5269b021-533e-4702-b9d9-72acbc852c97",
+    "uti": "qCJIbzpuwkexvR8VH7mEAQ",
+    "ver": "2.0"
+}

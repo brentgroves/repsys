@@ -28,20 +28,20 @@ const jwtToken = "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IlhSdmtvOFA3QTNVYV
 
 func main() {
 
-	var userClaim UserClaim
-	token, err := jwt.ParseWithClaims(jwtToken, &userClaim, func(token *jwt.Token) (interface{}, error) {
-		return []byte(key2), nil
-	})
+	// var userClaim UserClaim
+	// token, err := jwt.ParseWithClaims(jwtToken, &userClaim, func(token *jwt.Token) (interface{}, error) {
+	// 	return []byte(key2), nil
+	// })
 
-	if err != nil {
-		log.Fatal(err)
-	}
+	// if err != nil {
+	// 	log.Fatal(err)
+	// }
 
-	// Checking token validity
-	if !token.Valid {
-		log.Fatal("invalid token")
-	}
-	fmt.Printf("Parsed User Claim:%s %s\n", userClaim.Email, userClaim.Name)
+	// // Checking token validity
+	// if !token.Valid {
+	// 	log.Fatal("invalid token")
+	// }
+	// fmt.Printf("Parsed User Claim:%s %s\n", userClaim.Email, userClaim.Name)
 
 	fs := http.FileServer(http.Dir("public"))
 	http.Handle("/", fs)
