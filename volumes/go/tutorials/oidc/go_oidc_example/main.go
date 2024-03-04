@@ -6,6 +6,8 @@ import (
 	"net/http"
 	"os"
 
+	"github.com/MicahParks/keyfunc/v3"
+
 	"github.com/golang-jwt/jwt/v5"
 )
 
@@ -27,6 +29,7 @@ const key2 = "MIIC/jCCAeagAwIBAgIJAKysonliFZLIMA0GCSqGSIb3DQEBCwUAMC0xKzApBgNVBA
 const jwtToken = "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IlhSdmtvOFA3QTNVYVdTblU3Yk05blQwTWpoQSJ9.eyJhdWQiOiJkNmI2NjhjNy1lMTgxLTQ0MTUtYjZmZS1mYjdhNzZkNDhkNGEiLCJpc3MiOiJodHRwczovL2xvZ2luLm1pY3Jvc29mdG9ubGluZS5jb20vNTI2OWIwMjEtNTMzZS00NzAyLWI5ZDktNzJhY2JjODUyYzk3L3YyLjAiLCJpYXQiOjE3MDkzMjY1MjIsIm5iZiI6MTcwOTMyNjUyMiwiZXhwIjoxNzA5MzMwNDIyLCJhaW8iOiJBV1FBbS84V0FBQUFvYVVOU2lKaDNETklDN2xVRnVLUnhGTUg0NDRzNkRxNlVMTUY5bnVNclVMSFJHOTNkRytpRHN1MWNld2hvNk9EMkZhckdpQXk3WTdickNTOGl4blB2R3plNWM1dEJXYTZ6MnZYRnVVNk82elpleTA5MVFWakIzbVdTTXBDZzFsaCIsIm5hbWUiOiJCcmVudCBHcm92ZXMiLCJub25jZSI6IjY3ODkxMCIsIm9pZCI6IjlhY2NmYTg5LTk4NzItNGI2Ni05ZDcwLWI3NWYyMzQyZjNiYSIsInByZWZlcnJlZF91c2VybmFtZSI6ImJyZW50Z3JvdmVzQDFoa3Q1dC5vbm1pY3Jvc29mdC5jb20iLCJyaCI6IjAuQVh3QUliQnBVajVUQWtlNTJYS3N2SVVzbDhkb3R0YUI0UlZFdHY3N2VuYlVqVXJNQUxJLiIsInN1YiI6IndJaGtqazNPbVQ1cVc2WE1ETVktRFMwTGVZUkt3UU56UE5NcjJ2NGtNQUkiLCJ0aWQiOiI1MjY5YjAyMS01MzNlLTQ3MDItYjlkOS03MmFjYmM4NTJjOTciLCJ1dGkiOiJpTzI1SDZrYnVrNnhJQ3RKM2VUNkFBIiwidmVyIjoiMi4wIn0.rtnjkC094uliFOjygWwVg9RYTfr0ie56OojPvaFg4LL3VZYTB88-EMPAdcdaNVrXuRRy_r7Cda4bYaOkAunnjFs3PiW2s6rEvTQC079ja3QeGD9SZ9lHgfq234yP10GwuTuc31G28s89HMPWYX2966AeZtwHeELZsF7GTGtXs_P0_QeMnaIUnLYZdSKbyUd8l5iQPGtWSfvwHhVkDmNcBbsCStIlxHQ5SlhOE7HLMM-jOYBOBdD28mv1bY8Kwu-2l-ldhN7JM0LjFTK5ZK7FOa42GfDEOQvSQHvcmCfbB6PjqIzp_ktqNUEKd1pPOYdADsXo0QboynEE4ywvuwPgWA"
 
 func main() {
+	jwksURL := "https://login.microsoftonline.com/5269b021-533e-4702-b9d9-72acbc852c97/discovery/v2.0/keys"
 
 	// var userClaim UserClaim
 	// token, err := jwt.ParseWithClaims(jwtToken, &userClaim, func(token *jwt.Token) (interface{}, error) {
@@ -46,6 +49,15 @@ func main() {
 	fs := http.FileServer(http.Dir("public"))
 	http.Handle("/", fs)
 
+	k, err := keyfunc.NewDefault([]string{jwksURL})
+
+	// When using the keyfunc.NewDefault function, the JWK Set will be automatically refreshed using jwkset.NewDefaultHTTPClient.
+	// This does launch a " refresh goroutine". If you want the ability to end this goroutine, use the keyfunc.NewDefaultCtx function.
+
+	if err != nil {
+		log.Fatalf("Failed to create a keyfunc.Keyfunc from the server's URL.\nError: %s", err)
+	}
+
 	// Create a new redirect route
 	http.HandleFunc("/oauth/redirect", func(w http.ResponseWriter, r *http.Request) {
 		// First, we need to get the value of the `code` query param
@@ -61,24 +73,37 @@ func main() {
 		state := r.FormValue("state")
 		fmt.Fprintf(os.Stdout, "id_token: %s", jwtToken)
 		fmt.Fprintf(os.Stdout, "state: %s", state)
-		var userClaim UserClaim
 
-		// 👇
-		token, err := jwt.ParseWithClaims(jwtToken, &userClaim, func(token *jwt.Token) (interface{}, error) {
-			return []byte(key2), nil
-		})
+		type MyCustomClaims struct {
+			Oid                string `json:"oid"`
+			Email              string `json:"email"`
+			Name               string `json:"name"`
+			Nonce              string `json:"nonce"`
+			Preferred_username string `json:"preferred_username"`
 
+			jwt.RegisteredClaims
+		}
+
+		// "preferred_username": "brentgroves@1hkt5t.onmicrosoft.com"
+		// // Parse the token
+		token, err := jwt.ParseWithClaims(jwtToken, &MyCustomClaims{}, k.Keyfunc)
 		if err != nil {
-			log.Fatal(err)
+			log.Fatalf("Failed to parse the JWT.\nError: %s", err)
 		}
 
 		// Checking token validity
 		if !token.Valid {
 			log.Fatal("invalid token")
 		}
-		fmt.Printf("Parsed User Claim:%s %s\n", userClaim.Email, userClaim.Name)
+		claims, _ := token.Claims.(*MyCustomClaims)
+		fmt.Println(token.Header["typ"])
+		fmt.Println(token.Header["typ"])
+		fmt.Println(token.Header["alg"])
+		fmt.Println(token.Header["kid"])
 
-		// fmt.Printf("Parsed User Claim: %d %s %s\n", userClaim.ID, userClaim.Email, userClaim.Name)
+		fmt.Println(claims.Oid, claims.Email)
+		fmt.Println(claims.Name, claims.Preferred_username)
+		fmt.Println(claims.Nonce, claims.RegisteredClaims.Issuer)
 
 	})
 

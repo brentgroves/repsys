@@ -141,8 +141,7 @@ token, err := jwt.ParseWithClaims(jwtToken, &userClaim, func(token *jwt.Token) (
 ```
 
 ```bash
-go get -u github.com/golang-jwt/jwt/v4
-go get -u github.com/golang-jwt/jwt/v5
+go get -u github.com/MicahParks/keyfunc/v3
 ```
 
 ## Personal Account

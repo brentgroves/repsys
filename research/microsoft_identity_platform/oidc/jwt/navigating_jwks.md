@@ -184,3 +184,9 @@ openssl x509 -pubkey -noout -in dev_account_x509c.pem > dev_account_publickey.pe
 copied and pasted from jwt.io to payload.json
 
 8. Decode the signature
+
+<https://stackoverflow.com/questions/41077953/how-to-verify-jwt-signature-with-jwk-in-go>
+
+9. # Finally, verify
+
+openssl dgst -sha256 -verify dev_account_publickey.pem -signature signature.dat payload.txt
