@@ -147,3 +147,35 @@ You can start the server by executing go run main.go and visit <http://localhost
 ```bash
 go run main.go
 ```
+
+Once you click on the “Login to Microsoft EntraID using OAuth2 flow” link, you will be redirected to the familiar login page. However, once you authenticate, you will be redirected to <http://localhost:8080/oauth/redirect>, which will lead to a 404 page on the server.
+
+## Adding a Redirect Route
+
+Once the user authenticates with Microsoft, they get redirected to the redirect URL that was specified earlier.
+
+The Microsoft Identity provider also adds a request token along with the url. In this case, Microsoft adds this as the code parameter, so the redirect URL will actually be something like <http://localhost:8080/oauth/redirect?code=mycode123>, where mycode123 is the request token.
+
+We need this request token and our client secret to get the access token, which is the token that is actually used to get information about the user. We get this access token by making a POST HTTP call to <https://login.microsoftonline.com/5269b021-533e-4702-b9d9-72acbc852c97/oauth2/v2.0/token> along with the mentioned information.
+
+## Request an access token with a client_secret
+
+**[More Info about Microsoft OAuth2 flow](../../../../../research/microsoft_identity_platform/oauth2/oath2_flow.md)**
+
+Now that you've acquired an authorization_code and have been granted permission by the user, you can redeem the code for an access_token to the resource. Redeem the code by sending a POST request to the /token endpoint:
+
+```http
+// Line breaks for legibility only
+
+POST /{tenant}/oauth2/v2.0/token HTTP/1.1
+Host: https://login.microsoftonline.com
+Content-Type: application/x-www-form-urlencoded
+
+client_id=204196ef-b7fd-461f-89b7-f778e1568c41
+&scope=https%3A%2F%2Fgraph.microsoft.com%2Fmail.read
+&code=OAAABAAAAiL9Kn2Z27UubvWFPbm0gLWQJVzCTE9UkP3pSx1aXxUjq3n8b2JRLk4OxVXr...
+&redirect_uri=http%3A%2F%2Flocalhost%2Fmyapp%2F
+&grant_type=authorization_code
+&code_verifier=ThisIsntRandomButItNeedsToBe43CharactersLong 
+&client_secret=sampleCredentia1s    // NOTE: Only required for web apps. This secret needs to be URL-Encoded.
+```
