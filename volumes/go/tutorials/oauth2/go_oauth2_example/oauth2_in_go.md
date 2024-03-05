@@ -1,6 +1,6 @@
 # OAuth2
 
-Now using this to test oidc as well.
+Github OAuth2 example
 
 ## references
 
@@ -47,7 +47,7 @@ We can create a new file, public/index.html:
 
 ```bash
 pushd .
-cd ~/src/repsys/volumes/go/tutorials/http/oauth2/go_oauth2_example
+cd ~/src/repsys/volumes/go/tutorials/oauth2/go_oauth2_example
 code public/index.html
 ```
 
@@ -78,7 +78,7 @@ Enter into index.html
 Once the user has finished logging in and approving the request, the authorization server is ready to redirect the user back to the application.
 Authorization Code Response
 
-If the request is valid and the user grants the authorization request, the authorization server generates an authorization code and redirects the user back to the application, adding the authorization code and the application’s “state” value to the redirect URL.
+If the request is valid and the user grants the authorization request, the authorization server generates an authorization code and redirects the user back to the application, adding the authorization code and the application’s “state” value to the redirect URL.0
 
 ## Generating the Authorization Code
 
