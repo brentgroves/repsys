@@ -1,3 +1,18 @@
+# Container Location History
+
+## Identify table
+
+container history table
+
+## View chain
+
+1. Filter on container history records dealing with location changes
+2. Assign row numbers grouping by part number order by descending date
+3. Filter by row numbers less than x
+4. Pivot records
+
+## Pivot example
+
 https://www.mssqltips.com/sqlservertip/7233/sql-pivot-sql-unpivot-examples-transform-data/
 
 SQL PIVOT diagram
