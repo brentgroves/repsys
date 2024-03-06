@@ -7,11 +7,22 @@ Sincerely yours,
 Brent G.
 260-564-4868
 
-This is a markdown file and can be viewed in Visual Studio Code or any online viewer such as https://markdownlivepreview.com/
+This is a markdown file and can be viewed in Visual Studio Code or any online viewer such as <https://markdownlivepreview.com/>
+
+## contacts
+
+Hi All,
+
+I know that you are most likely sick of me asking for meetings with people to go over the Power BI stuff.
+
+We did some more investigation over here and figured out that Azure as it refers to your tenant is just the “Blob” that comes with the workspaces that you guys have with PowerBI Pro User Licensing…
+
+To that end I would like to know if I can have you guys work with Tarek, our PBI Architect and guru of all things reporting. He will be able to work with you to get the workspaces and PBI Apps set up so that you guys can migrate 100% of your PBI stuff across…
+"Tarek Mohamed" <Tarek.Mohamed@Linamar.com>
 
 ## Plan
 
-The goal is to get Azure resource costs to be approximately $500 per month. Also to request a resource group named "repsys" in which the user "bGroves@linamar.com" is assigned the "Contributor" role.
+The goal is to get Azure resource costs to be approximately $500 per month. Also to request a resource group named "repsys" in which the user "<bGroves@linamar.com>" is assigned the "Contributor" role.
 
 - Create an Excel file showing the estimated monthly cost of all Azure resources.
 - Contact IT and IS team to gather any resource needs I may be unaware of.
@@ -69,4 +80,3 @@ az role assignment create --assignee "bGroves@linamar.com" \
 az role assignment list --resource-group repsys --assignee bGroves@linamar.com --output json --query '[].{principalName:principalName, roleDefinitionName:roleDefinitionName, scope:scope}'
 popd
 ```
-
