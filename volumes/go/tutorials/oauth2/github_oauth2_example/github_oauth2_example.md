@@ -47,7 +47,7 @@ We can create a new file, public/index.html:
 
 ```bash
 pushd .
-cd ~/src/repsys/volumes/go/tutorials/oauth2/go_oauth2_example
+cd ~/src/repsys/volumes/go/tutorials/oauth2/github_oauth2_example
 code public/index.html
 ```
 
@@ -119,11 +119,11 @@ Client secrets
 
 ```bash
 pushd .
-cd ~/src/repsys/volumes/go/tutorials/oauth2/go_oauth2_example
-go mod init go_oauth2_example
+cd ~/src/repsys/volumes/go/tutorials/oauth2/github_oauth2_example
+go mod init github_oauth2_example
 pushd .
 cd ~/src/repsys
-go work use ./volumes/go/tutorials/http/oauth2/go_oauth2_example
+go work use ./volumes/go/tutorials/oauth2/github_oauth2_example
 
 ```
 
@@ -281,6 +281,7 @@ We will be using the /user API to get basic info about the user and say hi to th
 With the addition of the welcome page, our OAuth implementation is now complete!
 
 Once the app starts, we can visit <http://localhost:8080/> , authorize with Github, and end up on the welcome page, which displays the greeting. My name on my github profile is “Soham Kamani”, so the welcome page will display Welcome, Soham Kamani once I login.
+"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"
 
 ## Next
 

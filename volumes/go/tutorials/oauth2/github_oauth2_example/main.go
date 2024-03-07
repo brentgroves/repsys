@@ -48,6 +48,7 @@ func main() {
 
 		// Next, lets for the HTTP request to call the github oauth endpoint
 		// to get our access token
+		// https://pkg.go.dev/net/http
 		reqURL := fmt.Sprintf("https://github.com/login/oauth/access_token?client_id=%s&client_secret=%s&code=%s", clientID, clientSecret, code)
 		req, err := http.NewRequest(http.MethodPost, reqURL, nil)
 		if err != nil {
@@ -78,6 +79,7 @@ func main() {
 
 		// Finally, send a response to redirect the user to the "welcome" page
 		// with the access token
+		// https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Location
 		w.Header().Set("Location", "/welcome.html?access_token="+t.AccessToken)
 		w.WriteHeader(http.StatusFound)
 	})

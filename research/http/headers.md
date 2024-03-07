@@ -3,6 +3,7 @@
 ## references
 
 <https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers>
+<https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers>
 
 ## HTTP headers
 
