@@ -57,21 +57,12 @@ Enter into index.html
 <!DOCTYPE html>
 <html>
   <body>
-    <a
-      href="https://github.com/login/oauth/authorize?client_id=myclientid123&redirect_uri=http://localhost:8080/oauth/redirect"
-    >
+        href="https://github.com/login/oauth/authorize?client_id=4e83a11fd0182d7cbb02&redirect_uri=http://localhost:8080/oauth/redirect">
       Login with github
     </a>
   </body>
 </html>
 ```
-
-## Disect Azure Identity Management URL
-
-<https://login.microsoftonline.com/5269b021-533e-4702-b9d9-72acbc852c97/oauth2/v2.0/authorize?response_type=code&client_id=b08211fd-0bcf-4700-a70a-e600bc0bcf77&scope=api://b08211fd-0bcf-4700-a70a-e600bc0bcf77/Files.Read>
-
-- **tenant:** 5269b021-533e-4702-b9d9-72acbc852c97
-- **response_type:** code
 
 ## **[The Authorization Response](https://www.oauth.com/oauth2-servers/authorization/the-authorization-response/)**
 
@@ -88,15 +79,11 @@ The link URL has three key parts:
 
 - https//github.com/login/oauth/authorize is the OAuth gateway for Github’s **OAuth flow**. All OAuth providers have a gateway URL that you have to send the user to in order to proceed.
 
-- client_id=myclientid123 - this specifies the client ID of the application. This ID will tell Github about the identity of the consumer who is trying to use their OAuth service. Maybe the client_id is the id of the app registered with github.
+- client_id=4e83a11fd0182d7cbb02 - this specifies the client ID of the application. This ID will tell Github about the identity of the consumer who is trying to use their OAuth service. Maybe the client_id is the id of the app registered with github.
 
-  OAuth service providers normally have a portal in which you can register your consumer. On registration, you will receive a client ID (which we are using here as myclientid123), and a client secret (which we will use later on). For Github, the portal to register new applications can be found on <https://github.com/settings/applications/new>.
+OAuth service providers normally have a portal in which you can register your consumer. On registration, you will receive a client ID (which we are using here as myclientid123), and a client secret (which we will use later on). For Github, the portal to register new applications can be found on <https://github.com/settings/applications/new>.
 
 - redirect_uri=<http://localhost:8080/oauth/redirect> - specifies the URL to redirect to with the request token, once the user has been authenticated by the service provider. Normally, you will have to set this value on the registration portal as well, to prevent anyone from setting malicious callback URLs.
-
-Azure example:
-
-href="<https://login.microsoftonline.com/5269b021-533e-4702-b9d9-72acbc852c97/oauth2/v2.0/authorize?response_type=code&client_id=b08211fd-0bcf-4700-a70a-e600bc0bcf77&scope=api://b08211fd-0bcf-4700-a70a-e600bc0bcf77/Files.Read">>
 
 ## register app with Github
 
@@ -112,8 +99,6 @@ Client ID
 4e83a11fd0182d7cbb02
 Client secrets
 58870f5f28410c3fce3ea5c0bd5fe6e1cbb41cfc
-
-## **[register app with Azure](./azure_oauth_registriation.md)**
 
 ## Setup go progam
 
@@ -132,6 +117,7 @@ go work use ./volumes/go/tutorials/oauth2/github_oauth2_example
 The following code would go into a new file main.go:
 
 ```go
+# https://forum.golangbridge.org/t/how-does-http-dir-work/9203/3
 func main() {
  fs := http.FileServer(http.Dir("public"))
  http.Handle("/", fs)
@@ -166,11 +152,10 @@ const clientID = "<your client id>"
 const clientSecret = "<your client secret>"
 
 func main() {
- fs := httNow the redirect URL is functional, and will redirect the user to the welcome page, along with the access token.
+ fs := http.FileServer(http.Dir("public"))
+ http.Handle("/", fs)
 
-## Redirecting to the Welcome Page
-The welcome page is the page we show the user after they have logged in. Now that we have the users access token, we can obtain their account information on their behalf as authorized Github users.
-ll be using `httpClient` to make external HTTP requests later in our code
+ // We will be using `httpClient` to make external HTTP requests later in our code
  httpClient := http.Client{}
 
  // Create a new redirect route route
@@ -205,11 +190,12 @@ ll be using `httpClient` to make external HTTP requests later in our code
    return
   }
   defer res.Body.Close()
-Now the redirect URL is functional, and will redirect the user to the welcome page, along with the access token.
 
-## Redirecting to the Welcome Page
-The welcome page is the page we show the user after they have logged in. Now that we have the users access token, we can obtain their account information on their behalf as authorized Github users.
-eHeader(http.StatusBadRequest)
+  // Parse the request body into the `OAuthAccessResponse` struct
+  var t OAuthAccessResponse
+  if err := json.NewDecoder(res.Body).Decode(&t); err != nil {
+   fmt.Fprintf(os.Stdout, "could not parse JSON response: %v", err)
+   w.WriteHeader(http.StatusBadRequest)
    return
   }
 
