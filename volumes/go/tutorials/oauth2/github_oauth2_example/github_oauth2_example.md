@@ -269,7 +269,7 @@ With the addition of the welcome page, our OAuth implementation is now complete!
 Once the app starts, we can visit <http://localhost:8080/> , authorize with Github, and end up on the welcome page, which displays the greeting. My name on my github profile is “Soham Kamani”, so the welcome page will display Welcome, Soham Kamani once I login.
 "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"
 
-## Next
+## **[Next Sessions and cookies](https://www.sohamkamani.com/web-security-basics/#sessions-and-cookies)**
 
 Attempt to get this to work for Azure
 <https://github.com/coreos/go-oidc>
