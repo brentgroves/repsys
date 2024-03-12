@@ -31,8 +31,13 @@ client_id=535fb089-9ff3-47b6-9bfb-4f1264799865
 &code_challenge=YTFjNjI1OWYzMzA3MTI4ZDY2Njg5M2RkNmVjNDE5YmEyZGRhOGYyM2IzNjdmZWFhMTQ1ODg3NDcxY2Nl
 &code_challenge_method=S256
 
-code_challenge=WeDontSharePasswords1!
-s256=72ea7b462f69ea06a9f88a00d54a90ce589470c9752b055057df156cee8435c4
+https://emn178.github.io/online-tools/sha256.html
+
+code_challenge=KEHQlD-uzPrseTN41uiyEXZ2yHepE1doyOmy8vCCSrA
+code_verifier=WDYzWRoEjNJhkze5xH8HZpgs9oLtP3dXSW0BsnmK76s
+
+hash=de738e38ee4de214d11458cab720c4854243c968a904bbabcaac90177a7a44a9
+base64url=ZGU3MzhlMzhlZTRkZTIxNGQxMTQ1OGNhYjcyMGM0ODU0MjQzYzk2OGE5MDRiYmFiY2FhYzkwMTc3YTdhNDRhOQ==
 ```
 
 | Parameter             | Required/optional      | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
