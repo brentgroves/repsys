@@ -1,4 +1,4 @@
-# **[TCP protocol](https://www.tutorialspoint.com/data_communication_computer_network/transmission_control_protocol.htm)
+# **[TCP protocol](https://www.tutorialspoint.com/data_communication_computer_network/transmission_control_protocol.htm)**
 
 ## Features
 
@@ -10,6 +10,47 @@
 - TCP provides flow control and quality of service.
 - TCP operates in Client/Server point-to-point mode.
 - TCP provides full duplex server, i.e. it can perform roles of both receiver and sender.
+
+## Header
+
+The length of TCP header is minimum 20 bytes long and maximum 60 bytes.
+
+![](https://www.tutorialspoint.com/data_communication_computer_network/images/TCP_Header.jpg
+)
+
+- Source Port (16-bits)  - It identifies source port of the application process on the sending device.
+- Destination Port (16-bits) - It identifies destination port of the application process on the receiving device
+- Sequence Number (32-bits) - Sequence number of data bytes of a segment in a session.
+- Acknowledgement Number (32-bits)  - When ACK flag is set, this number contains the next sequence number of the data byte expected and works as acknowledgement of the previous data received.
+- Data Offset (4-bits)  - This field implies both, the size of TCP header (32-bit words) and the offset of data in current packet in the whole TCP segment.
+- Reserved (3-bits)  - Reserved for future use and all are set zero by default.
+- Flags (1-bit each)
+  - NS - Nonce Sum bit is used by Explicit Congestion Notification signaling process.
+  - CWR - When a host receives packet with ECE bit set, it sets Congestion Windows Reduced to acknowledge that ECE received.
+  - ECE -It has two meanings:
+    - If SYN bit is clear to 0, then ECE means that the IP packet has its CE (congestion experience) bit set.
+    - If SYN bit is set to 1, ECE means that the device is ECT capable.
+  - URG - It indicates that Urgent Pointer field has significant data and should be processed.
+  - ACK - It indicates that Acknowledgement field has significance. If ACK is cleared to 0, it indicates that packet does not contain any acknowledgement.
+  - PSH - When set, it is a request to the receiving station to PUSH data (as soon as it comes) to the receiving application without buffering it.
+  - RST - Reset flag has the following features:
+        - It is used to refuse an incoming connection.
+        - It is used to reject a segment.
+        - It is used to restart a connection.
+  - SYN - This flag is used to set up a connection between hosts.
+  - FIN - This flag is used to release a connection and no more data is exchanged thereafter. Because packets with SYN and FIN flags have sequence numbers, they are processed in correct order.
+- Windows Size  - This field is used for flow control between two stations and indicates the amount of buffer (in bytes) the receiver has allocated for a segment, i.e. how much data is the receiver expecting.
+- Checksum - This field contains the checksum of Header, Data and Pseudo Headers.
+- Urgent Pointer  - It points to the urgent data byte if URG flag is set to 1.
+- Options  - It facilitates additional options which are not covered by the regular header. Option field is always described in 32-bit words. If this field contains data less than 32-bit, padding is used to cover the remaining bits to reach 32-bit boundary.
+
+## Addressing
+
+TCP communication between two remote hosts is done by means of port numbers (TSAPs). Ports numbers can range from 0 – 65535 which are divided as:
+
+- System Ports (0 – 1023)
+- User Ports ( 1024 – 49151)
+- Private/Dynamic Ports (49152 – 65535)
 
 ## Connection Management
 

@@ -87,6 +87,18 @@ code public/index.html
 
 Enter into index.html
 
+// Line breaks for legibility only
+
+<https://login.microsoftonline.com/{tenant}/oauth2/v2.0/authorize>?
+client_id=535fb089-9ff3-47b6-9bfb-4f1264799865
+&response_type=code
+&redirect_uri=http%3A%2F%2Flocalhost%2Fmyapp%2F
+&response_mode=query
+&scope=https%3A%2F%2Fgraph.microsoft.com%2Fmail.read
+&state=12345
+&code_challenge=YTFjNjI1OWYzMzA3MTI4ZDY2Njg5M2RkNmVjNDE5YmEyZGRhOGYyM2IzNjdmZWFhMTQ1ODg3NDcxY2Nl
+&code_challenge_method=S256
+
 ```html
 <!DOCTYPE html>
 <html>

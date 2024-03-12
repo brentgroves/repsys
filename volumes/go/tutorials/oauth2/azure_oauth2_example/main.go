@@ -15,6 +15,13 @@ const tenantId = "5269b021-533e-4702-b9d9-72acbc852c97"
 const clientID = "e0e65e2b-9f59-495a-81fd-b6738ab023fc"
 const clientSecret = "nRH8Q~HGjz4eSmS~~nGPxOdbILLOZfLM62~iScss"
 
+// https://github.com/brentgroves/mailer13319/blob/main/authconf.js
+// const APP_ID = "b5615dbe-0af5-49fd-ab09-803e91be7bd9";
+// const APP_SECERET = "L9c1qlg8x1CfH8StSyfVtkB23vD-C~-.x.";
+// const TOKEN_ENDPOINT =
+//   "https://login.microsoftonline.com/b4b87e8f-df64-41ff-9ba4-a4930ebc804b/oauth2/v2.0/token";
+// const MS_GRAPH_SCOPE = "https://graph.microsoft.com/.default";
+
 // Dev Account Client Application
 // Client Id:e0e65e2b-9f59-495a-81fd-b6738ab023fc
 // value:nRH8Q~HGjz4eSmS~~nGPxOdbILLOZfLM62~iScss
@@ -52,9 +59,6 @@ func main() {
 		// https: //stackoverflow.com/questions/63852734/azure-oauth-getting-html-body-instead-of-code-from-angular-get-request
 		// https: //stackoverflow.com/questions/67247541/how-to-acquire-oauth2-0-token-from-azure-ad-in-go
 		// https: //github.com/mcordell/go-ms-graph/blob/master/auth/auth.go
-
-		// Azure way
-		// https://stackoverflow.com/questions/67247541/how-to-acquire-oauth2-0-token-from-azure-ad-in-go
 
 		reqURL := fmt.Sprintf("https://login.microsoftonline.com/%s/oauth2/v2.0/token", tenantId)
 		fmt.Sprintf("%s?client_id=%s&scope=", reqURL, clientID)
