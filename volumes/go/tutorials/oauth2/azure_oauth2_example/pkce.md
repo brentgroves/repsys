@@ -1,5 +1,7 @@
 # Generate Code Verifier and Code Challenge
 
+<https://gist.github.com/ogazitt/f749dad9cca8d0ac6607f93a42adf322>
+
 <https://example-app.com/pkce>
 
 Code_verifier(random_string)=5b7c647392f1f049e1319918a220c4a0ee39bb453aa58f3b87f7ff73
