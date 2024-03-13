@@ -4,6 +4,14 @@
 
 <https://go.dev/ref/mod#go-get>
 
+## go get -u
+
+You would use -u to update the dependencies to their latest available minor and patch versions. So if your module is using package foo.com/bar, running go get -u foo.com/bar will update not only foo.com/bar to the latest MINOR.PATCH, but also its dependencies.
+
+Go modules follows semver: MAJOR.MINOR.PATCH
+
+Changes in MINOR and PATCH should never break users, so they are "safe" to automatically update. That said, the conservative approach (without -u) doesn't update them and is appropriate in some cases.
+
 ## Add dependencies to current module and install them
 
 Add dependencies to current module and install them

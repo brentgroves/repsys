@@ -146,11 +146,32 @@ OAuth service providers normally have a portal in which you can register your co
 The following code would go into a new file main.go:
 
 ```go
+
+import (
+ "encoding/json"
+ "fmt"
+ "net/http"
+ "os"    
+ "crypto/rand"
+ "encoding/hex"
+ "io"
+)
+
 func main() {
  fs := http.FileServer(http.Dir("public"))
  http.Handle("/", fs)
 
  http.ListenAndServe(":8080", nil)
+}
+
+func randomBytesInHex(count int) (string, error) {
+    buf := make([]byte, count)
+    _, err := io.ReadFull(rand.Reader, buf)
+    if err != nil {
+        return "", fmt.Errorf("Could not generate %d random bytes: %v", count, err)
+    }
+ 
+    return hex.EncodeToString(buf), nil
 }
 ```
 

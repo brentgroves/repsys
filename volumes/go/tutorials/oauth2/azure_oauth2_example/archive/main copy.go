@@ -135,13 +135,6 @@ func main() {
 	httpClient := http.Client{}
 
 	// Create a new redirect route
-	http.HandleFunc("/oauth/authurl", func(w http.ResponseWriter, r *http.Request) {
-
-		config *oauth2.Config
-		func AuthorizationURL(config *oauth2.Config) (*AuthURL, error) {
-
-	}
-	// Create a new redirect route
 	http.HandleFunc("/oauth/redirect", func(w http.ResponseWriter, r *http.Request) {
 		// First, we need to get the value of the `code` query param
 		err := r.ParseForm()

@@ -7,7 +7,8 @@
 Code_verifier(random_string)=5b7c647392f1f049e1319918a220c4a0ee39bb453aa58f3b87f7ff73
 URL-Safe SHA256 (Code Challenge)=iyIT0W4qFHxvxpgNOg9C2cs84WSeAHCliJYX0DaMEKI
 
-1bb2ec44ba38581bb41ebd9c6459bbcb6809a82d477f7870ddabb9df9cd55524
+hash: 1bb2ec44ba38581bb41ebd9c6459bbcb6809a82d477f7870ddabb9df9cd55524
+base64:
 
 ## **[Proof Key for Code Exchange Overview](https://curity.io/resources/learn/oauth-pkce/#:~:text=The%20Proof%20Key%20for%20Code,same%20one%20that%20finishes%20it.)**
 

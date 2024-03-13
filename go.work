@@ -13,6 +13,7 @@ use (
 	./volumes/go/tutorials/http/basics/webapp/gowiki
 	./volumes/go/tutorials/oauth2/azure_oauth2_example
 	./volumes/go/tutorials/oauth2/github_oauth2_example
+	./volumes/go/tutorials/oauth2/oauth2_example
 	./volumes/go/tutorials/oidc/go_oidc_example
 	./volumes/go/tutorials/prometheus/counter
 	./volumes/go/tutorials/webhook/webhook
