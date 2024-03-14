@@ -3,6 +3,20 @@
 # Example
 
 ```bash
+# wonder account
+TENANT_ID="2a7c89a0-abf5-4584-a446-bf6c8d111de5"
+CLIENT_ID="3bb4fcf5-bb02-4e23-bd3c-ac55e58b63f9"
+secret_id="d6bfdd84-0ad9-48e7-8c74-730320638aef"
+secret_value="Yem8Q~qNcX7OUcFFQWXl8b5uMvzab3kvjFQulbk6"
+SCOPE='https%3A%2F%2Fgraph.microsoft.com%2F.default'
+MSFT="https://login.microsoftonline.com/2a7c89a0-abf5-4584-a446-bf6c8d111de5/oauth2/v2.0/token"
+
+https://login.microsoftonline.com/2a7c89a0-abf5-4584-a446-bf6c8d111de5/oauth2/v2.0/authorize
+
+CLIENT_SECRET="nRH8Q~HGjz4eSmS~~nGPxOdbILLOZfLM62~iScss"
+TENANT_ID="5269b021-533e-4702-b9d9-72acbc852c97"
+MSFT="https://login.microsoftonline.com/5269b021-533e-4702-b9d9-72acbc852c97/oauth2/v2.0/token"
+
 # dev account
 CLIENT_ID="b08211fd-0bcf-4700-a70a-e600bc0bcf77"
 CLIENT_SECRET="nRH8Q~HGjz4eSmS~~nGPxOdbILLOZfLM62~iScss"
@@ -19,7 +33,9 @@ SCOPE='https%3A%2F%2Fgraph.microsoft.com%2F.default'
 const TOKEN_ENDPOINT =
   "https://login.microsoftonline.com/b4b87e8f-df64-41ff-9ba4-a4930ebc804b/oauth2/v2.0/token";
 const MS_GRAPH_SCOPE = "https://graph.microsoft.com/.default";
-
+https://learn.microsoft.com/en-us/answers/questions/1342882/microsoft-graph-apis-access-for-free-trial-account
+Or better yet, get a free DEV subscription that you can reuse: https://developer.microsoft.com/en-us/microsoft-365/dev-program
+https://www.youtube.com/watch?v=M22WNJwOxHY
 curl \ -d "client_id=$CLIENT_ID" \ -d "client_secret=$CLIENT_SECRET" \ -d "grant_type=client_credentials" \ -d "scope=$SCOPE" \ -X POST $MSFT If everything is configured properly, you should receive a response like this…
 {
     "token_type":"Bearer",
@@ -74,6 +90,7 @@ curl -X GET \
 
 https://graph.microsoft.com/v1.0/me/sendMail
 https://graph.microsoft.com/v1.0/users/bgroves@mobexglobal.com/sendMail
+https://graph.microsoft.com/v1.0/users/brent.groves@outlook.com/sendMail
 curl -X POST \
     -H "Authorization: Bearer $token" \
     -H "Content-Type: application/json" \
