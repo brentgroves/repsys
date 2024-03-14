@@ -93,7 +93,7 @@ curl -X POST \
         "toRecipients": [ 
             { 
                 "emailAddress": { 
-                    "address": "brent.groves@outlook.com" 
+                    "address": "brent.groves@gmail.com" 
                 } 
             } 
         ] 
