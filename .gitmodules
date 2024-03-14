@@ -34,3 +34,6 @@
 [submodule "linux"]
 	path = linux
 	url = git@github.com:brentgroves/linux.git
+[submodule "status"]
+	path = status
+	url = git@github.com:brentgroves/status
