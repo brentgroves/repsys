@@ -4,9 +4,6 @@
 [submodule "projects"]
 	path = projects
 	url = git@github.com:brentgroves/projects.git
-[submodule "status"]
-	path = status
-	url = git@github.com:brentgroves/status.git
 [submodule "volumes/ansible/rsapb"]
 	path = volumes/ansible/rsapb
 	url = git@github.com:brentgroves/rsapb.git
