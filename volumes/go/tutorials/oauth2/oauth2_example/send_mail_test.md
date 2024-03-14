@@ -99,6 +99,8 @@ curl -X POST \
         ] 
     } 
 }' \
+"https://graph.microsoft.com/v1.0/users/brent.groves@outlook.com/sendMail"
+
 "https://graph.microsoft.com/v1.0/users/steven.groves@brentgrovesoutlook.onmicrosoft.com/sendMail"
 {"error":{"code":"MailboxNotEnabledForRESTAPI","message":"The mailbox is either inactive, soft-deleted, or is hosted on-premise."}}% 
 
