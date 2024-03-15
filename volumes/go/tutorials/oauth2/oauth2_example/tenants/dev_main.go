@@ -18,18 +18,18 @@ import (
 func main() {
 	ctx := context.Background()
 	conf := &oauth2.Config{
-		ClientID: "4c914e6c-f56e-4a77-a59f-733d6d37942e",
+		ClientID: "b08211fd-0bcf-4700-a70a-e600bc0bcf77",
 		// ClientID:     "d6b668c7-e181-4415-b6fe-fb7a76d48d4a",
-		ClientSecret: "Ei88Q~LEIJzqYYsaurhNfCqgG.IqoQPy1.rdgaWj",
-		Scopes:       []string{"Mail.ReadBasic", "Mail.Read", "Mail.ReadWrite"},
+		ClientSecret: "nRH8Q~HGjz4eSmS~~nGPxOdbILLOZfLM62~iScss",
+		Scopes:       []string{"api://b08211fd-0bcf-4700-a70a-e600bc0bcf77/User.Read.All"},
 		// Scopes: []string{"openid", "profile", "email"},
 		// RedirectURL: "",
 		// Scopes:       []string{"api://b08211fd-0bcf-4700-a70a-e600bc0bcf77/Files.Read", "SCOPE2"},
 
 		// Scopes:       []string{"api://b08211fd-0bcf-4700-a70a-e600bc0bcf77/Files.Read", "SCOPE2"},
 		Endpoint: oauth2.Endpoint{
-			AuthURL:  "https://login.microsoftonline.com/07476fd3-6a57-4e3f-80ab-a1be2af5d10a/oauth2/v2.0/authorize",
-			TokenURL: "https://login.microsoftonline.com/07476fd3-6a57-4e3f-80ab-a1be2af5d10a/oauth2/v2.0/token",
+			AuthURL:  "https://login.microsoftonline.com/5269b021-533e-4702-b9d9-72acbc852c97/oauth2/v2.0/authorize",
+			TokenURL: "https://login.microsoftonline.com/5269b021-533e-4702-b9d9-72acbc852c97/oauth2/v2.0/token",
 		},
 	}
 	// 5269b021-533e-4702-b9d9-72acbc852c97
