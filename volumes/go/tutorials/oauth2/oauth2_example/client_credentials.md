@@ -48,6 +48,8 @@ domain: brentgrovesoutlook.onmicrosoft.com
 MSFT="https://login.microsoftonline.com/07476fd3-6a57-4e3f-80ab-a1be2af5d10a/oauth2/v2.0/token"
 https://graph.microsoft.com/.default
 
+*oauth2.Token {AccessToken: "eyJ0eXAiOiJKV1QiLCJub25jZSI6IjhRSWtkWHFraW5oTGFTT19IdFRkS0hZdmwzMzI5b18tVVlrSEViYUh0OUEiLCJhbGciOiJSUzI1NiIsIng1dCI6IlhSdmtvOFA3QTNVYVdTblU3Yk05blQwTWpoQSIsImtpZCI6IlhSdmtvOFA3QTNVYVdTblU3Yk05blQwTWpoQSJ9.eyJhdWQiOiIwMDAwMDAwMy0wMDAwLTAwMDAtYzAwMC0wMDAwMDAwMDAwMDAiLCJpc3MiOiJodHRwczovL3N0cy53aW5kb3dzLm5ldC8wNzQ3NmZkMy02YTU3LTRlM2YtODBhYi1hMWJlMmFmNWQxMGEvIiwiaWF0IjoxNzEwNDY1NTU4LCJuYmYiOjE3MTA0NjU1NTgsImV4cCI6MTcxMDQ3MTI1NCwiYWNjdCI6MCwiYWNyIjoiMSIsImFpbyI6IkFZUUFlLzhXQUFBQTdCTzlTaHJRNGxNL0dlam9JUW5zY1M1RnN...+1842 more", TokenType: "Bearer", RefreshToken: "", Expiry: time.Time(2024-03-15T02:54:13Z, +5435935471176){wall: 13940061370550757009, ext: 5435935471176, loc: *(*time.Location)(0xb0e440)}, raw: interface {}(map[string]interface {}) ["token_type": *(*interface {})(0xc00019a3e8), "scope": *(*interface {})(0xc00019a3f8), "expires_in": *(*interface {})(0xc00019a408), "ext_expires_in": *(*interface {})(0xc00019a418), "access_token": *(*interface {})(0xc00019a428), ], expiryDelta: 0}
+
 
 https://login.microsoftonline.com/07476fd3-6a57-4e3f-80ab-a1be2af5d10a/oauth2/v2.0/authorize?
 client_id=4c914e6c-f56e-4a77-a59f-733d6d37942e
