@@ -15,6 +15,8 @@ Microsoft Entra ID for building advanced identity and access management solution
 
 
 ## Join the Microsoft 365 Developer Program!
+Microsoft stopped allowing this freely you must now have a developer subscription.
+
 First Name:FNU
 Last Name:LNU
 Email:wonder.groves@outlook.com
