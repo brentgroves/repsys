@@ -1,5 +1,7 @@
 # Microsoft 365 E5 instant sandbox
 
+https://trainingsupport.microsoft.com/en-us/tcmct/forum/all/you-dont-current-qualify-for-a-microsoft-365/7d308853-5fc4-4ec1-9847-bda4c5a33442
+
 Cut your configuration time from days to seconds. Be your own administrator and prototype apps and solutions on your fully pre-provisioned sandbox subscription.
 
 Includes 25 user licenses for development purposes

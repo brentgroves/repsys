@@ -5,6 +5,15 @@
   "version": "0.2.0",
   "configurations": [
     {
+      "type": "fpDebug",
+      "request": "launch",
+      "name": "Debug Pascal helloworld program",
+      // "program": "${file}",
+      // fpc -gw3 helloworld.pas
+      "program": "${workspaceFolder}/volumes/pascal/helloworld"
+      // "program": "${workspaceFolder}/volumes/pascal/helloworld"
+    },
+    {
       "name": "Python: Current File",
       "type": "python",
       "request": "launch",
