@@ -1,4 +1,5 @@
 https://cstack.github.io/db_tutorial/
+https://www.amazon.com/C-Database-Development-Al-Stevens/dp/1558281363
 
 https://awesome-go.com/databases-implemented-in-go/
 https://github.com/gostor/awesome-go-storage
