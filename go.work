@@ -11,6 +11,7 @@ use (
 	./volumes/go/tutorials/database/mysql/tutorial_access_database
 	./volumes/go/tutorials/http/basics/fileserver
 	./volumes/go/tutorials/http/basics/webapp/gowiki
+	./volumes/go/tutorials/msal/graphtutorial
 	./volumes/go/tutorials/oauth2/azure_oauth2_example
 	./volumes/go/tutorials/oauth2/github_oauth2_example
 	./volumes/go/tutorials/oauth2/oauth2_example

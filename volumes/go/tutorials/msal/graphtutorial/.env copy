@@ -1,0 +1,3 @@
+CLIENT_ID=3d156079-1781-42d2-9ba1-ee541109edca
+TENANT_ID=07476fd3-6a57-4e3f-80ab-a1be2af5d10a
+GRAPH_USER_SCOPES=user.read,mail.read,mail.send

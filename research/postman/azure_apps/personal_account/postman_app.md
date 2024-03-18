@@ -1,5 +1,7 @@
 # Postman App
 
+Cant use to call mail api.
+
 ## Register your application
 
 Sign in to the Microsoft Entra admin center.
@@ -68,6 +70,9 @@ The first time you run a request as a delegated authentication flow, you need to
 1. Select the Delegated folder.
 2. Select the Authorization tab.
 3. In the Configure New Token section, make sure the callback URL matches with what you provided when you created the application registration, for example, <https://oauth.pstmn.io/v1/browser-callback>. Leave all the fields as preconfigured, including the Grant type that is set to Authorization Code.
+
+For personal account which uses Delegated permission (you have tried in Microsoft Graph Explorer), the authority endpoint is <https://login.microsoftonline.com/commonm/oauth2/v2.0/authorize> or <https://login.microsoftonline.com/consumers/oauth2/v2.0/authorize>.
+
 4. Scroll down on the right and select Get New Access Token.
 5. Sign in with your developer tenant administrator account.
 6. Select Proceed, and then select the Use Token button.

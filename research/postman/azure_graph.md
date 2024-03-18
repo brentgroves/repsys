@@ -1,5 +1,11 @@
 # **[Postman Microsoft Graph](https://www.postman.com/microsoftgraph/workspace/microsoft-graph/overview)**
 
+Note: can't use postman because cant set redirect url.
+
+url: postman.com
+login: <brent.groves@gmail.com>
+forks of Microsoft Graph: My Azure Account linked to <brent.groves@outlook.com>
+
 Microsoft Graph is the unified API for modern work. It is the gateway to data and intelligence in Microsoft 365. Use the wealth of data in Microsoft Graph to build apps for organizations and consumers that interact with millions of users.
 Microsoft Graph supports two access scenarios, delegated access and app-only access. In delegated access, the app calls Microsoft Graph on behalf of a signed-in user. In app-only access, the app calls Microsoft Graph with its own identity, without a signed in user.
 In this collection, you can try out both delegated and application API calls.
@@ -19,11 +25,15 @@ brent_groves fork of Microsoft Graph project
 ## Step 2: Create an Azure AD application
 
 To use this collection in your own developer tenant, create an Azure Active Directory (Azure AD) application and give it the appropriate permissions for the requests that you want to call. If you don't have a developer tenant, you can sign up for one through the Microsoft 365 Developer Program.
-Register your application:
+Note: My M365 Developer Program account no longer is licensed and the M365 developer program wont currently let you create a tenant with licenses and sample tenants like you used to.
+For personal account which uses Delegated permission (you have tried in Microsoft Graph Explorer), the authority endpoint is <https://login.microsoftonline.com/commonm/oauth2/v2.0/authorize> or <https://login.microsoftonline.com/consumers/oauth2/v2.0/authorize>.
+
+### Register your application
+
 Sign in to the Microsoft Entra admin center.
 Expand the Identity menu > select Applications > App registrations > New registration.
 Set the Application name to Postman.
-Set supported account types as desired.
+Set supported account types: For accounts linked to a basic M365 Office account select "Accounts in any organizational directory (Any Microsoft Entra ID tenant - Multitenant)" The reason is a M365 user is considered external to the tenant.
 From the dropdown menu under Redirect URI, select Web.
 Set the Redirect URI to <https://oauth.pstmn.io/v1/browser-callback>.
 Select Register.
