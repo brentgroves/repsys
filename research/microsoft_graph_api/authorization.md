@@ -1,5 +1,9 @@
 # test
+https://learn.microsoft.com/en-us/graph/tutorials/go-app-only?tabs=aad
 https://learn.microsoft.com/en-us/entra/identity-platform/tutorial-v2-nodejs-console
+https://devblogs.microsoft.com/microsoft365dev/building-go-applications-with-the-microsoft-graph-go-sdk/
+https://www.example-code.com/golang/microsoftGraph.asp
+https://learn.microsoft.com/en-us/openapi/kiota/tutorials/go-azure?tabs=portal
 1. switch auth/token url in postman to common
 2. change app registration to any organization since brent.groves@outlook.com is an external user.
 3. look at your applications at https://myapplications.microsoft.com/
