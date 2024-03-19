@@ -1,5 +1,5 @@
 # test
-
+https://learn.microsoft.com/en-us/entra/identity-platform/tutorial-v2-nodejs-console
 1. switch auth/token url in postman to common
 2. change app registration to any organization since brent.groves@outlook.com is an external user.
 3. look at your applications at https://myapplications.microsoft.com/

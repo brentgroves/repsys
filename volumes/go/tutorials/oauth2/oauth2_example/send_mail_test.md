@@ -116,5 +116,7 @@ curl -X POST \
 https://graph.microsoft.com/v1.0/users/4e3f82ca-1024-486f-8f4d-30671be7754c/sendMail
 
 https://login.microsoftonline.com/common/oauth2/v2.0/authorize?client_id=de8bc8b5-d9f9-48b1-a8ad-b748da725064&scope=openid%20profile%20User.Read%20offline_access&redirect_uri=https%3A%2F%2Fdeveloper.microsoft.com%2Fen-us%2Fgraph%2Fgraph-explorer&client-request-id=018e567e-5f60-74a9-bde9-e3e31ab2bcf0&response_mode=fragment&response_type=code&x-client-SKU=msal.js.browser&x-client-VER=3.10.0&client_info=1&code_challenge=KBliSBFOUywSVbsDNclcp-ODCU8YwcGEr0hNrxWcRY0&code_challenge_method=S256&prompt=select_account&nonce=018e567e-5f72-7230-9cfd-da1cea73a26b&state=eyJpZCI6IjAxOGU1NjdlLTVmNzItNzQwNi04MjMxLWQyZTE5NzI0NTYxZCIsIm1ldGEiOnsiaW50ZXJhY3Rpb25UeXBlIjoicG9wdXAifX0%3D&claims=%7B%22access_token%22%3A%7B%22xms_cc%22%3A%7B%22values%22%3A%5B%22CP1%22%5D%7D%7D%7D&mkt=en-US
+
+https://learn.microsoft.com/en-us/entra/identity-platform/tutorial-v2-nodejs-console
 ```
 
