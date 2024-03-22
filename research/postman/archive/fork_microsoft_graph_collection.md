@@ -1,11 +1,5 @@
 # **[Postman Microsoft Graph](https://www.postman.com/microsoftgraph/workspace/microsoft-graph/overview)**
 
-Note: can't use postman because cant set redirect url.
-
-url: postman.com
-login: <brent.groves@gmail.com>
-forks of Microsoft Graph: My Azure Account linked to <brent.groves@outlook.com>
-
 Microsoft Graph is the unified API for modern work. It is the gateway to data and intelligence in Microsoft 365. Use the wealth of data in Microsoft Graph to build apps for organizations and consumers that interact with millions of users.
 Microsoft Graph supports two access scenarios, delegated access and app-only access. In delegated access, the app calls Microsoft Graph on behalf of a signed-in user. In app-only access, the app calls Microsoft Graph with its own identity, without a signed in user.
 In this collection, you can try out both delegated and application API calls.

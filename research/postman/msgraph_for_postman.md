@@ -1,13 +1,14 @@
 # Microsoft Graph API
 
-<https://dzone.com/articles/getting-access-token-for-microsoft-graph-using-oau>
 ![](https://learn.microsoft.com/en-us/graph/images/microsoft-graph.png)
 
-## **[Graph Explorer](https://developer.microsoft.com/en-us/graph/graph-explorer)**
+## references
 
-## **[Use the Graph API](https://learn.microsoft.com/en-us/graph/use-the-api)**
+- **[Graph Explorer](https://developer.microsoft.com/en-us/graph/graph-explorer)**
 
-## **[Use Postman](https://learn.microsoft.com/en-us/graph/use-postman)**
+- **[Use the Graph API](https://learn.microsoft.com/en-us/graph/use-the-api)**
+
+- **[Use Postman](https://learn.microsoft.com/en-us/graph/use-postman)**
 
 ## **[Fork Postman collection](https://learn.microsoft.com/en-us/graph/use-postman#step-1-fork-the-microsoft-graph-postman-collection)**
 
@@ -32,34 +33,35 @@ To use this collection in your own developer tenant, create a Microsoft Entra ap
 7. On the left menu, select API Permissions.
 8. On the horizontal menu, select Add a permission, and choose Microsoft Graph.
 9. Select the Delegated permissions option, type Mail., expand the Mail options, and then select Mail.Read.
-10. Select the Application permissions option, type User., expand the User options, and then select User.Read.All.
+10. Select the Application permissions option, type User., expand the User options, and then select User.Read.All. Type Mail., expand the Mail options, and then select Mail.Send. Noticed this says "Not granted for MSFT."
 11. Select Add permissions to add both permissions from the previous steps.
-12. On the horizontal menu, select Grant admin consent for, and then select Yes.
+12. On the horizontal menu, select Grant admin consent for, and then select Yes. Note that the prompt asks do you want to grant consent for the requests permissions for all accounts in MSFT. This will update any existing admin consent records this application already has to match what is listed below: Delegated:Mail.Read,Delegated:User.Read,Application:User.Read.All.
 13. On the left menu, select Overview. From here, you can get the application (client) ID and directory (tenant) ID. You'll need these in step 4. CLIENT_ID=4bf317c1-3185-469f-8f13-8c37ccb2c31c,TENANT_ID=07476fd3-6a57-4e3f-80ab-a1be2af5d10a
 14. On the left menu, select Certificates and secrets.
 15. Select New client secret, enter a description, and then select Add. Hover over the new client secret Value and copy it; you'll need this in step 4. value=km78Q~h6peVsoA5aJKWBmH6JXoIItOO2OPBeKbEk,id=e10bf4da-eebf-423a-aaca-5a678a34a789
 
 The application now has two permissions configured. Mail.Read is added as a delegated permission, which is a permission that requires a signed-in user. The application can read mail on behalf of the user. User.Read.All is added as an application permission, which is a permission that does not require a signed-in user. The application can read users in Microsoft Entra ID.
 
-## **[Step 4: Configure authentication](https://learn.microsoft.com/en-us/graph/use-postman#step-4-configure-authentication)
+## **[Step 4: Configure authentication](https://learn.microsoft.com/en-us/graph/use-postman#step-4-configure-authentication)**
 
 In this step, you set up the environment variables in Postman that you use to retrieve an access token.
 
 Go to Fork environment.
+**[app_info](/media/brent/KINGSTON/secrets/azure/azure_apps/msdev_1hkt5t/postman.md)**
 
 1. Add a label for the fork. This can be any text.
 2. Under Workspace, ensure that My Workspace is selected in the dropdown list.
-Select Fork Environment. It was labeled M365 environment.
+Select Fork Environment. It was labeled app_name environment.
 3. In ClientID, set the Current value to the application (client) ID value from step 3.15.
 4. In TenantID, set the Current value to the directory (tenant) ID value from step 3.15.
 5. In ClientSecret, set the Current value to the client secret value, km78Q~h6peVsoA5aJKWBmH6JXoIItOO2OPBeKbEk,from step 3.17.
 6. On the top right, select Save.
 7. Close the Manage Environments tab.
-8. On the top right, next to the eye icon, verify that M365 Environment is selected in the dropdown and not No environment.
+8. On the top right, next to the eye icon, verify that app_name Environment is selected in the dropdown and not No environment.
 
 ## Next steps
 
 Now that you have successfully set up the environment to run Microsoft Graph on Postman, continue with the authentication steps:
 
-- **[Use delegated authentication](https://learn.microsoft.com/en-us/graph/use-postman-with-delegated-authentication)** with Postman for Microsoft Graph
+- **[Use delegated authentication](./delegate_authentication.md)** with Postman for Microsoft Graph
 - **[Use app-only (application) authentication](https://learn.microsoft.com/en-us/graph/use-postman-with-app-only-authentication)** with Postman for Microsoft Graph
