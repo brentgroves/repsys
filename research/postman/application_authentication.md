@@ -27,6 +27,38 @@ The Application folder contains many requests for Microsoft Graph workloads that
 1. Expand the Application folder, and then expand the User folder.
 2. Double-click Get Users to open the request.
 3. On the top right, select Send.
+4. Expand the mail folder and open the "send mail as user" request. I had to make this it was not part of the collection.
+
+    ```json
+    // https://graph.microsoft.com/v1.0/users/{{UserId}}/sendMail
+    // raw json
+    {
+    "message": {
+        "subject": "RepSys Test",
+        "body": {
+        "contentType": "Text",
+        "content": "The new cafeteria is open."
+        },
+        "toRecipients": [
+        {
+            "emailAddress": {
+            "address": "{{UserName}}"
+            }
+        }
+        ],
+        "ccRecipients": [
+        {
+            "emailAddress": {
+            "address": "{{UserName}}"
+            }
+        }
+        ]
+    },
+    "saveToSentItems": "false"
+    }
+    ```
+
+5. On the top right, select Send.
 
 You have now successfully run a Microsoft Graph request using application authentication.
 
