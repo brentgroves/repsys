@@ -1,5 +1,12 @@
 # **[Getting Access Token for Microsoft Graph Using OAuth REST API](https://dzone.com/articles/getting-access-token-for-microsoft-graph-using-oau)**
 
+## references
+
+<https://learn.microsoft.com/en-us/entra/identity-platform/v2-oauth2-client-creds-grant-flow>
+
+The value passed for the scope parameter in this request should be the resource identifier (application ID URI) of the resource you want, affixed with the .default suffix. All scopes included must be for a single resource. Including scopes for multiple resources will result in an error.
+For the Microsoft Graph example, the value is <https://graph.microsoft.com/.default>. This value tells the Microsoft identity platform that of all the direct application permissions you have configured for your app, the endpoint should issue a token for the ones associated with the resource you want to use. To learn more about the /.default scope, see the consent documentation.
+
 Microsoft Graph is here to unite Azure and Office 365 data under a single roof. It is a simple REST API and Microsoft provided many examples of how to use it, including an interactive Graph Explorer which allows us to discover the different methods.
 
 Using the API is as simple as sending an HTTP request - for example, calling this method will return the details about the users in the directory:
@@ -7,6 +14,8 @@ Using the API is as simple as sending an HTTP request - for example, calling thi
 ```bash
 curl https://graph.microsoft.com/v1.0/users
 ```
+
+## Access Token for Microsoft Graph
 
 In the **[Graph Explorer](https://developer.microsoft.com/en-us/graph/graph-explorer)** demo page it all works fine, but as soon as we try to use the Graph API from outside the page, from another program or test application like **[Postman](https://www.getpostman.com/apps)**, we receive a "401 Unauthorized" exception.
 
@@ -103,15 +112,23 @@ For our needs, this is the minimum which is required:
 1. Create a new app in the target directory (Azure Portal > Azure Active Directory > App Registration > New Application Registration).
 2. In the Create screen, enter the following information:
     - Name: Can be any name, for example, "MicrosoftGraphClient."
-    - Type: Must be "Web App/API" for our needs.
+    - Type: Must be "Web App/API" for our needs. **Note:** I did not configure any platform and the credential grant flow still worked and I was able to send email.
     - Sign-On URL: Not important (since we do not intend users to directly login to the app), for our case, we should put it under the tenant directory. For example,https://<directoryname>.onmicrosoft.com/MicrosoftGraphClient
-3. Get the Client ID: Note the Application ID - It is the Client ID, so we need the following steps.
-4. Create a new Client Secret: Navigate to App > Keys > Passwordsand add a new key.
+3. Allow public client flows (This was not needed for the basic credential flow only for the resource owner password credential flow)
+    - go to Authentication under Advanced settings
+    - check Allow public client flows
+    This ennables the following mobile and desktop flows:
+    - App collects plaintext password **[Resource Owner Password Credential Flow](https://go.microsoft.com/fwlink/?linkid=2144008)
+    - No keyboard (Device Code Flow) Learn more
+    - SSO for domain-joined Windows (Windows Integrated Auth Flow) Learn more
+
+4. Get the Client ID: Note the Application ID - It is the Client ID, so we need the following steps.
+5. Create a new Client Secret: Navigate to App > Keys > Passwordsand add a new key.
     - Name (description): enter a descriptive name for the key so you later know that the client application is using it (you can have more than one key per app).
     - Expires: Choose "Never Expire," unless you want to change your key every year or two.
     - Click Save - a new Client Secret will be generated for you. This will be the only time you will see the Client Secret, so you better copy it to a secured location otherwise you won't be able to retrieve it again!
 
-Fill out this **[app template](/media/brent/KINGSTON/secrets/azure/tenants/app_template.md)**
+Fill out this **[app template](../../../../../../../../media/brent/KINGSTON/secrets/azure/tenants/app_template.md)**
 
 ## Configuring App Permission
 
@@ -127,6 +144,13 @@ Now that we have created an app, we have to configure its permissions. In the OA
     - Application:User.Read.All // Read all users' full profiles
     - Application.Mail.ReadBasic.All // Read basic mail in all mailboxe
     - Application:Mail.Send // Send mail as any user
+
+    // not needed for resource owner password credential flow grant
+
+    - Delegated:offline_access // Maintain access to data you have given it access to
+    - Delegated:openid // Sign users in
+    - Delegated:profile // needed for openid
+        The offline_access permission is a standard OIDC scope that's requested so that the app can get a refresh token. The app can use the refresh token to get a new access token when the current one expires.
     ```
 
 2. Grant App permissions: Now that we have declared what kind of permission our App requires, it's time to grant them to the App. Usually this is done by the user when the app first attempts to access their information, but, for now, we can just "accept" on behalf of all of our tenant users by doing one  of the following:
@@ -170,8 +194,7 @@ token=`curl -d "client_id=$CLIENT_ID" \
 | jq -j .access_token`
 ```
 
-Sample can be found at: **[client_credential_test](/media/brent/KINGSTON/secrets/azure/tenants/msdev_1hkt5t/apps/MicrosoftGraphClient/curl/client_credential_test.m
-d)**
+Sample can be found at: **[client_credential_test](../../../../../../../../media/brent/KINGSTON/secrets/azure/tenants/msdev_1hkt5t/apps/MicrosoftGraphClient/curl/client_credential.md)**
 
 We will receive a response with a JSON object containing the following properties:
 
@@ -218,3 +241,5 @@ Besides the access token, we received two additional tokens - Refresh Token and 
 ```bash
 SCOPE='https%3A%2F%2Fgraph.microsoft.com%2F.default openid'
 ```
+
+Sample can be found at: **[Resource Owner Password Credentials Grant in Azure AD OAuth](../../../../../../../../media/brent/KINGSTON/secrets/azure/tenants/msdev_1hkt5t/apps/MicrosoftGraphClient/curl/resource%20_owner_credentials_grant.md)**
