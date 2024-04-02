@@ -160,6 +160,12 @@ mysqldump -u root -p -h 10.1.0.118 --port=31008 --column-statistics=0 --add-drop
 # restore all the databases
 mysql -u root -p -h127.0.0.1 --port 3306 < ~/backups/reports31/mysql/2023-10-03-17:15:33.sql.bak
 
+mysql -u root -p -hreports31 --port 3306 < ~/backups/reports31/mysql/database/ETL2023-10-19-18:14:46.sql.bak
+
+mysql -u root -p -hreports31 --port 3306 < ~/backups/reports31/mysql/2023-10-03-17:15:33.sql.bak
+
+mysql -u root -p -hreports31 --port 30031 < ~/backups/reports31/mysql/2023-10-19-17:29:22.sql.bak
+
 ```
 
 ## Connecting with a node-port

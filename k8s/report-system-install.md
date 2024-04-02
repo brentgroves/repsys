@@ -3,7 +3,7 @@
 - **[Ubuntu 22.04 Server Install](./linux/ubuntu22-04/server-install.md)**
 - **[MicroK8s](./microk8s_1.28_install.md)**
 - **[Kubectl](./kubectl-install.md)**
-- **[Helm](./)**
+- **[Helm](./helm-install.md)**
 - **[K8s API Metrics Server](./metrics-server.md)**
 - **[K9s](k9s-install.md)**
 - **[Observability](./kube-prometheus-stack-install.md)**

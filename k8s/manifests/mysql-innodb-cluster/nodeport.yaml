@@ -18,7 +18,7 @@ spec:
     tier: mysql    
   ports:
   - name: mycluster-np
-    nodePort: 30051
+    nodePort: 30031
     # A Service definition specifies the port number that the Service will listen on for incoming traffic using the port field. 
     port: 3306
     protocol: TCP

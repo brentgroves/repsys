@@ -82,6 +82,7 @@ sudo microk8s add-node
 ```bash
 microk8s kubectl get node -o wide
 ```
+
 ## Enable the necessary MicroK8s Add ons
 
 ```bash
@@ -90,8 +91,7 @@ microk8s enable rbac
 microk8s enable hostpath-storage
 WARNING: Hostpath storage is not suitable for production environments.
          A hostpath volume can grow beyond the size limit set in the volume claim manifest.
-kubectl get storageclass
+microk8s kubectl get storageclass
 NAME                          PROVISIONER            RECLAIMPOLICY   VOLUMEBINDINGMODE      ALLOWVOLUMEEXPANSION   AGE
 microk8s-hostpath (default)   microk8s.io/hostpath   Delete          WaitForFirstConsumer   false                  61s
 ```
-

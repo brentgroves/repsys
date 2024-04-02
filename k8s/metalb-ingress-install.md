@@ -46,7 +46,8 @@ If one node goes down network connections will still be possible. I don't know i
 nmap -sP 172.20.88.0/22
 nmap -sP 10.1.0.0/22
 
-microk8s enable metallb:172.20.88.59-172.20.88.60
+microk8s enable metallb:172.20.88.57-172.20.88.58
+# microk8s enable metallb:172.20.88.59-172.20.88.60
 microk8s enable metallb:10.1.0.8-10.1.0.9
 
 kubectl get IPAddressPool -A                           
