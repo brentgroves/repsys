@@ -1,27 +1,25 @@
-# Install kubectl
+# **[Install kubectl](https://microk8s.io/docs/working-with-kubectl)**
 
 Note: our dotfiles has an alias to microk8s kubectl set to kc so you can use this locallly.
 
+```bash
 sudo snap install kubectl  --classic
-
-<https://microk8s.io/docs/working-with-kubectl>
-If you’d prefer to use your host’s kubectl command, running the following command will output the kubeconfig file from MicroK8s.
+```
 
 ## generate microk8s config
 
-ssh brent@reports51
+```bash
+ssh brent@reports31
 cd ~
 mkdir .kube
 cd .kube
-microk8s config > reports5.yaml
-exit
-From development system
-cd ~/.kube
-lfpt brent@reports51
-get /home/brent/.kube/reports5.yaml
+microk8s config > reports3.yaml
+nvim reports3.yaml
+```
 
-## add contexts to reports5.yaml
+## add contexts to reports3.yaml
 
+```yaml
 - context:
     cluster: microk8s-cluster
     namespace: mayastor
@@ -47,43 +45,53 @@ get /home/brent/.kube/reports5.yaml
     namespace: test
     user: admin
   name: test
+```
 
 ## test with scc
 
-scc.sh reports5.yaml microk8s
+scc.sh reports3.yaml microk8s
 kubectl get all
 
 ## add to source control
 
 ### github
 
-cd ~/src/linux-utils/kubectl/all-config-files
-cp ~/.kube/reports5.yaml .
-checkin changes
+```bash
+# From development system
+cd ~/src/repsys/linux/kubectl/all-config-files
+rm reports3.yaml
+lftp brent@reports31
+get /home/brent/.kube/reports3.yaml
+rm ~/.kube/reports3.yaml
+cp ./reports3.yaml ~/.kube/
+# checkin changes
 
-### dev ops
+# Optional commit changes to dev ops repo
 
 ```bash
 cd ~/src
 git clone git@ssh.dev.azure.com:v3/MobexGlobal/MobexCloudPlatform/kube
 
-cd ~/src/linux-utils/kubectl/all-config-files
-cp reports5.yaml ~/src/kube/
+cd ~/src/repsys/linux/kubectl/all-config-files
+cp reports3.yaml ~/src/kube/
 checkin changes
 
 ```
 
-## copy kubeconfig files for all clusters
+## copy kubeconfig files to all clusters
 
 ```bash
 ssh brent@reports5
-pushd ~/src/linux-utils/kubectl/all-config-files
-git pull
+~/startday.sh
+pushd ~/src/repsys/linux/kubectl/all-config-files
 mkdir -p ~/.kube
+rm ~/.kube/*.yaml
 cp ./*.yaml ~/.kube/
 cd ..
-cp ./scc.sh ~/.kube/
-sudo cp ./scc.sh /usr/local/bin
+# scc.sh is also in the ~/src/repsys/shell_scripts dir but it does not change much
+cp ./scc.sh ~/
+
+# optional location of config files
 cd ~/src
 git clone <git@ssh.dev.azure.com>:v3/MobexGlobal/MobexCloudPlatform/kube
 cd kube

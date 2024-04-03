@@ -4,6 +4,13 @@
 - **[MicroK8s](./microk8s_1.28_install.md)**
 - **[Kubectl](./kubectl-install.md)**
 - **[Helm](./helm-install.md)**
+- **[Enable host path storage](./host_path_storage/host_path_storage.md)**
+- **[Enable Mayastor](./mayastor-install-2.0.0.md)**
+- **[MySQL 8.0 server via stateful set](./mysql-8.0-server-install.md)**
+- **[MySQL InnoDB Operator](./mysql-operator-install.md)**
+- **[MySQL InnoDB Cluster](./mysql-innodb-cluster-install.md)**
+- **[Ingress Choices](./Ingress_choices.md)**
+
 - **[K8s API Metrics Server](./metrics-server.md)**
 - **[K9s](k9s-install.md)**
 - **[Observability](./kube-prometheus-stack-install.md)**
@@ -11,12 +18,13 @@
 - **[Kubectl Krew plugin](./krew-install.md)**
 - **[Rook Microceph](./rook-microceph-install.md)**
 - **[Minio S3 compatible Object Storage](./minio-install.md)**
-- **[Nodeport, NGinx, or Kong](./nodeport_nginx_or_kong.md)**
+
 ## Notes
+
 Deploy the MySQL 8.0 server and import mydw.  Later recreate mydw in the MySQL InnoDB Cluster. You should make a copy of each table and give it a primary key then copy the mydw non-keyed data into it.
-- **[MySQL Operator](./mysql-operator-install.md)**
-- **[MySQL InnoDB Cluster](./mysql-innodb-cluster-install.md)**
+
 - **[Postgres Operator](./postgres-operator-install.md)**
 - **[MetalB load balancer and NGINX ingress controller](./metalb-ingress-install.md)**
+- **[MetalB load balancer and Kong ingress controller](./metalb-kong-install.md)**
 - **[Redis Operator](./redis_operator-install.md)**
 - **[What is Vault](../linux/vault/what_is_vault.md)**

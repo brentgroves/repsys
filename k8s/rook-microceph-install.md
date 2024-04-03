@@ -14,6 +14,10 @@ Visit <https://rook.io/docs/rook/latest> for instructions on how to create and c
 
 <https://rook.github.io/docs/rook/latest/Getting-Started/intro/>
 
+## When to use Ceph
+
+This was just introduced in 1.28 and by default creates storage on only one node, so I'm thinking maybe use if for S3 storage and not a database operator which probably should have its storage on whatever pod its server is running on.
+
 ## Remove MicroCeph
 
 sudo snap remove microceph

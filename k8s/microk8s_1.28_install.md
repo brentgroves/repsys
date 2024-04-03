@@ -59,8 +59,6 @@ microk8s inspect
 
 ## Add all nodes to cluster
 
-Since I only have 4 nodes made 3 control plane nodes and 1 a worker node, reports54, but there should be 3 worker nodes.
-
 ```bash
 sudo microk8s add-node
 # go to the node you want to add and run the command shown to add it as either a control plane or worker node.
@@ -83,15 +81,8 @@ sudo microk8s add-node
 microk8s kubectl get node -o wide
 ```
 
-## Enable the necessary MicroK8s Add ons
+## Enable RBAC
 
 ```bash
 microk8s enable rbac
-# observability or postgres operator does not like mayastor but hostpath storage works
-microk8s enable hostpath-storage
-WARNING: Hostpath storage is not suitable for production environments.
-         A hostpath volume can grow beyond the size limit set in the volume claim manifest.
-microk8s kubectl get storageclass
-NAME                          PROVISIONER            RECLAIMPOLICY   VOLUMEBINDINGMODE      ALLOWVOLUMEEXPANSION   AGE
-microk8s-hostpath (default)   microk8s.io/hostpath   Delete          WaitForFirstConsumer   false                  61s
 ```
