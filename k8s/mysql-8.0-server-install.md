@@ -6,6 +6,10 @@ This is an alternative to installing the MySQL InnoDB cluster. It uses a simple 
 
 Thank you Father for the troubles that help me to learn valuable lessons!
 
+Mayastor did not work but maybe that was because the pv was not on the same node as the pod.
+
+### this works
+
 ```bash
 # make the database and backup directory on reports31
 sudo mkdir /mnt/data
