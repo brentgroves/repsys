@@ -2,6 +2,21 @@
 
 This is an alternative to installing the MySQL InnoDB cluster. It uses a simple stateful set and the mayastor storage class. It is appropriate when you must import a legacy database that does not meet the requirement imposed by InnoDB.
 
+## trouble-shooting
+
+Thank you Father for the troubles that help me to learn valuable lessons!
+
+```bash
+# make the database and backup directory on reports31
+sudo mkdir /mnt/data
+sudo chmod 777 /mnt/data
+# deploy 
+./mysql_statefulset/mysql-storage-class.yaml
+Reporting/prod/k8s/mysql-node/volume/output/volume.yaml
+Reporting/prod/k8s/mysql-node/stateful-set/output/stateful-set.yaml
+mysql -u root -p -h reports31 --port=30031 < ~/backups/reports31/mysql/2023-10-19-17:29:22.sql.bak
+```
+
 ## reference
 
 <https://livebook.manning.com/book/kubernetes-in-action/chapter-10/7>
