@@ -3,6 +3,9 @@
 pushd .
 rm -rf /media/brent/KINGSTON/secrets 
 cp -r  ~/src/secrets /media/brent/KINGSTON/
+rm -rf /media/brent/KINGSTON/k8s 
+cp -r  ~/src/k8s /media/brent/KINGSTON/
+
 rm -rf /media/brent/KINGSTON/backups 
 cp -r ~/src/backups /media/brent/KINGSTON/
 

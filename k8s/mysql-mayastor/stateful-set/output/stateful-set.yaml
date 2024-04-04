@@ -19,7 +19,7 @@ spec:
           valueFrom:
             secretKeyRef:
               key: password3
-              name: lastpass
+              name: db-user-pass
         - name: TZ
           value: America/Fort_Wayne
         image: brentgroves/mysql:8.0
@@ -41,5 +41,5 @@ spec:
       - ReadWriteOnce
       resources:
         requests:
-          storage: 5Gi
-      storageClassName: mayastor-3
+          storage: 10Gi
+      storageClassName: mayastor

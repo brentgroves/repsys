@@ -1,14 +1,22 @@
 # MySQL 8.0 Server install
 
-This is an alternate to the InnoDB cluster using a simple stateful set and a mayastor storage class. It is appropriate when you must import a legacy database that does not meet the requirement imposed by InnoDB.
+This is an alternative to installing the MySQL InnoDB cluster. It uses a simple stateful set and the mayastor storage class. It is appropriate when you must import a legacy database that does not meet the requirement imposed by InnoDB.
 
 ## reference
 
 <https://livebook.manning.com/book/kubernetes-in-action/chapter-10/7>
 <https://www.howtoforge.com/create-a-statefulset-in-kubernetes/>
 
-pushd ~/src/Reporting/prod/k8s/mysql-mayastor/
+## Remove previous installations
 
+```bash
+pushd .
+cd ~/src/repsys/k8s/mysql-mayastor/
+
+# set kube context
+scc.sh reports3.yaml mysql
+
+# delete mysql objects
 kubectl delete svc mysql-0
 kubectl delete svc mysql
 kubectl delete statefulset mysql
@@ -20,24 +28,18 @@ microk8s-reports13-pool   reports13   Online   21449670656   5368709120   160809
 microk8s-reports12-pool   reports12   Online   21449670656   5368709120   16080961536
 microk8s-reports11-pool   reports11   Online   21449670656   5368709120   16080961536
 
-# set context
-
-scc.sh reports1.yaml mysql
-or if you are already set to the correct cluster
-kubectl config use-context mysql
-kubectl config current-context
-mysql
-
 # deploy namespace if not already deployed
 
-pushd ~/src/Reporting/prod/k8s/mysql-mayastor/stateful-set/output
+cd ~/src/repsys/k8s/mysql-mayastor/stateful-set/output
 kubectl apply -f namespace.yaml
 
-# deploy lastpass
+# deploy secrets
 
-pushd ~/src/Reporting/prod/k8s/secrets/lastpass
+pushd .
+cd ~/src/k8s/secrets/lastpass
 kubectl apply -f lastpass.yaml
 kubectl get secrets -n mysql
+kubectl get secret db-user-pass -o jsonpath='{.data.password}' | base64 --decode
 
 pushd ~/src/Reporting/prod/k8s/mysql-mayastor/stateful-set
 
@@ -62,11 +64,18 @@ kubectl get pods
 kubectl apply -f service.yaml
 kubectl get svc
 
+mysql -u root -p -hreports31 --port 3306 < ~/backups/reports31/mysql/database/ETL2023-10-19-18:14:46.sql.bak
+
+mysql -u root -p -hreports31 --port 30031
+mysql -u root -p -h127.0.0.1 --port 30031
+
+
 # validation
 
 kubectl exec statefulset/mysql -it -- /bin/bash
 mysql -u root -ppassword
-mysql -u root -p -h reports51 --port=30051
+mysql -u root -p
+mysql -u root -p -h reports31 --port=30031
 
 # restore datbases from a backup
 
