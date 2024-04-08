@@ -6,6 +6,8 @@
 - **[Helm](./helm-install.md)**
 - **[Enable host path storage](./host_path_storage/host_path_storage.md)**
 - **[Enable Mayastor](./mayastor-install-2.0.0.md)**
+- **[Create K8s db_user_pass secret](../../k8s/secrets/managing-secrets-min.md)**
+
 - **[MySQL 8.0 server via stateful set](./mysql-8.0-server-install.md)**
 - **[MySQL InnoDB Operator](./mysql-operator-install.md)**
 - **[MySQL InnoDB Cluster](./mysql-innodb-cluster-install.md)**
