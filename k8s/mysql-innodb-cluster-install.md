@@ -26,19 +26,9 @@ kubectl get InnoDBCluster --all-namespaces
 
 ## Deploy using kubectl
 
-To create an InnoDB Cluster with kubectl, first create a secret containing credentials for a new MySQL root user, a secret named 'mypwds' in this example:
+To create an InnoDB Cluster with kubectl, we need a secret containing credentials for a new MySQL root user.  This should have already been created.
 
-```bash
-pushd ~/src/reports/k8s/ 
-kubectl create secret generic mypwds \
-        --from-literal=rootUser=root \
-        --from-literal=rootHost=% \
-        --from-literal=rootPassword="password"
-
-secret/mypwds created
-# verify this
-kubectl get secrets
-```
+**[db_user_passwords](../../k8s/secrets/managing-secrets-min.md)
 
 ## Configure a new MySQL InnoDB Cluster
 

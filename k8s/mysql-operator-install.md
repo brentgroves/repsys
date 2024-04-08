@@ -1,4 +1,8 @@
-# MySQL operator install
+# **[MySQL operator install](https://dev.mysql.com/doc/mysql-operator/en/)**
+
+## references
+
+<https://dev.mysql.com/doc/mysql-operator/en/>
 
 ## prerequisites
 
@@ -6,6 +10,19 @@
 # Make sure hostpath storage is enabled
 microk8s enable hostpath-storage
 ```
+
+## **[Chapter 2 Installing MySQL Operator for Kubernetes](https://dev.mysql.com/doc/mysql-operator/en/mysql-operator-installation.html)**
+
+Table of Contents
+
+2.1 Install using Helm Charts
+2.2 Install using Manifest Files
+Two different installation methods are documented here; using either helm or manually applying manifests using kubectl. This documentation assumes that kubectl is available on a system configured with the desired Kubernetes context; and all examples use a Unix-like command line.
+
+MySQL Operator for Kubernetes functions with Kubernetes 1.21 and newer.
+
+Note
+MySQL Operator for Kubernetes requires these three container images to function: MySQL Operator for Kubernetes, MySQL Router, and MySQL Server.
 
 ## delete MySQL Operator
 
