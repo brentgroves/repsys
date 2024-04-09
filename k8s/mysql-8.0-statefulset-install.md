@@ -20,11 +20,15 @@ pushd .
 cd ~/src/repsys/k8s/mysql_statefulset/
 
 # set kube context
+
 scc.sh reports3.yaml microk8s
+scc.sh rephub1_home.yaml microk8s 
 
 # set environment variables
 svc="mysql-reports31-svc"
 ss="mysql-reports31"
+svc="mysql-rephub11-svc"
+ss="mysql-rephub11"
 
 kubectl delete svc $svc
 kubectl delete statefulset $ss
@@ -41,11 +45,14 @@ cd ~/src/repsys/k8s/mysql_statefulset/
 
 # set kube context
 scc.sh reports3.yaml microk8s
+scc.sh rephub1_home.yaml microk8s 
 
 # set environment variables
 pvc="mysql-reports31-pvc"
 pv="mysql-reports31-pv"
 sc="mysql-storageclass"
+pvc="mysql-rephub11-pvc"
+pv="mysql-rephub11-pv"
 
 kubectl delete pvc $pvc
 # deleting the pvc releases the pv and since the pv has persistentVolumeReclaimPolicy set to Retain it is not deleted
@@ -53,6 +60,7 @@ kubectl delete pv $pv
 kubectl delete sc $sc
 
 node="reports31"
+node="rephub11"
 ssh brent@$node
 sudo rm -rf /mnt/mysql
 
@@ -64,9 +72,11 @@ sudo rm -rf /mnt/mysql
 ```bash
 # make the database and backup directory on node MySQL 8.0 server is installed
 node="reports31"
+node="rephub11"
 ssh brent@$node
 sudo mkdir /mnt/mysql
 sudo chmod 777 /mnt/mysql
+exit
 ```
 
 ## deploy db_credentials k8s secret
