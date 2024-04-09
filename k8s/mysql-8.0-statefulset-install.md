@@ -13,7 +13,7 @@ Note: There is no ClusterIP service only a NodePort. A ClusterIP service shoulld
 
 Thank you Father for the troubles that help me to learn valuable lessons!
 
-## Remove previous mysql_statefulset installations
+## Remove previous service and statefulset
 
 ```bash
 pushd .
@@ -22,54 +22,97 @@ cd ~/src/repsys/k8s/mysql_statefulset/
 # set kube context
 scc.sh reports3.yaml microk8s
 
-# delete mysql objects
-kubectl delete svc mysql-rephub11-svc
-kubectl delete statefulset mysql-rephub11
-kubectl delete pvc mysql-rephub11-pvc
-# deleting the pvc releases the pv and since the pv has persistentVolumeReclaimPolicy set to Retain it is not deleted
-kubectl get pv mysql-rephub31-pv
+# set environment variables
+svc="mysql-reports31-svc"
+ss="mysql-reports31"
+
+kubectl delete svc $svc
+kubectl delete statefulset $ss
+
 ```
 
-## Optionally remove pv,sc and database local storage
+## Optionally delete pvc, pv, sc, and database local storage
 
-If you don't remove the /mnt/data directory then when a new mysql server is created it will use the old database. I deleted the pv and pvc before redeploying the volume.yaml and stateful-set.yaml and all the original database data was retained.
+If you don't remove the /mnt/mysql directory then when a new mysql server is created it will retain the old database, passwords, users, etc. I deleted the pv and pvc before redeploying the volume.yaml and stateful-set.yaml and all the original database data was retained.
 
 ```bash
+pushd .
+cd ~/src/repsys/k8s/mysql_statefulset/
+
 # set kube context
 scc.sh reports3.yaml microk8s
-kubectl delete sc mysql-storageclass
-kubectl get pv mysql-reports31-pv
-ssh brent@reports31
+
+# set environment variables
+pvc="mysql-reports31-pvc"
+pv="mysql-reports31-pv"
+sc="mysql-storageclass"
+
+kubectl delete pvc $pvc
+# deleting the pvc releases the pv and since the pv has persistentVolumeReclaimPolicy set to Retain it is not deleted
+kubectl delete pv $pv
+kubectl delete sc $sc
+
+node="reports31"
+ssh brent@$node
+sudo rm -rf /mnt/mysql
+
 
 ```
 
-## setup database directory to be used as pv
+## setup database directory to be used as local pv
 
 ```bash
 # make the database and backup directory on node MySQL 8.0 server is installed
-ssh brent@reports31
+node="reports31"
+ssh brent@$node
 sudo mkdir /mnt/mysql
 sudo chmod 777 /mnt/mysql
 ```
 
-## deploy k8s secret
+## deploy db_credentials k8s secret
 
-The secret should have been installed previously **[secret install](../../k8s/secrets/create-k8s-secrets.md)**
+The secret should have been installed previously **[secret install](./db_credentials/db_credentials.md)**
+
 ## deploy mysql_statefulset
 
-# Create a StorageClass
+## Create a StorageClass
 
-StorageClass helps pods provision persistent volume claims on the node.
+Create a no provisioner StorageClass. This will help link the manually created pv to the pvc.
 
 ```bash
 pushd .
 cd ~/src/repsys/k8s/mysql_statefulset/volume
-kubectl apply -f mysql-storage-class.yaml
-kubectl get storageclass
+kubectl apply -f mysql-storageclass.yaml
+kubectl describe sc mysql-storageclass 
+Name:            mysql-storageclass
+IsDefaultClass:  No
+Annotations:     kubectl.kubernetes.io/last-applied-configuration={"allowVolumeExpansion":true,"apiVersion":"storage.k8s.io/v1","kind":"StorageClass","metadata":{"annotations":{},"name":"mysql-storageclass"},"provisioner":"kubernetes.io/no-provisioner","volumeBindingMode":"WaitForFirstConsumer"}
+
+Provisioner:           kubernetes.io/no-provisioner
+Parameters:            <none>
+AllowVolumeExpansion:  True
+MountOptions:          <none>
+ReclaimPolicy:         Delete
+VolumeBindingMode:     WaitForFirstConsumer
+Events:                <none>
 popd
 ```
 
-# create persistent volume and persistent volume claim using sed and kustomization
+```yaml
+# probably could add a reclaim policy of retain 
+# instead of having to specify it in the pv yaml.
+kind: StorageClass
+apiVersion: storage.k8s.io/v1
+metadata:
+  name: mysql-storageclass
+provisioner: kubernetes.io/no-provisioner
+volumeBindingMode: WaitForFirstConsumer
+allowVolumeExpansion: true
+```
+
+## create persistent volume and persistent volume claim using sed and kustomization
+
+I used mostly sed to configure the yaml for a particular node but as I learn more about kustomization this may change.
 
 ```bash
 pushd .
@@ -81,7 +124,8 @@ kubectl apply -f output/rephub11.yaml
 popd .
 ```
 
-# create a statefulset, ClusterIP, and Nodeport service
+## create a statefulset, ClusterIP, and Nodeport service
+
 ```bash
 # from the development system
 pushd .
@@ -117,7 +161,8 @@ mysql -u root -p -h reports31 --port=30031 < ~/backups/reports31/mysql/2023-10-1
 
 ```bash
 # from statefulset
-kubectl exec statefulset/mysql-rephub11 -it -- /bin/bash
+ss=mysql-reports31
+kubectl exec statefulset/$ss -it -- /bin/bash
 mysql -u root -p
 # from dev system
 mysql -u root -p -h reports31 --port=30031
@@ -131,4 +176,4 @@ mysql -u root -p -h reports51 --port=30051 < ~/backups/mysql/2023-02-11-18:08:21
 
 ## backup all databases
 
-mysqldump -u root -p -h reports31 --port=30031 --column-statistics=0 --add-drop-table --routines --all-databases > ~/backups/reports31/mysql/$(/bin/date +\%Y-\%m-\%d-\%R:\%S).sql.bak
+mysqldump -u root -p -h reports31 --port=30031 --column-statistics=0 --add-drop-table --routines --all-databases > ~/src/backups/reports31/mysql/$(/bin/date +\%Y-\%m-\%d-\%R:\%S).sql.bak

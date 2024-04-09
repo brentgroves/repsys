@@ -10,7 +10,7 @@ spec:
   capacity:
     storage: 20Gi
   local:
-    path: /mnt/data
+    path: /mnt/mysql
   nodeAffinity:
     required:
       nodeSelectorTerms:

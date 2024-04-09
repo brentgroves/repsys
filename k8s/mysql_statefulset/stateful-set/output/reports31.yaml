@@ -1,27 +1,39 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: mysql-reports31
+  labels:
+    app: mysql-reports31
+  name: mysql-reports31-svc
 spec:
   ports:
   - name: mysql-reports31-port
     nodePort: 30031
     port: 3306
     protocol: TCP
-    targetPort: mysql-reports31
+    targetPort: reports31-mysql
   selector:
     app: mysql-reports31
   type: NodePort
 ---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: db
+data:
+  mysql-database: database
+---  
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
+  labels:
+    app: mysql-reports31
   name: mysql-reports31
 spec:
+  replicas: 1
   selector:
     matchLabels:
       app: mysql-reports31
-  serviceName: mysql-reports31
+  serviceName: mysql-reports31-svc
   template:
     metadata:
       labels:
@@ -38,20 +50,39 @@ spec:
                 - reports31
       containers:
       - env:
+        - name: MYSQL_DATABASE
+          valueFrom:
+            configMapKeyRef:
+              name: db
+              key: mysql-database
         - name: MYSQL_ROOT_PASSWORD
-          value: password
+          valueFrom:
+            secretKeyRef:
+              name: db-credentials
+              key: mysql-root-password
+        - name: MYSQL_USER
+          valueFrom:
+            secretKeyRef:
+              name: db-credentials
+              key: mysql-user
+        - name: MYSQL_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: db-credentials
+              key: mysql-password
         - name: TZ
           value: America/Fort_Wayne
         image: brentgroves/mysql:8.0
+        imagePullPolicy: Always
         name: mysql-reports31
         ports:
         - containerPort: 3306
-          name: mysql-reports31
+          name: reports31-mysql
           protocol: TCP
         volumeMounts:
         - mountPath: /var/lib/mysql
-          name: mysql-reports31-persistent-storage
+          name: mysql-reports31-data-dir
       volumes:
-      - name: mysql-reports31-persistent-storage
+      - name: mysql-reports31-data-dir
         persistentVolumeClaim:
-          claimName: mysql-reports31-pv-claim
+          claimName: mysql-reports31-pvc
