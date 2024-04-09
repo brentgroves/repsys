@@ -170,8 +170,9 @@ mysql -u root -p -h reports31 --port=30031
 
 ## restore datbases from a backup
 
-There was a bug fix in the 2 recreate functions on 2/11 so only use backups created after this date
-mysql -u root -p -h reports11 --port=30010 < ~/backups/mysql/2023-02-11-18:08:21.sql.bak
+There was a bug fix in the 2 recreate functions on 2/11/2023 and sometime around 2024/01/09 so only use backups created after this date
+mysql -u root -p -h reports31 --port=30031 < ~/src/backups/reports31/mysql/2024-04-09-13:33:19.sql.bak
+
 mysql -u root -p -h reports51 --port=30051 < ~/backups/mysql/2023-02-11-18:08:21.sql.bak
 
 ## backup all databases
