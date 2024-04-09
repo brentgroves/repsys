@@ -9,12 +9,12 @@ sudo snap install kubectl  --classic
 ## generate microk8s config
 
 ```bash
-ssh brent@reports31
+ssh brent@rephub11
 cd ~
 mkdir .kube
 cd .kube
-microk8s config > reports3.yaml
-nvim reports3.yaml
+microk8s config > rephub1_home.yaml
+nvim rephub1.yaml
 ```
 
 ## add contexts to reports3.yaml
@@ -49,7 +49,7 @@ nvim reports3.yaml
 
 ## test with scc
 
-scc.sh reports3.yaml microk8s
+scc.sh rephub1_home.yaml microk8s
 kubectl get all
 
 ## add to source control
@@ -58,13 +58,20 @@ kubectl get all
 
 ```bash
 # From development system
-cd ~/src/repsys/linux/kubectl/all-config-files
-rm reports3.yaml
-lftp brent@reports31
-get /home/brent/.kube/reports3.yaml
-rm ~/.kube/reports3.yaml
-cp ./reports3.yaml ~/.kube/
-# checkin changes
+cd ~/src/repsys/k8s/kubectl/all-config-files
+rm rephub1_home.yaml
+# From K8s node get new config file
+lftp brent@rephub11
+get /home/brent/.kube/rephub1_home.yaml
+exit
+# Remove previous config files from nodes and hosts
+ssh brent@rephub11
+rm ~/.kube/*.yaml
+exit
+# Deploy all config files to other nodes and hosts
+lftp brent@rephub11
+cd .kube
+mput *.yaml
 
 # Optional commit changes to dev ops repo
 

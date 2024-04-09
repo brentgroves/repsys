@@ -8,6 +8,7 @@ This cluster is going to use Mayastor as the default storage class. A MySQL 8.0 
 
 - installed MicroK8s from channel 1.28/stable, version installed was 1.28.7
 - enabled host path storage
+- Install MySQL 8.0 server stateful set on reports31 and used /mnt/data localstorage and mysql-storageclass with a pv nodeAffinity of reports31.
 - enabled Mayastor storage and set size to 40GB.
 - Installed a 1 instance MySQL InnoDB cluster using its operator to local storage.
 - Modified the NGinx Ingress Controller to route traffic to the MySql InnoDB cluster router.

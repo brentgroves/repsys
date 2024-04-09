@@ -1,6 +1,6 @@
 # **[Mayastor](https://microk8s.io/docs/addon-mayastor)**
 
-Mayastor is very cool but Observability and the Postgress operator currently, 4/2/2024, do not run from Mayastor and have a problem when linux huge pages are enabled.  I did successfully use it on reports3 K8s for MySql 8.0.
+Mayastor is very cool but Observability, InnoDB, and the Postgress operator currently, 4/2/2024, do not run from Mayastor and have a problem when linux huge pages are enabled.  I did successfully use it on reports3 K8s for MySql 8.0.
 
 ## references
 

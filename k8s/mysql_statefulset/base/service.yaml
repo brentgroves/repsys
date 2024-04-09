@@ -1,0 +1,11 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: mysql-rephub11
+  name: mysql-rephub11-svc
+spec:
+  selector:
+    app: mysql-rephub11
+  type: NodePort  

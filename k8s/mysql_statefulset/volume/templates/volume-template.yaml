@@ -1,0 +1,25 @@
+# https://github.com/kubernetes/website/issues/30912
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: %APP%-%NODE%-pv
+  labels:
+    type: local
+spec:
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: kubernetes.io/hostname
+          operator: In
+          values:
+          - %NODE%  
+  capacity:
+    storage: 20Gi
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: mysql-storageclass
+  local:
+    path: /mnt/mysql

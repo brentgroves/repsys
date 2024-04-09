@@ -1,4 +1,4 @@
-# MySQL 8.0 Server install
+# MySQL 8.0 Server statefulset install
 
 This is an alternative to installing the MySQL InnoDB cluster. It uses a simple stateful set and the mayastor storage class. It is appropriate when you must import a legacy database that does not meet the requirement imposed by InnoDB.
 
@@ -23,11 +23,11 @@ cd ~/src/repsys/k8s/mysql_statefulset/
 scc.sh reports3.yaml microk8s
 
 # delete mysql objects
-kubectl delete svc mysql-reports31-svc
-kubectl delete statefulset mysql-reports31
-kubectl delete pvc mysql-reports31-pvc
+kubectl delete svc mysql-rephub11-svc
+kubectl delete statefulset mysql-rephub11
+kubectl delete pvc mysql-rephub11-pvc
 # deleting the pvc releases the pv and since the pv has persistentVolumeReclaimPolicy set to Retain it is not deleted
-kubectl get pv mysql-reports31-pv
+kubectl get pv mysql-rephub31-pv
 ```
 
 ## Optionally remove pv,sc and database local storage
@@ -40,7 +40,7 @@ scc.sh reports3.yaml microk8s
 kubectl delete sc mysql-storageclass
 kubectl get pv mysql-reports31-pv
 ssh brent@reports31
-sudo rm -rf /mnt/data
+
 ```
 
 ## setup database directory to be used as pv
@@ -48,74 +48,55 @@ sudo rm -rf /mnt/data
 ```bash
 # make the database and backup directory on node MySQL 8.0 server is installed
 ssh brent@reports31
-sudo mkdir /mnt/data
-sudo chmod 777 /mnt/data
+sudo mkdir /mnt/mysql
+sudo chmod 777 /mnt/mysql
 ```
 
 ## deploy k8s secret
 
-```bash
-cd ~/src/k8s/secrets
-
-# remove previous secret
-kubectl delete secret db-user-pass
-
-# create secret 
-kubectl create secret generic db-user-pass \
-  --from-file=username=./username.txt \
-  --from-file=password=./password.txt \
-  --from-file=username2=./username2.txt \
-  --from-file=password2=./password2.txt \
-  --from-file=username3=./username3.txt \
-  --from-file=password3=./password3.txt \
-  --from-file=username4=./username4.txt \
-  --from-file=password4=./password4.txt \
-  --from-file=username5=./username5.txt \
-  --from-file=password5=./password5.txt \
-  --from-file=username6=./username6.txt \
-  --from-file=password6=./password6.txt \
-  --from-file=username7=./username7.txt \
-  --from-file=password7=./password7.txt \
-  --from-file=username8=./username8.txt \
-  --from-file=password8=./password8.txt \
-  --from-file=username9=./username9.txt \
-  --from-file=password9=./password9.txt \
-  --from-file=username10=./username10.txt \
-  --from-file=password10=./password10.txt \
-  --from-file=username11=./username11.txt \
-  --from-file=password11=./password11.txt \
-  --from-file=MYSQL_HOST=./reports31.txt \
-  --from-file=AZURE_DW=./azure_dw_1.txt
-# pick 1 host for cluster
-  --from-file=MYSQL_HOST=./reports03.txt \
-  --from-file=MYSQL_HOST=./reports13.txt \
-  --from-file=MYSQL_HOST=./moto.txt \
-  --from-file=MYSQL_PORT=./mysql_port.txt \
-# choose if azure dw is to be updated 1 means yes.
-  --from-file=AZURE_DW=./azure_dw_1.txt
-  --from-file=AZURE_DW=./azure_dw_0.txt
-
-# verify secret
-kubectl get secrets
-kubectl get secret db-user-pass -o jsonpath='{.data}'
-kubectl get secret db-user-pass -o jsonpath='{.data.password}' | base64 --decode
-```
-
+The secret should have been installed previously **[secret install](../../k8s/secrets/create-k8s-secrets.md)**
 ## deploy mysql_statefulset
 
+# Create a StorageClass
+
+StorageClass helps pods provision persistent volume claims on the node.
+
+```bash
+pushd .
+cd ~/src/repsys/k8s/mysql_statefulset/volume
+kubectl apply -f mysql-storage-class.yaml
+kubectl get storageclass
+popd
+```
+
+# create persistent volume and persistent volume claim using sed and kustomization
+
+```bash
+pushd .
+cd ~/src/repsys/k8s/mysql_statefulset/volume
+./sed-mysql-vol-updates.sh mysql rephub11  
+kubectl kustomize ./templates/ | tee ./output/rephub11.yaml 
+kubectl apply -f output/rephub11.yaml
+
+popd .
+```
+
+# create a statefulset, ClusterIP, and Nodeport service
 ```bash
 # from the development system
 pushd .
-cd ~/src/repsys/k8s/mysql_statefulset
-# deploy storage-class
-kubectl apply -f mysql-storage-class.yaml
-# deploy volume
-kubectl apply -f ./volume/output/volume.yaml
-kubectl apply -f ./stateful-set/output/stateful-set.yaml
-# check pvc
-kubectl get pvc
-NAME                  STATUS   VOLUME               CAPACITY   ACCESS MODES   STORAGECLASS         AGE
-mysql-reports31-pvc   Bound    mysql-reports31-pv   20Gi       RWO            mysql-storageclass   29m
+cd ~/src/repsys/k8s/mysql_statefulset/stateful-set
+# configure yaml for cluster
+./sed-mysql-stateful-set-updates.sh mysql rephub11 30031 3306 mysql 8.0
+kubectl kustomize ./templates/ | tee ./output/rephub11.yaml 
+
+kubectl apply -f output/rephub11.yaml
+kubectl apply -f output/test.yaml
+
+kubectl describe svc mysql-rephub11-svc
+kubectl describe statefulset mysql-rephub11
+
+
 # check if running
 kubectl get all                           
 NAME                    READY   STATUS    RESTARTS   AGE
@@ -136,7 +117,7 @@ mysql -u root -p -h reports31 --port=30031 < ~/backups/reports31/mysql/2023-10-1
 
 ```bash
 # from statefulset
-kubectl exec statefulset/mysql-reports31 -it -- /bin/bash
+kubectl exec statefulset/mysql-rephub11 -it -- /bin/bash
 mysql -u root -p
 # from dev system
 mysql -u root -p -h reports31 --port=30031

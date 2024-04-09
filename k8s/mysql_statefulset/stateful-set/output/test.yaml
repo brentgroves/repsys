@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Secret
+metadata:
+   name: db-credentials
+type: Opaque
+data:
+# https://devpress.csdn.net/k8s/62fd80587e6682346619261b.html
+# Test1234
+  mysql-password: VGVzdDEyMzQ=
+  mysql-root-password: VGVzdDEyMzQ=
+  # testadm
+  mysql-user: dGVzdGFkbQ==

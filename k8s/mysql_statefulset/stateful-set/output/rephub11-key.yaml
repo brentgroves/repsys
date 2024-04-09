@@ -1,0 +1,88 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: mysql-rephub11
+  name: mysql-rephub11-svc
+spec:
+  ports:
+  - name: mysql-rephub11-port
+    nodePort: 30031
+    port: 3306
+    protocol: TCP
+    targetPort: rephub11-mysql
+  selector:
+    app: mysql-rephub11
+  type: NodePort
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: db
+data:
+  mysql-database: database
+---  
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  labels:
+    app: mysql-rephub11
+  name: mysql-rephub11
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mysql-rephub11
+  serviceName: mysql-rephub11-svc
+  template:
+    metadata:
+      labels:
+        app: mysql-rephub11
+    spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: kubernetes.io/hostname
+                operator: In
+                values:
+                - rephub11
+      containers:
+      - env:
+        - name: MYSQL_DATABASE
+          valueFrom:
+            configMapKeyRef:
+              name: db
+              key: mysql-database
+        - name: MYSQL_ROOT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: db-credentials
+              key: mysql-root-password
+        - name: MYSQL_USER
+          valueFrom:
+            secretKeyRef:
+              name: db-credentials
+              key: mysql-user
+        - name: MYSQL_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: db-credentials
+              key: mysql-password
+        - name: TZ
+          value: America/Fort_Wayne
+        image: brentgroves/mysql:8.0
+        imagePullPolicy: Always
+        name: mysql-rephub11
+        ports:
+        - containerPort: 3306
+          name: rephub11-mysql
+          protocol: TCP
+        volumeMounts:
+        - mountPath: /var/lib/mysql
+          name: mysql-rephub11-data-dir
+      volumes:
+      - name: mysql-rephub11-data-dir
+        persistentVolumeClaim:
+          claimName: mysql-rephub11-pvc
