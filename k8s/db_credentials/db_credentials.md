@@ -5,9 +5,13 @@ This k8s secret contains all encoded passwords that is needed for repsys. Use ~/
 ```bash
 pushd .
 cd ~/src/k8s/repsys/
+# remove previous secret 
+kubectl delete secret db-credentials
 kubectl apply -f db_credentials.yaml
 kubectl get secret db-credentials -o jsonpath='{.data.password3}' | base64 --decode
 kubectl get secret db-credentials -o jsonpath='{.data.mysql-root-password}' | base64 --decode
-
+kubectl get secret db-credentials -o jsonpath='{.data.rootUser}' | base64 --decode
+kubectl get secret db-credentials -o jsonpath='{.data.rootHost}' | base64 --decode
+kubectl get secret db-credentials -o jsonpath='{.data.rootPassword}' | base64 --decode
 popd
 ```
