@@ -164,7 +164,7 @@ NAME                               READY   AGE
 statefulset.apps/mysql-reports31   1/1     32m
 
 # Optionally import backup data.
-mysql -u root -p -h reports31 --port=30031 < ~/backups/reports31/mysql/2023-10-19-17:29:22.sql.bak
+mysql -u root -p -h reports31 --port=30031 < ~/src/backups/reports31/mysql/2024-04-09-13:33:19.sql.bak
 ```
 
 ## validate deployment

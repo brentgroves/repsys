@@ -15,6 +15,13 @@ spec:
     app: mysql-rephub11
   type: NodePort
 ---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: db
+data:
+  mysql-database: database
+---  
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
@@ -43,8 +50,26 @@ spec:
                 - rephub11
       containers:
       - env:
+        - name: MYSQL_DATABASE
+          valueFrom:
+            configMapKeyRef:
+              name: db
+              key: mysql-database
         - name: MYSQL_ROOT_PASSWORD
-          value: password
+          valueFrom:
+            secretKeyRef:
+              name: db-credentials
+              key: mysql-root-password
+        - name: MYSQL_USER
+          valueFrom:
+            secretKeyRef:
+              name: db-credentials
+              key: mysql-user
+        - name: MYSQL_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: db-credentials
+              key: mysql-password
         - name: TZ
           value: America/Fort_Wayne
         image: brentgroves/mysql:8.0
