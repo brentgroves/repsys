@@ -1,6 +1,8 @@
 #!/bin/bash
 # https://gist.github.com/gitaarik/8735255
 pushd .
+rm -rf ~/src/azure
+cp -r /media/brent/KINGSTON/azure ~/src
 rm -rf ~/src/secrets
 cp -r /media/brent/KINGSTON/secrets ~/src
 rm -rf ~/src/k8s

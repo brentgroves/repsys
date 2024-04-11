@@ -79,7 +79,7 @@ mput *.yaml
 cd ~/src
 git clone git@ssh.dev.azure.com:v3/MobexGlobal/MobexCloudPlatform/kube
 
-cd ~/src/repsys/linux/kubectl/all-config-files
+cd ~/src/repsys/k8s/kubectl/all-config-files
 cp reports3.yaml ~/src/kube/
 checkin changes
 
