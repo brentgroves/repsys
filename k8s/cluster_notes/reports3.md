@@ -10,5 +10,12 @@ This cluster is going to use Mayastor as the default storage class. A MySQL 8.0 
 - enabled host path storage
 - Install MySQL 8.0 server stateful set on reports31 and used /mnt/data localstorage and mysql-storageclass with a pv nodeAffinity of reports31.
 - enabled Mayastor storage and set size to 40GB.
-- Installed a 1 instance MySQL InnoDB cluster using its operator to local storage.
-- Modified the NGinx Ingress Controller to route traffic to the MySql InnoDB cluster router.
+- Installed a 3 instance MySQL InnoDB cluster using mysql-innodb-mayastor-cluster.yaml. It worked until I rebooted then had a problem like on rephub1_home.
+- Deleted Mayastor and tried mysql-innodb-cluster-3-instance-storage-path.yaml which uses microk8s default storage-path storage. The microk8s storage-path method seems stable and survives a reboot.
+- trying postgres-20g-manifest.yaml
+
+## mayastor issue
+
+- Installed a 3 instance MySQL InnoDB cluster using mysql-innodb-mayastor-cluster.yaml. It worked until I rebooted then had a problem like on rephub1_home.
+
+tried deleting pods. 1st pod would not terminate after several minutes. So ran kubectl delete InnoDBCluster mycluster and that worked.

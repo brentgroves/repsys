@@ -1,3 +1,6 @@
+## mayastor issue
+# Installed a 3 instance MySQL InnoDB cluster using mysql-innodb-mayastor-cluster.yaml. 
+# It worked until I rebooted then had a problem like on rephub1_home.
 apiVersion: mysql.oracle.com/v2
 kind: InnoDBCluster
 metadata:

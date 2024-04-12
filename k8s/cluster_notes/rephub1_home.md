@@ -3,6 +3,7 @@
 ## MySQL 8.0 server stateful set
 
 Did not use Mayastor or Microk8s storage-path dynamic storage instead used the following pv and everything works well.
+
 ```yaml
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -18,15 +19,19 @@ spec:
   volumeMode: Filesystem
 
 ```
+
 ## MySQL InnoDB Cluster
 
 ### 3 instance microk8s storage path
+
 mysql-innodb-cluster-3-instance-storage-path.yaml
 worked well
 
 ### 3 instance mayastor storage
+
 mysql-innodb-mayastor-cluster.yaml
 2 of the 3 nodes entered CrashLoop.
+Noticed this yaml config worked on reports31 and it has the same memory, although reports3 nodes all have sd disks.
 
 ## Postgres
 

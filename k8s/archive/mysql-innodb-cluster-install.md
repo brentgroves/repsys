@@ -1,13 +1,5 @@
 # **[MySQL InnoDB Cluster install](https://dev.mysql.com/doc/mysql-operator/en/mysql-operator-innodbcluster.html)**
 
-## mayastor issue
-
-- Installed a 3 instance MySQL InnoDB cluster using mysql-innodb-mayastor-cluster.yaml. It worked until I rebooted then had a problem like on rephub1_home.
-
-tried deleting pods. 1st pod would not terminate after several minutes. So ran kubectl delete InnoDBCluster mycluster and that worked.
-
-After that disable hugepages and unloaded the nvme driver and use microk8s dynamic storagepath from then on.
-
 **![MySQL Operator Architecture](https://dev.mysql.com/doc/mysql-operator/en/images/mysql-operator-architecture.png)**
 
 ## delete previous InnoDB Cluster
@@ -85,9 +77,17 @@ pushd .
 cd ~/src/repsys/k8s
 # pick which storage class
 ## for mayastor
-kubectl apply -f ./mysql-innodb-cluster/mysql-innodb-cluster-3-instance-storage-path.yaml
+kubectl apply -f ./mysql-innodb-cluster/mysql-innodb-mayastor-cluster.yaml
+## for the default dynamic storage
+kubectl apply -f ./mysql-innodb-cluster/mysql-innodb-cluster.yaml
+innodbcluster.mysql.oracle.com/mycluster created
 
-kubectl get pvc,pv
+## check for mayastor
+kubectl get pvc
+datadir-mycluster-0   Bound    pvc-1a262320-9efc-43f9-9dd1-1d5962effa87   20Gi       RWO            mayastor             18s
+datadir-mycluster-2   Bound    pvc-ccb319cc-b559-4cda-814a-145444dfc627   20Gi       RWO            mayastor             18s
+datadir-mycluster-1   Bound    pvc-1f720e57-c92a-4b0e-85aa-d785a5af8de5   20Gi       RWO            mayastor             18s
+kubectl get diskpool -n mayastor
 
 # Optionally observe the process by watching the innodbcluster type for the default namespace:
 kubectl get innodbcluster --watch
@@ -100,6 +100,8 @@ NAME                  TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)        
 kubernetes            ClusterIP   10.152.183.1     <none>        443/TCP                                                           19d
 mycluster-instances   ClusterIP   None             <none>        3306/TCP,33060/TCP,33061/TCP                                      2m50s
 mycluster             ClusterIP   10.152.183.173   <none>        3306/TCP,33060/TCP,6446/TCP,6448/TCP,6447/TCP,6449/TCP,8443/TCP   2m50s
+
+kubectl get diskpool -n mayastor
 
 kubectl get statefulsets
 

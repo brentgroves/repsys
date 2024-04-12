@@ -6,7 +6,7 @@
 - **[Kubectl](./kubectl-install.md)**
 - **[Helm](./helm-install.md)**
 - **[Enable host path storage](./host_path_storage/host_path_storage.md)**
-- **[Enable Mayastor](./mayastor-install-2.0.0.md)**
+- **[Don't Enable Mayastor because of issues with InnoDB](./mayastor-install-2.0.0.md)**
 - **[Deploy K8s db_credentials secret](./db_credentials/db_credentials.md)**
 - **[MySQL 8.0 server via stateful set](./mysql-8.0-statefulset-install.md)**
 - **[MySQL InnoDB Operator](./mysql-operator-install.md)**

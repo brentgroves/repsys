@@ -78,7 +78,6 @@ cd ~/src/reports/k8s/
 
 ## don't do this again just once
 git clone https://github.com/zalando/postgres-operator.git
-cd postgres-operator
 
 cd ~/src/reports/k8s/postgres-operator
 
@@ -93,7 +92,7 @@ clusterrolebinding.rbac.authorization.k8s.io/postgres-operator created
 clusterrole.rbac.authorization.k8s.io/postgres-pod created
 kubectl create -f manifests/postgres-operator.yaml  # deployment
 deployment.apps/postgres-operator created
-kubectl create -f manifests/api-service.yaml  # I DID NOT INSTALL THIS operator API to be used by UI
+kubectl create -f manifests/api-service.yaml  # operator API to be used by UI
 kubectl get pod -l name=postgres-operator 
 NAME                                READY   STATUS    RESTARTS       AGE
 postgres-operator-57f67f997-tcmt6   1/1     Running   1 (2m6s ago)   2m12s
@@ -105,7 +104,7 @@ kubectl create -f manifests/postgres-20g-manifest.yaml
 postgresql.acid.zalan.do/acid-minimal-cluster created
 
 # check the deployed cluster
-kubectl get postgresql --watch
+kubectl get postgresql 
 NAME                   TEAM   VERSION   PODS   VOLUME   CPU-REQUEST   MEMORY-REQUEST   AGE    STATUS
 acid-minimal-cluster   acid   15        2      1Gi                                     2m8s   Running
 # I got an error after reinstalling a cluster after deleting a failed cluster creation attempt when hugepages were enabled.
@@ -124,31 +123,38 @@ acid-minimal-cluster          ClusterIP   10.152.183.62   <none>        5432/TCP
 acid-minimal-cluster-repl     ClusterIP   10.152.183.48   <none>        5432/TCP   2m54s   replica
 acid-minimal-cluster-config   ClusterIP   None            <none>        <none>     2m13s 
 
-# Connect to the Postgres cluster via psql
-# You can create a port-forward on a database pod to connect to Postgres. See the user guide for instructions. With minikube it's also easy to retrieve the connections string from the K8s service that is pointing to the master pod:
-https://postgres-operator.readthedocs.io/en/latest/user/#connect-to-postgresql
-https://github.com/kubernetes/kubectl/issues/1169
-https://github.com/CrunchyData/postgres-operator/issues/3547
+```
+
+## Connect to the Postgres cluster via psql
+
+<https://access.crunchydata.com/documentation/postgres-operator/5.3>
+<https://postgres-operator.readthedocs.io/en/latest/user/#connect-to-postgresql>
+<https://github.com/kubernetes/kubectl/issues/1169>
+<https://github.com/CrunchyData/postgres-operator/issues/3547>
+
+You can create a port-forward on a database pod to connect to Postgres. See the user guide for instructions. With minikube it's also easy to retrieve the connections string from the K8s service that is pointing to the master pod:
 
 Connect to PostgreSQL
 With a port-forward on one of the database pods (e.g. the master) you can connect to the PostgreSQL database from your machine. Use labels to filter for the master pod of our test cluster.
 
+```bash
 # get name of master pod of acid-minimal-cluster
 export PGMASTER=$(kubectl get pods -o jsonpath={.items..metadata.name} -l application=spilo,cluster-name=acid-minimal-cluster,spilo-role=master -n default)
+echo $PGMASTER 
+acid-minimal-cluster-0
 
 # set up port forward
 kubectl port-forward $PGMASTER 6432:5432 -n default
-Open another CLI and connect to the database using e.g. the psql client. When connecting with a manifest role like foo_user user, read its password from the K8s secret which was generated when creating acid-minimal-cluster. As non-encrypted connections are rejected by default set SSL mode to require:
+
+# Open another CLI and connect to the database using e.g. the psql client. When connecting with a manifest role like foo_user user, read its password from the K8s secret which was generated when creating acid-minimal-cluster. As non-encrypted connections are rejected by default set SSL mode to require:
 
 export PGPASSWORD=$(kubectl get secret postgres.acid-minimal-cluster.credentials.postgresql.acid.zalan.do -o 'jsonpath={.data.password}' | base64 -d)
-2mcnagDpaJkj3sIsl1wASZPvni8ndzqogofdLzkolNZNM3ibS0u0mZUFNH60a8aT
-export PGPASSWORD=$(kubectl get secret zalando.acid-minimal-cluster.credentials.postgresql.acid.zalan.do -o 'jsonpath={.data.password}' | base64 -d)
-quoVESbqgd8VbMjknhUnP12UOpMfuXyM3dgwMUGYeNYayr8x6KaHbOZeJufWWeeU
 
+# secret name format
 {username}.{clustername}.credentials.postgresql.acid.zalan.do
+
 export PGSSLMODE=require # for nodeport
 export PGSSLMODE=disable # for port forwarding
-QA6Np78sgTXoIX4Mi7XpU6BARyOM8wRI2rBAU2vshHQBo7qMVsgi9yjwmwZdgXt2
 psql -U postgres -h localhost -p 6432
 # create database with postgres user
 create database zalando;
@@ -162,7 +168,7 @@ Type "help" for help.
 # some psql commands 
 \q # quit - if ssl connection this will cause portwording to end abruptly
 \l # list database
-\c mydb; # connect database
+\c zalando; # connect database
 
 # some tables to test access to db.
 CREATE TABLE cars (
@@ -185,17 +191,18 @@ host      | {all}         | {all}       | 127.0.0.1 | 255.255.255.255           
 # the rules require ssl for all other ips
 hostssl   | {all}         | {all}       | all       |                                         | md5
 
-String url = "jdbc:postgresql://localhost/zalando?user=postgres&password=2mcnagDpaJkj3sIsl1wASZPvni8ndzqogofdLzkolNZNM3ibS0u0mZUFNH60a8aT&port=6432&sslmode=disable";
 ## I don't think dbeaver accepts the password in the connection string because it prompts for it.  Same with ssl
 
 # create nodeport service
 
-pushd /home/brent/src/reports/k8s
-kubectl apply -f ./manifests/postgres-operator/nodeport.yaml
+cd ~/src/repsys/k8s
+kubectl apply -f ./postgres-operator-manifests/nodeport.yaml
 service/acid-minimal-cluster-0-np created
 kubectl get svc acid-minimal-cluster-0-np -owide         
 NAME                        TYPE       CLUSTER-IP      EXTERNAL-IP   PORT(S)          AGE   SELECTOR
 acid-minimal-cluster-0-np   NodePort   10.152.183.21   <none>        5432:30451/TCP   4s    application=spilo,cluster-name=acid-minimal-cluster,spilo-role=master
+
+export PGMASTER=$(kubectl get pods -o jsonpath={.items..metadata.name} -l application=spilo,cluster-name=acid-minimal-cluster,spilo-role=master -n default)
 
 # access from dbeaver
 ```java
