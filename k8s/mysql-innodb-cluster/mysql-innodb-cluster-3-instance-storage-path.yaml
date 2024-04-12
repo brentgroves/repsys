@@ -5,9 +5,9 @@ metadata:
 spec:
   secretName: db-credentials
   tlsUseSelfSigned: true
-  instances: 1
+  instances: 3
   router:
-    instances: 3
+    instances: 1
   datadirVolumeClaimTemplate:
     accessModes: 
       - ReadWriteOnce

@@ -73,12 +73,14 @@ The Postgres Operator can be installed simply by applying yaml manifests. Note, 
 ## First, clone the repository and change to the directory
 
 ```bash
-pushd ~/src/reports/k8s/
+pushd .
+cd ~/src/reports/k8s/
 
+## don't do this again just once
 git clone https://github.com/zalando/postgres-operator.git
 cd postgres-operator
 
-pushd ~/src/reports/k8s/postgres-operator
+cd ~/src/reports/k8s/postgres-operator
 
 # apply the manifests in the following order
 
@@ -98,11 +100,12 @@ postgres-operator-57f67f997-tcmt6   1/1     Running   1 (2m6s ago)   2m12s
 # create a Postgres cluster
 kubectl create -f manifests/minimal-postgres-manifest.yaml
 kubectl create -f manifests/postgres-5g-manifest.yaml
+kubectl create -f manifests/postgres-20g-manifest.yaml
 
 postgresql.acid.zalan.do/acid-minimal-cluster created
 
 # check the deployed cluster
-kubectl get postgresql
+kubectl get postgresql --watch
 NAME                   TEAM   VERSION   PODS   VOLUME   CPU-REQUEST   MEMORY-REQUEST   AGE    STATUS
 acid-minimal-cluster   acid   15        2      1Gi                                     2m8s   Running
 # I got an error after reinstalling a cluster after deleting a failed cluster creation attempt when hugepages were enabled.

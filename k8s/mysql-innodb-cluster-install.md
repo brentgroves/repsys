@@ -97,8 +97,7 @@ kubernetes            ClusterIP   10.152.183.1     <none>        443/TCP        
 mycluster-instances   ClusterIP   None             <none>        3306/TCP,33060/TCP,33061/TCP                                      2m50s
 mycluster             ClusterIP   10.152.183.173   <none>        3306/TCP,33060/TCP,6446/TCP,6448/TCP,6447/TCP,6449/TCP,8443/TCP   2m50s
 
-# optional use this select to create a nodeport svc
-kubectl get svc mycluster -o yaml
+kubectl get diskpool -n mayastor
 
 kubectl get statefulsets
 
