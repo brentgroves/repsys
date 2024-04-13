@@ -130,7 +130,7 @@ cd ~/src/repsys/k8s/mysql_statefulset/volume
 ./sed-mysql-vol-updates.sh mysql rephub11  
 kubectl kustomize ./templates/ | tee ./output/rephub11.yaml 
 kubectl apply -f output/rephub11.yaml
-
+kubectl get pvc,pv
 popd .
 ```
 
@@ -145,7 +145,6 @@ cd ~/src/repsys/k8s/mysql_statefulset/stateful-set
 kubectl kustomize ./templates/ | tee ./output/rephub11.yaml 
 
 kubectl apply -f output/rephub11.yaml
-kubectl apply -f output/test.yaml
 
 kubectl describe svc mysql-rephub11-svc
 kubectl describe statefulset mysql-rephub11
@@ -171,11 +170,15 @@ mysql -u root -p -h reports31 --port=30031 < ~/src/backups/reports31/mysql/2024-
 
 ```bash
 # from statefulset
+node=rephub31
 ss=mysql-reports31
+node=rephub11
+ss=mysql-rephub11
 kubectl exec statefulset/$ss -it -- /bin/bash
 mysql -u root -p
 # from dev system
-mysql -u root -p -h reports31 --port=30031
+mysql -u root -p -h $node --port=30031
+
 ```
 
 ## restore datbases from a backup

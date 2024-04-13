@@ -79,7 +79,7 @@ cd ~/src/reports/k8s/
 ## don't do this again just once
 git clone https://github.com/zalando/postgres-operator.git
 
-cd ~/src/reports/k8s/postgres-operator
+cd ~/src/repsys/k8s/postgres-operator
 
 # apply the manifests in the following order
 
@@ -156,11 +156,14 @@ export PGPASSWORD=$(kubectl get secret postgres.acid-minimal-cluster.credentials
 export PGSSLMODE=require # for nodeport
 export PGSSLMODE=disable # for port forwarding
 psql -U postgres -h localhost -p 6432
+psql -U postgres -h rephub11 -p 30351
 # create database with postgres user
 create database zalando;
 # create tables and manage database with manifest user
 export PGPASSWORD=$(kubectl get secret zalando.acid-minimal-cluster.credentials.postgresql.acid.zalan.do -o 'jsonpath={.data.password}' | base64 -d)
 psql -U zalando -h localhost -p 6432
+psql -U zalando -h rephub11 -p 30351
+
 psql (16.0 (Ubuntu 16.0-1.pgdg22.04+1), server 15.2 (Ubuntu 15.2-1.pgdg22.04+1))
 SSL connection (protocol: TLSv1.3, cipher: TLS_AES_256_GCM_SHA384, compression: off)
 Type "help" for help.

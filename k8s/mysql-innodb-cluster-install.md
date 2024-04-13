@@ -85,7 +85,7 @@ pushd .
 cd ~/src/repsys/k8s
 # pick which storage class
 ## for mayastor
-kubectl apply -f ./mysql-innodb-cluster/mysql-innodb-cluster-3-instance-storage-path.yaml
+kubectl apply -f ./mysql-innodb-cluster/mysql-innodb-cluster-2-instance-storage-path.yaml
 
 kubectl get pvc,pv
 

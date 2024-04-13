@@ -9,6 +9,8 @@
 - **[Don't Enable Mayastor because of issues with InnoDB](./mayastor-install-2.0.0.md)**
 - **[Deploy K8s db_credentials secret](./db_credentials/db_credentials.md)**
 - **[MySQL 8.0 server via stateful set](./mysql-8.0-statefulset-install.md)**
+
+Note: The router has problems.  It can't survive a scheduled reboot. Until this can be resolved use the statefulset deployment.
 - **[MySQL InnoDB Operator](./mysql-operator-install.md)**
 - **[MySQL InnoDB Cluster](./mysql-innodb-cluster-install.md)**
 - **[Ingress Choices](./Ingress_choices.md)**
