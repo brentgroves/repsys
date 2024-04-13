@@ -105,6 +105,7 @@ postgresql.acid.zalan.do/acid-minimal-cluster created
 
 # check the deployed cluster
 kubectl get postgresql 
+kubectl edit postgresql acid-minimal-cluster
 NAME                   TEAM   VERSION   PODS   VOLUME   CPU-REQUEST   MEMORY-REQUEST   AGE    STATUS
 acid-minimal-cluster   acid   15        2      1Gi                                     2m8s   Running
 # I got an error after reinstalling a cluster after deleting a failed cluster creation attempt when hugepages were enabled.
