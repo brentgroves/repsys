@@ -40,6 +40,7 @@ kubectl logs -f kured-q5v9f -n kube-system
 kubectl get all
 pod/mycluster-router-6444b6fc88-rr4d2   0/1     CrashLoopBackOff   7 (110s ago)   13m
 
+# Sometimes if you wait long enough k8s resolves this issue by itself but you can do the following to help it along.
 # change the router instances to 0 and wait for the router pod and deployment to be removed
 kubectl edit innodbcluster mycluster
 # set the router instance to 1
