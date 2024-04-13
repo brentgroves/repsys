@@ -66,7 +66,12 @@ sudo touch /var/run/reboot-required
 kubectl get nodes -w
 
 # Or look at the logs to see the reboot
-kubectl logs -f kured-gpf2w -n kube-system
+kubectl get pods -n kube-system -owide | grep kured
+kubectl logs -f kured-w9gqk -n kube-system
+kubectl edit postgresql.acid.zalan.do/acid-minimal-cluster
+
+kubectl edit innodbcluster mycluster
+pod/kured-w9gqk
 time="2023-10-20T20:52:04Z" level=info msg="Reboot check command: [test -f /var/run/reboot-required] every 30s"
 time="2023-10-20T20:52:04Z" level=info msg="Concurrency: 1"
 time="2023-10-20T20:52:04Z" level=info msg="Reboot command: [/bin/systemctl reboot]"
