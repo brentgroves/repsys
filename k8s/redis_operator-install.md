@@ -1,72 +1,15 @@
-# Redis Operator
+# **[Redis Operator](https://ot-redis-operator.netlify.app/docs/installation/installation/)**
 
 ## references
 
-<https://operatorhub.io/operator/redis-operator>
+## Uninstall
 
-<https://github.com/ot-container-kit/redis-operator>
-
-<https://ot-redis-operator.netlify.app/>
-
-<https://operatorhub.io/operator/redis-operator>
-
-<https://github.com/ot-container-kit/redis-operator>
-
-## Overview
-
-Redis Operator is a software to set up and manage Redis on Kubernetes.
-A Golang based redis operator that will make/oversee Redis standalone/cluster/replication/sentinel mode setup on top of the Kubernetes. It can create a redis cluster setup with best practices on Cloud as well as the Bare-metal environment. Also, it provides an in-built monitoring capability using redis-exporter.
-
-Documentation is available here:- <https://ot-container-kit.github.io/redis-operator/>
-
-The type of Redis setup which is currently supported:
-
-- Redis Cluster
-- Redis Standalone
-- Redis Replication
-- Redis Sentinel
-
-This operator only supports versions of redis =>6.
-
-## Purpose
-
-There are multiple problems that people face while setting up redis setup on Kubernetes, specially cluster type setup. The purpose of creating this opperator is to provide an easy and production ready interface for redis setup that include best-practices, security controls, monitoring, and management.
-
-## Why Redis Operator?
-
-Here the features which are supported by this operator:-
-
-- Redis cluster, replication and standalone mode setup
-- Redis cluster and replication failover and recovery
-- Inbuilt monitoring with redis exporter
-- Password and password-less setup of redis
-- TLS support for additional security layer
-- Ipv4 and Ipv6 support for redis setup
-- Detailed monitoring grafana dashboard
-
-![](https://ot-redis-operator.netlify.app/images/redis-operator-architecture.png)
-
-## Getting Started
-
-If you want to deploy redis-operator from scratch to a local Minikube cluster, begin with the Getting started document. It will guide your through the setup step-by-step.
-
-The configuration of Redis setup should be described in **[CRD](https://github.com/OT-CONTAINER-KIT/redis-operator/blob/master/config/crd/bases)** definitions. All the examples related to redis standalone and cluster setup can be found inside **[example](https://github.com/OT-CONTAINER-KIT/redis-operator/blob/master/example)** folder.
-
-## Quickstart
-
-The setup can be done by using helm. If you want to see more example, please go through the **[example](https://github.com/OT-CONTAINER-KIT/redis-operator/blob/master/example)** folder.
-
-But you can simply use the helm chart for installation.
-
-## Add the helm chart
+## Remove Redis
 
 ```bash
-helm repo add ot-helm https://ot-container-kit.github.io/helm-charts/
-# Deploy the redis-operator
-kubectl create ns ot-operators
-helm upgrade redis-operator ot-helm/redis-operator --install --namespace ot-operators
-# After deployment, verify the installation of operator
-helm test redis-operator --namespace ot-operators
+helm uninstall redis-operator -n ot-operators
+helm repo remove ot-helm 
+helm delete ns ot-operators
 ```
 
 ## Installation
@@ -81,13 +24,78 @@ There are four different Objects available under redis.redis.opstreelabs.in/v1be
 - Redis Replication
 - Redis Sentinel
 
-## Choosing which **[Redis cluster](../linux/redis/cluster_vs_replication.md)** type
+For **[OperatorHub installation](https://operatorhub.io/operator/redis-operator):
 
-## Next
+So for deploying the redis-operator and setup we need a Kubernetes cluster 1.18+ and that’s it. Let’s deploy the redis operator first.
 
-<https://github.com/ot-container-kit/redis-operator>
-<https://github.com/OT-CONTAINER-KIT/helm-charts/blob/main/charts/redis-replication/values.yaml>
+The easiest way to install a redis operator is using Helm chart. The operator helm chart is developed on the helm=>3.0.0 version. The **[values.yaml](https://github.com/OT-CONTAINER-KIT/helm-charts/blob/main/charts/redis-operator/values.yaml)** can be modified.
 
-Creating redis cluster, standalone, replication and sentinel setup.
+## Helm Installation
 
-Is prometheus support enabled by default or do I need to change the values file?
+```bash
+helm repo add ot-helm https://ot-container-kit.github.io/helm-charts/
+helm install redis-operator ot-helm/redis-operator --namespace ot-operators
+NAME: redis-operator
+LAST DEPLOYED: Sun Apr 14 13:22:32 2024
+NAMESPACE: ot-operators
+STATUS: deployed
+REVISION: 1
+TEST SUITE: None
+```
+
+## Installation Validation
+Instructions for validating installation of Operator
+To confirm Redis Operator is up and running, run the following command:
+
+```bash
+kubectl describe --namespace ot-operators pods
+```
+
+It should describe one pod created in the ot-operators namespace, with no error messages or status. All Conditions sections should look like this:
+
+Conditions:
+  Type              Status
+  Initialized       True
+  Ready             True
+  ContainersReady   True
+  PodScheduled      True
+
+## The operator pod should be in a RUNNING state:
+
+```bash
+kubectl get pods -n ot-operators 
+NAME                             READY   STATUS    RESTARTS   AGE
+redis-operator-c7d844dd4-n57c9   1/1     Running   0          2m41s
+```
+
+That’s it!
+
+Now with Redis Operator installed, you can utilise its Custom Resource Definitions to create resources of type Redis, RedisCluster and more!
+
+## Getting Started
+
+Instructions for getting started on Redis and Redis cluster setup
+The redis operator supports below deployment strategies for redis:-
+
+- Cluster setup
+- Standalone setup
+- Replication setup
+- Sentinel setup
+
+## Replication setup
+
+In Redis replication, the leader node is responsible for receiving write requests and propagating the changes to one or more follower nodes. The follower nodes receive the data changes from the leader and apply them locally, thereby creating a replica of the leader’s dataset.
+
+![](https://ot-redis-operator.netlify.app/images/replication-redis.png)
+
+## Standalone
+
+Redis standalone is a single process-based redis pod that can manage your keys inside it. Multiple applications can consume this redis with a Kubernetes endpoint or service. Since this standalone setup is running inside Kubernetes, the auto-heal feature will be automatically part of it. The only drawback of a standalone setup is that it doesn’t stand on the high availability principle.
+
+![](https://ot-redis-operator.netlify.app/images/standalone-redis.png)
+
+## Sentinel
+
+Redis Sentinel is a tool that provides automatic failover and monitoring for Redis nodes. It works by running separate processes that communicate with each other and with Redis nodes to detect failures, elect a new master node, and configure the other nodes to replicate from the new master. Sentinel can also perform additional tasks such as sending notifications and managing configuration changes. Redis Sentinel is a flexible and robust solution for implementing high availability in Redis.
+
+![](https://ot-redis-operator.netlify.app/images/sentinel-redis.png)
