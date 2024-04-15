@@ -1,8 +1,23 @@
-# **[Redis Sentinel]([Sentinel](https://ot-redis-operator.netlify.app/docs/getting-started/sentinel/))
+# **[Redis Sentinel](https://ot-redis-operator.netlify.app/docs/getting-started/sentinel/)
+
+## **[High availability with Redis Sentinel](https://redis.io/docs/latest/operate/oss_and_stack/management/sentinel/)**
+
+High availability for non-clustered Redis
+
+Redis Sentinel provides high availability for Redis when not using Redis Cluster.
+
+Redis Sentinel also provides other collateral tasks such as monitoring, notifications and acts as a configuration provider for clients.
+
+This is the full list of Sentinel capabilities at a macroscopic level (i.e. the big picture):
+
+Monitoring. Sentinel constantly checks if your master and replica instances are working as expected.
+Notification. Sentinel can notify the system administrator, or other computer programs, via an API, that something is wrong with one of the monitored Redis instances.
+Automatic failover. If a master is not working as expected, Sentinel can start a failover process where a replica is promoted to master, the other additional replicas are reconfigured to use the new master, and the applications using the Redis server are informed about the new address to use when connecting.
+Configuration provider. Sentinel acts as a source of authority for clients service discovery: clients connect to Sentinels in order to ask for the address of the current Redis master responsible for a given service. If a failover occurs, Sentinels will report the new address.
 
 ## references
 
-https://ot-redis-operator.netlify.app/docs/getting-started/sentinel/
+<https://ot-redis-operator.netlify.app/docs/getting-started/sentinel/>
 <https://operatorhub.io/operator/redis-operator>
 
 <https://github.com/ot-container-kit/redis-operator>
@@ -45,7 +60,7 @@ REVISION: 1
 TEST SUITE: None
 ```
 
-## Verify the sentinel redis setup by kubectl command line.
+## Verify the sentinel redis setup by kubectl command line
 
 ```bash
 kubectl get pods -n ot-operators
@@ -57,6 +72,9 @@ redis-sentinel-sentinel-2        1/1     Running   0          105s```
 ```
 
 ## YAML Installation
+
+Use this method when you need more controll over the configuration of the cluster.
+
 **[Examples](https://github.com/OT-CONTAINER-KIT/redis-operator/tree/master/example)** folder has different types of manifests for different scenarios and features. There are these YAML examples present in this directory:
 
 additional_config
@@ -109,3 +127,8 @@ Instructions for testing the failover of Redis cluster
 For cluster setup, testing can be performed to validate the failover functionality of Redis. In the failover testing, we can set some random keys inside the redis cluster and then delete one or two pods from the redis cluster. At that particular time, we can make some calls to redis for fetching the key to observing its failover mechanism of it.
 
 Before failover testing, we have to write some dummy data inside the Redis cluster, we can write the dummy data using the redis-cli.
+
+```bash
+kubectl exec -it redis-cluster-leader-0 -n ot-operators \
+    -- redis-cli -c set tony stark
+```

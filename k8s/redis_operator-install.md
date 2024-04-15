@@ -7,9 +7,10 @@
 ## Remove Redis
 
 ```bash
+scc.sh reports3.yaml microk8s
 helm uninstall redis-operator -n ot-operators
 helm repo remove ot-helm 
-helm delete ns ot-operators
+kubectl delete ns ot-operators
 ```
 
 ## Installation
@@ -33,6 +34,10 @@ The easiest way to install a redis operator is using Helm chart. The operator he
 ## Helm Installation
 
 ```bash
+pushd .
+cd ~/src/repsys/k8s/
+scc.sh reports3.yaml microk8s
+kubectl apply -f ./redis_operator/namespace.yaml
 helm repo add ot-helm https://ot-container-kit.github.io/helm-charts/
 helm install redis-operator ot-helm/redis-operator --namespace ot-operators
 NAME: redis-operator
@@ -44,14 +49,13 @@ TEST SUITE: None
 ```
 
 ## Installation Validation
+
 Instructions for validating installation of Operator
 To confirm Redis Operator is up and running, run the following command:
 
 ```bash
 kubectl describe --namespace ot-operators pods
-```
-
-It should describe one pod created in the ot-operators namespace, with no error messages or status. All Conditions sections should look like this:
+# It should describe one pod created in the ot-operators namespace, with no error messages or status. All Conditions sections should look like this:
 
 Conditions:
   Type              Status
@@ -60,7 +64,9 @@ Conditions:
   ContainersReady   True
   PodScheduled      True
 
-## The operator pod should be in a RUNNING state:
+```
+
+## The operator pod should be in a RUNNING state
 
 ```bash
 kubectl get pods -n ot-operators 
@@ -80,7 +86,7 @@ The redis operator supports below deployment strategies for redis:-
 - Cluster setup
 - Standalone setup
 - Replication setup
-- Sentinel setup
+- **[Sentinel setup](./redis_sentinal_install.md)**
 
 ## Replication setup
 
@@ -94,7 +100,7 @@ Redis standalone is a single process-based redis pod that can manage your keys i
 
 ![](https://ot-redis-operator.netlify.app/images/standalone-redis.png)
 
-## Sentinel
+## **[Sentinelp](./redis_sentinal_install.md)**
 
 Redis Sentinel is a tool that provides automatic failover and monitoring for Redis nodes. It works by running separate processes that communicate with each other and with Redis nodes to detect failures, elect a new master node, and configure the other nodes to replicate from the new master. Sentinel can also perform additional tasks such as sending notifications and managing configuration changes. Redis Sentinel is a flexible and robust solution for implementing high availability in Redis.
 
