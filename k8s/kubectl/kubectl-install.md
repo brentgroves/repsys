@@ -16,14 +16,18 @@ mkdir .kube
 cd .kube
 microk8s config > reports1.yaml
 exit
-# Add the new config file to source control
+```
+
+## Add the new config file to source control
+
+```bash
 # From development system
-pushd ~/src/linux-utils/kubectl/all-config-files
-git pull
+pushd ~/src/rypsys/k8s/kubectl/all-config-files
 lftp brent@reports11
 get /home/brent/.kube/reports1.yaml
+exit
 # add contexts to reports1.yaml
-code ~/src/linux-utils/kubectl/all-config-files
+code ~/src/repsys/k8s/kubectl/all-config-files
 - context:
     cluster: microk8s-cluster
     namespace: mayastor
@@ -50,19 +54,20 @@ code ~/src/linux-utils/kubectl/all-config-files
     user: admin
   name: test
 # commit changes to source control
+```
 
-# git@ssh.dev.azure.com:v3/MobexGlobal/MobexCloudPlatform/kube
-# Repeat the next section from everywhere you want to use kubectl.
-ssh brent@reports11
-cd ~/src
-git clone git@github.com:brentgroves/linux-utils.git
-pushd ~/src/linux-utils/kubectl/all-config-files
-mkdir -p ~/.kube
-cp ./*.yaml ~/.kube/
-cd ..
-cp ./scc.sh ~/.kube/
-sudo cp ./scc.sh /usr/local/bin
-# test config with scc
-scc.sh reports1.yaml microk8s
-kubectl get node -o wide
+## copy all clusters kube config file
+
+```bash
+# remove config files from .kube directory
+ssh brent@repsys12
+rm .kube/*.yaml
+exit
+# from dev system
+cd ~/src/repsys/k8s/kubectl/all-config-files
+# upload kube config files to server .config dir
+lftp brent@repsys12
+:~> cd .kube
+:~> mput *.yaml
+exit
 ```

@@ -2,19 +2,25 @@
 
 Go to a development system with the repo of the shell scripts to be installed.
 
-## mirror
-
-mirror -c source_dir target_dir
-source_dir is the ftp server dir
-target_dir is the ftp client dir
-
-examples:
+## copy shell scripts to server
 
 ```bash
-pushd .
+# From dev system 
 cd ~/src/repsys/shell_scripts
-lftp brent@reports31
-# copies all files in ~/src/repsys/shell_scripts to reports31 ~ dir
-mirror -R
-popd
+ssh brent@repsys12
+mkdir -p ~/bin/shell_scripts/
+chmod 755 ~/bin/shell_scripts/
+exit
+
+# upload shell scripts to server
+lftp brent@rephub12
+:~> cd ~/bin/shell_scripts #this is in dotfiles path
+:~> mput *.sh
+exit
+ssh brent@repsys12
+chmod 755 ~/bin/shell_scripts/*
+# clone repos
+~/bin/shell_scripts/freshstart.sh
+~/bin/shell_scripts/freshstart-old.sh
+exit
 ```
