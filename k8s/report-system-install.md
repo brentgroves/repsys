@@ -13,6 +13,7 @@
 - **[MySQL InnoDB Operator](./mysql-operator-install.md)**
 - **[MySQL InnoDB Cluster](./mysql-innodb-cluster-install.md)**
 - **[Redis Operator](./redis_operator-install.md)**
+- **[Redis Replication](./redis_replication_install.md)**
 - **[Redis Sentinal Install](./redis_sentinal_install.md)**
 - **[K8s API Metrics Server](./metrics-server.md)**
 - **[K9s](k9s-install.md)**
