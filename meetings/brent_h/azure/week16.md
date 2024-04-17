@@ -2,6 +2,10 @@
 
 This is a markdown file if it looks a little strange. You could use visual studio code or an online viewer such as <https://dillinger.io/>
 
+## contact
+
+Aamir Ghaffar
+
 ## Microsoft 365 E5 Plan
 
 Need E5 or E3 plan to get needed add-ons.
