@@ -2,6 +2,10 @@
 
 This is a markdown file if it looks a little strange you can use visual studio code or an online viewer such as <https://dillinger.io/> to pretty it up.
 
+## summary
+
+Reduce our Azure data warehouse costs from $748 to $30 per month by using an Azure SQL db service-hosted database instead of one hosted on an Azure SQL MI. Keep the Azure Kubernetes service as is at $290 per month.
+
 ## **[Azure SQL MI](https://azure.microsoft.com/en-us/pricing/details/azure-sql-managed-instance/single/)**
 
 Currently, this Azure SQL MI hosts an Azure SQL database which is being used as our data warehouse.
