@@ -10,8 +10,8 @@ redisStandalone:
   imagePullSecrets: []
     # - name:  Secret with Registry credentials
   redisSecret:
-    secretName: "credentials"
-    secretKey: "redisPassword"
+    secretName: "redis-secret"
+    secretKey: "password"
   serviceType: ClusterIP
   resources: {}
     # requests:

@@ -9,11 +9,12 @@ import (
 )
 
 func main() {
-	client := redis.NewClient(&redis.Options{
-		Addr: "reports31:30380", //"localhost:6379"
-		// Addr:     "reports31:30379", //"localhost:6379"
-		Password: "password", // no password set
-		DB:       0,          // use default DB
+	client := redis.NewClusterClient(&redis.ClusterOptions{
+		Addrs: []string{":16379", ":16380", ":16381", ":16382", ":16383", ":16384"},
+
+		// To route commands by latency or randomly, enable one of the following.
+		//RouteByLatency: true,
+		//RouteRandomly: true,
 	})
 	ctx := context.Background()
 

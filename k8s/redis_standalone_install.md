@@ -11,9 +11,12 @@
 ## Uninstall
 
 ```bash
-kubectl delete redis redis-standalone
+kubectl get all -n ot-operators
+kubectl delete svc redis-standalone-np -n ot-operators
 helm uninstall redis -n ot-operators
 kubectl delete secret redis-secret
+kubectl get all -n ot-operators
+
 ```
 
 ## password
@@ -21,7 +24,10 @@ kubectl delete secret redis-secret
 If we want to use password based authentication inside Redis, we need to create a secret for it. By default the name of the secret is redis-secret and key name is password, but it can be overidden in helm charts.
 
 ```bash
-kubectl create secret generic redis-secret --from-literal=password=password -n ot-operators
+# kubectl create secret generic credentials --from-literal=password=password -n ot-operators
+kubectl apply -f ~/src/k8s/repsys/namespaces/ot-operators/credentials.yaml
+kubectl get secret credentials -n ot-operators -o jsonpath='{.data.redisPassword}' | base64 --decode
+kubectl get secret redis-secret -n ot-operators -o jsonpath='{.data.password}' | base64 --decode
 
 ```
 
@@ -30,15 +36,16 @@ In redis standalone mode, we deploy redis as a single Stateful pod which means e
 ## helm install
 
 ```bash
+pushd .
+cd ~/src/repsys/k8s/
 # install and set values from file.
-helm upgrade redis ot-helm/redis --install --namespace ot-operators --values values.yaml
+helm upgrade redis ot-helm/redis --install --namespace ot-operators --values ./redis_standalone/values.yaml
 # check values 
 helm get values -a redis --namespace ot-operators
 # set values by --set param
-helm upgrade redis ot-helm/redis --set redisStandalone.redisSecret.secretName=redis-secret,redisStandalone.redisSecret.secretKey=password --install --namespace ot-operators
-helm get values -a redis --namespace ot-operators
-
-kubectl get secret redis-secret -n ot-operators -o jsonpath='{.data.password}' | base64 --decode
+# helm upgrade redis ot-helm/redis --set redisStandalone.redisSecret.secretName=redis-secret,redisStandalone.redisSecret.secretKey=password --install --namespace ot-operators
+# helm get values -a redis --namespace ot-operators
+popd
 ```
 
 Verify the standalone redis setup by kubectl command line.
@@ -77,7 +84,17 @@ Ran the following after install and it worked fine, but ran it the next day and 
 # get command prompt if password set use -a
 kubectl exec -it redis-0 -n ot-operators -- redis-cli -a password
 set tony stark
+get tony
 set t2 t2
+get t2
+# get command prompt and authenticate with auth command 
+kubectl exec -it redis-0 -n ot-operators -- redis-cli -a password
+auth password
+set tony stark
+get tony
+set t2 t2
+get t2
+
 kubectl exec -it redis-0 -n ot-operators \
     -- redis-cli -a password -c set t2 t2
 kubectl exec -it redis-0 -n ot-operators \
@@ -86,7 +103,7 @@ kubectl exec -it redis-0 -n ot-operators \
 
 ```
 
-# **[Exposing Redis](https://ot-container-kit.github.io/redis-operator/guide/exposing-redis.html#exposing-service)**
+## **[Exposing Redis](https://ot-container-kit.github.io/redis-operator/guide/exposing-redis.html#exposing-service)**
 
 By default, the nature of Redis standalone/cluster setup is private and limited to the Kubernetes cluster only. But we do have a provision to expose it using the Kubernetes "Service" object. If we can expose the service by doing some configuration inside the helm values for redis standalone and cluster setup. This will create another service in parallel to the internal redis service to expose redis.
 
@@ -103,7 +120,18 @@ kubectl apply -f ./redis_standalone/nodeport.yaml
 
 ```bash
 kubectl apply -f ./redis_standalone/nodeport.yaml
+# connect with password
 redis-cli -a password -h reports31 -p 30379 PING
+# connect no password then auth
+redis-cli -h reports31 -p 30379 
+# https://redis.io/docs/latest/commands/auth/
+auth password
+set tony stark
+get tony
+set t2 t2
+get t2
+
+# connect and get command prompt
 redis-cli -a password -h reports31 -p 30379 
 
 ```
