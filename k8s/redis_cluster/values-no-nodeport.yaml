@@ -82,10 +82,10 @@ externalConfig:
     stream-node-max-bytes 2048
 
 externalService:
-  enabled: true
+  enabled: false
   # annotations:
   #   foo: bar
-  serviceType: NodePort
+  serviceType: LoadBalancer
   port: 6379
 
 serviceMonitor:
