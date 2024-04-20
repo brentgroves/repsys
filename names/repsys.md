@@ -1,4 +1,20 @@
-# OSS
+# repsys
+
+## domain name
+
+repsys.app
+brent groves
+Customer #: 610231968
+PIN: View
+Customer number:610231968
+Username:brent.groves@gmail.com
+social login: Google
+brent.groves@gmail.com
+You need this PIN when you contact Support.
+Current PIN
+8469
+
+## OSS
 
 Make a modern open-source software package that is comparable to PowerBI.
 
