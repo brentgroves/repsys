@@ -1,6 +1,8 @@
 <https://redis.io/docs/latest/operate/kubernetes/deployment/quick-start/>
 To deploy Redis Enterprise for Kubernetes, you'll need:
 <https://redis.io/docs/latest/operate/rs/installing-upgrading/>
+<https://redis.io/docs/latest/operate/kubernetes/re-clusters/connect-to-admin-console/>
+
 a Kubernetes cluster in a supported distribution
 a minimum of three worker nodes
 a Kubernetes client (kubectl)
