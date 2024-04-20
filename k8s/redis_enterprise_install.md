@@ -1,5 +1,21 @@
 # **[Redis Enterprise Install](https://github.com/RedisLabs/redis-enterprise-k8s-docs)**
 
+## summary
+
+Everything worked ok until I tried to create a database. The database never became active. I tried to delete the rec with kubectl delete rec my-rec -n redis-enterprise.
+
+<https://redis.io/docs/latest/operate/rs/databases/connect/troubleshooting-guide/>
+
+## **[Licensing](https://redis.io/legal/licenses/)**
+
+## NOTE THE LICENSE EXPIRES IN 1 MONTH
+
+```bash
+kubectl get rec
+NAME     NODES   VERSION    STATE     SPEC STATUS   LICENSE STATE   SHARDS LIMIT   LICENSE EXPIRATION DATE   AGE
+my-rec   3       7.4.2-54   Running   Valid         Valid           4              2024-05-19T23:59:50Z      20h
+```
+
 ## references
 
 <https://github.com/RedisLabs/redis-enterprise-k8s-docs>
@@ -16,7 +32,7 @@
 ```bash
 # set namespace
 kubectl config set-context --current --namespace=redis-enterprise
-
+kubectl delete rec my-rec
 # what is created when you deploy the operator bundle
 role.rbac.authorization.k8s.io/redis-enterprise-operator created
 serviceaccount/redis-enterprise-operator created
@@ -151,9 +167,17 @@ This will request a cluster with three Redis Enterprise nodes using the default 
 kubectl config set-context --current --namespace=redis-enterprise
 
 # This will request a cluster with three Redis Enterprise nodes using the default requests (i.e., 2 CPUs and 4GB of memory per node).
+# Apply your custom resource file in the same namespace as my-rec.yaml.
 kubectl apply -f ./redis_enterprise/rec.yaml
+# At this point, the operator will go through the process of creating various services and pod deployments.
 kubectl get rec
+NAME     NODES   VERSION    STATE     SPEC STATUS   LICENSE STATE   SHARDS LIMIT   LICENSE EXPIRATION DATE   AGE
+my-rec   3       7.4.2-54   Running   Valid         Valid           4              2024-05-19T23:59:50Z      20h
+# NOTE THE LICENSE EXPIRES IN 1 MONTH
+# You can track the progress by examining the StatefulSet associated with the cluster:
 kubectl rollout status sts/my-rec
+# or by looking at the status of all of the resources in your namespace:
+kubectl get all
 ```
 
 To test with a larger configuration, use the example below to add node resources to the spec section of your test cluster (my-rec.yaml).
@@ -166,4 +190,188 @@ redisEnterpriseNodeResources:
   requests:
     cpu: 2000m
     memory: 16Gi
+```
+
+Note:
+Each cluster must have at least 3 nodes. Single-node RECs are not supported.
+See the **[Redis Enterprise hardware requirements]** for more information on sizing Redis Enterprise node resource requests.
+
+### Enable the admission controller
+
+The admission controller dynamically validates REDB resources configured by the operator. It is strongly recommended that you use the admission controller on your Redis Enterprise Cluster (REC). The admission controller only needs to be configured once per operator deployment.
+
+As part of the REC creation process, the operator stores the admission controller certificate in a Kubernetes secret called admission-tls. You may have to wait a few minutes after creating your REC to see the secret has been created.
+
+1. Verify the admission-tls secret exists.
+
+```bash
+# Change the namespace context to make the newly created namespace default for future commands.
+kubectl config set-context --current --namespace=redis-enterprise
+kubectl get secret admission-tls
+# The output should look similar to
+ NAME            TYPE     DATA   AGE
+ admission-tls   Opaque   2      2m43s
+# Save the certificate to a local environment variable.
+CERT=`kubectl get secret admission-tls -o jsonpath='{.data.cert}'`
+```
+
+Create a Kubernetes validating webhook, replacing <namespace> with the namespace where the REC was installed.
+
+The webhook.yaml template can be found in **[redis-enterprise-k8s-docs/admission](https://github.com/RedisLabs/redis-enterprise-k8s-docs/tree/master/admission)**
+
+```bash
+pushd .
+# Change the namespace context to make the newly created namespace default for future commands.
+kubectl config set-context --current --namespace=redis-enterprise
+
+cd ~/src/repsys/k8s/redis_enterprise
+sed 's/OPERATOR_NAMESPACE/redis-enterprise/g' webhook.yaml | kubectl create -f -
+validatingwebhookconfiguration.admissionregistration.k8s.io/redis-enterprise-admission created
+```
+
+Patch the webhook with the certificate.
+
+```bash
+pushd .
+# Change the namespace context to make the newly created namespace default for future commands.
+kubectl config set-context --current --namespace=redis-enterprise
+cd ~/src/repsys/k8s/redis_enterprise
+# Replace environment variables in a file with their actual value
+eval "echo \"$(cat modified-webhook.yaml)\"" > eval-webhook.yaml
+# did this in bash not zsh
+kubectl patch ValidatingWebhookConfiguration redis-enterprise-admission --patch "$(cat eval-webhook.yaml)"
+validatingwebhookconfiguration.admissionregistration.k8s.io/redis-enterprise-admission patched
+```
+
+### Limit the webhook to the relevant namespaces
+
+I did not do this because I'm not sure which namespace.
+The operator bundle includes a webhook file. The webhook will intercept requests from all namespaces unless you edit it to target a specific namespace. You can do this by adding the namespaceSelector section to the webhook spec to target a label on the namespace.
+
+Make sure the namespace has a unique namespace-name label.
+
+```bash
+Patch the webhook to add the namespaceSelector section.
+
+cat > modified-webhook.yaml <<EOF
+webhooks:
+- name: redisenterprise.admission.redislabs
+  namespaceSelector:
+    matchLabels:
+      namespace-name: staging
+EOF
+
+```
+
+Apply the patch.
+
+```bash
+
+kubectl patch ValidatingWebhookConfiguration \
+  redis-enterprise-admission --patch "$(cat modified-webhook.yaml)"
+```
+
+## Verify the admission controller is working
+
+Verify the admission controller is installed correctly by applying an invalid resource. This should force the admission controller to correct it.
+
+```bash
+kubectl apply -f - << EOF
+apiVersion: app.redislabs.com/v1alpha1
+kind: RedisEnterpriseDatabase
+metadata:
+  name: redis-enterprise-database
+spec:
+  evictionPolicy: illegal
+EOF
+# You should see your request was denied by the admission webhook "redisenterprise.admission.redislabs".
+Error from server: error when creating "STDIN": admission webhook "redisenterprise.admission.redislabs" denied the request: eviction_policy: u'illegal' is not one of [u'volatile-lru', u'volatile-ttl', u'volatile-random', u'allkeys-lru', u'allkeys-random', u'noeviction', u'volatile-lfu', u'allkeys-lfu']
+```
+
+## Create a Redis Enterprise Database (REDB)
+
+You can create multiple databases within the same namespace as your REC or in other namespaces.
+
+See **[manage Redis Enterprise databases for Kubernetes](https://redis.io/docs/latest/operate/kubernetes/re-databases/db-controller/)** to create a new REDB.
+
+## Manage Redis Enterprise databases for Kubernetes
+
+This section describes how the database controller provides the ability to create, manage, and use databases via a database custom resource.
+
+## Redis Enterprise database (REDB) lifecycle
+
+A Redis Enterprise database (REDB) is created with a custom resource file. The custom resource defines the size, name, and other specifications for the REDB. The database is created when you apply the custom resource file.
+
+The database controller in Redis Enterprise for Kubernetes:
+
+Discovers the custom resource
+Makes sure the REDB is created in the same namespace as the Redis Enterprise cluster (REC)
+Maintains consistency between the custom resource and the REDB
+The database controller recognizes the new custom resource and validates the specification. If valid, the controller combines the values specified in the custom resource with default values to create a full specification. It then uses this full specification to create the database on the specified Redis Enterprise cluster (REC).
+
+Once the database is created, it is exposed with the same service mechanisms by the service rigger for the Redis Enterprise cluster. If the database custom resource is deleted, the database and its services are deleted from the cluster.
+
+## Create a database
+
+Your Redis Enterprise database custom resource must be of the kind: RedisEnterpriseDatabase and have values for name and memorySize. All other values are optional and will be defaults if not specified.
+
+Create a file (in this example mydb.yaml) that contains your database custom resource.
+
+```yaml
+apiVersion: app.redislabs.com/v1alpha1
+kind: RedisEnterpriseDatabase
+metadata:
+  name: mydb
+spec:
+  memorySize: 1GB
+```
+
+To create a REDB in a different namespace from your REC, you need to specify the cluster with redisEnterpriseCluster in the spec section of your RedisEnterpriseDatabase custom resource.
+
+```yaml
+redisEnterpriseCluster:
+  name: rec
+```
+
+Apply the file in the namespace you want your database to be in.
+
+```bash
+pushd .
+# Change the namespace context to make the newly created namespace default for future commands.
+kubectl config set-context --current --namespace=redis-enterprise
+cd ~/src/repsys/k8s/redis_enterprise
+kubectl apply -f mydb.yaml
+redisenterprisedatabase.app.redislabs.com/mydb created
+# Check the status of your database.
+kubectl get redb mydb -o jsonpath="{.status.status}"
+# When the status is active, the database is ready to use.
+```
+
+### Modify a database
+
+The custom resource defines the properties of the database. To change the database, you can edit your original specification and apply the change or use kubectl edit.
+
+To modify the database:
+
+Edit the definition:
+
+```bash
+kubectl edit redb mydb
+Change the specification (only properties in spec section) and save the changes.
+For more details, see RedisEnterpriseDatabaseSpec or Options for Redis Enterprise databases.
+
+Monitor the status to see when the changes take effect:
+
+kubectl get redb mydb -o jsonpath="{.status.status}"
+When the status is active, the database is ready for use.
+```
+
+### Delete a database
+
+The database exists as long as the custom resource exists. If you delete the custom resource, the database controller deletes the database. The database controller removes the database and its services from the cluster.
+
+To delete a database, run:
+
+```bash
+kubectl delete redb mydb
 ```
