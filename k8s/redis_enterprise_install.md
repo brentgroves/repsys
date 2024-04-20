@@ -2,7 +2,7 @@
 
 ## summary
 
-Everything worked ok until I tried to create a database. The database never became active. I tried to delete the rec with kubectl delete rec my-rec -n redis-enterprise.
+Everything worked ok until I tried to create a database. The database never became active. I tried to delete the rec with kubectl delete rec my-rec -n redis-enterprise but that did not work.  Then I deleted the namespace and that worked kubectl delete ns redis-enterprise.
 
 <https://redis.io/docs/latest/operate/rs/databases/connect/troubleshooting-guide/>
 
