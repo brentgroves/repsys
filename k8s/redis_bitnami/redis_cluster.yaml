@@ -20,7 +20,7 @@ metadata:
   name: redis-cluster
 spec:
   serviceName: redis-cluster
-  replicas: 6
+  replicas: 3
   selector:
     matchLabels:
       app: redis-cluster
@@ -45,10 +45,14 @@ spec:
         - containerPort: 16379
           name: gossip
         volumeMounts:
-        - name: conf
+        - name: redis-config-volume
           mountPath: /conf
         - name: data
           mountPath: /data
+      volumes:
+        - name: redis-config-volume
+          configMap:
+            name: redis-cluster-configmap          
   volumeClaimTemplates:
   - metadata:
       name: data

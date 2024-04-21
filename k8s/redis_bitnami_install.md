@@ -1,5 +1,21 @@
 # **[redis bitnami install](https://www.dragonflydb.io/guides/redis-kubernetes)**
 
+## summary
+
+could not set values for cluster
+
+```bash
+pushd .
+cd ~/src/repsys/k8s/redis_bitnami
+kubectl config set-context --current --namespace=redis-bitnami
+kubectl apply -f redis_cluster.yaml
+kubectl exec -it redis-cluster-0 -- redis-cli
+kubectl exec -n redis-bitnami -it redis-cluster-0 -- redis-cli 
+127.0.0.1:6379> set tony stark
+(error) CLUSTERDOWN Hash slot not served
+127.0.0.1:6379> 
+```
+
 <https://github.com/bitnami/charts/tree/main/bitnami/redis>
 
 ## Redis and Helm Installation
@@ -120,6 +136,11 @@ pushd .
 cd ~/src/repsys/k8s/redis_bitnami
 kubectl config set-context --current --namespace=redis-bitnami
 kubectl apply -f redis_cluster.yaml
+kubectl exec -it redis-cluster-0 -- redis-cli
+kubectl exec -n redis-bitnami -it redis-cluster-0 -- redis-cli 
+127.0.0.1:6379> set tony stark
+(error) CLUSTERDOWN Hash slot not served
+127.0.0.1:6379> 
 ```
 ## Shard Distribution and Fault Tolerance
 In a Redis Cluster, data is divided into shards, with each shard being managed by a master node and one or more slave nodes. The default number of shards in a Redis Cluster is 16384. When deploying your cluster, you should ensure an even distribution of these shards across the master nodes for optimal performance and fault tolerance.
