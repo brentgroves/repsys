@@ -36,8 +36,8 @@ The easiest way to install a redis operator is using Helm chart. The operator he
 ```bash
 pushd .
 cd ~/src/repsys/k8s/
+kubectl create ns ot-operators
 scc.sh reports3.yaml microk8s
-kubectl apply -f ./redis_operator/namespace.yaml
 helm repo add ot-helm https://ot-container-kit.github.io/helm-charts/
 helm install redis-operator ot-helm/redis-operator --namespace ot-operators
 NAME: redis-operator

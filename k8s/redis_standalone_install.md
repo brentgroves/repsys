@@ -1,5 +1,9 @@
 # **[Redis standalone setup](https://ot-container-kit.github.io/redis-operator/guide/setup.html#redis-standalone)**
 
+## summary
+
+This is stable. I could not get the Cluster or Sentinel to work reliably.  I put the install scripts in the archive folder.
+
 ![](https://ot-container-kit.github.io/redis-operator/assets/img/redis-standalone.a6152d9b.png)
 
 ## references
