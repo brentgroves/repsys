@@ -1,6 +1,41 @@
-# **[Redis Operator](https://ot-redis-operator.netlify.app/docs/installation/installation/)**
+# **[Redis Operator](https://github.com/ot-container-kit/redis-operator)**
 
 ## references
+
+<https://github.com/ot-container-kit/redis-operator>
+
+## Quickstart
+
+The setup can be done by using helm. If you want to see more example, please go through the example folder.
+
+But you can simply use the helm chart for installation.
+
+```bash
+# Add the helm chart
+helm repo add ot-helm https://ot-container-kit.github.io/helm-charts/
+# Deploy the redis-operator
+helm upgrade redis-operator ot-helm/redis-operator --install --create-namespace --namespace ot-operators
+# After deployment, verify the installation of operator
+helm test redis-operator --namespace ot-operators
+```
+
+## Create redis sentinel setup
+
+```bash
+helm upgrade redis-sentinel ot-helm/sentinel --install --namespace ot-operators
+Release "redis-sentinel" does not exist. Installing it now.
+Error: chart "sentinel" matching  not found in ot-helm index. (try 'helm repo update'): no chart name found
+
+
+```
+
+If you want to customize the value file by yourself while initializing the helm command, the values files for reference are present **[here](https://github.com/OT-CONTAINER-KIT/helm-charts/tree/main/charts/redis-setup)**.
+
+## Check the state of the pod is running or not
+
+```bash
+kubectl get pods -n ot-operators
+```
 
 ## Uninstall
 

@@ -20,6 +20,7 @@ kubectl delete svc redis-standalone-np -n ot-operators
 helm uninstall redis -n ot-operators
 kubectl delete secret redis-secret
 kubectl get all -n ot-operators
+kubectl delete redis redis -n ot-operators
 
 ```
 
