@@ -36,7 +36,7 @@ sentinel.enabled: true
 ## Create a Namespace or use the default Namespace
 
 ```bash
-Kubectl create namespace redis-sentinel
+kubectl create namespace redis-sentinel
 ```
 
 Stay in the root of the Redis Helm chart and Install the Updated Chart in the newly created or existing namespace within the K8s cluster.
