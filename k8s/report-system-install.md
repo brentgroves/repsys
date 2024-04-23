@@ -9,12 +9,19 @@
 - **[Don't Enable Mayastor because of issues with InnoDB](./mayastor-install-2.0.0.md)**
 - **[Deploy K8s db_credentials secret](./db_credentials/db_credentials.md)**
 - **[MySQL 8.0 server via stateful set](./mysql-8.0-statefulset-install.md)**
-- **[Ingress Choices](./Ingress_choices.md)**
+- **[Ingress (Kong or NGinx](./Ingress_choices.md)**
 - **[MySQL InnoDB Operator](./mysql-operator-install.md)**
 - **[MySQL InnoDB Cluster](./mysql-innodb-cluster-install.md)**
 - **[Redis Operator](./redis_operator-install.md)**
-- **[Redis Stand Alone](./redis_standalone_install.md)**
-- **[Redis Cluster](./redis_cluster_install.md)**
+- **[Redis Stand Alone](./redis_sentinel.md)**
+START HERE
+There are several tutorials on deploying a go app to k8s but they are older. Try to follow the tutorials and use the newer golang images from <https://docs.docker.com/language/golang/>
+- **[Deploy Go app to k8s](https://www.bogotobogo.com/GoLang/GoLang_Web_Building_Docker_Image_and_Deploy_to_Kubernetes.php)**
+- **[Deploy Go app to k8s](https://reintech.io/blog/deploying-a-go-application-to-kubernetes)**
+
+- **[Docker Go Test](https://docs.docker.com/language/golang/)**
+- **[Go client for K8s API](https://medium.com/cloud-native-daily/working-with-kubernetes-using-golang-a3069d51dfd6)**
+- **[Create k8s operator in go](https://www.faizanbashir.me/guide-to-create-kubernetes-operator-with-golang)**
 - **[K8s API Metrics Server](./metrics-server.md)**
 - **[K9s](k9s-install.md)**
 - **[Observability](./kube-prometheus-stack-install.md)**

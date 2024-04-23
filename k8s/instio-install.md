@@ -1,5 +1,9 @@
 # Instio
 
+## references
+
+<https://tanmaybatham.medium.com/using-istio-and-kong-in-kubernetes-cluster-366096dad529#:~:text=Kong%20is%20an%20API%20gateway%20which%20allows%20us%20to%20play,from%20application%20at%20any%20point>.
+
 ## Traffic Management
 
 Istio’s traffic routing rules let you easily control the flow of traffic and API calls between services. Istio simplifies configuration of service-level properties like circuit breakers, timeouts, and retries, and makes it easy to set up important tasks like A/B testing, canary rollouts, and staged rollouts with percentage-based traffic splits. It also provides out-of-box failure recovery features that help make your application more robust against failures of dependent services or the network.
@@ -40,4 +44,3 @@ Demoing the new SidecarContainers feature with Istio.
 **[Native Sidecars](https://istio.io/latest/blog/2023/native-sidecars/)**
 
 A formal proposal for adding sidecar support in Kubernetes was raised in 2019. With many stops and starts along the way, and after a reboot of the project last year, formal support for sidecars is being released to Alpha in Kubernetes 1.28. Istio has implemented support for this feature, and in this post you can learn how to take advantage of it.
-

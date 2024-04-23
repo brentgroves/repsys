@@ -2,7 +2,11 @@
 
 ## references
 
+<https://github.com/bitnami/containers/tree/main/bitnami/redis#configuration>
+<https://github.com/bitnami/containers/tree/main/bitnami/redis#bitnami-package-for-redis>
+<https://github.com/bitnami/charts/blob/main/bitnami/redis/README.md>
 <https://medium.com/@khadkakripu4/leveraging-redis-sentinel-with-bitnami-redis-helm-chart-for-high-availability-in-kubernetes-a25d79e20e69>
+<https://www.dragonflydb.io/guides/redis-kubernetes>
 
 ## Installation of Redis Bitnami Helm Chart
 
@@ -87,6 +91,7 @@ REDISCLI_AUTH="$REDIS_PASSWORD" redis-cli -h redis-sentinel-replicas
 
 To connect to your database from outside the cluster execute the following commands:
 
+# https://kubernetes.io/docs/tasks/access-application-cluster/port-forward-access-application-cluster/
 kubectl port-forward --namespace redis-sentinel svc/redis-sentinel-master 6379:6379 
 REDISCLI_AUTH="$REDIS_PASSWORD" redis-cli -h 127.0.0.1 -p 6379
 
@@ -102,4 +107,20 @@ Now you should have a 3 Node Redis Sentinel Cluster up and running in your k8s c
 
 ```bash
 kubectl get pods -n redis-sentinel
+```
+
+## expose service
+
+```bash
+cd ~/src/repsys/k8s/redis_sentinel/
+kubectl apply -f redis_sentinel_np.yaml 
+export REDIS_PASSWORD=$(kubectl get secret --namespace redis-sentinel redis-sentinel -o jsonpath="{.data.redis-password}" | base64 -d)
+REDISCLI_AUTH="$REDIS_PASSWORD" redis-cli -h reports31 -p 30379
+```
+
+## connect externally
+
+```bash
+REDISCLI_AUTH="$REDIS_PASSWORD" redis-cli -h reports31 -p 30379
+
 ```

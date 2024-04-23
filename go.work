@@ -17,6 +17,7 @@ use (
 	./volumes/go/tutorials/oidc/go_oidc_example
 	./volumes/go/tutorials/prometheus/counter
 	./volumes/go/tutorials/redis_cluster/redis_cluster_test
+	./volumes/go/tutorials/redis_sentinel/redis_sentinel_test
 	./volumes/go/tutorials/redis_standalone/redis_standalone_test
 	./volumes/go/tutorials/webhook/webhook
 )
