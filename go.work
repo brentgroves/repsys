@@ -3,6 +3,7 @@ go 1.22.0
 use (
 	./volumes/go/replib
 	./volumes/go/runner
+	./volumes/go/trial_balance_pipeline/rs_tb_pl
 	./volumes/go/tutorials/azure_sdk/01-azstart
 	./volumes/go/tutorials/database/mysql/access
 	./volumes/go/tutorials/database/mysql/insert
