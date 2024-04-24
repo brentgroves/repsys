@@ -12,6 +12,7 @@ use (
 	./volumes/go/tutorials/database/mysql/tutorial_access_database
 	./volumes/go/tutorials/http/basics/fileserver
 	./volumes/go/tutorials/http/basics/webapp/gowiki
+	./volumes/go/tutorials/k8s/out-of-cluster-client-configuration
 	./volumes/go/tutorials/msal/graphtutorial
 	./volumes/go/tutorials/oauth2/authentication_flow
 	./volumes/go/tutorials/oauth2/github_authentication_flow
