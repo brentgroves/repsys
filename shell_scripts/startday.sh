@@ -8,10 +8,6 @@ echo "pulling git"
 cd ~/src/repsys/git
 git pull
 
-echo "pulling projects"
-cd ~/src/repsys/projects
-git pull
-
 echo "pulling status"
 cd ~/src/repsys/status
 git pull

@@ -10,8 +10,6 @@ git clone --recursive git@github.com:brentgroves/repsys.git
 ## git switch main if detached head
 cd ~/src/repsys/git
 git switch main
-cd ~/src/repsys/projects
-git switch main
 cd ~/src/repsys/status
 git switch main
 cd ~/src/repsys/volumes/ansible/rsapb
