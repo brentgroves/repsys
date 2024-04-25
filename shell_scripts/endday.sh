@@ -17,12 +17,6 @@ git add -A
 git commit -m "updated source code"
 git push -u origin main
 
-cd ~/src/repsys/projects
-echo "commit projects"
-git add -A 
-git commit -m "updated source code"
-git push -u origin main
-
 cd ~/src/repsys/status
 echo "commit status"
 git add -A 
