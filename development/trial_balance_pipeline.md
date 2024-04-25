@@ -1,17 +1,88 @@
 # Trial Balance Pipeline
 
-## psuedo code
+```mermaid
+sequenceDiagram
+    participant dan as Dan
+    participant req as Requestor
+    participant red as Redis
+    participant run as Runner
+    dan->>req: request report
+    req->>red: insert report request
+    run->>red: subscribe to report mutex and queue
+    loop Check for report request
+        run->>run: If mutex up then start etl pipeline
+    end
+```
+
+## ETL pipeline
+
+```mermaid
+sequenceDiagram
+    participant run as Runner
+    participant s1 as AccountingYearCategoryType
+    participant s2 as AccountingAccount
+    participant s3 as AccountingPeriod
+    participant s4 as AccountingPeriodRanges
+
+    run->>s1: start AccountingYearCategoryType
+    s1->>s2: start AccountingAccount
+    s2->>s3: start AccountingPeriod
+    s3->>s4: start AccountingPeriodRanges
+
+```
+
+## continuation
+
+```mermaid
+sequenceDiagram
+    participant s4 as AccountingPeriodRanges
+    participant s5 as AccountingBalanceAppendPeriodRange
+    participant s6 as AccountActivitySummaryGetOpenPeriodRange
+    participant s7 as AccountPeriodBalanceRecreatePeriodRange
+    participant s8 as AccountPeriodBalanceRecreateOpenPeriodRange
+    s4->>s5: start AccountingBalanceAppendPeriodRange
+    s5->>s6: start AccountActivitySummaryGetOpenPeriodRange
+    s6->>s7: start AccountPeriodBalanceRecreatePeriodRange
+    s7->>s8: start AccountPeriodBalanceRecreateOpenPeriodRange
+
+```
+
+## Trial Balance Runner
+
+The ETL pipeline is a set of Go routines (threads) each of which is responsible for 1 ETL script. The TB runner's main thread begins the ETL pipeline by sending a message the first ETL script go routine.  Each ETL script go routine completes and then calls the next ETL script's go routine.  The final ETL script finishes and then sets the TB mutex up so that the runner's main thread can start the pipeline again.
 
 ```psuedo_code
-connect to redis
-subscribe to tb_mutex
-if tb_mutex up
-    get next report request 
-    send request to stage1 channel
+create go routines (threads) and communitcation channels for each tb etl script in tb etl pipeline
+subscribe to redis tb mutex and request queue 
+
+infinite while loop
+    if tb queue not empty
+        remove request from queue
+        when tb mutex up
+            down tb mutex 
+            send request to 1st ETL script's go routine
+        end
+    end
+```
+
+## Trial Balance ETL script go routine
+
+Each ETL script's go routine either waits for a message from the runner's main thread in the case of the first ETL script's go routine or the previous ETL scripts go routine before it starts. If it completes successfully it sends a message to the next ETL script's go routine or in the case of the final ETL script's go routine inserts a record in the redis result list indicating it's completion status.
+
+```psuedo_code
+infinite while loop
+    if redis 
+    runner's main thread calls 1st ETL scripts go routine.
+    while more ETL scripts to run
+        if ETL script complete successfully
+            call the next ETL script's go routine
+        else
+            update redis result list to failed
+            send error message via email
+        end
+    end
+    last ETL script's go routine sets redis TB mutex up and inserts a record in the redis TB result list indicating it's completion status.
 end
-create stage_1 channel
-
-
 ```
 
 ## Setup development system
@@ -68,6 +139,6 @@ go: added github.com/redis/go-redis/v9 v9.5.1
 
 ## get secret in cluster
 
-https://github.com/kubernetes/client-go
-https://github.com/kubernetes/client-go/tree/master/examples/in-cluster-client-configuration
-https://github.com/kubernetes/client-go/blob/master/examples/in-cluster-client-configuration/main.go
+<https://github.com/kubernetes/client-go>
+<https://github.com/kubernetes/client-go/tree/master/examples/in-cluster-client-configuration>
+<https://github.com/kubernetes/client-go/blob/master/examples/in-cluster-client-configuration/main.go>
