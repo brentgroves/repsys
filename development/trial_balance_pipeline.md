@@ -65,3 +65,9 @@ go: added github.com/dgryski/go-rendezvous v0.0.0-20200823014737-9f7001d12a5f
 go: added github.com/redis/go-redis/v9 v9.5.1
 
 ```
+
+## get secret in cluster
+
+https://github.com/kubernetes/client-go
+https://github.com/kubernetes/client-go/tree/master/examples/in-cluster-client-configuration
+https://github.com/kubernetes/client-go/blob/master/examples/in-cluster-client-configuration/main.go
