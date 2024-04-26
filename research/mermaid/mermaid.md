@@ -54,6 +54,25 @@ sequenceDiagram
 
 ```mermaid
 gantt
+    dateFormat  YYYY-MM-DD
+    title       Report System IT & Development
+    excludes    weekends
+    %% (`excludes` accepts specific dates in YYYY-MM-DD format, days of the week ("sunday") or "weekends", but not the word "weekdays".)
+
+    section K8s
+    MySQL InnoDB Operator     :active,k1,2024-03-01,5d
+    Postgres Operator         :active,k2, after k1, 5d
+    Kong API Gateway          :active,k3, after k2, 5d
+    Redis Operator            :active,k4, after k3, 5d
+    Kured Operator            :active,k5, after k4, 5d
+    section Development
+    Runner                  :active,d1,2024-04-22,5d
+    Requester               :       d2,after d1,5d
+
+```
+
+```mermaid
+gantt
     title A Gantt Diagram
     dateFormat YYYY-MM-DD
     section Section
