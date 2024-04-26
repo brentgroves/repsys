@@ -8,9 +8,39 @@ If you are familiar with Markdown you should have no problem learning Mermaid's 
 
 ## references
 
-https://mermaid.js.org/intro/syntax-reference.html
-https://mermaid.js.org/syntax/gantt.html
-https://chromewebstore.google.com/detail/mermaid-previewer/oidjnlhbegipkcklbdfnbkikplpghfdl
+<https://markmap.js.org/>
+<https://mermaid.js.org/intro/syntax-reference.html>
+<https://mermaid.js.org/syntax/gantt.html>
+<https://chromewebstore.google.com/detail/mermaid-previewer/oidjnlhbegipkcklbdfnbkikplpghfdl>
+
+## mindmap
+
+```mermaid
+mindmap
+  root((Report System))
+    Azure Tenent
+      IAM
+      Azure SQL DB
+      ::icon(fa fa-book)
+      Blob Storage
+      AKS
+        redis
+        report requester
+    Plex ERP
+      ::icon(fa fa-book)
+      Soap Web Services
+      ODBC data source
+
+    On Premise
+      MicroK8s
+        Kong API Server
+        MySQL
+        Postgres
+        MongoDB
+        Redis
+        Report Runner
+
+```
 
 ## flow chart
 
@@ -51,6 +81,7 @@ sequenceDiagram
     destroy Bob
     Bob->>Alice: I agree
 ```
+
 ## gnatt
 
 ```mermaid
