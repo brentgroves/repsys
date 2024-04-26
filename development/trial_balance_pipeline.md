@@ -1,5 +1,9 @@
 # Trial Balance Pipeline
 
+## references
+
+https://mermaid.js.org/intro/syntax-reference.html
+https://mermaid.js.org/syntax/gantt.html
 ```mermaid
 sequenceDiagram
     participant dan as Dan

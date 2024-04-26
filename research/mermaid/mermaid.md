@@ -6,6 +6,11 @@ It is a JavaScript based diagramming and charting tool that renders Markdown-ins
 
 If you are familiar with Markdown you should have no problem learning Mermaid's Syntax.
 
+## references
+
+https://mermaid.js.org/intro/syntax-reference.html
+https://mermaid.js.org/syntax/gantt.html
+
 ## flow chart
 
 ```mermaid
@@ -44,4 +49,17 @@ sequenceDiagram
     Alice-xCarl: We are too many
     destroy Bob
     Bob->>Alice: I agree
+```
+## gnatt
+
+```mermaid
+gantt
+    title A Gantt Diagram
+    dateFormat YYYY-MM-DD
+    section Section
+        A task          :a1, 2014-01-01, 30d
+        Another task    :after a1, 20d
+    section Another
+        Task in Another :2014-01-12, 12d
+        another task    :24d
 ```
