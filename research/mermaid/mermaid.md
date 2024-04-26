@@ -10,6 +10,7 @@ If you are familiar with Markdown you should have no problem learning Mermaid's 
 
 https://mermaid.js.org/intro/syntax-reference.html
 https://mermaid.js.org/syntax/gantt.html
+https://chromewebstore.google.com/detail/mermaid-previewer/oidjnlhbegipkcklbdfnbkikplpghfdl
 
 ## flow chart
 
