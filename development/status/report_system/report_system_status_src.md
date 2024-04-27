@@ -2,7 +2,7 @@
 
 This is a work in progress.  When finished we will have a Microsoft Teams tab accessible way to request, view, and archive both parameterized reports requiring long running SQL scripts and those requiring live Plex data. It will also be able to use the **[Azure Graph API](https://learn.microsoft.com/en-us/graph/overview)** to email excel files or about anything else having to do with any Microsoft apps.
 
-## **[View in GitHub](https://github.com/brentgroves/status/blob/main/2024/week18.md)**
+## **[View in GitHub](https://github.com/brentgroves/repsys/blob/main/development/status/2024/week18.md)**
 
 ## references
 
