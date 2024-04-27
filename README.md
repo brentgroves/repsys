@@ -1,11 +1,11 @@
----
-title: Report System
-markmap:
-  colorFreezeLevel: 2
----
+# RepSys
 
+A K8s report system.
 
-- **[Setup Development System](./development/setup_dev_system/setup_dev_system.md)**
-- **[Report System Installation](./k8s/report-system-install.md)**
-- **[Backups](./backups/backups.md)**
+## Main Menu
+
+- **[Setup Development System](./development/report_system/setup_dev_system/setup_dev_system.md)**
+- **[Report System K8s Setup](./k8s/report-system-install.md)**
+- **[Development](./development/report_system/menu.md)**
+- **[IT Admin](./it_admin/it_admin.md)**
 - **[Report System Status](./development/status/complete/report_system_status_src.md)**

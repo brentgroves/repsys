@@ -2,16 +2,18 @@
 
 This is a work in progress.  When finished we will have a Microsoft Teams tab accessible way to request, view, and archive both parameterized reports requiring long running SQL scripts and those requiring live Plex data. It will also be able to use the **[Azure Graph API](https://learn.microsoft.com/en-us/graph/overview)** to email excel files or about anything else having to do with any Microsoft apps.
 
-## Viewing Options 
+## Markdown with Markmap and Mermaid Viewing Options
+
+To get the full effect of Markmap mindmap menus and Mermaid diagrams I recommend using Visual Studio Code or **[Visual Studio Code On-Line](https://github.dev/brentgroves/repsys/blob/main/development/status/weekly/2024/week18.md)** with the following extensions:
+
+- **[Visual Studio Code Mermaid extension](https://marketplace.visualstudio.com/items?itemName=bierner.markdown-mermaid)**
+- **[Visual Studio Code Markmap extension](https://marketplace.visualstudio.com/items?itemName=gera2ld.markmap-vscode)**
+
+Note: Press ctrl-shift-v to render markdown after installing the "Markdown Preview Mermaid Support" extension in Visual Studio Code or Visual Studio Code On-Line.
+
+You can also view this markdown directly from **[GitHub](https://github.com/brentgroves/repsys/blob/main/development/status/2024/week18.md)** but there are styling issues.
 
 The github viewer has timeout issues rendering mermaid diagrams. For "unable to render" error please press the "<-->" button above that mermaid diagram to view it. Experiment with theming to get the best view. I think high contrast dark themes work best!
-
-Note: Press ctrl-shift-v to render markdown after installing the "Markdown Preview Mermaid Support" extension in Visual Studio Code or GitHub.Dev.
-
-- **[GitHub Link](https://github.com/brentgroves/repsys/blob/main/development/status/2024/week18.md)**
-- **[Visual Studio Code On-Line](https://github.dev/brentgroves/repsys/blob/main/development/status/2024/week18.md)**
-- **[Visual Studio Code](https://marketplace.visualstudio.com/items?itemName=bierner.markdown-mermaid)**
-- **[JebBrains IDE](https://www.jetbrains.com/guide/go/tips/mermaid-js-support-in-markdown/)**
 
 ## **[Mermaid Live Editor](https://mermaid.live/edit)** (Also supports copy from Github gists and saving to .svg .png)
 

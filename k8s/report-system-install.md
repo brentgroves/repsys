@@ -1,4 +1,4 @@
-# Observable Report System on our K8s Private Cloud
+# Report System K8s Setup
 
 - **[Azure Setup](../../azure/mobexglobal.com/azure_setup.md)**
 - **[Ubuntu 22.04 Server Install](./linux/ubuntu22-04/server-install.md)**
@@ -21,11 +21,6 @@
 - **[Kubectl Krew plugin](./krew-install.md)**
 - **[Rook Microceph](./rook-microceph-install.md)**
 - **[Minio S3 compatible Object Storage](./minio-install.md)**
-
-## Notes
-
-Deploy the MySQL 8.0 server and import mydw.  Later recreate mydw in the MySQL InnoDB Cluster. You should make a copy of each table and give it a primary key then copy the mydw non-keyed data into it.
-
 - **[Postgres Operator](./postgres-operator-install.md)**
 - **[MetalB load balancer and NGINX ingress controller](./metalb-ingress-install.md)**
 - **[MetalB load balancer and Kong ingress controller](./metalb-kong-install.md)**

@@ -1,24 +1,21 @@
-# Information System Status
+# Weekly Status
 
-## 2022
+## 2024
 
-- **[Week43](./2022/week43.md)**
-- **[Week44](./2022/week44.md)**
-- **[Week45](./2022/week45.md)**
-- **[Week46](./2022/week46.md)**
-- **[Week47](./2022/week47.md)**
-- **[Week48](./2022/week48.md)**
-- **[Week49](./2022/week49.md)**
-- **[Week50](./2022/week50.md)**
-- **[Week51](./2022/week51.md)**
-- **[Week52](./2022/week52.md)**
-
-## 2023
-
-- **[Week40](./2023/week40.md)**
-- **[Week41](./2023/week41.md)**
-- **[Week42](./2023/week42.md)**
-- **[Week43](./2023/week43.md)**
-- **[Week44](./2023/week44.md)**
-- **[Week45](./2023/week45.md)**
-- **[Week46](./2023/week46.md)**
+- **[Week1](./2024/week1.md)**
+- **[Week2](./2024/week2.md)**
+- **[Week3](./2024/week3.md)**
+- **[Week4](./2024/week4.md)**
+- **[Week5](./2024/week5.md)**
+- **[Week6](./2024/week6.md)**
+- **[Week7](./2024/week7.md)**
+- **[Week81](./2024/week8.md)**
+- **[Week92](./2024/week9.md)**
+- **[Week10](./2024/week10.md)**
+- **[Week11](./2024/week11.md)**
+- **[Week12](./2024/week12.md)**
+- **[Week13](./2024/week13.md)**
+- **[Week15](./2024/week14.md)**
+- **[Week16](./2024/week11.md)**
+- **[Week17](./2024/week12.md)**
+- **[Week18](./2024/week13.md)**
