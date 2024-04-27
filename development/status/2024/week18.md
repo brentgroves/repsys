@@ -9,15 +9,18 @@ Brent G.
 260-564-4868
 ```
 
-## **[View in GitHub](https://github.com/brentgroves/repsys/blob/main/development/status/2024/week18.md)**
+## Viewing Options 
 
-The github viewer has timeout issues rendering mermaid diagrams. For each "unable to render" error please press the "<-->" button above that mermaid diagram to view it.
+The github viewer has timeout issues rendering mermaid diagrams. For "unable to render" error please press the "<-->" button above that mermaid diagram to view it. Experiment with theming to get the best view!
 
-## Best ways to create and view Markdown with Mermaid
-
-- **[Markdown Mermaid extension](https://marketplace.visualstudio.com/items?itemName=bierner.markdown-mermaid)**
+- **[Visual Studio Code](https://marketplace.visualstudio.com/items?itemName=bierner.markdown-mermaid)**
 - **[JebBrains IDE](https://www.jetbrains.com/guide/go/tips/mermaid-js-support-in-markdown/)**
-- **[Mermaid Live Editor](https://mermaid.live/edit)** (Also supports copy from Github gists and saving to .svg .png)
+- **[GitHub](https://github.com/brentgroves/repsys/blob/main/development/status/2024/week18.md)**
+- **[GitHub.Dev]https://github.dev/brentgroves/repsys/blob/main/development/status/2024/week18.md)**
+
+## **[Mermaid Live Editor](https://mermaid.live/edit)** (Also supports copy from Github gists and saving to .svg .png)
+
+Mermaid is a JavaScript-based diagramming and charting tool that uses Markdown-inspired text definitions and a renderer to create and modify complex diagrams. The main purpose of Mermaid is to help documentation catch up with development.
 
 ![](https://mermaid.ink/img/pako:eNqFUk1v4kAM_SvWnEDKooRE-ZgblB4qipollSqtcpkmhh0tM04nk1Up4r_vkDSUPfVm-9nPzx8nVlGNjDMlda1EU2oAQ2Qnky02ZCwUx9aimk4vAMDiozMIz6hR2yEC8LDYjOYAFz8fYbUcY5zLivRkJ2AnfrwS_ZmOyPJAr1BYMmKPV4Z1MZpOCNayvXV7RQbfOnSizIDkB3yH-23-fb-CRAMv6Hqi-SsrvFI_rZZ3UAsroKXOVE7MgDxpyA0q2V7lbWRlaJ3eiFqT3sMif-hJR0196tHt4cvNqbV7gzeVG1dJX3sC2P4_7ucBtp3WF17mMYVGCVm7a50uaSWzv1Fhybgza9yJ7mBLVuqzSxWdpeKoK8at6dBjXePmw5UUeyMU4ztxaK_R-1q6I4yZjdC_iNSNy_iJvTMeZ7MwnEeJn4TJPAhjjx0ZD6L5LMviJPL9KM7S2E_PHvvo6_1Z6qfzMEmywI-DyA8ij2HfajO8XP95538_hrzz?type=png)
 
