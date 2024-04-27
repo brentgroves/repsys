@@ -1,5 +1,9 @@
 # Report System Status
 
+## Note
+
+This is pure markdown but does not look good.
+
 This is a work in progress.  When finished we will have a Microsoft Teams tab accessible way to request, view, and archive both parameterized reports requiring long running SQL scripts and those requiring live Plex data. It will also be able to use the **[Azure Graph API](https://learn.microsoft.com/en-us/graph/overview)** to email excel files or about anything else having to do with any Microsoft apps.
 
 ## **[View in GitHub](https://github.com/brentgroves/repsys/blob/main/development/status/2024/week18.md)**
@@ -12,7 +16,7 @@ This is a work in progress.  When finished we will have a Microsoft Teams tab ac
 
 ![](https://mermaid.ink/img/pako:eNqNkUFrwzAMhf-KEBRaSEaXdZecw25lY-1l4ENdW-m8JnawlW2h9L_PqbsxymB9J6FnvidLB1ROE5a4k5ZZWIjSkunB-VYywEtUvlzmVZU8NtwQJD1590aKQ3LoUzW9pjDWH0R7svrsTCYw3XzbG5BKUccBQkfK1Ead8gIY-ysM6lN-Fr0hgKuBX-lEhanA0NvYFjgD50HgTxhmsO0ZrOP03Hl9tkeKwJuZsGmiEMc2zl784Jk65xlWQ2Bq4X-V3W1WzItFPl_kRZHd64RZO9fA2ku1Jw9XYYq_MI_bQP5dbk1jeLhiqLK7u8SMIMywpbhLo-ORD2NHYNxOSwLLWGqqZd-wQGGP8ans2a0Gq7Bk31OGfTcepzJy52WbmscvGXKgcQ?type=png)
 
-![](https://mermaid.ink/img/pako:eNqVkk9rAjEQxb_KEBAU1la3FsreWpZCaaVSvRRyMCazNribbDeTVhG_e7N_LHoo0jmFvMnvvUyyZ9IqZAlbC0PEDYRSgvDRVoUggPdQw-l0mKatRppyhLYWwm3gRbvuGG5l7hW6ev2NuEGjXKv0etBfHuUlCCmxJAeuRKkzLRtDB9qcuEHWBIiCtnNgM6APbKjQ58x5E7Y5G4CtgLNfMxbByhMYS227rVQn1xTOrgbctIkcStLWwPNdF_ENlXbwWmIlKEAvVKLGUTyKJ8PRZBjH0a06p6b4hbktCzTdaIIN3M-emps790_6WJ1GnPnV9dyvYPEAnx49_g2JI5ERVlDTzhDhaOEJt5dz3BwRcYdgESswPIxW4cvs6x3OwqgL5CwJS4WZ8Dlxxs0htApPdr4zkiVUeYyYL-uXTrVYV6JgSSZyh4cfQ7y0bg?type=png)
+[![](https://mermaid.ink/img/pako:eNqVkk1rAjEQhv_KEBAU1la3FsreWpZCaaVSvRRyMCazNribbDeTVhH_e7MfFj0U6ZyGeSfPvJlkz6RVyBK2FoaIGwihBOGjrQpBAO8hhtPpME1bjTTlCG0shNvAi3bdMdzK3Ct0df6NuEGjXKv0etBfHuUlCCmxJAeuRKkzLZuBDrQ5mQZZYyAK2s6BzYA-sKFCnzPnTShzNgBbAWe_w1gEK09gLLXttlKdXFM4uxpw0zpyKElbA893ncU3VNrBa4mVoAC9EIkaR_EongxHk2EcR7fqnJriF-a2LNB0qwlj4H721NzcuX_Sx-rU4syvrud-BYsH-PTo8W9IHImMsIKadoYIRwtPuL3s4-aIiDsEi1iB4WG0Cl9mX1c4C6sukLMkpAoz4XPijJtDaBWe7HxnJEuo8hgxX9YvnWqxrkTRFg8_j-C0Iw?type=png)](https://mermaid.live/edit#pako:eNqVkk1rAjEQhv_KEBAU1la3FsreWpZCaaVSvRRyMCazNribbDeTVhH_e7MfFj0U6ZyGeSfPvJlkz6RVyBK2FoaIGwihBOGjrQpBAO8hhtPpME1bjTTlCG0shNvAi3bdMdzK3Ct0df6NuEGjXKv0etBfHuUlCCmxJAeuRKkzLZuBDrQ5mQZZYyAK2s6BzYA-sKFCnzPnTShzNgBbAWe_w1gEK09gLLXttlKdXFM4uxpw0zpyKElbA893ncU3VNrBa4mVoAC9EIkaR_EongxHk2EcR7fqnJriF-a2LNB0qwlj4H721NzcuX_Sx-rU4syvrud-BYsH-PTo8W9IHImMsIKadoYIRwtPuL3s4-aIiDsEi1iB4WG0Cl9mX1c4C6sukLMkpAoz4XPijJtDaBWe7HxnJEuo8hgxX9YvnWqxrkTRFg8_j-C0Iw)
 
 ## Task Notes
 
