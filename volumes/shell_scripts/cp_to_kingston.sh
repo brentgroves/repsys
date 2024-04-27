@@ -13,7 +13,7 @@ rm -rf /media/brent/KINGSTON/backups
 cp -r ~/src/backups /media/brent/KINGSTON/
 
 rm -rf /media/brent/KINGSTON/shell_scripts
-cp -r ~/src/repsys/shell_scripts /media/brent/KINGSTON/
+cp -r ~/src/repsys/volumes/shell_scripts /media/brent/KINGSTON/
 
 
 popd
