@@ -131,6 +131,7 @@ sequenceDiagram
     loop 
         run->>run: Start TB ETL pipeline
     end
+
 ```
 
 ## Trial Balance Runner
