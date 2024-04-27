@@ -4,14 +4,6 @@ pushd .
 
 # --recurse-submodules don't seem to always pull all the commits
 
-echo "pulling git"
-cd ~/src/repsys/git
-git pull
-
-echo "pulling status"
-cd ~/src/repsys/status
-git pull
-
 echo "pulling rsapb"
 cd ~/src/repsys/volumes/ansible/rsapb
 git pull

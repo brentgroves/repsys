@@ -1,6 +1,3 @@
-[submodule "git"]
-	path = git
-	url = git@github.com:brentgroves/git
 [submodule "volumes/ansible/rsapb"]
 	path = volumes/ansible/rsapb
 	url = git@github.com:brentgroves/rsapb.git
@@ -31,6 +28,3 @@
 [submodule "linux"]
 	path = linux
 	url = git@github.com:brentgroves/linux.git
-[submodule "status"]
-	path = status
-	url = git@github.com:brentgroves/status
