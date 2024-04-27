@@ -6,18 +6,18 @@ This is pure markdown but does not look good.
 
 This is a work in progress.  When finished we will have a Microsoft Teams tab accessible way to request, view, and archive both parameterized reports requiring long running SQL scripts and those requiring live Plex data. It will also be able to use the **[Azure Graph API](https://learn.microsoft.com/en-us/graph/overview)** to email excel files or about anything else having to do with any Microsoft apps.
 
-## View Options 
+## Viewing Options 
 
-Experiment with theming to get the best view!
+The github viewer has timeout issues rendering mermaid diagrams. For "unable to render" error please press the "<-->" button above that mermaid diagram to view it. Experiment with theming to get the best view!
 
 - **[Visual Studio Code](https://marketplace.visualstudio.com/items?itemName=bierner.markdown-mermaid)**
 - **[JebBrains IDE](https://www.jetbrains.com/guide/go/tips/mermaid-js-support-in-markdown/)**
 - **[GitHub](https://github.com/brentgroves/repsys/blob/main/development/status/2024/week18.md)**
 - **[GitHub.Dev]https://github.dev/brentgroves/repsys/blob/main/development/status/2024/week18.md)**
 
-## references
+## **[Mermaid Live Editor](https://mermaid.live/edit)** (Also supports copy from Github gists and saving to .svg .png)
 
-- **[Mermaid Live Editor](https://mermaid.live/edit)** (Also supports copy from Github gists and saving to .svg .png)
+Mermaid is a JavaScript-based diagramming and charting tool that uses Markdown-inspired text definitions and a renderer to create and modify complex diagrams. The main purpose of Mermaid is to help documentation catch up with development.
 
 ![](https://mermaid.ink/img/pako:eNqNkUFrwzAMhf-KEBRaSEaXdZecw25lY-1l4ENdW-m8JnawlW2h9L_PqbsxymB9J6FnvidLB1ROE5a4k5ZZWIjSkunB-VYywEtUvlzmVZU8NtwQJD1590aKQ3LoUzW9pjDWH0R7svrsTCYw3XzbG5BKUccBQkfK1Ead8gIY-ysM6lN-Fr0hgKuBX-lEhanA0NvYFjgD50HgTxhmsO0ZrOP03Hl9tkeKwJuZsGmiEMc2zl784Jk65xlWQ2Bq4X-V3W1WzItFPl_kRZHd64RZO9fA2ku1Jw9XYYq_MI_bQP5dbk1jeLhiqLK7u8SMIMywpbhLo-ORD2NHYNxOSwLLWGqqZd-wQGGP8ans2a0Gq7Bk31OGfTcepzJy52WbmscvGXKgcQ?type=png)
 
