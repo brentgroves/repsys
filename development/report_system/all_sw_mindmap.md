@@ -10,7 +10,7 @@ mindmap
       Blob Storage
       AKS
         redis
-        report requester
+        RepSys web for Teams
     Plex ERP
       ::icon(fa fa-book)
       Soap Web Services
@@ -18,6 +18,7 @@ mindmap
 
     On Premise
       MicroK8s
+        RepSys on-prem web
         Kong API Server
         MySQL
         Postgres
