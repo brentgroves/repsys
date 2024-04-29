@@ -42,9 +42,12 @@ gantt
 
 An On-Premise and Cloud-based observable K8s data warehouse reporting system.
 
-## Observability System
+## **[Observability System](https://www.ibm.com/blog/kubernetes-observability/)**
 
-An unmanned ticketing system which monitors CNC tool, pallet, and cycle times.
+Both an automated and CNC operator metric and ticketing system.
+
+- CNC operators' enter tickets in Plex concerning issues that could cause a rejection.
+- Automatically enters tickets in Plex by monitoring CNC tool, pallet, and cycle times.
 
 ```mermaid
 gantt
