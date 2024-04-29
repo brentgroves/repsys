@@ -45,3 +45,5 @@ markmap:
 - Report System Status
   - **[Weekly](./development/status/weekly/2024/week18.md)**
   - **[Complete](./development/status/complete/report_system_status.md)**
+
+- **[Spirit and Truth](./spirit_and_truth/spirit_and_truth.md)**
