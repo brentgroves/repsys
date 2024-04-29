@@ -1,28 +1,21 @@
 # Report System K8s Setup
 
-- **[Azure Setup](../../azure/mobexglobal.com/azure_setup.md)**
+- **[Azure Setup (Secret)](../../azure/mobexglobal.com/azure_setup.md)**
 - **[Ubuntu 22.04 Server Install](./linux/ubuntu22-04/server-install.md)**
 - **[MicroK8s](./microk8s_1.28_install.md)**
 - **[Kubectl](./kubectl-install.md)**
 - **[Helm](./helm-install.md)**
-- **[Enable host path storage](./host_path_storage/host_path_storage.md)**
-- **[Don't Enable Mayastor because of issues with InnoDB](./mayastor-install-2.0.0.md)**
-- **[Deploy K8s credentials secret](./credentials/credentials.md)**
-- **[MySQL 8.0 server via stateful set](./mysql-8.0-statefulset-install.md)**
-- **[Ingress (Kong or NGinx](./Ingress_choices.md)**
+- **[Host Path Storage](./host_path_storage/host_path_storage.md)**
+- **[K8s Credentials Secret](./credentials/credentials.md)**
 - **[MySQL InnoDB Operator](./mysql-operator-install.md)**
 - **[MySQL InnoDB Cluster](./mysql-innodb-cluster-install.md)**
-- **[Redis Operator](./redis_operator-install.md)**
-- **[Redis Stand Alone](./redis_sentinel.md)**
+- **[Postgres Operator](./postgres-operator-install.md)**
+- **[Redis Sentinel](./redis_sentinel.md)**
 - **[K8s API Metrics Server](./metrics-server.md)**
 - **[K9s](k9s-install.md)**
-- **[Observability](./kube-prometheus-stack-install.md)**
+- **[K8s Observability](./kube-prometheus-stack-install.md)**
 - **[Kured](./kured-install.md)**
 - **[Kubectl Krew plugin](./krew-install.md)**
 - **[Rook Microceph](./rook-microceph-install.md)**
 - **[Minio S3 compatible Object Storage](./minio-install.md)**
-- **[Postgres Operator](./postgres-operator-install.md)**
-- **[MetalB load balancer and NGINX ingress controller](./metalb-ingress-install.md)**
-- **[MetalB load balancer and Kong ingress controller](./metalb-kong-install.md)**
-- **[Redis Operator](./redis_operator-install.md)**
-- **[What is Vault](../linux/vault/what_is_vault.md)**
+- **[MetalB and Kong IC](./metalb-kong-install.md)**
