@@ -2,21 +2,21 @@
 
 ```text
 Good morning dear ones,
-I hope all is going well for you and your loved ones :-)  As always please feel free to call me at home or at work about anything you like!  
+I hope you and your loved ones are enjoying this beautiful spring weather and are doing OK!  As always please feel free to call me at home or work about anything you like!  
 
 Sincerely yours,
 Brent G.
 260-564-4868
 ```
 
-## Viewing Options 
+## Viewing Options
 
 The github viewer has timeout issues rendering mermaid diagrams. For "unable to render" error please press the "<-->" button above that mermaid diagram to view it. Experiment with theming to get the best view. I think high contrast dark themes work best!
 
 Note: Press ctrl-shift-v to render markdown after installing the "Markdown Preview Mermaid Support" extension in Visual Studio Code or GitHub.Dev.
 
-- **[GitHub Link](https://github.com/brentgroves/repsys/blob/main/development/status/2024/week18.md)**
-- **[Visual Studio Code On-Line](https://github.dev/brentgroves/repsys/blob/main/development/status/2024/week18.md)**
+- **[GitHub Link](https://github.com/brentgroves/repsys/blob/main/development/status/weekly/2024/week18.md)**
+- **[Visual Studio Code On-Line](https://github.dev/brentgroves/repsys/blob/main/development/status/weekly/2024/week18.md)**
 - **[Visual Studio Code](https://marketplace.visualstudio.com/items?itemName=bierner.markdown-mermaid)**
 - **[JebBrains IDE](https://www.jetbrains.com/guide/go/tips/mermaid-js-support-in-markdown/)**
 
