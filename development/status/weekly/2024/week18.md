@@ -16,7 +16,7 @@ The github viewer has timeout issues rendering mermaid diagrams. For "unable to 
 Note: Press ctrl-shift-v to render markdown after installing the "Markdown Preview Mermaid Support" extension in Visual Studio Code or GitHub.Dev.
 
 - **[GitHub Link](https://github.com/brentgroves/repsys/blob/main/development/status/weekly/2024/week18.md)**
-- **[Visual Studio Code On-Line](https://github.dev/brentgroves/repsys/blob/main/development/status/weekly/2024/week18.md)**
+- **[Visual Studio Code Web](https://github.dev/brentgroves/repsys/blob/main/development/status/weekly/2024/week18.md)**
 - **[Visual Studio Code](https://marketplace.visualstudio.com/items?itemName=bierner.markdown-mermaid)**
 - **[JebBrains IDE](https://www.jetbrains.com/guide/go/tips/mermaid-js-support-in-markdown/)**
 

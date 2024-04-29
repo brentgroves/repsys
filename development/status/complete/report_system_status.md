@@ -1,19 +1,17 @@
 # Report System Status
 
-This is a work in progress.  When finished we will have a Microsoft Teams tab accessible way to request, view, and archive both parameterized reports requiring long running SQL scripts and those requiring live Plex data. It will also be able to use the **[Azure Graph API](https://learn.microsoft.com/en-us/graph/overview)** to email excel files or about anything else having to do with any Microsoft apps.
+This is a work in progress.  When finished we will have an On-Premise and Microsoft Teams tab accessible way to request, view, and archive both parameterized reports requiring long running SQL scripts and those requiring live Plex data. It will also be able to use the **[Azure Graph API](https://learn.microsoft.com/en-us/graph/overview)** to email excel files or about anything else having to do with any Microsoft apps.
 
-## Markdown with Markmap and Mermaid Viewing Options
-
-To get the full effect of Markmap mindmap menus and Mermaid diagrams I recommend using Visual Studio Code or **[Visual Studio Code On-Line](https://github.dev/brentgroves/repsys/blob/main/development/status/weekly/2024/week18.md)** with the following extensions:
-
-- **[Visual Studio Code Mermaid extension](https://marketplace.visualstudio.com/items?itemName=bierner.markdown-mermaid)**
-- **[Visual Studio Code Markmap extension](https://marketplace.visualstudio.com/items?itemName=gera2ld.markmap-vscode)**
-
-Note: Press ctrl-shift-v to render markdown after installing the "Markdown Preview Mermaid Support" extension in Visual Studio Code or Visual Studio Code On-Line.
-
-You can also view this markdown directly from **[GitHub](https://github.com/brentgroves/repsys/blob/main/development/status/2024/week18.md)** but there are styling issues.
+## Viewing Options
 
 The github viewer has timeout issues rendering mermaid diagrams. For "unable to render" error please press the "<-->" button above that mermaid diagram to view it. Experiment with theming to get the best view. I think high contrast dark themes work best!
+
+Note: Press ctrl-shift-v to render markdown after installing the "Markdown Preview Mermaid Support" extension in Visual Studio Code or GitHub.Dev.
+
+- **[GitHub Link](https://github.com/brentgroves/repsys/blob/main/development/status/weekly/2024/week18.md)**
+- **[Visual Studio Code Web](https://github.dev/brentgroves/repsys/blob/main/development/status/weekly/2024/week18.md)**
+- **[Visual Studio Code](https://marketplace.visualstudio.com/items?itemName=bierner.markdown-mermaid)**
+- **[JebBrains IDE](https://www.jetbrains.com/guide/go/tips/mermaid-js-support-in-markdown/)**
 
 ## **[Mermaid Live Editor](https://mermaid.live/edit)** (Also supports copy from Github gists and saving to .svg .png)**
 
@@ -58,7 +56,20 @@ gantt
 
 ## Task Notes
 
-- **[Research Redis mutex](https://dev.to/jdvert/handling-mutexes-in-distributed-systems-with-redis-and-go-5g0d)**
+- **[Redis Distributed Locks (mutex)](https://redis.io/docs/latest/develop/use/patterns/distributed-locks/)**
+
+  **[Full Research Summary](../../../research/m_z/redis/mutex/distributed_locks.md)** \
+  We are going to model our design with just three properties that, from our point of view, are the minimum guarantees needed to use distributed locks in an effective way.
+
+  - Safety property: Mutual exclusion. At any given moment, only one client can hold a lock.
+  - Liveness property A: Deadlock free. Eventually it is always possible to acquire a lock, even if the client that locked a resource crashes or gets partitioned.
+  - Liveness property B: Fault tolerance. As long as the majority of Redis nodes are up, clients are able to acquire and release locks. \
+
+  To acquire the lock, the way to go is the following:
+
+  `SET resource_name my_random_value NX PX 30000` \
+  The command will set the key only if it does not already exist (NX option), with an expire of 30000 milliseconds (PX option). The key is set to a value “my_random_value”. This value must be unique across all clients and all lock requests.
+
 - **[Research Redis Pub/Sub](https://redis.io/docs/latest/develop/interact/pubsub/)**
 - Create K8s API tutorial in **[go/tutorials/k8s](~/src/repsys/volumes/go/tutorials/k8s)**
   - **[In-Cluster K8s API access](https://github.com/kubernetes/client-go/tree/master/examples/in-cluster-client-configuration)**
