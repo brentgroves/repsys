@@ -1,5 +1,7 @@
 # **[Distributed Locks in Redis](https://redis.io/docs/latest/develop/use/patterns/distributed-locks/)**
 
+## **[Back](../../../research_list.md)**
+
 A distributed lock pattern with Redis
 
 Distributed locks are a very useful primitive in many environments where different processes must operate with shared resources in a mutually exclusive way.

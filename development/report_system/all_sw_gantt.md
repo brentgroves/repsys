@@ -1,5 +1,7 @@
 # All Software Gantt Chart
 
+**[Back](./menu.md)**
+
 ```mermaid
 gantt
     dateFormat  YYYY-MM-DD

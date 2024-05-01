@@ -20,8 +20,6 @@ markmap:
 
 - Development
   - **[Setup Development System](./development/report_system/setup_dev_system/setup_dev_system.md)**
-    - **[Ubuntu 22.04 Desktop](./linux/ubuntu22-04/desktop-install.md)**
-    - **[K8s debugging](./development/report_system/setup_dev_system/setup_for_debugging.md)**
   - **[All Software MindMap](./development/report_system/all_sw_mindmap.md)**
   - **[All Software Gantt](./development/report_system/all_sw_gantt.md)**
   - **[Report Creation Sequence Diagram](./development/report_system/report_creation_sequece_diagram.md)**

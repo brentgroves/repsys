@@ -1,5 +1,7 @@
 # Juju
 
+## **[Back](../../research_list.md)**
+
 Welcome to Juju, your entrypoint into the Juju universe!
 
 ## references

@@ -1,5 +1,7 @@
 # **[Observability System](https://www.ibm.com/blog/kubernetes-observability/)**
 
+## **[Back](../project_list.md)**
+
 Identify and escalate CNC maintenance and engineering issues which lead to rejections and low efficiency.
 
 - Supervisor or CNC Operator enter Maintenance tickets into Plex concerning issues that could cause a rejection.

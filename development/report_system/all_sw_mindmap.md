@@ -1,5 +1,7 @@
 # Report System Mind Map
 
+**[Back](./menu.md)**
+
 ```mermaid
 mindmap
   root((Report System))
