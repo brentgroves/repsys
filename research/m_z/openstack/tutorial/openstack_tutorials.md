@@ -1,10 +1,10 @@
-# Ubuntu OpenStack Install
+# OpenStack Tutorials
 
 ## references
 
-<https://ubuntu.com/openstack/tutorials>
-
-<https://ubuntu.com/tutorials/install-openstack-on-your-workstation-and-launch-your-first-instance#1-overview>
+- <https://ubuntu.com/openstack/tutorials>
+- <https://ubuntu.com/tutorials/install-openstack-on-your-workstation-and-launch-your-first-instance#2-install-openstack>
+- <https://ubuntu.com/tutorials/install-openstack-on-your-workstation-and-launch-your-first-instance#1-overview>
 
 ## OpenStack tutorials
 

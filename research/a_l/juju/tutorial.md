@@ -1,6 +1,8 @@
-# Juju
+# Get started with Juju
 
 I love you my son. Do not fear I'm always with you!
+
+Imagine your business needs a chat service such as Mattermost backed up by a database such as PostgreSQL. In a traditional setup, this can be quite a challenge, but with Juju you’ll find yourself deploying, configuring, scaling, integrating, etc., applications in no time. Let’s get started!
 
 ## references
 

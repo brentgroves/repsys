@@ -8,10 +8,22 @@ markmap:
   - **[Report System](./projects/report_system/report_system.md)**
   - **[Observability System](./projects/observability_system/observability_system.md)**
 
+- Research
+  - **[Mattermost](./research/m_z/mattermost/mattermost.md)**
+  - **[Juju](./research/a_l/juju/tutorial.md)**
+  - **[Redis Distributed Locks (mutex)](./research/m_z/redis/mutex/distributed_locks.md)**
+
+- Tutorials
+  - **[Handling Mutexes in Distributed Systems with Redis and Go](./volumes/go/tutorials/redis_sentinel/mutex/tutorial_redis_mutex_go.md)**
+  - **[In-Cluster K8s API access](./volumes/go/tutorials/k8s/in-cluster-client-configuration.md)**
+  - **[Out-of-Cluster K8s API access](./volumes/go/tutorials/k8s/out-of-cluster-client-configuration/out-of-cluster-client-configuration.md)**
+
 - Development
   - **[Setup Development System](./development/report_system/setup_dev_system/setup_dev_system.md)**
+    - **[Ubuntu 22.04 Desktop](./linux/ubuntu22-04/desktop-install.md)**
+    - **[K8s debugging](./development/report_system/setup_dev_system/setup_for_debugging.md)**
   - **[All Software MindMap](./development/report_system/all_sw_mindmap.md)**
-  - **[All Software Gnatt](./development/report_system/all_sw_gnatt.md)**
+  - **[All Software Gantt](./development/report_system/all_sw_gantt.md)**
   - **[Report Creation Sequence Diagram](./development/report_system/report_creation_sequece_diagram.md)**
   - **[Trial Balance Runner Flow Chart](./development/report_system/trial_balance_runner_flow_chart.md)**
   - **[Task List](./development/report_system/task_list.md)**
@@ -36,6 +48,7 @@ markmap:
   - **[Rook Microceph](./k8s/rook-microceph-install.md)**
   - **[Minio S3 compatible Object Storage](./k8s/minio-install.md)**
   - **[MetalB and Kong IC](./k8s/metalb-kong-install.md)**
+  - **[Mattermost](./k8s/mattermost_install.md)**
 
 - IT Admin Tasks
   - **[Reboot](./it_admin/reboot.md)**

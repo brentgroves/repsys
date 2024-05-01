@@ -25,14 +25,12 @@ In this example we will use the Redis client library github.com/go-redis/redis w
 pod.namespace.svc.cluster.local
 
 redis-sentinel-master.redis-sentinel.svc.cluster.local
-** Please be patient while the chart is being deployed **
+**Please be patient while the chart is being deployed**
 
 Redis&reg; can be accessed on the following DNS names from within your cluster:
 
     redis-sentinel-master.redis-sentinel.svc.cluster.local for read/write operations (port 6379)
     redis-sentinel-replicas.redis-sentinel.svc.cluster.local for read-only operations (port 6379)
-
-
 
 To get your password run:
 

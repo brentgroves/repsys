@@ -19,3 +19,4 @@
 - **[Rook Microceph](./rook-microceph-install.md)**
 - **[Minio S3 compatible Object Storage](./minio-install.md)**
 - **[MetalB and Kong IC](./metalb-kong-install.md)**
+- **[Mattermost](./mattermost_install.md)**

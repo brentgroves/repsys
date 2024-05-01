@@ -1,4 +1,4 @@
-# All Software Gnatt Chart
+# All Software Gantt Chart
 
 ```mermaid
 gantt

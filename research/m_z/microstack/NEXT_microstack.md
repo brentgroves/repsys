@@ -1,6 +1,7 @@
-# Next OpenStack
+# Next
 
-Continue Microstack study by learning **[juju](../juju/tutorial.md)**
+- Continue Microstack study by learning **[juju](../../a_l/juju/tutorial.md)**
+- Install **[MicroStack](./Install_microstack.md)**
 
 ## Summary 01-23-2024
 
@@ -25,9 +26,3 @@ Install Multiplass next.
 ## Summary 01-16-2024
 
 Looked at MicroStack, devstack and LinuxTV and took some notes.  I think MicroStack is what my Father has directed me.  Hang in there my son and we will enjoy learning about OpenStack together!
-
-## Next
-
-<https://ubuntu.com/tutorials/install-openstack-on-your-workstation-and-launch-your-first-instance#2-install-openstack>
-
-## Next Install **[MicroStack](./microstack/Install_microstack.md)**
