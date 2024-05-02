@@ -1,5 +1,9 @@
 # Install Shell scripts
 
+**[Ubuntu 22.04 Desktop](../../linux/ubuntu22-04/desktop-install.md)**\
+**[Ubuntu 22.04 Server](../../linux/ubuntu22-04/server-install.md)**\
+**[Back to Main](../../README.md)**
+
 Go to a development system with the repo of the shell scripts to be installed.
 
 ## copy shell scripts to server

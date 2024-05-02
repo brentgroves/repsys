@@ -1,5 +1,9 @@
 # Remove a K8s node
 
+**[IT Admin](it_admin.md)**\
+**[Current Status](../development/status/weekly/current_status.md)**\
+**[Back to Main](../README.md)**
+
 ## Reference
 
 <https://kubernetes.io/docs/tasks/administer-cluster/safely-drain-node/>

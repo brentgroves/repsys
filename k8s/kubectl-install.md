@@ -1,6 +1,8 @@
 # **[Install kubectl](https://microk8s.io/docs/working-with-kubectl)**
 
 **[Report System Install](./report-system-install.md)**\
+**[Ubuntu 22.04 Desktop](../linux/ubuntu22-04/desktop-install.md)**\
+**[Ubuntu 22.04 Server](../linux/ubuntu22-04/server-install.md)**\
 **[Current Status](../development/status/weekly/current_status.md)**\
 **[Back to Main](../README.md)**
 
