@@ -1,5 +1,9 @@
 # **[Install kubectl](https://microk8s.io/docs/working-with-kubectl)**
 
+**[Report System Install](./report-system-install.md)**\
+**[Current Status](../development/status/weekly/current_status.md)**\
+**[Back to Main](../README.md)**
+
 Note: our dotfiles has an alias to microk8s kubectl set to kc so you can use this locallly.
 
 ```bash

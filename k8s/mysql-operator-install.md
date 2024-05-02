@@ -1,5 +1,9 @@
 # **[MySQL operator install](https://dev.mysql.com/doc/mysql-operator/en/)**
 
+**[Report System Install](./report-system-install.md)**\
+**[Current Status](../development/status/weekly/current_status.md)**\
+**[Back to Main](../README.md)**
+
 ## references
 
 <https://dev.mysql.com/doc/mysql-operator/en/>

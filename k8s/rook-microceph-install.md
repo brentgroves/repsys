@@ -1,5 +1,9 @@
 # HowTo setup MicroK8s with (Micro)Ceph storage
 
+**[Report System Install](./report-system-install.md)**\
+**[Current Status](../development/status/weekly/current_status.md)**\
+**[Back to Main](../README.md)**
+
 With the 1.28 release, we introduced a new rook-ceph addon that allows users to easily setup, import, and manage Ceph deployments via rook.
 
 In this guide we show how to setup a Ceph cluster with MicroCeph, give it three virtual disks backed up by local files, and import the Ceph cluster in MicroK8s using the rook-ceph addon.

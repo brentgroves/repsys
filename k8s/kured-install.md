@@ -1,5 +1,9 @@
 # Kured
 
+**[Report System Install](./report-system-install.md)**\
+**[Current Status](../development/status/weekly/current_status.md)**\
+**[Back to Main](../README.md)**
+
 **[Kubernetes Reboot Daemon](https://kured.dev/docs/)**
 
 Watches for the presence of a reboot sentinel file e.g. /var/run/reboot-required or the successful run of a sentinel command.

@@ -1,7 +1,12 @@
 # Status
 
-**[All Weekly Status List](./2024/status_list.md)**\
+**[All Status](../weekly/status_list.md)**\
 **[Back to Main](../../../README.md)**
+
+## Project List
+
+- **[Report System](../../../projects/report_system/report_system.md)**
+- **[Observability System](../../../projects/observability_system/observability_system.md)**
 
 ## Task Summaries
 
@@ -28,9 +33,10 @@
   `SET resource_name my_random_value NX PX 30000` \
   The command will set the key only if it does not already exist (NX option), with an expire of 30000 milliseconds (PX option). The key is set to a value “my_random_value”. This value must be unique across all clients and all lock requests.
 
-- **[Handling Mutexes in Distributed Systems with Redis and Go](../../../volumes/go/tutorials/redis_sentinel/mutex/tutorial_redis_mutex_go.md)**
-
 - **[Research Redis Pub/Sub](https://redis.io/docs/latest/develop/interact/pubsub/)**
-- Create K8s API tutorial in go
-  - **[In-Cluster K8s API access](../../../volumes/go/tutorials/k8s/in-cluster-client-configuration.md)**
-  - **[Out-of-Cluster K8s API access](../../../volumes/go/tutorials/k8s/out-of-cluster-client-configuration/out-of-cluster-client-configuration.md)**
+
+## Tutorials
+
+- **[Handling Mutexes in Distributed Systems with Redis and Go](../../../volumes/go/tutorials/redis_sentinel/mutex/tutorial_redis_mutex_go.md)**
+- **[In-Cluster K8s API access](../../../volumes/go/tutorials/k8s/in_cluster_client_configuration/in-cluster-client-configuration.md)**
+- **[Out-of-Cluster K8s API access](../../../volumes/go/tutorials/k8s/out-of-cluster-client-configuration/out-of-cluster-client-configuration.md)**

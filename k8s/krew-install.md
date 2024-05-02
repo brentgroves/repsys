@@ -1,5 +1,9 @@
 # Install Kubectl Krew plugin
 
+**[Report System Install](./report-system-install.md)**\
+**[Current Status](../development/status/weekly/current_status.md)**\
+**[Back to Main](../README.md)**
+
 ## references
 
 <https://min.io/docs/minio/kubernetes/upstream/reference/kubectl-minio-plugin.html>

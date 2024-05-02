@@ -1,5 +1,9 @@
 # Zalando Postgres Operator Helm deployment
 
+**[Report System Install](./report-system-install.md)**\
+**[Current Status](../development/status/weekly/current_status.md)**\
+**[Back to Main](../README.md)**
+
 ## Hugepage issue
 
 This article says it's very important but because of a sys bus error we can not enable hugepages.

@@ -1,7 +1,10 @@
 # Report System K8s Setup
 
-- **[Azure Setup (Secret)](../../azure/mobexglobal.com/azure_setup.md)**
-- **[Ubuntu 22.04 Server Install](./linux/ubuntu22-04/server-install.md)**
+**[Current Status](../development/status/weekly/current_status.md)**\
+**[Back to Main](../README.md)**
+
+- **[Azure Setup (Ask for Access)](../../azure/mobexglobal.com/azure_setup.md)**
+- **[Ubuntu 22.04 Server Install](../linux/ubuntu22-04/server-install.md)**
 - **[MicroK8s](./microk8s_1.28_install.md)**
 - **[Kubectl](./kubectl-install.md)**
 - **[Helm](./helm-install.md)**
@@ -19,4 +22,5 @@
 - **[Rook Microceph](./rook-microceph-install.md)**
 - **[Minio S3 compatible Object Storage](./minio-install.md)**
 - **[MetalB and Kong IC](./metalb-kong-install.md)**
+- **[MetalB and NGinx (Alt to Kong IC)](./metalb-ingress-install.md)**
 - **[Mattermost](./mattermost_install.md)**

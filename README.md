@@ -14,9 +14,10 @@ markmap:
   - **[Redis Distributed Locks (mutex)](./research/m_z/redis/mutex/distributed_locks.md)**
 
 - Tutorials
-  - **[Handling Mutexes in Distributed Systems with Redis and Go](./volumes/go/tutorials/redis_sentinel/mutex/tutorial_redis_mutex_go.md)**
-  - **[In-Cluster K8s API access](./volumes/go/tutorials/k8s/in-cluster-client-configuration.md)**
-  - **[Out-of-Cluster K8s API access](./volumes/go/tutorials/k8s/out-of-cluster-client-configuration/out-of-cluster-client-configuration.md)**
+  - Go
+    - **[Handling Mutexes in Distributed Systems with Redis and Go](./volumes/go/tutorials/redis_sentinel/mutex/tutorial_redis_mutex_go.md)**
+    - **[In-Cluster K8s API access](./volumes/go/tutorials/k8s/in_cluster_client_configuration/in-cluster-client-configuration.md)**
+    - **[Out-of-Cluster K8s API access](./volumes/go/tutorials/k8s/out-of-cluster-client-configuration/out-of-cluster-client-configuration.md)**
 
 - Development
   - **[Setup Development System](./development/report_system/setup_dev_system/setup_dev_system.md)**

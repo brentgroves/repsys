@@ -1,6 +1,8 @@
 # All Software Gantt Chart
 
-**[Back](./menu.md)**
+**[Development Menu](./menu.md)**\
+**[Current Status](../status/weekly/current_status.md)**\
+**[Back to Main](../../README.md)**
 
 ```mermaid
 gantt

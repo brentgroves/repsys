@@ -1,6 +1,7 @@
 # Setup development system for K8s Debugging
 
-**[Back Setup Dev System](../menu.md)**\
+**[Setup Dev System](../menu.md)**\
+**[Current Status](../../status/weekly/current_status.md)**\
 **[Back to Main](../../../README.md)**
 
 ## Add names of k8s services and pods to hosts file

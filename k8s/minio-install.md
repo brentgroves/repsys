@@ -1,5 +1,9 @@
 # Install MinIO with Kubectl Krew plugin
 
+**[Report System Install](./report-system-install.md)**\
+**[Current Status](../development/status/weekly/current_status.md)**\
+**[Back to Main](../README.md)**
+
 I tried the MicroK8s addon but it seems pretty outdated and I could not get the tenant console working. So I installed it using the **[Kubectl MinIO plugin](https://min.io/docs/minio/kubernetes/upstream/reference/kubectl-minio-plugin.html)** instead.
 
 ## references

@@ -1,6 +1,8 @@
 # Report FLow Sequece Diagram
 
-**[Back](./menu.md)**
+**[Development Menu](./menu.md)**\
+**[Current Status](../status/weekly/current_status.md)**\
+**[Back to Main](../../README.md)**
 
 ## Run TB Report
 

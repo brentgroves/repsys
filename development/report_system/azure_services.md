@@ -1,6 +1,8 @@
 # Azure Services Summary
 
-**[Back](./menu.md)**
+**[Development Menu](./menu.md)**\
+**[Current Status](../status/weekly/current_status.md)**\
+**[Back to Main](../../README.md)**
 
 Reduce our Azure data warehouse costs from $748 to $30 per month by using an Azure SQL db service-hosted database instead of one hosted on an Azure SQL MI. Keep the Azure Kubernetes service as is at $290 per month.
 

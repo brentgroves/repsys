@@ -1,5 +1,9 @@
 # **[Leveraging Redis Sentinel with Bitnami Redis Helm Chart for High Availability in Kubernetes](https://medium.com/@khadkakripu4/leveraging-redis-sentinel-with-bitnami-redis-helm-chart-for-high-availability-in-kubernetes-a25d79e20e69)**
 
+**[Report System Install](./report-system-install.md)**\
+**[Current Status](../development/status/weekly/current_status.md)**\
+**[Back to Main](../README.md)**
+
 ## references
 
 <https://github.com/bitnami/containers/tree/main/bitnami/redis#configuration>

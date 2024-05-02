@@ -1,5 +1,9 @@
 # Kube-prometheus-stack
 
+**[Report System Install](./report-system-install.md)**\
+**[Current Status](../development/status/weekly/current_status.md)**\
+**[Back to Main](../README.md)**
+
 ## References
 
 <https://github.com/prometheus-community/helm-charts/tree/main/charts/kube-prometheus-stack>

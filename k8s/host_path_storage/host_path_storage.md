@@ -1,5 +1,9 @@
 # **[Host path storage](https://microk8s.io/docs/addon-hostpath-storage)**
 
+**[Report System Install](../report-system-install.md)**\
+**[Current Status](../../development/status/weekly/current_status.md)**\
+**[Back to Main](../../README.md)**
+
 ## When to enable hostpath-storage
 
 Since Observability and the Postgress operator currently, 4/2/2024, do not run from Mayastor I would enable it on all MicroK8s Clusters for now. If you will be using Mayastor for MySQL Server or InnoDB cluster you can include the Mayastor class name on the deployments.

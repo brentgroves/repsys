@@ -1,5 +1,9 @@
 # **[out-of-cluster-client-configuration]**
 
+**[Back to Go Tutorial List](../../tutorial_list.md)**\
+**[Back to Current Status](../../../../../development/status/weekly/current_status.md)**\
+**[Back to Main](../../../../../README.md)**
+
 ## references
 
 <https://github.com/kubernetes/client-go/blob/master/examples/out-of-cluster-client-configuration/README.md>

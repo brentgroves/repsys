@@ -1,5 +1,9 @@
 # Status
 
+**[All Status](../status_list.md)**\
+**[Current Status](../current_status.md)**\
+**[Back to Main](../../../../README.md)**
+
 ## **[Back](./status.md)**
 
 ```text

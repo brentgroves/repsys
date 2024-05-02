@@ -1,5 +1,9 @@
 # Microk8s install
 
+**[Report System Install](./report-system-install.md)**\
+**[Current Status](../development/status/weekly/current_status.md)**\
+**[Back to Main](../README.md)**
+
 ## References
 
 <https://microk8s.io/#install-microk8s>

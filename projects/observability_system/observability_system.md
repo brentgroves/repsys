@@ -1,6 +1,8 @@
 # **[Observability System](https://www.ibm.com/blog/kubernetes-observability/)**
 
-## **[Back](../project_list.md)**
+**[Project List](../project_list.md)**\
+**[Current Status](../../development/status/weekly/current_status.md)**\
+**[Back to Main](../../README.md)**
 
 Identify and escalate CNC maintenance and engineering issues which lead to rejections and low efficiency.
 

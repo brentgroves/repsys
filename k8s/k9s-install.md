@@ -1,5 +1,9 @@
 # Install K9s
 
+**[Report System Install](./report-system-install.md)**\
+**[Current Status](../development/status/weekly/current_status.md)**\
+**[Back to Main](../README.md)**
+
 - I have not used K9s much.  It could be helpful but I suggest learning kubectl first to make sure you know what K9s is doing.
 
 **[Install K9s](https://k9scli.io/topics/install/)**

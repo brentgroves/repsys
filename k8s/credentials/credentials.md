@@ -1,5 +1,9 @@
 # **[Deploy K8s db_credentials secret](../../../k8s/repsys/db_credentials.yaml)**
 
+**[Report System Install](../report-system-install.md)**\
+**[Current Status](../../development/status/weekly/current_status.md)**\
+**[Back to Main](../../README.md)**
+
 This k8s secret contains all encoded passwords that is needed for repsys. Use ~/cp_from_kingston.sh if necessary to refresh contents of ~/src/k8s/ before deploying the db_credentials.yaml.
 
 ```bash

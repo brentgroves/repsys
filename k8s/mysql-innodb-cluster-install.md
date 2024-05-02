@@ -1,5 +1,9 @@
 # **[MySQL InnoDB Cluster install](https://dev.mysql.com/doc/mysql-operator/en/mysql-operator-innodbcluster.html)**
 
+**[Report System Install](./report-system-install.md)**\
+**[Current Status](../development/status/weekly/current_status.md)**\
+**[Back to Main](../README.md)**
+
 ## mayastor issue
 
 - Installed a 3 instance MySQL InnoDB cluster using mysql-innodb-mayastor-cluster.yaml. It worked until I rebooted then had a problem like on rephub1_home.
