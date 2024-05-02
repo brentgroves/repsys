@@ -1,6 +1,8 @@
 # Juju
 
-## **[Back](../../research_list.md)**
+**[Back to Research List](../../research_list.md)**\
+**[Back to Current Status](../../../development/status/weekly/current_status.md)**\
+**[Back to Main](../../../README.md)**
 
 Welcome to Juju, your entrypoint into the Juju universe!
 

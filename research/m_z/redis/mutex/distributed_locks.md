@@ -1,6 +1,8 @@
 # **[Distributed Locks in Redis](https://redis.io/docs/latest/develop/use/patterns/distributed-locks/)**
 
-## **[Back](../../../research_list.md)**
+**[Back to Research List](../../../research_list.md)**\
+**[Back to Current Status](../../../../development/status/weekly/current_status.md)**\
+**[Back to Main](../../../../README.md)**
 
 A distributed lock pattern with Redis
 

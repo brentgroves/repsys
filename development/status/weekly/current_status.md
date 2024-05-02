@@ -1,6 +1,7 @@
 # Status
 
-## **[Back](./status.md)**
+**[All Weekly Status List](./2024/status_list.md)**\
+**[Back to Main](../../../README.md)**
 
 ## Task Summaries
 
@@ -9,13 +10,13 @@
 
 ## Research
 
-- **[Juju](../../../../research/a_l/juju/tutorial.md)**\
+- **[Juju](../../../research/a_l/juju/tutorial.md)**\
   Juju provides a declarative and model-driven way to install, provision, maintain, update, upgrade, and integrate applications on and across Kubernetes containers, Linux containers, virtual machines, and bare metal machines, on public or private cloud.
 
-- **[Mattermost](../../../../research/m_z/mattermost/mattermost.md)** \
+- **[Mattermost](../../../research/m_z/mattermost/mattermost.md)** \
   Mattermost is an open-source, self-hostable online chat service with file sharing, search, and integrations. It is designed as an internal chat for organisations and companies, and mostly markets itself as an open-source alternative to Slack and Microsoft Teams. Wikipedia
 
-- **[Redis Distributed Locks (mutex)](../../../../research/m_z/redis/mutex/distributed_locks.md)**\
+- **[Redis Distributed Locks (mutex)](../../../research/m_z/redis/mutex/distributed_locks.md)**\
   We are going to model our design with just three properties that, from our point of view, are the minimum guarantees needed to use distributed locks in an effective way.
 
   - Safety property: Mutual exclusion. At any given moment, only one client can hold a lock.
@@ -27,9 +28,9 @@
   `SET resource_name my_random_value NX PX 30000` \
   The command will set the key only if it does not already exist (NX option), with an expire of 30000 milliseconds (PX option). The key is set to a value “my_random_value”. This value must be unique across all clients and all lock requests.
 
-- **[Handling Mutexes in Distributed Systems with Redis and Go](../../../../volumes/go/tutorials/redis_sentinel/mutex/tutorial_redis_mutex_go.md)**\
+- **[Handling Mutexes in Distributed Systems with Redis and Go](../../../volumes/go/tutorials/redis_sentinel/mutex/tutorial_redis_mutex_go.md)**
 
 - **[Research Redis Pub/Sub](https://redis.io/docs/latest/develop/interact/pubsub/)**
 - Create K8s API tutorial in go
-  - **[In-Cluster K8s API access](../../../../volumes/go/tutorials/k8s/in-cluster-client-configuration.md)**
-  - **[Out-of-Cluster K8s API access](../../../../volumes/go/tutorials/k8s/out-of-cluster-client-configuration/out-of-cluster-client-configuration.md)**
+  - **[In-Cluster K8s API access](../../../volumes/go/tutorials/k8s/in-cluster-client-configuration.md)**
+  - **[Out-of-Cluster K8s API access](../../../volumes/go/tutorials/k8s/out-of-cluster-client-configuration/out-of-cluster-client-configuration.md)**

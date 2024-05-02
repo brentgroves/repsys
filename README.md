@@ -54,7 +54,6 @@ markmap:
   - **[Drain Node](./it_admin/drain.md)**
 
 - Report System Status
-  - **[Week 18](./development/status/weekly/2024/week18.md)**
-  - **[Week 19](./development/status/weekly/2024/week19.md)**
+  - **[Current Status](./development/status/weekly/current_status.md)**
 
 - **[Spirit and Truth](./spirit_and_truth/spirit_and_truth.md)**
