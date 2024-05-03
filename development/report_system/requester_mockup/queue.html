@@ -2,7 +2,7 @@
 <html>
 
 <head>
-  <title>Request Params</title>
+  <title>Runs Param</title>
 </head>
 <style>
   .topnav {
@@ -67,23 +67,40 @@
 
 <body>
   <div class="topnav">
-    <a class="active" href="request.html">Request</a>
-    <a href="queue.html">Queue</a>
+    <a href="request.html">Request</a>
+    <a class="active" href="queue.html">Queue</a>
     <a href="archives.html">Archives</a>
   </div>
-  <p>Get info from customer.<br>
-    Then view TB queue.
-  </p>
-  <form>
-    Name <br>
-    <input type="text" name="reportName"> </br>
-    Start Period <br>
-    <input type="text" name="startPeriod"> </br>
-    End Period <br>
-    <input type="text" name="endPeriod"> </br>
-    <button class="button button1">Submit</button>
 
-  </form>
+  <p>
+    Trial Balance Queue is like a print Queue.</br>
+    Subscribe to the Redis TB_Queue to receive updates.
+  </p>
+  <table>
+    <tr>
+      <th>Customer</th>
+      <th>Date/Time</th>
+      <th>Name</th>
+      <th>Start</th>
+      <th>End</th>
+      <th>Status</th>
+    </tr>
+    <tr>
+      <td>Dan Martin</td>
+      <td>05/03/2024:08:30:03</td>
+      <td>TB_202404_to_202404</td>
+      <td>202404</td>
+      <td>202404</td>
+      <td>Running</td>
+    </tr>
+    <tr>
+      <td>Greg Phillips</td>
+      <td>05/03/2024:08:35:00</td>
+      <td>TB_202304_to_202404</td>
+      <td>202303</td>
+      <td>202403</td>
+      <td>Pending</td>
+    </tr>
 </body>
 
 </html>
