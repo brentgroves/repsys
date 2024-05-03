@@ -11,4 +11,4 @@ Brent G.
 
 Note: Press ctrl-shift-v to render markdown in Visual Studio Code Web.
 
-- **[Visual Studio Code Web](https://github.dev/brentgroves/repsys/blob/main/development/status/weekly/2024/week19.md)**
+- **[Visual Studio Code Web](https://github.dev/brentgroves/repsys/blob/main/development/status/weekly/current_status.md)**
