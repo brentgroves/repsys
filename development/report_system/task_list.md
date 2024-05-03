@@ -28,3 +28,4 @@ gantt
 - **[Research Redis Pub/Sub](https://redis.io/docs/latest/develop/interact/pubsub/)**
 - **[In-Cluster K8s API access](https://github.com/kubernetes/client-go/tree/master/examples/in-cluster-client-configuration)**
 - **[Out-of-Cluster K8s API access](https://github.com/kubernetes/client-go/blob/master/examples/out-of-cluster-client-configuration/README.md)**
+- **[Sessions and Cookies](https://www.sohamkamani.com/web-security-basics/#sessions-and-cookies)**
