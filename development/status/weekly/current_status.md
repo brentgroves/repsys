@@ -18,13 +18,16 @@
 - **[Task List](../../report_system/task_list.md)**
 - **[Requester Mockup](../../report_system/requester_mockup/requester_mockup.md)**
 
-## Task Tutorials/Notes
+## Task Tutorials & Notes
 
 - **[Handling Mutexes in Distributed Systems with Redis and Go](../../../volumes/go/tutorials/redis_sentinel/mutex/tutorial_redis_mutex_go.md)**
 - **[In-Cluster K8s API access](../../../volumes/go/tutorials/k8s/in_cluster_client_configuration/in-cluster-client-configuration.md)**
 - **[Out-of-Cluster K8s API access](../../../volumes/go/tutorials/k8s/out-of-cluster-client-configuration/out-of-cluster-client-configuration.md)**
 
 ## Research
+
+- **[Minio Object Storage](../../../research/m_z/minio/minio.md)**\
+  Object storage is accessed via a REST API call. Using POST, PUT, GET to an HTTP endpoint, you can create, read, update and delete (the famous CRUD operations) your blobs of data.
 
 - **[Juju](../../../research/a_l/juju/tutorial.md)**\
   Juju provides a declarative and model-driven way to install, provision, maintain, update, upgrade, and integrate applications on and across Kubernetes containers, Linux containers, virtual machines, and bare metal machines, on public or private cloud.

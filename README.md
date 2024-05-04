@@ -8,6 +8,7 @@
   - **[Mattermost](./research/m_z/mattermost/mattermost.md)**
   - **[Juju](./research/a_l/juju/tutorial.md)**
   - **[Redis Distributed Locks (mutex)](./research/m_z/redis/mutex/distributed_locks.md)**
+  - **[Minio Object Storage](./research/m_z/minio/minio.md)**
 
 - Tutorials
   - Go
