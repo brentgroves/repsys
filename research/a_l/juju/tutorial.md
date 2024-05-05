@@ -10,6 +10,9 @@ Imagine your business needs a chat service such as Mattermost backed up by a dat
 
 <https://juju.is/docs/juju/tutorial>
 
+<https://charmhub.io/mattermost-k8s>
+<https://charmhub.io/postgresql-k8s>
+<https://charmhub.io/self-signed-certificates>
 ![](https://discourse-charmhub-io.s3.eu-west-2.amazonaws.com/original/2X/7/7a96fdecba28aa84691a7eccf337615a2296d3d5.png)
 
 ## Setup: Create your test environment
@@ -62,7 +65,84 @@ However, once it’s done, you’ll have everything you’ll need – all in a n
 
 See more: **[GitHub > multipass-blueprints > charm-dev.yaml](https://github.com/canonical/multipass-blueprints/blob/ae90147b811a79eaf4508f4776390141e0195fe7/v1/charm-dev.yaml#L134)**
 
+## Open a shell into the VM
+
+```bash
+multipass shell my-juju-vm
+```
+
+## Verify that the VM has indeed come pre-equipped with you’ll need
+
+Verify that you have Juju, MicroK8s (for machine charms) / LXD (for machine charms), a MicroK8s / LXD cloud (microk8s / localhost), a controller on that cloud (microk8s / lxd), and a workload model on that controller (welcome-k8s / welcome-lxd) by switching to the workload model:
+
+```bash
+juju switch microk8s:welcome-k8s
+juju switch
+microk8s:admin/welcome-k8s
+juju switch lxd:welcome-lxd
+microk8s:admin/welcome-k8s -> lxd:admin/welcome-lxd
+```
+
+When used without an argument, the command shows the current controller and its active model. When a single argument without a colon is provided juju first looks for a controller by that name and switches to it, and if it’s not found it tries to switch to a model within current controller. mycontroller: switches to default model in mycontroller, :mymodel switches to mymodel in current controller and mycontroller:mymodel switches to mymodel on mycontroller. The juju models command can be used to determine the active model (of any controller). An asterisk denotes it.
+
+```bash
+juju models
+Controller: microk8s
+
+Model         Cloud/Region        Type        Status     Units  Access  Last connection
+controller    microk8s/localhost  kubernetes  available  1       admin  just now
+welcome-k8s*  microk8s/localhost  kubernetes  available  -       admin  never connected
+juju switch lxd:welcome-lxd
+```
+
+Done!
+
+Going forward:
+
+Use the Multipass VM shell to run all commands.
+At any point:
+
+To exit the shell, press mod key + C or type exit.
+To stop the VM after exiting the VM shell, run multipass stop charm-dev-vm.
+To restart the VM and re-open a shell into it, type multipass shell charm-dev-vm.
+
+```bash
+# To stop and exit the VM
+multipass stop my-juju-vm
+```
+
+Tear down automatically
+Delete the Multipass VM (below, my-juju-vm):
+
+```bash
+multipass delete --purge my-juju-vm
+```
+
+## Plan
+
+In this tutorial your goal is to set up a chat service on a cloud.
+
+First, decide which cloud (i.e., anything that provides storage, compute, and networking) you want to use. Juju supports a long list of clouds, including a low-ops, minimal production Kubernetes called ‘MicroK8s’. In a terminal, open a shell into your VM and verify that you already have MicroK8s installed (microk8s version).
+
+Next, decide which charms (i.e., software operators) you want to use. Charmhub provides a large collection. For this tutorial plan to use mattermost-k8s for the chat service, postgresql-k8s for its backing database, and self-signed-certificates to TLS-encrypt traffic from PostgreSQL.
+
+See more: Charm, Charmhub, Charmhub | mattermost-k8s, **[postgresql-k8s](https://charmhub.io/postgresql-k8s)**, **[self-signed-certificates](https://charmhub.io/self-signed-certificates)**
+
+Look around
+
+1. Learn more about your MicroK8s cloud.
+1a. Find out more about its snap: snap info microk8s.
+1b. Find out the installed version: microk8s version.
+1c. Check its enabled addons: microk8s status.
+1d. Inspect its .kube/config file: cat ~/.kube/config.
+1e. Try microk8s kubectl; you won’t need it once you have Juju, but it’s there anyway.
+
 ## START HERE
+
+**[Deploy](https://juju.is/docs/juju/tutorial)**
+
+juju
+You will need to install a Juju client; on the client, add your cloud and cloud credentials; on the cloud, bootstrap a controller (i.e., control plan); on the controller, add a model (i.e., canvas to deploy things on; namespace); on the model, deploy, configure, and integrate the charms that make up your chat service.
 
 <https://juju.is/docs/juju/set-up--tear-down-your-test-environment#heading--set-up-automatically>
 <https://multipass.run/docs/blueprint>

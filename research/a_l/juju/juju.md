@@ -14,6 +14,14 @@ Welcome to Juju, your entrypoint into the Juju universe!
 
 ![](https://discourse-charmhub-io.s3.eu-west-2.amazonaws.com/optimized/2X/7/738a914d2452961cb3d31bb3635b056ff7735b17_2_690x254.png)
 
+## Revolutionise the speed and quality of software operations with Juju
+
+Juju is an open source orchestration engine for software operators that enables the deployment, integration and lifecycle management of applications at any scale, on any infrastructure using charms.
+
+A charm is an operator - business logic encapsulated in reusable software packages that automate every aspect of an application's life.
+
+![](https://res.cloudinary.com/canonical/image/fetch/f_auto,q_auto,fl_sanitize,w_500,h_453/https://assets.ubuntu.com/v1/2c7e3fab-juju-header-illustration.svg)
+
 ## What is Juju
 
 Juju is an open source orchestration engine for software operators that enables the deployment, integration and lifecycle management of applications at any scale, on any infrastructure, using special software operators called ‘charms’.
