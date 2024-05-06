@@ -50,7 +50,26 @@ See more: **[Set up your test environment automatically > steps 1-2](https://juj
 
 Note: This document also contains a manual path, using which you can set things up without the Multipass VM or the charm-dev blueprint. However, please note that the manual path may yield slightly different results that may impact your experience of this tutorial. For best results we strongly recommend the automatic path, or else suggest that you follow the manual path in a way that stays very close to the definition of the charm-dev blueprint.
 
-Use Multipass with the charm-dev blueprint to launch a Juju-ready Ubuntu VM (below my-juju-vm):
+Use Multipass with the **[charm-dev blueprint](https://github.com/canonical/multipass-blueprints/blob/main/v1/charm-dev.yaml)** to launch a Juju-ready Ubuntu VM (below my-juju-vm):
+
+charm-dev readme.md
+
+```markdown
+# This blueprint creates a juju testing environment ready to go.
+# A microk8s controller and an empty model are created as part of the cloud-init script
+# so you can `juju deploy` right away.
+# For development convenience, charmcraft and tox are installed as well.
+# If you are a zsh user, the ohmyzsh juju plugin is already enabled when you switch to zsh.
+#
+# To create a VM similar to a GitHub-hosted runner:
+# multipass launch --memory 7G --cpus 2 --name charm-dev-2cpu-7g charm-dev
+# https://docs.github.com/en/actions/using-github-hosted-runners/about-github-hosted-runners
+#
+# To only test the cloud init portion of this blueprint:
+#
+#   yq '.instances."charm-dev"."cloud-init"."vendor-data"' v1/charm-dev.yaml > charm-dev-cloud-init.yaml
+#   multipass launch --cloud-init ./charm-dev-cloud-init.yaml --name test --memory 7G --cpus 2 --disk 30G
+```
 
 ```bash
 ssh brent@repsys11
@@ -137,12 +156,16 @@ Look around
 1d. Inspect its .kube/config file: cat ~/.kube/config.
 1e. Try microk8s kubectl; you won’t need it once you have Juju, but it’s there anyway.
 
-## START HERE
-
 **[Deploy](https://juju.is/docs/juju/tutorial)**
 
 juju
 You will need to install a Juju client; on the client, add your cloud and cloud credentials; on the cloud, bootstrap a controller (i.e., control plan); on the controller, add a model (i.e., canvas to deploy things on; namespace); on the model, deploy, configure, and integrate the charms that make up your chat service.
+
+The blueprint used to launch your VM has ensured that most of these things are already in place for you – verify that you have a Juju client, that it knows about your MicroK8s cloud and cloud credentials, that the MicroK8s cloud already has a controller bootstrapped on it, and that the Microk8s controller already has a model on it.
+
+## **[START HERE](https://juju.is/docs/juju/tutorial)**
+
+Just for practice, bootstrap a new controller and model with more informative names – a controller called 31microk8s (reflecting the version of Juju that came with your VM and the cloud that the controller lives on) and a model called chat (reflecting the fact that we intend to use it for applications related to a chat service).
 
 <https://juju.is/docs/juju/set-up--tear-down-your-test-environment#heading--set-up-automatically>
 <https://multipass.run/docs/blueprint>
