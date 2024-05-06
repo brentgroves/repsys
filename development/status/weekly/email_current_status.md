@@ -1,7 +1,7 @@
 # Status
 
-Good morning dear ones,
-I hope you and your loved ones are enjoying this beautiful spring weather and are doing OK!  As always please feel free to call me at home or work about anything you like!  
+Good afternoon dear ones,
+I hope you are all doing well on this beautiful day!  As always please feel free to call me at home or work about anything you like!  
 
 Sincerely yours,
 Brent G.

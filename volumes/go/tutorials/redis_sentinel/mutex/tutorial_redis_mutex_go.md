@@ -4,6 +4,11 @@
 **[Back to Current Status](../../../../../development/status/weekly/current_status.md)**\
 **[Back to Main](../../../../../README.md)**
 
+## references
+
+<https://github.com/redis/go-redis>
+<https://github.com/bsm/redislock>
+
 A mutual exclusion lock (or Mutex which is an abbreviation of Mutual Exclusion) is a very important and sometimes overlooked concept when building a thread-safe access to a system's resources. On top of it being overlooked it can be quite challenging to handle and can lead to race conditions in your system if not done correctly.
 
 In this post I will go over how you can use Redis (a popular and widely used key-value store) to help ensure your Go application has mutex on important operations and resources using **[Redis's implementation of distributed locks](https://redis.io/docs/manual/patterns/distributed-locks/)**.
@@ -22,15 +27,25 @@ In this example we will use the Redis client library github.com/go-redis/redis w
 
 ## Setup to debug
 
-# debug redis on k8s
+## Access Redis from dev system
 
-## add FQDN to /etc/hosts file
+setup k8s port-forwarding with kubectl for services app needs
 
-pod.namespace.svc.cluster.local
+```bash
+# To get your password run:
+export REDIS_PASSWORD=$(kubectl get secret --namespace redis-sentinel redis-sentinel -o jsonpath="{.data.redis-password}" | base64 -d)
 
-redis-sentinel-master.redis-sentinel.svc.cluster.local
-**Please be patient while the chart is being deployed**
 
+```bash
+# https://kubernetes.io/docs/tasks/access-application-cluster/port-forward-access-application-cluster/
+kubectl port-forward --namespace redis-sentinel svc/redis-sentinel-master 6379:6379 
+REDISCLI_AUTH="$REDIS_PASSWORD" redis-cli -h 127.0.0.1 -p 6379
+REDISCLI_AUTH="$REDIS_PASSWORD" redis-cli -h redis-sentinel-master.redis-sentinel.svc.cluster.local -p 6379
+```
+
+## Access Redis from redis-client pod
+
+```bash
 Redis&reg; can be accessed on the following DNS names from within your cluster:
 
     redis-sentinel-master.redis-sentinel.svc.cluster.local for read/write operations (port 6379)
@@ -56,13 +71,12 @@ kubectl exec --tty -i redis-client \
 REDISCLI_AUTH="$REDIS_PASSWORD" redis-cli -h redis-sentinel-master
 REDISCLI_AUTH="$REDIS_PASSWORD" redis-cli -h redis-sentinel-replicas
 
-To connect to your database from outside the cluster execute the following commands:
+```
 
 ## Creating the project
 
 ```bash
 pushd .
-mkdir -p ~/src/repsys/volumes/go/tutorials/redis_sentinel/mutex
 cd ~/src/repsys/volumes/go/tutorials/redis_sentinel/mutex
 go mod init mutex
 pushd .
@@ -71,8 +85,106 @@ go work use ./volumes/go/tutorials/redis_sentinel/mutex
 dirs -v
 pushd +X # where X is 0 based number from the bottom of dirs -v entries
 go get github.com/redis/go-redis/v9
+
 go: added github.com/cespare/xxhash/v2 v2.2.0
 go: added github.com/dgryski/go-rendezvous v0.0.0-20200823014737-9f7001d12a5f
 go: added github.com/redis/go-redis/v9 v9.5.1
+
+```
+
+## Create main.go
+
+```go
+package main
+
+import (
+    "fmt"
+    "time"
+
+    "github.com/go-redis/redis"
+)
+
+func acquireLock(client *redis.Client, key string, expiration time.Duration) (bool, error) {
+    // Use the SET command to try to acquire the lock
+    result, err := client.SetNX(key, "lock", expiration).Result()
+    if err != nil {
+        return false, err
+    }
+    return result, nil
+}
+
+func releaseLock(client *redis.Client, key string) error {
+    // Use the DEL command to release the lock
+    _, err := client.Del(key).Result()
+    return err
+}
+
+func main() {
+    // Create a new Redis client
+    client := redis.NewClient(&redis.Options{
+        Addr:     "localhost:6379",
+        Password: "", // no password set
+        DB:       0,  // use default DB
+    })
+
+    mutexKey := "my_lock"
+
+    // Try to acquire the first lock
+    isFirstLockSet, err := acquireLock(client, mutexKey, time.Second*10)
+    if err != nil {
+        fmt.Println("Error acquiring lock:", err)
+        return
+    }
+    if !isFirstLockSet {
+        fmt.Println("Failed to acquire lock")
+        return
+    }
+
+    // Do some work while holding the lock
+    fmt.Println("First lock acquired!")
+
+    isSecondLockSet, _ := acquireLock(client, mutexKey, time.Second*10)
+
+    if !isSecondLockSet {
+        fmt.Println("Could not get a second lock which is as expected this is where you would force the request out.")
+    } else {
+        fmt.Println("Second Lock acquired! This should not happen :)")
+    }
+
+    // Simulate some work by sleeping and try to acquire the lock again to see that it fails
+    time.Sleep(time.Second * 5)
+
+    isThirdLockSet, _ := acquireLock(client, mutexKey, time.Second*10)
+    if !isThirdLockSet {
+        fmt.Println("Still could not get the third lock since the first lock is still set.")
+    } else {
+        fmt.Println("Third Lock acquired! This should not happen :)")
+    }
+
+    // Release the lock
+    err = releaseLock(client, mutexKey)
+    if err != nil {
+        fmt.Println("Error releasing lock:", err)
+        return
+    }
+    fmt.Println("First lock released!")
+
+    // Try to acquire the lock again to show it has been released
+    isForthLockSet, _ := acquireLock(client, mutexKey, time.Second*10)
+    if !isForthLockSet {
+        fmt.Println("Failed to acquire lock")
+        return
+    } else {
+        fmt.Println("Forth Lock acquired!")
+    }
+
+    // Release the forth lock
+    err = releaseLock(client, mutexKey)
+    if err != nil {
+        fmt.Println("Error releasing lock:", err)
+        return
+    }
+    fmt.Println("Forth Lock released!")
+}
 
 ```
