@@ -18,12 +18,16 @@ gantt
     Redis Pub/Sub TB queue                        :d2,after d1,2d
     Redis TB mutex                                :d3,after d2,2d
     Azure SQL MI to Azure SQL DB                  :d4,after d3,5d   
-    Requester HTML Mockup                         :d5,after d4,5d   
+    Requester HTML Mockup                         :d5,after d4,5d  
+    Test k8s.io from within Cluster               :d6,after d5,5d  
+ 
 
 ```
 
 ## Task Notes
 
+- **[Test k8s.io from within Cluster](https://github.com/kubernetes/client-go/blob/master/examples/in-cluster-client-configuration/main.go)**
+  - read database passwords from k8s secret and write to k8s log.
 - **[Research Redis mutex](https://dev.to/jdvert/handling-mutexes-in-distributed-systems-with-redis-and-go-5g0d)**
 - **[Research Redis Pub/Sub](https://redis.io/docs/latest/develop/interact/pubsub/)**
 - **[In-Cluster K8s API access](https://github.com/kubernetes/client-go/tree/master/examples/in-cluster-client-configuration)**

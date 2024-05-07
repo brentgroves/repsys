@@ -5,7 +5,9 @@
 
 ## NEXT
 
-Remove password from mutex tutorial.
+- **[Test k8s.io from within Cluster](https://github.com/kubernetes/client-go/blob/master/examples/in-cluster-client-configuration/main.go)**
+  - read database passwords from k8s secret and write to k8s log.
+- Remove password from mutex tutorial.
 
 - **[Out-of-Cluster K8s API access](https://github.com/kubernetes/client-go/blob/master/examples/out-of-cluster-client-configuration/README.md)**
 
