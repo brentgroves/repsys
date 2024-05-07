@@ -3,12 +3,6 @@
 **[All Status](../weekly/status_list.md)**\
 **[Back to Main](../../../README.md)**
 
-## NEXT
-
-Remove password from mutex tutorial.
-
-- **[Out-of-Cluster K8s API access](https://github.com/kubernetes/client-go/blob/master/examples/out-of-cluster-client-configuration/README.md)**
-
 ## Project List
 
 - **[Report System](../../../projects/report_system/report_system.md)**
