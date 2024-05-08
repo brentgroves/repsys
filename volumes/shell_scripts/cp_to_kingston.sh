@@ -15,5 +15,8 @@ cp -r ~/src/backups /media/brent/KINGSTON/
 rm -rf /media/brent/KINGSTON/shell_scripts
 cp -r ~/src/repsys/volumes/shell_scripts /media/brent/KINGSTON/
 
+rm -rf /media/brent/KINGSTON/pki
+cp -r ~/src/pki /media/brent/KINGSTON/
+
 
 popd

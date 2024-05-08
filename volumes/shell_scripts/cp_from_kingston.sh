@@ -9,6 +9,7 @@ rm -rf ~/src/k8s
 cp -r /media/brent/KINGSTON/k8s ~/src
 rm -rf ~/src/backups
 cp -r /media/brent/KINGSTON/backups ~/src
-
+rm -rf ~/src/pki
+cp -r /media/brent/KINGSTON/pki ~/src
 
 popd
