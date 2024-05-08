@@ -5,6 +5,7 @@
 
 ## NEXT
 
+- Verify TB Power BI report runs from alb-utl and add it to repsys volume/powerbi dir.
 - **[Test k8s.io from within Cluster](https://github.com/kubernetes/client-go/blob/master/examples/in-cluster-client-configuration/main.go)**
   - read database passwords from k8s secret and write to k8s log.
 - Remove password from mutex tutorial.
