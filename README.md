@@ -51,6 +51,7 @@
   - **[Reboot](./it_admin/reboot.md)**
   - **[Backups](./it_admin/backups/backups.md)**
   - **[Drain Node](./it_admin/drain.md)**
+  - **[TLS/SSL certificates (Private)](../pki/gen-and-install-certs.md)**
 
 - Status
   - **[Current Status](./development/status/weekly/current_status.md)**
