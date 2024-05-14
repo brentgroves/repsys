@@ -13,9 +13,6 @@
 [submodule "volumes/java/etlj"]
 	path = volumes/java/etlj
 	url = git@github.com:brentgroves/etlj
-[submodule "volumes/pki"]
-	path = volumes/pki
-	url = git@github.com:brentgroves/pki.git
 [submodule "volumes/python/tutorials/flask_cert"]
 	path = volumes/python/tutorials/flask_cert
 	url = git@github.com:brentgroves/flask_cert.git
