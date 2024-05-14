@@ -32,10 +32,6 @@ echo "pulling flask_cert"
 cd ~/src/repsys/volumes/python/tutorials/flask_cert
 git pull
 
-echo "pulling pki"
-cd ~/src/repsys/volumes/pki
-git pull
-
 echo "pulling tbsql"
 cd ~/src/repsys/volumes/sql/tbsql
 git pull

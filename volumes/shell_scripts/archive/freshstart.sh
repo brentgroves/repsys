@@ -24,6 +24,8 @@ cd ~/src/repsys/volumes/python/tbetl
 git switch main
 cd ~/src/repsys/volumes/python/tutorials/flask_cert
 git switch main
+cd ~/src/repsys/volumes/pki
+git switch main
 cd ~/src/repsys/volumes/sql/tbsql
 git switch main
 cd ~/src/repsys/linux

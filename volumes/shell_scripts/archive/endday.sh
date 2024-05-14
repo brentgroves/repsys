@@ -54,6 +54,12 @@ git add -A
 git commit -m "updated source code"
 git push -u origin main
 
+cd ~/src/repsys/volumes/pki
+echo "commit pki"
+git add -A 
+git commit -m "updated source code"
+git push -u origin main
+
 cd ~/src/repsys/volumes/sql/tbsql
 echo "commit tbsql"
 git add -A 

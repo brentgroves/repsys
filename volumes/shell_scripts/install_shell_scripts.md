@@ -10,7 +10,7 @@ Go to a development system with the repo of the shell scripts to be installed.
 
 ```bash
 # From dev system 
-cd ~/src/repsys/shell_scripts
+cd ~/src/repsys/volumes/shell_scripts
 ssh brent@repsys12
 mkdir -p ~/bin/shell_scripts/
 chmod 755 ~/bin/shell_scripts/
