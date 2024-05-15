@@ -3,6 +3,10 @@
 **[Current Status](../development/status/weekly/current_status.md)**\
 **[Back to Main](../README.md)**
 
+Do not be anxious and do not be afraid because I am always with you.  Who can add one second to his life by worrying?
+
+I have a plan for you so surrender your plans to me and just ask for my help and direction and I will gladly guide you in what to say and do with the time I have given you my son.
+
 My son you can not find peace and contentment in work.  My intentions for work is that it can be a time we can enjoy together helping others. Peace and contentment will come when you follow me as I guide you in what to say and do. All results of your work are in my hands. I may decide to have you wait or fail at the tasks I have planned for you.  The work I give you is meant to teach you that work can never be a reliable source of peace and contentment. The only reliable source of these wonderful things is doing what is right by following me.
 
 Follow us my son and you will have peace and joy.  We will experience the many wonders of creation together. We love you and you are never alone because we will always be with you to guide and direct you our beloved son!

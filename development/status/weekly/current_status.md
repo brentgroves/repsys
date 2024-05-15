@@ -27,6 +27,10 @@
 - **[Task List](../../report_system/task_list.md)**
 - **[Requester Mockup](../../report_system/requester_mockup/requester_mockup.md)**
 
+## IT Admin
+
+- **[PKI](../../../it_admin/pki/pki_menu.md)**
+
 ## Task Tutorials & Notes
 
 - **[Handling Mutexes in Distributed Systems with Redis and Go](../../../volumes/go/tutorials/redis_sentinel/mutex/tutorial_redis_mutex_go.md)**
@@ -34,6 +38,15 @@
 - **[Out-of-Cluster K8s API access](../../../volumes/go/tutorials/k8s/out-of-cluster-client-configuration/out-of-cluster-client-configuration.md)**
 
 ## Research
+
+- **[Microstack](../../../research/m_z/microstack/NEXT_microstack.md)**\
+MicroStack is Canonical OpenStack implementation which comes with a K8s-native architecture. This includes OCI images for OpenStack control plane services wrapped with Kubernetes operators for streamlined lifecycle management.
+
+- **[Cloud-init](../../../research/m_z/multipass/cloud-init.md)**\
+Cloud images are operating system templates and every instance starts out as an identical clone of every other instance. It is the user data that gives every cloud instance its personality and cloud-init is the tool that applies user data to your instances automatically.
+
+- **[LXD](../../../research/a_l/lxd/lxd.md)**\
+LXD ( [lɛks'di:] 🔈) is a modern, secure and powerful system container and virtual machine manager. It provides a unified experience for running and managing full Linux systems inside containers or virtual machines.
 
 - **[Minio Object Storage](../../../research/m_z/minio/minio.md)**\
   Object storage is accessed via a REST API call. Using POST, PUT, GET to an HTTP endpoint, you can create, read, update and delete (the famous CRUD operations) your blobs of data.

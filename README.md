@@ -51,7 +51,9 @@
   - **[Reboot](./it_admin/reboot.md)**
   - **[Backups](./it_admin/backups/backups.md)**
   - **[Drain Node](./it_admin/drain.md)**
-  - **[TLS/SSL certificates (Private)](../pki/gen-and-install-certs.md)**
+  - **[PKI certificate process](./it_admin/pki/gen-and-install-certs.md)**
+  - **[Mach2 Certificate procedure](./it_admin/pki/gen_mach2_cert.md)**
+  - **[Creating and Signing an SSL Certificate using Niagara Certificate Management in Workbench](./research/m_z/niagara/ssl.md)**
 
 - Status
   - **[Current Status](./development/status/weekly/current_status.md)**

@@ -163,9 +163,44 @@ You will need to install a Juju client; on the client, add your cloud and cloud 
 
 The blueprint used to launch your VM has ensured that most of these things are already in place for you – verify that you have a Juju client, that it knows about your MicroK8s cloud and cloud credentials, that the MicroK8s cloud already has a controller bootstrapped on it, and that the Microk8s controller already has a model on it.
 
-## **[START HERE](https://juju.is/docs/juju/tutorial)**
-
 Just for practice, bootstrap a new controller and model with more informative names – a controller called 31microk8s (reflecting the version of Juju that came with your VM and the cloud that the controller lives on) and a model called chat (reflecting the fact that we intend to use it for applications related to a chat service).
+
+Finally, go ahead and deploy, configure, and integrate your charms.
+
+Sample session (yours should look very similar):
+
+Pro tip:
+Split your terminal window into three. In all, access your Multipass VM shell (multipass shell my-juju-vm) and then:
+
+Shell 1: Keep using it as you’ve already been doing so far, namely to type the commands in this tutorial.
+
+Shell 2: Run juju status --relations --watch 1s to watch your deployment status evolve. (Things are all right if your App Status and your Unit - Workload reach active and your Unit - Agent reaches idle. See more: **[Status](https://juju.is/docs/juju/status)**.)
+
+Shell 3: Run juju debug-log to watch all the details behind your deployment status. (Especially useful when things don’t evolve as expected. In that case, please get in touch.)
+
+```bash
+# Verify that you have the juju client installed:
+ubuntu@my-juju-vm:~$ juju version
+3.1.8-genericlinux-amd64
+
+# Verify that the client already knows about your microk8s cloud:
+ubuntu@my-juju-vm:~$ juju clouds
+# (Ignore the client-controller distinction for now --it'll make sense in a bit.)
+Only clouds with registered credentials are shown.
+There are more clouds, use --all to see them.
+
+Clouds available on the controller:
+Cloud     Regions  Default    Type
+microk8s  1        localhost  k8s  
+
+Clouds available on the client:
+Cloud      Regions  Default    Type  Credentials  Source    Description
+localhost  1        localhost  lxd   1            built-in  LXD Container Hypervisor
+microk8s   1        localhost  k8s   1            built-in  A Kubernetes Cluster
+
+```
+
+## **[START HERE](https://juju.is/docs/juju/tutorial)**
 
 <https://juju.is/docs/juju/set-up--tear-down-your-test-environment#heading--set-up-automatically>
 <https://multipass.run/docs/blueprint>

@@ -1,5 +1,8 @@
 # **[Creating and Signing an SSL Certificate using Niagara Certificate Management in Workbench](https://know.innon.com/creating-signing-ssl-certificate-niagara)**
 
+**[Back to Main](../../../README.md)**\
+**[Current Status](../../../development/status/weekly/current_status.md)**
+
 This article is taken from the original Tridium one available on Niagara Central here: <https://www.niagara-community.com/s/article/Creating-and-Signing-an-SSL-Certificate-using-Niagara-Certificate-Management-in-Workbench>
 
 The CA and Server Certificates can be created using the Certificate Management Tool. Alternatively you may choose to only create the Server Certificate using the Certificate Management Tool. Then generate a certificate signing request which is then sent to a well known signing authority to be signed and imported back into the station's 'User Key Store'.
