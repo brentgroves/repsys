@@ -10,6 +10,7 @@ use (
 	./volumes/go/tutorials/database/mysql/prepared_statement
 	./volumes/go/tutorials/database/mysql/query
 	./volumes/go/tutorials/database/mysql/tutorial_access_database
+	./volumes/go/tutorials/docker/go_web_docker
 	./volumes/go/tutorials/http/basics/fileserver
 	./volumes/go/tutorials/http/basics/webapp/gowiki
 	./volumes/go/tutorials/k8s/out-of-cluster-client-configuration
