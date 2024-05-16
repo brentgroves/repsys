@@ -20,6 +20,10 @@ echo "pulling runner"
 cd ~/src/repsys/volumes/go/runner
 git pull
 
+echo "pulling go_web_docker"
+cd ~/src/repsys/volumes/go/tutorials/docker/go_web_docker
+git pull
+
 echo "pulling etlj"
 cd ~/src/repsys/volumes/java/etlj
 git pull

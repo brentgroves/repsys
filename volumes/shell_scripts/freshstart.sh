@@ -16,6 +16,8 @@ cd ~/src/repsys/volumes/go/replib
 git switch main
 cd ~/src/repsys/volumes/go/runner
 git switch main
+cd ~/src/repsys/volumes/go/tutorials/docker/go_web_docker
+git switch main
 cd ~/src/repsys/volumes/java/etlj
 git switch main
 cd ~/src/repsys/volumes/pki

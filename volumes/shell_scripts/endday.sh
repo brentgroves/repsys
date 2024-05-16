@@ -35,6 +35,12 @@ git add -A
 git commit -m "updated source code"
 git push -u origin main
 
+cd ~/src/repsys/volumes/go/tutorials/docker/go_web_docker
+echo "commit go_web_docker"
+git add -A 
+git commit -m "updated source code"
+git push -u origin main
+
 cd ~/src/repsys/volumes/java/etlj
 echo "commit etlj"
 git add -A 
