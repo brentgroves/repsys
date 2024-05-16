@@ -25,3 +25,6 @@
 [submodule "linux"]
 	path = linux
 	url = git@github.com:brentgroves/linux.git
+[submodule "volumes/go/tutorials/docker/go_web_docker"]
+	path = volumes/go/tutorials/docker/go_web_docker
+	url = git@github.com:brentgroves/go_web_docker.git
