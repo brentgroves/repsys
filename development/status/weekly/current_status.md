@@ -45,26 +45,29 @@ Containerize your Go app.
 
 ## Research
 
-- **[Microstack](../../../research/m_z/microstack/NEXT_microstack.md)**\
-MicroStack is Canonical OpenStack implementation which comes with a K8s-native architecture. This includes OCI images for OpenStack control plane services wrapped with Kubernetes operators for streamlined lifecycle management.
-
 - **[Cloud-init](../../../research/m_z/multipass/cloud-init.md)**\
 Cloud images are operating system templates and every instance starts out as an identical clone of every other instance. It is the user data that gives every cloud instance its personality and cloud-init is the tool that applies user data to your instances automatically.
+
+- **[Docker Multi-stage builds](../../../research/a_l/docker/multi_stage_builds.md)**
+With multi-stage builds, you use multiple FROM statements in your Dockerfile. Each FROM instruction can use a different base, and each of them begins a new stage of the build. You can selectively copy artifacts from one stage to another, leaving behind everything you don't want in the final image.
 
 - **[LXD](../../../research/a_l/lxd/lxd.md)**\
 LXD ( [lɛks'di:] 🔈) is a modern, secure and powerful system container and virtual machine manager. It provides a unified experience for running and managing full Linux systems inside containers or virtual machines.
 
-- **[Minio Object Storage](../../../research/m_z/minio/minio.md)**\
-  Object storage is accessed via a REST API call. Using POST, PUT, GET to an HTTP endpoint, you can create, read, update and delete (the famous CRUD operations) your blobs of data.
-
 - **[Juju](../../../research/a_l/juju/tutorial.md)**\
   Juju provides a declarative and model-driven way to install, provision, maintain, update, upgrade, and integrate applications on and across Kubernetes containers, Linux containers, virtual machines, and bare metal machines, on public or private cloud.
 
-- **[Multipass](../../../research/m_z/multipass/multipass.md)**
-Multipass is a tool to generate cloud-style Ubuntu VMs quickly on Linux, macOS, and Windows. It gives you a simple but powerful CLI that allows you to quickly access an Ubuntu command line or create your own local mini-cloud.
-
 - **[Mattermost](../../../research/m_z/mattermost/mattermost.md)** \
   Mattermost is an open-source, self-hostable online chat service with file sharing, search, and integrations. It is designed as an internal chat for organisations and companies, and mostly markets itself as an open-source alternative to Slack and Microsoft Teams. Wikipedia
+
+- **[Microstack](../../../research/m_z/microstack/NEXT_microstack.md)**\
+MicroStack is Canonical OpenStack implementation which comes with a K8s-native architecture. This includes OCI images for OpenStack control plane services wrapped with Kubernetes operators for streamlined lifecycle management.
+
+- **[Minio Object Storage](../../../research/m_z/minio/minio.md)**\
+  Object storage is accessed via a REST API call. Using POST, PUT, GET to an HTTP endpoint, you can create, read, update and delete (the famous CRUD operations) your blobs of data.
+
+- **[Multipass](../../../research/m_z/multipass/multipass.md)**
+Multipass is a tool to generate cloud-style Ubuntu VMs quickly on Linux, macOS, and Windows. It gives you a simple but powerful CLI that allows you to quickly access an Ubuntu command line or create your own local mini-cloud.
 
 - **[Redis Distributed Locks (mutex)](../../../research/m_z/redis/mutex/distributed_locks.md)**\
   We are going to model our design with just three properties that, from our point of view, are the minimum guarantees needed to use distributed locks in an effective way.

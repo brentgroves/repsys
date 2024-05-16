@@ -4,6 +4,7 @@
 **[Back](../README.md)**
 
 - **[Cloud-init](./m_z/multipass/cloud-init.md)**
+- **[Docker Multi-stage builds](./a_l/docker/multi_stage_builds.md)**
 - **[JuJu](./a_l/juju/juju.md)**
 - **[LXD](./a_l/lxd/lxd.md)**
 - **[Mattermost](./m_z/mattermost/mattermost.md)**
