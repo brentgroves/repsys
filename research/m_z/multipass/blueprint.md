@@ -4,6 +4,13 @@ In Multipass, a blueprint is a recipe to create a customised Multipass instance.
 
 Blueprints consist of a base image, cloud-init initialisation, and a set of parameters describing the instance itself, e.g. minimum memory, CPUs or disk.
 
+## references
+
+- <https://github.com/canonical/multipass-blueprints/blob/main/README.md>
+- <https://cloud-images.ubuntu.com/>
+
+## Blueprints
+
 Blueprints are defined from a YAML file with the following schema:
 
 ## v1/<name>.yaml

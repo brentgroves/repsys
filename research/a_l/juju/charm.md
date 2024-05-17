@@ -69,3 +69,19 @@ Run system containers with LXD
 Fast, dense, and secure container and VM management at any scale. LXD provides a unified user experience for managing system containers and virtual machines.
 
 The LXD project is no longer part of the Linux Containers project but can now be found directly on Canonical's websites. Website: <https://ubuntu.com/lxd>
+
+## list charms
+
+```bash
+juju status
+Model  Controller  Cloud/Region        Version  SLA          Timestamp
+chat   31microk8s  microk8s/localhost  3.1.8    unsupported  16:17:23-04:00
+
+App             Version  Status   Scale  Charm           Channel    Rev  Address         Exposed  Message
+mattermost-k8s           waiting      1  mattermost-k8s  stable      27                  no       Waiting for database relation
+postgresql-k8s  14.10    active       1  postgresql-k8s  14/stable  193  10.152.183.124  no       Primary
+
+Unit               Workload  Agent      Address      Ports  Message
+mattermost-k8s/0*  waiting   idle                           Waiting for database relation
+postgresql-k8s/0*  active    executing  10.1.32.147         Primary
+```

@@ -8,11 +8,11 @@ Imagine your business needs a chat service such as Mattermost backed up by a dat
 
 ## references
 
-<https://juju.is/docs/juju/tutorial>
+- <https://juju.is/docs/juju/tutorial>
+- <https://charmhub.io/mattermost-k8s>
+- <https://charmhub.io/postgresql-k8s>
+- <https://charmhub.io/self-signed-certificates>
 
-<https://charmhub.io/mattermost-k8s>
-<https://charmhub.io/postgresql-k8s>
-<https://charmhub.io/self-signed-certificates>
 ![](https://discourse-charmhub-io.s3.eu-west-2.amazonaws.com/original/2X/7/7a96fdecba28aa84691a7eccf337615a2296d3d5.png)
 
 ## Setup: Create your test environment
@@ -22,7 +22,7 @@ When you’re trying things out, it’s good to be in an isolated environment, s
 This tutorial assumes you will use the Multipass blueprint. Still, if you'd prefer not to:
 At the “Add your cloud definition to Juju” step, when you install MicroK8s, if you’re installing it on Linux from snap, make sure to install the strictly-confined snap: ```snap install microk8s --channel 1.28-strict```.
 
-Strict Used by the majority of snaps. Strictly confined snaps run in complete isolation, up to a minimal access level that's deemed always safe.
+Strict Used by the majority of snaps. **[Strictly confined snaps](../../m_z/snap/confinement.md)** run in complete isolation, up to a minimal access level that's deemed always safe.
 
 For this and more, see steps 5 (“Set up your cloud”) and 6 (“Set up Juju”) of the Charm SDK | Set up your development environment manually guide.
 
@@ -87,6 +87,7 @@ See more: **[GitHub > multipass-blueprints > charm-dev.yaml](https://github.com/
 ## Open a shell into the VM
 
 ```bash
+ssh brent@repsys11
 multipass shell my-juju-vm
 ```
 
@@ -200,7 +201,129 @@ microk8s   1        localhost  k8s   1            built-in  A Kubernetes Cluster
 
 ```
 
+## Verify that the client already knows about your microk8s credentials
+
+```bash
+ubuntu@my-juju-vm:~$ juju credentials
+# (Ignore the client-controller distinction for now --it'll make sense in a bit.)
+Controller Credentials:
+Cloud     Credentials
+microk8s  microk8s
+
+Client Credentials:
+Cloud      Credentials
+localhost  localhost*
+microk8s   microk8s*
+
+ubuntu@my-juju-vm:~$ juju controllers
+Use --refresh option with this command to see the latest information.
+
+Controller  Model        User   Access     Cloud/Region         Models  Nodes    HA  Version
+lxd         welcome-lxd  admin  superuser  localhost/localhost       2      1  none  3.1.8  
+microk8s*   welcome-k8s  admin  superuser  microk8s/localhost        2      1     -  3.1.8  
+
+# Bootstrap a new controller:
+ubuntu@my-juju-vm:~$ juju bootstrap microk8s 31microk8s
+Creating Juju controller "31microk8s" on microk8s/localhost
+Bootstrap to Kubernetes cluster identified as microk8s/localhost
+Creating k8s resources for controller "controller-31microk8s"
+Starting controller pod
+Bootstrap agent now started
+Contacting Juju controller at 10.152.183.189 to verify accessibility...
+
+Bootstrap complete, controller "31microk8s" is now available in namespace "controller-31microk8s"
+
+Now you can run
+ juju add-model <model-name>
+to create a new model to deploy k8s workloads.
+
+juju controllers
+Use --refresh option with this command to see the latest information.
+
+Controller   Model        User   Access     Cloud/Region         Models  Nodes    HA  Version
+31microk8s*  -            admin  superuser  microk8s/localhost        1      1     -  3.1.8  
+lxd          welcome-lxd  admin  superuser  localhost/localhost       2      1  none  3.1.8  
+microk8s     welcome-k8s  admin  superuser  microk8s/localhost        2      1     -  3.1.8 
+```
+
+## Create a new model
+
+```bash
+ubuntu@my-juju-vm:~$ juju add-model chat
+Added 'chat' model on microk8s/localhost with credential 'microk8s' for user 'admin'
+
+# Deploy mattermost-k8s
+
+ubuntu@tutorial-vm:~$ juju deploy mattermost-k8s
+Located charm "mattermost-k8s" in charm-hub, revision 27
+Deploying "mattermost-k8s" from charm-hub charm "mattermost-k8s", revision 27 in channel stable on ubuntu@20.04/stable
+
+# Deploy and configure postgresql-k8s:
+ubuntu@tutorial-vm:~$ juju deploy postgresql-k8s --channel 14/stable --trust --config profile=testing
+Located charm "postgresql-k8s" in charm-hub, revision 193
+Deploying "postgresql-k8s" from charm-hub charm "postgresql-k8s", revision 193 in channel 14/stable on ubuntu@22.04/stable
+
+# Deploy self-signed-certificates:
+ubuntu@my-juju-vm:~$ juju deploy self-signed-certificates
+Located charm "self-signed-certificates" in charm-hub, revision 72
+Deploying "self-signed-certificates" from charm-hub charm "self-signed-certificates", revision 72 in channel stable on ubuntu@22.04/stable
+
+juju deploy self-signed-certificates
+Located charm "self-signed-certificates" in charm-hub, revision 72
+Deploying "self-signed-certificates" from charm-hub charm "self-signed-certificates", revision 72 in channel stable on ubuntu@22.04/stable
+Located: command not found
+Deploying: command not found
+
+
+# Integrate self-signed-certificates with postgresql-k8s:
+ubuntu@tutorial-vm:~$ juju integrate self-signed-certificates postgresql-k8s 
+
+# Integrate postgresql-k8s with mattermost-k8s:
+ubuntu@tutorial-vm:~$ juju integrate postgresql-k8s:db mattermost-k8s 
+
+# Check your model's status:
+ubuntu@my-juju-vm:~$ juju status --relations
+Model  Controller  Cloud/Region        Version  SLA          Timestamp
+chat   31microk8s  microk8s/localhost  3.1.8    unsupported  16:33:33-04:00
+
+App                       Version                         Status  Scale  Charm                     Channel    Rev  Address         Exposed  Message
+mattermost-k8s            .../mattermost:v8.1.3-20.04...  active      1  mattermost-k8s            stable      27  10.152.183.104  no       
+postgresql-k8s            14.10                           active      1  postgresql-k8s            14/stable  193  10.152.183.124  no       
+self-signed-certificates                                  active      1  self-signed-certificates  stable      72  10.152.183.75   no       
+
+Unit                         Workload  Agent  Address      Ports     Message
+mattermost-k8s/0*            active    idle   10.1.32.149  8065/TCP  
+postgresql-k8s/0*            active    idle   10.1.32.147            Primary
+self-signed-certificates/0*  active    idle   10.1.32.148            
+
+Integration provider                   Requirer                       Interface         Type     Message
+postgresql-k8s:database-peers          postgresql-k8s:database-peers  postgresql_peers  peer     
+postgresql-k8s:db                      mattermost-k8s:db              pgsql             regular  
+postgresql-k8s:restart                 postgresql-k8s:restart         rolling_op        peer     
+postgresql-k8s:upgrade                 postgresql-k8s:upgrade         upgrade           peer     
+self-signed-certificates:certificates  postgresql-k8s:certificates    tls-certificates  regular  
+```
+
+From the output of juju status> Unit > mattermost-k8s/0, retrieve the IP address and the port and feed them to curl on the template below:
+
+```bash
+# 10.1.32.149  8065
+curl 10.1.32.149:8065/api/v4/system/ping
+Sample session:
+
+ubuntu@my-juju-vm:~$ curl 10.1.32.149:8065/api/v4/system/ping
+{"ActiveSearchBackend":"database","AndroidLatestVersion":"","AndroidMinVersion":"","IosLatestVersion":"","IosMinVersion":"","status":"OK"}
+```
+
+Congratulations, your chat service is up and running!
+
+![](https://discourse-charmhub-io.s3.eu-west-2.amazonaws.com/original/2X/7/7f7d16728c8305907398427d1c041fcecefe0177.jpeg)
+
 ## **[START HERE](https://juju.is/docs/juju/tutorial)**
+
+Look around
+
+1. Learn more about juju.
 
 <https://juju.is/docs/juju/set-up--tear-down-your-test-environment#heading--set-up-automatically>
 <https://multipass.run/docs/blueprint>
