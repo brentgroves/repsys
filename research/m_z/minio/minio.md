@@ -1,5 +1,9 @@
 # **[Minio](https://medium.com/@martin.hodges/object-storage-in-your-kubernetes-cluster-using-minio-ad838decd9ce)**
 
+**[Back to Research List](../../research_list.md)**\
+**[Back to Current Status](../../../development/status/weekly/current_status.md)**\
+**[Back to Main](../../../README.md)**
+
 ## Access to the storage
 
 File systems are accessed via your operating system. Depending on which operating system you are running, you will access your files in different ways. In fact, the features offered by the file system will differ for each operating system.

@@ -47,6 +47,9 @@
 - **[Cloud-init](../../../research/m_z/multipass/cloud-init.md)**\
 Cloud images are operating system templates and every instance starts out as an identical clone of every other instance. It is the user data that gives every cloud instance its personality and cloud-init is the tool that applies user data to your instances automatically.
 
+- **[Continuous Integration and Continuous Delivery(CI/CD)](../../../research/a_l/continuous_integration_and_delivery/continuous_integration_and_delivery.md)**
+Semaphore lets you test and deploys code at the push of a button with hosted continuous integration and delivery. After you push code to GitHub, it quickly runs your tests on a platform with first-class Docker support and 100+ tools preinstalled.
+
 - **[Docker Multi-stage builds](../../../research/a_l/docker/multi_stage_builds.md)**
 With multi-stage builds, you use multiple FROM statements in your Dockerfile. Each FROM instruction can use a different base, and each of them begins a new stage of the build. You can selectively copy artifacts from one stage to another, leaving behind everything you don't want in the final image.
 
