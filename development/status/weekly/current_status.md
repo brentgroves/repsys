@@ -5,6 +5,9 @@
 
 ## NEXT
 
+- **[Zitadel](../../../research/m_z/zitadel/zitadel.md)**\
+Research Zitadel IAM
+
 - **[Go web app in Docker](https://semaphoreci.com/community/tutorials/how-to-deploy-a-go-web-application-with-docker)**
 
 - Verify TB Power BI report runs from alb-utl and add it to repsys volume/powerbi dir.
@@ -44,17 +47,14 @@
 
 ## Research
 
-- **[Cloud-init](../../../research/m_z/multipass/cloud-init.md)**\
-Cloud images are operating system templates and every instance starts out as an identical clone of every other instance. It is the user data that gives every cloud instance its personality and cloud-init is the tool that applies user data to your instances automatically.
+- **[Research List](../../../research/research_list.md)**\
+A list of all research for repsys.
 
 - **[Continuous Integration and Continuous Delivery(CI/CD)](../../../research/a_l/continuous_integration_and_delivery/continuous_integration_and_delivery.md)**
 Semaphore lets you test and deploys code at the push of a button with hosted continuous integration and delivery. After you push code to GitHub, it quickly runs your tests on a platform with first-class Docker support and 100+ tools preinstalled.
 
-- **[Docker Multi-stage builds](../../../research/a_l/docker/multi_stage_builds.md)**
-With multi-stage builds, you use multiple FROM statements in your Dockerfile. Each FROM instruction can use a different base, and each of them begins a new stage of the build. You can selectively copy artifacts from one stage to another, leaving behind everything you don't want in the final image.
-
-- **[LXD](../../../research/a_l/lxd/lxd.md)**\
-LXD ( [lɛks'di:] 🔈) is a modern, secure and powerful system container and virtual machine manager. It provides a unified experience for running and managing full Linux systems inside containers or virtual machines.
+- **[Zitadel](../../../research/m_z/zitadel/zitadel.md)**\
+ZITADEL is an open source, cloud-native Identity and Access Management solution (IAM) that provides various security mechanisms to secure applications and services. It uses a range of different authorization strategies, including Role-Based Access Control (RBAC) and Delegated Access.
 
 - **[Juju](../../../research/a_l/juju/tutorial.md)**\
   Juju provides a declarative and model-driven way to install, provision, maintain, update, upgrade, and integrate applications on and across Kubernetes containers, Linux containers, virtual machines, and bare metal machines, on public or private cloud.
@@ -62,23 +62,5 @@ LXD ( [lɛks'di:] 🔈) is a modern, secure and powerful system container and vi
 - **[Mattermost](../../../research/m_z/mattermost/mattermost.md)** \
   Mattermost is an open-source, self-hostable online chat service with file sharing, search, and integrations. It is designed as an internal chat for organisations and companies, and mostly markets itself as an open-source alternative to Slack and Microsoft Teams. Wikipedia
 
-- **[Microstack](../../../research/m_z/microstack/NEXT_microstack.md)**\
-MicroStack is Canonical OpenStack implementation which comes with a K8s-native architecture. This includes OCI images for OpenStack control plane services wrapped with Kubernetes operators for streamlined lifecycle management.
-
 - **[Minio Object Storage](../../../research/m_z/minio/minio.md)**\
   Object storage is accessed via a REST API call. Using POST, PUT, GET to an HTTP endpoint, you can create, read, update and delete (the famous CRUD operations) your blobs of data.
-
-- **[Multipass](../../../research/m_z/multipass/multipass.md)**
-Multipass is a tool to generate cloud-style Ubuntu VMs quickly on Linux, macOS, and Windows. It gives you a simple but powerful CLI that allows you to quickly access an Ubuntu command line or create your own local mini-cloud.
-
-- **[Redis Distributed Locks (mutex)](../../../research/m_z/redis/mutex/distributed_locks.md)**\
-  We are going to model our design with just three properties that, from our point of view, are the minimum guarantees needed to use distributed locks in an effective way.
-
-  - Safety property: Mutual exclusion. At any given moment, only one client can hold a lock.
-  - Liveness property A: Deadlock free. Eventually it is always possible to acquire a lock, even if the client that locked a resource crashes or gets partitioned.
-  - Liveness property B: Fault tolerance. As long as the majority of Redis nodes are up, clients are able to acquire and release locks. \
-
-  To acquire the lock, the way to go is the following:
-
-  `SET resource_name my_random_value NX PX 30000` \
-  The command will set the key only if it does not already exist (NX option), with an expire of 30000 milliseconds (PX option). The key is set to a value “my_random_value”. This value must be unique across all clients and all lock requests.
