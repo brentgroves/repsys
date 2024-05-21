@@ -3,6 +3,13 @@
 **[Current Status](../development/status/weekly/current_status.md)**
 **[Back](../README.md)**
 
+- IAM
+  - **[Token Sharing Approaches](./a_l/iam/token_sharing_approaches.md)**
+
+  ![](https://curity.io/images/resources/architect/api-security/token-sharing/mesh.svg)
+
+  If your system is high in the API security maturity model you most probably use access tokens to authorize access to your endpoints. Access tokens that your API receives are tailored for the use with the given endpoint - they will have a concrete set of scopes and claim values. But as shown above, your API most probably will talk to different services which may or may not be part of the same domain or even company. This means that the API will have to share the token it received with the other services it needs to access. There are different ways in which such token can be shared:
+
 - **[Cloud-init](./m_z/multipass/cloud-init.md)**\
 The standard for customising cloud instances
 Cloud images are operating system templates and every instance starts out as an identical clone of every other instance. It is the user data that gives every cloud instance its personality and cloud-init is the tool that applies user data to your instances automatically.
@@ -52,5 +59,5 @@ Use of REST APIs means that, regardless of the operating system you are running 
 - **[Snap Confinement](./m_z/snap/confinement.md)**\
 Strict Used by the majority of snaps. Strictly confined snaps run in complete isolation, up to a minimal access level that’s deemed always safe. Consequently, strictly confined snaps can not access files, network, processes or any other system resource without requesting specific access via an interface **[(see below)](https://snapcraft.io/docs/snap-confinement#interfaces)**.
 
-- **[Zitadel](./m_z/zitadel/zitadel.md)**\
+- **[Zitadel](./m_z/zitadel/zitadel_article.md)**\
 ZITADEL is an open source, cloud-native Identity and Access Management solution (IAM) that provides various security mechanisms to secure applications and services. It uses a range of different authorization strategies, including Role-Based Access Control (RBAC) and Delegated Access.

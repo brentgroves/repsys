@@ -51,6 +51,13 @@ Research Zitadel IAM
 - **[Research List](../../../research/research_list.md)**\
 A list of all research for repsys.
 
+- IAM
+  - **[Token Sharing Approaches](./a_l/iam/token_sharing_approaches.md)**
+
+  - ![](https://curity.io/images/resources/architect/api-security/token-sharing/mesh.svg)
+
+    If your system is high in the API security maturity model you most probably use access tokens to authorize access to your endpoints. Access tokens that your API receives are tailored for the use with the given endpoint - they will have a concrete set of scopes and claim values. But as shown above, your API most probably will talk to different services which may or may not be part of the same domain or even company. This means that the API will have to share the token it received with the other services it needs to access. There are different ways in which such token can be shared:
+
 - **[Continuous Integration and Continuous Delivery(CI/CD)](../../../research/a_l/continuous_integration_and_delivery/continuous_integration_and_delivery.md)**
 Semaphore lets you test and deploys code at the push of a button with hosted continuous integration and delivery. After you push code to GitHub, it quickly runs your tests on a platform with first-class Docker support and 100+ tools preinstalled.
 
