@@ -5,7 +5,7 @@
 
 ## NEXT
 
-- **[Zitadel](../../../research/m_z/zitadel/zitadel_article.md)**\
+- **[Zitadel](../../../research/m_z/zitadel/zitadel.md)**\
 Research Zitadel IAM
 
 - **[Go web app in Docker](https://semaphoreci.com/community/tutorials/how-to-deploy-a-go-web-application-with-docker)**
