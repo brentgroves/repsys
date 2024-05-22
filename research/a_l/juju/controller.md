@@ -1,5 +1,9 @@
 # **[Controller](https://infohub.delltechnologies.com/l/reference-architecture-canonical-charmed-openstack-ussuri-on-dell-emc-hardware/juju-components/#:~:text=Juju%20controller%20%2D%20the%20heart%20of,all%20your%20models%20and%20applications.)**
 
+**[Back to Juju List](./juju_list.md)**\
+**[Back to Current Status](../../../development/status/weekly/current_status.md)**\
+**[Back to Main](../../../README.md)**
+
 ## referernces
 
 <https://juju.is/docs/olm/controller>

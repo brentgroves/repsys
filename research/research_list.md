@@ -1,7 +1,7 @@
 # Research List
 
-**[Current Status](../development/status/weekly/current_status.md)**
-**[Back](../README.md)**
+**[Current Status](../development/status/weekly/current_status.md)**\
+**[Back Main](../README.md)**
 
 - IAM
   - **[Token Sharing Approaches](./a_l/iam/token_sharing_approaches.md)**
@@ -14,6 +14,9 @@
 The standard for customising cloud instances
 Cloud images are operating system templates and every instance starts out as an identical clone of every other instance. It is the user data that gives every cloud instance its personality and cloud-init is the tool that applies user data to your instances automatically.
 
+- **[All Canonical](./a_l/canonical/all_canonical.md)**\
+A list of the products offered by Canonical.
+
 - **[Continuous Integration and Continuous Delivery(CI/CD)](./a_l/continuous_integration_and_delivery/continuous_integration_and_delivery.md)**\
 Semaphore lets you test and deploys code at the push of a button with hosted continuous integration and delivery.\
 After you push code to GitHub, it quickly runs your tests on a platform with first-class Docker support and 100+ tools preinstalled.
@@ -21,7 +24,7 @@ After you push code to GitHub, it quickly runs your tests on a platform with fir
 - **[Docker Multi-stage builds](./a_l/docker/multi_stage_builds.md)**\
 With multi-stage builds, you use multiple FROM statements in your Dockerfile. Each FROM instruction can use a different base, and each of them begins a new stage of the build. You can selectively copy artifacts from one stage to another, leaving behind everything you don't want in the final image.
 
-- **[JuJu](./a_l/juju/juju.md)**\
+- **[JuJu](./a_l/juju/juju_list.md)**\
 Juju is an open source orchestration engine for software operators that enables the deployment, integration and lifecycle management of applications at any scale, on any infrastructure using charms.
 
 - **[Keycloak](./a_l/keycloak/keycloak.md)**

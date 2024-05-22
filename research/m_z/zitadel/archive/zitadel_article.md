@@ -305,13 +305,12 @@ Install Dependencies:
 With the terminal at the project directory (the one containing requirements.txt), run
 
 ```bash
-# note changed requirements.txt
-# added the line Werkzeug==2.2.2 to resolve an error
-# ImportError: cannot import name 'url_quote' from 'werkzeug.urls' 
 pip3 install -r requirements.txt
 Installing collected packages: urllib3, python-dotenv, PyJWT, pycparser, MarkupSafe, itsdangerous, idna, click, charset-normalizer, certifi, Werkzeug, requests, Jinja2, cffi, Flask, cryptography, Authlib
-Successfully installed Authlib-1.2.0 Flask-2.2.2 Jinja2-3.1.4 MarkupSafe-2.1.5 PyJWT-2.7.0 Werkzeug-2.2.2 certifi-2024.2.2 cffi-1.16.0 charset-normalizer-3.3.2 click-8.1.7 cryptography-42.0.7 idna-3.7 itsdangerous-2.2.0 pycparser-2.22 python-dotenv-0.21.0 requests-2.28.2 urllib3-1.26.18
+Successfully installed Authlib-1.2.0 Flask-2.2.2 Jinja2-3.1.4 MarkupSafe-2.1.5 PyJWT-2.7.0 Werkzeug-3.0.3 certifi-2024.2.2 cffi-1.16.0 charset-normalizer-3.3.2 click-8.1.7 cryptography-42.0.7 idna-3.7 itsdangerous-2.2.0 pycparser-2.22 python-dotenv-0.21.0 requests-2.28.2 urllib3-1.26.18
 ```
+
+**[Code](../../../../example-fine-grained-authorization/README.md)**
 
 to install the necessary dependencies.
 
@@ -327,67 +326,12 @@ The Flask API (in **[app.py](https://github.com/zitadel/example-fine-grained-aut
 cd ~/src/example-fine-grained-authorization
 python3 app.py
 
+Traceback (most recent call last):
+  File "/home/brent/src/example-fine-grained-authorization/app.py", line 1, in <module>
+    from flask import Flask, jsonify
+  File "/home/brent/src/example-fine-grained-authorization/env/lib/python3.10/site-packages/flask/__init__.py", line 5, in <module>
+    from .app import Flask as Flask
+  File "/home/brent/src/example-fine-grained-authorization/env/lib/python3.10/site-packages/flask/app.py", line 30, in <module>
+    from werkzeug.urls import url_quote
+ImportError: cannot import name 'url_quote' from 'werkzeug.urls' (/home/brent/src/example-fine-grained-authorization/env/lib/python3.10/site-packages/werkzeug/urls.py)
 ```
-
-If everything is set up correctly, your Flask application should now be running.
-
-This project was developed and tested with Python 3. If you encounter any issues, please ensure you're using a Python 3 interpreter.
-
-## Run the API
-
-1. Ensure you have cloned the repository and installed the necessary dependencies as described earlier.
-2. Run the client_credentials_token_generator.py script to generate an access token. Open your terminal and navigate to the project directory, then run the script using python3:
-
-```bash
-# open another terminal
-cd ~/src/example-fine-grained-authorization
-source env/bin/activate
-python3 client-credentials-token-generator.py 
-```
-
-3. If successful, this will print an access token to your terminal. This is the token you'll use to authenticate your requests to the API.
-
-4. If you didn't start the Flask API earlier, run the API by opening another terminal in the project directory and running:
-
-```bash
-python3 app.py
-```
-
-The API server should be now running and ready to accept requests.
-
-Now you can use cURL or any other HTTP client (like Postman) to make requests to the API. Remember to replace your_access_token in the curl commands with the access token you obtained in step 2.
-
-## Test the API
-
-Scenario 1: Junior Editor Tries to Edit an Article (Success) User with editor role and junior experience_level tries to call edit_article endpoint.
-
-```bash
-# curl http://localhost:5000/test
-curl -H "Authorization: Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6IjI2ODE0MjIxMzE5ODgyMTQ2OSIsInR5cCI6IkpXVCJ9.eyJhdWQiOlsiMjY4MDAyMDQyNjI5MzgwNTk0Il0sImV4cCI6MTcxNjM3NzI3NiwiaWF0IjoxNzE2MzM0MDc2LCJpc3MiOiJodHRwczovL3JlcHN5cy1kZXYtNHBhbmh3LnppdGFkZWwuY2xvdWQiLCJqb3VybmFsaXN0OmV4cGVyaWVuY2VfbGV2ZWwiOiJjMlZ1YVc5eSIsImp0aSI6IjI2ODE2Mzc5Mzc0ODUwNDkxMSIsIm5iZiI6MTcxNjMzNDA3Niwic3ViIjoiMjY4MDA1MjU1MDQ2NzgwMDk0IiwidXJuOnppdGFkZWw6aWFtOm9yZzpwcm9qZWN0OjI2ODAwMjA0MjYyOTM4MDU5NDpyb2xlcyI6eyJqb3VybmFsaXN0Ijp7IjI2Nzk5OTkxNjUzNjc0ODUzMCI6InJlcHN5cy56aXRhZGVsLmNsb3VkIn19LCJ1cm46eml0YWRlbDppYW06dXNlcjptZXRhZGF0YSI6eyJleHBlcmllbmNlX2xldmVsIjoiYzJWdWFXOXkifX0.xU5h3AAKb6IZxiyKRt2nF3KPcH7v6gWW9yRCajj-ZKS4UJ2OcjW4xLAexAgAwfGpWVw8LGKFnYGLl4kotohh9Bei5ocXbgB2k4OX3Y0e2I_WGb9E8psNsCQbxUg-uPzcuFXdzG7oBynfOvz5QMt5pZC1elR79SVUtXQn8__xFvIMUb3Sfa-uZcJ8gv6r4Cm6q9kjkiM4pKOXasxz0vpOlkh0ij1wvteCheImOYYve9XBwn9FovOuVtW82k3lofHQ1uJjmYQH_Hh0p_J3yGAyNjXfJz1EWf9QjLeaP4kukvFuI27H1M6uOBy5Y7r0ZQ9aj0uQASHGM0s_71dfwu22Ug" http://localhost:5000/testme
-
-# Lois Lan
-# curl -H "Authorization: Bearer <your_access_token>" -X POST http://localhost:5000/edit_article
-curl -H "Authorization: Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6IjI2ODE0MjIxMzE5ODgyMTQ2OSIsInR5cCI6IkpXVCJ9.eyJhdWQiOlsiMjY4MDAyMDQyNjI5MzgwNTk0Il0sImV4cCI6MTcxNjM3NzI3NiwiaWF0IjoxNzE2MzM0MDc2LCJpc3MiOiJodHRwczovL3JlcHN5cy1kZXYtNHBhbmh3LnppdGFkZWwuY2xvdWQiLCJqb3VybmFsaXN0OmV4cGVyaWVuY2VfbGV2ZWwiOiJjMlZ1YVc5eSIsImp0aSI6IjI2ODE2Mzc5Mzc0ODUwNDkxMSIsIm5iZiI6MTcxNjMzNDA3Niwic3ViIjoiMjY4MDA1MjU1MDQ2NzgwMDk0IiwidXJuOnppdGFkZWw6aWFtOm9yZzpwcm9qZWN0OjI2ODAwMjA0MjYyOTM4MDU5NDpyb2xlcyI6eyJqb3VybmFsaXN0Ijp7IjI2Nzk5OTkxNjUzNjc0ODUzMCI6InJlcHN5cy56aXRhZGVsLmNsb3VkIn19LCJ1cm46eml0YWRlbDppYW06dXNlcjptZXRhZGF0YSI6eyJleHBlcmllbmNlX2xldmVsIjoiYzJWdWFXOXkifX0.xU5h3AAKb6IZxiyKRt2nF3KPcH7v6gWW9yRCajj-ZKS4UJ2OcjW4xLAexAgAwfGpWVw8LGKFnYGLl4kotohh9Bei5ocXbgB2k4OX3Y0e2I_WGb9E8psNsCQbxUg-uPzcuFXdzG7oBynfOvz5QMt5pZC1elR79SVUtXQn8__xFvIMUb3Sfa-uZcJ8gv6r4Cm6q9kjkiM4pKOXasxz0vpOlkh0ij1wvteCheImOYYve9XBwn9FovOuVtW82k3lofHQ1uJjmYQH_Hh0p_J3yGAyNjXfJz1EWf9QjLeaP4kukvFuI27H1M6uOBy5Y7r0ZQ9aj0uQASHGM0s_71dfwu22Ug" -X POST http://localhost:5000/edit_article
-
-# curl -H "Authorization: Bearer <your_access_token>" -X POST http://localhost:5000/edit_article
-# Andy Sachs
-curl -H "Authorization: Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6IjI2ODE0MjIxMzE5ODgyMTQ2OSIsInR5cCI6IkpXVCJ9.eyJhdWQiOlsiMjY4MDAyMDQyNjI5MzgwNTk0Il0sImV4cCI6MTcxNjM3NTk4OCwiaWF0IjoxNzE2MzMyNzg4LCJpc3MiOiJodHRwczovL3JlcHN5cy1kZXYtNHBhbmh3LnppdGFkZWwuY2xvdWQiLCJqb3VybmFsaXN0OmV4cGVyaWVuY2VfbGV2ZWwiOiJjMlZ1YVc5eSIsImp0aSI6IjI2ODE2MTYzMjQ5MDc2MjU3NSIsIm5iZiI6MTcxNjMzMjc4OCwic3ViIjoiMjY4MDA1MjU1MDQ2NzgwMDk0IiwidXJuOnppdGFkZWw6aWFtOm9yZzpwcm9qZWN0OjI2ODAwMjA0MjYyOTM4MDU5NDpyb2xlcyI6eyJqb3VybmFsaXN0Ijp7IjI2Nzk5OTkxNjUzNjc0ODUzMCI6InJlcHN5cy56aXRhZGVsLmNsb3VkIn19LCJ1cm46eml0YWRlbDppYW06dXNlcjptZXRhZGF0YSI6eyJleHBlcmllbmNlX2xldmVsIjoiYzJWdWFXOXkifX0.uhPa8Sh4EldBx-A7da8o2iTv0iNWf-33QblZfWGJS_fKNrwj7vHHtVI2-zR41TsbhY6xIE7QmPaWbjHgIQvveYr_FO8NeNNcgKIi_N6tl_YfKzB7wCazbMwrbzYATm30MVSbxHYuP_WlBP8fqE4tOYR5yCLvN75eWi_YO3sMaPmSI0sWjL2S1um6sPYUTxhWUWupUJsL2AgcPjXQ_4PasbwHQInonPfvzz8g8EuUeChDHGp7-I3fvacYxWQOpbkudiCAQCgKJ82SGrou15A2tb4c4v_ShwCg34mGh0oHnnpjEOgbjSMOvV7esFHXn3-_wVzi2VjSZQGnH48EhmedFA" -X POST http://localhost:5000/edit_article
-
-
-Expected Output: {"message": "Article edited successfully"}
-<!doctype html>
-<html lang=en>
-<title>405 Method Not Allowed</title>
-<h1>Method Not Allowed</h1>
-<p>The method is not allowed for the requested URL.</p>
-
-# Miranda Priestly
-# curl -H "Authorization: Bearer <your_access_token>" -X POST http://localhost:5000/edit_article
-curl -H "Authorization: Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6IjI2ODE0MjIxMzE5ODgyMTQ2OSIsInR5cCI6IkpXVCJ9.eyJhdWQiOlsiMjY4MDAyMDQyNjI5MzgwNTk0Il0sImVkaXRvcjpleHBlcmllbmNlX2xldmVsIjoiYzJWdWFXOXkiLCJleHAiOjE3MTYzNzQ0MjMsImlhdCI6MTcxNjMzMTIyMywiaXNzIjoiaHR0cHM6Ly9yZXBzeXMtZGV2LTRwYW5ody56aXRhZGVsLmNsb3VkIiwianRpIjoiMjY4MTU5MDA3NDI2ODgzOTE5IiwibmJmIjoxNzE2MzMxMjIzLCJzdWIiOiIyNjgwMDY4NjQyODM4MTg0ODIiLCJ1cm46eml0YWRlbDppYW06b3JnOnByb2plY3Q6MjY4MDAyMDQyNjI5MzgwNTk0OnJvbGVzIjp7ImVkaXRvciI6eyIyNjc5OTk5MTY1MzY3NDg1MzAiOiJyZXBzeXMueml0YWRlbC5jbG91ZCJ9fSwidXJuOnppdGFkZWw6aWFtOnVzZXI6bWV0YWRhdGEiOnsiZXhwZXJpZW5jZV9sZXZlbCI6ImMyVnVhVzl5In19.mf2XjAiqQMlLw-957V9PkFSSL6Vqe3igHU8FtGsJYsrpp2vMktrgg-78y4EIkDbBfWn0b4s-TMRL4-iCTZ5OIfVnpxRcx1af22sK4yH8oKJaUx9_yjM4zul6w64rLT-cghe1DdNhNi7tpO-aPI5gKMWtBkkq1Xv7Dtmqni1t4yaRrrrINlYBW-Ttmg-atuFXbkT33LLq-CQox9Hk3xuvMg1rrV30-so28AUai68nCVRBdrarHhorYtwwaT-dvLCwsu6a_yNKDohs46rMUgliNSZx2bbqHy5M-9XC9PdGnWdC1Nlsmf1tERXpnb5Fzz9255nFkPNNY3t9YQa49A7BQw" -X POST http://localhost:5000/edit_article
-
-
-```
-
-## Next
-
-<https://zitadel.com/docs/examples/secure-api/go>

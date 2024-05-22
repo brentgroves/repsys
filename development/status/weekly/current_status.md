@@ -61,7 +61,7 @@ A list of all research for repsys.
 - **[Continuous Integration and Continuous Delivery(CI/CD)](../../../research/a_l/continuous_integration_and_delivery/continuous_integration_and_delivery.md)**
 Semaphore lets you test and deploys code at the push of a button with hosted continuous integration and delivery. After you push code to GitHub, it quickly runs your tests on a platform with first-class Docker support and 100+ tools preinstalled.
 
-- **[Zitadel](../../../research/m_z/zitadel/zitadel.md)**\
+- **[Zitadel](../../../research/m_z/zitadel/zitadel_article.md)**\
 ZITADEL is an open source, cloud-native Identity and Access Management solution (IAM) that provides various security mechanisms to secure applications and services. It uses a range of different authorization strategies, including Role-Based Access Control (RBAC) and Delegated Access.
 
 - **[Juju](../../../research/a_l/juju/tutorial.md)**\

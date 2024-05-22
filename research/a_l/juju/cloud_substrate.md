@@ -1,5 +1,9 @@
 # **[Cloud Substrate](https://juju.is/docs/juju/cloud)**
 
+**[Back to Juju List](./juju_list.md)**\
+**[Back to Current Status](../../../development/status/weekly/current_status.md)**\
+**[Back to Main](../../../README.md)**
+
 Cloud (substrate)
 See also: How to **[manage a cloud](https://juju.is/docs/juju/manage-clouds)**
 
