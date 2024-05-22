@@ -5,7 +5,10 @@
 
 ## NEXT
 
-- **[Zitadel](../../../research/m_z/zitadel/zitadel_article.md)**\
+- **[Go Backend with IAM](../../../../go_zit_backend/README.md#next)**\
+Read more about how to generate a key file.
+
+- **[Go Frontend with IAM](../../../research/m_z/zitadel/zitadel_article.md)**\
 Research Zitadel IAM
 
 - **[Go web app in Docker](https://semaphoreci.com/community/tutorials/how-to-deploy-a-go-web-application-with-docker)**
@@ -37,9 +40,15 @@ Research Zitadel IAM
 
 - **[PKI](../../../it_admin/pki/pki_menu.md)**
 
-## Task Tutorials & Notes
+## Tutorials
 
-- **[Testing your code during development can expose bugs that find their way in as you make changes.](https://go.dev/doc/tutorial/add-a-test)**
+- **[Go Tutorials](../../../volumes/go/tutorials/tutorial_list.md)**
+- **[Zitadel with Go (Backend)](../../../volumes/go/tutorials/zitadel/backend/backend.md)**
+- **[Zitadel with Go (Frontend)](../../../volumes/go/tutorials/zitadel/frontend/frontend.md)**
+- **[Handling Mutexes in Distributed Systems with Redis and Go](../../../volumes/go/tutorials/redis_sentinel/mutex/tutorial_redis_mutex_go.md)**
+- **[In-Cluster K8s API access](../../../volumes/go/tutorials/k8s/in_cluster_client_configuration/in-cluster-client-configuration.md)**
+- **[Out-of-Cluster K8s API access](../../../volumes/go/tutorials/k8s/out-of-cluster-client-configuration/out-of-cluster-client-configuration.md)**
+
 - **[Containerize your Go app and use semaphore for CI/CD.](../../../volumes/go/tutorials/docker/go_web_docker/go_web_docker.md)**
 
 - **[Handling Mutexes in Distributed Systems with Redis and Go](../../../volumes/go/tutorials/redis_sentinel/mutex/tutorial_redis_mutex_go.md)**

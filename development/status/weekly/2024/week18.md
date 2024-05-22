@@ -4,8 +4,6 @@
 **[Current Status](../current_status.md)**\
 **[Back to Main](../../../../README.md)**
 
-## **[Back](./status.md)**
-
 ```text
 Good morning dear ones,
 I hope you and your loved ones are enjoying this beautiful spring weather and are doing OK!  As always please feel free to call me at home or work about anything you like!  

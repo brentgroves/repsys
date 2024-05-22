@@ -14,6 +14,9 @@
 
 - Tutorials
   - Go
+    - **[Go Tutorials](./volumes/go/tutorials/tutorial_list.md)**
+    - **[Zitadel with Go (Backend)](./volumes/go/tutorials/zitadel/backend/backend.md)**
+    - **[Zitadel with Go (Frontend)](./volumes/go/tutorials/zitadel/frontend/frontend.md)**
     - **[Handling Mutexes in Distributed Systems with Redis and Go](./volumes/go/tutorials/redis_sentinel/mutex/tutorial_redis_mutex_go.md)**
     - **[In-Cluster K8s API access](./volumes/go/tutorials/k8s/in_cluster_client_configuration/in-cluster-client-configuration.md)**
     - **[Out-of-Cluster K8s API access](./volumes/go/tutorials/k8s/out-of-cluster-client-configuration/out-of-cluster-client-configuration.md)**
@@ -59,6 +62,7 @@
 
 - Status
   - **[Current Status](./development/status/weekly/current_status.md)**
+  - **[Status List](./development/status/weekly/status_list.md)**
 
 - **[VSCode for Web](./linux/a_d/code/vscode_for_web.md)**
   - **[View Repo On-Line](https://github.dev/brentgroves/repsys/blob/main/development/status/weekly/current_status.md)**
