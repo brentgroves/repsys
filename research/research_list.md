@@ -18,11 +18,14 @@ Cloud images are operating system templates and every instance starts out as an 
 A list of the products offered by Canonical.
 
 - **[Continuous Integration and Continuous Delivery(CI/CD)](./a_l/continuous_integration_and_delivery/continuous_integration_and_delivery.md)**\
-Semaphore lets you test and deploys code at the push of a button with hosted continuous integration and delivery.\
-After you push code to GitHub, it quickly runs your tests on a platform with first-class Docker support and 100+ tools preinstalled.
+  Semaphore lets you test and deploys code at the push of a button with hosted continuous integration and delivery.\
+  After you push code to GitHub, it quickly runs your tests on a platform with first-class Docker support and 100+ tools preinstalled.
 
 - **[Docker Multi-stage builds](./a_l/docker/multi_stage_builds.md)**\
-With multi-stage builds, you use multiple FROM statements in your Dockerfile. Each FROM instruction can use a different base, and each of them begins a new stage of the build. You can selectively copy artifacts from one stage to another, leaving behind everything you don't want in the final image.
+  With multi-stage builds, you use multiple FROM statements in your Dockerfile. Each FROM instruction can use a different base, and each of them begins a new stage of the build. You can selectively copy artifacts from one stage to another, leaving behind everything you don't want in the final image.
+
+- **[Github Runners](./a_l/github/runners.md)**\
+  Runners are the machines that execute jobs in a GitHub Actions workflow. For example, a runner can clone your repository locally, install testing software, and then run commands that evaluate your code.
 
 - **[JuJu](./a_l/juju/juju_list.md)**\
 Juju is an open source orchestration engine for software operators that enables the deployment, integration and lifecycle management of applications at any scale, on any infrastructure using charms.
