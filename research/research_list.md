@@ -51,6 +51,9 @@ LXD ( [lɛks'di:] 🔈) is a modern, secure and powerful system container and vi
 - **[Mattermost](./m_z/mattermost/mattermost.md)**\
 Mattermost is an open-source, self-hostable online chat service with file sharing, search, and integrations. It is designed as an internal chat for organisations and companies, and mostly markets itself as an open-source alternative to Slack and Microsoft Teams. Wikipedia
 
+- **[Deploy Mattermost to K8s](./m_z/mattermost/deploy_k8s.md)** \
+You can install and deploy a production-ready Mattermost system on a Kubernetes cluster using the Mattermost Kubernetes Operator in practically any environment with less IT overhead and more automation.
+
 - **[Microstack](./m_z/microstack/microstack.md)**\
 Install OpenStack anywhere in a few simple steps and let Kubernetes operators manage it for you. MicroStack (based on Sunbeam) is not yet another OpenStack on Kubernetes. It is a canonical OpenStack with native Kubernetes experience.
 

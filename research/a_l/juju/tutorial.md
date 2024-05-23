@@ -236,7 +236,8 @@ Contacting Juju controller at 10.152.183.189 to verify accessibility...
 Bootstrap complete, controller "31microk8s" is now available in namespace "controller-31microk8s"
 
 Now you can run
- juju add-model <model-name>
+# In Juju, a model is an abstraction that holds applications and application supporting components – machines, storage, network spaces, relations (integrations), etc.
+juju add-model <model-name>
 to create a new model to deploy k8s workloads.
 
 juju controllers
@@ -251,30 +252,29 @@ microk8s     welcome-k8s  admin  superuser  microk8s/localhost        2      1  
 ## Create a new model
 
 ```bash
+# In Juju, a model is an abstraction that holds applications and application supporting components – machines, storage, network spaces, relations (integrations), etc.
 ubuntu@my-juju-vm:~$ juju add-model chat
 Added 'chat' model on microk8s/localhost with credential 'microk8s' for user 'admin'
 
 # Deploy mattermost-k8s
 # juju deploy [options] <charm or bundle> [<application name>]
+# Deploys a new application or bundle to a machine / container.
 ubuntu@tutorial-vm:~$ juju deploy mattermost-k8s
 Located charm "mattermost-k8s" in charm-hub, revision 27
 Deploying "mattermost-k8s" from charm-hub charm "mattermost-k8s", revision 27 in channel stable on ubuntu@20.04/stable
 
 # Deploy and configure postgresql-k8s:
 # juju deploy [options] <charm or bundle> [<application name>]
+# Deploys a new application or bundle to a machine / container.
 ubuntu@tutorial-vm:~$ juju deploy postgresql-k8s --channel 14/stable --trust --config profile=testing
 Located charm "postgresql-k8s" in charm-hub, revision 193
 Deploying "postgresql-k8s" from charm-hub charm "postgresql-k8s", revision 193 in channel 14/stable on ubuntu@22.04/stable
 
 # Deploy self-signed-certificates:
 # juju deploy [options] <charm or bundle> [<application name>]
-ubuntu@my-juju-vm:~$ juju deploy self-signed-certificates
-Located charm "self-signed-certificates" in charm-hub, revision 72
-Deploying "self-signed-certificates" from charm-hub charm "self-signed-certificates", revision 72 in channel stable on ubuntu@22.04/stable
-
-juju deploy self-signed-certificates
 # https://github.com/canonical/self-signed-certificates-operator
 # An operator to provide self-signed X.509 certificates to your charms.
+ubuntu@my-juju-vm:~$ juju deploy self-signed-certificates
 Located charm "self-signed-certificates" in charm-hub, revision 72
 Deploying "self-signed-certificates" from charm-hub charm "self-signed-certificates", revision 72 in channel stable on ubuntu@22.04/stable
 Located: command not found
@@ -365,12 +365,10 @@ Congratulations, your chat service is up and running!
 
 ![](https://discourse-charmhub-io.s3.eu-west-2.amazonaws.com/original/2X/7/7f7d16728c8305907398427d1c041fcecefe0177.jpeg)
 
+Your computer with your Multipass VM, your MicroK8s cloud, and a live Juju controller (the ‘charm’ in the Controller Unit is the juju-controller charm) + a sample deployed application on it (the ‘charm’ in the Regular Unit stands for any charm that you might deploy). If in the Regular Application you replace the charm with mattermost-k8s and image a few more Regular Applications where you replace the charm with postgresql-k8s and, respectively, self-signed-certificates, and if you trace the path from postgresql-k8s’s Unit Agent through the Controller Agent to self-signed-certificates’s and, respectively, mattermost-k8s Unit Agent, you get a full representation of your deployment. (Note: After integration, the workloads may also know how to contact each other directly; still, all communication between their respective charms goes through the Juju controller and the result of that communication is stored in the database in the form of maps known as ‘relation data bags’.)
+
 ## **[START HERE](https://juju.is/docs/juju/tutorial)**
 
 Look around
 
-1. Learn more about juju.
-
-<https://juju.is/docs/juju/set-up--tear-down-your-test-environment#heading--set-up-automatically>
-<https://multipass.run/docs/blueprint>
-<https://multipass.run/docs/instance>
+## **[Continue Study of MicroStack](../../m_z/microstack/NEXT_microstack.md)**

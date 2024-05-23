@@ -9,6 +9,7 @@
 - **[charmhub](./charmhub.md)**
 - **[cloud substrate](./cloud_substrate.md)**
 - **[controller](./controller.md)**
+- **[deploy](./deploy.md)**
 - **[instance](./instance.md)**
 - **[integrate](./integrate.md)**
 - **[juju](./juju.md)**

@@ -43,8 +43,8 @@ Research Zitadel IAM
 ## Tutorials
 
 - **[Go Tutorials](../../../volumes/go/tutorials/tutorial_list.md)**
-- **[Zitadel with Go (Backend)](../../../volumes/go/tutorials/zitadel/backend/backend.md)**
-- **[Zitadel with Go (Frontend)](../../../volumes/go/tutorials/zitadel/frontend/frontend.md)**
+- **[Zitadel with Go (Backend)](../../../research/m_z/zitadel/go_backend/go_backend.md)**
+- **[Zitadel with Go (Frontend)](../../../research/m_z/zitadel/go_frontend/go_frontend.md)**
 - **[Handling Mutexes in Distributed Systems with Redis and Go](../../../volumes/go/tutorials/redis_sentinel/mutex/tutorial_redis_mutex_go.md)**
 - **[In-Cluster K8s API access](../../../volumes/go/tutorials/k8s/in_cluster_client_configuration/in-cluster-client-configuration.md)**
 - **[Out-of-Cluster K8s API access](../../../volumes/go/tutorials/k8s/out-of-cluster-client-configuration/out-of-cluster-client-configuration.md)**
@@ -81,8 +81,31 @@ Semaphore lets you test and deploys code at the push of a button with hosted con
 - **[Juju](../../../research/a_l/juju/tutorial.md)**\
   Juju provides a declarative and model-driven way to install, provision, maintain, update, upgrade, and integrate applications on and across Kubernetes containers, Linux containers, virtual machines, and bare metal machines, on public or private cloud.
 
+  ```bash
+  ssh brent@repsys11
+  multipass launch --cpus 4 --memory 8G --disk 50G --name my-juju-vm charm-dev
+
+  # This blueprint creates a juju testing environment ready to go.
+  # A microk8s controller and an empty model are created as part of the cloud-init script
+  # so you can `juju deploy` right away.
+  # For development convenience, charmcraft and tox are installed as well.
+  # If you are a zsh user, the ohmyzsh juju plugin is already enabled when you switch to zsh.
+  #
+  # To create a VM similar to a GitHub-hosted runner:
+  # multipass launch --memory 7G --cpus 2 --name charm-dev-2cpu-7g charm-dev
+  # https://docs.github.com/en/actions/using-github-hosted-runners/about-github-hosted-runners
+  #
+  # To only test the cloud init portion of this blueprint:
+  #
+  #   yq '.instances."charm-dev"."cloud-init"."vendor-data"' v1/charm-dev.yaml > charm-dev-cloud-init.yaml
+  #   multipass launch --cloud-init ./charm-dev-cloud-init.yaml --name test --memory 7G --cpus 2 --disk 30G
+  ```
+
 - **[Mattermost](../../../research/m_z/mattermost/mattermost.md)** \
   Mattermost is an open-source, self-hostable online chat service with file sharing, search, and integrations. It is designed as an internal chat for organisations and companies, and mostly markets itself as an open-source alternative to Slack and Microsoft Teams. Wikipedia
+
+- **[Deploy Mattermost to K8s](../../../research/m_z/mattermost/deploy_k8s.md)** \
+You can install and deploy a production-ready Mattermost system on a Kubernetes cluster using the Mattermost Kubernetes Operator in practically any environment with less IT overhead and more automation.
 
 - **[Minio Object Storage](../../../research/m_z/minio/minio.md)**\
   Object storage is accessed via a REST API call. Using POST, PUT, GET to an HTTP endpoint, you can create, read, update and delete (the famous CRUD operations) your blobs of data.
