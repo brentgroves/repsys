@@ -6,7 +6,7 @@
 ## NEXT
 
 - **[Go Backend with IAM](../../../../go_zit_backend/README.md#next)**\
-Read more about how to generate a key file.
+Read more about how to **[generate a key file](../../../research/m_z/zitadel/key_file.md)**.
 
 - **[Go Frontend with IAM](../../../research/m_z/zitadel/zitadel_article.md)**\
 Research Zitadel IAM

@@ -4,6 +4,8 @@
 **[Back Main](../README.md)**
 
 - IAM
+- **[OAuth vs JWT](./a_l/iam/oauth_vs_jwt.md)**\
+JWT defines a token format while OAuth deals in defining authorization protocols. JWT is simple and easy to learn from the initial stage while OAuth is complex. OAuth uses both client-side and server-side storage while JWT must use only client-side storage. JWT has limited scope and use cases.
   - **[Token Sharing Approaches](./a_l/iam/token_sharing_approaches.md)**
 
   ![](https://curity.io/images/resources/architect/api-security/token-sharing/mesh.svg)
