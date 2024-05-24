@@ -15,4 +15,5 @@
 - **[juju](./juju.md)**
 - **[kvm,lxc, lxd compare](./kvm_lxd_lxc.md)**
 - **[model](./model.md)**
-- **[juju tutorial](./tutorial.md)**
+- **[tutorial](./tutorial.md)**
+- **[unit](unit.md)**

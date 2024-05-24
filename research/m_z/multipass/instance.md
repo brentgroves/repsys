@@ -1,5 +1,10 @@
 # **[Multipass Instance](https://multipass.run/docs/instance)**
 
+**[Back to Research List](../../research_list.md)**\
+**[Back to Multipass Menu](./multipass_menu.md)**\
+**[Back to Current Status](../../../development/status/weekly/current_status.md)**\
+**[Back to Main](../../../README.md)**
+
 See also **[how to manage instances](https://multipass.run/docs/how-to-guides#heading--manage-instances)**
 
 An instance is a virtual machine created and managed by Multipass.

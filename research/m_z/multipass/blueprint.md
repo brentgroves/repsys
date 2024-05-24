@@ -1,5 +1,10 @@
 # **[Multipass Blueprint](https://multipass.run/docs/blueprint)**
 
+**[Back to Research List](../../research_list.md)**\
+**[Back to Multipass Menu](./multipass_menu.md)**\
+**[Back to Current Status](../../../development/status/weekly/current_status.md)**\
+**[Back to Main](../../../README.md)**
+
 In Multipass, a blueprint is a recipe to create a customised Multipass instance.
 
 Blueprints consist of a base image, cloud-init initialisation, and a set of parameters describing the instance itself, e.g. minimum memory, CPUs or disk.

@@ -7,7 +7,8 @@
 - Research
   - **[Research List](./research/research_list.md)**
   - **[Mattermost](./research/m_z/mattermost/mattermost.md)**
-  - **[Juju](./research/a_l/juju/juju_list.md)**
+  - **[Juju List](./research/a_l/juju/juju_list.md)**
+  - **[Multipass Menu](./research/m_z/multipass/multipass_menu.md)**
   - **[Redis Distributed Locks (mutex)](./research/m_z/redis/mutex/distributed_locks.md)**
   - **[Minio Object Storage](./research/m_z/minio/minio.md)**
   - **[Zitadel](./research/m_z/zitadel/zitadel_article.md)**

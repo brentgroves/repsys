@@ -63,6 +63,9 @@ Install OpenStack anywhere in a few simple steps and let Kubernetes operators ma
 Object storage is accessed via a REST API call. Using POST, PUT, GET to an HTTP endpoint, you can create, read, update and delete (the famous CRUD operations) your blobs of data.\
 Use of REST APIs means that, regardless of the operating system you are running on, your access to your object storage is the same.
 
+- **[Multipass Menu](./m_z/multipass/multipass_menu.md)**
+All Multipass research topics.
+
 - Redis
   - **[Distributed Locks](./m_z/redis/mutex/distributed_locks.md)**\
   This page describes a more canonical algorithm to implement distributed locks with Redis. We propose an algorithm, called **Redlock**, which implements a DLM which we believe to be safer than the vanilla single instance approach. We hope that the community will analyze it, provide feedback, and use it as a starting point for the implementations or more complex or alternative designs.

@@ -19,6 +19,10 @@ Local development and testing is a pain, but Multipass makes it easier by automa
 
 Developers can use Multipass to prototype cloud deployments and to create fresh, customized Linux dev environments on any machine. Mac and Windows users can use Multipass as the quickest way to get an Ubuntu command line on their system. New Ubuntu users can use it as a sandbox to try new things without affecting their host machine, and without the need to dual boot.
 
+## To uninstall Multipass, simply run
+
+```sudo snap remove multipass```
+
 ## **[Install Multipass](https://multipass.run/docs/installing-on-linux#heading--install-upgrade-uninstall)**
 
 To install Multipass, simply execute:

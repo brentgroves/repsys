@@ -367,6 +367,17 @@ Congratulations, your chat service is up and running!
 
 Your computer with your Multipass VM, your MicroK8s cloud, and a live Juju controller (the ‘charm’ in the Controller Unit is the juju-controller charm) + a sample deployed application on it (the ‘charm’ in the Regular Unit stands for any charm that you might deploy). If in the Regular Application you replace the charm with mattermost-k8s and image a few more Regular Applications where you replace the charm with postgresql-k8s and, respectively, self-signed-certificates, and if you trace the path from postgresql-k8s’s Unit Agent through the Controller Agent to self-signed-certificates’s and, respectively, mattermost-k8s Unit Agent, you get a full representation of your deployment. (Note: After integration, the workloads may also know how to contact each other directly; still, all communication between their respective charms goes through the Juju controller and the result of that communication is stored in the database in the form of maps known as ‘relation data bags’.)
 
+## Scale
+
+A database failure can be very costly. Let’s scale it!
+
+Sample session:
+
+```bash
+ubuntu@my-juju-vm:~$ juju scale-application postgresql-k8s 3
+postgresql-k8s scaled to 3 units
+```
+
 ## **[START HERE](https://juju.is/docs/juju/tutorial)**
 
 Look around
