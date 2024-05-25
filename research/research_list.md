@@ -3,21 +3,12 @@
 **[Current Status](../development/status/weekly/current_status.md)**\
 **[Back Main](../README.md)**
 
-- IAM
-- **[OAuth vs JWT](./a_l/iam/oauth_vs_jwt.md)**\
-JWT defines a token format while OAuth deals in defining authorization protocols. JWT is simple and easy to learn from the initial stage while OAuth is complex. OAuth uses both client-side and server-side storage while JWT must use only client-side storage. JWT has limited scope and use cases.
-  - **[Token Sharing Approaches](./a_l/iam/token_sharing_approaches.md)**
-
-  ![](https://curity.io/images/resources/architect/api-security/token-sharing/mesh.svg)
-
-  If your system is high in the API security maturity model you most probably use access tokens to authorize access to your endpoints. Access tokens that your API receives are tailored for the use with the given endpoint - they will have a concrete set of scopes and claim values. But as shown above, your API most probably will talk to different services which may or may not be part of the same domain or even company. This means that the API will have to share the token it received with the other services it needs to access. There are different ways in which such token can be shared:
+- **[Canonical](./a_l/canonical/all_canonical.md)**\
+A list of the products offered by Canonical.
 
 - **[Cloud-init](./m_z/multipass/cloud-init.md)**\
 The standard for customising cloud instances
 Cloud images are operating system templates and every instance starts out as an identical clone of every other instance. It is the user data that gives every cloud instance its personality and cloud-init is the tool that applies user data to your instances automatically.
-
-- **[All Canonical](./a_l/canonical/all_canonical.md)**\
-A list of the products offered by Canonical.
 
 - **[Continuous Integration and Continuous Delivery(CI/CD)](./a_l/continuous_integration_and_delivery/continuous_integration_and_delivery.md)**\
   Semaphore lets you test and deploys code at the push of a button with hosted continuous integration and delivery.\
@@ -28,6 +19,15 @@ A list of the products offered by Canonical.
 
 - **[Github Runners](./a_l/github/runners.md)**\
   Runners are the machines that execute jobs in a GitHub Actions workflow. For example, a runner can clone your repository locally, install testing software, and then run commands that evaluate your code.
+
+- IAM
+  - **[OAuth vs JWT](./a_l/iam/oauth_vs_jwt.md)**\
+JWT defines a token format while OAuth deals in defining authorization protocols. JWT is simple and easy to learn from the initial stage while OAuth is complex. OAuth uses both client-side and server-side storage while JWT must use only client-side storage. JWT has limited scope and use cases.
+  - **[Token Sharing Approaches](./a_l/iam/token_sharing_approaches.md)**
+
+  ![](https://curity.io/images/resources/architect/api-security/token-sharing/mesh.svg)
+
+  If your system is high in the API security maturity model you most probably use access tokens to authorize access to your endpoints. Access tokens that your API receives are tailored for the use with the given endpoint - they will have a concrete set of scopes and claim values. But as shown above, your API most probably will talk to different services which may or may not be part of the same domain or even company. This means that the API will have to share the token it received with the other services it needs to access. There are different ways in which such token can be shared:
 
 - **[JuJu](./a_l/juju/juju_list.md)**\
 Juju is an open source orchestration engine for software operators that enables the deployment, integration and lifecycle management of applications at any scale, on any infrastructure using charms.
@@ -50,11 +50,12 @@ LXC containers are often considered as something in the middle between a chroot 
 - **[LXD](./a_l/lxd/lxd.md)**\
 LXD ( [lɛks'di:] 🔈) is a modern, secure and powerful system container and virtual machine manager. It provides a unified experience for running and managing full Linux systems inside containers or virtual machines.
 
-- **[Mattermost](./m_z/mattermost/mattermost.md)**\
-Mattermost is an open-source, self-hostable online chat service with file sharing, search, and integrations. It is designed as an internal chat for organisations and companies, and mostly markets itself as an open-source alternative to Slack and Microsoft Teams. Wikipedia
+- Mattermost
+  - **[Mattermost](./m_z/mattermost/mattermost.md)**\
+  Mattermost is an open-source, self-hostable online chat service with file sharing, search, and integrations. It is designed as an internal chat for organisations and companies, and mostly markets itself as an open-source alternative to Slack and Microsoft Teams. Wikipedia
 
-- **[Deploy Mattermost to K8s](./m_z/mattermost/deploy_k8s.md)** \
-You can install and deploy a production-ready Mattermost system on a Kubernetes cluster using the Mattermost Kubernetes Operator in practically any environment with less IT overhead and more automation.
+  - **[Deploy Mattermost to K8s](./m_z/mattermost/deploy_k8s.md)** \
+  You can install and deploy a production-ready Mattermost system on a Kubernetes cluster using the Mattermost Kubernetes Operator in practically any environment with less IT overhead and more automation.
 
 - **[Microstack](./m_z/microstack/microstack.md)**\
 Install OpenStack anywhere in a few simple steps and let Kubernetes operators manage it for you. MicroStack (based on Sunbeam) is not yet another OpenStack on Kubernetes. It is a canonical OpenStack with native Kubernetes experience.
@@ -65,6 +66,9 @@ Use of REST APIs means that, regardless of the operating system you are running 
 
 - **[Multipass Menu](./m_z/multipass/multipass_menu.md)**
 All Multipass research topics.
+
+- **[Networking menu](./m_z/networking/networking_menu.md)**
+All networking and virtual networking research.
 
 - Redis
   - **[Distributed Locks](./m_z/redis/mutex/distributed_locks.md)**\

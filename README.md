@@ -9,6 +9,7 @@
   - **[Mattermost](./research/m_z/mattermost/mattermost.md)**
   - **[Juju List](./research/a_l/juju/juju_list.md)**
   - **[Multipass Menu](./research/m_z/multipass/multipass_menu.md)**
+  - **[Networking Menu](./research/m_z/networking/networking_menu.md)**
   - **[Redis Distributed Locks (mutex)](./research/m_z/redis/mutex/distributed_locks.md)**
   - **[Minio Object Storage](./research/m_z/minio/minio.md)**
   - **[Zitadel](./research/m_z/zitadel/zitadel_article.md)**
