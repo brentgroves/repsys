@@ -178,6 +178,8 @@ default via 10.182.32.1 dev enp5s0 proto dhcp src 10.182.32.89 metric 100
 
 ## start here
 
+vm on reports-alb has no problem reaching internet.
+
 <https://www.reddit.com/r/Ubuntu/comments/fyzkfj/cant_ping_outside_in_vm_created_by_multipass/>
 
 nmcli -p con show docker0
