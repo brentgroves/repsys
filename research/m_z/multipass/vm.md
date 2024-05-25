@@ -71,6 +71,111 @@ enp66s0f3   ethernet   Ethernet device
 mpbr0       bridge     Network bridge for Multipass
 ```
 
+<https://gist.github.com/ynott/f4bdc89b940522f2a0e4b32790ddb731>
+<https://discourse.ubuntu.com/t/how-to-add-network-interfaces/19544>
+
+```bash
+# last try
+multipass networks 
+Name        Type       Description
+br-eno1     bridge     Network bridge with eno1
+docker0     bridge     Network bridge
+eno1        ethernet   Ethernet device
+eno2        ethernet   Ethernet device
+eno3        ethernet   Ethernet device
+eno4        ethernet   Ethernet device
+enp66s0f0   ethernet   Ethernet device
+enp66s0f1   ethernet   Ethernet device
+enp66s0f2   ethernet   Ethernet device
+enp66s0f3   ethernet   Ethernet device
+mpbr0       bridge     Network bridge for Multipass
+
+multipass launch --network eno1                 
+Launched: idealistic-skunk
+multipass exec idealistic-skunk -- ip -br address show scope global
+enp5s0           UP             10.182.32.173/24 metric 100 fd42:f307:746a:5edd:5054:ff:fe70:cbc4/64 
+# above only had one interface
+
+multipass launch --network eno1 --network name=mpbr0,mode=manual
+[2024-05-24T19:41:13.246] [error] [lxd request] Error waiting on operation: (409) Failed start validation for device "eth0": Instance DNS name "airy-quahog" conflict between "eth0" and "eth2" because both are connected to same network
+launch failed: Error waiting on operation: (409) Failed start validation for device "eth0": Instance DNS name "airy-quahog" conflict between "eth0" and "eth2" because both are connected to same network
+
+multipass launch --network eno1 --network name=br-eno1,mode=manual
+# above did not work
+multipass launch 20.04 --network br-eno1
+nothing will give me wo ips
+
+ssh brent@10.1.2.139
+
+Thank you Lord for every trial and problem you allow me to go through today.
+sudo nmcli connection add type bridge con-name localbr ifname localbr \
+    ipv4.method manual ipv4.addresses 10.1.0.126/22
+
+This will create a bridge named localbr with IP 10.13.31.1/24. You can see the new device and address with ip -c -br addr show dev localbr. This should show:
+exit
+ip -c -br addr show dev localbr
+localbr          DOWN           10.1.0.126/22 
+
+You can also run multipass networks to confirm the bridge is available for Multipass to connect to.
+
+Step 2: Launch an instance with a manual network
+Next we launch an instance with an extra network in manual mode, connecting it to this bridge:
+
+multipass launch --name test1 --network name=localbr,mode=manual,mac="52:54:00:4b:ab:cd"
+
+You can also leave the MAC address unspecified (just --network name=localbr,mode=manual). If you do so, Multipass will generate a random MAC for you, but you will need to retrieve it in the next step.
+
+Step 3: Configure the extra interface
+We now need to configure the manual network interface inside the instance. We can achieve that using Netplan. The following command plants the required Netplan configuration file in the instance:
+
+$ multipass exec -n test1 -- sudo bash -c 'cat << EOF > /etc/netplan/10-custom.yaml
+network:
+    version: 2
+    ethernets:
+        extra0:
+            dhcp4: no
+            match:
+                macaddress: "52:54:00:4b:ab:cd"
+            addresses: [10.1.0.126/22]
+EOF'
+
+The IP address needs to be unique and in the same subnet as the bridge. The MAC address needs to match the extra interface inside the instance: either the one provided in step 2 or the one Multipass generated (you can find it with ip link).
+
+If you want to set a different name for the interface, you can add a set-name property.
+
+Step 4: Apply the new configuration
+We now tell netplan apply the new configuration inside the instance:
+
+multipass exec -n test1 -- sudo netplan apply
+You may also use netplan try, to have the outcome reverted if something goes wrong.
+
+Step 5: Confirm that it works
+You can confirm that the new IP is present in the instance with Multipass:
+
+multipass info test1
+Name:           test1
+State:          Running
+IPv4:           10.182.32.10
+                10.1.0.126
+Release:        Ubuntu 24.04 LTS
+Image hash:     08c7ba960c16 (Ubuntu 24.04 LTS)
+CPU(s):         1
+Load:           0.13 0.32 0.18
+Disk usage:     1.2GiB out of 9.6GiB
+Memory usage:   341.5MiB out of 945.6MiB
+Mounts: 
+
+The command above should show two IPs, the second of which is the one we just configured (10.13.31.13). You can use ping to confirm that it can be reached from the host:
+
+ping 10.1.0.126
+Conversely, you can also ping from the instance to the host:
+
+multipass exec -n test1 -- ping 10.1.0.126
+
+thank you Father for allowing me enjoy my work no matter if I succeed or fail.  You can not fail if you do not give up and I am in control of if you succeed or not.
+
+```
+
 ## Launch a fresh instance of the Ubuntu Jammy (22.04) LTS
 
 You can launch a fresh instance by specifying either the image name from the list (in this example, 22.04) or using an alias, if the image has one.
@@ -88,7 +193,7 @@ This will temporarily disrupt connectivity on that interface.
 Do you want to continue (yes/no)? 
 Configuring vm01 - waiting
 
-multipass launch 22.04 -n vm01 --network en01
+multipass launch 22.04 -n vm01 --network eno1
 $ multipass launch 22.04
 Launched: cleansing-guanaco
 ```
@@ -135,6 +240,8 @@ Disk usage:     15.7GiB out of 48.4GiB
 Memory usage:   2.4GiB out of 7.7GiB
 Mounts:         --
 ```
+
+multipass launch 22.04 -n vm02 --network br-eno1
 
 ## Connect to a running instance
 
