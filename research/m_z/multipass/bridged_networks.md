@@ -153,6 +153,19 @@ multipass exec -n test1 -- ping 10.1.0.126
 ```
 
 I could ping from the test1 to the host but not to reports-alb
+
+from repsys11
+ping -I mpbr0 10.1.0.113
+PING 10.1.0.113 (10.1.0.113) from 10.182.32.1 mpbr0: 56(84) bytes of data.
+From 10.182.32.1 icmp_seq=1 Destination Host Unreachable
+From 10.182.32.1 icmp_seq=2 Destination Host Unreachable
+From 10.182.32.1 icmp_seq=3 Destination Host Unreachable
+
+ping 10.1.0.113
+PING 10.1.0.113 (10.1.0.113) 56(84) bytes of data.
+64 bytes from 10.1.0.113: icmp_seq=1 ttl=64 time=0.413 ms
+64 bytes from 10.1.0.113: icmp_seq=2 ttl=64 time=0.403 ms
+
 <https://github.com/canonical/multipass/issues/2680>
 <https://multipass.run/docs/troubleshoot-networking>
 
@@ -166,6 +179,25 @@ default via 10.182.32.1 dev enp5s0 proto dhcp src 10.182.32.89 metric 100
 ## start here
 
 <https://www.reddit.com/r/Ubuntu/comments/fyzkfj/cant_ping_outside_in_vm_created_by_multipass/>
+
+nmcli -p con show docker0
+
+nmcli -p con show mpbr0
+ipv4.method:                            manual
+ipv4.dns:                               --
+ipv4.dns-search:                        --
+ipv4.dns-options:                       --
+ipv4.dns-priority:                      0
+ipv4.addresses:                         10.182.32.1/24
+ipv4.gateway:                           --
+ipv4.routes:                            --
+ipv4.route-metric:                      -1
+ipv4.route-table:                       0 (unspec)
+ipv4.routing-rules:                     --
+...
+IP4.ADDRESS[1]:                         10.182.32.1/24
+IP4.GATEWAY:                            --
+IP4.ROUTE[1]:                           dst = 10.182.32.0/24, nh = 0.0.0.0, mt = 0
 
 ## Conclusion
 
