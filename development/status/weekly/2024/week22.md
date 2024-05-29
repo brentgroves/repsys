@@ -5,16 +5,6 @@
 
 ## NEXT
 
-<https://multipass.run/docs/set-up-the-driver>
-
-<https://www.rootisgod.com/2022/Using-Multipass-Like-a-Personal-Cloud-Service/>
-sudo ip route add 10.182.32.0/24 via 10.1.0.125 (IP of your multipass server)
-
-<https://www.reddit.com/r/Fedora/comments/u498yj/solution_for_anybody_who_wants_it_creating/>
-<https://gist.github.com/lukasnellen/d597f52441d6ca65ea0f0c79c9c170e7>
-<https://en.wikipedia.org/wiki/MacVTap>
-<https://forum.level1techs.com/t/solved-how-to-expose-virtual-machines-to-local-network/156726/14>
-
 - **[Go Backend with IAM](../../../../go_zit_backend/README.md#next)**\
 Read more about how to **[generate a key file](../../../research/m_z/zitadel/key_file.md)**.
 
@@ -58,7 +48,12 @@ Research Zitadel IAM
 - **[Handling Mutexes in Distributed Systems with Redis and Go](../../../volumes/go/tutorials/redis_sentinel/mutex/tutorial_redis_mutex_go.md)**
 - **[In-Cluster K8s API access](../../../volumes/go/tutorials/k8s/in_cluster_client_configuration/in-cluster-client-configuration.md)**
 - **[Out-of-Cluster K8s API access](../../../volumes/go/tutorials/k8s/out-of-cluster-client-configuration/out-of-cluster-client-configuration.md)**
+
 - **[Containerize your Go app and use semaphore for CI/CD.](../../../volumes/go/tutorials/docker/go_web_docker/go_web_docker.md)**
+
+- **[Handling Mutexes in Distributed Systems with Redis and Go](../../../volumes/go/tutorials/redis_sentinel/mutex/tutorial_redis_mutex_go.md)**
+- **[In-Cluster K8s API access](../../../volumes/go/tutorials/k8s/in_cluster_client_configuration/in-cluster-client-configuration.md)**
+- **[Out-of-Cluster K8s API access](../../../volumes/go/tutorials/k8s/out-of-cluster-client-configuration/out-of-cluster-client-configuration.md)**
 
 ## Research
 

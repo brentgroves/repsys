@@ -11,6 +11,7 @@
   - **[Manage KVM virtual machines with virsh](./kvm/manage_virtual_machines_with_virsh.md)**
 - nmcli
   - **[nmcli](./nmcli/nmcli.md)**
+  - **[nmcli examples](./nmcli/nmcli_examples.md)**
   - **[add network bridge](./nmcli/how_to_add_network_bridge_nmcli.md)**
 - **[Ubuntu network management](./network_management.md)**
 - **[netplan](./netplan.md)**
@@ -20,4 +21,5 @@
   - **[Create a bridge using nmcli](./nmcli/how_to_add_network_bridge_nmcli.md)**
 - **[polkit](./polkit.md)**
 - **[Spanning Tree Protocal (STP)](./stp.md)**
+- **[udev](./udev.md)**
 - **[virsh](./virsh.md)**

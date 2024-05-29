@@ -6,6 +6,7 @@
 
 - Research
   - **[Research List](./research/research_list.md)**
+  - **[Canonical](./research/a_l/canonical/all_canonical.md)**
   - **[Mattermost](./research/m_z/mattermost/mattermost.md)**
   - **[Juju List](./research/a_l/juju/juju_list.md)**
   - **[Multipass Menu](./research/m_z/multipass/multipass_menu.md)**

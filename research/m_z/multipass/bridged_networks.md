@@ -5,6 +5,11 @@
 **[Back to Current Status](../../../development/status/weekly/current_status.md)**\
 **[Back to Main](../../../README.md)**
 
+## references
+
+- **[Add network interfaces](https://discourse.ubuntu.com/t/how-to-add-network-interfaces/19544))**
+- **[Need LXD](https://multipass.run/docs/networks-command)**
+
 ## **[Configure Static IP](https://multipass.run/docs/configure-static-ips)**
 
 This document explains how to create instances with static IPs in a new network, internal to the host. With this approach, instances get an extra IP that does not change with restarts. By using a separate, local network we avoid any IP conflicts. Instances retain the usual default interface with a DHCP-allocated IP, which gives them connectivity to the outside.
@@ -49,6 +54,8 @@ And lastly, we tell multipass to use lxd:
 multipass set local.driver=lxd
 ```
 
+Check which backend you are using with multipass get local.driver if it doesn't return lxd you need to make sure lxd is installed and set it as the driver multipass set local.driver=lxd
+
 ```bash
 # repsys11
 multipass networks
@@ -67,18 +74,33 @@ mpbr0       bridge     Network bridge for Multipass
 
 Thank you Lord for every trial and problem you allow me to go through today.
 
+```bash
+multipass launch --network en01 
+multipass launch --network en01 --network name=bridge0,mode=manual
+```
+
 ## Step 1: Create a Bridge
 
 The first step is to create a new bridge/switch with a static IP on your host. This is beyond the scope of Multipass but, as an example, here is how this can be achieved with NetworkManager (e.g. on Ubuntu Desktop):
 
 ```bash
 sudo nmcli connection add type bridge con-name localbr ifname localbr \
-    ipv4.method manual ipv4.addresses 10.1.0.126/22
+    ipv4.method manual ipv4.addresses 10.1.0.127/22
+
+nmcli connection add type bridge con-name mpbr ifname mpbr \
+    ipv4.method manual ipv4.addresses 10.13.31.1/24
+Connection 'mpbr' (793e1b43-e221-455c-b53b-0720befecdec) successfully added.
 
 #This will create a bridge named localbr with IP 10.1.0.126/22. You can see the new device and address with ip -c -br addr show dev localbr. This should show:
 
-ip -c -br addr show dev localbr
-localbr          DOWN           10.1.0.126/22
+# ip -c -br addr show dev localbr
+# localbr          UP             10.1.0.127/22
+
+ip -c -br addr show dev mpbr
+
+mpbr             DOWN           10.13.31.1/24
+
+
 ```
 
 You can also run multipass networks to confirm the bridge is available for Multipass to connect to.
@@ -88,9 +110,16 @@ You can also run multipass networks to confirm the bridge is available for Multi
 Next we launch an instance with an extra network in manual mode, connecting it to this bridge:
 
 ```bash
-multipass launch --name test1 --network name=localbr,mode=manual,mac="52:54:00:4b:ab:cd"
+multipass launch --name test6 --network name=mpbr,mode=manual,mac="4b:4b:00:4b:ab:cd"
 
-multipass launch --name test3 --network name=localbr,mode=manual,mac="53:54:00:4b:ab:cd" 
+# multipass launch --name test1 --network name=localbr,mode=manual,mac="52:54:00:4b:ab:cd"
+
+# multipass launch --name test3 --network name=localbr,mode=manual,mac="53:54:00:4b:ab:cd" 
+
+# multipass launch --name test4 --network name=localbr,mode=manual,mac="51:54:00:4b:ab:cd"
+
+# multipass launch --name test5 --network name=localbr,mode=manual,mac="55:55:00:4b:ab:cd"
+
 
 ```
 
@@ -101,15 +130,27 @@ You can also leave the MAC address unspecified (just --network name=localbr,mode
 We now need to configure the manual network interface inside the instance. We can achieve that using Netplan. The following command plants the required Netplan configuration file in the instance:
 
 ```bash
-$ multipass exec -n test1 -- sudo bash -c 'cat << EOF > /etc/netplan/10-custom.yaml
+multipass exec -n test6 -- sudo bash -c 'cat << EOF > /etc/netplan/10-custom.yaml
 network:
     version: 2
     ethernets:
         extra0:
             dhcp4: no
             match:
-                macaddress: "52:54:00:4b:ab:cd"
-            addresses: [10.1.0.126/22]
+                macaddress: "4b:4b:00:4b:ab:cd"
+            addresses: [10.13.31.13/24]
+EOF'
+
+
+# $ multipass exec -n test6 -- sudo bash -c 'cat << EOF > /etc/netplan/10-custom.yaml
+network:
+    version: 2
+    ethernets:
+        extra0:
+            dhcp4: no
+            match:
+                macaddress: "55:55:00:4b:ab:cd"
+            addresses: [10.1.0.127/22]
 EOF'
 ```
 
@@ -122,7 +163,10 @@ If you want to set a different name for the interface, you can add a set-name pr
 We now tell netplan apply the new configuration inside the instance:
 
 ```bash
-multipass exec -n test1 -- sudo netplan apply
+multipass exec -n test6 -- sudo netplan apply
+
+
+** (generate:2634): WARNING **: 19:52:03.729: Permissions for /etc/netplan/10-custom.yaml are too open. Netplan configuration should NOT be accessible by others.
 # You may also use netplan try, to have the outcome reverted if something goes wrong.
 
 ```

@@ -38,6 +38,37 @@ Networks are configured in .network files, see systemd.network(5), and virtual n
 Ubuntu ( and Debian ) uses NetworkManager by default but also has ifupdown installed by default if you want to configure /etc/network/interfaces. Running networkctl will tell you whether systemd-networkd is running and managing any interfaces
 
 ```bash
+# Networkd is running on ubuntu 22.04 server but not on Ubuntu 22.04 desktop
+ssh brent@reports11
+networkctl
+IDX LINK            TYPE     OPERATIONAL SETUP     
+  1 lo              loopback carrier     unmanaged
+  2 enp0s31f6       ether    routable    configured
+  9 vxlan.calico    vxlan    routable    unmanaged
+ 43 calid91e40e752c ether    degraded    unmanaged
+ 46 cali56b95e837c6 ether    degraded    unmanaged
+ 47 cali92441034b36 ether    degraded    unmanaged
+ 48 cali7b9b66e0016 ether    degraded    unmanaged
+ 49 cali715c7bde611 ether    degraded    unmanaged
+
+cat /etc/netplan/00-installer-config.yaml 
+# This is the network config written by 'subiquity'
+network:
+  ethernets:
+    enp0s31f6:
+      addresses:
+      - 10.1.0.110/22
+      nameservers:
+        addresses:
+        - 10.1.2.69
+        - 172.20.88.20
+        search: []
+      routes:
+      - to: default
+        via: 10.1.1.205
+  version: 2
+
+
 ssh brent@reports-alb
 networkctl
 WARNING: systemd-networkd is not running, output will be incomplete.
