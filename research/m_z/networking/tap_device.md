@@ -1,8 +1,16 @@
 # Network **[Tap device](https://blog.cloudflare.com/virtual-networking-101-understanding-tap)**
 
+**[Back to Research List](../../research_list.md)**\
+**[Back to Networking Menu](./networking_menu.md)**\
+**[Back to Current Status](../../../development/status/weekly/current_status.md)**\
+**[Back to Main](../../../README.md)**
+
 A tap device is a virtual network interface that looks like an ethernet network card. Instead of having real wires plugged into it, it exposes a nice handy file descriptor to an application willing to send/receive packets. Historically tap devices were mostly used to implement VPN clients. The machine would route traffic towards a tap interface, and a VPN client application would pick them up and process accordingly. For example this is what our Cloudflare WARP Linux client does. Here's how it looks on my laptop:
 
 ## references
+
+<https://www.redhat.com/en/blog/introduction-virtio-networking-and-vhost-net>
+<https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/virtualization_deployment_and_administration_guide/sect-virtual_networking-directly_attaching_to_physical_interface>
 
 <https://blog.cloudflare.com/virtual-networking-101-understanding-tap>
 

@@ -339,6 +339,67 @@ ip link show master localbr
 14: tap3910decf: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq master localbr state UP mode DEFAULT group default qlen 1000
     link/ether ae:da:0f:d7:33:6a brd ff:ff:ff:ff:ff:ff
 
+# Network **[Tap device](https://blog.cloudflare.com/virtual-networking-101-understanding-tap)**
+
+ip tuntap list           
+tape518c5a7: tap one_queue multi_queue vnet_hdr persist
+tap3910decf: tap one_queue multi_queue vnet_hdr persist
+
+nmcli con show tape518c5a7
+
+nmcli con show tape518c5a7
+
+connection.id:                          tape518c5a7
+connection.uuid:                        f43135b4-cc0a-4d41-8110-39d553800c23
+connection.stable-id:                   --
+connection.type:                        tun
+connection.interface-name:              tape518c5a7
+connection.autoconnect:                 no
+connection.autoconnect-priority:        0
+connection.autoconnect-retries:         -1 (default)
+connection.multi-connect:               0 (default)
+connection.auth-retries:                -1
+connection.timestamp:                   1717108605
+connection.read-only:                   no
+connection.permissions:                 --
+connection.zone:                        --
+connection.master:                      mpbr0
+connection.slave-type:                  bridge
+connection.autoconnect-slaves:          -1 (default)
+connection.secondaries:                 --
+connection.gateway-ping-timeout:        0
+connection.metered:                     unknown
+connection.lldp:                        default
+connection.mdns:                        -1 (default)
+connection.llmnr:                       -1 (default)
+connection.dns-over-tls:                -1 (default)
+connection.wait-device-timeout:         -1
+bridge-port.priority:                   32
+bridge-port.path-cost:                  2
+bridge-port.hairpin-mode:               no
+bridge-port.vlans:                      --
+tun.mode:                               2 (tap)
+tun.owner:                              --
+tun.group:                              --
+tun.pi:                                 no
+tun.vnet-hdr:                           no
+tun.multi-queue:                        yes
+GENERAL.NAME:                           tape518c5a7
+GENERAL.UUID:                           f43135b4-cc0a-4d41-8110-39d553800c23
+GENERAL.DEVICES:                        tape518c5a7
+GENERAL.IP-IFACE:                       tape518c5a7
+GENERAL.STATE:                          activated
+GENERAL.DEFAULT:                        no
+GENERAL.DEFAULT6:                       no
+GENERAL.SPEC-OBJECT:                    --
+GENERAL.VPN:                            no
+GENERAL.DBUS-PATH:                      /org/freedesktop/NetworkManager/ActiveConnection/6
+GENERAL.CON-PATH:                       /org/freedesktop/NetworkManager/Settings/12
+GENERAL.ZONE:                           --
+GENERAL.MASTER-PATH:                    /org/freedesktop/NetworkManager/Devices/12
+IP4.GATEWAY:                            --
+IP6.GATEWAY:                            --
+
 nmcli device show tape518c5a7
 
 GENERAL.DEVICE:                         tape518c5a7
@@ -362,6 +423,60 @@ GENERAL.CONNECTION:                     tap3910decf
 GENERAL.CON-PATH:                       /org/freedesktop/NetworkManager/ActiveConnection/7
 IP4.GATEWAY:                            --
 IP6.GATEWAY:                            --
+
+nmcli connection show tap3910decf
+
+connection.id:                          tap3910decf
+connection.uuid:                        5e15a73d-d042-4196-931f-302f9054de6a
+connection.stable-id:                   --
+connection.type:                        tun
+connection.interface-name:              tap3910decf
+connection.autoconnect:                 no
+connection.autoconnect-priority:        0
+connection.autoconnect-retries:         -1 (default)
+connection.multi-connect:               0 (default)
+connection.auth-retries:                -1
+connection.timestamp:                   1717108905
+connection.read-only:                   no
+connection.permissions:                 --
+connection.zone:                        --
+connection.master:                      localbr
+connection.slave-type:                  bridge
+connection.autoconnect-slaves:          -1 (default)
+connection.secondaries:                 --
+connection.gateway-ping-timeout:        0
+connection.metered:                     unknown
+connection.lldp:                        default
+connection.mdns:                        -1 (default)
+connection.llmnr:                       -1 (default)
+connection.dns-over-tls:                -1 (default)
+connection.wait-device-timeout:         -1
+bridge-port.priority:                   32
+bridge-port.path-cost:                  2
+bridge-port.hairpin-mode:               no
+bridge-port.vlans:                      --
+tun.mode:                               2 (tap)
+tun.owner:                              --
+tun.group:                              --
+tun.pi:                                 no
+tun.vnet-hdr:                           no
+tun.multi-queue:                        yes
+GENERAL.NAME:                           tap3910decf
+GENERAL.UUID:                           5e15a73d-d042-4196-931f-302f9054de6a
+GENERAL.DEVICES:                        tap3910decf
+GENERAL.IP-IFACE:                       tap3910decf
+GENERAL.STATE:                          activated
+GENERAL.DEFAULT:                        no
+GENERAL.DEFAULT6:                       no
+GENERAL.SPEC-OBJECT:                    --
+GENERAL.VPN:                            no
+GENERAL.DBUS-PATH:                      /org/freedesktop/NetworkManager/ActiveConnection/7
+GENERAL.CON-PATH:                       /org/freedesktop/NetworkManager/Settings/13
+GENERAL.ZONE:                           --
+GENERAL.MASTER-PATH:                    /org/freedesktop/NetworkManager/Devices/11
+IP4.GATEWAY:                            --
+IP6.GATEWAY:                            --
+
 
 multipass exec -n test1 -- networkctl
 IDX LINK   TYPE     OPERATIONAL SETUP     
