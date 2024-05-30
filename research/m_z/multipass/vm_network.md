@@ -615,3 +615,7 @@ May 30 06:36:09 test1 systemd-networkd[5396]: enp6s0: Configuring with /run/syst
 
 Conclusion
 You have now created a small internal network, local to your host, with Multipass instances that you can reach on the same IP across reboots. Instances still have the default NAT-ed network, which they can use to reach the outside world. You can combine this with other networks if you want to (e.g. for bridging).
+
+## Start Here
+
+**[Create an instance with multiple network interfaces](https://multipass.run/docs/create-an-instance#heading--create-an-instance-with-multiple-network-interfaces)**
