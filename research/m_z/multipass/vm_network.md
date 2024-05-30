@@ -146,6 +146,26 @@ ip -c -br addr show dev localbr
 localbr           DOWN           10.13.31.1/24
 ```
 
+Use the ip utility to display the link status of Ethernet devices that are ports of a specific bridge:
+
+```bash
+ip link show master localbr
+14: tap3910decf: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq master localbr state UP mode DEFAULT group default qlen 1000
+    link/ether ae:da:0f:d7:33:6a brd ff:ff:ff:ff:ff:ff
+
+nmcli device show tap3910decf
+GENERAL.DEVICE:                         tap3910decf
+GENERAL.TYPE:                           tun
+GENERAL.HWADDR:                         AE:DA:0F:D7:33:6A
+GENERAL.MTU:                            1500
+GENERAL.STATE:                          100 (connected (externally))
+GENERAL.CONNECTION:                     tap3910decf
+GENERAL.CON-PATH:                       /org/freedesktop/NetworkManager/ActiveConnection/7
+IP4.GATEWAY:                            --
+IP6.GATEWAY:                            --
+
+```
+
 You can also run multipass networks to confirm the bridge is available for Multipass to connect to.
 
 ```bash
@@ -297,7 +317,167 @@ multipass exec -n test1 -- ping 10.13.31.14
 multipass exec -n test1 -- ping google.com
 PING google.com (142.250.191.238) 56(84) bytes of data.
 64 bytes from ord38s32-in-f14.1e100.net (142.250.191.238): icmp_seq=1 ttl=116 time=9.71 ms
+```
 
+## Verify network interfaces
+
+```bash
+nmcli connection show 
+NAME                UUID                                  TYPE      DEVICE      
+Wired connection 2  74830679-74b4-3a2a-8711-e20103c77322  ethernet  eno2        
+mpbr0               88ee5396-79df-46b9-a4c9-46ac56fb0798  bridge    mpbr0       
+Wired connection 1  dff312d7-ea1c-3537-8be5-a1f7043797ce  ethernet  eno1        
+localbr             65380f4f-d384-4d03-8b8c-bdf9160ea065  bridge    localbr     
+tap3910decf         5e15a73d-d042-4196-931f-302f9054de6a  tun       tap3910decf 
+tape518c5a7         f43135b4-cc0a-4d41-8110-39d553800c23  tun       tape518c5a7 
+
+ip link show master mpbr0
+13: tape518c5a7: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq master mpbr0 state UP mode DEFAULT group default qlen 1000
+    link/ether e6:53:77:50:74:f1 brd ff:ff:ff:ff:ff:ff
+
+ip link show master localbr
+14: tap3910decf: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq master localbr state UP mode DEFAULT group default qlen 1000
+    link/ether ae:da:0f:d7:33:6a brd ff:ff:ff:ff:ff:ff
+
+nmcli device show tape518c5a7
+
+GENERAL.DEVICE:                         tape518c5a7
+GENERAL.TYPE:                           tun
+GENERAL.HWADDR:                         E6:53:77:50:74:F1
+GENERAL.MTU:                            1500
+GENERAL.STATE:                          100 (connected (externally))
+GENERAL.CONNECTION:                     tape518c5a7
+GENERAL.CON-PATH:                       /org/freedesktop/NetworkManager/ActiveConnection/6
+IP4.GATEWAY:                            --
+IP6.GATEWAY:                            --
+
+nmcli device show tap3910decf
+
+GENERAL.DEVICE:                         tap3910decf
+GENERAL.TYPE:                           tun
+GENERAL.HWADDR:                         AE:DA:0F:D7:33:6A
+GENERAL.MTU:                            1500
+GENERAL.STATE:                          100 (connected (externally))
+GENERAL.CONNECTION:                     tap3910decf
+GENERAL.CON-PATH:                       /org/freedesktop/NetworkManager/ActiveConnection/7
+IP4.GATEWAY:                            --
+IP6.GATEWAY:                            --
+
+multipass exec -n test1 -- networkctl
+IDX LINK   TYPE     OPERATIONAL SETUP     
+  1 lo     loopback carrier     unmanaged
+  2 enp5s0 ether    routable    configured
+  3 enp6s0 ether    routable    configured
+
+multipass exec -n test1 -- networkctl status
+● Interfaces: 1, 3, 2
+         State: routable                                      
+  Online state: online                                        
+       Address: 10.161.38.77 on enp5s0
+                10.13.31.13 on enp6s0
+                fd42:b403:217:3a62:5054:ff:fec9:3e64 on enp5s0
+                fe80::5054:ff:fec9:3e64 on enp5s0
+                fe80::5e13:55ff:fe48:4358 on enp6s0
+       Gateway: 10.161.38.1 on enp5s0
+                fe80::216:3eff:fe0f:4ee on enp5s0
+           DNS: 10.161.38.1
+                fd42:b403:217:3a62::1
+                fe80::216:3eff:fe0f:4ee
+Search Domains: lxd
+
+May 30 06:36:09 test1 systemd-networkd[5396]: enp6s0: Gained carrier
+May 30 06:36:09 test1 systemd-networkd[5396]: enp5s0: Gained IPv6LL
+May 30 06:36:09 test1 systemd-networkd[5396]: enp6s0: Gained IPv6LL
+May 30 06:36:09 test1 systemd-networkd[5396]: Enumeration completed
+May 30 06:36:09 test1 systemd-networkd[5396]: enp5s0: Configuring with /run/systemd/network/10-netplan-enp5s0.network.
+May 30 06:36:09 test1 systemd[1]: Started systemd-networkd.service - Network Configuration.
+May 30 06:36:09 test1 systemd-networkd[5396]: enp6s0: Configuring with /run/systemd/network/10-netplan-extra0.network.
+May 30 06:36:09 test1 systemd-networkd[5396]: enp5s0: DHCPv4 address 10.161.38.77/24, gateway 10.161.38.1 acquired from 10.161.38.1
+May 30 06:36:09 test1 systemd[1]: Starting systemd-networkd-wait-online.service - Wait for Network to be Configured...
+May 30 06:36:09 test1 systemd[1]: Finished systemd-networkd-wait-online.service - Wait for Network to be Configured.
+```
+
+To list various details of specific network interface called enp7s0, you can run the following command, which will list network configuration files, type, state, IP addresses (both IPv4 and IPv6), broadcast addresses, gateway, DNS servers, domain, routing information, maximum transmission unit (MTU), and queuing discipline (QDisc).
+
+```bash
+multipass exec -n test1 -- networkctl status enp5s0
+● 2: enp5s0
+                   Link File: /run/systemd/network/10-netplan-enp5s0.link
+                Network File: /run/systemd/network/10-netplan-enp5s0.network
+                       State: routable (configured)
+                Online state: online                                         
+                        Type: ether
+                        Path: pci-0000:05:00.0
+                      Driver: virtio_net
+                      Vendor: Red Hat, Inc.
+                       Model: Virtio 1.0 network device
+            Hardware Address: 52:54:00:c9:3e:64
+                         MTU: 1500 (min: 68, max: 65535)
+                       QDisc: mq
+IPv6 Address Generation Mode: eui64
+    Number of Queues (Tx/Rx): 2/2
+            Auto negotiation: no
+                     Address: 10.161.38.77 (DHCP4 via 10.161.38.1)
+                              fd42:b403:217:3a62:5054:ff:fec9:3e64
+                              fe80::5054:ff:fec9:3e64
+                     Gateway: 10.161.38.1
+                              fe80::216:3eff:fe0f:4ee
+                         DNS: 10.161.38.1
+                              fd42:b403:217:3a62::1
+                              fe80::216:3eff:fe0f:4ee
+              Search Domains: lxd
+           Activation Policy: up
+         Required For Online: yes
+             DHCP4 Client ID: IAID:0x49721f47/DUID
+           DHCP6 Client IAID: 0x49721f47
+           DHCP6 Client DUID: DUID-EN/Vendor:0000ab11fa956945a47e6700
+
+May 29 18:37:58 test1 systemd-networkd[715]: enp5s0: Configuring with /run/systemd/network/10-netplan-enp5s0.network.
+May 29 18:37:58 test1 systemd-networkd[715]: enp5s0: DHCP lease lost
+May 29 18:37:58 test1 systemd-networkd[715]: enp5s0: DHCPv6 lease lost
+May 29 18:37:58 test1 systemd-networkd[715]: enp5s0: DHCPv4 address 10.161.38.77/24, gateway 10.161.38.1 acquired from 10.161.38.1
+May 30 06:36:09 test1 systemd-networkd[715]: enp5s0: DHCPv6 lease lost
+May 30 06:36:09 test1 systemd-networkd[5396]: enp5s0: Link UP
+May 30 06:36:09 test1 systemd-networkd[5396]: enp5s0: Gained carrier
+May 30 06:36:09 test1 systemd-networkd[5396]: enp5s0: Gained IPv6LL
+May 30 06:36:09 test1 systemd-networkd[5396]: enp5s0: Configuring with /run/systemd/network/10-netplan-enp5s0.network.
+May 30 06:36:09 test1 systemd-networkd[5396]: enp5s0: DHCPv4 address 10.161.38.77/24, gateway 10.161.38.1 acquired from 10.161.38.1
+
+
+multipass exec -n test1 -- networkctl status enp6s0
+
+● 3: enp6s0
+                   Link File: /usr/lib/systemd/network/99-default.link
+                Network File: /run/systemd/network/10-netplan-extra0.network
+                       State: routable (configured)
+                Online state: online                                         
+                        Type: ether
+                        Path: pci-0000:06:00.0
+                      Driver: virtio_net
+                      Vendor: Red Hat, Inc.
+                       Model: Virtio 1.0 network device
+            Hardware Address: 5c:13:55:48:43:58
+                         MTU: 1500 (min: 68, max: 65535)
+                       QDisc: mq
+IPv6 Address Generation Mode: eui64
+    Number of Queues (Tx/Rx): 2/2
+            Auto negotiation: no
+                     Address: 10.13.31.13
+                              fe80::5e13:55ff:fe48:4358
+           Activation Policy: up
+         Required For Online: yes
+           DHCP6 Client DUID: DUID-EN/Vendor:0000ab11fa956945a47e6700
+
+May 29 18:37:58 test1 systemd-networkd[715]: enp6s0: Link UP
+May 29 18:37:58 test1 systemd-networkd[715]: enp6s0: Gained carrier
+May 29 18:37:58 test1 systemd-networkd[715]: enp6s0: Configuring with /run/systemd/network/10-netplan-extra0.network.
+May 29 18:37:58 test1 systemd-networkd[715]: enp6s0: DHCPv6 lease lost
+May 29 18:38:00 test1 systemd-networkd[715]: enp6s0: Gained IPv6LL
+May 30 06:36:09 test1 systemd-networkd[715]: enp6s0: DHCPv6 lease lost
+May 30 06:36:09 test1 systemd-networkd[5396]: enp6s0: Link UP
+May 30 06:36:09 test1 systemd-networkd[5396]: enp6s0: Gained carrier
+May 30 06:36:09 test1 systemd-networkd[5396]: enp6s0: Gained IPv6LL
+May 30 06:36:09 test1 systemd-networkd[5396]: enp6s0: Configuring with /run/systemd/network/10-netplan-extra0.network.
 
 ```
 
