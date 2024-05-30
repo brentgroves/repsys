@@ -1,4 +1,4 @@
-# **[How to configure a static IP](https://multipass.run/docs/configure-static-ips)**
+# **[VM Network](https://multipass.run/docs/configure-static-ips)**
 
 **[Back to Research List](../../research_list.md)**\
 **[Back to Networking Menu](./networking_menu.md)**\
@@ -9,8 +9,10 @@
 
 - **[bridge on ubuntu server](https://multipass.run/docs/create-an-instance#heading--create-an-instance-with-multiple-network-interfaces)**
 - **[nmcli bridge tutorial](https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/8/html/configuring_and_managing_networking/configuring-a-network-bridge_configuring-and-managing-networking)**
+- **[Add network bridge with nmcli (NetworkManager)](https://www.cyberciti.biz/faq/how-to-add-network-bridge-with-nmcli-networkmanager-on-linux/#google_vignette)**
+- **[How to add network interfaces in Multipass](https://discourse.ubuntu.com/t/how-to-add-network-interfaces/19544)**
 
-## How to configure static IPs
+## Create a network internal to the host
 
 This document explains how to create instances with static IPs in a new network, internal to the host. With this approach, instances get an extra IP that does not change with restarts. By using a separate, local network we avoid any IP conflicts. Instances retain the usual default interface with a DHCP-allocated IP, which gives them connectivity to the outside.
 
@@ -115,6 +117,13 @@ sudo nmcli connection add type bridge con-name localbr ifname localbr \
 
 Connection 'localbr' (65380f4f-d384-4d03-8b8c-bdf9160ea065) successfully added.
 
+nmcli connection show 
+NAME                UUID                                  TYPE      DEVICE      
+Wired connection 2  74830679-74b4-3a2a-8711-e20103c77322  ethernet  eno2        
+mpbr0               88ee5396-79df-46b9-a4c9-46ac56fb0798  bridge    mpbr0       
+Wired connection 1  dff312d7-ea1c-3537-8be5-a1f7043797ce  ethernet  eno1        
+localbr             65380f4f-d384-4d03-8b8c-bdf9160ea065  bridge    localbr 
+
 nmcli device show localbr
 GENERAL.DEVICE:                         localbr
 GENERAL.TYPE:                           bridge
@@ -184,10 +193,6 @@ ip -4 a
        valid_lft forever preferred_lft forever
 
 ```
-
-Since '''/etc/hosts``` has 10.1.0.135 as the static ip for repsys13 don't enslave the eno1 interface so I can still ssh to the system. Use the eno2 interface to add to the bridge.
-
-To use this device as a port, multipass will modify its connection profile.
 
 ## Step 2: Launch an instance with a manual network
 

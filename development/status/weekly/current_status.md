@@ -39,6 +39,7 @@ Research Zitadel IAM
 ## Development
 
 - **[Setup Development System](../../report_system/setup_dev_system/setup_dev_system.md)**
+- **[VM Network](../../report_system/vm_network.md)**
 - **[All Software MindMap](../../report_system/all_sw_mindmap.md)**
 - **[All Software Gantt](../../report_system/all_sw_gantt.md)**
 - **[Report Creation Sequence Diagram](../../report_system/report_creation_sequece_diagram.md)**
@@ -65,52 +66,7 @@ Research Zitadel IAM
 - **[Research List](../../../research/research_list.md)**\
 A list of all research for repsys.
 
-- IAM
-  - **[Token Sharing Approaches](./a_l/iam/token_sharing_approaches.md)**
-
-  - ![](https://curity.io/images/resources/architect/api-security/token-sharing/mesh.svg)
-
-    If your system is high in the API security maturity model you most probably use access tokens to authorize access to your endpoints. Access tokens that your API receives are tailored for the use with the given endpoint - they will have a concrete set of scopes and claim values. But as shown above, your API most probably will talk to different services which may or may not be part of the same domain or even company. This means that the API will have to share the token it received with the other services it needs to access. There are different ways in which such token can be shared:
-
-- **[Continuous Integration and Continuous Delivery(CI/CD)](../../../research/a_l/continuous_integration_and_delivery/continuous_integration_and_delivery.md)**
-Semaphore lets you test and deploys code at the push of a button with hosted continuous integration and delivery. After you push code to GitHub, it quickly runs your tests on a platform with first-class Docker support and 100+ tools preinstalled.
-
-- **[Zitadel](../../../research/m_z/zitadel/zitadel_article.md)**\
-  ZITADEL is an open source, cloud-native Identity and Access Management solution (IAM) that provides various security mechanisms to secure applications and services. It uses a range of different authorization strategies, including Role-Based Access Control (RBAC) and Delegated Access.
-
-![](https://github.com/zitadel/example-fine-grained-authorization/raw/main/screenshots/21%20-%20SU%20authorization%20.png)
-
-- **[Github Runners](../../../research/a_l/github/runners.md)**\
-  Runners are the machines that execute jobs in a GitHub Actions workflow. For example, a runner can clone your repository locally, install testing software, and then run commands that evaluate your code.
-
-- **[Juju](../../../research/a_l/juju/tutorial.md)**\
-  Juju provides a declarative and model-driven way to install, provision, maintain, update, upgrade, and integrate applications on and across Kubernetes containers, Linux containers, virtual machines, and bare metal machines, on public or private cloud.
-
-  ```bash
-  ssh brent@repsys11
-  multipass launch --cpus 4 --memory 8G --disk 50G --name my-juju-vm charm-dev
-
-  # This blueprint creates a juju testing environment ready to go.
-  # A microk8s controller and an empty model are created as part of the cloud-init script
-  # so you can `juju deploy` right away.
-  # For development convenience, charmcraft and tox are installed as well.
-  # If you are a zsh user, the ohmyzsh juju plugin is already enabled when you switch to zsh.
-  #
-  # To create a VM similar to a GitHub-hosted runner:
-  # multipass launch --memory 7G --cpus 2 --name charm-dev-2cpu-7g charm-dev
-  # https://docs.github.com/en/actions/using-github-hosted-runners/about-github-hosted-runners
-  #
-  # To only test the cloud init portion of this blueprint:
-  #
-  #   yq '.instances."charm-dev"."cloud-init"."vendor-data"' v1/charm-dev.yaml > charm-dev-cloud-init.yaml
-  #   multipass launch --cloud-init ./charm-dev-cloud-init.yaml --name test --memory 7G --cpus 2 --disk 30G
-  ```
-
 - **[Mattermost](../../../research/m_z/mattermost/mattermost.md)** \
   Mattermost is an open-source, self-hostable online chat service with file sharing, search, and integrations. It is designed as an internal chat for organisations and companies, and mostly markets itself as an open-source alternative to Slack and Microsoft Teams. Wikipedia
 
-- **[Deploy Mattermost to K8s](../../../research/m_z/mattermost/deploy_k8s.md)** \
-You can install and deploy a production-ready Mattermost system on a Kubernetes cluster using the Mattermost Kubernetes Operator in practically any environment with less IT overhead and more automation.
-
-- **[Minio Object Storage](../../../research/m_z/minio/minio.md)**\
-  Object storage is accessed via a REST API call. Using POST, PUT, GET to an HTTP endpoint, you can create, read, update and delete (the famous CRUD operations) your blobs of data.
+- **[VM Network](../../../research/m_z/multipass/vm_network.md)**
