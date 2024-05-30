@@ -331,6 +331,23 @@ localbr             65380f4f-d384-4d03-8b8c-bdf9160ea065  bridge    localbr
 tap3910decf         5e15a73d-d042-4196-931f-302f9054de6a  tun       tap3910decf 
 tape518c5a7         f43135b4-cc0a-4d41-8110-39d553800c23  tun       tape518c5a7 
 
+nmcli connection show localbr 
+GENERAL.NAME:                           localbr
+GENERAL.UUID:                           65380f4f-d384-4d03-8b8c-bdf9160ea065
+GENERAL.DEVICES:                        localbr
+GENERAL.IP-IFACE:                       localbr
+GENERAL.STATE:                          activated
+GENERAL.DEFAULT:                        no
+GENERAL.DEFAULT6:                       no
+GENERAL.SPEC-OBJECT:                    --
+GENERAL.VPN:                            no
+GENERAL.DBUS-PATH:                      /org/freedesktop/NetworkManager/ActiveConnection/4
+GENERAL.CON-PATH:                       /org/freedesktop/NetworkManager/Settings/10
+GENERAL.ZONE:                           --
+GENERAL.MASTER-PATH:                    --
+IP4.ADDRESS[1]:                         10.13.31.1/24
+
+
 ip link show master mpbr0
 13: tape518c5a7: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq master mpbr0 state UP mode DEFAULT group default qlen 1000
     link/ether e6:53:77:50:74:f1 brd ff:ff:ff:ff:ff:ff
