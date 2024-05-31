@@ -1,4 +1,4 @@
-# **[VM Network](https://multipass.run/docs/configure-static-ips)**
+# **[Configure Static IPs in Multipass](https://multipass.run/docs/configure-static-ips)**
 
 **[Back to Research List](../../research_list.md)**\
 **[Back to Networking Menu](./networking_menu.md)**\
@@ -228,7 +228,7 @@ d5:eb:35:ee:b4:14
 
 **[Notes launch command](https://multipass.run/docs/launch-command)**
 
-```
+```bash
 --network <spec>                      Add a network interface to the
                                         instance, where <spec> is in the
                                         "key=value,key=value" format, with the
@@ -493,6 +493,16 @@ GENERAL.ZONE:                           --
 GENERAL.MASTER-PATH:                    /org/freedesktop/NetworkManager/Devices/11
 IP4.GATEWAY:                            --
 IP6.GATEWAY:                            --
+
+
+ip shows us our links
+multipass exec -n test1 -- ip link list
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN mode DEFAULT group default qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+2: enp5s0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq state UP mode DEFAULT group default qlen 1000
+    link/ether 52:54:00:c9:3e:64 brd ff:ff:ff:ff:ff:ff
+3: enp6s0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq state UP mode DEFAULT group default qlen 1000
+    link/ether 5c:13:55:48:43:58 brd ff:ff:ff:ff:ff:ff
 
 
 multipass exec -n test1 -- networkctl

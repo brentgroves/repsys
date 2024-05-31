@@ -70,7 +70,19 @@ Research Zitadel IAM
 - **[Research List](../../../research/research_list.md)**\
 A list of all research for repsys.
 
+- **[Linux routing and traffic control](../../../research/m_z/networking/iproute2/introduction_to_iproute.md)** \
+The 2.2 and above Linux kernels include a completely redesigned network subsystem. This new networking code brings Linux performance and a feature set with little competition in the general OS arena. In fact, the new routing, filtering, and classifying code is more featureful than the one provided by many dedicated routers and firewalls and traffic shaping products.
+
+- **[Configure Static IPs](../../../research/m_z/multipass/config_static_ips.md)** \
+This document explains how to create instances with static IPs in a new network, internal to the host. With this approach, instances get an extra IP that does not change with restarts. By using a separate, local network we avoid any IP conflicts. Instances retain the usual default interface with a DHCP-allocated IP, which gives them connectivity to the outside.
+
+- **[Virtio-networking and OVS](../../../research/m_z/networking/virtual_networking/virtio-part1.md)**
+
+  Virtio was developed as a standardized open interface for virtual machines (VMs) to access simplified devices such as block devices and network adaptors. Virtio-net is a virtual ethernet card and is the most complex device supported so far by virtio.
+
+  In this post we will provide a high level solution overview of the virtio-networking architecture, based on establishing an interface between the host kernel and the VM guest kernel. We will present the basic building blocks including KVM, qemu and libvirt. We will look at the virtio spec and vhost protocol, and Open vSwitch (OVS) for connecting different VMs and connecting the outside world.
+
+![](https://www.redhat.com/rhdc/managed-files/2019-09-10-virtio-intro-fig4.jpg)
+
 - **[Mattermost](../../../research/m_z/mattermost/mattermost.md)** \
   Mattermost is an open-source, self-hostable online chat service with file sharing, search, and integrations. It is designed as an internal chat for organisations and companies, and mostly markets itself as an open-source alternative to Slack and Microsoft Teams. Wikipedia
-
-- **[VM Network](../../../research/m_z/multipass/vm_network.md)**
