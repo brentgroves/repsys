@@ -57,3 +57,137 @@ ip shows us our links
 3764: ppp0: <POINTOPOINT,MULTICAST,NOARP,UP> mtu 1492 qdisc pfifo_fast qlen 10
     link/ppp
 ```
+
+Your mileage may vary, but this is what it shows on my NAT router at home. I'll only explain part of the output as not everything is directly relevant.
+
+We first see the loopback interface. While your computer may function somewhat without one, I'd advise against it. The MTU size (Maximum Transfer Unit) is 3924 octets, and it is not supposed to queue. Which makes sense because the loopback interface is a figment of your kernel's imagination.
+
+I'll skip the dummy interface for now, and it may not be present on your computer. Then there are my two physical network interfaces, one at the side of my cable modem, the other one serves my home ethernet segment. Furthermore, we see a ppp0 interface.
+
+Note the absence of IP addresses. iproute disconnects the concept of 'links' and 'IP addresses'. With IP aliasing, the concept of 'the' IP address had become quite irrelevant anyhow.
+
+It does show us the MAC addresses though, the hardware identifier of our ethernet interfaces.
+
+ip shows us our IP addresses
+
+```bash
+[ahu@home ahu]$ ip address show        
+1: lo: <LOOPBACK,UP> mtu 3924 qdisc noqueue 
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 brd 127.255.255.255 scope host lo
+2: dummy: <BROADCAST,NOARP> mtu 1500 qdisc noop 
+    link/ether 00:00:00:00:00:00 brd ff:ff:ff:ff:ff:ff
+3: eth0: <BROADCAST,MULTICAST,PROMISC,UP> mtu 1400 qdisc pfifo_fast qlen 100
+    link/ether 48:54:e8:2a:47:16 brd ff:ff:ff:ff:ff:ff
+    inet 10.0.0.1/8 brd 10.255.255.255 scope global eth0
+4: eth1: <BROADCAST,MULTICAST,PROMISC,UP> mtu 1500 qdisc pfifo_fast qlen 100
+    link/ether 00:e0:4c:39:24:78 brd ff:ff:ff:ff:ff:ff
+3764: ppp0: <POINTOPOINT,MULTICAST,NOARP,UP> mtu 1492 qdisc pfifo_fast qlen 10
+    link/ppp 
+    inet 212.64.94.251 peer 212.64.94.1/32 scope global ppp0
+```
+
+## ip shows us our IP addresses
+
+```bash
+[ahu@home ahu]$ ip address show        
+1: lo: <LOOPBACK,UP> mtu 3924 qdisc noqueue 
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 brd 127.255.255.255 scope host lo
+2: dummy: <BROADCAST,NOARP> mtu 1500 qdisc noop 
+    link/ether 00:00:00:00:00:00 brd ff:ff:ff:ff:ff:ff
+3: eth0: <BROADCAST,MULTICAST,PROMISC,UP> mtu 1400 qdisc pfifo_fast qlen 100
+    link/ether 48:54:e8:2a:47:16 brd ff:ff:ff:ff:ff:ff
+    inet 10.0.0.1/8 brd 10.255.255.255 scope global eth0
+4: eth1: <BROADCAST,MULTICAST,PROMISC,UP> mtu 1500 qdisc pfifo_fast qlen 100
+    link/ether 00:e0:4c:39:24:78 brd ff:ff:ff:ff:ff:ff
+3764: ppp0: <POINTOPOINT,MULTICAST,NOARP,UP> mtu 1492 qdisc pfifo_fast qlen 10
+    link/ppp 
+    inet 212.64.94.251 peer 212.64.94.1/32 scope global ppp0
+```
+
+This contains more information. It shows all our addresses, and to which cards they belong. 'inet' stands for Internet (IPv4). There are lots of other address families, but these don't concern us right now.
+
+Let's examine eth0 somewhat closer. It says that it is related to the inet address '10.0.0.1/8'. What does this mean? The /8 stands for the number of bits that are in the Network Address. There are 32 bits, so we have 24 bits left that are part of our network. The first 8 bits of 10.0.0.1 correspond to 10.0.0.0, our Network Address, and our netmask is 255.0.0.0.
+
+The other bits are connected to this interface, so 10.250.3.13 is directly available on eth0, as is 10.0.0.1 for example.
+
+With ppp0, the same concept goes, though the numbers are different. Its address is 212.64.94.251, without a subnet mask. This means that we have a point-to-point connection and that every address, with the exception of 212.64.94.251, is remote. There is more information, however. It tells us that on the other side of the link there is, yet again, only one address, 212.64.94.1. The /32 tells us that there are no 'network bits'.
+
+It is absolutely vital that you grasp these concepts. Refer to the documentation mentioned at the beginning of this HOWTO if you have trouble.
+
+You may also note 'qdisc', which stands for Queueing Discipline. This will become vital later on.
+
+## ip shows us our routes
+
+Well, we now know how to find 10.x.y.z addresses, and we are able to reach 212.64.94.1. This is not enough however, so we need instructions on how to reach the world. The Internet is available via our ppp connection, and it appears that 212.64.94.1 is willing to spread our packets around the world, and deliver results back to us.
+
+```bash
+[ahu@home ahu]$ ip route show
+212.64.94.1 dev ppp0  proto kernel  scope link  src 212.64.94.251 
+10.0.0.0/8 dev eth0  proto kernel  scope link  src 10.0.0.1 
+127.0.0.0/8 dev lo  scope link 
+default via 212.64.94.1 dev ppp0 
+```
+
+This is pretty much self explanatory. The first 4 lines of output explicitly state what was already implied by ip address show, the last line tells us that the rest of the world can be found via 212.64.94.1, our default gateway. We can see that it is a gateway because of the word via, which tells us that we need to send packets to 212.64.94.1, and that it will take care of things.
+
+For reference, this is what the old route utility shows us:
+
+```bash
+[ahu@home ahu]$ route -n
+Kernel IP routing table
+Destination     Gateway         Genmask         Flags Metric Ref    Use
+Iface
+212.64.94.1     0.0.0.0         255.255.255.255 UH    0      0        0 ppp0
+10.0.0.0        0.0.0.0         255.0.0.0       U     0      0        0 eth0
+127.0.0.0       0.0.0.0         255.0.0.0       U     0      0        0 lo
+0.0.0.0         212.64.94.1     0.0.0.0         UG    0      0        0 ppp0
+```
+
+## ARP
+
+ARP is the Address Resolution Protocol as described in RFC 826. ARP is used by a networked machine to resolve the hardware location/address of another machine on the same local network. Machines on the Internet are generally known by their names which resolve to IP addresses. This is how a machine on the foo.com network is able to communicate with another machine which is on the bar.net network. An IP address, though, cannot tell you the physical location of a machine. This is where ARP comes into the picture.
+
+Let's take a very simple example. Suppose I have a network composed of several machines. Two of the machines which are currently on my network are foo with an IP address of 10.0.0.1 and bar with an IP address of 10.0.0.2. Now foo wants to ping bar to see that he is alive, but alas, foo has no idea where bar is. So when foo decides to ping bar he will need to send out an ARP request. This ARP request is akin to foo shouting out on the network "Bar (10.0.0.2)! Where are you?" As a result of this every machine on the network will hear foo shouting, but only bar (10.0.0.2) will respond. Bar will then send an ARP reply directly back to foo which is akin bar saying, "Foo (10.0.0.1) I am here at 00:60:94:E9:08:12." After this simple transaction that's used to locate his friend on the network, foo is able to communicate with bar until he (his arp cache) forgets where bar is (typically after 15 minutes on Unix).
+
+Now let's see how this works. You can view your machines current arp/neighbor cache/table like so:
+
+```bash
+[root@espa041 /home/src/iputils]# ip neigh show
+9.3.76.42 dev eth0 lladdr 00:60:08:3f:e9:f9 nud reachable
+9.3.76.1 dev eth0 lladdr 00:06:29:21:73:c8 nud reachable
+```
+
+As you can see my machine espa041 (9.3.76.41) knows where to find espa042 (9.3.76.42) and espagate (9.3.76.1). Now let's add another machine to the arp cache.
+
+```bash
+[root@espa041 /home/paulsch/.gnome-desktop]# ping -c 1 espa043
+PING espa043.austin.ibm.com (9.3.76.43) from 9.3.76.41 : 56(84) bytes of data.
+64 bytes from 9.3.76.43: icmp_seq=0 ttl=255 time=0.9 ms
+
+--- espa043.austin.ibm.com ping statistics ---
+1 packets transmitted, 1 packets received, 0% packet loss
+round-trip min/avg/max = 0.9/0.9/0.9 ms
+
+[root@espa041 /home/src/iputils]# ip neigh show
+9.3.76.43 dev eth0 lladdr 00:06:29:21:80:20 nud reachable
+9.3.76.42 dev eth0 lladdr 00:60:08:3f:e9:f9 nud reachable
+9.3.76.1 dev eth0 lladdr 00:06:29:21:73:c8 nud reachable
+```
+
+As a result of espa041 trying to contact espa043, espa043's hardware address/location has now been added to the arp/neighbor cache. So until the entry for espa043 times out (as a result of no communication between the two) espa041 knows where to find espa043 and has no need to send an ARP request.
+
+Now let's delete espa043 from our arp cache:
+
+```bash
+[root@espa041 /home/src/iputils]# ip neigh delete 9.3.76.43 dev eth0
+[root@espa041 /home/src/iputils]# ip neigh show
+9.3.76.43 dev eth0  nud failed
+9.3.76.42 dev eth0 lladdr 00:60:08:3f:e9:f9 nud reachable
+9.3.76.1 dev eth0 lladdr 00:06:29:21:73:c8 nud stale
+```
+
+Now espa041 has again forgotten where to find espa043 and will need to send another ARP request the next time he needs to communicate with espa043. You can also see from the above output that espagate (9.3.76.1) has been changed to the "stale" state. This means that the location shown is still valid, but it will have to be confirmed at the first transaction to that machine.
+
+## **[NEXT](https://tldp.org/HOWTO/Adv-Routing-HOWTO/lartc.rpdb.html)**

@@ -322,6 +322,22 @@ PING google.com (142.250.191.238) 56(84) bytes of data.
 ## Verify network interfaces
 
 ```bash
+# ip shows us our routes
+ip route show
+default via 10.1.1.205 dev eno2 proto static metric 100 
+default via 10.1.1.205 dev eno1 proto static metric 101 
+10.1.0.0/22 dev eno2 proto kernel scope link src 10.1.0.136 metric 100 
+10.1.0.0/22 dev eno1 proto kernel scope link src 10.1.0.135 metric 101 
+10.13.31.0/24 dev localbr proto kernel scope link src 10.13.31.1 metric 425 
+10.161.38.0/24 dev mpbr0 proto kernel scope link src 10.161.38.1 
+169.254.0.0/16 dev eno2 scope link metric 1000 
+
+# You can view your machines current arp/neighbor cache/table like so:
+ip neigh show
+10.1.0.162 dev eno2 lladdr 4c:91:7a:64:0f:7d STALE
+10.1.0.166 dev eno1 lladdr 4c:91:7a:63:c0:3a STALE
+10.1.1.205 dev eno1 lladdr 34:56:fe:77:58:bc STALE
+
 nmcli connection show 
 NAME                UUID                                  TYPE      DEVICE      
 Wired connection 2  74830679-74b4-3a2a-8711-e20103c77322  ethernet  eno2        
@@ -494,8 +510,14 @@ GENERAL.MASTER-PATH:                    /org/freedesktop/NetworkManager/Devices/
 IP4.GATEWAY:                            --
 IP6.GATEWAY:                            --
 
+# You can view your machines current arp/neighbor cache/table like so:
+multipass exec -n test1 -- ip neigh show 
+10.13.31.1 dev enp6s0 lladdr ae:6f:d9:34:27:8a STALE 
+10.161.38.1 dev enp5s0 lladdr 00:16:3e:0f:04:ee DELAY 
+fe80::216:3eff:fe0f:4ee dev enp5s0 lladdr 00:16:3e:0f:04:ee router STALE 
+fd42:b403:217:3a62::1 dev enp5s0 lladdr 00:16:3e:0f:04:ee router STALE
 
-ip shows us our links
+# ip shows us our links
 multipass exec -n test1 -- ip link list
 1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN mode DEFAULT group default qlen 1000
     link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
@@ -504,6 +526,36 @@ multipass exec -n test1 -- ip link list
 3: enp6s0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq state UP mode DEFAULT group default qlen 1000
     link/ether 5c:13:55:48:43:58 brd ff:ff:ff:ff:ff:ff
 
+# ip shows us our IP addresses
+multipass exec -n test1 -- ip address show
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+    inet6 ::1/128 scope host noprefixroute 
+       valid_lft forever preferred_lft forever
+2: enp5s0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq state UP group default qlen 1000
+    link/ether 52:54:00:c9:3e:64 brd ff:ff:ff:ff:ff:ff
+    inet 10.161.38.77/24 metric 100 brd 10.161.38.255 scope global dynamic enp5s0
+       valid_lft 3313sec preferred_lft 3313sec
+    inet6 fd42:b403:217:3a62:5054:ff:fec9:3e64/64 scope global mngtmpaddr noprefixroute 
+       valid_lft forever preferred_lft forever
+    inet6 fe80::5054:ff:fec9:3e64/64 scope link 
+       valid_lft forever preferred_lft forever
+3: enp6s0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq state UP group default qlen 1000
+    link/ether 5c:13:55:48:43:58 brd ff:ff:ff:ff:ff:ff
+    inet 10.13.31.13/24 brd 10.13.31.255 scope global enp6s0
+       valid_lft forever preferred_lft forever
+    inet6 fe80::5e13:55ff:fe48:4358/64 scope link 
+       valid_lft forever preferred_lft forever
+
+# ip shows us our routes
+multipass exec -n test1 -- ip route show
+
+default via 10.161.38.1 dev enp5s0 proto dhcp src 10.161.38.77 metric 100 
+10.13.31.0/24 dev enp6s0 proto kernel scope link src 10.13.31.13 
+10.161.38.0/24 dev enp5s0 proto kernel scope link src 10.161.38.77 metric 100 
+10.161.38.1 dev enp5s0 proto dhcp scope link src 10.161.38.77 metric 100 
 
 multipass exec -n test1 -- networkctl
 IDX LINK   TYPE     OPERATIONAL SETUP     
