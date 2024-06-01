@@ -190,4 +190,107 @@ Now let's delete espa043 from our arp cache:
 
 Now espa041 has again forgotten where to find espa043 and will need to send another ARP request the next time he needs to communicate with espa043. You can also see from the above output that espagate (9.3.76.1) has been changed to the "stale" state. This means that the location shown is still valid, but it will have to be confirmed at the first transaction to that machine.
 
-## **[NEXT](https://tldp.org/HOWTO/Adv-Routing-HOWTO/lartc.rpdb.html)**
+Chapter 4. Rules - routing policy database
+Table of Contents
+4.1. Simple source policy routing
+4.2. Routing for multiple uplinks/providers
+4.2.1. Split access
+4.2.2. Load balancing
+If you have a large router, you may well cater for the needs of different people, who should be served differently. The routing policy database allows you to do this by having multiple sets of routing tables.
+
+If you want to use this feature, make sure that your kernel is compiled with the "IP: advanced router" and "IP: policy routing" features.
+
+When the kernel needs to make a routing decision, it finds out which table needs to be consulted. By default, there are three tables. The old 'route' tool modifies the main and local tables, as does the ip tool (by default).
+
+The default rules:
+
+```bash
+
+[ahu@home ahu]$ ip rule list
+0: from all lookup local 
+32766: from all lookup main 
+32767: from all lookup default
+```
+
+This lists the priority of all rules. We see that all rules apply to all packets ('from all'). We've seen the 'main' table before, it is output by ip route ls, but the 'local' and 'default' table are new.
+
+If we want to do fancy things, we generate rules which point to different tables which allow us to override system wide routing rules.
+
+For the exact semantics on what the kernel does when there are more matching rules, see Alexey's ip-cref documentation.
+
+## 4.1. Simple source policy routing
+
+Let's take a real example once again, I have 2 (actually 3, about time I returned them) cable modems, connected to a Linux NAT ('masquerading') router. People living here pay me to use the Internet. Suppose one of my house mates only visits hotmail and wants to pay less. This is fine with me, but they'll end up using the low-end cable modem.
+
+The 'fast' cable modem is known as 212.64.94.251 and is a PPP link to 212.64.94.1. The 'slow' cable modem is known by various ip addresses, 212.64.78.148 in this example and is a link to 195.96.98.253.
+
+The local table:
+
+```bash
+ip route list table local
+broadcast 127.255.255.255 dev lo  proto kernel  scope link  src 127.0.0.1 
+local 10.0.0.1 dev eth0  proto kernel  scope host  src 10.0.0.1 
+broadcast 10.0.0.0 dev eth0  proto kernel  scope link  src 10.0.0.1 
+local 212.64.94.251 dev ppp0  proto kernel  scope host  src 212.64.94.251 
+broadcast 10.255.255.255 dev eth0  proto kernel  scope link  src 10.0.0.1 
+broadcast 127.0.0.0 dev lo  proto kernel  scope link  src 127.0.0.1 
+local 212.64.78.148 dev ppp2  proto kernel  scope host  src 212.64.78.148 
+local 127.0.0.1 dev lo  proto kernel  scope host  src 127.0.0.1 
+local 127.0.0.0/8 dev lo  proto kernel  scope host  src 127.0.0.1 
+```
+
+Lots of obvious things, but things that need to be specified somewhere. Well, here they are. The default table is empty.
+
+Let's view the 'main' table:
+
+```bash
+[ahu@home ahu]$ ip route list table main 
+195.96.98.253 dev ppp2  proto kernel  scope link  src 212.64.78.148 
+212.64.94.1 dev ppp0  proto kernel  scope link  src 212.64.94.251 
+10.0.0.0/8 dev eth0  proto kernel  scope link  src 10.0.0.1 
+127.0.0.0/8 dev lo  scope link 
+default via 212.64.94.1 dev ppp0 
+```
+
+We now generate a new rule which we call 'John', for our hypothetical house mate. Although we can work with pure numbers, it's far easier if we add our tables to /etc/iproute2/rt_tables.
+
+```bash
+cat /etc/iproute2/rt_tables
+#
+# reserved values
+#
+255 local
+254 main
+253 default
+0 unspec
+#
+# local
+#
+#1 inr.ruhep
+
+# echo 200 John >> /etc/iproute2/rt_tables
+# ip rule add from 10.0.0.10 table John
+# ip rule ls
+0: from all lookup local 
+32765: from 10.0.0.10 lookup John
+32766: from all lookup main 
+32767: from all lookup default
+```
+
+Now all that is left is to generate John's table, and flush the route cache:
+
+```bash
+
+# ip route add default via 195.96.98.253 dev ppp2 table John
+# ip route flush cache
+```
+
+And we are done. It is left as an exercise for the reader to implement this in ip-up.
+
+```bash
+# ip route add default via 195.96.98.253 dev ppp2 table John
+
+# ip route flush cache
+```
+
+## **[NEXT](https://tldp.org/HOWTO/Adv-Routing-HOWTO/lartc.rpdb.multiple-links.html)**

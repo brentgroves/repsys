@@ -115,6 +115,9 @@ sudo nmcli connection delete 65380f4f-d384-4d03-8b8c-bdf9160ea065
 sudo nmcli connection add type bridge con-name localbr ifname localbr \
     ipv4.method manual ipv4.addresses 10.13.31.1/24
 
+sudo nmcli connection add type bridge con-name mybr ifname mybr \
+    ipv4.method manual ipv4.addresses 10.15.31.1/24
+10.15.31.16/24
 Connection 'localbr' (65380f4f-d384-4d03-8b8c-bdf9160ea065) successfully added.
 
 nmcli connection show 
@@ -152,6 +155,13 @@ Use the ip utility to display the link status of Ethernet devices that are ports
 ip link show master localbr
 14: tap3910decf: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq master localbr state UP mode DEFAULT group default qlen 1000
     link/ether ae:da:0f:d7:33:6a brd ff:ff:ff:ff:ff:ff
+
+# After adding 2nd instance
+ip link show master localbr
+14: tap3910decf: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq master localbr state UP mode DEFAULT group default qlen 1000
+    link/ether ae:da:0f:d7:33:6a brd ff:ff:ff:ff:ff:ff
+16: tapb82c4330: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq master localbr state UP mode DEFAULT group default qlen 1000
+    link/ether 86:8c:70:a9:59:01 brd ff:ff:ff:ff:ff:ff
 
 nmcli device show tap3910decf
 GENERAL.DEVICE:                         tap3910decf
@@ -249,7 +259,24 @@ d5:eb:35:ee:b4:14
 Next we launch an instance with an extra network in manual mode, connecting it to this bridge:
 
 ```bash
+multipass launch --name test6 --network eno2 --network name=mybr
+multipass exec -n test6 -- sudo networkctl -a status
+
+multipass launch --name test5 --network name=mybr
+multipass exec -n test5 -- sudo networkctl -a status
+multipass launch --name test4 --network name=mybr
+
+multipass launch --name test3 --network name=mybr,mode=manual,mac="7f:71:f0:b2:55:dd"
+
+
 multipass launch --name test1 --network name=localbr,mode=manual,mac="5c:13:55:48:43:58"
+
+# Step 6: More instances
+# If desired, repeat steps 2-5 with different names/MACs/IP terminations (e.g. 10.13.31.14) to launch other instances with static IPs in the same network. You can ping from one instance to another to confirm that they are connected. For example:
+
+multipass launch --name test2 --network name=localbr,mode=manual,mac="d5:eb:35:ee:b4:14"
+
+# multipass exec -n test1 -- ping 10.13.31.14
 ```
 
 ## Step 3: Configure the extra interface
@@ -257,6 +284,73 @@ multipass launch --name test1 --network name=localbr,mode=manual,mac="5c:13:55:4
 We now need to configure the manual network interface inside the instance. We can achieve that using Netplan. The following command plants the required Netplan configuration file in the instance:
 
 ```bash
+
+multipass exec -n test6 -- sudo bash -c 'cat << EOF > /etc/netplan/10-custom.yaml
+network:
+    version: 2
+    ethernets:
+        enp7s0:
+            dhcp4: no
+            match:
+                macaddress: "52:54:00:0a:19:62"
+            addresses: [10.15.31.19/24]
+EOF'
+multipass exec -n test3 -- sudo bash -c 'sudo rm /etc/netplan/10-custom.yaml'
+
+multipass exec -n test6 -- sudo bash -c 'cat << EOF > /etc/netplan/10-custom.yaml
+network:
+    version: 2
+    ethernets:
+        extra0:
+            dhcp4: no
+            match:
+                macaddress: "52:54:00:0a:19:62"
+            addresses: [10.15.31.18/24]
+EOF'
+
+multipass exec -n test5 -- sudo bash -c 'cat << EOF > /etc/netplan/10-custom.yaml
+network:
+    version: 2
+    ethernets:
+        extra0:
+            dhcp4: no
+            match:
+                macaddress: "52:54:00:36:69:4b"
+            addresses: [10.15.31.17/24]
+EOF'
+
+multipass exec -n test4 -- sudo bash -c 'cat << EOF > /etc/netplan/10-custom.yaml
+network:
+    version: 2
+    ethernets:
+        extra0:
+            dhcp4: no
+            match:
+                macaddress: "52:54:00:3a:34:23"
+            addresses: [10.15.31.16/24]
+EOF'
+multipass exec -n test3 -- sudo bash -c 'sudo rm /etc/netplan/10-custom.yaml'
+multipass exec -n test3 -- sudo bash -c 'cat << EOF > /etc/netplan/10-custom.yaml
+network:
+    version: 2
+    ethernets:
+        extra0:
+            dhcp4: no
+            match:
+                macaddress: "7f:71:f0:b2:55:dd"
+            addresses: [10.15.31.16/24]
+EOF'
+multipass exec -n test3 -- sudo bash -c 'cat << EOF > /etc/netplan/10-custom.yaml
+network:
+    version: 2
+    ethernets:
+        extra0:
+            dhcp4: no
+            match:
+                macaddress: "7f:71:f0:b2:55:dd"
+            addresses: [10.13.31.16/24]
+EOF'
+
 $ multipass exec -n test1 -- sudo bash -c 'cat << EOF > /etc/netplan/10-custom.yaml
 network:
     version: 2
@@ -268,8 +362,39 @@ network:
             addresses: [10.13.31.13/24]
 EOF'
 
+# Step 6: More instances
+# If desired, repeat steps 2-5 with different names/MACs/IP terminations (e.g. 10.13.31.14) to launch other instances with static IPs in the same network. You can ping from one instance to another to confirm that they are connected. For example:
+
+$ multipass exec -n test2 -- sudo bash -c 'cat << EOF > /etc/netplan/10-custom.yaml
+network:
+    version: 2
+    ethernets:
+        extra0:
+            dhcp4: no
+            match:
+                macaddress: "d5:eb:35:ee:b4:14"
+            addresses: [10.13.31.14/24]
+EOF'
+
+
+
 multipass exec -n test1 -- sudo bash -c 'cat /etc/netplan/10-custom.yaml'
+multipass exec -n test2 -- sudo bash -c 'cat /etc/netplan/10-custom.yaml'
+multipass exec -n test3 -- sudo bash -c 'cat /etc/netplan/10-custom.yaml'
+network:
+    version: 2
+    ethernets:
+        extra0:
+            dhcp4: no
+            match:
+                macaddress: "7f:71:f0:b2:55:dd"
+            addresses: [10.13.31.16/24]
+multipass exec -n test3 -- sudo networkctl -a status
+
 multipass exec -n test1 -- sudo netplan apply
+multipass exec -n test2 -- sudo netplan apply
+multipass exec -n test3 -- sudo netplan apply
+multipass exec -n test3 -- sudo networkctl -a status
 ** (generate:2661): WARNING **: 18:37:57.672: Permissions for /etc/netplan/10-custom.yaml are too open. Netplan configuration should NOT be accessible by others.
 ```
 
@@ -290,6 +415,20 @@ Load:           0.00 0.00 0.00
 Disk usage:     1.4GiB out of 9.6GiB
 Memory usage:   343.6MiB out of 945.6MiB
 Mounts:         --
+
+multipass info test2
+
+Name:           test2
+State:          Running
+IPv4:           10.161.38.109
+Release:        Ubuntu 24.04 LTS
+Image hash:     08c7ba960c16 (Ubuntu 24.04 LTS)
+CPU(s):         1
+Load:           0.00 0.10 0.07
+Disk usage:     1.4GiB out of 9.6GiB
+Memory usage:   314.8MiB out of 945.6MiB
+Mounts:         --
+
 
 ```
 
@@ -321,9 +460,35 @@ PING google.com (142.250.191.238) 56(84) bytes of data.
 
 ## Verify network interfaces
 
+**[references iproute2 intro for ip commands](../networking/iproute2/introduction_to_iproute.md)**
+
 ```bash
+ip route list table local
+
+local 10.1.0.135 dev eno1 proto kernel scope host src 10.1.0.135 
+local 10.1.0.136 dev eno2 proto kernel scope host src 10.1.0.136 
+broadcast 10.1.3.255 dev eno2 proto kernel scope link src 10.1.0.136 
+broadcast 10.1.3.255 dev eno1 proto kernel scope link src 10.1.0.135 
+local 10.13.31.1 dev localbr proto kernel scope host src 10.13.31.1 
+broadcast 10.13.31.255 dev localbr proto kernel scope link src 10.13.31.1 
+local 10.161.38.1 dev mpbr0 proto kernel scope host src 10.161.38.1 
+broadcast 10.161.38.255 dev mpbr0 proto kernel scope link src 10.161.38.1 
+local 127.0.0.0/8 dev lo proto kernel scope host src 127.0.0.1 
+local 127.0.0.1 dev lo proto kernel scope host src 127.0.0.1 
+broadcast 127.255.255.255 dev lo proto kernel scope link src 127.0.0.1 
+
+ip route list table main
+default via 10.1.1.205 dev eno2 proto static metric 100 
+default via 10.1.1.205 dev eno1 proto static metric 101 
+10.1.0.0/22 dev eno2 proto kernel scope link src 10.1.0.136 metric 100 
+10.1.0.0/22 dev eno1 proto kernel scope link src 10.1.0.135 metric 101 
+10.13.31.0/24 dev localbr proto kernel scope link src 10.13.31.1 metric 425 
+10.161.38.0/24 dev mpbr0 proto kernel scope link src 10.161.38.1 
+169.254.0.0/16 dev eno2 scope link metric 1000 
+
 # ip shows us our routes
 ip route show
+# same as ip route ls  
 default via 10.1.1.205 dev eno2 proto static metric 100 
 default via 10.1.1.205 dev eno1 proto static metric 101 
 10.1.0.0/22 dev eno2 proto kernel scope link src 10.1.0.136 metric 100 
@@ -510,6 +675,43 @@ GENERAL.MASTER-PATH:                    /org/freedesktop/NetworkManager/Devices/
 IP4.GATEWAY:                            --
 IP6.GATEWAY:                            --
 
+multipass exec -n test1 -- ip route list table local
+
+local 10.13.31.13 dev enp6s0 proto kernel scope host src 10.13.31.13 
+broadcast 10.13.31.255 dev enp6s0 proto kernel scope link src 10.13.31.13 
+local 10.161.38.77 dev enp5s0 proto kernel scope host src 10.161.38.77 
+broadcast 10.161.38.255 dev enp5s0 proto kernel scope link src 10.161.38.77 
+local 127.0.0.0/8 dev lo proto kernel scope host src 127.0.0.1 
+local 127.0.0.1 dev lo proto kernel scope host src 127.0.0.1 
+broadcast 127.255.255.255 dev lo proto kernel scope link src 127.0.0.1 
+
+multipass exec -n test1 -- ip route list table main
+default via 10.161.38.1 dev enp5s0 proto dhcp src 10.161.38.77 metric 100 
+10.13.31.0/24 dev enp6s0 proto kernel scope link src 10.13.31.13 
+10.161.38.0/24 dev enp5s0 proto kernel scope link src 10.161.38.77 metric 100 
+10.161.38.1 dev enp5s0 proto dhcp scope link src 10.161.38.77 metric 100 
+
+# ip shows us our routes
+multipass exec -n test1 -- ip route show
+
+default via 10.161.38.1 dev enp5s0 proto dhcp src 10.161.38.77 metric 100 
+10.13.31.0/24 dev enp6s0 proto kernel scope link src 10.13.31.13 
+10.161.38.0/24 dev enp5s0 proto kernel scope link src 10.161.38.77 metric 100 
+10.161.38.1 dev enp5s0 proto dhcp scope link src 10.161.38.77 metric 100 
+
+# When the kernel needs to make a routing decision, it finds out which table needs to be consulted. By default, there are three tables. The old 'route' tool modifies the main and local tables, as does the ip tool (by default).
+multipass exec -n test1 -- ip rule list
+0: from all lookup local
+32766: from all lookup main
+32767: from all lookup default
+
+#This lists the priority of all rules. We see that all rules apply to all packets ('from all'). We've seen the 'main' table before, it is output by ip route ls, but the 'local' and 'default' table are new.
+
+# If we want to do fancy things, we generate rules which point to different tables which allow us to override system wide routing rules.
+
+# For the exact semantics on what the kernel does when there are more matching rules, see Alexey's ip-cref documentation.
+
+
 # You can view your machines current arp/neighbor cache/table like so:
 multipass exec -n test1 -- ip neigh show 
 10.13.31.1 dev enp6s0 lladdr ae:6f:d9:34:27:8a STALE 
@@ -548,14 +750,6 @@ multipass exec -n test1 -- ip address show
        valid_lft forever preferred_lft forever
     inet6 fe80::5e13:55ff:fe48:4358/64 scope link 
        valid_lft forever preferred_lft forever
-
-# ip shows us our routes
-multipass exec -n test1 -- ip route show
-
-default via 10.161.38.1 dev enp5s0 proto dhcp src 10.161.38.77 metric 100 
-10.13.31.0/24 dev enp6s0 proto kernel scope link src 10.13.31.13 
-10.161.38.0/24 dev enp5s0 proto kernel scope link src 10.161.38.77 metric 100 
-10.161.38.1 dev enp5s0 proto dhcp scope link src 10.161.38.77 metric 100 
 
 multipass exec -n test1 -- networkctl
 IDX LINK   TYPE     OPERATIONAL SETUP     
