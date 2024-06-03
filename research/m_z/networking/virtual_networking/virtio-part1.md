@@ -11,7 +11,8 @@ In this post we will provide a high level solution overview of the virtio-networ
 
 After finishing reading this post you should have a clear picture of the terms mentioned and how an application running in a VM can transfer packets to applications running on other VMs and to the outside world. These terms will be the basis for the next posts.
 
-Virtio basic building blocks
+## Virtio basic building blocks
+
 A guest VM or a guest is a VM installed, executed and hosted on physical machine. The machine hosting the guest VM is referred to as the host and it provides resources to the guest. The guest has a separate operating system running on top of the host operating system through a hypervisor. For example, the host will provide the guest a virtual NIC so the guest machine feels as if it’s using a real NIC, while in reality it’s using a virtual NIC.
 
 The following building blocks create the environment to which virtio later on connects:
@@ -88,7 +89,8 @@ To each guest we can associate a number of virtual CPUs (vCPUs) and the RX/TX qu
 
 ![](https://www.redhat.com/rhdc/managed-files/styles/wysiwyg_full_width/private/2019-09-10-virtio-intro-fig3.jpg?itok=L1CzfaHg)
 
-Virtio-networking and OVS
+## Virtio-networking and OVS
+
 Up to this point we have described how the guest can pass the packets to the host kernel using the virtio-networking interface. In order to forward these packets to other guest running on the same host or outside the hosts (such as the internet) we use OVS.
 
 OVS is a software switch which enables the packet forwarding inside the kernel. It’s composed of a userspace part and a kernel part:
