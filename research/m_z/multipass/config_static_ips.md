@@ -228,6 +228,8 @@ ip -4 a
 
 **[Generate 5 MAC address](https://www.browserling.com/tools/random-mac)**
 
+Note: I never process to work if these mac addresses were passed in manually, so I stared letting multipass generate them instead.
+
 ```bash
 5c:13:55:48:43:58
 d5:eb:35:ee:b4:14

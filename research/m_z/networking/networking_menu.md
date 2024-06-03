@@ -24,5 +24,6 @@
 - **[udev](./udev.md)**
 - **[virsh](./virsh.md)**
 - Virtual Networking
-  - **[Virtio](./virtual_networking/virtio-part1.md)**
+  - **[Virtio-Net part 1](./virtual_networking/virtio-part1.md)**
+  - **[Virtio-Net part 2](./virtual_networking/virtio-part2.md)**
   - **[Virtual Network Interface Cards](./virtual_networking/virtual_network_interface_cards.md)**
