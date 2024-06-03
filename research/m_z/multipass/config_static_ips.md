@@ -262,12 +262,36 @@ Next we launch an instance with an extra network in manual mode, connecting it t
 
 ```bash
 multipass launch --name test6 --network eno2 --network name=mybr
+
 multipass exec -n test6 -- sudo networkctl -a status
+
+multipass launch --name test7 --network eno2 --network name=mybr
+
+multipass exec -n test7 -- sudo networkctl -a status
+# get the mac address assigned
+enp7s0
+                   Link File: /usr/lib/systemd/network/99-default.link
+                Network File: /run/systemd/network/10-netplan-extra1.network
+                       State: degraded (configuring)
+                Online state: online                                                      
+                        Type: ether
+                        Path: pci-0000:07:00.0
+                      Driver: virtio_net
+                      Vendor: Red Hat, Inc.
+                       Model: Virtio 1.0 network device
+            Hardware Address: 52:54:00:58:18:4f
+                         MTU: 1500 (min: 68, max: 65535)
+                       QDisc: mq
+IPv6 Address Generation Mode: eui64
+    Number of Queues (Tx/Rx): 2/2
+            Auto negotiation: no
+
 
 multipass launch --name test5 --network name=mybr
 multipass exec -n test5 -- sudo networkctl -a status
 multipass launch --name test4 --network name=mybr
 
+# can't get manual mode to work
 multipass launch --name test3 --network name=mybr,mode=manual,mac="7f:71:f0:b2:55:dd"
 
 
@@ -286,6 +310,50 @@ multipass launch --name test2 --network name=localbr,mode=manual,mac="d5:eb:35:e
 We now need to configure the manual network interface inside the instance. We can achieve that using Netplan. The following command plants the required Netplan configuration file in the instance:
 
 ```bash
+
+
+multipass exec -n test7 -- sudo bash -c 'cat << EOF > /etc/netplan/10-custom.yaml
+network:
+    version: 2
+    ethernets:
+        enp7s0:
+            dhcp4: no
+            match:
+                macaddress: "52:54:00:58:18:4f"
+            addresses: [10.15.31.20/24]
+EOF'
+
+multipass exec -n test7 -- sudo netplan apply
+
+multipass exec -n test7 -- sudo networkctl -a status
+● 3: enp6s0
+                   Link File: /usr/lib/systemd/network/99-default.link
+                Network File: /run/systemd/network/10-netplan-extra0.network
+                       State: routable (configured)
+                Online state: online                                         
+                        Type: ether
+                        Path: pci-0000:06:00.0
+                      Driver: virtio_net
+                      Vendor: Red Hat, Inc.
+                       Model: Virtio 1.0 network device
+            Hardware Address: 52:54:00:41:ee:b9
+                         MTU: 1500 (min: 68, max: 65535)
+                       QDisc: mq
+IPv6 Address Generation Mode: eui64
+    Number of Queues (Tx/Rx): 2/2
+            Auto negotiation: no
+                     Address: 10.1.3.159 (DHCP4 via 10.1.2.70)
+                              fe80::5054:ff:fe41:eeb9
+                     Gateway: 10.1.1.205
+                         DNS: 10.1.2.69
+                              10.1.2.70
+                              172.20.0.39
+              Search Domains: BUSCHE-CNC.COM
+           Activation Policy: up
+         Required For Online: yes
+             DHCP4 Client ID: IAID:0x24721ac8/DUID
+           DHCP6 Client DUID: DUID-EN/Vendor:0000ab118fbffcae7a8a6b9a
+
 
 multipass exec -n test6 -- sudo bash -c 'cat << EOF > /etc/netplan/10-custom.yaml
 network:
@@ -404,6 +472,17 @@ Step 5: Confirm that it works
 You can confirm that the new IP is present in the instance with Multipass:
 
 ```bash
+multipass info test7
+
+multipass info test6
+Name:           test6
+State:          Running
+IPv4:           10.161.38.197
+                10.1.2.129
+                10.15.31.19
+Release:        Ubuntu 24.04 LTS
+Image hash:     08c7ba960c16 (Ubuntu 24.04 LTS)
+
 multipass info test1
 
 Name:           test1
@@ -464,9 +543,31 @@ PING google.com (142.250.191.238) 56(84) bytes of data.
 
 **[references iproute2 intro for ip commands](../networking/iproute2/introduction_to_iproute.md)**
 
+After launching several vm networked to mybr it seems like each a new tap device is created for each vm that gets passed mybr. I believe these are **[macvtap devices](https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/virtualization_deployment_and_administration_guide/sect-virtual_networking-directly_attaching_to_physical_interface)**
+
+![](https://access.redhat.com/webassets/avalon/d/Red_Hat_Enterprise_Linux-7-Virtualization_Deployment_and_Administration_Guide-en-US/images/0d5f8cc757d821c65465afe2b12d76a0/macvtap_modes-VEPA.png)
+
+Network **[Tap device](https://blog.cloudflare.com/virtual-networking-101-understanding-tap)**. A tap device is a virtual network interface that looks like an ethernet network card. Instead of having real wires plugged into it, it exposes a nice handy file descriptor to an application willing to send/receive packets.
+
 ```bash
 ip route list table local
+# after passing in eno2 to multipass --network eno2 10.1.0.136 interface is gone/enslaved and br-eno2 10.1.3.158 interface has been created. Later on when ```nmcli connection show br-eno2-child``` is ran we see eno2 referenced.
 
+local 10.1.0.135 dev eno1 proto kernel scope host src 10.1.0.135 
+local 10.1.3.158 dev br-eno2 proto kernel scope host src 10.1.3.158 
+broadcast 10.1.3.255 dev eno1 proto kernel scope link src 10.1.0.135 
+broadcast 10.1.3.255 dev br-eno2 proto kernel scope link src 10.1.3.158 
+local 10.13.31.1 dev localbr proto kernel scope host src 10.13.31.1 
+broadcast 10.13.31.255 dev localbr proto kernel scope link src 10.13.31.1 
+local 10.15.31.1 dev mybr proto kernel scope host src 10.15.31.1 
+broadcast 10.15.31.255 dev mybr proto kernel scope link src 10.15.31.1 
+local 10.161.38.1 dev mpbr0 proto kernel scope host src 10.161.38.1 
+broadcast 10.161.38.255 dev mpbr0 proto kernel scope link src 10.161.38.1 
+local 127.0.0.0/8 dev lo proto kernel scope host src 127.0.0.1 
+local 127.0.0.1 dev lo proto kernel scope host src 127.0.0.1 
+broadcast 127.255.255.255 dev lo proto kernel scope link src 127.0.0.1 
+
+# before passing in eno2 to multipass --network
 local 10.1.0.135 dev eno1 proto kernel scope host src 10.1.0.135 
 local 10.1.0.136 dev eno2 proto kernel scope host src 10.1.0.136 
 broadcast 10.1.3.255 dev eno2 proto kernel scope link src 10.1.0.136 
@@ -480,6 +581,18 @@ local 127.0.0.1 dev lo proto kernel scope host src 127.0.0.1
 broadcast 127.255.255.255 dev lo proto kernel scope link src 127.0.0.1 
 
 ip route list table main
+# after passing in eno2 to multipass --network eno2 10.1.0.136 interface is gone and br-eno2 now has route to 10.1.0.0/22 as well as our lan's gateway. Don't know what 169.254.0.0/16 dev eno2 route is for but see it again ```IP4.ROUTE[1]  dst = 169.254.0.0/16``` when ```nmcli connection show br-eno2-child``` is ran.
+default via 10.1.1.205 dev eno1 proto static metric 101 
+default via 10.1.1.205 dev br-eno2 proto dhcp metric 427 
+10.1.0.0/22 dev eno1 proto kernel scope link src 10.1.0.135 metric 101 
+10.1.0.0/22 dev br-eno2 proto kernel scope link src 10.1.3.158 metric 427 
+10.13.31.0/24 dev localbr proto kernel scope link src 10.13.31.1 metric 425 
+10.15.31.0/24 dev mybr proto kernel scope link src 10.15.31.1 metric 426 
+10.161.38.0/24 dev mpbr0 proto kernel scope link src 10.161.38.1 
+169.254.0.0/16 dev eno2 scope link metric 1000 
+
+ip route list table main
+# before passing in eno2 to multipass --network
 default via 10.1.1.205 dev eno2 proto static metric 100 
 default via 10.1.1.205 dev eno1 proto static metric 101 
 10.1.0.0/22 dev eno2 proto kernel scope link src 10.1.0.136 metric 100 
@@ -505,6 +618,29 @@ ip neigh show
 10.1.0.166 dev eno1 lladdr 4c:91:7a:63:c0:3a STALE
 10.1.1.205 dev eno1 lladdr 34:56:fe:77:58:bc STALE
 
+# after passing in eno2 to multipass launch --network eno2. Not only was the br-eno2 bridge created but eht br-eno2-child ethernet device has been created.
+
+nmcli connection show 
+NAME                UUID                                  TYPE      DEVICE      
+Wired connection 1  dff312d7-ea1c-3537-8be5-a1f7043797ce  ethernet  eno1        
+mpbr0               88ee5396-79df-46b9-a4c9-46ac56fb0798  bridge    mpbr0       
+br-eno2             fbcc6e74-d4c5-4262-b33f-0aa66e9ad5aa  bridge    br-eno2     
+localbr             65380f4f-d384-4d03-8b8c-bdf9160ea065  bridge    localbr     
+mybr                2380dcbf-387e-44ab-988b-47fe7edeb2fe  bridge    mybr        
+br-eno2-child       4b6baf2f-8e00-43a6-9b23-82ff48db7107  ethernet  eno2        
+tap04270071         d67e8e38-9b03-47f5-9dec-eaf2d4c9379c  tun       tap04270071 
+tap36ec9bf6         d84e1265-386d-4607-975a-cdd7db5f862d  tun       tap36ec9bf6 
+tap3eec7b9d         90948c69-0d8c-4227-8aed-e48ae05683db  tun       tap3eec7b9d 
+tap539daa08         82c48ed6-3794-45ee-8e9e-42b4fa296b97  tun       tap539daa08 
+tap5459bdcf         7b9ae3d1-d099-447c-be91-d0c63192da36  tun       tap5459bdcf 
+tap6f162cbc         1cfcb696-a47e-4d1f-bf2d-80200b8f9ce1  tun       tap6f162cbc 
+tap936d26a5         d43880f7-ce65-4642-b0eb-dbd50d251b64  tun       tap936d26a5 
+tap94d4edf6         cc6c782b-dd44-4ffe-b2b8-b44416582ca1  tun       tap94d4edf6 
+tapc97b1123         bb6027e0-4f60-4a0e-b963-df1472cbc7f6  tun       tapc97b1123 
+tapeed7b980         4770820d-6484-4d45-914d-b02fd2943d79  tun       tapeed7b980 
+tapfde3cc51         b1510302-89f5-4208-b35b-1f5869764b84  tun       tapfde3cc51 
+
+# before passing in eno2 to multipass launch --network eno2
 nmcli connection show 
 NAME                UUID                                  TYPE      DEVICE      
 Wired connection 2  74830679-74b4-3a2a-8711-e20103c77322  ethernet  eno2        
@@ -513,6 +649,19 @@ Wired connection 1  dff312d7-ea1c-3537-8be5-a1f7043797ce  ethernet  eno1
 localbr             65380f4f-d384-4d03-8b8c-bdf9160ea065  bridge    localbr     
 tap3910decf         5e15a73d-d042-4196-931f-302f9054de6a  tun       tap3910decf 
 tape518c5a7         f43135b4-cc0a-4d41-8110-39d553800c23  tun       tape518c5a7 
+
+nmcli connection show br-eno2-child 
+...
+connection.master:                      br-eno2
+connection.slave-type:                  bridge
+...
+GENERAL.NAME:                           br-eno2-child
+GENERAL.UUID:                           4b6baf2f-8e00-43a6-9b23-82ff48db7107
+GENERAL.DEVICES:                        eno2
+GENERAL.IP-IFACE:                       eno2
+GENERAL.STATE:                          activated
+IP4.ROUTE[1]:                           dst = 169.254.0.0/16, nh = 0.0.0.0, mt = 1000
+
 
 nmcli connection show localbr 
 GENERAL.NAME:                           localbr
@@ -539,7 +688,66 @@ ip link show master localbr
 14: tap3910decf: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq master localbr state UP mode DEFAULT group default qlen 1000
     link/ether ae:da:0f:d7:33:6a brd ff:ff:ff:ff:ff:ff
 
+# After launching several vm networked to mybr it seems like each a new tap device is created for each vm that gets passed mybr I believe these are macvtap devices explained here https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/virtualization_deployment_and_administration_guide/sect-virtual_networking-directly_attaching_to_physical_interface
+
+# A tap device is a virtual network interface that looks like an ethernet network card. Instead of having real wires plugged into it, it exposes a nice handy file descriptor to an application willing to send/receive packets.
+
+# IP addresses are assigned to interfaces (physical or virtual). Unnumbered, point-to-point interfaces may work without an IP address of their own though (e.g. a simple, serial interface). Also, only layer-3 interfaces can use IP addresses.
+
+# A layer-3 device like a host or a router may have multiple interfaces, mandating multiple IP addresses. Lower-layer devices like switches or repeaters don't use IP addresses for their basic function. Note that "device" can also be used for just about any technical component. It may also very well refer to a device in the sense of Linux's hardware management.
+
+# A link/connection is an active connection between two physical-layer interfaces. On bus networks like obsolete 10BASE5, more than two interfaces can be "linked".
+
+ip link show master mybr    
+
+23: tap36ec9bf6: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq master mybr state UP mode DEFAULT group default qlen 1000
+    link/ether 66:8e:b3:ae:b5:30 brd ff:ff:ff:ff:ff:ff
+25: tapfde3cc51: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq master mybr state UP mode DEFAULT group default qlen 1000
+    link/ether 1e:3f:de:ae:47:65 brd ff:ff:ff:ff:ff:ff
+27: tap936d26a5: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq master mybr state UP mode DEFAULT group default qlen 1000
+    link/ether 02:66:6e:c9:10:1b brd ff:ff:ff:ff:ff:ff
+31: tap3eec7b9d: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq master mybr state UP mode DEFAULT group default qlen 1000
+    link/ether d6:bc:4f:74:11:ca brd ff:ff:ff:ff:ff:ff
+
 # Network **[Tap device](https://blog.cloudflare.com/virtual-networking-101-understanding-tap)**
+# A tap device is a virtual network interface that looks like an ethernet network card. Instead of having real wires plugged into it, it exposes a nice handy file descriptor to an application willing to send/receive packets.
+
+ip link show master br-eno2  
+
+ip link show master br-eno2
+7: eno2: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq master br-eno2 state UP mode DEFAULT group default qlen 1000
+    link/ether b8:ca:3a:6a:35:99 brd ff:ff:ff:ff:ff:ff
+    altname enp1s0f1
+30: tap6f162cbc: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq master br-eno2 state UP mode DEFAULT group default qlen 1000
+    link/ether 16:43:4e:07:3b:5b brd ff:ff:ff:ff:ff:ff
+
+nmcli con show eno2
+Error: eno2 - no such connection profile.
+
+nmcli con show tap6f162cbc
+GENERAL.NAME:                           tap6f162cbc
+GENERAL.UUID:                           1cfcb696-a47e-4d1f-bf2d-80200b8f9ce1
+GENERAL.DEVICES:                        tap6f162cbc
+GENERAL.IP-IFACE:                       tap6f162cbc
+GENERAL.STATE:                          activated
+
+ip link show tap6f162cbc
+30: tap6f162cbc: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq master br-eno2 state UP mode DEFAULT group default qlen 1000
+    link/ether 16:43:4e:07:3b:5b brd ff:ff:ff:ff:ff:ff
+
+ip link show eno2
+7: eno2: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq master br-eno2 state UP mode DEFAULT group default qlen 1000
+    link/ether b8:ca:3a:6a:35:99 brd ff:ff:ff:ff:ff:ff
+
+nmcli device status                 
+# although the eno2 device is now enslaved to the br-eno2 bridge it is still an ethernet device
+DEVICE       TYPE      STATE                   CONNECTION         
+eno1         ethernet  connected               Wired connection 1 
+mpbr0        bridge    connected (externally)  mpbr0              
+br-eno2      bridge    connected               br-eno2            
+localbr      bridge    connected               localbr            
+mybr         bridge    connected               mybr               
+eno2         ethernet  connected               br-eno2-child 
 
 ip tuntap list           
 tape518c5a7: tap one_queue multi_queue vnet_hdr persist
@@ -677,6 +885,17 @@ GENERAL.MASTER-PATH:                    /org/freedesktop/NetworkManager/Devices/
 IP4.GATEWAY:                            --
 IP6.GATEWAY:                            --
 
+multipass exec -n test6 -- ip route list table local
+
+local 10.1.2.129 dev enp6s0 proto kernel scope host src 10.1.2.129 
+broadcast 10.1.3.255 dev enp6s0 proto kernel scope link src 10.1.2.129 
+local 10.15.31.19 dev enp7s0 proto kernel scope host src 10.15.31.19 
+broadcast 10.15.31.255 dev enp7s0 proto kernel scope link src 10.15.31.19 
+local 10.161.38.197 dev enp5s0 proto kernel scope host src 10.161.38.197 
+broadcast 10.161.38.255 dev enp5s0 proto kernel scope link src 10.161.38.197 
+local 127.0.0.0/8 dev lo proto kernel scope host src 127.0.0.1 
+local 127.0.0.1 dev lo proto kernel scope host src 127.0.0.1 
+broadcast 127.255.255.255 dev lo proto kernel scope link src 127.0.0.1 
 multipass exec -n test1 -- ip route list table local
 
 local 10.13.31.13 dev enp6s0 proto kernel scope host src 10.13.31.13 
@@ -687,6 +906,19 @@ local 127.0.0.0/8 dev lo proto kernel scope host src 127.0.0.1
 local 127.0.0.1 dev lo proto kernel scope host src 127.0.0.1 
 broadcast 127.255.255.255 dev lo proto kernel scope link src 127.0.0.1 
 
+multipass exec -n test6 -- ip route list table main
+multipass exec -n test6 -- ip route list table main
+default via 10.161.38.1 dev enp5s0 proto dhcp src 10.161.38.197 metric 100 
+default via 10.1.1.205 dev enp6s0 proto dhcp src 10.1.2.129 metric 200 
+10.1.0.0/22 dev enp6s0 proto kernel scope link src 10.1.2.129 metric 200 
+10.1.1.205 dev enp6s0 proto dhcp scope link src 10.1.2.129 metric 200 
+10.1.2.69 dev enp6s0 proto dhcp scope link src 10.1.2.129 metric 200 
+10.1.2.70 dev enp6s0 proto dhcp scope link src 10.1.2.129 metric 200 
+10.15.31.0/24 dev enp7s0 proto kernel scope link src 10.15.31.19 
+10.161.38.0/24 dev enp5s0 proto kernel scope link src 10.161.38.197 metric 100 
+10.161.38.1 dev enp5s0 proto dhcp scope link src 10.161.38.197 metric 100 
+172.20.0.39 via 10.1.1.205 dev enp6s0 proto dhcp src 10.1.2.129 metric 200 
+
 multipass exec -n test1 -- ip route list table main
 default via 10.161.38.1 dev enp5s0 proto dhcp src 10.161.38.77 metric 100 
 10.13.31.0/24 dev enp6s0 proto kernel scope link src 10.13.31.13 
@@ -694,6 +926,18 @@ default via 10.161.38.1 dev enp5s0 proto dhcp src 10.161.38.77 metric 100
 10.161.38.1 dev enp5s0 proto dhcp scope link src 10.161.38.77 metric 100 
 
 # ip shows us our routes
+multipass exec -n test6 -- ip route show
+default via 10.161.38.1 dev enp5s0 proto dhcp src 10.161.38.197 metric 100 
+default via 10.1.1.205 dev enp6s0 proto dhcp src 10.1.2.129 metric 200 
+10.1.0.0/22 dev enp6s0 proto kernel scope link src 10.1.2.129 metric 200 
+10.1.1.205 dev enp6s0 proto dhcp scope link src 10.1.2.129 metric 200 
+10.1.2.69 dev enp6s0 proto dhcp scope link src 10.1.2.129 metric 200 
+10.1.2.70 dev enp6s0 proto dhcp scope link src 10.1.2.129 metric 200 
+10.15.31.0/24 dev enp7s0 proto kernel scope link src 10.15.31.19 
+10.161.38.0/24 dev enp5s0 proto kernel scope link src 10.161.38.197 metric 100 
+10.161.38.1 dev enp5s0 proto dhcp scope link src 10.161.38.197 metric 100 
+172.20.0.39 via 10.1.1.205 dev enp6s0 proto dhcp src 10.1.2.129 metric 200
+
 multipass exec -n test1 -- ip route show
 
 default via 10.161.38.1 dev enp5s0 proto dhcp src 10.161.38.77 metric 100 
@@ -721,7 +965,31 @@ multipass exec -n test1 -- ip neigh show
 fe80::216:3eff:fe0f:4ee dev enp5s0 lladdr 00:16:3e:0f:04:ee router STALE 
 fd42:b403:217:3a62::1 dev enp5s0 lladdr 00:16:3e:0f:04:ee router STALE
 
+multipass exec -n test6 -- ip neigh show 
+10.1.3.128 dev enp6s0 lladdr 04:ec:d8:51:88:b2 STALE 
+10.161.38.1 dev enp5s0 lladdr 00:16:3e:0f:04:ee DELAY 
+10.1.0.135 dev enp6s0 lladdr b8:ca:3a:6a:35:98 STALE 
+10.1.1.205 dev enp6s0 lladdr 34:56:fe:77:58:bc STALE 
+10.15.31.1 dev enp7s0 lladdr e2:4f:b4:dd:f4:1b STALE 
+10.1.0.32 dev enp6s0 lladdr cc:70:ed:1b:4f:c0 STALE 
+10.1.0.30 dev enp6s0 lladdr d4:ad:71:bc:e7:c0 STALE 
+10.1.0.31 dev enp6s0 lladdr 70:35:09:91:8f:40 STALE 
+10.1.1.151 dev enp6s0 lladdr 00:50:56:ad:fb:d8 STALE 
+10.1.2.69 dev enp6s0 lladdr 00:50:56:ad:44:9b STALE 
+fe80::216:3eff:fe0f:4ee dev enp5s0 lladdr 00:16:3e:0f:04:ee router STALE 
+fd42:b403:217:3a62::1 dev enp5s0 lladdr 00:16:3e:0f:04:ee router STALE 
+
 # ip shows us our links
+multipass exec -n test6 -- ip link list
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN mode DEFAULT group default qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+2: enp5s0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq state UP mode DEFAULT group default qlen 1000
+    link/ether 52:54:00:0e:fc:93 brd ff:ff:ff:ff:ff:ff
+3: enp6s0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq state UP mode DEFAULT group default qlen 1000
+    link/ether 52:54:00:f5:69:23 brd ff:ff:ff:ff:ff:ff
+4: enp7s0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq state UP mode DEFAULT group default qlen 1000
+    link/ether 52:54:00:0a:19:62 brd ff:ff:ff:ff:ff:ff
+
 multipass exec -n test1 -- ip link list
 1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN mode DEFAULT group default qlen 1000
     link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
@@ -731,6 +999,34 @@ multipass exec -n test1 -- ip link list
     link/ether 5c:13:55:48:43:58 brd ff:ff:ff:ff:ff:ff
 
 # ip shows us our IP addresses
+multipass exec -n test6 -- ip address show
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+    inet6 ::1/128 scope host noprefixroute 
+       valid_lft forever preferred_lft forever
+2: enp5s0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq state UP group default qlen 1000
+    link/ether 52:54:00:0e:fc:93 brd ff:ff:ff:ff:ff:ff
+    inet 10.161.38.197/24 metric 100 brd 10.161.38.255 scope global dynamic enp5s0
+       valid_lft 3170sec preferred_lft 3170sec
+    inet6 fd42:b403:217:3a62:5054:ff:fe0e:fc93/64 scope global mngtmpaddr noprefixroute 
+       valid_lft forever preferred_lft forever
+    inet6 fe80::5054:ff:fe0e:fc93/64 scope link 
+       valid_lft forever preferred_lft forever
+3: enp6s0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq state UP group default qlen 1000
+    link/ether 52:54:00:f5:69:23 brd ff:ff:ff:ff:ff:ff
+    inet 10.1.2.129/22 metric 200 brd 10.1.3.255 scope global dynamic enp6s0
+       valid_lft 391505sec preferred_lft 391505sec
+    inet6 fe80::5054:ff:fef5:6923/64 scope link 
+       valid_lft forever preferred_lft forever
+4: enp7s0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq state UP group default qlen 1000
+    link/ether 52:54:00:0a:19:62 brd ff:ff:ff:ff:ff:ff
+    inet 10.15.31.19/24 brd 10.15.31.255 scope global enp7s0
+       valid_lft forever preferred_lft forever
+    inet6 fe80::5054:ff:fe0a:1962/64 scope link 
+       valid_lft forever preferred_lft forever
+
 multipass exec -n test1 -- ip address show
 1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
     link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
@@ -752,6 +1048,40 @@ multipass exec -n test1 -- ip address show
        valid_lft forever preferred_lft forever
     inet6 fe80::5e13:55ff:fe48:4358/64 scope link 
        valid_lft forever preferred_lft forever
+
+multipass exec -n test6 -- networkctl status
+● Interfaces: 1, 4, 3, 2
+         State: routable                                      
+  Online state: online                                        
+       Address: 10.161.38.197 on enp5s0
+                10.1.2.129 on enp6s0
+                10.15.31.19 on enp7s0
+                fd42:b403:217:3a62:5054:ff:fe0e:fc93 on enp5s0
+                fe80::5054:ff:fe0e:fc93 on enp5s0
+                fe80::5054:ff:fef5:6923 on enp6s0
+                fe80::5054:ff:fe0a:1962 on enp7s0
+       Gateway: 10.161.38.1 on enp5s0
+                10.1.1.205 on enp6s0
+                fe80::216:3eff:fe0f:4ee on enp5s0
+           DNS: 10.161.38.1
+                fd42:b403:217:3a62::1
+                fe80::216:3eff:fe0f:4ee
+                10.1.2.69
+                10.1.2.70
+                172.20.0.39
+Search Domains: lxd
+                BUSCHE-CNC.COM
+
+Jun 01 06:46:20 test6 systemd-networkd[5878]: enp7s0: Gained IPv6LL
+Jun 01 06:46:20 test6 systemd-networkd[5878]: Enumeration completed
+Jun 01 06:46:20 test6 systemd-networkd[5878]: enp5s0: Configuring with /run/systemd/network/10-netplan-default.network.
+Jun 01 06:46:20 test6 systemd-networkd[5878]: enp6s0: Configuring with /run/systemd/network/10-netplan-extra0.network.
+Jun 01 06:46:20 test6 systemd[1]: Started systemd-networkd.service - Network Configuration.
+Jun 01 06:46:20 test6 systemd-networkd[5878]: enp7s0: Configuring with /run/systemd/network/10-netplan-enp7s0.network.
+Jun 01 06:46:20 test6 systemd-networkd[5878]: enp5s0: DHCPv4 address 10.161.38.197/24, gateway 10.161.38.1 acquired from 10.161.38.1
+Jun 01 06:46:20 test6 systemd-networkd[5878]: enp6s0: DHCPv4 address 10.1.2.129/22, gateway 10.1.1.205 acquired from 10.1.2.69
+Jun 01 06:46:20 test6 systemd[1]: Starting systemd-networkd-wait-online.service - Wait for Network to be Configured...
+Jun 01 06:46:20 test6 systemd[1]: Finished systemd-networkd-wait-online.service - Wait for Network to be Configured.
 
 multipass exec -n test1 -- networkctl
 IDX LINK   TYPE     OPERATIONAL SETUP     
@@ -790,6 +1120,47 @@ May 30 06:36:09 test1 systemd[1]: Finished systemd-networkd-wait-online.service 
 To list various details of specific network interface called enp7s0, you can run the following command, which will list network configuration files, type, state, IP addresses (both IPv4 and IPv6), broadcast addresses, gateway, DNS servers, domain, routing information, maximum transmission unit (MTU), and queuing discipline (QDisc).
 
 ```bash
+multipass exec -n test6 -- networkctl status enp6s0
+
+● 3: enp6s0
+                   Link File: /usr/lib/systemd/network/99-default.link
+                Network File: /run/systemd/network/10-netplan-extra0.network
+                       State: routable (configured)
+                Online state: online                                         
+                        Type: ether
+                        Path: pci-0000:06:00.0
+                      Driver: virtio_net
+                      Vendor: Red Hat, Inc.
+                       Model: Virtio 1.0 network device
+            Hardware Address: 52:54:00:f5:69:23
+                         MTU: 1500 (min: 68, max: 65535)
+                       QDisc: mq
+IPv6 Address Generation Mode: eui64
+    Number of Queues (Tx/Rx): 2/2
+            Auto negotiation: no
+                     Address: 10.1.2.129 (DHCP4 via 10.1.2.69)
+                              fe80::5054:ff:fef5:6923
+                     Gateway: 10.1.1.205
+                         DNS: 10.1.2.69
+                              10.1.2.70
+                              172.20.0.39
+              Search Domains: BUSCHE-CNC.COM
+           Activation Policy: up
+         Required For Online: yes
+             DHCP4 Client ID: IAID:0x24721ac8/DUID
+           DHCP6 Client DUID: DUID-EN/Vendor:0000ab11fdf0a14abfe669bd
+
+May 31 21:25:10 test6 systemd-networkd[717]: enp6s0: Reconfiguring with /run/systemd/network/10-netplan-extra0.network.
+May 31 21:25:10 test6 systemd-networkd[717]: enp6s0: DHCP lease lost
+May 31 21:25:10 test6 systemd-networkd[717]: enp6s0: DHCPv6 lease lost
+May 31 21:25:10 test6 systemd-networkd[717]: enp6s0: DHCPv4 address 10.1.2.129/22, gateway 10.1.1.205 acquired from 10.1.2.69
+Jun 01 06:46:19 test6 systemd-networkd[717]: enp6s0: DHCPv6 lease lost
+Jun 01 06:46:20 test6 systemd-networkd[5878]: enp6s0: Link UP
+Jun 01 06:46:20 test6 systemd-networkd[5878]: enp6s0: Gained carrier
+Jun 01 06:46:20 test6 systemd-networkd[5878]: enp6s0: Gained IPv6LL
+Jun 01 06:46:20 test6 systemd-networkd[5878]: enp6s0: Configuring with /run/systemd/network/10-netplan-extra0.network.
+Jun 01 06:46:20 test6 systemd-networkd[5878]: enp6s0: DHCPv4 address 10.1.2.129/22, gateway 10.1.1.205 acquired from 10.1.2.69
+
 multipass exec -n test1 -- networkctl status enp5s0
 ● 2: enp5s0
                    Link File: /run/systemd/network/10-netplan-enp5s0.link
