@@ -131,6 +131,7 @@ KVM acceleration can be used
 ```
 
 ```bash
+sudo apt install net-tools
 sudo apt install libvirt-clients
 sudo virsh net-list --all
 error: failed to connect to the hypervisor

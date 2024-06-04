@@ -228,7 +228,7 @@ ip -4 a
 
 **[Generate 5 MAC address](https://www.browserling.com/tools/random-mac)**
 
-Note: I never process to work if these mac addresses were passed in manually, so I stared letting multipass generate them instead.
+Note: I never process to work if these mac addresses were passed in manually, so I stared letting multipass generate them instead. Found someplace in KVM ubuntu docs the first digit has to be even for libvirt.
 
 ```bash
 5c:13:55:48:43:58
@@ -354,6 +354,65 @@ IPv6 Address Generation Mode: eui64
              DHCP4 Client ID: IAID:0x24721ac8/DUID
            DHCP6 Client DUID: DUID-EN/Vendor:0000ab118fbffcae7a8a6b9a
 
+multipass exec -n test7 -- sudo bash -c 'cat << EOF > /etc/netplan/10-custom.yaml
+network:
+    version: 2
+    ethernets:
+        enp6s0:
+            dhcp4: no
+            match:
+                macaddress: "52:54:00:41:ee:b9"
+            addresses: [10.1.0.137/22]
+            gateway4: 10.1.1.205
+            nameservers:
+                addresses: [10.1.2.69,10.1.2.70,172.20.0.39]
+        enp7s0:
+            dhcp4: no
+            match:
+                macaddress: "52:54:00:58:18:4f"
+            addresses: [10.15.31.20/24]
+EOF'
+
+multipass exec -n test7 -- sudo bash -c 'cat /etc/netplan/10-custom.yaml'
+network:
+    version: 2
+    ethernets:
+        enp6s0:
+            dhcp4: no
+            match:
+                macaddress: "52:54:00:41:ee:b9"
+            addresses: [10.1.0.137/22]
+            gateway4: 10.1.1.205
+            nameservers:
+                addresses: [10.1.2.69,10.1.2.70,172.20.0.39]
+        enp7s0:
+            dhcp4: no
+            match:
+                macaddress: "52:54:00:58:18:4f"
+            addresses: [10.15.31.20/24]
+
+multipass exec -n test7 -- sudo netplan apply
+** (generate:19032): WARNING **: 18:49:35.838: Permissions for /etc/netplan/10-custom.yaml are too open. Netplan configuration should NOT be accessible by others.
+
+** (generate:19032): WARNING **: 18:49:35.838: `gateway4` has been deprecated, use default routes instead.
+See the 'Default routes' section of the documentation for more details.
+
+** (process:19031): WARNING **: 18:49:36.596: Permissions for /etc/netplan/10-custom.yaml are too open. Netplan configuration should NOT be accessible by others.
+
+** (process:19031): WARNING **: 18:49:36.596: `gateway4` has been deprecated, use default routes instead.
+See the 'Default routes' section of the documentation for more details.
+
+** (process:19031): WARNING **: 18:49:37.108: Permissions for /etc/netplan/10-custom.yaml are too open. Netplan configuration should NOT be accessible by others.
+
+** (process:19031): WARNING **: 18:49:37.108: `gateway4` has been deprecated, use default routes instead.
+See the 'Default routes' section of the documentation for more details.
+
+multipass exec -n test7 -- sudo networkctl -a status
+
+
+multipass exec -n test7 -- sudo netplan apply
+
+multipass exec -n test7 -- sudo networkctl -a status
 
 multipass exec -n test6 -- sudo bash -c 'cat << EOF > /etc/netplan/10-custom.yaml
 network:
