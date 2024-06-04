@@ -60,15 +60,6 @@ Research Zitadel IAM
 - **[Research List](../../../research/research_list.md)**\
 A list of all research for repsys.
 
-- **[KVM networking](../../../research/m_z/networking/kvm/kvm_networking.md)**
-There are a few different ways to allow a virtual machine access to the external network.
-
-1. The default virtual network configuration is known as Usermode Networking. NAT is performed on traffic through the host interface to the outside network.
-
-2. Alternatively, you can configure Bridged Networking to enable external hosts to directly access services on the guest operating system.
-
-If you are confused, the libvirt Networking Handbook provides a good outline.
-
 - **[Linux routing and traffic control](../../../research/m_z/networking/iproute2/introduction_to_iproute.md)** \
 The 2.2 and above Linux kernels include a completely redesigned network subsystem. This new networking code brings Linux performance and a feature set with little competition in the general OS arena. In fact, the new routing, filtering, and classifying code is more featureful than the one provided by many dedicated routers and firewalls and traffic shaping products.
 

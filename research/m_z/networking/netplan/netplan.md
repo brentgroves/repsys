@@ -1,8 +1,8 @@
 # **[netplan](https://launchpad.net/netplan)**
 
-**[Back to Research List](../../research_list.md)**\
-**[Back to Networking Menu](./networking_menu.md)**\
-**[Back to Current Status](../../../development/status/weekly/current_status.md)**\
+**[Back to Research List](../../../research_list.md)**\
+**[Back to Networking Menu](../networking_menu.md)**\
+**[Back to Current Status](../../../../development/status/weekly/current_status.md)**\
 **[Back to Main](../../../README.md)**
 
 ## How does it work?

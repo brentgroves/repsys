@@ -20,6 +20,16 @@ At least 2 GB RAM (4 GB recommended)
 
 To verify that your CPU supports hardware virtualization, run this command:
 
+```bash
+sudo apt install cpu-checker
+kvm-ok                      
+INFO: /dev/kvm exists
+KVM acceleration can be used
+
+```
+
+or
+
 ```$ egrep -c '(vmx|svm)' /proc/cpuinfo```
 If the output is 1 or greater, your CPU supports hardware virtualization.
 
