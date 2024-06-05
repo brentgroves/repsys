@@ -115,3 +115,41 @@ At this point, the bridge connection will automatically be activated. You will m
 Also, check the list of available interfaces. As mentioned, the bridge interface must have taken over whatever IP address was possessed by your Ethernet interface.
 
 ![](https://www.xmodulo.com/img/51l.png)
+
+```bash
+nmcli con mod "br-eno2" ipv4.method "manual"
+
+nmcli con mod "br-eno2" ipv4.dns "172.20.0.39,10.1.2.69,10.1.2.70"
+nmcli con mod "br-eno2" ipv4.dns-search "BUSCHE-CNC.COM"
+nmcli con mod "br-eno2" ipv4.addresses "10.1.0.138/22"
+nmcli con mod "br-eno2" ipv4.gateway "10.1.1.205"
+
+# this shows the ip6 address
+ip address show eno2   
+7: eno2: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq state UP group default qlen 1000
+    link/ether b8:ca:3a:6a:35:99 brd ff:ff:ff:ff:ff:ff
+    altname enp1s0f1
+    inet 10.1.0.136/22 brd 10.1.3.255 scope global noprefixroute eno2
+       valid_lft forever preferred_lft forever
+    inet6 fe80::5597:8f60:13a3:3a3/64 scope link noprefixroute 
+       valid_lft forever preferred_lft forever
+
+# eno2 connection is pingable 
+ping6 -I enp0s25 fe80::5597:8f60:13a3:3a3
+ping6: Warning: source address might be selected on device other than: enp0s25
+PING fe80::5597:8f60:13a3:3a3(fe80::5597:8f60:13a3:3a3) from :: enp0s25: 56 data bytes
+64 bytes from fe80::5597:8f60:13a3:3a3%enp0s25: icmp_seq=1 ttl=64 time=0.715 ms
+64 bytes from fe80::5597:8f60:13a3:3a3%enp0s25: icmp_seq=2 ttl=64 time=0.395 ms
+
+# br-eno2 does not show the ip6 address for some reason
+ip address show br-eno2
+12: br-eno2: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default qlen 1000
+    link/ether de:28:04:da:3a:48 brd ff:ff:ff:ff:ff:ff
+    inet 10.1.0.136/22 brd 10.1.3.255 scope global noprefixroute br-eno2
+       valid_lft forever preferred_lft forever
+
+
+ip link show br-eno2    
+28: br-eno2: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP mode DEFAULT group default qlen 1000
+    link/ether de:28:04:da:3a:48 brd ff:ff:ff:ff:ff:ff
+```

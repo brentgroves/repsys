@@ -7,6 +7,7 @@
 
 ## references
 
+- **[Network connection bridge](../../networking/kvm/)
 - **[libvirt](https://ubuntu.com/server/docs/libvirt)**
 - **[How Multipass enslaves an ethernet device to a bridge](https://www.cyberciti.biz/faq/how-to-add-network-bridge-with-nmcli-networkmanager-on-linux/)**
 - **[Redhat Create Bridge with nmcli](https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/8/html/configuring_and_managing_networking/configuring-a-network-bridge_configuring-and-managing-networking)**
