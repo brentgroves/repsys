@@ -5,6 +5,12 @@
 **[Back to Current Status](../../../../development/status/weekly/current_status.md)**\
 **[Back to Main](../../../../README.md)**
 
+## references
+
+<https://www.digitalocean.com/community/tutorials/how-to-forward-ports-through-a-linux-gateway-with-iptables>
+
+<https://superuser.com/questions/1836606/how-to-set-up-port-forwarding-to-guest-vm-using-iptables>
+
 ## Forwarding Incoming Connections
 
 By default, guests that are connected via a virtual network with <forward mode='nat'/> can make any outgoing network connection they like. Incoming connections are allowed from the host, and from other guests connected to the same libvirt network, but all other incoming connections are blocked by iptables rules.
