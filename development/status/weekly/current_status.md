@@ -5,6 +5,10 @@
 
 ## NEXT
 
+- **[iptable port forwarding](../../../research/m_z/virtualization/networking/routing/port_forwarding/iptables_port_forwarding.md)**
+- Ask Ligtel ip6 address block
+- Connect to db through ip6
+- Port forward tutorial test by forwarding to local usermod network.
 - Ask for 20 IP and change-over not to occur on 2nd week of month.
 
 - **[Set Static IP using Netplan](https://gal.vin/posts/2023/ubuntu-static-ip/)** and **[Netplan tutorial](https://linuxconfig.org/netplan-network-configuration-tutorial-for-beginners)**

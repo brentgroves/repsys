@@ -49,6 +49,10 @@ Traditionally IP network is classified as A, B or C network. The computers ident
 
 IPv6 rangeblocks
 IPv6 addresses are each 128 bits long. Because each digit in an IPv6 address can have 16 different values (from 0 to 15), each digit represents the overall value of 4 bits (one nibble), with 32 digits total. As with IPv4, CIDR notation describes ranges in terms of a common prefix of bits. For example 2001:db8::/32 means that the range described has the first 32 bits set to the binary digits 00100000000000010000110110101000. Also like IPv4, MediaWiki implements IPv6 rangeblocks using CIDR notation.
+pass-through /64 routed fire
+login into u4
+ip6 static pass-through harold / josh
+ip4 NAT port forward
 
 ```bash
 ping6 -I eno1 2a03:2880:f12f:83:face:b00c::25de
