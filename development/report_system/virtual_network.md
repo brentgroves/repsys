@@ -10,10 +10,10 @@ mindmap
       Network Interface eno1 10.1.0.135/22
         ssh repsys13
       Network Interface Bridge slave eno2 
-        MicroK8s node 1 - 10.1.3.159/22
+        MicroK8s node 1 - 10.1.0.137/22
           Service 1
           Service 2
-        MicroK8s node 2 - 10.1.2.129/22
+        MicroK8s node 2 - 10.1.3.7/22
           Service 3
           Service 4
         MicroK8s node 3 - 10.1.2.?/22

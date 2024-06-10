@@ -19,11 +19,15 @@ Begin by updating the local package cache:
 ```bash
 sudo apt update
 # Now install the iptables-persistent package. This allows you to save your rule sets and have them automatically applied at boot:
+# iptables-persistent on Ubuntu has netfilter-persistent as a dependency: https://packages.ubuntu.com/bionic/iptables-persistent
+
 
 sudo apt install iptables-persistent
 ```
 
 During the installation, you’ll be asked whether you want to save your current rules, select <Yes>. Please note that you’ll be running the netfilter-persistent command to execute the iptables persistent firewall service. Next, you’ll edit the generated rules files.
+
+<!-- iptables-persistent on Ubuntu has netfilter-persistent as a dependency: https://packages.ubuntu.com/bionic/iptables-persistent -->
 
 ## A Note About IPv6 in this Guide
 

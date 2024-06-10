@@ -5,13 +5,13 @@
 
 ## NEXT
 
-- **[iptable port forwarding](../../../research/m_z/virtualization/networking/routing/port_forwarding/iptables_port_forwarding.md)**
+- **[iptable port forwarding with nftables](../../../research/m_z/virtualization/networking/routing/port_forwarding/iptables_port_forwarding.md)**
 - Ask Ligtel ip6 address block
 - Connect to db through ip6
 - Port forward tutorial test by forwarding to local usermod network.
 - Ask for 20 IP and change-over not to occur on 2nd week of month.
 
-- **[Set Static IP using Netplan](https://gal.vin/posts/2023/ubuntu-static-ip/)** and **[Netplan tutorial](https://linuxconfig.org/netplan-network-configuration-tutorial-for-beginners)**
+- **[Set Static IP using Netplan](../../../research/m_z/virtualization/multipass/config_static_ips.md)** and **[Netplan tutorial](https://linuxconfig.org/netplan-network-configuration-tutorial-for-beginners)**
 
 - **[Go Backend with IAM](../../../../go_zit_backend/README.md#next)**\
 Read more about how to **[generate a key file](../../../research/m_z/zitadel/key_file.md)**.
@@ -64,7 +64,7 @@ Research Zitadel IAM
 - **[Research List](../../../research/research_list.md)**\
 A list of all research for repsys.
 
-- **[KVM networking](../../../research/m_z/networking/kvm/kvm_networking.md)**
+- **[KVM networking](../../../research/m_z/virtualization/kvm/kvm_networking.md)**
 There are a few different ways to allow a virtual machine access to the external network.
 
 1. The default virtual network configuration is known as Usermode Networking. NAT is performed on traffic through the host interface to the outside network.
@@ -73,13 +73,13 @@ There are a few different ways to allow a virtual machine access to the external
 
 If you are confused, the libvirt Networking Handbook provides a good outline.
 
-- **[Linux routing and traffic control](../../../research/m_z/networking/iproute2/introduction_to_iproute.md)** \
+- **[Linux routing and traffic control](../../../research/m_z/virtualization/networking/routing/introduction_to_iproute2.md)** \
 The 2.2 and above Linux kernels include a completely redesigned network subsystem. This new networking code brings Linux performance and a feature set with little competition in the general OS arena. In fact, the new routing, filtering, and classifying code is more featureful than the one provided by many dedicated routers and firewalls and traffic shaping products.
 
-- **[Configure Static IPs](../../../research/m_z/multipass/config_static_ips.md)** \
+- **[Configure Static IPs](../../../research/m_z/virtualization/multipass/config_static_ips.md)** \
 This document explains how to create instances with static IPs in a new network, internal to the host. With this approach, instances get an extra IP that does not change with restarts. By using a separate, local network we avoid any IP conflicts. Instances retain the usual default interface with a DHCP-allocated IP, which gives them connectivity to the outside.
 
-- **[Virtio-networking and OVS](../../../research/m_z/networking/virtual_networking/virtio-part1.md)**
+- **[Virtio-networking and OVS](../../../research/m_z/virtualization/networking/virtio/virtio-part1.md)**
 
   Virtio was developed as a standardized open interface for virtual machines (VMs) to access simplified devices such as block devices and network adaptors. Virtio-net is a virtual ethernet card and is the most complex device supported so far by virtio.
 
