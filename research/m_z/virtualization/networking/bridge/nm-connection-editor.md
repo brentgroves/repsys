@@ -121,7 +121,7 @@ nmcli con mod "br-eno2" ipv4.method "manual"
 
 nmcli con mod "br-eno2" ipv4.dns "172.20.0.39,10.1.2.69,10.1.2.70"
 nmcli con mod "br-eno2" ipv4.dns-search "BUSCHE-CNC.COM"
-nmcli con mod "br-eno2" ipv4.addresses "10.1.0.138/22"
+nmcli con mod "br-eno2" ipv4.addresses "10.1.0.136/22"
 nmcli con mod "br-eno2" ipv4.gateway "10.1.1.205"
 
 # this shows the ip6 address

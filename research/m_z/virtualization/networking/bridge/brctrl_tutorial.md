@@ -1,5 +1,10 @@
 # **[brctl](https://www.baeldung.com/linux/bridging-network-interfaces)**
 
+This section describes the management of a network bridge using the legacy brctl tool from the bridge-utils package. See brctl(8) for full listing of options.
+
+**[brctl obsolete](https://wiki.archlinux.org/title/network_bridge)**
+Note: The use of brctl is deprecated and is considered obsolete. See the Notes section in brctl(8) § NOTES for details.
+
 In Linux, bridging network interfaces is a common practice for combining two or more network interfaces into a single virtual interface. Bridging is useful for various reasons, such as improving network performance, redundancy, and load balancing.
 
 In this article, we’ll explain what network bridging is, how to set it up, and provide some examples of how it can be used in practice.
@@ -215,23 +220,21 @@ Another use case for network bridging is to create a virtual network between vir
 
 For example, if we have two virtual machines running on the same physical host, we can bridge their virtual network interfaces into a single virtual interface. This will allow the virtual machines to communicate with each other directly without going through the physical network.
 
-list your iptables nat table:
+```bash
+brctl show br-eno2
+bridge name bridge id  STP enabled interfaces
+br-eno2  8000.de2804da3a48 yes  eno2
+                                tapb9f2fc68
+                                tape3f5bd2d
+```
 
 ```bash
-sudo iptables -n -t nat -L
-[sudo] password for brent: 
-# Warning: iptables-legacy tables present, use iptables-legacy to see them
-Chain PREROUTING (policy ACCEPT)
-target     prot opt source               destination         
+nmcli con mod "br-eno2" ipv4.method "manual"
 
-Chain INPUT (policy ACCEPT)
-target     prot opt source               destination         
-
-Chain OUTPUT (policy ACCEPT)
-target     prot opt source               destination         
-
-Chain POSTROUTING (policy ACCEPT)
-target     prot opt source               destination      
+nmcli con mod "br-eno2" ipv4.dns "172.20.0.39,10.1.2.69,10.1.2.70"
+nmcli con mod "br-eno2" ipv4.dns-search "BUSCHE-CNC.COM"
+nmcli con mod "br-eno2" ipv4.addresses "10.1.0.136/22"
+nmcli con mod "br-eno2" ipv4.gateway "10.1.1.205"
 ```
 
 ```bash
