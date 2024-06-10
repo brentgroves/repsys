@@ -5,13 +5,8 @@
 
 ## NEXT
 
-- **[iptable port forwarding with nftables](../../../research/m_z/virtualization/networking/routing/port_forwarding/iptables_port_forwarding.md)**
-- Ask Ligtel ip6 address block
-- Connect to db through ip6
-- Port forward tutorial test by forwarding to local usermod network.
+- **[port forwarding with nftables](https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/security_guide/sec-configuring_port_forwarding_using_nftables)**
 - Ask for 20 IP and change-over not to occur on 2nd week of month.
-
-- **[Set Static IP using Netplan](../../../research/m_z/virtualization/multipass/config_static_ips.md)** and **[Netplan tutorial](https://linuxconfig.org/netplan-network-configuration-tutorial-for-beginners)**
 
 - **[Go Backend with IAM](../../../../go_zit_backend/README.md#next)**\
 Read more about how to **[generate a key file](../../../research/m_z/zitadel/key_file.md)**.
