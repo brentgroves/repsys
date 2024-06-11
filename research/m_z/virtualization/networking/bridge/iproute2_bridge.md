@@ -12,8 +12,8 @@ ip address show eno3
 8: eno3: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq state UP group default qlen 1000
     link/ether b8:ca:3a:6a:35:9a brd ff:ff:ff:ff:ff:ff
     altname enp1s0f2
-    inet 10.1.0.138/22 brd 10.1.3.255 scope global dynamic noprefixroute eno3
-       valid_lft 265929sec preferred_lft 265929sec
+    inet 10.1.3.172/22 brd 10.1.3.255 scope global dynamic noprefixroute eno3
+       valid_lft 182918sec preferred_lft 182918sec
     inet6 fe80::4418:3ffb:954b:9cea/64 scope link noprefixroute 
        valid_lft forever preferred_lft forever
 
@@ -33,9 +33,9 @@ Initial setup for the bridge:
 
 ```bash
 # ip link add name br0 type bridge
-sudo ip link add name br-eno3 type bridge
+sudo ip link add name mybr-eno3 type bridge
 # ip link set dev br0 up
-sudo ip link set dev br-eno3 up
+sudo ip link set dev mybr-eno3 up
 # ip address add 10.2.3.4/8 dev br0
 sudo ip address add 10.1.0.138/22 dev br-eno3
 # ip route append default via 10.0.0.1 dev br0
