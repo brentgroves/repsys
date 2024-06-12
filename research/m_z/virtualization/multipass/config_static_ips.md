@@ -261,12 +261,44 @@ d5:eb:35:ee:b4:14
 Next we launch an instance with an extra network in manual mode, connecting it to this bridge:
 
 ```bash
-multipass launch --name test6 --network eno2 --network name=mybr
+multipass launch --name test8 --network name=mybr-eno3
+multipass exec -n test8 -- sudo networkctl -a status
+3: enp6s0
+                   Link File: /usr/lib/systemd/network/99-default.link
+                Network File: /run/systemd/network/10-netplan-extra0.network
+                       State: routable (configured)
+                Online state: online                                         
+                        Type: ether
+                        Path: pci-0000:06:00.0
+                      Driver: virtio_net
+                      Vendor: Red Hat, Inc.
+                       Model: Virtio 1.0 network device
+            Hardware Address: 52:54:00:b6:62:e9
+                         MTU: 1500 (min: 68, max: 65535)
+                       QDisc: mq
+IPv6 Address Generation Mode: eui64
+    Number of Queues (Tx/Rx): 2/2
+            Auto negotiation: no
+                     Address: 10.1.3.39 (DHCP4 via 10.1.2.69)
+                              fe80::5054:ff:feb6:62e9
+                     Gateway: 10.1.1.205
+                         DNS: 10.1.2.69
+                              10.1.2.70
+                              172.20.0.39
+              Search Domains: BUSCHE-CNC.COM
+           Activation Policy: up
+         Required For Online: yes
+             DHCP4 Client ID: IAID:0x24721ac8/DUID
+           DHCP6 Client DUID: DUID-EN/Vendor:0000ab1121fdaafbb0376aea
 
-multipass exec -n test6 -- sudo networkctl -a status
+Jun 11 20:58:28 test8 systemd-networkd[715]: enp6s0: Configuring with /run/systemd/network/10-netplan-extra0.network.
+Jun 11 20:58:28 test8 systemd-networkd[715]: enp6s0: Link UP
+Jun 11 20:58:28 test8 systemd-networkd[715]: enp6s0: Gained carrier
+Jun 11 20:58:29 test8 systemd-networkd[715]: enp6s0: Gained IPv6LL
+Jun 11 20:58:35 test8 systemd-networkd[715]: enp6s0: DHCPv4 address 10.1.3.39/22, gateway 10.1.1.205 acquired from 10.1.2.69
+
 
 multipass launch --name test7 --network eno2 --network name=mybr
-
 multipass exec -n test7 -- sudo networkctl -a status
 # get the mac address assigned
 enp7s0
@@ -286,23 +318,9 @@ IPv6 Address Generation Mode: eui64
     Number of Queues (Tx/Rx): 2/2
             Auto negotiation: no
 
-
-multipass launch --name test5 --network name=mybr
-multipass exec -n test5 -- sudo networkctl -a status
-multipass launch --name test4 --network name=mybr
-
 # can't get manual mode to work
-multipass launch --name test3 --network name=mybr,mode=manual,mac="7f:71:f0:b2:55:dd"
+# multipass launch --name test3 --network name=mybr,mode=manual,mac="7f:71:f0:b2:55:dd"
 
-
-multipass launch --name test1 --network name=localbr,mode=manual,mac="5c:13:55:48:43:58"
-
-# Step 6: More instances
-# If desired, repeat steps 2-5 with different names/MACs/IP terminations (e.g. 10.13.31.14) to launch other instances with static IPs in the same network. You can ping from one instance to another to confirm that they are connected. For example:
-
-multipass launch --name test2 --network name=localbr,mode=manual,mac="d5:eb:35:ee:b4:14"
-
-# multipass exec -n test1 -- ping 10.13.31.14
 ```
 
 ## Step 3: Configure the extra interface
@@ -310,20 +328,50 @@ multipass launch --name test2 --network name=localbr,mode=manual,mac="d5:eb:35:e
 We now need to configure the manual network interface inside the instance. We can achieve that using Netplan. The following command plants the required Netplan configuration file in the instance:
 
 ```bash
+# bridge i made with iproute2 worked when using non-main network interface eno3.
+multipass exec -n test8 -- sudo networkctl -a status
+3: enp6s0
+                   Link File: /usr/lib/systemd/network/99-default.link
+                Network File: /run/systemd/network/10-netplan-extra0.network
+                       State: routable (configured)
+                Online state: online                                         
+                        Type: ether
+                        Path: pci-0000:06:00.0
+                      Driver: virtio_net
+                      Vendor: Red Hat, Inc.
+                       Model: Virtio 1.0 network device
+            Hardware Address: 52:54:00:b6:62:e9
+                         MTU: 1500 (min: 68, max: 65535)
+                       QDisc: mq
+IPv6 Address Generation Mode: eui64
+    Number of Queues (Tx/Rx): 2/2
+            Auto negotiation: no
+                     Address: 10.1.3.39 (DHCP4 via 10.1.2.69)
+                              fe80::5054:ff:feb6:62e9
+                     Gateway: 10.1.1.205
+                         DNS: 10.1.2.69
+                              10.1.2.70
+                              172.20.0.39
+              Search Domains: BUSCHE-CNC.COM
+           Activation Policy: up
+         Required For Online: yes
+             DHCP4 Client ID: IAID:0x24721ac8/DUID
+           DHCP6 Client DUID: DUID-EN/Vendor:0000ab1121fdaafbb0376aea
 
-
-multipass exec -n test7 -- sudo bash -c 'cat << EOF > /etc/netplan/10-custom.yaml
+multipass exec -n test8 -- sudo bash -c 'cat << EOF > /etc/netplan/10-custom.yaml
 network:
     version: 2
     ethernets:
-        enp7s0:
+        enp6s0:
             dhcp4: no
             match:
-                macaddress: "52:54:00:58:18:4f"
-            addresses: [10.15.31.20/24]
+                macaddress: "52:54:00:b6:62:e9"
+            addresses: [10.1.0.139/22]
+            gateway4: 10.1.1.205
+            nameservers:
+                addresses: [10.1.2.69,10.1.2.70,172.20.0.39]
 EOF'
 
-multipass exec -n test7 -- sudo netplan apply
 
 multipass exec -n test7 -- sudo networkctl -a status
 ● 3: enp6s0
@@ -353,6 +401,20 @@ IPv6 Address Generation Mode: eui64
          Required For Online: yes
              DHCP4 Client ID: IAID:0x24721ac8/DUID
            DHCP6 Client DUID: DUID-EN/Vendor:0000ab118fbffcae7a8a6b9a
+multipass exec -n test8 -- sudo bash -c 'cat /etc/netplan/10-custom.yaml'
+network:
+    version: 2
+    ethernets:
+        enp6s0:
+            dhcp4: no
+            match:
+                macaddress: "52:54:00:b6:62:e9"
+            addresses: [10.1.0.139/22]
+            gateway4: 10.1.1.205
+            nameservers:
+                addresses: [10.1.2.69,10.1.2.70,172.20.0.39]
+multipass exec -n test8 -- sudo netplan apply
+multipass exec -n test8 -- sudo networkctl -a status
 
 multipass exec -n test7 -- sudo bash -c 'cat << EOF > /etc/netplan/10-custom.yaml
 network:
