@@ -1,5 +1,9 @@
 # **[Creating a bridge](https://wiki.archlinux.org/title/network_bridge)**
 
+## summary
+
+Compared the bridge I created to the bridge multipass makes below. the commented lines are the lines of the automatically generated bridge multipass makes when it enslaves the interface.  There are several differences so I let multipass create this bridge and then add a static ip address afterwards so we can still use the network interface from the host.
+
 ## With iproute2
 
 This section describes the management of a network bridge using the ip tool from the iproute2 package, which is required by the base meta package.
@@ -32,20 +36,58 @@ Bridge name: br-eno3
 Initial setup for the bridge:
 
 ```bash
+ip address del 10.2.3.4/8 dev eth0
 # ip link add name br0 type bridge
 sudo ip link add name mybr-eno3 type bridge
-# ip link set dev br0 up
+# show bridge details
+ip -d link show mybr-eno3
+# Show bridge details in a pretty JSON format (which is a good way to get bridge key-value pairs):
+ip -j -p -d link how mybr-eno3
+# NOTE: compared this bridge to the bridge multipass makes below. the commented lines are the lines of the automatically generated bridge multipass makes when it enslaves the interface
+ip -j -p -d link show mybr-eno3
+[ {
+        # "flags": [ "BROADCAST","MULTICAST","UP","LOWER_UP" ],
+        "flags": [ "BROADCAST","MULTICAST" ],
+        # "operstate": "UP",
+        "operstate": "DOWN",
+        "linkinfo": {
+            "info_kind": "bridge",
+            "info_data": {
+                # "stp_state": 1,
+                "stp_state": 0,
+                # "root_port": 1,
+                # "root_path_cost": 127,
+                "root_port": 0,
+                "root_path_cost": 0,
+                # "gc_timer": 31.25,
+                "gc_timer": 0.00,
+            }
+        },
+        # "inet6_addr_gen_mode": "none",
+        "inet6_addr_gen_mode": "eui64",
+    } ]
+
+# ip link set dev br0 up DONT DO THIS YET
 sudo ip link set dev mybr-eno3 up
+
 # ip address add 10.2.3.4/8 dev br0
-sudo ip address add 10.1.0.138/22 dev br-eno3
+sudo ip address add 10.1.0.138/22 dev mybr-eno3
+NOTE: at this step the ssh connection hangs.
+
 # ip route append default via 10.0.0.1 dev br0
-ip route append default via 10.1.1.205 dev br-eno2
+sudo ip route append default via 10.1.1.205 dev mybr-eno3
 ```
 
 Then, execute these commands in quick succession. It is advisable to put them in a script file and execute the script:
 
 ```bash
-ip link set eno3 master br-eno3
+ip link set eno3 master mybr-eno3
+
+Linux bridging has supported STP since the 2.4 and 2.6 kernel series. To enable STP on a bridge, enter:
+
+# ip link set br0 type bridge stp_state 1
+ip link set mybr-eno3 type bridge stp_state 1
+
 # ip address del 10.2.3.4/8 dev eth0
 ip address del 10.1.0.138/22 dev en03
 ```
