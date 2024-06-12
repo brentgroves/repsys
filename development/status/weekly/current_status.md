@@ -74,7 +74,8 @@ The 2.2 and above Linux kernels include a completely redesigned network subsyste
 - **[Configure Static IPs](../../../research/m_z/virtualization/multipass/config_static_ips.md)** \
 This document explains how to create instances with static IPs in a new network, internal to the host. With this approach, instances get an extra IP that does not change with restarts. By using a separate, local network we avoid any IP conflicts. Instances retain the usual default interface with a DHCP-allocated IP, which gives them connectivity to the outside.
 
-- **[Create a bridge using iproute2](../../../research/m_z/virtualization/networking/bridge/iproute2_bridge.md)**
+- **[Create a bridge using iproute2](../../../research/m_z/virtualization/networking/bridge/iproute2_bridge.md)**\
+This section describes the management of a network bridge using the ip tool from the iproute2 package
 
 - **[Virtio-networking and OVS](../../../research/m_z/virtualization/networking/virtio/virtio-part1.md)**
 

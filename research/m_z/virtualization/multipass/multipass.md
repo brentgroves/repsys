@@ -7,7 +7,15 @@
 ## references
 
 <https://multipass.run/docs>
+<https://github.com/canonical/multipass>
+<https://discourse.ubuntu.com/c/multipass/doc/24>
 <https://multipass.run/docs/create-an-instance#heading--create-an-instance>
+
+## **[What is Multipass](https://github.com/canonical/multipass)**
+
+Multipass is a lightweight VM manager for Linux, Windows and macOS. It's designed for developers who want a fresh Ubuntu environment with a single command. It uses KVM on Linux, Hyper-V on Windows and QEMU on macOS to run the VM with minimal overhead. It can also use VirtualBox on Windows and macOS. Multipass will fetch images for you and keep them up to date.
+
+Since it supports metadata for cloud-init, you can simulate a small cloud deployment on your laptop or workstation.
 
 ## Multipass Documentation
 
