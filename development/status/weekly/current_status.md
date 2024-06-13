@@ -18,7 +18,13 @@
 - Format kors43 certificate chain for jboss/Niagara
 - Ask Sam to import certificate chain on kors43 using Niagara front-end
 
-## Network packet
+## **[netfilter](../../../research/m_z/virtualization/networking/packet_classification_framework/netfilter.md)**
+
+Netfilter is a subsystem that was introduced in the Linux 2.4 kernel that provides a framework for implementing advanced network functionalities such as packet filtering, network address translation (NAT), and connection tracking. It achieves this by leveraging hooks in the kernel’s network code, which are the locations where kernel code can register functions to be invoked for specific network events. For instance, when a packet is received, it triggers a handler for the event and performs module specified actions.
+
+![](https://blogs.oracle.com/content/published/api/v1.1/assets/CONTA49E135C72694072948F0F9816404B23/Medium?cb=_cache_31b4&channelToken=3189ef66cf584820b5b19e6b10792d6f&format=jpg)
+
+## **[Network packet journey](../../../research/m_z/virtualization/networking/packet_classification_framework/network_packet_journey.md)**
 
 - Client uses name servers to determine IP address of destination service
 - Client sends network packet to IP address
@@ -33,6 +39,10 @@
 - Once the network packet has arrived at the destination network the network routing device uses the ARP protocol/table to determine the HW address of the network interface that is assigned to the destination IP address.
 - Once the HW (MAC) address is known the network routing can also use MAC tables to determine the port of layer 2 switch in which the network interface device is attached to.
 - Once the network packet arrives on the destination host's kernel via the network interface device then it's firewall determines whether to accept/reject/forward the network packet.
+
+## **[What happens when the packet arrives at it's destination](../../../research/m_z/virtualization/networking/packet_classification_framework/iptables/iptables_netfilter_arch.md)**
+
+In this guide, we will dive into the iptables architecture with the aim of making it more comprehensible for users who need to build their own firewall policies. We will discuss how iptables interacts with netfilter and how the various components fit together to provide a comprehensive filtering system.
 
 ## service-level agreement (SLA)
 
@@ -97,6 +107,9 @@ Research Zitadel IAM
 
 - **[Research List](../../../research/research_list.md)**\
 A list of all research for repsys.
+
+- **[Kernel Blog](../../../research/a_l/kernel/kernel.md)**\
+The Linux kernel goes through a development cycle that is — quite frankly — insane. Some statistics from the Kernel 5.10 patch show that this release saw 252 new authors making commits into the repo (which is also the lowest amount of new contributors since 5.6), and new releases are coming out every 9 weeks. All in all, the kernel forms the solid bedrock of a large part of the computing world, but it’s not archaic by any means. All good and well, but what if you want to poke around inside it, and maybe write some code yourself? It can be a little daunting, as it’s an area of programming that most schools and boot camps don’t touch on. Plus, unlike with every flavour-of-the-month JavaScript framework that comes crawling out of the woodwork whenever you blink your eyes, you can’t go onto StackOverflow and find an odd billion or so posts to guide you through any issues.
 
 - **[KVM networking](../../../research/m_z/virtualization/kvm/kvm_networking.md)**
 There are a few different ways to allow a virtual machine access to the external network.
