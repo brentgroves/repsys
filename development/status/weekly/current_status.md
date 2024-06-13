@@ -3,6 +3,45 @@
 **[All Status](../weekly/status_list.md)**\
 **[Back to Main](../../../README.md)**
 
+## **[Reporting System IP Request](../../report_system/r620s.md)**
+
+- 12 for r620s
+- 4 for Albion dev system and k8s cluster
+- 4 for Avilla dev system and k8s cluster
+
+## Linamar PKI
+
+- Lint certificate chain
+- Lint kors43 SAN server certificate
+- Fix any errors
+- Test certificate chain
+- Format kors43 certificate chain for jboss/Niagara
+- Ask Sam to import certificate chain on kors43 using Niagara front-end
+
+## Network packet
+
+- Client uses name servers to determine IP address of destination service
+- Client sends network packet to IP address
+- Networking devices route network packet to destination network using routing protocals such as:
+  - Routing Information Protocol (RIP)
+  - Interior Gateway Protocol (IGRP)
+  - Open Shortest Path First (OSPF)
+  - Exterior Gateway Protocol (EGP)
+  - Enhanced Interior Gateway Routing Protocol (EIGRP)
+  - Border Gateway Protocol (BGP)
+  - Intermediate System-to-Intermediate System (IS-IS)
+- Once the network packet has arrived at the destination network the network routing device uses the ARP protocol/table to determine the HW address of the network interface that is assigned to the destination IP address.
+- Once the HW (MAC) address is known the network routing can also use MAC tables to determine the port of layer 2 switch in which the network interface device is attached to.
+- Once the network packet arrives on the destination host's kernel via the network interface device then it's firewall determines whether to accept/reject/forward the network packet.
+
+## service-level agreement (SLA)
+
+A service-level agreement (SLA) is a contract between a service provider and its customers that documents what services the provider will furnish and defines the service standards the provider is obligated to meet.
+
+## SentinelOne, Inc
+
+SentinelOne, Inc. is an American cybersecurity company listed on NYSE based in Mountain View, California. The company was founded in 2013 by Tomer Weingarten, Almog Cohen and Ehud Shamir. Weingarten acts as the company's CEO. Vats Srivatsan is the company's COO.
+
 ## NEXT
 
 - **[port forwarding with nftables](https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/security_guide/sec-configuring_port_forwarding_using_nftables)**
