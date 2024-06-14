@@ -26,6 +26,7 @@
 
 - Development
   - **[Setup Development System](./development/report_system/setup_dev_system/setup_dev_system.md)**
+  - **[IT/OT database access](./development/report_system/it_ot_database.md)**
   - **[All Software MindMap](./development/report_system/all_sw_mindmap.md)**
   - **[All Software Gantt](./development/report_system/all_sw_gantt.md)**
   - **[Report Creation Sequence Diagram](./development/report_system/report_creation_sequece_diagram.md)**

@@ -81,6 +81,7 @@ Research Zitadel IAM
 ## Development
 
 - **[Setup Development System](../../report_system/setup_dev_system/setup_dev_system.md)**
+- **[IT/OT database access](../../report_system/it_ot_database.md)**
 - **[Virtual Network](../../report_system/virtual_network.md)**
 - **[All Software MindMap](../../report_system/all_sw_mindmap.md)**
 - **[All Software Gantt](../../report_system/all_sw_gantt.md)**
