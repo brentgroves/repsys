@@ -3,6 +3,11 @@
 **[All Status](../weekly/status_list.md)**\
 **[Back to Main](../../../README.md)**
 
+## **[Deploy SQL Server on K8s](https://github.com/microsoft/sqlworkshops-sql2019workshop/blob/master/sql2019workshop/07_SQLOnKubernetes.md)**
+
+- Intermediate step in the report system to ensure we can always run the TB.
+- The MI is backed up to a local drive and SQL server currently runs from a dockerfile.
+
 ## **[Reporting System IP Request](../../report_system/r620s.md)**
 
 - 12 for r620s
@@ -55,7 +60,6 @@ SentinelOne, Inc. is an American cybersecurity company listed on NYSE based in M
 ## NEXT
 
 - **[port forwarding with nftables](https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/security_guide/sec-configuring_port_forwarding_using_nftables)**
-- Ask for 20 IP and change-over not to occur on 2nd week of month.
 
 - **[Go Backend with IAM](../../../../go_zit_backend/README.md#next)**\
 Read more about how to **[generate a key file](../../../research/m_z/zitadel/key_file.md)**.
