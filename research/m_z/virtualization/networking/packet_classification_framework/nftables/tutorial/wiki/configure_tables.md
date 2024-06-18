@@ -4,6 +4,8 @@ Tables are the top-level containers within an nftables ruleset; they hold chains
 
 Each table belongs to exactly one family. So your ruleset requires at least one table for each family you want to filter.
 
+family refers to a one of the following table types: ip, arp, ip6, bridge, inet, netdev. It defaults to ip.
+
 Following are some basic operations and commands for configuring tables:
 
 ## Adding tables

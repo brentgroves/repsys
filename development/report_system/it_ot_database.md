@@ -15,8 +15,8 @@ mindmap
         id)it network(
           report system
     bridge-eno3
-      eno3
-        ot network cable
+      hypervisor<br/>network adapter 3<br/eno2>
+        id)ot network(
           mach2
 
 ```

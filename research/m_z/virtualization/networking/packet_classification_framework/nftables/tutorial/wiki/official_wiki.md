@@ -9,3 +9,16 @@ It is available in Linux kernels >= 3.13.
 It comes with a new command line utility nft whose syntax is different to iptables.
 It also comes with a compatibility layer that allows you to run iptables commands over the new nftables kernel framework.
 It provides a generic set infrastructure that allows you to construct maps and concatenations. You can use these new structures to arrange your ruleset in a multidimensional tree which drastically reduces the number of rules that need to be inspected until reaching the final action on a packet.
+
+## **[netfilter hooks](https://wiki.nftables.org/wiki-nftables/index.php/Netfilter_hooks)**
+
+nftables uses mostly the same Netfilter infrastructure as legacy iptables. The hook infrastructure, Connection Tracking System, NAT engine, logging infrastructure, and userspace queueing remain the same. Only the packet classification framework is new.
+
+## Netfilter hooks into Linux networking packet flows
+
+The following schematic shows packet flows through Linux networking:
+
+![](https://people.netfilter.org/pablo/nf-hooks.png)
+
+- **[configure tables](./configure_tables.md)**
+- **[configure chains](./configure_chains.md)**

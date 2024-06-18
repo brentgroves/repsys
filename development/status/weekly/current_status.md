@@ -3,7 +3,23 @@
 **[All Status](../weekly/status_list.md)**\
 **[Back to Main](../../../README.md)**
 
-## **[Deploy SQL Server on K8s](https://github.com/microsoft/sqlworkshops-sql2019workshop/blob/master/sql2019workshop/07_SQLOnKubernetes.md)**
+## MES software
+
+MES software monitors, tracks, documents, and controls the process of manufacturing goods from raw materials to finished products.
+
+## So here comes MES
+
+While SCADA is designed to control the production in real-time and ERP is designed for management of the company’s business processes, MES is designed to track and collect information about each product (semi-product) through all stages of the production process. It is a software capable of operating with big data received in real-time (PLC, SCADA), while also exchanging information with the transactional world (ERP, SCM, CRM).
+
+MES’s purpose is to analyze and extract important information from this big data and forward it to ERP. Also, this software solution can convert work orders received from ERP to a production schedule and is capable of dispatching this schedule to the shop floor (PLC, SCADA). It is very important to properly correlate between process data and product quality and to provide and collect information in different formats from various systems.
+
+## Cool apps
+
+- **[No Machine RDP](https://www.nomachine.com/)**
+- **[Vesktop](https://github.com/Vencord/Vesktop)**
+- **[Parsec](https://parsec.app/)**
+
+## **[Modify ETL scripts to use local SQL Server container](https://github.com/microsoft/sqlworkshops-sql2019workshop/blob/master/sql2019workshop/07_SQLOnKubernetes.md)**
 
 - Intermediate step in the report system to ensure we can always run the TB.
 - The MI is backed up to a local drive and SQL server currently runs from a dockerfile.
@@ -14,6 +30,8 @@
 - 4 for Albion dev system and k8s cluster
 - 4 for Avilla dev system and k8s cluster
 
+** **[IT/OT database access](../../report_system/it_ot_database.md)**
+
 ## Linamar PKI
 
 - Lint certificate chain
@@ -23,11 +41,15 @@
 - Format kors43 certificate chain for jboss/Niagara
 - Ask Sam to import certificate chain on kors43 using Niagara front-end
 
-## **[netfilter](../../../research/m_z/virtualization/networking/packet_classification_framework/netfilter.md)**
+## **[Netfilter](../../../research/m_z/virtualization/networking/packet_classification_framework/netfilter.md)**
 
 Netfilter is a subsystem that was introduced in the Linux 2.4 kernel that provides a framework for implementing advanced network functionalities such as packet filtering, network address translation (NAT), and connection tracking. It achieves this by leveraging hooks in the kernel’s network code, which are the locations where kernel code can register functions to be invoked for specific network events. For instance, when a packet is received, it triggers a handler for the event and performs module specified actions.
 
-![](https://blogs.oracle.com/content/published/api/v1.1/assets/CONTA49E135C72694072948F0F9816404B23/Medium?cb=_cache_31b4&channelToken=3189ef66cf584820b5b19e6b10792d6f&format=jpg)
+## Netfilter hooks into Linux networking packet flows
+
+The following schematic shows packet flows through Linux networking:
+
+![](https://people.netfilter.org/pablo/nf-hooks.png)
 
 ## **[Network packet journey](../../../research/m_z/virtualization/networking/packet_classification_framework/network_packet_journey.md)**
 
@@ -129,7 +151,7 @@ If you are confused, the libvirt Networking Handbook provides a good outline.
 The 2.2 and above Linux kernels include a completely redesigned network subsystem. This new networking code brings Linux performance and a feature set with little competition in the general OS arena. In fact, the new routing, filtering, and classifying code is more featureful than the one provided by many dedicated routers and firewalls and traffic shaping products.
 
 - **[Configure Static IPs](../../../research/m_z/virtualization/multipass/config_static_ips.md)** \
-This document explains how to create instances with static IPs in a new network, internal to the host. With this approach, instances get an extra IP that does not change with restarts. By using a separate, local network we avoid any IP conflicts. Instances retain the usual default interface with a DHCP-allocated IP, which gives them connectivity to the outside.
+This document explains how to create instances with static IPs in a new network, internal to the host. With this approach,Netfilter e, local network we avoid any IP conflicts. Instances retain the usual default interface with a DHCP-allocated IP, which gives them connectivity to the outside.
 
 - **[Create a bridge using iproute2](../../../research/m_z/virtualization/networking/bridge/iproute2_bridge.md)**\
 This section describes the management of a network bridge using the ip tool from the iproute2 package
