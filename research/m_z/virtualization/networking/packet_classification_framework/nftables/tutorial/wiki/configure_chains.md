@@ -3,6 +3,25 @@
 Configuring chains
 As in iptables, with nftables you attach your rules to chains. Unlike in iptables, there are no predefined chains like INPUT, OUTPUT, etc. Instead, to filter packets at a particular processing step, you explicitly create a base chain with name of your choosing, and attach it to the appropriate Netfilter hook. This allows very flexible configurations without slowing Netfilter down with built-in chains not needed by your ruleset.
 
+Following are descriptions of current nftables families. Additional families may be added in the future.
+
+**ip**\
+Tables of this family see IPv4 traffic/packets. The iptables tool is the legacy x_tables equivalent.
+
+**ip6**\
+Tables of this family see IPv6 traffic/packets. The ip6tables tool is the legacy x_tables equivalent.
+
+**inet**\
+Tables of this family see both IPv4 and IPv6 traffic/packets, simplifying dual stack support.
+
+Within a table of inet family, both IPv4 and IPv6 packets traverse the same rules. Rules for IPv4 packets don't affect IPv6 packets and vice-versa. Rules for both layer 3 protocols affect both. Use meta l4proto l4proto to match on the layer 4 protocol, regardless of whether the packet is IPv4 or IPv6.
+
+**[table family/chain type/hook](./netfilter_hooks.md)**
+
+## Why do you have to add a chain family since we already have a table family?
+
+I believe this is because if the table family is inet which includes both ip and ip6 families the chain can be specifically for either ip or ip6 packets if desired.
+
 ## Adding base chains
 
 Base chains are those that are registered into the Netfilter hooks, i.e. these chains see packets flowing through your Linux TCP/IP stack.
@@ -28,6 +47,11 @@ Important: nft re-uses special characters, such as curly braces and the semicolo
 
 The add chain command registers the input chain, that it attached to the input hook so it will see packets that are addressed to the local processes.
 
+## Netfilter hooks into Linux networking packet flows
+
+The following schematic shows packet flows through Linux networking:
+
+![hooks](https://people.netfilter.org/pablo/nf-hooks.png)
 The priority is important since it determines the ordering of the chains, thus, if you have several chains in the input hook, you can decide which one sees packets before another. For example, input chains with priorities -12, -1, 0, 10 would be consulted exactly in that order. It's possible to give two base chains the same priority, but there is no guaranteed evaluation order of base chains with identical priority that are attached to the same hook location.
 
 If you want to use nftables to filter traffic for desktop Linux computers, i.e. a computer which does not forward traffic, you can also register the output chain:
@@ -48,11 +72,13 @@ When adding a chain on ingress hook, it is mandatory to specify the device where
 
 ## Base chain types
 
+**[table family/chain type/hook](./netfilter_hooks.md)**
+
 The possible chain types are:
 
-- filter, which is used to filter packets. This is supported by the arp, bridge, ip, ip6 and inet table families.
-route, which is used to reroute packets if any relevant IP header field or the packet mark is modified. If you are familiar with iptables, this chain type provides equivalent semantics to the mangle table but only for the output hook (for other hooks use type filter instead). This is supported by the ip, ip6 and inet table families.
-nat, which is used to perform Networking Address Translation (NAT). Only the first packet of a given flow hits this chain; subsequent packets bypass it. Therefore, never use this chain for filtering. The nat chain type is supported by the ip, ip6 and inet table families.
+- **filter**, which is used to filter packets. This is supported by the arp, bridge, ip, ip6 and inet table families.
+- **route**, which is used to reroute packets if any relevant IP header field or the packet mark is modified. If you are familiar with iptables, this chain type provides equivalent semantics to the mangle table but only for the output hook (for other hooks use type filter instead). This is supported by the ip, ip6 and inet table families.
+- **nat**, which is used to perform Networking Address Translation (NAT). Only the first packet of a given flow hits this chain; subsequent packets bypass it. Therefore, never use this chain for filtering. The nat chain type is supported by the ip, ip6 and inet table families.
 
 ## Base chain priority
 

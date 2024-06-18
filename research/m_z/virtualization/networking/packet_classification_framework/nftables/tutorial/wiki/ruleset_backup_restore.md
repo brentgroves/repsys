@@ -40,15 +40,43 @@ Also per family:
 You can combine these two commands above to backup your ruleset:
 
 ```bash
- % echo "flush ruleset" > backup.nft
- % nft list ruleset >> backup.nft
+# echo "flush ruleset" > backup.nft
+# nft list ruleset >> backup.nft
 
- nft list ruleset >> backup.nft
+# backup 
+cp /etc/nftables.conf ~/backup/
+sudo rm /etc/nftables.conf
+sudo touch /etc/nftables.conf
+sudo chmod 666 /etc/nftables.conf
+echo "#!/usr/sbin/nft -f" > /etc/nftables.conf
+echo "flush ruleset" >> /etc/nftables.conf
+sudo nft list ruleset >> /etc/nftables.conf
+ 
+
+# example
+sudo nft add table ip test
+# make this a low priority chain
+sudo nft 'add chain ip test input { type filter hook input priority 100 ; }'
+sudo nft 'add chain ip test output { type filter hook output priority 100 ; }'
+sudo nft 'add rule test output ip daddr 8.8.8.8 counter'
+
+# backup 
+cp /etc/nftables.conf ~/backup/
+sudo rm /etc/nftables.conf
+sudo touch /etc/nftables.conf
+sudo chmod 666 /etc/nftables.conf
+echo "flush ruleset" > /etc/nftables.conf
+sudo nft list ruleset >> /etc/nftables.conf
+
+# reboot system and see if test table persists
+
+reboot
+
  ```
 
- And load it atomically:
+## How to load ruleset automically
 
-```% nft -f backup.nft```
+```% sudo nft -f backup.nft```
 
 ## **[automtic rule replacement](https://wiki.nftables.org/wiki-nftables/index.php/Atomic_rule_replacement)**
 

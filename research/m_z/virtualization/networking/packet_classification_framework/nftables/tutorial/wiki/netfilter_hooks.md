@@ -32,15 +32,30 @@ The ingress hook provides an alternative to tc ingress filtering. You still need
 
 The following table lists available hooks by family and chain type. Minimum nftables and Linux kernel versions are shown for recently-added hooks.
 
-|             |     Hooks    |            |         |       |        |             |        |
-|-------------|:------------:|:----------:|:-------:|:-----:|:------:|:-----------:|:------:|
-| chain type  |    ingress   | prerouting | forward | input | output | postrouting | egress |
-| inet family |              |            |         |       |        |             |        |
-| filter      | 0.9.7 / 5.10 |     Yes    |   Yes   |  Yes  |   Yes  |     Yes     |   No   |
-| nat         |      No      |     Yes    |    No   |  Yes  |   Yes  |     Yes     |   No   |
-| route       |      No      |     No     |    No   |   No  |   Yes  |      No     |   No   |
-|  ip6 family |              |            |         |       |        |             |        |
-| filter      |      No      |     Yes    |   Yes   |  Yes  |   Yes  |     Yes     |   No   |
-| nat         |      No      |     Yes    |    No   |  Yes  |   Yes  |     Yes     |   No   |
-| route       |      No      |     No     |    No   |   No  |   Yes  |      No     |   No   |
-|             |              |            |         |       |        |             |        |
+|               |     Hooks    |            |         |       |        |             |              |
+|---------------|:------------:|:----------:|:-------:|:-----:|:------:|:-----------:|:------------:|
+| Chain type    |    ingress   | prerouting | forward | input | output | postrouting |    egress    |
+|  inet family  |              |            |         |       |        |             |              |
+| filter        | 0.9.7 / 5.10 |     Yes    |   Yes   |  Yes  |   Yes  |     Yes     |      No      |
+| nat           |      No      |     Yes    |    No   |  Yes  |   Yes  |     Yes     |      No      |
+| route         |      No      |     No     |    No   |   No  |   Yes  |      No     |      No      |
+|   ip6 family  |              |            |         |       |        |             |              |
+| filter        |      No      |     Yes    |   Yes   |  Yes  |   Yes  |     Yes     |      No      |
+| nat           |      No      |     Yes    |    No   |  Yes  |   Yes  |     Yes     |      No      |
+| route         |      No      |     No     |    No   |   No  |   Yes  |      No     |      No      |
+|   ip family   |              |            |         |       |        |             |              |
+| filter        |      No      |     Yes    |   Yes   |  Yes  |   Yes  |     Yes     |      No      |
+| nat           |      No      |     Yes    |    No   |  Yes  |   Yes  |     Yes     |      No      |
+| route         |      No      |     No     |    No   |   No  |   Yes  |      No     |      No      |
+|   arp family  |              |            |         |       |        |             |              |
+| filter        |      No      |     No     |    No   |  Yes  |   Yes  |      No     |      No      |
+| nat           |      No      |     No     |    No   |   No  |   No   |      No     |      No      |
+| route         |      No      |     No     |    No   |   No  |   No   |      No     |      No      |
+| bridge family |              |            |         |       |        |             |              |
+| filter        |      No      |     Yes    |   Yes   |  Yes  |   Yes  |     Yes     |      No      |
+| nat           |      No      |     No     |    No   |   No  |   No   |      No     |      No      |
+| route         |      No      |     No     |    No   |   No  |   No   |      No     |      No      |
+| netdev family |              |            |         |       |        |             |              |
+| filter        |   0.6 / 4.2  |     No     |    No   |   No  |   No   |      No     | 1.0.1 / 5.16 |
+| nat           |      No      |     No     |    No   |   No  |   No   |      No     |      No      |
+| route         |      No      |     No     |    No   |   No  |   No   |      No     |      No      |

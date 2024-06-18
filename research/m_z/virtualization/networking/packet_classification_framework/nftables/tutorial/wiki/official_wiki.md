@@ -18,7 +18,15 @@ nftables uses mostly the same Netfilter infrastructure as legacy iptables. The h
 
 The following schematic shows packet flows through Linux networking:
 
-![](https://people.netfilter.org/pablo/nf-hooks.png)
+![hooks](https://people.netfilter.org/pablo/nf-hooks.png)
 
+## Why do you have to add a chain family since we already have a table family?
+
+I believe this is because if the table family is inet which includes both ip and ip6 families the chain can be specifically for either ip or ip6 packets if desired.
+
+- **[table family/chain type/hook](./netfilter_hooks.md)**
 - **[configure tables](./configure_tables.md)**
 - **[configure chains](./configure_chains.md)**
+- **[ruleset backup/restore](./ruleset_backup_restore.md)**
+- **[simple rule management](./simple_rule_management.md)**
+- **[port forwarding](../port_forwarding.md)**

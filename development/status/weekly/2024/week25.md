@@ -24,11 +24,6 @@ MES’s purpose is to analyze and extract important information from this big da
 - Intermediate step in the report system to ensure we can always run the TB.
 - The MI is backed up to a local drive and SQL server currently runs from a dockerfile.
 
-## Mach2 Linamar PKI
-
-- Now #1 priority
-- Ask please give notice if any plans to shutdown Azure MI in the near future.
-
 ## **[Reporting System IP Request](../../report_system/r620s.md)**
 
 - 12 for r620s
