@@ -7,6 +7,8 @@
 
 ## test portforwarding on multipass test5
 
+- **[nfttables debug](https://wiki.nftables.org/wiki-nftables/index.php/Ruleset_debug/tracing)**
+
 ## MES software
 
 MES software monitors, tracks, documents, and controls the process of manufacturing goods from raw materials to finished products.
