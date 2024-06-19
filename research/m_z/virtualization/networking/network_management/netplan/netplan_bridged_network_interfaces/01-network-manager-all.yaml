@@ -1,0 +1,17 @@
+network:
+  version: 2
+  renderer: NetworkManager
+    ethernets:
+      eno3:
+        dhcp4: no
+    bridges:
+      br0:
+        dhcp4: no
+        addresses: [10.1.0.138/22]
+        routes: # i believe this replaces the gateway4 parameter
+          - to: 0.0.0.0/0
+            via: 10.1.1.205  # Adjust according to your network configuration
+        nameservers:
+          addresses: [10.1.2.69,10.1.2.70,172.20.0.39]
+        interfaces: [eno3]
+

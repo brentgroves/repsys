@@ -3,6 +3,10 @@
 **[All Status](../weekly/status_list.md)**\
 **[Back to Main](../../../README.md)**
 
+## Test Linamar Mach2 PKI
+
+## test portforwarding on multipass test5
+
 ## MES software
 
 MES software monitors, tracks, documents, and controls the process of manufacturing goods from raw materials to finished products.
@@ -12,6 +16,20 @@ MES software monitors, tracks, documents, and controls the process of manufactur
 While SCADA is designed to control the production in real-time and ERP is designed for management of the company’s business processes, MES is designed to track and collect information about each product (semi-product) through all stages of the production process. It is a software capable of operating with big data received in real-time (PLC, SCADA), while also exchanging information with the transactional world (ERP, SCM, CRM).
 
 MES’s purpose is to analyze and extract important information from this big data and forward it to ERP. Also, this software solution can convert work orders received from ERP to a production schedule and is capable of dispatching this schedule to the shop floor (PLC, SCADA). It is very important to properly correlate between process data and product quality and to provide and collect information in different formats from various systems.
+
+## requirement
+
+### Where is the data from?
+
+- IAM/OIDC Zitadel -> Entra ID
+- Web APP
+- data source
+  - excel
+  - **[ERP/IFS](https://docs.ifs.com/techdocs/21r2/010_overview/240_integration/400_rest_apis/)**
+  - from web app
+- ETL scripts
+- data warehouse
+- Power BI report
 
 ## Cool apps
 
@@ -35,7 +53,7 @@ MES’s purpose is to analyze and extract important information from this big da
 - 4 for Albion dev system and k8s cluster
 - 4 for Avilla dev system and k8s cluster
 
-** **[IT/OT database access](../../report_system/it_ot_database.md)**
+## **[IT/OT database access](../../report_system/it_ot_database.md)**
 
 ## Linamar PKI
 

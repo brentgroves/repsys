@@ -224,11 +224,11 @@ ip -4 a
 
 ```
 
-## Step 2: Launch an instance with a manual network
+## Step 2: Launch an instance with a manual network (could not get manual to work)
 
 **[Generate 5 MAC address](https://www.browserling.com/tools/random-mac)**
 
-Note: I never process to work if these mac addresses were passed in manually, so I stared letting multipass generate them instead. Found someplace in KVM ubuntu docs the first digit has to be even for libvirt.
+Note: I never got process to work if these mac addresses were passed in manually, so I stared letting multipass generate them instead. Found someplace in KVM ubuntu docs the first digit has to be even for libvirt.
 
 ```bash
 5c:13:55:48:43:58
@@ -261,6 +261,7 @@ d5:eb:35:ee:b4:14
 Next we launch an instance with an extra network in manual mode, connecting it to this bridge:
 
 ```bash
+multipass launch --name test8 --network name=mybr-eno3
 multipass launch --name test8 --network name=mybr-eno3
 multipass exec -n test8 -- sudo networkctl -a status
 3: enp6s0
