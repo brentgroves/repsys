@@ -3,6 +3,10 @@
 **[All Status](../weekly/status_list.md)**\
 **[Back to Main](../../../README.md)**
 
+## Plex IP restriction
+
+- Is this similiar to Azure SQL IP restrictions.
+
 ## Test Linamar Mach2 PKI
 
 ## test portforwarding on multipass test5
