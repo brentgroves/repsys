@@ -7,6 +7,14 @@
 
 - Is this similiar to Azure SQL IP restrictions.
 
+## Updated R620s from ubuntu 22.04 desktop to 24.04 server
+
+Using a lightweight command line hypervisor Multipass which Canonical makes.
+
+- Did this to test netplan 1.0. It is more integrated with NetworkManagager.
+- **[Install Microk8s on Multipass VM](https://microk8s.io/docs/install-multipass)**\
+```multipass launch --network br0 --name microk8s-vm --mem 4G --disk 40G```
+
 ## Test Linamar Mach2 PKI
 
 ## test portforwarding on multipass test5
@@ -43,10 +51,43 @@ MES’s purpose is to analyze and extract important information from this big da
 - **[Vesktop](https://github.com/Vencord/Vesktop)**
 - **[Parsec](https://parsec.app/)**
 
+## **[Graph Visualization](https://graphviz.org/about/)**
+
+Graph visualization is a way of representing structural information as diagrams of abstract graphs and networks. Automatic graph drawing has many important applications in software engineering, database and web design, networking, and in visual interfaces for many other domains.
+
+Graphviz is open source graph visualization software. It has several main graph layout programs. See the Gallery for some sample layouts. It also has web and interactive graphical interfaces, and auxiliary tools, libraries, and language bindings.
+
+```graphviz
+digraph finite_state_machine {
+    rankdir=LR;
+    size="8,5"
+
+    node [shape = doublecircle]; S;
+    node [shape = point ]; qi
+
+    node [shape = circle];
+    qi -> S;
+    S  -> q1 [ label = "a" ];
+    S  -> S  [ label = "a" ];
+    q1 -> S  [ label = "a" ];
+    q1 -> q2 [ label = "ddb" ];
+    q2 -> q1 [ label = "b" ];
+    q2 -> q2 [ label = "b" ];
+}
+```
+
 ## **[Modify ETL scripts to use local SQL Server container](https://github.com/microsoft/sqlworkshops-sql2019workshop/blob/master/sql2019workshop/07_SQLOnKubernetes.md)**
 
 - Intermediate step in the report system to ensure we can always run the TB.
 - The MI is backed up to a local drive and SQL server currently runs from a dockerfile.
+
+## **[SQL Server Containers](https://learn.microsoft.com/en-us/sql/linux/sql-server-linux-docker-container-deployment?view=sql-server-ver16&pivots=cs1-bash)**
+
+## Run production container images
+
+The quickstart in the previous section runs the free Developer edition of SQL Server from the Microsoft Artifact Registry. Most of the information still applies if you want to run production container images, such as Enterprise, Standard, or Web editions. However, there are a few differences that are outlined here.
+
+You can only use SQL Server in a production environment if you have a valid license. You can obtain a free SQL Server Express production license here. SQL Server Standard and Enterprise edition licenses are available through Microsoft Volume Licensing.
 
 ## Mach2 Linamar PKI
 

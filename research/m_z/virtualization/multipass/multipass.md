@@ -6,6 +6,8 @@
 
 ## references
 
+- **[How to add network interfaces in Multipass](https://discourse.ubuntu.com/t/how-to-add-network-interfaces/19544)**
+
 <https://multipass.run/docs>
 <https://github.com/canonical/multipass>
 <https://discourse.ubuntu.com/c/multipass/doc/24>
@@ -58,6 +60,331 @@ srw-rw---- 1 root sudo 0 Dec 19 09:47 /var/snap/multipass/common/multipass_socke
 $ groups | grep sudo
 brent adm cdrom sudo dip plugdev lpadmin lxd sambashare docker
 
+```
+
+## **[Step 0: Change to LXD driver](https://jon.sprig.gs/blog/post/2800)**
+
+Currently only the LXD driver supports the networks command on Linux.
+
+So, let’s make multipass on Ubuntu use LXD! (Be prepared for entering your password a few times!)
+
+```bash
+multipass networks
+
+networks failed: The networks feature is not implemented on this backend.
+```
+
+## Firstly, we need to install LXD. Dead simple
+
+LXD ( [lɛks'di:] 🔈) is a modern, secure and powerful system container and virtual machine manager. It provides a unified experience for running and managing full Linux systems inside containers or virtual machines.
+
+```bash
+sudo snap install lxd
+lxd (5.21/stable) 5.21.1-d46c406 from Canonical✓ installed
+```
+
+Next, we need to tell snap that it’s allowed to connect LXD to multipass:
+
+```bash
+sudo snap connect multipass:lxd lxd
+sudo snap connections multipass
+Interface          Plug                         Slot                Notes
+firewall-control   multipass:firewall-control   :firewall-control   -
+home               multipass:all-home           :home               -
+home               multipass:home               :home               -
+kvm                multipass:kvm                :kvm                -
+libvirt            multipass:libvirt            -                   -
+lxd                multipass:lxd                lxd:lxd             -
+multipass-support  multipass:multipass-support  :multipass-support  -
+network            multipass:network            :network            -
+network-bind       multipass:network-bind       :network-bind       -
+network-control    multipass:network-control    :network-control    -
+network-manager    multipass:network-manager    :network-manager    -
+network-observe    multipass:network-observe    :network-observe    -
+removable-media    multipass:removable-media    -                   -
+system-observe     multipass:system-observe     :system-observe     -
+unity7             multipass:unity7             :unity7             -
+wayland            multipass:wayland            :wayland            -
+x11                multipass:x11                :x11                -```
+
+And lastly, we tell multipass to use lxd:
+
+```bash
+multipass set local.driver=lxd
+multipass networks
+
+Name        Type       Description
+eno1        ethernet   Ethernet device
+eno2        ethernet   Ethernet device
+eno3        ethernet   Ethernet device
+eno4        ethernet   Ethernet device
+enp66s0f0   ethernet   Ethernet device
+enp66s0f1   ethernet   Ethernet device
+enp66s0f2   ethernet   Ethernet device
+enp66s0f3   ethernet   Ethernet device
+mpbr0       bridge     Network bridge for Multipass
+```
+
+## create a bridge optional
+
+**[50-cloud-init](https://ubuntuforums.org/showthread.php?t=2492108)**
+
+## Brent's summary
+
+I updated /etc/netplan/50-cloud-init.yaml at it's changes persisted on reboot but if I start having network problems this is the first place I will check. I also only tested this on ubuntu 24.04.
+
+## Installing bridge-utils in Ubuntu
+
+To bridge network interfaces, you need to install a bridge-utils package which is used to configure and manage network bridges in Linux-based systems.
+
+```bash
+sudo apt install bridge-utils
+```
+
+## Creating a Network Bridge Using Static IP
+
+Similar to the DHCP configuration, you can also configure static IP addresses on the bridge in the same configuration file.
+
+```bash
+# create backup
+cd ~
+sudo cp /etc/netplan/50-cloud-init.yaml .
+sudo vi /etc/netplan/50-cloud-init.yaml
+```
+
+## Modify the configuration to assign a static IP to the bridge ‘br0‘
+
+I did not include renderer: networkd when I updated 50-cloud-init.yaml.
+
+```yaml
+network:
+  version: 2
+  renderer: networkd
+  ethernets:
+    enp1s0:
+      dhcp4: no
+    enp2s0f1:
+      dhcp4: no
+  bridges:
+    br0:
+      dhcp4: no
+      addresses: [192.168.122.100/24]
+      routes:
+        - to: 0.0.0.0/0
+          via: 192.168.122.1  # Adjust according to your network configuration
+      nameservers:
+        addresses: [8.8.8.8, 8.8.4.4]  # DNS servers
+      interfaces: [enp1s0, enp2s0f1]
+```
+
+The actual 50-cloud-init.yaml looked like this.
+
+```yaml
+# This file is generated from information provided by the datasource.  Changes
+# to it will not persist across an instance reboot.  To disable cloud-init's
+# network configuration capabilities, write a file
+# /etc/cloud/cloud.cfg.d/99-disable-network-config.cfg with the following:
+# network: {config: disabled}
+network:
+    ethernets:
+        eno1:
+            addresses:
+            - 10.1.0.125/22
+            nameservers:
+                addresses:
+                - 10.1.2.69
+                - 10.1.2.70
+                - 172.20.0.39
+                search: [BUSCHE-CNC.COM]
+            routes:
+            -   to: default
+                via: 10.1.1.205
+        eno2:
+            dhcp4: no
+        eno3:
+            dhcp4: true
+        eno4:
+            dhcp4: true
+        enp66s0f0:
+            dhcp4: true
+        enp66s0f1:
+            dhcp4: true
+        enp66s0f2:
+            dhcp4: true
+        enp66s0f3:
+            dhcp4: true
+    bridges:
+        br0:
+            dhcp4: no
+            addresses:
+            - 10.1.0.126/22
+            nameservers:
+                addresses:
+                - 10.1.2.69
+                - 10.1.2.70
+                - 172.20.0.39
+                search: [BUSCHE-CNC.COM]
+            interfaces: [eno2]
+        br1:
+            dhcp4: no
+            addresses:
+            - 10.13.31.1/24
+    version: 2
+```
+
+Next we launch an instance with an extra network, connecting it to this bridge:
+
+```bash
+multipass launch --name test1 --network name=br0
+multipass exec -n test1 -- sudo networkctl -a status
+...
+● 3: enp6s0
+                   Link File: /usr/lib/systemd/network/99-default.link
+                Network File: /run/systemd/network/10-netplan-extra0.network
+                       State: routable (configured)
+                Online state: online                                         
+                        Type: ether
+                        Path: pci-0000:06:00.0
+                      Driver: virtio_net
+                      Vendor: Red Hat, Inc.
+                       Model: Virtio 1.0 network device
+            Hardware Address: 52:54:00:a5:6b:57
+                         MTU: 1500 (min: 68, max: 65535)
+                       QDisc: mq
+IPv6 Address Generation Mode: eui64
+    Number of Queues (Tx/Rx): 2/2
+            Auto negotiation: no
+                     Address: 10.1.3.13 (DHCP4 via 10.1.2.69)
+                              fe80::5054:ff:fea5:6b57
+                     Gateway: 10.1.1.205
+                         DNS: 10.1.2.69
+                              10.1.2.70
+                              172.20.0.39
+              Search Domains: BUSCHE-CNC.COM
+           Activation Policy: up
+         Required For Online: yes
+             DHCP4 Client ID: IAID:0x24721ac8/DUID
+           DHCP6 Client DUID: DUID-EN/Vendor:0000ab11908c895e37224793
+...
+```
+
+## configure extra interface with static ip
+
+```bash
+# look at current netpan yaml.
+multipass exec -n test1 -- sudo bash -c 'ls /etc/netplan/'
+50-cloud-init.yaml
+
+multipass exec -n test1 -- sudo bash -c 'cat /etc/netplan/50-cloud-init.yaml'
+# This file is generated from information provided by the datasource.  Changes
+# to it will not persist across an instance reboot.  To disable cloud-init's
+# network configuration capabilities, write a file
+# /etc/cloud/cloud.cfg.d/99-disable-network-config.cfg with the following:
+# network: {config: disabled}
+network:
+    ethernets:
+        default:
+            dhcp4: true
+            match:
+                macaddress: 52:54:00:bd:29:c8
+        extra0:
+            dhcp4: true
+            dhcp4-overrides:
+                route-metric: 200
+            match:
+                macaddress: 52:54:00:a5:6b:57
+            optional: true
+    version: 2
+```
+
+## modified 50-cloud-init.yaml
+
+```bash
+multipass exec -n test1 -- sudo bash -c 'cat /etc/netplan/50-cloud-init.yaml'
+# This file is generated from information provided by the datasource.  Changes
+# to it will not persist across an instance reboot.  To disable cloud-init's
+# network configuration capabilities, write a file
+# /etc/cloud/cloud.cfg.d/99-disable-network-config.cfg with the following:
+# network: {config: disabled}
+network:
+    ethernets:
+        default:
+            dhcp4: true
+            match:
+                macaddress: 52:54:00:bd:29:c8
+        extra0:
+            dhcp4: true
+            dhcp4-overrides:
+                route-metric: 200
+            match:
+                macaddress: 52:54:00:a5:6b:57
+            optional: true
+    version: 2
+
+
+multipass exec -n test1 -- sudo bash -c 'cat << EOF > /etc/netplan/50-cloud-init.yaml
+# This file is generated from information provided by the datasource.  Changes
+# to it will not persist across an instance reboot.  To disable cloud-inits
+# network configuration capabilities, write a file
+# /etc/cloud/cloud.cfg.d/99-disable-network-config.cfg with the following:
+# network: {config: disabled}
+network:
+    ethernets:
+        default:
+            dhcp4: true
+            match:
+                macaddress: 52:54:00:bd:29:c8
+        extra0:
+            addresses:
+            - 10.1.0.128/22
+            nameservers:
+                addresses:
+                - 10.1.2.69
+                - 10.1.2.70
+                - 172.20.0.39
+                search: [BUSCHE-CNC.COM]
+            match:
+                macaddress: 52:54:00:a5:6b:57
+            optional: true
+    version: 2
+EOF'
+```
+
+## check it
+
+```bash
+multipass exec -n test1 -- sudo bash -c 'cat /etc/netplan/50-cloud-init.yaml'
+# This file is generated from information provided by the datasource.  Changes
+# to it will not persist across an instance reboot.  To disable cloud-inits
+# network configuration capabilities, write a file
+# /etc/cloud/cloud.cfg.d/99-disable-network-config.cfg with the following:
+# network: {config: disabled}
+network:
+    ethernets:
+        default:
+            dhcp4: true
+            match:
+                macaddress: 52:54:00:bd:29:c8
+        extra0:
+            addresses:
+            - 10.1.0.128/22
+            nameservers:
+                addresses:
+                - 10.1.2.69
+                - 10.1.2.70
+                - 172.20.0.39
+                search: [BUSCHE-CNC.COM]
+            match:
+                macaddress: 52:54:00:a5:6b:57
+            optional: true
+    version: 2
+```
+
+## try new config
+
+```bash
+multipass exec -n test1 -- sudo netplan apply
+multipass exec -n test1 -- sudo networkctl -a status
 ```
 
 ## Create an instance

@@ -1,5 +1,9 @@
 # **[Create a network bridge with iproute](https://wiki.archlinux.org/title/network_bridge)**
 
+## Summary
+
+Adding a bridge using iproute2 worked for a while but then the bridge deletes itself. Is network manager deleting it?  I don't know for sure.
+
 ## references
 
 - **[iproute2 bridge cli](https://manpages.debian.org/unstable/iproute2/bridge.8.en.html)**

@@ -1,6 +1,7 @@
 # **[port forwarding](https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/security_guide/sec-configuring_port_forwarding_using_nftables#sec-Forwarding_incoming_packets_on_a_specific_local_port_to_a_different_host)**
 
-6.6. Configuring port forwarding using nftables
+## 6.6. Configuring port forwarding using nftables
+
 Port forwarding enables administrators to forward packets sent to a specific destination port to a different local or remote port.
 For example, if your web server does not have a public IP address, you can set a port forwarding rule on your firewall that forwards incoming packets on port 80 and 443 on the firewall to the web server. With this firewall rule, users on the internet can access the web server using the IP or host name of the firewall.
 6.6.1. Forwarding incoming packets to a different local port
