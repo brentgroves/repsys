@@ -3,6 +3,20 @@
 **[All Status](../weekly/status_list.md)**\
 **[Back to Main](../../../README.md)**
 
+## **[Plex ODBC](https://www.progress.com/odbc/custom-connector-sdk)**
+
+Plex has created a Progress DataDirect ODBC driver currently we use this driver in our ETL scripts but we maybe able to use this driver in Power BI reports. If you look in our ODBC init files you will see the following 2 properties:
+
+```bash
+authmethod=iam;accesstoken=Dont_show_ourOurAccessToken;
+```
+
+## **[Access Token](https://docs.progress.com/bundle/datadirect-aha-odbc-80/page/Access-Token.html)**
+
+Specifies the access token used to authenticate to Aha! with OAuth 2.0 enabled. Typically, this option is configured by the application; however, in some scenarios, you may need to secure a token using external processes. In those instances, you can also use this option to set the access token manually.
+
+## **[Aha! Oauth2](https://www.aha.io/api/oauth2)**
+
 ## Plex IP restriction
 
 - Is this similiar to Azure SQL IP restrictions.

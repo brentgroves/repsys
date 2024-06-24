@@ -1,6 +1,9 @@
 #!/bin/bash
 # https://gist.github.com/gitaarik/8735255
 pushd .
+rm -rf /media/brent/KINGSTON/odbc 
+cp -r  ~/src/odbc /media/brent/KINGSTON/
+
 rm -rf /media/brent/KINGSTON/azure 
 cp -r  ~/src/azure /media/brent/KINGSTON/
 
