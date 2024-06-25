@@ -1,6 +1,6 @@
-# Networking Menu
+# Virtualization Menu
 
-**[Current Status](../development/status/weekly/current_status.md)**\
+**[Current Status](../../../development/status/weekly/current_status.md)**\
 **[Research List](../../research_list.md)**\
 **[Back Main](../../../README.md)**
 
@@ -9,6 +9,8 @@
 - KVM
   - **[Install KVM](./kvm/kvm_install.md)**
   - **[Manage KVM virtual machines with virsh](./kvm/manage_virtual_machines_with_virsh.md)**
+- multipass
+  - **[Configure Static IPs](./multipass/create_bridges_with_netplan.md)** \
 - nmcli
   - **[nmcli](./nmcli/nmcli.md)**
   - **[nmcli examples](./nmcli/nmcli_examples.md)**
@@ -27,3 +29,6 @@
   - **[Virtio-Net part 1](./virtual_networking/virtio-part1.md)**
   - **[Virtio-Net part 2](./virtual_networking/virtio-part2.md)**
   - **[Virtual Network Interface Cards](./virtual_networking/virtual_network_interface_cards.md)**
+
+- **[Configure Static IPs](../m/multipass/config_static_ips.md)** \
+This document explains how to create instances with static IPs in a new network, internal to the host. With this approach,Netfilter e, local network we avoid any IP conflicts. Instances retain the usual default interface with a DHCP-allocated IP, which gives them connectivity to the outside.

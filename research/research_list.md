@@ -20,6 +20,10 @@ Cloud images are operating system templates and every instance starts out as an 
 - **[Github Runners](./a_l/github/runners.md)**\
   Runners are the machines that execute jobs in a GitHub Actions workflow. For example, a runner can clone your repository locally, install testing software, and then run commands that evaluate your code.
 
+- **[Graph Visualization](./a_l/graphviz/graphviz.md)**
+
+Graph visualization is a way of representing structural information as diagrams of abstract graphs and networks. Automatic graph drawing has many important applications in software engineering, database and web design, networking, and in visual interfaces for many other domains.
+
 - IAM
   - **[OAuth vs JWT](./a_l/iam/oauth_vs_jwt.md)**\
 JWT defines a token format while OAuth deals in defining authorization protocols. JWT is simple and easy to learn from the initial stage while OAuth is complex. OAuth uses both client-side and server-side storage while JWT must use only client-side storage. JWT has limited scope and use cases.
@@ -28,6 +32,9 @@ JWT defines a token format while OAuth deals in defining authorization protocols
   ![](https://curity.io/images/resources/architect/api-security/token-sharing/mesh.svg)
 
   If your system is high in the API security maturity model you most probably use access tokens to authorize access to your endpoints. Access tokens that your API receives are tailored for the use with the given endpoint - they will have a concrete set of scopes and claim values. But as shown above, your API most probably will talk to different services which may or may not be part of the same domain or even company. This means that the API will have to share the token it received with the other services it needs to access. There are different ways in which such token can be shared:
+
+- **[iproute2 Linux routing and traffic control](./m_z/virtualization/networking/routing/introduction_to_iproute2.md)** \
+The 2.2 and above Linux kernels include a completely redesigned network subsystem. This new networking code brings Linux performance and a feature set with little competition in the general OS arena. In fact, the new routing, filtering, and classifying code is more featureful than the one provided by many dedicated routers and firewalls and traffic shaping products.
 
 - **[JuJu](./a_l/juju/juju_list.md)**\
 Juju is an open source orchestration engine for software operators that enables the deployment, integration and lifecycle management of applications at any scale, on any infrastructure using charms.
@@ -64,11 +71,8 @@ Install OpenStack anywhere in a few simple steps and let Kubernetes operators ma
 Object storage is accessed via a REST API call. Using POST, PUT, GET to an HTTP endpoint, you can create, read, update and delete (the famous CRUD operations) your blobs of data.\
 Use of REST APIs means that, regardless of the operating system you are running on, your access to your object storage is the same.
 
-- **[Multipass Menu](./m_z/multipass/multipass_menu.md)**
-All Multipass research topics.
-
-- **[Networking menu](./m_z/networking/networking_menu.md)**
-All networking and virtual networking research.
+- **[Virtualization menu](./m_z/virtualization/virtualization_menu.md)**
+All virtualization research.
 
 - Redis
   - **[Distributed Locks](./m_z/redis/mutex/distributed_locks.md)**\
@@ -76,6 +80,18 @@ All networking and virtual networking research.
 
 - **[Snap Confinement](./m_z/snap/confinement.md)**\
 Strict Used by the majority of snaps. Strictly confined snaps run in complete isolation, up to a minimal access level that’s deemed always safe. Consequently, strictly confined snaps can not access files, network, processes or any other system resource without requesting specific access via an interface **[(see below)](https://snapcraft.io/docs/snap-confinement#interfaces)**.
+
+- **[SQL Server Containers](./m_z/sql_server/sql_server_containers.md)**
+
+  The quickstart in the previous section runs the free Developer edition of SQL Server from the Microsoft Artifact Registry. Most of the information still applies if you want to run production container images, such as Enterprise, Standard, or Web editions. However, there are a few differences that are outlined here.
+
+  You can only use SQL Server in a production environment if you have a valid license. You can obtain a free SQL Server Express production license here. SQL Server Standard and Enterprise edition licenses are available through Microsoft Volume Licensing.
+
+- **[Virtio-networking and OVS](./m_z/virtualization/networking/virtio/virtio-part1.md)**
+
+  Virtio was developed as a standardized open interface for virtual machines (VMs) to access simplified devices such as block devices and network adaptors. Virtio-net is a virtual ethernet card and is the most complex device supported so far by virtio.
+
+  In this post we will provide a high level solution overview of the virtio-networking architecture, based on establishing an interface between the host kernel and the VM guest kernel. We will present the basic building blocks including KVM, qemu and libvirt. We will look at the virtio spec and vhost protocol, and Open vSwitch (OVS) for connecting different VMs and connecting the outside world.
 
 - **[Zitadel](./m_z/zitadel/zitadel_article.md)**\
 ZITADEL is an open source, cloud-native Identity and Access Management solution (IAM) that provides various security mechanisms to secure applications and services. It uses a range of different authorization strategies, including Role-Based Access Control (RBAC) and Delegated Access.

@@ -1,5 +1,9 @@
 # **[Graphviz Markdown Preview](https://marketplace.visualstudio.com/items?itemName=geeklearningio.graphviz-markdown-preview)**
 
+**[Current Status](../../../development/status/weekly/current_status.md)**\
+**[Research List](../../research_list.md)**\
+**[Back Main](../../../README.md)**
+
 ## references
 
 <https://graphviz.org/gallery/>
