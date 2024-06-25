@@ -4,6 +4,7 @@
 **[Research List](../../research_list.md)**\
 **[Back Main](../../../README.md)**
 
+- **[install](./multipass_install.md)**
 - **[blueprint](./blueprint.md)**
 - **[cloud-init](./cloud-init.md)**
 - **[instance](./instance.md)**

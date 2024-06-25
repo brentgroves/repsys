@@ -28,6 +28,8 @@ Linamar ssl certificate for Fruitport's Mach2 server.
   - Format kors43 certificate chain for jboss/Niagara
   - Ask Sam to import certificate chain on kors43 using Niagara front-end
 
+- **[Deploy MicroK8s on R620 using Multipass](../../../research/m_z/virtualization/multipass/sql_server/sql_server_containers.md)**
+
 - **[Modify ETL scripts to use local SQL Server container](../../../research/m_z/sql_server/sql_server_containers.md)**
 
 - Intermediate step in the report system to ensure we can always run the TB.

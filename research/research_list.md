@@ -71,9 +71,6 @@ Install OpenStack anywhere in a few simple steps and let Kubernetes operators ma
 Object storage is accessed via a REST API call. Using POST, PUT, GET to an HTTP endpoint, you can create, read, update and delete (the famous CRUD operations) your blobs of data.\
 Use of REST APIs means that, regardless of the operating system you are running on, your access to your object storage is the same.
 
-- **[Virtualization menu](./m_z/virtualization/virtualization_menu.md)**
-All virtualization research.
-
 - Redis
   - **[Distributed Locks](./m_z/redis/mutex/distributed_locks.md)**\
   This page describes a more canonical algorithm to implement distributed locks with Redis. We propose an algorithm, called **Redlock**, which implements a DLM which we believe to be safer than the vanilla single instance approach. We hope that the community will analyze it, provide feedback, and use it as a starting point for the implementations or more complex or alternative designs.
@@ -81,17 +78,16 @@ All virtualization research.
 - **[Snap Confinement](./m_z/snap/confinement.md)**\
 Strict Used by the majority of snaps. Strictly confined snaps run in complete isolation, up to a minimal access level that’s deemed always safe. Consequently, strictly confined snaps can not access files, network, processes or any other system resource without requesting specific access via an interface **[(see below)](https://snapcraft.io/docs/snap-confinement#interfaces)**.
 
-- **[SQL Server Containers](./m_z/sql_server/sql_server_containers.md)**
+- SQL Server
+  - **[SQL Server Containers](./m_z/sql_server/sql_server_containers.md)**
 
-  The quickstart in the previous section runs the free Developer edition of SQL Server from the Microsoft Artifact Registry. Most of the information still applies if you want to run production container images, such as Enterprise, Standard, or Web editions. However, there are a few differences that are outlined here.
+    The quickstart in the previous section runs the free Developer edition of SQL Server from the Microsoft Artifact Registry. Most of the information still applies if you want to run production container images, such as Enterprise, Standard, or Web editions. However, there are a few differences that are outlined here.
 
-  You can only use SQL Server in a production environment if you have a valid license. You can obtain a free SQL Server Express production license here. SQL Server Standard and Enterprise edition licenses are available through Microsoft Volume Licensing.
-
-- **[Virtio-networking and OVS](./m_z/virtualization/networking/virtio/virtio-part1.md)**
-
-  Virtio was developed as a standardized open interface for virtual machines (VMs) to access simplified devices such as block devices and network adaptors. Virtio-net is a virtual ethernet card and is the most complex device supported so far by virtio.
-
-  In this post we will provide a high level solution overview of the virtio-networking architecture, based on establishing an interface between the host kernel and the VM guest kernel. We will present the basic building blocks including KVM, qemu and libvirt. We will look at the virtio spec and vhost protocol, and Open vSwitch (OVS) for connecting different VMs and connecting the outside world.
+    You can only use SQL Server in a production environment if you have a valid license. You can obtain a free SQL Server Express production license here. SQL Server Standard and Enterprise edition licenses are available through Microsoft Volume Licensing.
+  - **[Import/Export](./m_z/sql_server/export_import.md)**
+  
+- **[Virtualization menu](./m_z/virtualization/virtualization_menu.md)**
+All virtualization research.
 
 - **[Zitadel](./m_z/zitadel/zitadel_article.md)**\
 ZITADEL is an open source, cloud-native Identity and Access Management solution (IAM) that provides various security mechanisms to secure applications and services. It uses a range of different authorization strategies, including Role-Based Access Control (RBAC) and Delegated Access.
