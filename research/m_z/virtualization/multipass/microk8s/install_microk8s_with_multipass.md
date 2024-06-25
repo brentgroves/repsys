@@ -91,4 +91,15 @@ multipass launch --network br0 --name microk8s-vm --mem 4G --disk 40G
 # Add memory if going to run only sql server
 multipass launch --network br0 --name microk8s-vm --mem 8G --disk 40G
 
+multipass list
+Name                    State             IPv4             Image
+microk8s-vm             Running           10.127.233.194   Ubuntu 24.04 LTS
+                                          10.1.2.143
+test1                   Running           10.127.233.173   Ubuntu 24.04 LTS
+                                          10.1.0.128
+test2                   Running           10.127.233.24    Ubuntu 24.04 LTS
+                                          10.13.31.201
+
 ```
+
+## configure static ip
