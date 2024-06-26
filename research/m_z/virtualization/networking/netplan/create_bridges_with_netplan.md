@@ -177,3 +177,16 @@ Jun 21 21:25:30 repsys11 systemd-networkd[1032]: br0: Gained carrier
 Jun 21 21:25:32 repsys11 systemd-networkd[1032]: br0: Gained IPv6LL
 
 ```
+
+Use the ip utility to display the link status of Ethernet devices that are ports of a specific bridge:
+
+```bash
+ip link show master br0
+7: eno2: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq master br0 state UP mode DEFAULT group default qlen 1000
+    link/ether b8:ca:3a:6a:37:19 brd ff:ff:ff:ff:ff:ff
+    altname enp1s0f1
+14: tap34dcb760: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq master br0 state UP mode DEFAULT group default qlen 1000
+    link/ether 5a:8a:38:e5:66:f1 brd ff:ff:ff:ff:ff:ff
+18: tap38ceeb39: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq master br0 state UP mode DEFAULT group default qlen 1000
+    link/ether ce:80:f5:53:04:fb brd ff:ff:ff:ff:ff:ff
+```

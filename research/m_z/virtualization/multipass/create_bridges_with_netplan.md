@@ -126,3 +126,74 @@ sudo netplan try
 $ sudo netplan apply
 reboot
 ```
+
+## Verify routing tables
+
+**[references iproute2 intro for ip commands](../networking/iproute2/introduction_to_iproute.md)**
+
+```bash
+ip route list table local
+local 10.1.0.125 dev eno1 proto kernel scope host src 10.1.0.125 
+local 10.1.0.126 dev br0 proto kernel scope host src 10.1.0.126 
+broadcast 10.1.3.255 dev br0 proto kernel scope link src 10.1.0.126 
+broadcast 10.1.3.255 dev eno1 proto kernel scope link src 10.1.0.125 
+local 10.13.31.1 dev br1 proto kernel scope host src 10.13.31.1 
+broadcast 10.13.31.255 dev br1 proto kernel scope link src 10.13.31.1 
+local 10.127.233.1 dev mpbr0 proto kernel scope host src 10.127.233.1 
+broadcast 10.127.233.255 dev mpbr0 proto kernel scope link src 10.127.233.1 
+local 127.0.0.0/8 dev lo proto kernel scope host src 127.0.0.1 
+local 127.0.0.1 dev lo proto kernel scope host src 127.0.0.1 
+broadcast 127.255.255.255 dev lo proto kernel scope link src 127.0.0.1 
+
+# there should be only 1 default route
+ip route list table main
+default via 10.1.1.205 dev eno1 proto static 
+10.1.0.0/22 dev br0 proto kernel scope link src 10.1.0.126 
+10.1.0.0/22 dev eno1 proto kernel scope link src 10.1.0.125 
+10.13.31.0/24 dev br1 proto kernel scope link src 10.13.31.1 
+10.127.233.0/24 dev mpbr0 proto kernel scope link src 10.127.233.1
+
+# ip shows us our routes
+ip route show
+default via 10.1.1.205 dev eno1 proto static 
+10.1.0.0/22 dev br0 proto kernel scope link src 10.1.0.126 
+10.1.0.0/22 dev eno1 proto kernel scope link src 10.1.0.125 
+10.13.31.0/24 dev br1 proto kernel scope link src 10.13.31.1 
+10.127.233.0/24 dev mpbr0 proto kernel scope link src 10.127.233.1 
+
+# You can view your machines current arp/neighbor cache/table like so:
+ip neigh show
+10.1.0.162 dev eno2 lladdr 4c:91:7a:64:0f:7d STALE
+10.1.0.166 dev eno1 lladdr 4c:91:7a:63:c0:3a STALE
+10.1.1.205 dev eno1 lladdr 34:56:fe:77:58:bc STALE
+
+# view devices linked to bridge
+ip link show master br0
+7: eno2: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq master br0 state UP mode DEFAULT group default qlen 1000
+    link/ether b8:ca:3a:6a:37:19 brd ff:ff:ff:ff:ff:ff
+    altname enp1s0f1
+14: tap34dcb760: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq master br0 state UP mode DEFAULT group default qlen 1000
+    link/ether 5a:8a:38:e5:66:f1 brd ff:ff:ff:ff:ff:ff
+18: tap38ceeb39: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq master br0 state UP mode DEFAULT group default qlen 1000
+    link/ether ce:80:f5:53:04:fb brd ff:ff:ff:ff:ff:ff
+
+ip link show master mpbr0
+13: tape518c5a7: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq master mpbr0 state UP mode DEFAULT group default qlen 1000
+    link/ether e6:53:77:50:74:f1 brd ff:ff:ff:ff:ff:ff
+
+# show vm routing table
+multipass exec -n microk8s-vm -- ip route list table local
+local 10.1.0.129 dev enp6s0 proto kernel scope host src 10.1.0.129 
+broadcast 10.1.3.255 dev enp6s0 proto kernel scope link src 10.1.0.129 
+local 10.127.233.194 dev enp5s0 proto kernel scope host src 10.127.233.194 
+broadcast 10.127.233.255 dev enp5s0 proto kernel scope link src 10.127.233.194 
+local 127.0.0.0/8 dev lo proto kernel scope host src 127.0.0.1 
+local 127.0.0.1 dev lo proto kernel scope host src 127.0.0.1 
+broadcast 127.255.255.255 dev lo proto kernel scope link src 127.0.0.1 
+
+multipass exec -n microk8s-vm -- ip route list table main
+default via 10.127.233.1 dev enp5s0 proto dhcp src 10.127.233.194 metric 100 
+10.1.0.0/22 dev enp6s0 proto kernel scope link src 10.1.0.129 
+10.127.233.0/24 dev enp5s0 proto kernel scope link src 10.127.233.194 metric 100 
+10.127.233.1 dev enp5s0 proto dhcp scope link src 10.127.233.194 metric 100
+```

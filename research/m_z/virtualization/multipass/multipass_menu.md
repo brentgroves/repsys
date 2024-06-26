@@ -5,6 +5,8 @@
 **[Back Main](../../../README.md)**
 
 - **[install](./multipass_install.md)**
+- **[remove instance](./remove_instance.md)**
+- **[setup multipass vm](./setup_multipass_vm.md)**
 - **[blueprint](./blueprint.md)**
 - **[cloud-init](./cloud-init.md)**
 - **[instance](./instance.md)**

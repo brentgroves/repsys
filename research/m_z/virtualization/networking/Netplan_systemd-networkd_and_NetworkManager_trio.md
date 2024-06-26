@@ -1,5 +1,10 @@
 # **[How exactly are NetworkManager, networkd, netplan, ifupdown2, and iproute2 interacting?](https://unix.stackexchange.com/questions/475146/how-exactly-are-networkmanager-networkd-netplan-ifupdown2-and-iproute2-inter)**
 
+**[Back to Research List](../../research_list.md)**\
+**[Back to Multipass Menu](./multipass_menu.md)**\
+**[Back to Current Status](../../../development/status/weekly/current_status.md)**\
+**[Back to Main](../../../README.md)**
+
 ## references
 
 - **[networking trio](https://www.reddit.com/r/Ubuntu/comments/16oizuj/netplan_systemdnetworkd_and_networkmanager_trio/)**

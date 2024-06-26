@@ -28,12 +28,20 @@ Linamar ssl certificate for Fruitport's Mach2 server.
   - Format kors43 certificate chain for jboss/Niagara
   - Ask Sam to import certificate chain on kors43 using Niagara front-end
 
-- **[Deploy MicroK8s on R620 using Multipass](../../../research/m_z/virtualization/multipass/sql_server/sql_server_containers.md)**
+- **[Deploy MicroK8s on R620 using Multipass](../../../research/m_z/virtualization/multipass/microk8s/install_microk8s_with_multipass.md)**
+
+- **[Deploy SQL Server on MicroK8s on R620 using Multipass](../../../research/m_z/virtualization/multipass/microk8s/install_microk8s_with_multipass.md)**
 
 - **[Modify ETL scripts to use local SQL Server container](../../../research/m_z/sql_server/sql_server_containers.md)**
 
 - Intermediate step in the report system to ensure we can always run the TB.
 - The MI is backed up to a local drive and SQL server currently runs from a dockerfile.
+
+- **[VMs vs Containers](../../../research/m_z/virtualization/research/vm_vs_container.md)**
+
+![](https://www.mssqltips.com/tipimages2/5907_introduction-containers-sql-server-dba.002.png)
+
+  In the diagram above, you only have one operating system. The containers share the same operating system kernel with other containers, each one running as isolated processes in user space. **Instead of abstracting the hardware like what virtualization does, containers abstract the operating system kernel.** This reduces the amount of storage space requirement for containers, eliminating the inefficiencies of having multiple copies of the operating system running on guest virtual machines. It also significantly reduces the amount of administrative overhead necessary to manage operating systems. Plus, they use far fewer resources than virtual machines.
 
 ## NEXT Research Topics
 
