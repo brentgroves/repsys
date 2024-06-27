@@ -1,4 +1,4 @@
-# **[VMs versus Containers](<https://www.mssqltips.com/sqlservertip/5907/getting-started-with-windows-containers-for-sql-server-part-1/>)**
+# **[VMs versus Containers](https://www.mssqltips.com/sqlservertip/5907/getting-started-with-windows-containers-for-sql-server-part-1/)**
 
 **[Back to Research List](../../../research_list.md)**\
 **[Back to Multipass Menu](../virtualization_menu.md)**\

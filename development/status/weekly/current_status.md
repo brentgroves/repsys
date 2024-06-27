@@ -11,6 +11,11 @@
 - 4 for Albion dev system and k8s cluster
 - 4 for Avilla dev system and k8s cluster
 
+## Notes
+
+- **[Cyber Security Metrics](app.powerbi.com/groups/me/apps)**
+- Plex IP restrictions
+
 ## Research
 
 - **[Research List](../../../research/research_list.md)**\

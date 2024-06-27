@@ -21,4 +21,5 @@ use (
 	./volumes/go/tutorials/prometheus/counter
 	./volumes/go/tutorials/redis_sentinel/redis_sentinel_test
 	./volumes/go/tutorials/webhook/webhook
+	./volumes/go/tutorials/ssl/ssl_server
 )
