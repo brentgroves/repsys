@@ -26,7 +26,9 @@ This isn't really a go question, but the intermediate certs are required because
 
 To combine the certs you can just use cat (making sure they have a line feed at the end of the file first), something like:
 
+```bash
 cat example.com.ca-crt example.com.ca-bundle > example.com.crt
+```
 
 I'm not sure why that cat cmd doesn't work on me, but I merged them manually with text editor it works well now. Thank you! –
 DTechnlogy
@@ -35,3 +37,13 @@ DTechnlogy
 The most common reason for cat not working would be the lack of a new line at the end of the first file). –
 Kenny Grant
  CommentedMay 7, 2021 at 10:02
+
+## test certificate
+
+```bash
+curl -v https://frt-kors43.busche-cnc.com
+curl -v https://127.0.0.1:8443/
+curl -v frt-kors43.linamar.com:8443
+
+https://127.0.0.1:8443/
+```

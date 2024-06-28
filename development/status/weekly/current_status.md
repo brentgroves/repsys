@@ -24,7 +24,7 @@ A list of all research for repsys.
 - **[Hailey's Project](../../../research/a_l/hailey/hailey_project.md)**\
 Hailey could use the report system's Zitadel for IAM.
 
-- **[Linamar PKI](../../../../pki/linamar/linamar_pki.md)**\
+- **[Linamar PKI](../bhall/frt-kors43.md)**\
 Linamar ssl certificate for Fruitport's Mach2 server.
   - Lint certificate chain
   - Lint kors43 SAN server certificate
@@ -32,6 +32,9 @@ Linamar ssl certificate for Fruitport's Mach2 server.
   - Test certificate chain
   - Format kors43 certificate chain for jboss/Niagara
   - Ask Sam to import certificate chain on kors43 using Niagara front-end
+
+- **[Golang Certificate Tester](../../../volumes/go/tutorials/ssl/ssl_server/ssl_server.md)**\
+This is a very simple program that you can use to test a full x509 certificate chain with any browser.
 
 - **[Deploy MicroK8s on R620 using Multipass](../../../research/m_z/virtualization/multipass/microk8s/install_microk8s_with_multipass.md)**
 
