@@ -1,5 +1,9 @@
 # **[Installing MicroK8s with multipass](https://microk8s.io/docs/install-multipass)**
 
+**[Current Status](../../../../../development/status/weekly/current_status.md)**\
+**[Research List](../../../../research_list.md)**\
+**[Back Main](../../../../../README.md)**
+
 ## references
 
 - **[How to Bridge Two Network Interfaces in Linux Using Netplan](https://www.tecmint.com/netplan-bridge-network-interfaces/)**
@@ -310,7 +314,8 @@ Jun 26 21:50:34 microk8s-vm systemd-networkd[625]: enp6s0: DHCPv6 lease lost
 
 ```
 
-Step 5: Confirm that it works
+## Step 5: Confirm that it works
+
 You can confirm that the new IP is present in the instance with Multipass:
 
 ```bash

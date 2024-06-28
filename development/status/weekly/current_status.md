@@ -13,19 +13,27 @@
 
 ## Notes
 
-- **[Cyber Security Metrics](app.powerbi.com/groups/me/apps)**
-- Plex IP restrictions
+- **[Cyber Security Metrics](app.powerbi.com/groups/me/apps)**\
+This seems to be a cloud based PowerBI report server.
+- Plex IP restrictions. If this is like Azure SQL Server IP restrictions it may affect ODBC and SOAP Web Service connections.
 
 ## Research
 
 - **[Research List](../../../research/research_list.md)**\
 A list of all research for repsys.
 
+- **[k8s concepts](../../../research/a_l/k8s/concepts/k8s_concepts_menu.md)**\
+K8s concepts and inner working.
+
 - **[Hailey's Project](../../../research/a_l/hailey/hailey_project.md)**\
 Hailey could use the report system's Zitadel for IAM.
 
 - **[Linamar PKI](../bhall/frt-kors43.md)**\
-Linamar ssl certificate for Fruitport's Mach2 server.
+
+  Next: After Mach2 is installed on new server then generate a new private key and give it to Brent Hall.
+
+  Linamar ssl certificate for Fruitport's Mach2 server.
+
   - Lint certificate chain
   - Lint kors43 SAN server certificate
   - Fix any errors
@@ -36,9 +44,9 @@ Linamar ssl certificate for Fruitport's Mach2 server.
 - **[Golang Certificate Tester](../../../volumes/go/tutorials/ssl/ssl_server/ssl_server.md)**\
 This is a very simple program that you can use to test a full x509 certificate chain with any browser.
 
-- **[Deploy MicroK8s on R620 using Multipass](../../../research/m_z/virtualization/multipass/microk8s/install_microk8s_with_multipass.md)**
+- **[Deploy MicroK8s on R620 using Multipass](../../../research/m_z/virtualization/multipass/microk8s/install_microk8s_on_multipass_vm.md)**
 
-- **[Deploy SQL Server on MicroK8s on R620 using Multipass](../../../research/m_z/virtualization/multipass/microk8s/install_microk8s_with_multipass.md)**
+- **[Deploy SQL Server on MicroK8s on R620 using Multipass](../../../research/m_z/virtualization/multipass/microk8s/sql_server/deploy_sql_server_on_k8s.md)**
 
 - **[Modify ETL scripts to use local SQL Server container](../../../research/m_z/sql_server/sql_server_containers.md)**
 
@@ -47,7 +55,7 @@ This is a very simple program that you can use to test a full x509 certificate c
 
 - **[VMs vs Containers](../../../research/m_z/virtualization/research/vm_vs_container.md)**
 
-![](https://www.mssqltips.com/tipimages2/5907_introduction-containers-sql-server-dba.002.png)
+  ![](https://www.mssqltips.com/tipimages2/5907_introduction-containers-sql-server-dba.002.png)
 
   In the diagram above, you only have one operating system. The containers share the same operating system kernel with other containers, each one running as isolated processes in user space. **Instead of abstracting the hardware like what virtualization does, containers abstract the operating system kernel.** This reduces the amount of storage space requirement for containers, eliminating the inefficiencies of having multiple copies of the operating system running on guest virtual machines. It also significantly reduces the amount of administrative overhead necessary to manage operating systems. Plus, they use far fewer resources than virtual machines.
 
