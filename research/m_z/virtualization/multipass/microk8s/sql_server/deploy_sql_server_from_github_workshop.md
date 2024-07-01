@@ -130,3 +130,5 @@ cd ~/src/k8s/repsys/namespaces/mssql/
 kubectl apply -f credentials.yaml 
 kubectl get secret credentials -o jsonpath='{.data.password2}' | base64 --decode
 ```
+
+## **[Next step 6](https://github.com/microsoft/sqlworkshops-sql2019workshop/blob/master/sql2019workshop/07_SQLOnKubernetes.md)**
