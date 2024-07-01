@@ -73,13 +73,37 @@ mpbr0       bridge     Network bridge for Multipass
 
 ```
 
+## Create an instance with a specific image
+
+To find out what images are available, run:
+
+```bash
+multipass find
+Image                       Aliases           Version          Description
+core                        core16            20200818         Ubuntu Core 16
+core18                                        20211124         Ubuntu Core 18
+core20                                        20230119         Ubuntu Core 20
+core22                                        20230717         Ubuntu Core 22
+20.04                       focal             20240612         Ubuntu 20.04 LTS
+22.04                       jammy             20240626         Ubuntu 22.04 LTS
+23.10                       mantic            20240619         Ubuntu 23.10
+24.04                       noble,lts         20240622         Ubuntu 24.04 LTS
+```
+
 ## Launch VM with extra network interface
+
+The full multipass help launch output explains the available options:
+
+```bash
+$  multipass help launch
+Usage: multipass launch [options] [[<remote:>]<image> | <url>]
+```
 
 ```bash
 # can't get manual mode in which you pass the hardware address to work
 # multipass launch --name test3 --network name=mybr,mode=manual,mac="7f:71:f0:b2:55:dd"
 
-multipass launch --network br0 --name microk8s-vm --mem 4G --disk 40G
+multipass launch --network br0 --name microk8s-vm --mem 4G --disk 40G 22.04
 # Add memory if going to run only sql server
 multipass launch --network br0 --name microk8s-vm --mem 8G --disk 40G
 
@@ -113,6 +137,7 @@ ip link show master br0
 See how multipass configured the network. Until I can figure out how to pass the hardware address manaully during launch we will have to grab the one multipass or lxd creates.
 
 ```bash
+
 multipass exec -n microk8s-vm -- sudo networkctl -a status
 # skip multipass default network interface
 ...

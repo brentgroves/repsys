@@ -88,3 +88,5 @@ spec:
        requests:
         storage: 8Gi
 ```
+
+<https://kubernetes.io/docs/tasks/configure-pod-container/security-context/>

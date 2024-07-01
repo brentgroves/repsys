@@ -89,6 +89,32 @@ bridge link show
 16: tapf48799c9: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 master br1 state forwarding priority 32 cost 2
 ```
 
+## Create an instance with a specific image
+
+To find out what images are available, run:
+
+```bash
+multipass find
+Image                       Aliases           Version          Description
+core                        core16            20200818         Ubuntu Core 16
+core18                                        20211124         Ubuntu Core 18
+core20                                        20230119         Ubuntu Core 20
+core22                                        20230717         Ubuntu Core 22
+20.04                       focal             20240612         Ubuntu 20.04 LTS
+22.04                       jammy             20240626         Ubuntu 22.04 LTS
+23.10                       mantic            20240619         Ubuntu 23.10
+24.04                       noble,lts         20240622         Ubuntu 24.04 LTS
+```
+
+## Launch VM with extra network interface
+
+The full multipass help launch output explains the available options:
+
+```bash
+$  multipass help launch
+Usage: multipass launch [options] [[<remote:>]<image> | <url>]
+```
+
 ## **[Notes launch command](https://multipass.run/docs/launch-command)**
 
 ```bash
