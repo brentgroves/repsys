@@ -49,4 +49,84 @@ scc.sh repsys11_sql_server.yaml mssql
 
 ## STEP 4: Create a Load Balancer Service
 
+Deploy objects in Kubernetes is done in a declarative fashion. One of the key objects to create is a LoadBalancer service which is supported by default in Azure Kubernetes Service (AKS). A LoadBalancer provides a static public IP address mapped to a public IP address in Azure. You will be able to map the LoadBalancer to a SQL Server deployment including a port to map to the SQL Server port 1433. Non-cloud Kubernetes clusters also support a similar concept called a NodePort.
 I created a nodeport service instead.
+
+**[port/targetport/nodeport](<https://www.bmc.com/blogs/kubernetes-port-targetport-nodeport/>**
+
+- **Port** exposes the Kubernetes service on the specified port within the cluster. Other pods within the cluster can communicate with this server on the specified port.
+- **TargetPort** is the port on which the service will send requests to, that your pod will be listening on. Your application in the container will need to be listening on this port also.
+- **NodePort** exposes a service externally to the cluster by means of the target nodes IP address and the NodePort. NodePort is the default setting if the port field is not specified.
+
+```yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: mssql-service
+spec:
+  selector:
+    app: mssql
+  ports:
+    - protocol: TCP
+      port: 31433
+      targetPort: 1433
+  type: LoadBalancer
+```
+
+This is the nodeport that created:
+
+```yaml
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mssql-service
+  namespace: mssql
+spec:
+  type: NodePort
+  selector:
+    app: mssql
+  ports:
+  - protocol: TCP
+    # NodePort exposes a service externally to the cluster by means of
+    # the target nodes IP address and the NodePort. NodePort is the default setting if the port field is not specified.
+    nodePort: 31433
+    # Port exposes the Kubernetes service on the specified port within the cluster. Other pods within 
+    # the cluster can communicate with this server on the specified port.
+    port: 1433
+    targetPort: 1433
+    # TargetPort is the port on which the service will send requests to, that your pod will be listening on. Your application 
+    # in the container will need to be listening on this port also.
+```
+
+```bash
+pushd .
+cd ~/src/repsys/k8s/sql_server/
+kubectl apply -f nodeport.yaml
+kubectl get all               
+NAME                    TYPE       CLUSTER-IP       EXTERNAL-IP   PORT(S)          AGE
+service/mssql-service   NodePort   10.152.183.235   <none>        1433:31433/TCP   4s
+```
+
+## STEP 5: **[Create a secret](https://kubernetes.io/docs/tasks/configmap-secret/managing-secret-using-kubectl/)** to hold the sa password
+
+**[Important](https://learn.microsoft.com/en-us/sql/linux/sql-server-linux-kubernetes-best-practices-statefulsets?view=sql-server-ver16)** The SA_PASSWORD environment variable is deprecated. Use MSSQL_SA_PASSWORD instead.
+
+In order to use a password to connect to SQL Server, Kubernetes provides an object called a secret. Use the script step5_create_secret.ps1 to create the secret which runs the following command: (You are free to change the password but you will need to use the new password later in this Activity to connect to SQL Server)
+
+kubectl create secret generic mssql-secret --from-literal=SA_PASSWORD="Sql2019isfast"
+The name of the secret is called mssql-secret which you will need when deploying a pod later in this Activity.
+
+When this command completes you should see the following message:
+
+secret/mssql-secret created
+You cannot retrieve the plaintext of the password from the secret later so you need to remember this password.
+
+I created the secret by doing this:
+
+```bash
+pushd .
+cd ~/src/k8s/repsys/namespaces/mssql/
+kubectl apply -f credentials.yaml 
+kubectl get secret credentials -o jsonpath='{.data.password2}' | base64 --decode
+```
