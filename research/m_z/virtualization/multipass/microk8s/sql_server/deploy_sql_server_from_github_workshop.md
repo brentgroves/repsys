@@ -21,6 +21,13 @@ There are two subfolders for scripts to be used in different shells:
 powershell - Use scripts here for kubectl on Windows
 bash - Use these scripts for kubectl on Linux or MacOS
 
+## Cleanup
+
+```bash
+kubectl delete service/mssql-service -n mssql
+kubectl delete pvc mssql-data -n mssql
+```
+
 ## STEP 1: Connect to the cluster
 
 ```bash
@@ -63,6 +70,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: mssql-service
+  namespace: mssql
 spec:
   selector:
     app: mssql
@@ -130,5 +138,134 @@ cd ~/src/k8s/repsys/namespaces/mssql/
 kubectl apply -f credentials.yaml 
 kubectl get secret credentials -o jsonpath='{.data.password2}' | base64 --decode
 ```
+
+## STEP 6: Create persistent storage for databases
+
+SQL Server needs persistent storage for databases and files. This is a similar concept to using a volume with containers to map to directories in the SQL Server container. Disk systems are exposed in Kubernetes as a StorageClass. Azure Kubernetes Service (AKS) exposes a StorageClass called managed-premium which is mapped to Azure Premium Storage. Applications like SQL Server can use a Persistent Volume Claim (PVC) to request storage from the azure-disk StorageClass.
+
+Use **[hostpath-storage](https://microk8s.io/docs/addon-hostpath-storage)** in Microk8s:
+
+```bash
+microk8s enable hostpath-storage
+Infer repository core for addon hostpath-storage
+Enabling default storage class.
+WARNING: Hostpath storage is not suitable for production environments.
+         A hostpath volume can grow beyond the size limit set in the volume claim manifest.
+
+deployment.apps/hostpath-provisioner created
+storageclass.storage.k8s.io/microk8s-hostpath created
+serviceaccount/microk8s-hostpath created
+clusterrole.rbac.authorization.k8s.io/microk8s-hostpath created
+clusterrolebinding.rbac.authorization.k8s.io/microk8s-hostpath created
+Storage will be available soon.
+# look at directory used for storage on each node
+ls -alh /var/snap/microk8s/common/default-storage
+total 8.0K
+drwxr-xr-x 2 root root 4.0K Jul  2 22:04 .
+drwxr-xr-x 9 root root 4.0K Jul  2 22:04 ..
+# list storage classes
+kubectl get sc 
+NAME                          PROVISIONER            RECLAIMPOLICY   VOLUMEBINDINGMODE      ALLOWVOLUMEEXPANSION   AGE
+microk8s-hostpath (default)   microk8s.io/hostpath   Delete          WaitForFirstConsumer   false                  2m28s        
+
+```
+
+The storage.yaml file declare the PVC request:
+
+```yaml
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mssql-data
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 80Gi
+```
+
+```bash
+pushd .
+cd ~/src/repsys/k8s/sql_server/
+kubectl apply -f storage.yaml
+persistentvolumeclaim/mssql-data created
+
+kubectl get pvc
+NAME         STATUS    VOLUME   CAPACITY   ACCESS MODES   STORAGECLASS        VOLUMEATTRIBUTESCLASS   AGE
+mssql-data   Pending                                      microk8s-hostpath   <unset>                 79s
+```
+
+The name of the PVC is mssql-data which will be used to map to the SQL Server container directory for databases when deploying the pod. The rest of the declaration specifies how to access the PVC which is ReadWriteOnce. ReadWriteOnce means one node a time in the cluster can access the PVC. The size of the PVC in this case is 8Gb which for the purposes of this activity is plenty of space.
+
+## STEP 7: Deploy a pod with a SQL Server container
+
+I did not use the yaml from step 7 instead I used the yaml from <https://learn.microsoft.com/en-us/sql/linux/sql-server-linux-kubernetes-best-practices-statefulsets?view=sql-server-ver16> which used the statefulset deployment type.
+
+Now that you have deployed a LoadBalancer service, a secret, and a Persistent Volume Claim (PVC),you have all the components to deploy a pod running a SQL Server container. To deploy the pod you will use a concept called Deployment which provides the ability to declare a ReplicaSet. Run the script step7_deploy_sql2019.ps1 and after it executes you will analyze the details of the deployment. This scripts runs the command:
+
+```yaml
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: mssql
+  namespace: mssql
+  labels:
+    app: mssql
+spec:
+  serviceName: "mssql-sales"
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mssql-sales
+  template:
+    metadata:
+      labels:
+        app: mssql-sales
+    spec:
+      securityContext:
+        fsGroup: 10001
+      containers:
+        - name: mssql-sales
+          image: mcr.microsoft.com/mssql/server:2019-latest
+          ports:
+            - containerPort: 1433
+              name: tcpsql
+          env:
+            - name: ACCEPT_EULA
+              value: "Y"
+            - name: MSSQL_ENABLE_HADR
+              value: "1"
+            - name: MSSQL_AGENT_ENABLED
+              value: "1"
+            - name: MSSQL_SA_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mssql
+                  key: MSSQL_SA_PASSWORD
+          volumeMounts:
+            - name: mssql
+              mountPath: "/var/opt/mssql"
+  volumeClaimTemplates:
+    - metadata:
+        name: mssql
+      spec:
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: 8Gi
+
+```
+
+## references
+
+Limits and requests for memory are measured in bytes. You can express memory as a plain integer or as a fixed-point integer using one of these suffixes: E, P, T, G, M, K. You can also use the power-of-two equivalents: Ei, Pi, Ti, Gi, Mi, Ki.
+
+So those are the "bibyte" counterparts, like user2864740 commented.
+
+A **[little info](https://en.wikipedia.org/wiki/Kibibyte)** on those orders of magnitude:
+
+The kibibyte was designed to replace the kilobyte in those computer science contexts in which the term kilobyte is used to mean 1024 bytes. The interpretation of kilobyte to denote 1024 bytes, conflicting with the SI definition of the prefix kilo (1000), used to be common.
 
 ## **[Next step 6](https://github.com/microsoft/sqlworkshops-sql2019workshop/blob/master/sql2019workshop/07_SQLOnKubernetes.md)**
