@@ -68,9 +68,10 @@ scc.sh repsys11_sql_server.yaml mssql
 ## STEP 4: Create a Load Balancer Service
 
 Deploy objects in Kubernetes is done in a declarative fashion. One of the key objects to create is a LoadBalancer service which is supported by default in Azure Kubernetes Service (AKS). A LoadBalancer provides a static public IP address mapped to a public IP address in Azure. You will be able to map the LoadBalancer to a SQL Server deployment including a port to map to the SQL Server port 1433. Non-cloud Kubernetes clusters also support a similar concept called a NodePort.
-I created a nodeport service instead.
 
-**[port/targetport/nodeport](<https://www.bmc.com/blogs/kubernetes-port-targetport-nodeport/>**
+**I created a nodeport service instead.**
+
+**[definition of port/targetport/nodeport](https://www.bmc.com/blogs/kubernetes-port-targetport-nodeport/)**
 
 - **Port** exposes the Kubernetes service on the specified port within the cluster. Other pods within the cluster can communicate with this server on the specified port.
 - **TargetPort** is the port on which the service will send requests to, that your pod will be listening on. Your application in the container will need to be listening on this port also.
