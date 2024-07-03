@@ -19,7 +19,7 @@ A Pod has a PodStatus, which has an array of PodConditions through which the Pod
 - **PodScheduled:** the Pod has been scheduled to a node.
 - **PodReadyToStartContainers:** (beta feature; enabled by default) the Pod sandbox has been successfully created and networking configured.
 - **ContainersReady:** all containers in the Pod are ready.
-- **Initialized:** all init containers have completed successfully.
+- **Initialized:** all **[init containers](https://kubernetes.io/docs/concepts/workloads/pods/init-containers/)** have completed successfully.
 - **Ready:** the Pod is able to serve requests and should be added to the load balancing pools of all matching Services.
 
 ### Pod readiness
@@ -75,7 +75,31 @@ After a Pod gets scheduled on a node, it needs to be admitted by the kubelet and
 The PodReadyToStartContainers condition is set to False by the Kubelet when it detects a Pod does not have a runtime sandbox with networking configured. This occurs in the following scenarios:
 
 - Early in the lifecycle of the Pod, when the kubelet has not yet begun to set up a sandbox for the Pod using the container runtime.
--
+- Later in the lifecycle of the Pod, when the Pod sandbox has been destroyed due to either:
+  - the node rebooting, without the Pod getting evicted
+  - for container runtimes that use virtual machines for isolation, the Pod sandbox virtual machine rebooting, which then requires creating a new sandbox and fresh container network configuration.
+
+The PodReadyToStartContainers condition is set to True by the kubelet after the successful completion of sandbox creation and network configuration for the Pod by the runtime plugin. The kubelet can start pulling container images and create containers after PodReadyToStartContainers condition has been set to True.
+
+For a Pod with init containers, the kubelet sets the Initialized condition to True after the init containers have successfully completed (which happens after successful sandbox creation and network configuration by the runtime plugin). For a Pod without init containers, the kubelet sets the Initialized condition to True before sandbox creation and network configuration starts.
+
+Pod scheduling readiness
+FEATURE STATE: Kubernetes v1.26 [alpha]
+See **[Pod Scheduling Readiness](https://kubernetes.io/docs/concepts/scheduling-eviction/pod-scheduling-readiness/)** for more information.
+
+## Container probes
+
+A probe is a diagnostic performed periodically by the kubelet on a container. To perform a diagnostic, the kubelet either executes code within the container, or makes a network request.
+
+## Check mechanisms
+
+There are four different ways to check a container using a probe. Each probe must define exactly one of these four mechanisms:
+
+**exec**\
+Executes a specified command inside the container. The diagnostic is considered successful if the command exits with a status code of 0.
+
+**grpc**\
+Performs a remote procedure call using gRPC. The target should implement gRPC health checks. The diagnostic is considered successful if the status of the response is SERVING.
 
 ## references
 
