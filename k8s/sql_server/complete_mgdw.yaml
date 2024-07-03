@@ -1,29 +1,29 @@
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: mssql
-  namespace: mssql
+  name: mgdw # name of the StatefulSet workload, the SQL Server instance name is derived from this. We suggest to keep this name same as the .spec.template.metadata.labels, .spec.selector.matchLabels and .spec.serviceName to avoid confusion.
+  namespace: mgdw
   labels:
-    app: mssql
+    app: mgdw
 spec:
-  serviceName: "mssql"
+  serviceName: "mgdw" # serviceName is the name of the service that governs this StatefulSet. This service must exist before the StatefulSet, and is responsible for the network identity of the set.
   replicas: 1
   selector:
     matchLabels:
-      app: mssql
+      app: mgdw
   template:
     metadata:
       labels:
-        app: mssql
+        app: mgdw # this has to be the same as .spec.selector.matchLabels, as documented [here](https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/)
     spec:
       securityContext:
         fsGroup: 10001
       containers:
-        - name: mssql
+        - name: mgdw # container name within the pod.
           image: mcr.microsoft.com/mssql/server:2019-latest
           ports:
             - containerPort: 1433
-              name: tcpsql
+              name: mgdw
           env:
             - name: ACCEPT_EULA
               value: "Y"
@@ -37,11 +37,11 @@ spec:
                   name: credentials
                   key: password2
           volumeMounts:
-            - name: mssql
+            - name: mgdw
               mountPath: "/var/opt/mssql"
   volumeClaimTemplates:
     - metadata:
-        name: mssql
+        name: mgdw
       spec:
         accessModes:
           - ReadWriteOnce
@@ -52,12 +52,12 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: mssql
-  namespace: mssql
+  name: mgdw
+  namespace: mgdw
 spec:
   type: NodePort
   selector:
-    app: mssql
+    app: mgdw
   ports:
   - protocol: TCP
     # NodePort exposes a service externally to the cluster by means of
@@ -69,4 +69,4 @@ spec:
     # TargetPort is the port on which the service will send requests to, that your pod will be listening on. Your application 
     # in the container will need to be listening on this port also.
     targetPort: 1433
-    name: tcpsql
+    name: mgdw

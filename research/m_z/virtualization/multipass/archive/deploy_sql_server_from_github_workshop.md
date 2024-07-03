@@ -7,6 +7,8 @@
 ## references
 
 - **[Deploy SQL Server Linux containers on Kubernetes with StatefulSets](https://learn.microsoft.com/en-us/sql/linux/sql-server-linux-kubernetes-best-practices-statefulsets?view=sql-server-ver16)**
+- **[configure env variables on mssql](https://learn.microsoft.com/en-us/sql/linux/sql-server-linux-configure-environment-variables?view=sql-server-ver16)**
+
 - **[best practices](https://learn.microsoft.com/en-us/sql/linux/sql-server-linux-kubernetes-best-practices-statefulsets?view=sql-server-ver16)**
 - **[considerations](https://www.mssqltips.com/sqlservertip/6775/run-sql-server-on-kubernetes/)**
 - **[workshop](https://github.com/microsoft/sqlworkshops-sql2019workshop/blob/master/sql2019workshop/07_SQLOnKubernetes.md)**
@@ -35,14 +37,16 @@ bash - Use these scripts for kubectl on Linux or MacOS
 ## Cleanup
 
 ```bash
-kubectl delete service/mssql-service -n mssql
-kubectl delete pvc mssql-data -n mssql
+scc.sh repsys11_mgdw.yaml mgdw
+kubectl delete service/mssql-service -n mgdw
+kubectl delete pvc mssql-data -n mgdw
+kubectl delete namespace mgdw
 ```
 
 ## STEP 1: Connect to the cluster
 
 ```bash
-scc.sh repsys11_sql_server.yaml microk8s
+scc.sh repsys11_mgdw.yaml microk8s
 ```
 
 ## STEP 2: Create a namespace
@@ -50,32 +54,34 @@ scc.sh repsys11_sql_server.yaml microk8s
 A Kubernetes namespace is a scope object to organize your Kubernetes deployment and objects from other deployments. Run the script step2_create_namespace.ps1 which runs the following command:
 
 ```bash
-kubectl create namespace mssql
+kubectl create namespace mgdw
 ```
 
 When this command completes you should see a message like
 
-```namespace/mssql created```
+```namespace/mgdw created```
 
 ## STEP 3: Set the default context
 
 To now deploy in Kubernetes you can specify which namespace to use with parameters. But there is also a method to set the context to the new namespace.
 
 ```bash
-scc.sh repsys11_sql_server.yaml mssql
+scc.sh repsys11_mgdw.yaml mgdw
 ```
 
 ## STEP 4: Create a Load Balancer Service
 
 Deploy objects in Kubernetes is done in a declarative fashion. One of the key objects to create is a LoadBalancer service which is supported by default in Azure Kubernetes Service (AKS). A LoadBalancer provides a static public IP address mapped to a public IP address in Azure. You will be able to map the LoadBalancer to a SQL Server deployment including a port to map to the SQL Server port 1433. Non-cloud Kubernetes clusters also support a similar concept called a NodePort.
 
-**I created a nodeport service instead.**
+Reference only **I created a nodeport service instead:**
 
 **[definition of port/targetport/nodeport](https://www.bmc.com/blogs/kubernetes-port-targetport-nodeport/)**
 
 - **Port** exposes the Kubernetes service on the specified port within the cluster. Other pods within the cluster can communicate with this server on the specified port.
 - **TargetPort** is the port on which the service will send requests to, that your pod will be listening on. Your application in the container will need to be listening on this port also.
 - **NodePort** exposes a service externally to the cluster by means of the target nodes IP address and the NodePort. NodePort is the default setting if the port field is not specified.
+
+References Only:
 
 ```yaml
 apiVersion: v1
@@ -100,12 +106,12 @@ This is the nodeport that created:
 apiVersion: v1
 kind: Service
 metadata:
-  name: mssql-service
-  namespace: mssql
+  name: mgdw
+  namespace: mgdw
 spec:
   type: NodePort
   selector:
-    app: mssql
+    app: mgdw
   ports:
   - protocol: TCP
     # NodePort exposes a service externally to the cluster by means of
@@ -114,18 +120,19 @@ spec:
     # Port exposes the Kubernetes service on the specified port within the cluster. Other pods within 
     # the cluster can communicate with this server on the specified port.
     port: 1433
-    targetPort: 1433
     # TargetPort is the port on which the service will send requests to, that your pod will be listening on. Your application 
     # in the container will need to be listening on this port also.
+    targetPort: 1433
+    name: mgdw
 ```
 
 ```bash
 pushd .
 cd ~/src/repsys/k8s/sql_server/
 kubectl apply -f nodeport.yaml
-kubectl get all               
-NAME                    TYPE       CLUSTER-IP       EXTERNAL-IP   PORT(S)          AGE
-service/mssql-service   NodePort   10.152.183.235   <none>        1433:31433/TCP   4s
+kubectl get svc
+NAME   TYPE       CLUSTER-IP       EXTERNAL-IP   PORT(S)          AGE
+mgdw   NodePort   10.152.183.236   <none>        1433:31433/TCP   3m34s
 ```
 
 ## STEP 5: **[Create a secret](https://kubernetes.io/docs/tasks/configmap-secret/managing-secret-using-kubectl/)** to hold the sa password
@@ -146,7 +153,7 @@ I created the secret by doing this:
 
 ```bash
 pushd .
-cd ~/src/k8s/repsys/namespaces/mssql/
+cd ~/src/k8s/repsys/namespaces/mgdw/
 kubectl apply -f credentials.yaml 
 kubectl get secret credentials -o jsonpath='{.data.password2}' | base64 --decode
 ```
