@@ -1,5 +1,16 @@
 # **[SQL2019 Workshop](https://github.com/microsoft/sqlworkshops-sql2019workshop/blob/master/sql2019workshop/07_SQLOnKubernetes.md)**
 
+**[Current Status](../../../../../../development/status/weekly/current_status.md)**\
+**[Research List](../../../../../research_list.md)**\
+**[Back Main](../../../../../../README.md)**
+
+## references
+
+- **[Deploy SQL Server Linux containers on Kubernetes with StatefulSets](https://learn.microsoft.com/en-us/sql/linux/sql-server-linux-kubernetes-best-practices-statefulsets?view=sql-server-ver16)**
+- **[best practices](https://learn.microsoft.com/en-us/sql/linux/sql-server-linux-kubernetes-best-practices-statefulsets?view=sql-server-ver16)**
+- **[considerations](https://www.mssqltips.com/sqlservertip/6775/run-sql-server-on-kubernetes/)**
+- **[workshop](https://github.com/microsoft/sqlworkshops-sql2019workshop/blob/master/sql2019workshop/07_SQLOnKubernetes.md)**
+
 ## Deploying SQL Server on Kubernetes
 
 Since SQL Server is a stateful container application it is a perfect fit to deploy and use on a Kubernetes platform.
