@@ -3,6 +3,7 @@
 - **Port** exposes the Kubernetes service on the specified port within the cluster. Other pods within the cluster can communicate with this server on the specified port.
 - **TargetPort** is the port on which the service will send requests to, that your pod will be listening on. Your application in the container will need to be listening on this port also.
 - **NodePort** exposes a service externally to the cluster by means of the target nodes IP address and the NodePort. NodePort is the default setting if the port field is not specified.
+- **[Endpoint](https://www.reddit.com/r/kubernetes/comments/xolkbo/what_is_the_difference_between_endpoint_and/)** is the location (IP address) of the pod itself. (Endpoint = "which pod")
 
 ```yaml
 ---

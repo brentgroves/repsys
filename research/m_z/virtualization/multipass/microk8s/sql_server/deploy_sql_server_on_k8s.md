@@ -126,17 +126,6 @@ spec:
     name: mgdw
 ```
 
-Create nodeport:
-
-```bash
-pushd .
-cd ~/src/repsys/k8s/sql_server/
-kubectl apply -f nodeport.yaml
-kubectl get svc
-NAME   TYPE       CLUSTER-IP       EXTERNAL-IP   PORT(S)          AGE
-mgdw   NodePort   10.152.183.236   <none>        1433:31433/TCP   3m34s
-```
-
 ## STEP 5: **[Create a secret](https://kubernetes.io/docs/tasks/configmap-secret/managing-secret-using-kubectl/)** to hold the sa password
 
 **[Important](https://learn.microsoft.com/en-us/sql/linux/sql-server-linux-kubernetes-best-practices-statefulsets?view=sql-server-ver16)** The SA_PASSWORD environment variable is deprecated. Use MSSQL_SA_PASSWORD instead.
@@ -276,5 +265,124 @@ spec:
     targetPort: 1433
     name: mgdw
 ```
+
+## Deploy sql server
+
+```bash
+pushd .
+cd ~/src/repsys/k8s/sql_server/
+kubectl apply -f complete_mgdw.yaml 
+```
+
+## Deployment workloads
+
+You can use the deployment type for SQL Server, in scenarios where you want to deploy SQL Server containers as stateless database applications, for example when data persistence isn't critical. Some such examples are for test/QA or CI/CD purposes.
+
+## Isolation through namespaces
+
+Namespaces provide a mechanism for isolating groups of resources within a single Kubernetes cluster. For more about namespaces and when to use them, see Namespaces.
+
+From the SQL Server perspective, if you plan to run SQL Server pods on a Kubernetes cluster that is also hosting other resources, you should run the SQL Server pods in their own namespace, for ease of management and administration. For example, consider you have multiple departments sharing the same Kubernetes cluster, and you want to deploy a SQL Server instance for the Sales team and another one for the Marketing team. You'll create two namespaces called sales and marketing, as shown in the following example:
+
+```bash
+kubectl create namespace sales
+kubectl create namespace marketing
+```
+
+To check that the namespaces are created, run kubectl get namespaces, and you'll see a list similar to the following output.
+
+Output
+
+```bash
+NAME              STATUS   AGE
+default           Active   39d
+kube-node-lease   Active   39d
+kube-public       Active   39d
+kube-system       Active   39d
+marketing         Active   7s
+sales             Active   26m
+```
+
+Now you can deploy SQL Server containers in each of these namespaces using the sample YAML shown in the following example. Notice the namespace metadata added to the deployment YAML, so all the containers and services of this deployment are deployed in the sales namespace.
+
+```yaml
+kind: StorageClass
+apiVersion: storage.k8s.io/v1
+metadata:
+  name: azure-disk
+provisioner: kubernetes.io/azure-disk
+parameters:
+  storageAccountType: Standard_LRS
+  kind: Managed
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: mssql-sales
+  namespace: sales
+  labels:
+    app: mssql-sales
+spec:
+  serviceName: "mssql-sales"
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mssql-sales
+  template:
+    metadata:
+      labels:
+        app: mssql-sales
+    spec:
+      securityContext:
+        fsGroup: 10001
+      containers:
+        - name: mssql-sales
+          image: mcr.microsoft.com/mssql/server:2019-latest
+          ports:
+            - containerPort: 1433
+              name: tcpsql
+          env:
+            - name: ACCEPT_EULA
+              value: "Y"
+            - name: MSSQL_ENABLE_HADR
+              value: "1"
+            - name: MSSQL_AGENT_ENABLED
+              value: "1"
+            - name: MSSQL_SA_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mssql
+                  key: MSSQL_SA_PASSWORD
+          volumeMounts:
+            - name: mssql
+              mountPath: "/var/opt/mssql"
+  volumeClaimTemplates:
+    - metadata:
+        name: mssql
+      spec:
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: 8Gi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mssql-sales-0
+  namespace: sales
+spec:
+  type: LoadBalancer
+  selector:
+    statefulset.kubernetes.io/pod-name: mssql-sales-0
+  ports:
+    - protocol: TCP
+      port: 1433
+      targetPort: 1433
+      name: tcpsql
+```
+
+**question**\
+Shouldn't we change the name of the volume from mssql to mssql-sales?
 
 <https://kubernetes.io/docs/tasks/configure-pod-container/security-context/>

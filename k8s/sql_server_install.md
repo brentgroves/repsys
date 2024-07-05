@@ -126,17 +126,6 @@ spec:
     name: mgdw
 ```
 
-Create nodeport:
-
-```bash
-pushd .
-cd ~/src/repsys/k8s/sql_server/
-kubectl apply -f nodeport.yaml
-kubectl get svc
-NAME   TYPE       CLUSTER-IP       EXTERNAL-IP   PORT(S)          AGE
-mgdw   NodePort   10.152.183.236   <none>        1433:31433/TCP   3m34s
-```
-
 ## STEP 5: **[Create a secret](https://kubernetes.io/docs/tasks/configmap-secret/managing-secret-using-kubectl/)** to hold the sa password
 
 **[Important](https://learn.microsoft.com/en-us/sql/linux/sql-server-linux-kubernetes-best-practices-statefulsets?view=sql-server-ver16)** The SA_PASSWORD environment variable is deprecated. Use MSSQL_SA_PASSWORD instead.
