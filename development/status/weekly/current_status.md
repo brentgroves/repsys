@@ -21,6 +21,12 @@ This seems to be a cloud based PowerBI report server.
 
 - **[Research List](../../../research/research_list.md)**\
 A list of all research for repsys.
+
+- Prepare for Albion/Avilla Linamar Networking/VM changes
+  - Test Visual Studio SSIS scripts on alb-util/10.1.1.150.
+  - Test running trial_balance.rdl using Power BI report builder from alb-utl4/10.1.1.151,
+Run TB report, trial_balance.rdl, from any Windows machine with the Power BI report builder installed.
+
 - Lake Michigan.  
 - **[k8s concepts](../../../research/a_l/k8s/concepts/k8s_concepts_menu.md)**\
 K8s concepts and inner working.
