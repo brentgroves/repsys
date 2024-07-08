@@ -132,7 +132,8 @@ spec:
 
 In order to use a password to connect to SQL Server, Kubernetes provides an object called a secret. Use the script step5_create_secret.ps1 to create the secret which runs the following command: (You are free to change the password but you will need to use the new password later in this Activity to connect to SQL Server)
 
-kubectl create secret generic mssql-secret --from-literal=SA_PASSWORD="test"
+references only:\
+```kubectl create secret generic mssql-secret --from-literal=SA_PASSWORD="test"```
 The name of the secret is called mssql-secret which you will need when deploying a pod later in this Activity.
 
 When this command completes you should see the following message:
@@ -150,8 +151,10 @@ kubectl get secret credentials -o jsonpath='{.data.password2}' | base64 --decode
 
 ## STEP 6: Create persistent storage for databases
 
+reference only:\
 SQL Server needs persistent storage for databases and files. This is a similar concept to using a volume with containers to map to directories in the SQL Server container. Disk systems are exposed in Kubernetes as a StorageClass. Azure Kubernetes Service (AKS) exposes a StorageClass called managed-premium which is mapped to Azure Premium Storage. Applications like SQL Server can use a Persistent Volume Claim (PVC) to request storage from the azure-disk StorageClass.
 
+I used hostpath-storage instead:\
 Review how PVC/PV are automatically created in **[statefulsets](../../../../../a_l/k8s/concepts/statefulsets.md)**
 
 Use **[hostpath-storage](https://microk8s.io/docs/addon-hostpath-storage)** in Microk8s:
@@ -191,6 +194,8 @@ In the following example, the StatefulSet workload name should match the .spec.t
 
 The SA_PASSWORD environment variable is deprecated. Use MSSQL_SA_PASSWORD instead.
 
+### **[security context reference](../../../../../a_l/k8s/concepts/security_context/fsgroup_gid.md)**
+
 ```yaml
 apiVersion: apps/v1
 kind: StatefulSet
@@ -211,7 +216,7 @@ spec:
         app: mgdw # this has to be the same as .spec.selector.matchLabels, as documented [here](https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/)
     spec:
       securityContext:
-        fsGroup: 10001
+        fsGroup: 10001 
       containers:
         - name: mgdw # container name within the pod.
           image: mcr.microsoft.com/mssql/server:2019-latest
@@ -272,6 +277,31 @@ spec:
 pushd .
 cd ~/src/repsys/k8s/sql_server/
 kubectl apply -f complete_mgdw.yaml 
+```
+
+## look at directory used for storage
+
+```bash
+sudo ls -alh /var/snap/microk8s/common/default-storage
+total 12K
+drwxr-xr-x 3 root root 4.0K Jul  5 20:25 .
+drwxr-xr-x 9 root root 4.0K Jul  2 22:04 ..
+drwxrwxrwx 6 root root 4.0K Jul  5 20:27 mgdw-mgdw-mgdw-0-pvc-893b559e-0644-4001-a1c7-96402e829318
+
+```
+
+To see the resources, you can run the kubectl get all command with the namespace specified to see these resources:
+
+```bash
+kubectl get all -n mgdw
+NAME         READY   STATUS    RESTARTS   AGE
+pod/mgdw-0   1/1     Running   0          3d1h
+
+NAME           TYPE       CLUSTER-IP       EXTERNAL-IP   PORT(S)          AGE
+service/mgdw   NodePort   10.152.183.236   <none>        1433:31433/TCP   5d
+
+NAME                    READY   AGE
+statefulset.apps/mgdw   1/1     3d1h
 ```
 
 ## Deployment workloads

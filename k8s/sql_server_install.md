@@ -266,4 +266,79 @@ spec:
     name: mgdw
 ```
 
-<https://kubernetes.io/docs/tasks/configure-pod-container/security-context/>
+## Deploy sql server
+
+```bash
+pushd .
+cd ~/src/repsys/k8s/sql_server/
+kubectl apply -f complete_mgdw.yaml 
+```
+
+## look at directory used for storage
+
+```bash
+sudo ls -alh /var/snap/microk8s/common/default-storage
+total 12K
+drwxr-xr-x 3 root root 4.0K Jul  5 20:25 .
+drwxr-xr-x 9 root root 4.0K Jul  2 22:04 ..
+drwxrwxrwx 6 root root 4.0K Jul  5 20:27 mgdw-mgdw-mgdw-0-pvc-893b559e-0644-4001-a1c7-96402e829318
+
+```
+
+To see the resources, you can run the kubectl get all command with the namespace specified to see these resources:
+
+```bash
+kubectl get all -n mgdw
+NAME         READY   STATUS    RESTARTS   AGE
+pod/mgdw-0   1/1     Running   0          3d1h
+
+NAME           TYPE       CLUSTER-IP       EXTERNAL-IP   PORT(S)          AGE
+service/mgdw   NodePort   10.152.183.236   <none>        1433:31433/TCP   5d
+
+NAME                    READY   AGE
+statefulset.apps/mgdw   1/1     3d1h
+```
+
+## **[Connect to SQL Server](https://spacelift.io/blog/kubectl-exec)**
+
+Connect to Your Container
+To get a bash shell into the running container:
+
+```bash
+kubectl exec --stdin --tty mgdw-0 -- /bin/bash
+groups: cannot find name for group ID 10001
+```
+
+The following steps use the SQL Server command-line tool, sqlcmd utility, inside the container to connect to SQL Server.
+
+Use the docker exec -it command to start an interactive bash shell inside your running container. In the following example, sql1 is name specified by the --name parameter when you created the container.
+
+```Bash
+docker exec -it sql1 "bash"
+# Once inside the container, connect locally with sqlcmd, using its full path.
+sudo /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P "~/src/secrets/namespaces/default/credentials.yaml"
+Sqlcmd: Error: Microsoft ODBC Driver 17 for SQL Server : SSPI Provider: No Kerberos credentials available (default cache: FILE:/tmp/krb5cc_10001).
+Sqlcmd: Error: Microsoft ODBC Driver 17 for SQL Server : Cannot generate SSPI context.
+
+# Create a new database
+# The following steps create a new database named TestDB.
+# From the sqlcmd command prompt, paste the following Transact-SQL command to create a test database:
+CREATE DATABASE TestDB;
+# On the next line, write a query to return the name of all of the databases on your server:
+SELECT Name from sys.databases;
+# The previous two commands weren't run immediately. Type GO on a new line to run the previous commands:
+GO
+Name                                                                                                                            
+--------------------------------------------------------------------------------------------------------------------------------
+master                                                                                                                          
+tempdb                                                                                                                          
+model                                                                                                                           
+msdb                                                                                                                            
+TestDB                                                                                                                          
+
+(5 rows affected)
+CREATE TABLE Inventory (id INT, name NVARCHAR(50), quantity INT);
+INSERT INTO Inventory VALUES (1, 'banana', 150); INSERT INTO Inventory VALUES (2, 'orange', 154);
+```
+
+<!-- https://learn.microsoft.com/en-us/sql/linux/quickstart-install-connect-docker?view=sql-server-ver16&preserve-view=true&tabs=cli&pivots=cs1-bash -->

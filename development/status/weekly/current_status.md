@@ -30,6 +30,10 @@ Run TB report, trial_balance.rdl, from any Windows machine with the Power BI rep
 - Lake Michigan.  
 - **[k8s concepts](../../../research/a_l/k8s/concepts/k8s_concepts_menu.md)**\
 K8s concepts and inner working.
+- **[Intel Clear Linux OS](../../../research/a_l/k8s/concepts/intel_clear_containers.md)**\
+Intel Clear Containers offer a means of combining the best features of VMs with the power and flexibility that containers bring to application developers.
+
+You can find more information about **[Intel Clear Containers](http://clearlinux.org/features/intel%C2%AE-clear-containers)** at the official website.
 
 - **[Hailey's Project](../../../research/a_l/hailey/hailey_project.md)**\
 Hailey could use the report system's Zitadel for IAM.

@@ -12,6 +12,16 @@ Whilst a Pod is running, the kubelet is able to restart containers to handle som
 
 In the Kubernetes API, Pods have both a specification and an actual status. The status for a Pod object consists of a set of **[Pod conditions](https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#pod-conditions)**. You can also inject custom readiness information into the condition data for a Pod, if that is useful to your application.
 
+Pods are only scheduled once in their lifetime; assigning a Pod to a specific node is called binding, and the process of selecting which node to use is called scheduling. Once a Pod has been scheduled and is bound to a node, Kubernetes tries to run that Pod on the node. The Pod runs on that node until it stops, or until the Pod is terminated; if Kubernetes isn't able start the Pod on the selected node (for example, if the node crashes before the Pod starts), then that particular Pod never starts.
+
+You can use **[Pod Scheduling Readiness](https://kubernetes.io/docs/concepts/scheduling-eviction/pod-scheduling-readiness/)** to delay scheduling for a Pod until all its scheduling gates are removed. For example, you might want to define a set of Pods but only trigger scheduling once all the Pods have been created.
+
+## NEXT Pods and fault recovery
+
+If one of the containers in the Pod fails, then Kubernetes may try to restart that specific container. Read How Pods handle problems with containers to learn more.
+
+## references
+
 ## Pod conditions
 
 A Pod has a PodStatus, which has an array of PodConditions through which the Pod has or has not passed. Kubelet manages the following PodConditions:
@@ -100,8 +110,6 @@ Executes a specified command inside the container. The diagnostic is considered 
 
 **grpc**\
 Performs a remote procedure call using gRPC. The target should implement gRPC health checks. The diagnostic is considered successful if the status of the response is SERVING.
-
-## references
 
 The **[ETag](https://en.wikipedia.org/wiki/HTTP_ETag)** or entity tag is part of HTTP, the protocol for the World Wide Web. It is one of several mechanisms that HTTP provides for **Web cache validation**, which allows a client to make conditional requests. This mechanism allows caches to be more efficient and saves bandwidth, as a Web server does not need to send a full response if the content has not changed. ETags can also be used for optimistic concurrency control[1] to help prevent simultaneous updates of a resource from overwriting each other.
 

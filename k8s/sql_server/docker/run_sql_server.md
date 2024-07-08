@@ -16,7 +16,7 @@ Start a mssql-server instance for SQL Server 2022, which is now generally availa
 ```bash
 docker pull mcr.microsoft.com/mssql/server:2022-latest
 
-docker run -e 'ACCEPT_EULA=Y' -e 'MSSQL_SA_PASSWORD=WeDontSharePasswords1!' \
+docker run -e 'ACCEPT_EULA=Y' -e 'MSSQL_SA_PASSWORD=~/src/secrets/namespaces/default/credentials.yaml' \
    -p 1433:1433 --name sql1 --hostname sql1 \
    -d \
    mcr.microsoft.com/mssql/server:2022-latest
@@ -31,7 +31,7 @@ Use the docker exec -it command to start an interactive bash shell inside your r
 ```Bash
 docker exec -it sql1 "bash"
 # Once inside the container, connect locally with sqlcmd, using its full path.
-sudo /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P "WeDontSharePasswords1!"
+sudo /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P "~/src/secrets/namespaces/default/credentials.yaml"
 # Create a new database
 # The following steps create a new database named TestDB.
 # From the sqlcmd command prompt, paste the following Transact-SQL command to create a test database:
