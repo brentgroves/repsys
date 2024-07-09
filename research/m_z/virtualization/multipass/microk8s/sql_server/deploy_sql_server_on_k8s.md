@@ -304,6 +304,54 @@ NAME                    READY   AGE
 statefulset.apps/mgdw   1/1     3d1h
 ```
 
+## **[Connect to SQL Server](https://spacelift.io/blog/kubectl-exec)**
+
+Connect to Your Container
+To get a bash shell into the running container:
+
+```bash
+kubectl exec --stdin --tty mgdw-0 -- /bin/bash
+groups: cannot find name for group ID 10001
+```
+
+The following steps use the SQL Server command-line tool, sqlcmd utility, inside the container to connect to SQL Server.
+
+Use the docker exec -it command to start an interactive bash shell inside your running container. In the following example, sql1 is name specified by the --name parameter when you created the container.
+
+```Bash
+# Once inside the container, connect locally with sqlcmd, using its full path.
+sudo /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P "~/src/secrets/namespaces/default/credentials.yaml"
+
+# Create a new database
+# The following steps create a new database named TestDB.
+# From the sqlcmd command prompt, paste the following Transact-SQL command to create a test database:
+CREATE DATABASE TestDB;
+1> CREATE TABLE CUSTOMERS(    ID   INT              NOT NULL,    NAME VARCHAR (20)     NOT NULL,    AGE  INT              NOT NULL,    ADDRESS  CHAR (25) ,    SALARY   DECIMAL (18, 2),           PRIMARY KEY (ID));
+2> go
+1> INSERT INTO CUSTOMERS (ID,NAME,AGE,ADDRESS,SALARY) VALUES (1, 'Ramesh', 32, 'Ahmedabad', 2000.00 );
+2> select * from customers;
+3> go
+
+(1 rows affected)
+ID          NAME                 AGE         ADDRESS                   SALARY              
+----------- -------------------- ----------- ------------------------- --------------------
+          1 Ramesh                        32 Ahmedabad                              2000.00
+
+# On the next line, write a query to return the name of all of the databases on your server:
+1> select name from sys.databases;
+2> go
+name                                                                                                                          
+--------------------------------------------------------------------------------------------------------------------------------
+master                                                                                 tempdb                                                                                 model                                                                                  msdb                                                                                   TestDB  
+
+(5 rows affected)
+CREATE TABLE Inventory (id INT, name NVARCHAR(50), quantity INT);
+INSERT INTO Inventory VALUES (1, 'banana', 150); INSERT INTO Inventory VALUES (2, 'orange', 154);
+exit
+```
+
+<!-- https://learn.microsoft.com/en-us/sql/linux/quickstart-install-connect-docker?view=sql-server-ver16&preserve-view=true&tabs=cli&pivots=cs1-bash -->
+
 ## Deployment workloads
 
 You can use the deployment type for SQL Server, in scenarios where you want to deploy SQL Server containers as stateless database applications, for example when data persistence isn't critical. Some such examples are for test/QA or CI/CD purposes.
