@@ -18,7 +18,7 @@ You can use **[Pod Scheduling Readiness](https://kubernetes.io/docs/concepts/sch
 
 ## NEXT Pods and fault recovery
 
-If one of the containers in the Pod fails, then Kubernetes may try to restart that specific container. Read How Pods handle problems with containers to learn more.
+If one of the containers in the Pod fails, then Kubernetes may try to restart that specific container. Read **[How Pods handle problems with containers](https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#container-restarts)** to learn more.
 
 ## references
 
