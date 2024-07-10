@@ -16,15 +16,6 @@
 
 Decide which image you want to use.
 
-## **[create a debug pod](https://medium.com/@shambhand2020/create-the-various-debug-or-test-pod-inside-kubernetes-cluster-e4862c767b96)**
-
-```bash
-kubectl run -it --tty --rm debug --image=alpine --restart=Never -- sh
-If you don't see a command prompt, try pressing enter.
-/ # exit
-pod "debug" deleted
-```
-
 ## Kubernetes with StatefulSets
 
 This article contains best practices and guidance for running SQL Server containers on Kubernetes with StatefulSets. We recommend deploying one SQL Server container (instance) per pod in Kubernetes. Thus, you have one SQL Server instance deployed per pod in the Kubernetes cluster.
@@ -99,6 +90,7 @@ spec:
   type: LoadBalancer
 ```
 
+Note: you can just apply the complete_mgdw_yyyy.yaml file.
 This is the yaml for nodeport:
 
 ```yaml
@@ -271,7 +263,7 @@ spec:
 ```bash
 pushd .
 cd ~/src/repsys/k8s/sql_server/
-kubectl apply -f complete_mgdw.yaml 
+kubectl apply -f complete_mgdw_2022.yaml 
 ```
 
 ## look at directory used for storage
@@ -315,7 +307,7 @@ Use the docker exec -it command to start an interactive bash shell inside your r
 
 ```Bash
 # Once inside the container, connect locally with sqlcmd, using its full path.
-sudo /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P "~/src/secrets/namespaces/default/credentials.yaml"
+sudo /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P ~/src/k8s/repsys/namespaces/mgdw/credentials.yaml
 
 # Create a new database
 # The following steps create a new database named TestDB.
@@ -343,6 +335,30 @@ master                                                                          
 CREATE TABLE Inventory (id INT, name NVARCHAR(50), quantity INT);
 INSERT INTO Inventory VALUES (1, 'banana', 150); INSERT INTO Inventory VALUES (2, 'orange', 154);
 exit
+```
+
+## import database
+
+**[reference import database](../../backups/azure_mi/import_database.md)**
+
+## test import
+
+**[reference mssql_client](./sql_server/mssql_client.md)**
+
+```Bash
+kubectl exec --stdin --tty mgdw-0 -- /bin/bash
+groups: cannot find name for group ID 10001
+# Once inside the container, connect locally with sqlcmd, using its full path.
+sudo /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P "~/src/secrets/namespaces/default/credentials.yaml"
+1>select s.Name,sh.*
+from ETL.script_history sh 
+join ETL.script s 
+on sh.script_key=s.Script_Key 
+where sh.script_key in (1,3,4,5,6,7,8,9,10,11,116,117)
+and start_time between '2024-07-05 00:00:00' and '2024-07-06 00:00:00' 
+--and start_time between '2024-01-09 00:00:00' and '2024-01-10 00:00:00' 
+order by script_history_key desc
+
 ```
 
 <!-- https://learn.microsoft.com/en-us/sql/linux/quickstart-install-connect-docker?view=sql-server-ver16&preserve-view=true&tabs=cli&pivots=cs1-bash -->

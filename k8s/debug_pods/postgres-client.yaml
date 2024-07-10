@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: postgres-client-deployment
+  labels:
+    app: postgres-client
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: postgres-client
+  template:
+    metadata:
+      labels:
+        app: postgres-client
+    spec:
+      containers:
+      - name: postgres-client
+        image: docker.io/bitnami/postgresql:latest
+        ports:
+        - containerPort: 5432
+        env:
+         - name: POSTGRES_PASSWORD
+           value: password
+      #nodeName: <name of a node>
+
+### kubectl apply -f <postgres-client.yaml>
+### kubectl exec -it <postgres-client-pod-name>  -n <namespace> -- sh
+### psql -U username -h db-host -p 5432 db-name
+### kubectl delete -f <postgres-client.yaml>

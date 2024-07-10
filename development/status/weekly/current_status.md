@@ -17,6 +17,10 @@
 This seems to be a cloud based PowerBI report server.
 - Plex IP restrictions. If this is like Azure SQL Server IP restrictions it may affect ODBC and SOAP Web Service connections.
 
+## Diagrams
+
+- **[Report System Redundant K8s Clusters](../../report_system/report_system_redundant_k8s_clusters.md)**
+
 ## Research
 
 - **[Research List](../../../research/research_list.md)**\
@@ -27,7 +31,6 @@ A list of all research for repsys.
   - Test running trial_balance.rdl using Power BI report builder from alb-utl4/10.1.1.151,
 Run TB report, trial_balance.rdl, from any Windows machine with the Power BI report builder installed.
 
-- Lake Michigan.  
 - **[k8s concepts](../../../research/a_l/k8s/concepts/k8s_concepts_menu.md)**\
 K8s concepts and inner working.
 - **[Intel Clear Linux OS](../../../research/a_l/k8s/concepts/intel_clear_containers.md)**\
@@ -56,7 +59,7 @@ This is a very simple program that you can use to test a full x509 certificate c
 
 - **[Deploy MicroK8s on R620 using Multipass](../../../research/m_z/virtualization/multipass/microk8s/install_microk8s_on_multipass_vm.md)**
 
-- **[Deploy SQL Server on MicroK8s on R620 using Multipass](../../../research/m_z/virtualization/multipass/microk8s/sql_server/deploy_sql_server_on_k8s.md)**
+- **[Deploy SQL Server on MicroK8s on R620](../../../k8s/sql_server_install.md)**
 
 - **[Modify ETL scripts to use local SQL Server container](../../../research/m_z/sql_server/sql_server_containers.md)**
 
