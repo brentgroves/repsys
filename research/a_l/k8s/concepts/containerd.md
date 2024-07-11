@@ -1,5 +1,9 @@
 # **[Containerd and ctr](https://cloudyuga.guru/blogs/containerd-and-ctr/)**
 
+**[Current Status](../../../../development/status/weekly/current_status.md)**\
+**[Research List](../../../research_list.md)**\
+**[Back Main](../../../../README.md)**
+
 ## references
 
 <https://microk8s.io/docs/command-reference#heading--microk8s-ctr>
