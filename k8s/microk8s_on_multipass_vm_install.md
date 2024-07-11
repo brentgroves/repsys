@@ -142,9 +142,10 @@ requirements when we launch the VM:
 # can't get manual mode in which you pass the hardware address to work
 # multipass launch --name test3 --network name=mybr,mode=manual,mac="7f:71:f0:b2:55:dd"
 
-multipass launch --network br0 --name microk8s-vm --memory 4G --disk 40G 22.04
 # Add memory if going to run only sql server
 multipass launch --network br0 --name microk8s-vm --memory 8G --disk 80G 22.04
+
+multipass launch --network br2 --name repsys11-c2-n1 --memory 16G --disk 80G 22.04
 
 multipass list
 Name                    State             IPv4             Image
@@ -160,6 +161,13 @@ test2                   Running           10.127.233.24    Ubuntu 24.04 LTS
 Use the ip utility to display the link status of Ethernet devices that are ports of a specific bridge:
 
 ```bash
+ip link show master br2
+8: eno3: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq master br2 state UP mode DEFAULT group default qlen 1000
+    link/ether b8:ca:3a:6a:37:1a brd ff:ff:ff:ff:ff:ff
+    altname enp1s0f2
+21: tap50844081: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq master br2 state UP mode DEFAULT group default qlen 1000
+    link/ether 7e:c8:dd:1b:2b:24 brd ff:ff:ff:ff:ff:ff
+
 ip link show master br0
 7: eno2: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq master br0 state UP mode DEFAULT group default qlen 1000
     link/ether b8:ca:3a:6a:37:19 brd ff:ff:ff:ff:ff:ff
@@ -176,6 +184,37 @@ ip link show master br0
 See how multipass configured the network. Until I can figure out how to pass the hardware address manaully during launch we will have to grab the one multipass or lxd creates.
 
 ```bash
+multipass exec -n repsys11-c2-n1 -- sudo networkctl -a status
+# skip multipass default network interface
+enp6s0                                                                    
+                     Link File: /usr/lib/systemd/network/99-default.link
+                  Network File: /run/systemd/network/10-netplan-extra0.network
+                          Type: ether
+                         State: routable (configured)
+                  Online state: unknown
+                          Path: pci-0000:06:00.0
+                        Driver: virtio_net
+                        Vendor: Red Hat, Inc.
+                         Model: Virtio network device
+                    HW Address: 52:54:00:90:6f:18
+                           MTU: 1500 (min: 68, max: 65535)
+                         QDisc: mq
+  IPv6 Address Generation Mode: eui64
+          Queue Length (Tx/Rx): 2/2
+              Auto negotiation: no
+                         Speed: n/a
+                       Address: 10.1.2.212 (DHCP4 via 10.1.2.69)
+                                fe80::5054:ff:fe90:6f18
+                       Gateway: 10.1.1.205
+                           DNS: 10.1.2.69
+                                10.1.2.70
+                                172.20.0.39
+                Search Domains: BUSCHE-CNC.COM
+             Activation Policy: up
+           Required For Online: no
+               DHCP4 Client ID: IAID:0x24721ac8/DUID
+             DHCP6 Client DUID: DUID-EN/Vendor:0000ab114ea25eb8fd38096b0000
+
 multipass exec -n microk8s-vm -- sudo networkctl -a status
 # skip multipass default network interface
 ...
@@ -219,6 +258,49 @@ Jun 25 22:43:02 microk8s-vm systemd-networkd[730]: enp6s0: Gained IPv6LL
 We now need to configure the manual network interface inside the instance. We can achieve that using Netplan. The following command plants the required Netplan configuration file in the instance:
 
 ```bash
+multipass exec -n repsys11-c2-n1 -- sudo bash -c 'cat /etc/netplan/50-cloud-init.yaml'
+# This file is generated from information provided by the datasource.  Changes
+# to it will not persist across an instance reboot.  To disable cloud-init's
+# network configuration capabilities, write a file
+# /etc/cloud/cloud.cfg.d/99-disable-network-config.cfg with the following:
+# network: {config: disabled}
+network:
+    ethernets:
+        default:
+            dhcp4: true
+            match:
+                macaddress: 52:54:00:a8:40:63
+        extra0:
+            dhcp4: true
+            dhcp4-overrides:
+                route-metric: 200
+            match:
+                macaddress: 52:54:00:90:6f:18
+            optional: true
+    version: 2
+
+multipass exec -n repsys11-c2-n1 -- sudo bash -c 'cat << EOF > /etc/netplan/50-cloud-init.yaml
+network:
+    ethernets:
+        default:
+            dhcp4: true
+            match:
+                macaddress: 52:54:00:a8:40:63
+        extra0:
+            addresses:
+            - 10.1.0.123/22
+            nameservers:
+                addresses:
+                - 10.1.2.69
+                - 10.1.2.70
+                - 172.20.0.39
+                search: [BUSCHE-CNC.COM]
+            match:
+                macaddress: 52:54:00:90:6f:18
+            optional: true
+    version: 2
+EOF'
+
 multipass exec -n microk8s-vm -- sudo bash -c 'cat /etc/netplan/50-cloud-init.yaml'
 # This file is generated from information provided by the datasource.  Changes
 # to it will not persist across an instance reboot.  To disable cloud-init's
@@ -263,6 +345,26 @@ network:
 EOF'
 
 # verify yaml
+multipass exec -n repsys11-c2-n1 -- sudo bash -c 'cat /etc/netplan/50-cloud-init.yaml'
+network:
+    ethernets:
+        default:
+            dhcp4: true
+            match:
+                macaddress: 52:54:00:a8:40:63
+        extra0:
+            addresses:
+            - 10.1.0.123/22
+            nameservers:
+                addresses:
+                - 10.1.2.69
+                - 10.1.2.70
+                - 172.20.0.39
+                search: [BUSCHE-CNC.COM]
+            match:
+                macaddress: 52:54:00:90:6f:18
+            optional: true
+    version: 2
 
 multipass exec -n microk8s-vm -- sudo bash -c 'cat /etc/netplan/50-cloud-init.yaml'
 network:
@@ -286,6 +388,40 @@ network:
     version: 2
 
 # if all looks good apply network changes
+multipass exec -n repsys11-c2-n1 -- sudo netplan apply
+WARNING:root:Cannot call Open vSwitch: ovsdb-server.service is not running.
+# check network interfaces with networkd cli
+multipass exec -n repsys11-c2-n1 -- sudo networkctl -a status
+# skip multipass default network interfaces
+...
+● 3: enp6s0                                                                    
+                     Link File: /usr/lib/systemd/network/99-default.link
+                  Network File: /run/systemd/network/10-netplan-extra0.network
+                          Type: ether
+                         State: routable (configured)
+                  Online state: unknown
+                          Path: pci-0000:06:00.0
+                        Driver: virtio_net
+                        Vendor: Red Hat, Inc.
+                         Model: Virtio network device
+                    HW Address: 52:54:00:90:6f:18
+                           MTU: 1500 (min: 68, max: 65535)
+                         QDisc: mq
+  IPv6 Address Generation Mode: eui64
+          Queue Length (Tx/Rx): 2/2
+              Auto negotiation: no
+                         Speed: n/a
+                       Address: 10.1.0.123
+                                fe80::5054:ff:fe90:6f18
+                           DNS: 10.1.2.69
+                                10.1.2.70
+                                172.20.0.39
+                Search Domains: BUSCHE-CNC.COM
+             Activation Policy: up
+           Required For Online: no
+             DHCP6 Client DUID: DUID-EN/Vendor:0000ab114ea25eb8fd38096b0000
+
+
 multipass exec -n microk8s-vm -- sudo netplan apply
 WARNING:root:Cannot call Open vSwitch: ovsdb-server.service is not running.
 # https://stackoverflow.com/questions/77352932/ovsdb-server-service-from-no-where
@@ -345,6 +481,19 @@ Jun 26 21:50:34 microk8s-vm systemd-networkd[625]: enp6s0: DHCPv6 lease lost
 You can confirm that the new IP is present in the instance with Multipass:
 
 ```bash
+multipass info repsys11-c2-n1
+Name:           repsys11-c2-n1
+State:          Running
+IPv4:           10.127.233.66
+                10.1.0.123
+Release:        Ubuntu 22.04.4 LTS
+Image hash:     d8f4fd471ec4 (Ubuntu 22.04 LTS)
+CPU(s):         1
+Load:           0.00 0.00 0.01
+Disk usage:     1.6GiB out of 77.5GiB
+Memory usage:   254.4MiB out of 15.6GiB
+Mounts:         --
+
 multipass info microk8s-vm
 Name:           microk8s-vm
 State:          Running
@@ -363,6 +512,8 @@ Mounts:         --
 You can use ping to confirm that it can be reached from another host on lan:
 
 ```bash
+ping -c 1 -n 10.1.0.123
+
 ping -c 1 -n 10.1.0.129
 PING 10.1.0.129 (10.1.0.129) 56(84) bytes of data.
 64 bytes from 10.1.0.129: icmp_seq=1 ttl=64 time=1.31 ms
@@ -414,6 +565,7 @@ from the host machine.
 To work within the VM environment more easily, you can run a shell:
 
 ```bash
+multipass shell repsys11-c2-n1
 multipass shell microk8s-vm
 ```
 
@@ -544,8 +696,11 @@ RBAC is enabledm
 
 ```bash
 sudo snap install kubectl  --classic
-cd ~
-cd .kube
+cd ~/.kube
+microk8s config > repsys11c2n1.yaml
+cat repsys11c2n1.yaml
+cp repsys11c2n1.yaml ~/.kube/config
+
 microk8s config > repsys11_sql_server.yaml
 cat repsys11_sql_server.yaml
 cp repsys11_sql_server.yaml ~/.kube/config
@@ -563,7 +718,9 @@ touch repsys11_sql_server.yaml
 # copy and paste config file and replace the server ip with the static one from the bridged network interface.
 nvim repsys11_sql_server.yaml
 
+cp repsys11_sql_server.yaml ~/.kube/
 # scc.sh repsys11_sql_server.yaml microk8s
+# scc.sh repsys11c2n1.yaml microk8s
 
 ```
 
