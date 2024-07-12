@@ -6,7 +6,7 @@ network:
                 macaddress: 52:54:00:b7:ef:90
         extra0:
             addresses:
-            - 10.1.1.87/22
+            - 10.1.0.93/22
             nameservers:
                 addresses:
                 - 10.1.2.69
