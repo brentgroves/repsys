@@ -31,8 +31,12 @@ A list of all research for repsys.
   - Test running trial_balance.rdl using Power BI report builder from alb-utl4/10.1.1.151,
 Run TB report, trial_balance.rdl, from any Windows machine with the Power BI report builder installed.
 
+- Deploy mssql data warehouse hosted on one of our r620 k8s cluster to Azure SQL server.\
+This involves manual SQL creation of schema and automated copying of table records.
+- Deploy on-premise mysql stateful-set data warehouse to InnoDB HA MySQL database hosted on one of our r620 k8s cluster.\
+This will involve adding a primary key to those tables without one. It also involves manual SQL creation of schema and automated copying of table records.
 - **[k8s concepts](../../../research/a_l/k8s/concepts/k8s_concepts_menu.md)**\
-K8s concepts and inner working.
+Research K8s concepts, architecture, and inner working to better understand kubernetes.
 
 - **[Create a cluster with kubeadm](../../../research/a_l/k8s/concepts/kubeadm/create_cluster_with_kubeadm.md)\
 Our productions clusters are created by microk8s. MicroK8s is easy to use and can handle advanced configurations. The advantage of using kubeadm to create your cluster is that you have complete control of all kubernetes features.  In short kubeadm is a great learning tool in order to understand exactly what is going on in a kubernetes cluster.

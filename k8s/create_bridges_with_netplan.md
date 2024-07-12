@@ -116,6 +116,18 @@ network:
             dhcp4: no
             addresses:
             - 10.13.31.1/24
+        br2:
+            dhcp4: no
+            addresses:
+            - 10.1.0.124/22
+            nameservers:
+                addresses:
+                - 10.1.2.69
+                - 10.1.2.70
+                - 172.20.0.39
+                search: [BUSCHE-CNC.COM]
+            interfaces: [eno3]
+
     version: 2
 ```
 

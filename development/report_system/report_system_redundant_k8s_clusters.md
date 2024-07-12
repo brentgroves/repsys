@@ -13,6 +13,7 @@ mindmap
           mssql-mgdw
       br-eno3
         k8s-cluster-2-node-1
-          mysql_mgdw
+        k8s-cluster-2-node-2
+        k8s-cluster-2-node-3
 
 ```

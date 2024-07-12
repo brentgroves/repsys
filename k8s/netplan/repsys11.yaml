@@ -7,7 +7,7 @@ network:
     ethernets:
         eno1:
             addresses:
-            - 10.1.0.125/22
+            - 10.1.1.84/22
             nameservers:
                 addresses:
                 - 10.1.2.69
@@ -35,7 +35,7 @@ network:
         br0:
             dhcp4: no
             addresses:
-            - 10.1.0.126/22
+            - 10.1.1.85/22
             nameservers:
                 addresses:
                 - 10.1.2.69
@@ -50,7 +50,7 @@ network:
         br2:
             dhcp4: no
             addresses:
-            - 10.1.0.124/22
+            - 10.1.1.86/22
             nameservers:
                 addresses:
                 - 10.1.2.69

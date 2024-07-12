@@ -18,7 +18,7 @@ This process assumes you are using Ubuntu 24.04 server or OS that is using netwo
 
 Multipass is the fastest way to create a complete Ubuntu virtual machine on Linux, Windows or macOS, and it’s a great base for using MicroK8s.
 
-## **[Create a Bridge](../create_bridges_with_netplan.md)**
+## **[Create a Bridge](./create_bridges_with_netplan.md)**
 
 ```yaml
 # This file is generated from information provided by the datasource.  Changes
@@ -70,6 +70,17 @@ network:
             dhcp4: no
             addresses:
             - 10.13.31.1/24
+        br2:
+            dhcp4: no
+            addresses:
+            - 10.1.0.124/22
+            nameservers:
+                addresses:
+                - 10.1.2.69
+                - 10.1.2.70
+                - 172.20.0.39
+                search: [BUSCHE-CNC.COM]
+            interfaces: [eno3]
     version: 2
 ```
 
@@ -87,6 +98,59 @@ bridge link show
 14: tap34dcb760: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 master br0 state forwarding priority 32 cost 2 
 15: tap7a27ad4e: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 master mpbr0 state forwarding priority 32 cost 2 
 16: tapf48799c9: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 master br1 state forwarding priority 32 cost 2
+```
+
+## Decide how much ram and vcpu to use
+
+```bash
+lscpu
+Architecture:             x86_64
+  CPU op-mode(s):         32-bit, 64-bit
+  Address sizes:          46 bits physical, 48 bits virtual
+  Byte Order:             Little Endian
+CPU(s):                   32
+  On-line CPU(s) list:    0-31
+Vendor ID:                GenuineIntel
+  Model name:             Intel(R) Xeon(R) CPU E5-2650 0 @ 2.00GHz
+    CPU family:           6
+    Model:                45
+    Thread(s) per core:   2
+    Core(s) per socket:   8
+    Socket(s):            2
+    Stepping:             7
+    CPU(s) scaling MHz:   45%
+    CPU max MHz:          2800.0000
+    CPU min MHz:          1200.0000
+    BogoMIPS:             4000.10
+    Flags:                fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon peb
+                          s bts rep_good nopl xtopology nonstop_tsc cpuid aperfmperf pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 cx16 xtpr pdcm pcid dca sse4_1 sse4_2 x2apic popcnt tsc_deadl
+                          ine_timer aes xsave avx lahf_lm pti ssbd ibrs ibpb stibp tpr_shadow flexpriority ept vpid xsaveopt dtherm ida arat pln pts vnmi md_clear flush_l1d
+Virtualization features:  
+  Virtualization:         VT-x
+Caches (sum of all):      
+  L1d:                    512 KiB (16 instances)
+  L1i:                    512 KiB (16 instances)
+  L2:                     4 MiB (16 instances)
+  L3:                     40 MiB (2 instances)
+NUMA:                     
+  NUMA node(s):           2
+  NUMA node0 CPU(s):      0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30
+  NUMA node1 CPU(s):      1,3,5,7,9,11,13,15,17,19,21,23,25,27,29,31
+Vulnerabilities:          
+  Gather data sampling:   Not affected
+  Itlb multihit:          KVM: Mitigation: Split huge pages
+  L1tf:                   Mitigation; PTE Inversion; VMX conditional cache flushes, SMT vulnerable
+  Mds:                    Mitigation; Clear CPU buffers; SMT vulnerable
+  Meltdown:               Mitigation; PTI
+  Mmio stale data:        Unknown: No mitigations
+  Reg file data sampling: Not affected
+  Retbleed:               Not affected
+  Spec rstack overflow:   Not affected
+  Spec store bypass:      Mitigation; Speculative Store Bypass disabled via prctl
+  Spectre v1:             Mitigation; usercopy/swapgs barriers and __user pointer sanitization
+  Spectre v2:             Mitigation; Retpolines; IBPB conditional; IBRS_FW; STIBP conditional; RSB filling; PBRSB-eIBRS Not affected; BHI Not affected
+  Srbds:                  Not affected
+  Tsx async abort:        Not affected
 ```
 
 ## Create an instance with a specific image
@@ -147,6 +211,10 @@ multipass launch --network br0 --name microk8s-vm --memory 8G --disk 80G 22.04
 
 multipass launch --network br2 --name repsys11-c2-n1 --memory 16G --disk 80G 22.04
 
+multipass launch --network br2 --name repsys11-c2-n2 --cpus 2 --memory 16G --disk 80G 22.04
+
+multipass launch --network br2 --name repsys11-c2-n3 --cpus 2 --memory 16G --disk 80G 22.04
+
 multipass list
 Name                    State             IPv4             Image
 microk8s-vm             Running           10.127.233.194   Ubuntu 24.04 LTS
@@ -184,7 +252,7 @@ ip link show master br0
 See how multipass configured the network. Until I can figure out how to pass the hardware address manaully during launch we will have to grab the one multipass or lxd creates.
 
 ```bash
-multipass exec -n repsys11-c2-n1 -- sudo networkctl -a status
+multipass exec -n repsys11-c2-n2 -- sudo networkctl -a status
 # skip multipass default network interface
 enp6s0                                                                    
                      Link File: /usr/lib/systemd/network/99-default.link
@@ -196,15 +264,15 @@ enp6s0
                         Driver: virtio_net
                         Vendor: Red Hat, Inc.
                          Model: Virtio network device
-                    HW Address: 52:54:00:90:6f:18
+                    HW Address: 52:54:00:24:71:0c
                            MTU: 1500 (min: 68, max: 65535)
                          QDisc: mq
   IPv6 Address Generation Mode: eui64
           Queue Length (Tx/Rx): 2/2
               Auto negotiation: no
                          Speed: n/a
-                       Address: 10.1.2.212 (DHCP4 via 10.1.2.69)
-                                fe80::5054:ff:fe90:6f18
+                       Address: 10.1.3.186 (DHCP4 via 10.1.2.70)
+                                fe80::5054:ff:fe24:710c
                        Gateway: 10.1.1.205
                            DNS: 10.1.2.69
                                 10.1.2.70
@@ -213,44 +281,8 @@ enp6s0
              Activation Policy: up
            Required For Online: no
                DHCP4 Client ID: IAID:0x24721ac8/DUID
-             DHCP6 Client DUID: DUID-EN/Vendor:0000ab114ea25eb8fd38096b0000
+             DHCP6 Client DUID: DUID-EN/Vendor:0000ab117b8f3cc19d7e6cb00000
 
-multipass exec -n microk8s-vm -- sudo networkctl -a status
-# skip multipass default network interface
-...
-enp6s0
-                   Link File: /usr/lib/systemd/network/99-default.link
-                Network File: /run/systemd/network/10-netplan-extra0.network
-                       State: routable (configured)
-                Online state: online                                         
-                        Type: ether
-                        Path: pci-0000:06:00.0
-                      Driver: virtio_net
-                      Vendor: Red Hat, Inc.
-                       Model: Virtio 1.0 network device
-            Hardware Address: 52:54:00:6e:60:8a
-                         MTU: 1500 (min: 68, max: 65535)
-                       QDisc: mq
-IPv6 Address Generation Mode: eui64
-    Number of Queues (Tx/Rx): 2/2
-            Auto negotiation: no
-                     Address: 10.1.2.143 (DHCP4 via 10.1.2.69)
-                              fe80::5054:ff:fe6e:608a
-                     Gateway: 10.1.1.205
-                         DNS: 10.1.2.69
-                              10.1.2.70
-                              172.20.0.39
-              Search Domains: BUSCHE-CNC.COM
-           Activation Policy: up
-         Required For Online: yes
-             DHCP4 Client ID: IAID:0x24721ac8/DUID
-           DHCP6 Client DUID: DUID-EN/Vendor:0000ab11345612d63ead6a74
-
-Jun 25 22:43:01 microk8s-vm systemd-networkd[730]: enp6s0: Configuring with /run/systemd/network/10-netplan-extra0.network.
-Jun 25 22:43:01 microk8s-vm systemd-networkd[730]: enp6s0: Link UP
-Jun 25 22:43:01 microk8s-vm systemd-networkd[730]: enp6s0: Gained carrier
-Jun 25 22:43:01 microk8s-vm systemd-networkd[730]: enp6s0: DHCPv4 address 10.1.2.143/22, gateway 10.1.1.205 acquired from 10.1.2.69
-Jun 25 22:43:02 microk8s-vm systemd-networkd[730]: enp6s0: Gained IPv6LL
 ```
 
 ## Step 3: Configure the extra interface
@@ -258,7 +290,7 @@ Jun 25 22:43:02 microk8s-vm systemd-networkd[730]: enp6s0: Gained IPv6LL
 We now need to configure the manual network interface inside the instance. We can achieve that using Netplan. The following command plants the required Netplan configuration file in the instance:
 
 ```bash
-multipass exec -n repsys11-c2-n1 -- sudo bash -c 'cat /etc/netplan/50-cloud-init.yaml'
+multipass exec -n repsys11-c2-n2 -- sudo bash -c 'cat /etc/netplan/50-cloud-init.yaml'
 # This file is generated from information provided by the datasource.  Changes
 # to it will not persist across an instance reboot.  To disable cloud-init's
 # network configuration capabilities, write a file
@@ -269,17 +301,17 @@ network:
         default:
             dhcp4: true
             match:
-                macaddress: 52:54:00:a8:40:63
+                macaddress: 52:54:00:32:ff:d1
         extra0:
             dhcp4: true
             dhcp4-overrides:
                 route-metric: 200
             match:
-                macaddress: 52:54:00:90:6f:18
+                macaddress: 52:54:00:24:71:0c
             optional: true
     version: 2
 
-multipass exec -n repsys11-c2-n1 -- sudo bash -c 'cat << EOF > /etc/netplan/50-cloud-init.yaml
+multipass exec -n repsys11-c2-n2 -- sudo bash -c 'cat << EOF > /etc/netplan/50-cloud-init.yaml
 network:
     ethernets:
         default:
