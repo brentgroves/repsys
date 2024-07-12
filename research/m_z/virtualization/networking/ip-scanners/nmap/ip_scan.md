@@ -13,6 +13,10 @@ sudo snap install nmap
 sudo apt-get install nmap -y
 ```
 
+## In-Use IP addresses
+
+nmap -sP 10.1.0.0/22
+
 ## timestamp requests
 
 A live host will send back a reply, signalling its presence on the network. Using the -PP option, Nmap will send ICMP timestamp requests (type 13), expecting ICMP timestamp replies (type 14) in return. If a type 14 ICMP packet is received, then Nmap assumes the host is alive.

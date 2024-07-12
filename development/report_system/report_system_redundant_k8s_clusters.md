@@ -12,13 +12,6 @@ mindmap
         k8s-cluster-1-node-1
           mssql-mgdw
       br-eno3
-        k8s-cluster-1-node-2
-          mysql_mgdw
-    repsys12
-      br-eno2
-        k8s-cluster-2-node-1
-          mssql-mgdw
-      br-eno3
         k8s-cluster-2-node-1
           mysql_mgdw
 

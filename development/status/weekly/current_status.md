@@ -33,6 +33,10 @@ Run TB report, trial_balance.rdl, from any Windows machine with the Power BI rep
 
 - **[k8s concepts](../../../research/a_l/k8s/concepts/k8s_concepts_menu.md)**\
 K8s concepts and inner working.
+
+- **[Create a cluster with kubeadm](../../../research/a_l/k8s/concepts/kubeadm/create_cluster_with_kubeadm.md)\
+Our productions clusters are created by microk8s. MicroK8s is easy to use and can handle advanced configurations. The advantage of using kubeadm to create your cluster is that you have complete control of all kubernetes features.  In short kubeadm is a great learning tool in order to understand exactly what is going on in a kubernetes cluster.
+
 - **[Intel Clear Linux OS](../../../research/a_l/k8s/concepts/intel_clear_containers.md)**\
 Intel Clear Containers offer a means of combining the best features of VMs with the power and flexibility that containers bring to application developers.
 
