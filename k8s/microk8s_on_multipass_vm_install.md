@@ -7,7 +7,7 @@
 ## references
 
 - **[How to Bridge Two Network Interfaces in Linux Using Netplan](https://www.tecmint.com/netplan-bridge-network-interfaces/)**
-- **[bridge commands](https://developers.redhat.com/articles/2022/04/06/introduction-linux-bridging-commands-and-features#spanning_tree_protocol)
+- **[bridge commands](https://developers.redhat.com/articles/2022/04/06/introduction-linux-bridging-commands-and-features#spanning_tree_protocol)**
 - **[Create an instance with multiple network interfaces](https://multipass.run/docs/create-an-instance#heading--create-an-instance-with-multiple-network-interfaces)**
 
 ## Note
@@ -73,7 +73,7 @@ network:
         br2:
             dhcp4: no
             addresses:
-            - 10.1.0.124/22
+            - 10.1.0.127/22
             nameservers:
                 addresses:
                 - 10.1.2.69
@@ -290,93 +290,6 @@ enp6s0
 We now need to configure the manual network interface inside the instance. We can achieve that using Netplan. The following command plants the required Netplan configuration file in the instance:
 
 ```bash
-multipass exec -n repsys11-c2-n2 -- sudo bash -c 'cat /etc/netplan/50-cloud-init.yaml'
-# This file is generated from information provided by the datasource.  Changes
-# to it will not persist across an instance reboot.  To disable cloud-init's
-# network configuration capabilities, write a file
-# /etc/cloud/cloud.cfg.d/99-disable-network-config.cfg with the following:
-# network: {config: disabled}
-network:
-    ethernets:
-        default:
-            dhcp4: true
-            match:
-                macaddress: 52:54:00:32:ff:d1
-        extra0:
-            dhcp4: true
-            dhcp4-overrides:
-                route-metric: 200
-            match:
-                macaddress: 52:54:00:24:71:0c
-            optional: true
-    version: 2
-
-multipass exec -n repsys11-c2-n2 -- sudo bash -c 'cat << EOF > /etc/netplan/50-cloud-init.yaml
-network:
-    ethernets:
-        default:
-            dhcp4: true
-            match:
-                macaddress: 52:54:00:a8:40:63
-        extra0:
-            addresses:
-            - 10.1.0.123/22
-            nameservers:
-                addresses:
-                - 10.1.2.69
-                - 10.1.2.70
-                - 172.20.0.39
-                search: [BUSCHE-CNC.COM]
-            match:
-                macaddress: 52:54:00:90:6f:18
-            optional: true
-    version: 2
-EOF'
-
-multipass exec -n microk8s-vm -- sudo bash -c 'cat /etc/netplan/50-cloud-init.yaml'
-# This file is generated from information provided by the datasource.  Changes
-# to it will not persist across an instance reboot.  To disable cloud-init's
-# network configuration capabilities, write a file
-# /etc/cloud/cloud.cfg.d/99-disable-network-config.cfg with the following:
-# network: {config: disabled}
-network:
-    ethernets:
-        default:
-            dhcp4: true
-            match:
-                macaddress: 52:54:00:b7:ef:90
-        extra0:
-            dhcp4: true
-            dhcp4-overrides:
-                route-metric: 200
-            match:
-                macaddress: 52:54:00:a6:3d:3e
-            optional: true
-    version: 2
-
-multipass exec -n microk8s-vm -- sudo bash -c 'cat << EOF > /etc/netplan/50-cloud-init.yaml
-network:
-    ethernets:
-        default:
-            dhcp4: true
-            match:
-                macaddress: 52:54:00:b7:ef:90
-        extra0:
-            addresses:
-            - 10.1.0.129/22
-            nameservers:
-                addresses:
-                - 10.1.2.69
-                - 10.1.2.70
-                - 172.20.0.39
-                search: [BUSCHE-CNC.COM]
-            match:
-                macaddress: 52:54:00:a6:3d:3e
-            optional: true
-    version: 2
-EOF'
-
-# verify yaml
 multipass exec -n repsys11-c2-n1 -- sudo bash -c 'cat /etc/netplan/50-cloud-init.yaml'
 network:
     ethernets:
@@ -386,7 +299,7 @@ network:
                 macaddress: 52:54:00:a8:40:63
         extra0:
             addresses:
-            - 10.1.0.123/22
+              - 10.1.0.94/22
             nameservers:
                 addresses:
                 - 10.1.2.69
@@ -398,16 +311,16 @@ network:
             optional: true
     version: 2
 
-multipass exec -n microk8s-vm -- sudo bash -c 'cat /etc/netplan/50-cloud-init.yaml'
+multipass exec -n repsys11-c2-n1 -- sudo bash -c 'cat << EOF > /etc/netplan/50-cloud-init.yaml
 network:
     ethernets:
         default:
             dhcp4: true
             match:
-                macaddress: 52:54:00:b7:ef:90
+                macaddress: 52:54:00:a8:40:63
         extra0:
             addresses:
-            - 10.1.0.129/22
+              - 10.1.0.129/22
             nameservers:
                 addresses:
                 - 10.1.2.69
@@ -415,7 +328,31 @@ network:
                 - 172.20.0.39
                 search: [BUSCHE-CNC.COM]
             match:
-                macaddress: 52:54:00:a6:3d:3e
+                macaddress: 52:54:00:90:6f:18
+            optional: true
+    version: 2
+EOF'
+
+# verify yaml
+
+multipass exec -n repsys11-c2-n1 -- sudo bash -c 'cat /etc/netplan/50-cloud-init.yaml'
+network:
+    ethernets:
+        default:
+            dhcp4: true
+            match:
+                macaddress: 52:54:00:a8:40:63
+        extra0:
+            addresses:
+              - 10.1.0.129/22
+            nameservers:
+                addresses:
+                - 10.1.2.69
+                - 10.1.2.70
+                - 172.20.0.39
+                search: [BUSCHE-CNC.COM]
+            match:
+                macaddress: 52:54:00:90:6f:18
             optional: true
     version: 2
 
@@ -443,7 +380,7 @@ multipass exec -n repsys11-c2-n1 -- sudo networkctl -a status
           Queue Length (Tx/Rx): 2/2
               Auto negotiation: no
                          Speed: n/a
-                       Address: 10.1.0.123
+                       Address: 10.1.0.129
                                 fe80::5054:ff:fe90:6f18
                            DNS: 10.1.2.69
                                 10.1.2.70
@@ -453,9 +390,17 @@ multipass exec -n repsys11-c2-n1 -- sudo networkctl -a status
            Required For Online: no
              DHCP6 Client DUID: DUID-EN/Vendor:0000ab114ea25eb8fd38096b0000
 
+Jul 12 23:07:26 repsys11-c2-n1 systemd-networkd[690]: enp6s0: Re-configuring with /run/systemd/network/10-netplan-extra0.network
+Jul 12 23:07:26 repsys11-c2-n1 systemd-networkd[690]: enp6s0: DHCPv6 lease lost
+Jul 12 23:37:28 repsys11-c2-n1 systemd-networkd[690]: enp6s0: Re-configuring with /run/systemd/network/10-netplan-extra0.network
+Jul 12 23:37:28 repsys11-c2-n1 systemd-networkd[690]: enp6s0: DHCPv6 lease lost
+Jul 12 23:37:28 repsys11-c2-n1 systemd-networkd[690]: enp6s0: Re-configuring with /run/systemd/network/10-netplan-extra0.network
+Jul 12 23:37:28 repsys11-c2-n1 systemd-networkd[690]: enp6s0: DHCPv6 lease lost
+Jul 15 21:50:22 repsys11-c2-n1 systemd-networkd[690]: enp6s0: Re-configuring with /run/systemd/network/10-netplan-extra0.network
+Jul 15 21:50:22 repsys11-c2-n1 systemd-networkd[690]: enp6s0: DHCPv6 lease lost
+Jul 15 21:50:22 repsys11-c2-n1 systemd-networkd[690]: enp6s0: Re-configuring with /run/systemd/network/10-netplan-extra0.network
+Jul 15 21:50:22 repsys11-c2-n1 systemd-networkd[690]: enp6s0: DHCPv6 lease lost
 
-multipass exec -n microk8s-vm -- sudo netplan apply
-WARNING:root:Cannot call Open vSwitch: ovsdb-server.service is not running.
 # https://stackoverflow.com/questions/77352932/ovsdb-server-service-from-no-where
 # If the package isn't installed, there's no reason to warn that a non-existent service can't be restarted.
 # You can also install the Open vSwitch package, even if you're not planning to use it:
@@ -465,46 +410,6 @@ WARNING:root:Cannot call Open vSwitch: ovsdb-server.service is not running.
 # The spurious warning message problem goes away. Not elegant, but it works.
 
 
-# check network interfaces with networkd cli
-multipass exec -n microk8s-vm -- sudo networkctl -a status
-# skip multipass default network interfaces
-...
- ● 3: enp6s0                                                                    
-                     Link File: /usr/lib/systemd/network/99-default.link
-                  Network File: /run/systemd/network/10-netplan-extra0.network
-                          Type: ether
-                         State: routable (configured)
-                  Online state: unknown
-                          Path: pci-0000:06:00.0
-                        Driver: virtio_net
-                        Vendor: Red Hat, Inc.
-                         Model: Virtio network device
-                    HW Address: 52:54:00:a6:3d:3e
-                           MTU: 1500 (min: 68, max: 65535)
-                         QDisc: mq
-  IPv6 Address Generation Mode: eui64
-          Queue Length (Tx/Rx): 2/2
-              Auto negotiation: no
-                         Speed: n/a
-                       Address: 10.1.0.129
-                                fe80::5054:ff:fea6:3d3e
-                           DNS: 10.1.2.69
-                                10.1.2.70
-                                172.20.0.39
-                Search Domains: BUSCHE-CNC.COM
-             Activation Policy: up
-           Required For Online: no
-             DHCP6 Client DUID: DUID-EN/Vendor:0000ab11cd86ad425e510a3f0000
-
-Jun 26 21:41:57 microk8s-vm systemd-networkd[625]: enp6s0: Link UP
-Jun 26 21:41:57 microk8s-vm systemd-networkd[625]: enp6s0: Gained carrier
-Jun 26 21:41:57 microk8s-vm systemd-networkd[625]: enp6s0: DHCPv4 address 10.1.3.159/22 via 10.1.1.205
-Jun 26 21:41:59 microk8s-vm systemd-networkd[625]: enp6s0: Gained IPv6LL
-Jun 26 21:50:34 microk8s-vm systemd-networkd[625]: enp6s0: Re-configuring with /run/systemd/network/10-netplan-extra0.network
-Jun 26 21:50:34 microk8s-vm systemd-networkd[625]: enp6s0: DHCP lease lost
-Jun 26 21:50:34 microk8s-vm systemd-networkd[625]: enp6s0: DHCPv6 lease lost
-Jun 26 21:50:34 microk8s-vm systemd-networkd[625]: enp6s0: Re-configuring with /run/systemd/network/10-netplan-extra0.network
-Jun 26 21:50:34 microk8s-vm systemd-networkd[625]: enp6s0: DHCPv6 lease lost
 
 ```
 
@@ -514,30 +419,6 @@ You can confirm that the new IP is present in the instance with Multipass:
 
 ```bash
 multipass info repsys11-c2-n1
-Name:           repsys11-c2-n1
-State:          Running
-IPv4:           10.127.233.66
-                10.1.0.123
-Release:        Ubuntu 22.04.4 LTS
-Image hash:     d8f4fd471ec4 (Ubuntu 22.04 LTS)
-CPU(s):         1
-Load:           0.00 0.00 0.01
-Disk usage:     1.6GiB out of 77.5GiB
-Memory usage:   254.4MiB out of 15.6GiB
-Mounts:         --
-
-multipass info microk8s-vm
-Name:           microk8s-vm
-State:          Running
-IPv4:           10.127.233.200
-                10.1.0.129
-Release:        Ubuntu 22.04.4 LTS
-Image hash:     2a9392698c8e (Ubuntu 22.04 LTS)
-CPU(s):         1
-Load:           0.00 0.00 0.00
-Disk usage:     1.6GiB out of 77.5GiB
-Memory usage:   247.8MiB out of 7.7GiB
-Mounts:         --
 
 ```
 

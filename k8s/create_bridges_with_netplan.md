@@ -39,6 +39,41 @@ sudo cp /etc/netplan/50-cloud-init.yaml .
 sudo vi /etc/netplan/50-cloud-init.yaml
 ```
 
+## Finding free IP Addresses
+
+Finding an IP conflict is as simple as a single command, “arp-scan -l”. You may also wish to specify the -I option, which will allow you to pick an interface. Below, I have identified an IP address that is being claimed by two machines:
+
+```bash
+sudo arp-scan -I enp0s25 -l
+[sudo] password for brent: 
+Interface: enp0s25, type: EN10MB, MAC: 18:03:73:1f:84:a4, IPv4: 10.1.0.113
+Starting arp-scan 1.9.7 with 1024 hosts (https://github.com/royhills/arp-scan)
+10.1.0.10 84:7b:eb:f4:d1:82 Dell Inc.
+10.1.0.11 14:18:77:49:21:20 Dell Inc.
+10.1.0.12 00:0c:29:bf:1a:a3 VMware, Inc.
+10.1.0.13 2c:ea:7f:bf:b1:ea (Unknown)
+10.1.0.22 00:50:56:a9:a2:8c VMware, Inc.
+10.1.0.30 d4:ad:71:bc:e7:c0 Cisco Systems, Inc
+10.1.0.33 64:00:f1:ce:09:c0 Cisco Systems, Inc
+10.1.0.32 cc:70:ed:1b:4f:c0 Cisco Systems, Inc
+10.1.0.34 50:57:a8:61:05:40 Cisco Systems, Inc
+10.1.0.31 70:35:09:91:8f:40 Cisco Systems, Inc
+10.1.0.50 00:80:f0:fd:cf:d8 Panasonic Communications Co., Ltd.
+10.1.0.51 00:80:f0:fd:cf:d9 Panasonic Communications Co., Ltd.
+10.1.0.90 b8:ca:3a:6a:37:18 Dell Inc.
+10.1.0.90 b6:8c:21:19:97:af (Unknown: locally administered) (DUP: 2)
+10.1.0.90 72:ef:98:43:45:aa (Unknown: locally administered) (DUP: 3)
+10.1.0.91 b8:ca:3a:6a:37:18 Dell Inc.
+10.1.0.91 b6:8c:21:19:97:af (Unknown: locally administered) (DUP: 2)
+10.1.0.91 72:ef:98:43:45:aa (Unknown: locally administered) (DUP: 3)
+10.1.0.92 b8:ca:3a:6a:37:18 Dell Inc.
+10.1.0.92 b6:8c:21:19:97:af (Unknown: locally administered) (DUP: 2)
+10.1.0.92 72:ef:98:43:45:aa (Unknown: locally administered) (DUP: 3)
+10.1.0.93 52:54:00:a6:3d:3e QEMU
+10.1.0.94 52:54:00:90:6f:18 QEMU
+
+```
+
 ## Modify the configuration to assign a static IP to the bridge ‘br0‘
 
 I did not include renderer: networkd when I updated 50-cloud-init.yaml.

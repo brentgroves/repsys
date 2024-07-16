@@ -3,10 +3,10 @@ network:
         default:
             dhcp4: true
             match:
-                macaddress: 52:54:00:b7:ef:90
+                macaddress: 52:54:00:a8:40:63
         extra0:
             addresses:
-            - 10.1.0.93/22
+            - 10.1.0.129/22
             nameservers:
                 addresses:
                 - 10.1.2.69
@@ -14,6 +14,6 @@ network:
                 - 172.20.0.39
                 search: [BUSCHE-CNC.COM]
             match:
-                macaddress: 52:54:00:a6:3d:3e
+                macaddress: 52:54:00:90:6f:18
             optional: true
     version: 2

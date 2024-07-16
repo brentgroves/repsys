@@ -21,10 +21,7 @@ This seems to be a cloud based PowerBI report server.
 
 - **[Report System Redundant K8s Clusters](../../report_system/report_system_redundant_k8s_clusters.md)**
 
-## Research
-
-- **[Research List](../../../research/research_list.md)**\
-A list of all research for repsys.
+## ToDo
 
 - Prepare for Albion/Avilla Linamar Networking/VM changes
   - Test Visual Studio SSIS scripts on alb-util/10.1.1.150.
@@ -35,6 +32,24 @@ Run TB report, trial_balance.rdl, from any Windows machine with the Power BI rep
 This involves manual SQL creation of schema and automated copying of table records.
 - Deploy on-premise mysql stateful-set data warehouse to InnoDB HA MySQL database hosted on one of our r620 k8s cluster.\
 This will involve adding a primary key to those tables without one. It also involves manual SQL creation of schema and automated copying of table records.
+
+## Research
+
+- **[Research List](../../../research/research_list.md)**\
+A list of all research for repsys.
+
+- **[What is IPAM](../../../research/a_l/ipam/what-is-ipam.md)**\
+IP address management (IPAM) is method for enterprises to plan, track, and manage IP address space on a network using software tools.
+
+Together, DNS, DHCP, and IPAM make up a triad known as DDI.
+
+Managing the three components the comprise the DDI meaning separately presents inherent risks. Bringing them together into one managed solution transforms network management. DDI provides core network services and enables communications across all points of the network.
+
+- **[IDENTIFYING AND RESOLVING IP ADDRESS CONFLICTS WITH LINUX](../../../research/a_l/ip-scanners/ip_conflicts.md/)**\
+One of the most frustrating problems a network administrator can come across is an IP address conflict, when two or more machines on a network try to use the same IP. The result is typically that some packets on the network go to one machine, and some packets go to the other – leading to intermittent packet loss and dropped connections.
+
+Luckily, however, resolving IP address conflicts is easy if you know the right tools. This how to will teach you to find and resolve IP address conflicts on your network.
+
 - **[k8s concepts](../../../research/a_l/k8s/concepts/k8s_concepts_menu.md)**\
 Research K8s concepts, architecture, and inner working to better understand kubernetes.
 

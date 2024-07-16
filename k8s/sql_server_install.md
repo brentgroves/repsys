@@ -350,12 +350,11 @@ kubectl exec --stdin --tty mgdw-0 -- /bin/bash
 groups: cannot find name for group ID 10001
 # Once inside the container, connect locally with sqlcmd, using its full path.
 sudo /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P "~/src/secrets/namespaces/default/credentials.yaml"
-1>select s.Name,sh.* from ETL.script_history sh 
+1>use mgdw
+2>select s.Name,sh.* from ETL.script_history sh 
 join ETL.script s 
 on sh.script_key=s.Script_Key 
-where sh.script_key in (1,3,4,5,6,7,8,9,10,11,116,117)
-and start_time between '2024-07-05 00:00:00' and '2024-07-06 00:00:00' 
---and start_time between '2024-01-09 00:00:00' and '2024-01-10 00:00:00' 
+where sh.script_key in (1,3,4,5,6,7,8,9,10,11,116,117) and start_time between '2024-07-05 00:00:00' and '2024-07-06 00:00:00' 
 order by script_history_key desc
 
 ```
