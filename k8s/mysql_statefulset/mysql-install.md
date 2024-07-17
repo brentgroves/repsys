@@ -25,18 +25,8 @@ multipass shell repsys-c2-n1
 ## make the backup directory if needed
 
 ```bash
-ssh brent@reports-alb
-mkdir ~/backups/reports31/mysql
+mkdir -p ~/backups/repsys11/mysql
 sudo chmod 777 ~/backups
-```
-
-## ftp a current dw backup if desired
-
-```bash
-lftp brent@alb-ubu
-mirror -c /home/brent/backups /home/brent/backups
-mirror -c server/source_dir client/target_dir
-exit
 ```
 
 ## Make a fresh backup of mysql dw if needed
@@ -72,7 +62,7 @@ kubectl apply -f stateful-set.yaml
 statefulset.apps/mysql-repsys11-c2-n1 created
 
 kubectl describe svc mysql-svc
-kubectl describe statefulset mysql-ss
+kubectl describe statefulset mysql
 
 # validation
 
@@ -84,15 +74,3 @@ mysql -u root -ppassword
 ```bash
 mysql -u root -p -h repsys11_c2_n1 --port=30031 < ~/backups/reports31/mysql/2024-07-16-17:57:41.sql.bak
 ```
-
-mysql -u root -p -h reports11 --port=30011 < ~/backups/db/2022-10-18-06:10:01.sql.bak
-
-mysql -u root -p -h reports31 --port=30031 < ~/backups/db/2022-10-18-06:10:01.sql.bak
-
-mysql -u root -p -h reports12 --port=31009 < ~/backups/db/2022-10-18-06:10:01.sql.bak
-
-mysql -u root -p -h alb-ubu --port=30101 < ~/backups/db/2022-10-18-06:10:01.sql.bak
-
-mysql -u root -p -h avi-ubu --port=30102 < ~/backups/db/2022-10-18-06:10:01.sql.bak
-
-mysql -u root -p -h frt-ubu --port=30103 < ~/backups/db/2022-10-18-06:10:01.sql.bak

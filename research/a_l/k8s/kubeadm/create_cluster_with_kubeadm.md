@@ -32,7 +32,7 @@ The kubeadm tool's overall feature state is General Availability (GA). Some sub-
 **Note:**\
 Any commands under kubeadm alpha are, by definition, supported on an alpha level.
 
-**Objectives**\
+## **Objectives**
 
 - Install a single control-plane Kubernetes cluster
 - Install a Pod network on the cluster so that your Pods can talk to each other
@@ -41,7 +41,7 @@ Any commands under kubeadm alpha are, by definition, supported on an alpha level
 
 ### START HERE
 
-- Use multipass to setup some vms.
+- Use multipass to setup a single VM.
 
 **Preparing the hosts**\
 **Component installation**\

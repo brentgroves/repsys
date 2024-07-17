@@ -14,7 +14,7 @@
 
 This process assumes you are using Ubuntu 24.04 server or OS that is using networkd or an OS which is setup with NetworkMangager but is completely integrated with Netplan 1.0 such as I think Ubuntu 24.04 desktop. It also assumes microk8s is installed on a Ubuntu 22.04 vm.
 
-## **[Install multipass](../multipass_install.md)**
+## **[Install multipass](../research/m_z/virtualization/multipass/multipass_install.md)**
 
 Multipass is the fastest way to create a complete Ubuntu virtual machine on Linux, Windows or macOS, and it’s a great base for using MicroK8s.
 
@@ -205,6 +205,8 @@ requirements when we launch the VM:
 ```bash
 # can't get manual mode in which you pass the hardware address to work
 # multipass launch --name test3 --network name=mybr,mode=manual,mac="7f:71:f0:b2:55:dd"
+
+multipass launch --network br0 --name repsys21-c1-n1 --cpus 2 --memory 16G --disk 100G 22.04
 
 # Add memory if going to run only sql server
 multipass launch --network br0 --name microk8s-vm --memory 8G --disk 80G 22.04

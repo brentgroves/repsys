@@ -99,7 +99,7 @@ network:
       interfaces: [enp1s0, enp2s0f1]
 ```
 
-The actual 50-cloud-init.yaml looked like this.
+The actual netplan\repsys11\50-cloud-init.yaml looked like this.
 
 ```yaml
 # This file is generated from information provided by the datasource.  Changes

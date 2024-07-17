@@ -28,7 +28,7 @@ Developers can use Multipass to prototype cloud deployments and to create fresh,
 To install Multipass, simply execute:
 
 ```bash
-snap install multipass
+sudo snap install multipass
 multipass 1.13.0 from Canonical✓ installed
 ```
 
@@ -114,6 +114,8 @@ enp66s0f2   ethernet   Ethernet device
 enp66s0f3   ethernet   Ethernet device
 mpbr0       bridge     Network bridge for Multipass
 ```
+
+## I don't think I need to do the rest of this
 
 ## Install **[libvirt](https://ubuntu.com/server/docs/libvirt)**
 

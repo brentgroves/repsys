@@ -19,20 +19,9 @@ network:
             -   to: default
                 via: 10.1.1.205
         eno2:
-            addresses:
-            - 10.1.0.131/22
-            nameservers:
-                addresses:
-                - 10.1.2.69
-                - 10.1.2.70
-                - 172.20.88.20
-                search:
-                - BUSCHE-CNC.COM
-            routes:
-            -   to: default
-                via: 10.1.1.205
+            dhcp4: no
         eno3:
-            dhcp4: true
+            dhcp4: no
         eno4:
             dhcp4: true
         enp66s0f0:
@@ -43,4 +32,27 @@ network:
             dhcp4: true
         enp66s0f3:
             dhcp4: true
+    bridges:
+        br0:
+            dhcp4: no
+            addresses:
+            - 10.1.0.131/22
+            nameservers:
+                addresses:
+                - 10.1.2.69
+                - 10.1.2.70
+                - 172.20.0.39
+                search: [BUSCHE-CNC.COM]
+            interfaces: [eno2]
+        br1:
+            dhcp4: no
+            addresses:
+            - 10.1.0.132/22
+            nameservers:
+                addresses:
+                - 10.1.2.69
+                - 10.1.2.70
+                - 172.20.0.39
+                search: [BUSCHE-CNC.COM]
+            interfaces: [eno3]
     version: 2
