@@ -254,9 +254,8 @@ ip link show master br0
 See how multipass configured the network. Until I can figure out how to pass the hardware address manaully during launch we will have to grab the one multipass or lxd creates.
 
 ```bash
-multipass exec -n repsys11-c2-n2 -- sudo networkctl -a status
-# skip multipass default network interface
-enp6s0                                                                    
+multipass exec -n repsys21-c1-n1 -- sudo networkctl -a status
+● 3: enp6s0                                                                    
                      Link File: /usr/lib/systemd/network/99-default.link
                   Network File: /run/systemd/network/10-netplan-extra0.network
                           Type: ether
@@ -266,15 +265,15 @@ enp6s0
                         Driver: virtio_net
                         Vendor: Red Hat, Inc.
                          Model: Virtio network device
-                    HW Address: 52:54:00:24:71:0c
+                    HW Address: 52:54:00:96:35:56
                            MTU: 1500 (min: 68, max: 65535)
                          QDisc: mq
   IPv6 Address Generation Mode: eui64
           Queue Length (Tx/Rx): 2/2
               Auto negotiation: no
                          Speed: n/a
-                       Address: 10.1.3.186 (DHCP4 via 10.1.2.70)
-                                fe80::5054:ff:fe24:710c
+                       Address: 10.1.2.234 (DHCP4 via 10.1.2.69)
+                                fe80::5054:ff:fe96:3556
                        Gateway: 10.1.1.205
                            DNS: 10.1.2.69
                                 10.1.2.70
@@ -283,8 +282,12 @@ enp6s0
              Activation Policy: up
            Required For Online: no
                DHCP4 Client ID: IAID:0x24721ac8/DUID
-             DHCP6 Client DUID: DUID-EN/Vendor:0000ab117b8f3cc19d7e6cb00000
+             DHCP6 Client DUID: DUID-EN/Vendor:0000ab11a866203a4ad4a3490000
 
+Jul 17 20:28:41 repsys21-c1-n1 systemd-networkd[647]: enp6s0: Link UP
+Jul 17 20:28:41 repsys21-c1-n1 systemd-networkd[647]: enp6s0: Gained carrier
+Jul 17 20:28:41 repsys21-c1-n1 systemd-networkd[647]: enp6s0: DHCPv4 address 10.1.2.234/22 via 10.1.1.205
+Jul 17 20:28:42 repsys21-c1-n1 systemd-networkd[647]: enp6s0: Gained IPv6LL
 ```
 
 ## Step 3: Configure the extra interface
@@ -292,37 +295,37 @@ enp6s0
 We now need to configure the manual network interface inside the instance. We can achieve that using Netplan. The following command plants the required Netplan configuration file in the instance:
 
 ```bash
-multipass exec -n repsys11-c2-n1 -- sudo bash -c 'cat /etc/netplan/50-cloud-init.yaml'
+multipass exec -n repsys21-c1-n1 -- sudo bash -c 'cat /etc/netplan/50-cloud-init.yaml'
+# This file is generated from information provided by the datasource.  Changes
+# to it will not persist across an instance reboot.  To disable cloud-init's
+# network configuration capabilities, write a file
+# /etc/cloud/cloud.cfg.d/99-disable-network-config.cfg with the following:
+# network: {config: disabled}
 network:
     ethernets:
         default:
             dhcp4: true
             match:
-                macaddress: 52:54:00:a8:40:63
+                macaddress: 52:54:00:b2:f2:b4
         extra0:
-            addresses:
-              - 10.1.0.94/22
-            nameservers:
-                addresses:
-                - 10.1.2.69
-                - 10.1.2.70
-                - 172.20.0.39
-                search: [BUSCHE-CNC.COM]
+            dhcp4: true
+            dhcp4-overrides:
+                route-metric: 200
             match:
-                macaddress: 52:54:00:90:6f:18
+                macaddress: 52:54:00:96:35:56
             optional: true
     version: 2
 
-multipass exec -n repsys11-c2-n1 -- sudo bash -c 'cat << EOF > /etc/netplan/50-cloud-init.yaml
+multipass exec -n repsys21-c1-n1 -- sudo bash -c 'cat << EOF > /etc/netplan/50-cloud-init.yaml
 network:
     ethernets:
         default:
             dhcp4: true
             match:
-                macaddress: 52:54:00:a8:40:63
+                macaddress: 52:54:00:b2:f2:b4
         extra0:
             addresses:
-              - 10.1.0.129/22
+              - 10.1.0.133/22
             nameservers:
                 addresses:
                 - 10.1.2.69
@@ -330,23 +333,23 @@ network:
                 - 172.20.0.39
                 search: [BUSCHE-CNC.COM]
             match:
-                macaddress: 52:54:00:90:6f:18
+                macaddress: 52:54:00:96:35:56
             optional: true
     version: 2
 EOF'
 
 # verify yaml
 
-multipass exec -n repsys11-c2-n1 -- sudo bash -c 'cat /etc/netplan/50-cloud-init.yaml'
+multipass exec -n repsys21-c1-n1 -- sudo bash -c 'cat /etc/netplan/50-cloud-init.yaml'
 network:
     ethernets:
         default:
             dhcp4: true
             match:
-                macaddress: 52:54:00:a8:40:63
+                macaddress: 52:54:00:b2:f2:b4
         extra0:
             addresses:
-              - 10.1.0.129/22
+              - 10.1.0.133/22
             nameservers:
                 addresses:
                 - 10.1.2.69
@@ -354,15 +357,15 @@ network:
                 - 172.20.0.39
                 search: [BUSCHE-CNC.COM]
             match:
-                macaddress: 52:54:00:90:6f:18
+                macaddress: 52:54:00:96:35:56
             optional: true
     version: 2
 
 # if all looks good apply network changes
-multipass exec -n repsys11-c2-n1 -- sudo netplan apply
+multipass exec -n repsys21-c1-n1 -- sudo netplan apply
 WARNING:root:Cannot call Open vSwitch: ovsdb-server.service is not running.
 # check network interfaces with networkd cli
-multipass exec -n repsys11-c2-n1 -- sudo networkctl -a status
+multipass exec -n repsys21-c1-n1 -- sudo networkctl -a status
 # skip multipass default network interfaces
 ...
 ● 3: enp6s0                                                                    
@@ -375,33 +378,32 @@ multipass exec -n repsys11-c2-n1 -- sudo networkctl -a status
                         Driver: virtio_net
                         Vendor: Red Hat, Inc.
                          Model: Virtio network device
-                    HW Address: 52:54:00:90:6f:18
+                    HW Address: 52:54:00:96:35:56
                            MTU: 1500 (min: 68, max: 65535)
                          QDisc: mq
   IPv6 Address Generation Mode: eui64
           Queue Length (Tx/Rx): 2/2
               Auto negotiation: no
                          Speed: n/a
-                       Address: 10.1.0.129
-                                fe80::5054:ff:fe90:6f18
+                       Address: 10.1.0.133
+                                fe80::5054:ff:fe96:3556
                            DNS: 10.1.2.69
                                 10.1.2.70
                                 172.20.0.39
                 Search Domains: BUSCHE-CNC.COM
              Activation Policy: up
            Required For Online: no
-             DHCP6 Client DUID: DUID-EN/Vendor:0000ab114ea25eb8fd38096b0000
+             DHCP6 Client DUID: DUID-EN/Vendor:0000ab11a866203a4ad4a3490000
 
-Jul 12 23:07:26 repsys11-c2-n1 systemd-networkd[690]: enp6s0: Re-configuring with /run/systemd/network/10-netplan-extra0.network
-Jul 12 23:07:26 repsys11-c2-n1 systemd-networkd[690]: enp6s0: DHCPv6 lease lost
-Jul 12 23:37:28 repsys11-c2-n1 systemd-networkd[690]: enp6s0: Re-configuring with /run/systemd/network/10-netplan-extra0.network
-Jul 12 23:37:28 repsys11-c2-n1 systemd-networkd[690]: enp6s0: DHCPv6 lease lost
-Jul 12 23:37:28 repsys11-c2-n1 systemd-networkd[690]: enp6s0: Re-configuring with /run/systemd/network/10-netplan-extra0.network
-Jul 12 23:37:28 repsys11-c2-n1 systemd-networkd[690]: enp6s0: DHCPv6 lease lost
-Jul 15 21:50:22 repsys11-c2-n1 systemd-networkd[690]: enp6s0: Re-configuring with /run/systemd/network/10-netplan-extra0.network
-Jul 15 21:50:22 repsys11-c2-n1 systemd-networkd[690]: enp6s0: DHCPv6 lease lost
-Jul 15 21:50:22 repsys11-c2-n1 systemd-networkd[690]: enp6s0: Re-configuring with /run/systemd/network/10-netplan-extra0.network
-Jul 15 21:50:22 repsys11-c2-n1 systemd-networkd[690]: enp6s0: DHCPv6 lease lost
+Jul 17 20:28:41 repsys21-c1-n1 systemd-networkd[647]: enp6s0: Link UP
+Jul 17 20:28:41 repsys21-c1-n1 systemd-networkd[647]: enp6s0: Gained carrier
+Jul 17 20:28:41 repsys21-c1-n1 systemd-networkd[647]: enp6s0: DHCPv4 address 10.1.2.234/22 via 10.1.1.205
+Jul 17 20:28:42 repsys21-c1-n1 systemd-networkd[647]: enp6s0: Gained IPv6LL
+Jul 17 20:34:49 repsys21-c1-n1 systemd-networkd[647]: enp6s0: Re-configuring with /run/systemd/network/10-netplan-extra0.network
+Jul 17 20:34:49 repsys21-c1-n1 systemd-networkd[647]: enp6s0: DHCP lease lost
+Jul 17 20:34:49 repsys21-c1-n1 systemd-networkd[647]: enp6s0: DHCPv6 lease lost
+Jul 17 20:34:49 repsys21-c1-n1 systemd-networkd[647]: enp6s0: Re-configuring with /run/systemd/network/10-netplan-extra0.network
+Jul 17 20:34:49 repsys21-c1-n1 systemd-networkd[647]: enp6s0: DHCPv6 lease lost
 
 # https://stackoverflow.com/questions/77352932/ovsdb-server-service-from-no-where
 # If the package isn't installed, there's no reason to warn that a non-existent service can't be restarted.
@@ -420,7 +422,7 @@ Jul 15 21:50:22 repsys11-c2-n1 systemd-networkd[690]: enp6s0: DHCPv6 lease lost
 You can confirm that the new IP is present in the instance with Multipass:
 
 ```bash
-multipass info repsys11-c2-n1
+multipass info repsys21-c1-n1
 
 ```
 
@@ -441,7 +443,7 @@ rtt min/avg/max/mdev = 1.309/1.309/1.309/0.000 ms
 Confirm VM can ping lan and wan
 
 ```bash
-multipass exec -n microk8s-vm -- ping -c 1 -n 10.1.0.113
+multipass exec -n repsys21-c1-n1 -- ping -c 1 -n 10.1.0.113
 PING 10.1.0.113 (10.1.0.113) 56(84) bytes of data.
 64 bytes from 10.1.0.113: icmp_seq=1 ttl=64 time=0.560 ms
 
@@ -449,7 +451,7 @@ PING 10.1.0.113 (10.1.0.113) 56(84) bytes of data.
 1 packets transmitted, 1 received, 0% packet loss, time 0ms
 rtt min/avg/max/mdev = 0.560/0.560/0.560/0.000 ms
 
-multipass exec -n microk8s-vm -- ping -c 1 -n google.com
+multipass exec -n repsys21-c1-n1 -- ping -c 1 -n google.com
 PING google.com (142.250.191.238) 56(84) bytes of data.
 64 bytes from 142.250.191.238: icmp_seq=1 ttl=57 time=9.04 ms
 
