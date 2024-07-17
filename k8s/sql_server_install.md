@@ -359,4 +359,10 @@ order by script_history_key desc
 
 ```
 
+## Run sql client from any host
+
+```bash
+sqlcmd -C -S microk8s-vm,31433 -U sa -P  -d mgdw  
+```
+
 <!-- https://learn.microsoft.com/en-us/sql/linux/quickstart-install-connect-docker?view=sql-server-ver16&preserve-view=true&tabs=cli&pivots=cs1-bash -->
