@@ -39,9 +39,10 @@ Any commands under kubeadm alpha are, by definition, supported on an alpha level
 
 ## Instructions
 
-### START HERE
-
-- Use multipass to setup a single VM.
+```bash
+ssh brent@repsys12
+multipass shell repsys12-c1-n1
+```
 
 **Preparing the hosts**\
 **Component installation**\

@@ -11,12 +11,6 @@
 - 4 for Albion dev system and k8s cluster
 - 4 for Avilla dev system and k8s cluster
 
-## Notes
-
-- **[Cyber Security Metrics](app.powerbi.com/groups/me/apps)**\
-This seems to be a cloud based PowerBI report server.
-- Plex IP restrictions. If this is like Azure SQL Server IP restrictions it may affect ODBC and SOAP Web Service connections.
-
 ## Diagrams
 
 - **[Report System Redundant K8s Clusters](../../report_system/report_system_redundant_k8s_clusters.md)**
@@ -37,6 +31,11 @@ This will involve adding a primary key to those tables without one. It also invo
 
 - **[Research List](../../../research/research_list.md)**\
 A list of all research for repsys.
+
+- **[Automation X](../../../research/a_l/automation_x/automation_x.md)**\
+The automationX software provides interfaces for operator/HMI (aXViewer) and interfaces engineering & maintenance (aXEditor). There is also a fully integrated "real-time" control engine. This engine along with a global database, replaces the function of DCS/PLC controllers in the IT or aXserver.
+
+Each aXserver can handle 1000's of I/O. Some of the aXServers in the world are serving 6000-7000 real inputs and outputs (both analog loops and digital) with scan times as low as 20 mS on the server, lower on the integrated distributed controllers (aXController). To make best use of resources we typically scan at 200 ms.
 
 - **[What is IPAM](../../../research/a_l/ipam/what-is-ipam.md)**\
 IP address management (IPAM) is method for enterprises to plan, track, and manage IP address space on a network using software tools.
