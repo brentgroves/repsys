@@ -1,1 +1,0 @@
-https://blog.dockbit.com/templating-your-dockerfile-like-a-boss-2a84a67d28e9
