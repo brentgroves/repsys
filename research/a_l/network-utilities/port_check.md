@@ -1,5 +1,9 @@
 # Check required ports
 
+**[Current Status](../../../development/status/weekly/current_status.md)**\
+**[Research List](../../../research/research_list.md)**\
+**[Back Main](../../../README.md)**
+
 You can use tools like netcat to check if a port is open. For example:
 
 ```bash
