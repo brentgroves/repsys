@@ -3,6 +3,11 @@
 **[All Status](../weekly/status_list.md)**\
 **[Back to Main](../../../README.md)**
 
+## try next to enable connections to sql server
+
+1. Look at repsys\volumes/python\soap\openssl.cnf.bak for add system default section to config file but add minprotocol section
+2. get certificate from python. <https://gist.github.com/lnattrass/a4a91dbf439fc1719d69f7865c1b1791>
+
 ## Requests
 
 **[Reporting System IP Request](../../report_system/r620s.md)**
