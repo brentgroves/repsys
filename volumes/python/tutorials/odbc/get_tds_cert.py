@@ -68,7 +68,7 @@ if len(sys.argv) != 3:
 hostname = sys.argv[1]
 port = int(sys.argv[2])
 
-
+# https://stackoverflow.com/questions/72479812/how-to-change-tweak-python-3-10-default-ssl-settings-for-requests-sslv3-alert
 # Setup SSL
 if hasattr(ssl, 'PROTOCOL_TLS'):
     sslProto = ssl.PROTOCOL_TLS
@@ -78,6 +78,15 @@ else:
 sslctx = ssl.SSLContext(sslProto)
 # sslctx.security_level = 2
 sslctx.check_hostname = False
+
+# context = ssl.SSLContext()
+# ciphers = ":".join([
+#     "@SECLEVEL=1", #python 3.10 default is SECLEVEL=2 which rejects less secure ciphers
+#     "ALL",
+# ])
+# context.set_ciphers(ciphers)
+
+
 tls_in_buf = ssl.MemoryBIO()
 tls_out_buf = ssl.MemoryBIO()
 
