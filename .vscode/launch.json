@@ -13,7 +13,13 @@
             "request": "launch",
             "program": "${file}",
             "console": "integratedTerminal",
-            "justMyCode": true
+            "justMyCode": true,
+            "args": [
+                "busche-sql",
+                "1433"
+                // "microk8s-vm",
+                // "31433"
+            ]
         },
         {
             "name": "Go: Launch open file",
