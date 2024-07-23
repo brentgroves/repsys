@@ -12,8 +12,6 @@
 
 **[Reporting System IP Request](../../report_system/r620s.md)**
 
-- alb-utl has needed ETL ssis scripts running on Visual Studio
-- alb-utl4 has needed Power BI reporting software.
 - 12 for r620s
 - 4 for Albion dev system and k8s cluster
 - 4 for Avilla dev system and k8s cluster
@@ -40,26 +38,6 @@ This will involve adding a primary key to those tables without one. It also invo
 
 - **[Research List](../../../research/research_list.md)**\
 A list of all research for repsys.
-
-- **[TDS 8.0](../../../research/m_z/sql_server/tds8.md)**\
-**odbc/ado.net/oledb -> tds8**
-
-SQL Server 2022 (16.x), Azure SQL Database, and Azure SQL Managed Instance support Tabular Data Stream (TDS) 8.0.
-
-The Tabular Data Stream (TDS) protocol is an application layer protocol used by clients to connect to SQL Server. SQL Server uses Transport Layer Security (TLS) to encrypt data that is transmitted across a network between an instance of SQL Server and a client application.
-
-TDS is a secure protocol, but in previous versions of SQL Server, encryption could be turned off or not enabled. To meet the standards of mandatory encryption while using SQL Server, an iteration of the TDS protocol was introduced: TDS 8.0.
-
-The TLS handshake now precedes any TDS messages, wrapping the TDS session in TLS to enforce encryption, making TDS 8.0 aligned with HTTPS and other web protocols. This significantly contributes to TDS traffic manageability, as standard network appliances are now able to filter and securely passthrough SQL queries.
-
-Another benefit to TDS 8.0 compared to previous TDS versions is compatibility with TLS 1.3, and TLS standards to come. TDS 8.0 is also fully compatible with TLS 1.2 and previous TLS versions.
-
-- **[sqlcmd](../../../research/m_z/sql_server/golang/tds8.md)**\
-Installing sqlcmd (Go) via a package manager will replace sqlcmd (ODBC) with sqlcmd (Go) in your environment path. Any current command line sessions will need to be closed and reopened for this take to effect. sqlcmd (ODBC) won't be removed and can still be used by specifying the full path to the executable. You can also update your PATH variable to indicate which will take precedence.
-
-- **[Pytds - Microsoft SQL Server database adapter for Python](../../../research/m_z/sql_server/python/python-tds.md)**\
-
-Pytds is the top to bottom pure Python TDS implementation, that means cross-platform, and no dependency on ADO or FreeTDS. It supports large parameters (>4000 characters), MARS, timezones, new date types (datetime2, date, time, datetimeoffset). Even though it is implemented in Python performance is comparable to ADO and FreeTDS bindings.
 
 - **[Automation X](../../../research/a_l/automation_x/automation_x.md)**\
 The automationX software provides interfaces for operator/HMI (aXViewer) and interfaces engineering & maintenance (aXEditor). There is also a fully integrated "real-time" control engine. This engine along with a global database, replaces the function of DCS/PLC controllers in the IT or aXserver.
