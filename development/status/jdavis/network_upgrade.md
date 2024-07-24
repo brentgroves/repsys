@@ -2,11 +2,13 @@
 
 Hi Jared,
 
-I know you will be super busy next week,so I would like to give you a list of a few items now I will need to run the Southfield Monthly Balance report which will be requested on Aug 5th or 6th. Thank you Jared and good luck with the network upgrade!
+I know you will be super busy next week,so I would like to give you a list of items now I will need to run the Southfield Monthly Balance report which will be requested on Aug 5th or 6th. Thank you Jared and good luck with the network upgrade!
 
 - Thank you
 Brent
 260-564-4868
+
+The following is in markdown format it can be viewed better from <https://markdownlivepreview.com/>.
 
 ## Network Requests
 
@@ -27,7 +29,7 @@ Brent
 
 May need rights to add our public IP to the database firewall rules.
 
-## 3 R620s
+## 3 Dell PowerEdge R620s
 
 Will probably need to be physically on the servers to change the IPs.
 

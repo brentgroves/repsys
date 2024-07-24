@@ -8,15 +8,28 @@
 1. Look at repsys\volumes/python\soap\openssl.cnf.bak for add system default section to config file but add minprotocol section
 2. get certificate from python. <https://gist.github.com/lnattrass/a4a91dbf439fc1719d69f7865c1b1791>
 
-## Requests
+## **[Network Upgrade Request for the Reporting System](../jdavis/network_upgrade.md)**
 
-**[Reporting System IP Request](../../report_system/r620s.md)**
+- 50 static IP addresses.
+- 8 network cables ran to each R620 currently I only have 3.
+- New gateway address
+- New name server addresses
+- Need to be physically on the servers to change the IPs.
+- I completely wipe these R620s occassionally so I would like a key to the server room.
 
-- alb-utl has needed ETL ssis scripts running on Visual Studio
-- alb-utl4 has needed Power BI reporting software.
-- 12 for r620s
-- 4 for Albion dev system and k8s cluster
-- 4 for Avilla dev system and k8s cluster
+## Important Windows VMs
+
+- alb-utl.busche-cnc.com (10.1.1.150) has ETL ssis scripts which we run from Visual Studio
+- alb-utl4 (10.1.1.151) Power BI Report Builder
+- busche-sql.BUSCHE-CNC.com (10.1.2.74) Busche Tool List for the Busche Reporter.
+
+## Azure SQL MI
+
+May need rights to add our public IP to the database firewall rules.
+
+## 3 Dell PowerEdge R620s
+
+Will probably need to be physically on the servers to change the IPs.
 
 ## Diagrams
 
@@ -53,6 +66,11 @@ TDS is a secure protocol, but in previous versions of SQL Server, encryption cou
 The TLS handshake now precedes any TDS messages, wrapping the TDS session in TLS to enforce encryption, making TDS 8.0 aligned with HTTPS and other web protocols. This significantly contributes to TDS traffic manageability, as standard network appliances are now able to filter and securely passthrough SQL queries.
 
 Another benefit to TDS 8.0 compared to previous TDS versions is compatibility with TLS 1.3, and TLS standards to come. TDS 8.0 is also fully compatible with TLS 1.2 and previous TLS versions.
+
+- **[TDS Protocol](../../../research/m_z/tds/tds_protocol.md)**\
+is a protocol, or a set of rules describing how to transmit data between two computers. Like any protocol, it defines the types of messages that can be sent, and the order in which they may be sent. Protocols describe the "bits on the wire", specifying how data flows. It confuses many but entrances a few.
+
+A protocol is not an API, although the two are related. The server recognizes and speaks a protocol; anything that can send it the correct combination of bytes in the right order can communicate with it. Typically this task is handled by a software library. Over the years, there have been a few libraries — each with its own API — that do the work of moving SQL through a TDS pipe. ODBC, db-lib, ct-lib, and JDBC have very different APIs, but they're all one to the server, because on the wire they speak TDS.
 
 - **[sqlcmd](../../../research/m_z/sql_server/golang/tds8.md)**\
 Installing sqlcmd (Go) via a package manager will replace sqlcmd (ODBC) with sqlcmd (Go) in your environment path. Any current command line sessions will need to be closed and reopened for this take to effect. sqlcmd (ODBC) won't be removed and can still be used by specifying the full path to the executable. You can also update your PATH variable to indicate which will take precedence.
