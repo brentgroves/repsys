@@ -17,7 +17,7 @@ Sent 2 probes (1 broadcast(s))
 Received 2 response(s)
 ```
 
-Other options to the arping utility include the ability to send a broadcast arp using the -U option and the ability to send a gratuitous reply using the -A option. A kernel with support for non-local bind can be used with arping for the nefarious purpose of wreaking havoc on an otherwise properly configured Ethernet. By performing gratuitous arp and broadcasting incorrect arp information, arp tables in poorly designed IP stacks can become quite confused.
+Other options to the arping utility include the ability to send a broadcast arp using the -U option and the ability to send a gratuitous reply using the -A option. A kernel with support for non-local bind can be used with arping for the nefarious purpose of wreaking havoc on an otherwise properly configured Ethernet. By performing gratuitous arp and broadcasting incorrect arp information, arp tables in poorly designed IP stacks can become **quite confused.**
 
 arping can detect if an IP address is currently in use on an Ethernet. Called duplicate address detection, this use of arping is increasingly common in networking scripts.
 
@@ -31,6 +31,9 @@ Example B.5. Duplicate Address Detection with arping
 1
 [root@dietrich]# arping -D -q -I eth0 -c 2 192.168.99.36
 [root@dietrich]# echo $?
+0
+arping -D -q -I enp0s25 -c 2 172.20.3.21
+echo $?
 0
 ```
 
