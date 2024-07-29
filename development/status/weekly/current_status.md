@@ -8,6 +8,8 @@
 1. Look at repsys\volumes/python\soap\openssl.cnf.bak for add system default section to config file but add minprotocol section
 2. get certificate from python. <https://gist.github.com/lnattrass/a4a91dbf439fc1719d69f7865c1b1791>
 
+## **[Sentinel One](../../../../../src/secrets/sentinelone/sentinelone.md)**
+
 ## **[Network Upgrade Request for the Reporting System](../jdavis/network_upgrade.md)**
 
 - 50 static IP addresses.
