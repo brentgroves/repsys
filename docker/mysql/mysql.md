@@ -71,7 +71,12 @@ $> docker ps
 CONTAINER ID   IMAGE                                                         COMMAND                  CREATED          STATUS                    PORTS                       NAMES
 4cd4129b3211   container-registry.oracle.com/mysql/community-server:latest   "/entrypoint.sh mysq…"   8 seconds ago    Up 7 seconds (health: starting)   3306/tcp, 33060-33061/tcp   mysql1
 # if container is stopped
-docker start mysql-mgdw
+docker container ls -a                    
+CONTAINER ID   IMAGE                                                         COMMAND                  CREATED      STATUS                    PORTS     NAMES
+4f6ecad2525a   container-registry.oracle.com/mysql/community-server:latest   "/entrypoint.sh mysq…"   5 days ago   Exited (0) 22 hours ago             mysql-mgdw
+(base)  brent@reports-alb  ~/src/repsys/volumes/python/tutorials/odbc   main  mysql -u root -p -P 3306 -h reports-alb
+# restart stopped container
+docker start 4f6ecad2525a
 # why did container stop
 # You can run the docker logs [ContainerName] or docker logs  [ContainerID] command even on stopped containers. You can see them with docker ps -a.
 docker logs mysql-mgdw
