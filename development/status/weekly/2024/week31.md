@@ -56,9 +56,6 @@ This will involve adding a primary key to those tables without one. It also invo
 - **[Research List](../../../research/research_list.md)**\
 A list of all research for repsys.
 
-- **[Terraform](../../../research/m_z/terraform/terraform.md)**\
-Terraform, an open source “Infrastructure as Code” tool created by HashiCorp, allows programmers to build, change and version infrastructure safely and efficiently.
-
 - **[TDS 8.0](../../../research/m_z/sql_server/tds8.md)**\
 **odbc/ado.net/oledb -> tds8**
 
