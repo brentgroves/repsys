@@ -1,13 +1,16 @@
 # docker install
 
-**[Ubuntu 22.04 Desktop](../../ubuntu22-04/desktop-install.md)**\
-**[Ubuntu 22.04 Server](../../ubuntu22-04/server-install.md)**\
+**[Ubuntu 22.04 Desktop](../../../linux/ubuntu22-04/desktop-install.md)**\
+**[Ubuntu 22.04 Server](../../../linux/ubuntu22-04/server-install.md)**\
 **[Back to Main](../../../README.md)**
 
 ## refererences
-https://docs.docker.com/engine/install/ubuntu/
-# remove old versions
-https://docs.docker.com/engine/install/ubuntu/#uninstall-docker-engine
+
+<https://docs.docker.com/engine/install/ubuntu/>
+
+## remove old versions
+
+<https://docs.docker.com/engine/install/ubuntu/#uninstall-docker-engine>
 
 ```bash
 # stop the service

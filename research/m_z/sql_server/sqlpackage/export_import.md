@@ -1,4 +1,4 @@
 # Backup SQL Server MI
 
-- **[export SQL Server](../../../../../azure/sql_server/export_database.md)**
-- **[import SQL Server](../../../../../azure/sql_server/import_database.md)**
+- **[export SQL Server](../../../../../backups/mssql/export_database.md)**
+- **[import SQL Server](../../../../../backups/mssql/import_database.md)**

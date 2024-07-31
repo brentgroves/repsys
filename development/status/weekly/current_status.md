@@ -56,6 +56,14 @@ This will involve adding a primary key to those tables without one. It also invo
 - **[Research List](../../../research/research_list.md)**\
 A list of all research for repsys.
 
+- **[F5 Load Balancer](https://www.f5.com/products/big-ip-services/local-traffic-manager)**\
+Application Traffic Management
+BIG-IP LTM includes static and dynamic load balancing to eliminate single points of
+failure. Application proxies give you protocol awareness to control traffic for your most
+important applications. BIG-IP LTM also tracks the dynamic performance levels of servers
+in a group, ensuring that your applications are not just always on, but also are easier to
+scale and manage.
+
 - **[Terraform](../../../research/m_z/terraform/terraform.md)**\
 Terraform, an open source “Infrastructure as Code” tool created by HashiCorp, allows programmers to build, change and version infrastructure safely and efficiently.
 
