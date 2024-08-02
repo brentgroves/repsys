@@ -1,5 +1,6 @@
 # locate dhcp server
 
+```bash
 sudo nmap --script broadcast-dhcp-discover -e enp0s25
 Starting Nmap 7.80 ( <https://nmap.org> ) at 2024-03-06 12:31 EST
 Pre-scan script results:
@@ -25,3 +26,4 @@ $ ip route | grep default
 
 default via 1xx.1xx.xxx.xxx dev gpd0 metric 10
 default via 192.168.xxx.xxx dev wlp0s proto dhcp metric 100
+```
