@@ -3,10 +3,12 @@
 **[All Status](../weekly/status_list.md)**\
 **[Back to Main](../../../README.md)**
 
-## try next to enable connections to sql server
+## PKI
 
-1. Look at repsys\volumes/python\soap\openssl.cnf.bak for add system default section to config file but add minprotocol section
-2. get certificate from python. <https://gist.github.com/lnattrass/a4a91dbf439fc1719d69f7865c1b1791>
+- Internal Certificates (Self-Signed)
+- DigiCert - John Biel
+- Our PKI
+<https://MobexGlobal@dev.azure.com/MobexGlobal/PlexETLScripts/_git/TrialBalanceFromPlexCSV>
 
 ## **[Sentinel One](../../../../../src/secrets/sentinelone/sentinelone.md)**
 
@@ -56,6 +58,11 @@ This will involve adding a primary key to those tables without one. It also invo
 - **[Research List](../../../research/research_list.md)**\
 A list of all research for repsys.
 
+- **[Introducing Software Certification for Kubernetes](https://kubernetes.io/blog/2017/10/software-conformance-certification/)**\
+Over the last three years, Kubernetes® has seen wide-scale adoption by a vibrant and diverse community of providers. In fact, there are now more than 60 known Kubernetes platforms and distributions. From the start, one goal of Kubernetes has been consistency and portability.
+
+In order to better serve this goal, today the Kubernetes community and the Cloud Native Computing Foundation® (CNCF®) announce the availability of the beta Certified Kubernetes Conformance Program. The Kubernetes conformance certification program gives users the confidence that when they use a Certified Kubernetes™ product, they can rely on a high level of common functionality. Certification provides Independent Software Vendors (ISVs) confidence that if their customer is using a Certified Kubernetes product, their software will behave as expected.
+
 - **[F5 Load Balancer](https://www.f5.com/products/big-ip-services/local-traffic-manager)**\
 Application Traffic Management
 BIG-IP LTM includes static and dynamic load balancing to eliminate single points of
@@ -80,30 +87,6 @@ The TLS handshake now precedes any TDS messages, wrapping the TDS session in TLS
 
 Another benefit to TDS 8.0 compared to previous TDS versions is compatibility with TLS 1.3, and TLS standards to come. TDS 8.0 is also fully compatible with TLS 1.2 and previous TLS versions.
 
-- **[TDS Protocol](../../../research/m_z/tds/tds_protocol.md)**\
-is a protocol, or a set of rules describing how to transmit data between two computers. Like any protocol, it defines the types of messages that can be sent, and the order in which they may be sent. Protocols describe the "bits on the wire", specifying how data flows. It confuses many but entrances a few.
-
-A protocol is not an API, although the two are related. The server recognizes and speaks a protocol; anything that can send it the correct combination of bytes in the right order can communicate with it. Typically this task is handled by a software library. Over the years, there have been a few libraries — each with its own API — that do the work of moving SQL through a TDS pipe. ODBC, db-lib, ct-lib, and JDBC have very different APIs, but they're all one to the server, because on the wire they speak TDS.
-
-- **[sqlcmd](../../../research/m_z/sql_server/golang/tds8.md)**\
-Installing sqlcmd (Go) via a package manager will replace sqlcmd (ODBC) with sqlcmd (Go) in your environment path. Any current command line sessions will need to be closed and reopened for this take to effect. sqlcmd (ODBC) won't be removed and can still be used by specifying the full path to the executable. You can also update your PATH variable to indicate which will take precedence.
-
-- **[Pytds - Microsoft SQL Server database adapter for Python](../../../research/m_z/sql_server/python/python-tds.md)**\
-
-Pytds is the top to bottom pure Python TDS implementation, that means cross-platform, and no dependency on ADO or FreeTDS. It supports large parameters (>4000 characters), MARS, timezones, new date types (datetime2, date, time, datetimeoffset). Even though it is implemented in Python performance is comparable to ADO and FreeTDS bindings.
-
-- **[Automation X](../../../research/a_l/automation_x/automation_x.md)**\
-The automationX software provides interfaces for operator/HMI (aXViewer) and interfaces engineering & maintenance (aXEditor). There is also a fully integrated "real-time" control engine. This engine along with a global database, replaces the function of DCS/PLC controllers in the IT or aXserver.
-
-Each aXserver can handle 1000's of I/O. Some of the aXServers in the world are serving 6000-7000 real inputs and outputs (both analog loops and digital) with scan times as low as 20 mS on the server, lower on the integrated distributed controllers (aXController). To make best use of resources we typically scan at 200 ms.
-
-- **[What is IPAM](../../../research/a_l/ipam/what-is-ipam.md)**\
-IP address management (IPAM) is method for enterprises to plan, track, and manage IP address space on a network using software tools.
-
-Together, DNS, DHCP, and IPAM make up a triad known as DDI.
-
-Managing the three components the comprise the DDI meaning separately presents inherent risks. Bringing them together into one managed solution transforms network management. DDI provides core network services and enables communications across all points of the network.
-
 - **[IDENTIFYING AND RESOLVING IP ADDRESS CONFLICTS WITH LINUX](../../../research/a_l/ip-scanners/ip_conflicts.md/)**\
 One of the most frustrating problems a network administrator can come across is an IP address conflict, when two or more machines on a network try to use the same IP. The result is typically that some packets on the network go to one machine, and some packets go to the other – leading to intermittent packet loss and dropped connections.
 
@@ -112,7 +95,7 @@ Luckily, however, resolving IP address conflicts is easy if you know the right t
 - **[k8s concepts](../../../research/a_l/k8s/concepts/k8s_concepts_menu.md)**\
 Research K8s concepts, architecture, and inner working to better understand kubernetes.
 
-- **[Create a cluster with kubeadm](../../../research/a_l/k8s/concepts/kubeadm/create_cluster_with_kubeadm.md)\
+- **[Create a cluster with kubeadm](../../../research/a_l/k8s/kubeadm/create_cluster_with_kubeadm.md)\
 Our productions clusters are created by microk8s. MicroK8s is easy to use and can handle advanced configurations. The advantage of using kubeadm to create your cluster is that you have complete control of all kubernetes features.  In short kubeadm is a great learning tool in order to understand exactly what is going on in a kubernetes cluster.
 
 - **[Intel Clear Linux OS](../../../research/a_l/k8s/concepts/intel_clear_containers.md)**\

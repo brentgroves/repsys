@@ -25,6 +25,8 @@ sudo cat /sys/class/dmi/id/product_uuid
 46d89ce1-54f9-44ce-99a7-4b4d4137220c
 ```
 
+/sys/class/dmi/id/product_uuid: The main board **[product UUID](http://0pointer.de/blog/projects/ids.html)**, as set by the board manufacturer and encoded in the BIOS DMI information.
+
 - Certain ports are open on your machines. See **[here](https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-kubeadm/#check-required-ports)** for more details.
 - Swap configuration. The default behavior of a kubelet was to fail to start if swap memory was detected on a node. See **[Swap memory management](https://kubernetes.io/docs/concepts/architecture/nodes/#swap-memory)** for more details.
   - You MUST disable swap if the kubelet is not properly configured to use swap. For example, sudo swapoff -a will disable swapping temporarily. To make this change persistent across reboots, make sure swap is disabled in config files like /etc/fstab, systemd.swap, depending how it was configured on your system.
