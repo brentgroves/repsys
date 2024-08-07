@@ -3,6 +3,10 @@
 **[All Status](../weekly/status_list.md)**\
 **[Back to Main](../../../README.md)**
 
+## Sam SQL login
+
+Create an administrator login.
+
 ## Dan Martin Status
 
 Give Dan monthly status report of progress on the TB part of the report system.
