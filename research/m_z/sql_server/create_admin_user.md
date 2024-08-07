@@ -1,5 +1,9 @@
 # **[create login](https://learn.microsoft.com/en-us/sql/relational-databases/security/authentication-access/create-a-login?view=sql-server-ver16)**
 
+**[Current Status](../../../development/status/weekly/current_status.md)**\
+**[Research List](../../../research/research_list.md)**\
+**[Back Main](../../../README.md)**
+
 ## references
 
 - **[create login](https://learn.microsoft.com/en-us/sql/relational-databases/security/authentication-access/create-a-login?view=sql-server-ver16)**

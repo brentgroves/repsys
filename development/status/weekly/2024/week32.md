@@ -77,9 +77,6 @@ This will involve adding a primary key to those tables without one. It also invo
 - **[Research List](../../../research/research_list.md)**\
 A list of all research for repsys.
 
-- **[Create SQL Server admin user](../../../research/m_z/sql_server/create_admin_user.md)**\
-Instructions for creating an admin user for SQL Server.
-
 - **[Introducing Software Certification for Kubernetes](https://kubernetes.io/blog/2017/10/software-conformance-certification/)**\
 Over the last three years, Kubernetes® has seen wide-scale adoption by a vibrant and diverse community of providers. In fact, there are now more than 60 known Kubernetes platforms and distributions. From the start, one goal of Kubernetes has been consistency and portability.
 
