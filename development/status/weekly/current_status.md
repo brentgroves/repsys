@@ -67,15 +67,18 @@ Will probably need to be physically on the servers to change the IPs.
   - Test running trial_balance.rdl using Power BI report builder from alb-utl4/10.1.1.151,
 Run TB report, trial_balance.rdl, from any Windows machine with the Power BI report builder installed.
 
-- Deploy mssql data warehouse hosted on one of our r620 k8s cluster to Azure SQL server.\
+- **[Deploy mssql data warehouse hosted on one of our r620 k8s cluster to Azure SQL server.](../../../research/m_z/sql_server/migration/onprem_to_azure_sql.md)**\
 This involves manual SQL creation of schema and automated copying of table records.
 - Deploy on-premise mysql stateful-set data warehouse to InnoDB HA MySQL database hosted on one of our r620 k8s cluster.\
 This will involve adding a primary key to those tables without one. It also involves manual SQL creation of schema and automated copying of table records.
+- Create **[Plex ODBC connection instructions for Windows](../../../research/m_z/sql_server/p)**
 
 ## Research
 
 - **[Research List](../../../research/research_list.md)**\
 A list of all research for repsys.
+
+- **[Power BI connection to Plex](https://www.revolutiongroup.com/wp-content/uploads/PSCC2102_UsingTodaysTechnologytoBetterServeYourPlex_TonyBrown.pdf)**
 
 - **[Create SQL Server admin user](../../../research/m_z/sql_server/create_admin_user.md)**\
 Instructions for creating an admin user for SQL Server.
