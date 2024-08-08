@@ -28,10 +28,6 @@ echo "pulling etlj"
 cd ~/src/repsys/volumes/java/etlj
 git pull
 
-echo "pulling tbetl"
-cd ~/src/repsys/volumes/python/tbetl
-git pull
-
 echo "pulling flask_cert"
 cd ~/src/repsys/volumes/python/tutorials/flask_cert
 git pull

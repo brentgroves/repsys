@@ -47,13 +47,6 @@ git add -A
 git commit -m "updated source code"
 git push -u origin main
 
-
-cd ~/src/repsys/volumes/python/tbetl
-echo "commit tbetl"
-git add -A 
-git commit -m "updated source code"
-git push -u origin main
-
 cd ~/src/repsys/volumes/python/tutorials/flask_cert
 echo "commit flask_cert"
 git add -A 

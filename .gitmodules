@@ -10,21 +10,18 @@
 [submodule "volumes/go/runner"]
 	path = volumes/go/runner
 	url = git@github.com:brentgroves/runner
+[submodule "volumes/go/tutorials/docker/go_web_docker"]
+	path = volumes/go/tutorials/docker/go_web_docker
+	url = git@github.com:brentgroves/go_web_docker.git
 [submodule "volumes/java/etlj"]
 	path = volumes/java/etlj
 	url = git@github.com:brentgroves/etlj
 [submodule "volumes/python/tutorials/flask_cert"]
 	path = volumes/python/tutorials/flask_cert
 	url = git@github.com:brentgroves/flask_cert.git
-[submodule "volumes/python/tbetl"]
-	path = volumes/python/tbetl
-	url = git@github.com:brentgroves/tbetl.git
 [submodule "volumes/sql/tbsql"]
 	path = volumes/sql/tbsql
 	url = git@github.com:brentgroves/tbsql.git
 [submodule "linux"]
 	path = linux
 	url = git@github.com:brentgroves/linux.git
-[submodule "volumes/go/tutorials/docker/go_web_docker"]
-	path = volumes/go/tutorials/docker/go_web_docker
-	url = git@github.com:brentgroves/go_web_docker.git
