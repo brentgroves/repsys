@@ -1,4 +1,6 @@
 #!/bin/sh
+pushd .
+
 cd ~/src/linux-utils
 echo "in linux-utils"
 git pull
@@ -62,3 +64,4 @@ git commit -m "updated source code"
 git push -u origin main
 
 
+popd

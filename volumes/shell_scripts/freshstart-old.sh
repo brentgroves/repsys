@@ -5,9 +5,11 @@ cd ~/src
 rm -rf ~/src/linux-utils
 git clone git@github.com:brentgroves/linux-utils.git
 rm -rf ~/src/Reporting
-git clone git@ssh.dev.azure.com:v3/MobexGlobal/MobexCloudPlatform/Reporting
+git clone git@github.com:brentgroves/Reporting
+# git clone git@ssh.dev.azure.com:v3/MobexGlobal/MobexCloudPlatform/Reporting
 rm -rf ~/src/mobexsql
-git clone git@ssh.dev.azure.com:v3/MobexGlobal/MobexCloudPlatform/mobexsql
+git clone git@github.com:brentgroves/mobexsql
+# git clone git@ssh.dev.azure.com:v3/MobexGlobal/MobexCloudPlatform/mobexsql
 
 rm -rf ~/src/reports
 git clone --recursive git@ssh.dev.azure.com:v3/MobexGlobal/MobexCloudPlatform/reports
