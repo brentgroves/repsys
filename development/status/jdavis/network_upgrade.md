@@ -1,5 +1,8 @@
 # Network Upgrade
 
+**[Current Status](../weekly/current_status.md)**\
+**[Back to Main](../../../README.md)**
+
 Hi Jared,
 
 I know you will be super busy next week,so I would like to give you a list of items now I will need to run the Southfield Monthly Balance report which will be requested on Aug 5th or 6th. Thank you Jared and good luck with the network upgrade!

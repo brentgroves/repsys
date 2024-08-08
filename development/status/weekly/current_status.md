@@ -3,9 +3,9 @@
 **[All Status](../weekly/status_list.md)**\
 **[Back to Main](../../../README.md)**
 
-## Sam SQL login
+## **[Network Question](../jdavis/network_question.md)**
 
-Create an administrator login.
+Is it possible to have a faster connection from Albion to Avilla to RDP from Albion to Avilla and to run ETL scripts from Albion that accesses Cloud and Avilla data sources?
 
 ## Dan Martin Status
 
