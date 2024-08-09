@@ -47,6 +47,7 @@ Firewall 10.188.250.? Ligtel located in Avilla connect (good speed)
 50 - server
 48 - desktop/laptom
 30 - printer
+? - fruitport
 
 ## IP address for k8s development cluster on R620s
 
