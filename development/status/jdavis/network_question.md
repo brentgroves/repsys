@@ -1,11 +1,73 @@
-# Network Question
+# Network Questions
 
 **[Current Status](../weekly/current_status.md)**\
 **[Back to Main](../../../README.md)**
 
-Is it possible to have a faster connection from Albion to Avilla to RDP from Albion to Avilla and to run ETL scripts from Albion that accesses Cloud and Avilla data sources?
+1. Is it possible to have a faster connection from Albion to Avilla to RDP from Albion to Avilla and to run ETL scripts from Albion that accesses Cloud and Avilla data sources?
+
+2. Is it possible to create a VM in SF to test connection speed to Albion/Avilla web server.
 
 This markdown can be viewed by copying this entire document into <https://markdownlivepreview.com/>.
+
+## references
+
+- **[Network Speed Testing](https://www.baeldung.com/linux/network-speed-testing)**
+
+## Using iperf
+
+iperf is a tool for measuring the maximum TCP and UDP bandwidth performance over IP. Hence, it helps to identify the network’s throughput capacity by generating traffic and measuring the data transfer rates between systems.
+
+## Network details
+
+```bash
+# from Albion box
+traceroute reports-avi  
+traceroute to reports-avi (172.20.88.64), 30 hops max, 60 byte packets
+ 1  _gateway (10.1.1.205)  0.768 ms  0.686 ms  0.652 ms
+ 2  reports-avi (172.20.88.64)  29.900 ms  29.867 ms  29.835 ms
+```
+
+## Route from Albion to Avilla
+
+From Albion box
+to 10.1.1.205 Albion firewall connected to ligtel
+Going over vpn to avilla Firewall 172.20.88.1
+Firewall 172.20.88.1 connected to comcast (maybe why connection from Albion to Avilla is slow)
+Firewall 10.188.250.? Ligtel located in Avilla connect (good speed)
+<!-- From Avilla ping 10.187.10.12 switch in albion  1 to 2 ms -->
+
+## vlan 2nd octet
+
+187 albion
+188 avilla
+185 southfield
+
+## vlan 3rd octet
+
+50 - server
+48 - desktop/laptom
+30 - printer
+
+## IP address for k8s development cluster on R620s
+
+10.188.50.125-145 server vlan
+
+## IP address for k8s production cluster on Nutanix
+
+10.188.50.145-165 server vlan
+
+## Summary
+
+| From   | To       | Protocol | speed                         |
+|--------|----------|----------|-------------------------------|
+| Albion | Internet | Http/s   | 825.4 mbps down/810.1 mbps up |
+| Albion | Albion   | RDP      | good                          |
+| Avilla | Internet | TDS      | same as always - good         |
+| Avilla | Avilla   | TDS      | good                          |
+| Albion | Avilla   | SSH      | usable                        |
+| Albion | Avilla   | TDS      | very poor                     |
+| Albion | Avilla   | RDP      | very poor                     |
+| SF     | Alb/Avi  | Http/s   | not tested                    |
 
 ## RDP
 
