@@ -3,6 +3,10 @@
 **[All Status](../weekly/status_list.md)**\
 **[Back to Main](../../../README.md)**
 
+## Important date
+
+March remove active directory.
+
 ## **[Network Question](../jdavis/network_question.md)**
 
 Is it possible to have a faster connection from Albion to Avilla to RDP from Albion to Avilla and to run ETL scripts from Albion that accesses Cloud and Avilla data sources?
@@ -17,6 +21,7 @@ Give Dan monthly status report of progress on the TB part of the report system.
 
 The goal is to nail down the details of where the various parts of our report system will be running.
 
+- Can we still use Mobex tenant after March for AKS, Azure SQL db?
 - Can we get approval to have AKS in Mobex Azure tenant so that we can put the report system requestor and archive viewer in a teams tab?
 - Can we use a GPO to distribute our intermediate and root certificates to the trust stores of IT/OT hosts that will be accessing Mach2 or our reporting system?
 - Can we register an Oauth2 app in linamar azure tenant?
@@ -33,7 +38,7 @@ Installed on development system and researched the Linux CLI.
 
 ## **[Network Upgrade Request for the Reporting System](../jdavis/network_upgrade.md)**
 
-- 50 static IP addresses.
+- 60 static IP addresses.
 - 8 network cables ran to each R620 currently I only have 3.
 - New gateway address
 - New name server addresses
@@ -60,6 +65,7 @@ Will probably need to be physically on the servers to change the IPs.
 
 ## ToDo
 
+- Create Firewall rule for repsys Azure SQL db which include new Albion/Avilla public IP
 - Got SSL certificate from mssql server 2022 installed on r620 k8s.
 - Add certificate to trust store or lower default security level for OpenSSL installation. Could not get to work using odbc driver and pyodbc.
 - Prepare for Albion/Avilla Linamar Networking/VM changes
@@ -77,7 +83,8 @@ This will involve adding a primary key to those tables without one. It also invo
 
 - **[Research List](../../../research/research_list.md)**\
 A list of all research for repsys.
-
+- **[Network Speed Test](../../../research/m_z/virtualization/networking/iperf/network_speed_testing.md)**\
+Testing Network Speed Between Two Linux Servers
 - **[Power BI connection to Plex](https://www.revolutiongroup.com/wp-content/uploads/PSCC2102_UsingTodaysTechnologytoBetterServeYourPlex_TonyBrown.pdf)**
 
 - **[Create SQL Server admin user](../../../research/m_z/sql_server/create_admin_user.md)**\

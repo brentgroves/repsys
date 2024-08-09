@@ -1,5 +1,9 @@
 # **[Network Speed Testing](https://www.baeldung.com/linux/network-speed-testing)**
 
+**[Current Status](../../../../../development/status/weekly/current_status.md)**\
+**[Research List](../../../../research/research_list.md)**\
+**[Back Main](../../../../../README.md)**
+
 ## Testing Network Speed Between Two Linux Servers
 
 Efficient data transfer between Linux servers is an important aspect of maintaining a responsive network infrastructure. The speed at which data can be transmitted between servers directly impacts the overall performance of applications and services. For example, features like TCP traffic control can affect the data exchange speeds.
