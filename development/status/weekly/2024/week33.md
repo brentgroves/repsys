@@ -83,20 +83,6 @@ This will involve adding a primary key to those tables without one. It also invo
 
 - **[Research List](../../../research/research_list.md)**\
 A list of all research for repsys.
-
-- **[TCP congestion control](https://www.geeksforgeeks.org/tcp-congestion-control/)**
-
-  TCP congestion control is a method used by the TCP protocol to manage data flow over a network and prevent congestion. TCP uses a congestion window and congestion policy that avoids congestion. Previously, we assumed that only the receiver could dictate the sender’s window size. We ignored another entity here, the network. If the network cannot deliver the data as fast as it is created by the sender, it must tell the sender to slow down. In other words, in addition to the receiver, the network is a second entity that determines the size of the sender’s window.
-
-- **[RTT](https://www.geeksforgeeks.org/what-is-rttround-trip-time/)**
-
-  RTT (Round Trip Time) also called round-trip delay is a crucial tool in determining the health of a network. It is the time between a request for data and the display of that data. It is the duration measured in milliseconds.
-
-  RTT can be analyzed and determined by pinging a certain address. It refers to the time taken by a network request to reach a destination and to revert back to the original source. In this scenario, the source is the computer and the destination is a system that captures the arriving signal and reverts it back.
-
-- **[Types of Transmission Media](https://www.geeksforgeeks.org/types-transmission-media/)**\
-  Cell-phones, Wi-Fi, GPS, Bluetooth and many other technologies use microwaves to enable much in modern life. It's worth getting to know them a little. Microwaves are a form of electromagnetic (EM) radiation: just like gamma rays, x-rays, ultraviolet radiation, visible light, infrared radiation and radio waves.
-
 - **[Network Speed Test](../../../research/m_z/virtualization/networking/iperf/network_speed_testing.md)**\
 Testing Network Speed Between Two Linux Servers
 - **[Power BI connection to Plex](https://www.revolutiongroup.com/wp-content/uploads/PSCC2102_UsingTodaysTechnologytoBetterServeYourPlex_TonyBrown.pdf)**

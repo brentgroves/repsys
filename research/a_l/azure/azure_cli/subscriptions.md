@@ -4,6 +4,10 @@
 
 - **[How to manage Azure subscriptions with the Azure CLI](https://learn.microsoft.com/en-us/cli/azure/manage-azure-subscriptions-azure-cli?tabs=bash)**
 
+The Azure CLI helps you manage your Azure subscription, create management groups, and lock subscriptions.You might have multiple subscriptions within Azure. You can be part of more than one organization or your organization might divide access to certain resources across groupings. The Azure CLI supports selecting a subscription both globally and per command.
+
+For detailed information on subscriptions, billing, and cost management, see the billing and cost management documentation.
+
 ## mobexglobal.com
 
 ```bash
