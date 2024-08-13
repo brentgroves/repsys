@@ -1,6 +1,6 @@
 # Mobex Azure AKS and Azure SQL database resources future
 
-Mobex was planning on using an AKS single-node cluster and an Azure SQL database to host a report request web application and I would like to know what has been decided concerning the future of these resources. I thought it was previously decided to keep them in the Mobex Azure tenant but I would like to confirm this.
+Mobex was planning on using an AKS single-node cluster and an Azure SQL database to host a report request web application and I would like to know what has been decided concerning the future of these resources. I thought it was previously decided to keep them in the Mobex Azure tenant but I would like to confirm this.  If this has changed I would like to request the following resources be created in another Azure Linamar tenant.
 
 ## Costs
 

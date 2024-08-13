@@ -21,7 +21,7 @@ Give Dan monthly status report of progress on the TB part of the report system.
 
 The goal is to nail down the details of where the various parts of our report system will be running.
 
-- Can we still use Mobex tenant after March for AKS, Azure SQL db?
+- Can we still use Mobex tenant after March for **[AKS, Azure SQL db](../tickets/azure_resources.md)**?
 - Can we get approval to have AKS in Mobex Azure tenant so that we can put the report system requestor and archive viewer in a teams tab?
 - Can we use a GPO to distribute our intermediate and root certificates to the trust stores of IT/OT hosts that will be accessing Mach2 or our reporting system?
 - Can we register an Oauth2 app in linamar azure tenant?
