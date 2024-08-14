@@ -16,7 +16,7 @@ az login
 # Subscription ID: f7d0cfcb-65b9-4f1c-8c9d-f8f993e4722a  
 # Tenant: Mobex Global
 
-# How we created the resource group
+# How we created the resource group for Azure SQL Server
 az group create --name repsys --location "East US" --tags "repsys reporting system"
 
 # Show resource group
@@ -58,6 +58,11 @@ az sql db create -g repsys -s repsys -n rsdw --edition Standard --capacity 20 --
 # list database
 az sql db list --resource-group repsys --server repsys --output json --query '[].{currentSku:currentSku,id:id,databaseId:databaseId,maxSizeBytes:maxSizeBytes}'
 
+# How we created the resource group for AKS
+az group create --name repsys --location "East US" --tags "repsys reporting system"
+
+# Show resource group
+az group show --resource-group reports-aks 
 
 ```
 
