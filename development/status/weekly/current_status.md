@@ -21,7 +21,7 @@ Give Dan monthly status report of progress on the TB part of the report system.
 
 The goal is to nail down the details of where the various parts of our report system will be running.
 
-- Can we still use Mobex tenant after March for **[AKS, Azure SQL db](../tickets/azure_resources.md)**?
+- Can we still use Mobex tenant after March for **[AKS, Azure SQL db](../tickets/azure_resources.md)**
 - Can we get approval to have AKS in Mobex Azure tenant so that we can put the report system requestor and archive viewer in a teams tab?
 - Can we use a GPO to distribute our intermediate and root certificates to the trust stores of IT/OT hosts that will be accessing Mach2 or our reporting system?
 - Can we register an Oauth2 app in linamar azure tenant?
@@ -83,6 +83,14 @@ This will involve adding a primary key to those tables without one. It also invo
 
 - **[Research List](../../../research/research_list.md)**\
 A list of all research for repsys.
+
+- **[CPU request](../../../research/a_l/k8s/concepts/cpu_requests.md)**
+
+  ...Let’s say we have a single node with 1 CPU core and three pods (each of which have one container and one thread) that are requesting 200, 400, and 200 millicores (m) of CPU, respectively. The scheduler is able to place them all on the node because the sum of requests is less than 1 CPU core:
+
+![](https://imgix.datadoghq.com/img/blog/kubernetes-cpu-requests-limits/kubernetes-cpu-requests-limits-diagram-1-final.png?auto=format&fit=max&w=847)
+
+For any time slice of 100 ms, pod 1 is guaranteed to have 20 ms of CPU time, pod 2 is guaranteed to have 40 ms of CPU time, and pod 3 is guaranteed to have 20 ms of CPU time. But if the pods are not using these CPU cycles, these numbers don’t mean anything—any pod scheduled on the node could use them. For example, in a time slice of 100 ms, this scenario is possible:
 
 - **[TCP congestion control](https://www.geeksforgeeks.org/tcp-congestion-control/)**
 
