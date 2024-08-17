@@ -52,6 +52,45 @@ block-beta
 ```
 
 ```mermaid
+block-beta
+  columns 5
+  c11<[" "]>(right,down) 
+  c12<[" "]>(right,up) 
+  c13<[" "]>(right,left) 
+  c14<[" "]>(right,right) 
+  c15<[" "]>(right) 
+
+  c21<[" "]>(left,down) 
+  c22<[" "]>(left,up) 
+  c23<[" "]>(left,right) 
+  c24<[" "]>(left,left) 
+  c25<[" "]>(left) 
+
+  c31<[" "]>(up,down) 
+  c32<[" "]>(up,up) 
+  c33<[" "]>(up) 
+  c34<[" "]>(up,left) 
+  c35<[" "]>(up,right) 
+
+  c41<[" "]>(x,y) 
+  c42<[" "]>(x,x) 
+  c43<[" "]>(x,up) 
+  c44<[" "]>(x,down) 
+  c45<[" "]>(x,right) 
+
+  c51<[" "]>(y,y) 
+  c52<[" "]>(y,x) 
+  c53<[" "]>(y,up) 
+  c54<[" "]>(y,down) 
+  c55<[" "]>(y,left) 
+
+  classDef front fill:#696,stroke:#333;
+  classDef back fill:#969,stroke:#333;
+  class A1,A2,AzureSQL,redis front
+  class OnPrem_K8s_ETL_Runner back
+```
+
+```mermaid
 sequenceDiagram
     participant web as Web Browser
     participant blog as Blog Service
