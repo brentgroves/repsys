@@ -16,6 +16,7 @@ sudo apt-get install nmap -y
 ## In-Use IP addresses
 
 nmap -sP 10.1.0.0/22
+nmap -sP 192.168.1/24
 
 ## timestamp requests
 
