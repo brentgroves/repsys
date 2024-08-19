@@ -219,6 +219,17 @@ multipass launch --network br2 --name repsys11-c2-n3 --cpus 2 --memory 16G --dis
 
 multipass list
 Name                    State             IPv4             Image
+microk8s-vm             Running           10.127.233.200   Ubuntu 22.04 LTS
+                                          10.1.0.128
+                                          10.1.254.64
+repsys11-c2-n1          Running           10.127.233.66    Ubuntu 22.04 LTS
+                                          10.1.0.129
+                                          10.1.226.0
+repsys11-c2-n2          Running           10.127.233.252   Ubuntu 22.04 LTS
+                                          10.1.3.186
+repsys11-c2-n3          Running           10.127.233.169   Ubuntu 22.04 LTS
+                                          10.1.2.218
+
 microk8s-vm             Running           10.127.233.194   Ubuntu 24.04 LTS
                                           10.1.2.143
 test1                   Running           10.127.233.173   Ubuntu 24.04 LTS
@@ -254,6 +265,8 @@ ip link show master br0
 See how multipass configured the network. Until I can figure out how to pass the hardware address manaully during launch we will have to grab the one multipass or lxd creates.
 
 ```bash
+multipass exec -n repsys11-c2-n1 -- sudo networkctl -a status
+
 multipass exec -n repsys12-c1-n1 -- sudo networkctl -a status
 ● 3: enp6s0                                                                    
                      Link File: /usr/lib/systemd/network/99-default.link

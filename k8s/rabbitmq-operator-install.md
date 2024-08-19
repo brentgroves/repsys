@@ -8,6 +8,8 @@
 
 - **[githug](https://github.com/rabbitmq/cluster-operator)**
 - **[Install](https://www.rabbitmq.com/kubernetes/operator/install-operator)**
+- **[Using Kubernetes RabbitMQ Cluster Kubernetes Operator](https://www.rabbitmq.com/kubernetes/operator/using-operator)**
+)**
 
 ## **[Installing RabbitMQ Cluster Operator in a Kubernetes Cluster](https://www.rabbitmq.com/kubernetes/operator/install-operator)**
 
@@ -34,6 +36,13 @@ kubectl apply -f "https://github.com/rabbitmq/cluster-operator/releases/latest/d
 # clusterrolebinding.rbac.authorization.k8s.io/rabbitmq-cluster-operator-rolebinding created
 # deployment.apps/rabbitmq-cluster-operator created
 ```
+
+At this point, the RabbitMQ Cluster Kubernetes Operator is successfully installed. Once the RabbitMQ Cluster Kubernetes Operator pod is running, head over to **[Using Kubernetes RabbitMQ Cluster Kubernetes Operator](https://www.rabbitmq.com/kubernetes/operator/using-operator)**
+)** for instructions on how to deploy RabbitMQ using a Kubernetes Custom Resource.
+
+If you want to install a specific version of the Operator, you will have to obtain the manifest link from the Operator Releases. Please note that releases prior to 0.46.0 do not have this manifest. We strongly recommend to install versions 0.46.0+
+
+If you want to relocate the Operator image to a custom location, the section Relocate the Image has instructions to relocate the Operator image to a private registry.
 
 ## RabbitMQ Kubernetes Operators: Cluster Operator and Messaging Topology Operator
 
