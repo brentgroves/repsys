@@ -61,6 +61,7 @@ Installed plugin: rabbitmq
 \
  | Use this plugin:
  |      kubectl rabbitmq
+ 
  | Documentation:
  |      https://github.com/rabbitmq/cluster-operator
  | Caveats:

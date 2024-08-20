@@ -6,9 +6,23 @@
 
 ## references
 
-- **[githug](https://github.com/rabbitmq/cluster-operator)**
+- **[github](https://github.com/rabbitmq/cluster-operator)**
 - **[Install](https://www.rabbitmq.com/kubernetes/operator/install-operator)**
 - **[Using Kubernetes RabbitMQ Cluster Kubernetes Operator](https://www.rabbitmq.com/kubernetes/operator/using-operator)**
+- **[examples](https://github.com/rabbitmq/cluster-operator/blob/main/docs/examples)**
+
+## Delete a RabbitMQ Instance
+
+To delete a RabbitMQ service instance, run
+kubectl delete rabbitmqcluster INSTANCE
+
+where INSTANCE is the name of your RabbitmqCluster, or use
+
+```bash
+kubectl delete rabbitmqcluster INSTANCE
+# or
+kubectl delete -f INSTANCE.yaml
+```
 
 ## How to use the RabbitMQ Cluster Kubernetes Operator
 
@@ -89,8 +103,62 @@ kubectl create rolebinding rabbitmq-mycluster:psp:unprivileged \
 
 **[Kubernetes documentation](https://kubernetes.io/docs/concepts/policy/pod-security-policy/#example)** has an example to create RBAC rules and a policy.
 
+## **[Ensure Host-Path storage is enabled](./host_path_storage/host_path_storage.md)**
+
 ## Create a RabbitMQ Instance
 
 To create a RabbitMQ instance, a RabbitmqCluster resource definition must be created and applied. RabbitMQ Cluster Kubernetes Operator creates the necessary resources, such as Services and StatefulSet, in the same namespace in which the RabbitmqCluster was defined.
 
 First, create a YAML file to define a RabbitmqCluster resource named definition.yaml.
+
+Note: The YAML file can have any name, but the steps that follow assume it is named definition.
+
+Then copy and paste the below snippet into the file and save it:
+
+```yaml
+apiVersion: rabbitmq.com/v1beta1
+kind: RabbitmqCluster
+metadata:
+  name: definition
+```
+
+Note: when creating RabbitmqClusters on Openshift, there are extra parameters that must be added to all RabbitmqCluster manifests. See Support for Arbitrary User IDs for details.
+
+Next, apply the definition by running:
+
+```bash
+pushd .
+cd ~/src/repsys/k8s/rabbitmq
+kubectl apply -f definition.yaml
+```
+
+Then verify that the process was successful by running:
+
+```bash
+kubectl get all -l app.kubernetes.io/name=definition
+
+# If successful, there will be a running pod and a service that exposes the instance. For example:
+
+kubectl get all -l app.kubernetes.io/name=definition
+# NAME                      READY   STATUS    RESTARTS   AGE
+# pod/definition-server-0   1/1     Running   0          112s
+#
+# NAME                          TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)                        AGE
+# service/definition-nodes      ClusterIP   None             None        4369/TCP                       113s
+# service/definition            ClusterIP   10.103.214.196   None        5672/TCP,15672/TCP,15692/TCP   113s
+```
+
+A RabbitMQ cluster is now ready to be used by applications. Continue for more advanced configuration options. For more information, see the RabbitMQ documentation guides.
+
+## Delete RabbitMQ Instance
+
+To delete a RabbitMQ service instance, run
+kubectl delete rabbitmqcluster INSTANCE
+
+where INSTANCE is the name of your RabbitmqCluster, or use
+
+```bash
+kubectl delete rabbitmqcluster INSTANCE
+# or
+kubectl delete -f INSTANCE.yaml
+```

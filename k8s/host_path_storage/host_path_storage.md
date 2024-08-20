@@ -13,6 +13,21 @@ Since Observability and the Postgress operator currently, 4/2/2024, do not run f
 Noticed that only 2 of the 3 nodes has the "/var/snap/microk8s/common/default-storage" directory created. It does not seem to be a problem since the node without this directory seems to change.
 
 ```bash
+# is it already installed?
+microk8s is running
+high-availability: no
+  datastore master nodes: 127.0.0.1:19001
+  datastore standby nodes: none
+addons:
+  enabled:
+    dns                  # (core) CoreDNS
+    ha-cluster           # (core) Configure high availability on the current node
+    helm                 # (core) Helm - the package manager for Kubernetes
+    helm3                # (core) Helm 3 - the package manager for Kubernetes
+    hostpath-storage     # (core) Storage class; allocates storage from host directory
+    rbac                 # (core) Role-Based Access Control for authorisation
+    storage              # (core) Alias to hostpath-storage add-on, deprecated
+
 # observability or postgres operator does not like mayastor but hostpath storage works
 microk8s enable hostpath-storage
 Infer repository core for addon hostpath-storage
@@ -36,4 +51,55 @@ NAME                          PROVISIONER            RECLAIMPOLICY   VOLUMEBINDI
 microk8s-hostpath (default)   microk8s.io/hostpath   Delete          WaitForFirstConsumer   false                  7m52s
 
 
+```
+
+## Verify
+
+Create an example pod with a PVC, using the microk8s-hostpath storage class. Note that the microk8s-hostpath storage class is marked as default, so you do not have to specify a storageClassName for the PVC definition:
+
+```bash
+pushd .
+cd ~/src/repsys/k8s/host_path_storage
+kubectl apply -f pvc.yaml
+
+# or
+kubectl apply -f - <<EOF
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: test-pvc
+spec:
+  accessModes: [ReadWriteOnce]
+  resources: { requests: { storage: 1Gi } }
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: test-nginx
+spec:
+  volumes:
+    - name: pvc
+      persistentVolumeClaim:
+        claimName: test-pvc
+  containers:
+    - name: nginx
+      image: nginx
+      ports:
+        - containerPort: 80
+      volumeMounts:
+        - name: pvc
+          mountPath: /usr/share/nginx/html
+EOF
+```
+
+Then use microk8s kubectl get pod,pvc to verify that the volume and the container were successfully created:
+
+```bash
+kubectl get pod,pvc
+NAME             READY   STATUS    RESTARTS   AGE
+pod/test-nginx   1/1     Running   0          32s
+
+NAME                             STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS        AGE
+persistentvolumeclaim/test-pvc   Bound    pvc-c48dbcc1-ca7e-482d-954f-b9e80119e438   1Gi        RWO            
 ```
