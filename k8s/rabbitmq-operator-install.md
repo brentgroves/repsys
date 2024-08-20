@@ -9,7 +9,6 @@
 - **[githug](https://github.com/rabbitmq/cluster-operator)**
 - **[Install](https://www.rabbitmq.com/kubernetes/operator/install-operator)**
 - **[Using Kubernetes RabbitMQ Cluster Kubernetes Operator](https://www.rabbitmq.com/kubernetes/operator/using-operator)**
-)**
 
 ## **[Installing RabbitMQ Cluster Operator in a Kubernetes Cluster](https://www.rabbitmq.com/kubernetes/operator/install-operator)**
 
@@ -26,7 +25,12 @@ Installation
 To install the Operator, run the following command:
 
 ```bash
+pushd
+cd ~//src/repsys/k8s/rabbitmq
 kubectl apply -f "https://github.com/rabbitmq/cluster-operator/releases/latest/download/cluster-operator.yml"
+# or you can download it first
+curl -L -O https://github.com/rabbitmq/cluster-operator/releases/download/v2.9.0/cluster-operator.yml
+kubectl apply -f cluster-operator.yml
 # namespace/rabbitmq-system created
 # customresourcedefinition.apiextensions.k8s.io/rabbitmqclusters.rabbitmq.com created
 # serviceaccount/rabbitmq-cluster-operator created
@@ -43,6 +47,52 @@ At this point, the RabbitMQ Cluster Kubernetes Operator is successfully installe
 If you want to install a specific version of the Operator, you will have to obtain the manifest link from the Operator Releases. Please note that releases prior to 0.46.0 do not have this manifest. We strongly recommend to install versions 0.46.0+
 
 If you want to relocate the Operator image to a custom location, the section Relocate the Image has instructions to relocate the Operator image to a private registry.
+
+## Installation using kubectl-rabbitmq plugin
+
+The kubectl rabbitmq plugin provides commands for managing RabbitMQ clusters. The plugin can be installed using krew:
+
+```bash
+# To remove this plugin
+kubectl krew remove rabbitmq
+kubectl krew install rabbitmq
+Installing plugin: rabbitmq
+Installed plugin: rabbitmq
+\
+ | Use this plugin:
+ |      kubectl rabbitmq
+ | Documentation:
+ |      https://github.com/rabbitmq/cluster-operator
+ | Caveats:
+ | \
+ |  | This plugin requires the RabbitMQ cluster operator to be installed.
+ |  | To install the RabbitMQ cluster operator run `kubectl rabbitmq install-cluster-operator`.
+ |  | 
+ |  | `tail` subcommand requires the `tail` plugin. You can install it with `kubectl krew install tail`.
+ | /
+/
+WARNING: You installed plugin "rabbitmq" from the krew-index plugin repository.
+   These plugins are not audited for security by the Krew maintainers.
+   Run them at your own risk.
+
+# To get the list of available commands, use:
+
+# USAGE:
+#   Install RabbitMQ Cluster Operator (optionally provide image to use a relocated image or a specific version)
+#     kubectl rabbitmq install-cluster-operator [IMAGE]
+# [...]
+kubectl rabbitmq install-cluster-operator
+# namespace/rabbitmq-system created
+# customresourcedefinition.apiextensions.k8s.io/rabbitmqclusters.rabbitmq.com created
+# serviceaccount/rabbitmq-cluster-operator created
+# role.rbac.authorization.k8s.io/rabbitmq-cluster-leader-election-role created
+# clusterrole.rbac.authorization.k8s.io/rabbitmq-cluster-operator-role created
+# rolebinding.rbac.authorization.k8s.io/rabbitmq-cluster-leader-election-rolebinding created
+# clusterrolebinding.rbac.authorization.k8s.io/rabbitmq-cluster-operator-rolebinding created
+# deployment.apps/rabbitmq-cluster-operator created
+
+
+```
 
 ## RabbitMQ Kubernetes Operators: Cluster Operator and Messaging Topology Operator
 

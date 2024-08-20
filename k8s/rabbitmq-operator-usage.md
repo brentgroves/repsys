@@ -61,12 +61,16 @@ rabbitmqclusters.rabbitmq.com                         2024-08-19T21:19:19Z
 
 ## (Optional) Apply Pod Security Policies
 
+**Important NOTE**\
+Pod Security Policies have been replaced with **[Pod Security Admission](https://kubernetes.io/docs/concepts/security/pod-security-admission/)** an example can be found at **[Enforce Pod Security Standards with Namespace Labels](https://kubernetes.io/docs/tasks/configure-pod-container/enforce-standards-namespace-labels)**
+
 If pod security policies are enabled in the Kubernetes cluster, a [Cluster]Role and [Cluster]RoleBinding must be created to enable the Pods to be scheduled. For more information about Pod security policies, see the Kubernetes documentation. If Role and RoleBinding are used, it will only be effective in the Namespace where the RBACs are deployed.
 
 If Pod security policies are not enabled, skip to Create a RabbitMQ Instance below.
 
 The Role and RoleBinding should be created before a RabbitmqCluster instance is created. It's ok to create a binding that refers to a non-existing Service Account or User. The Operator creates a Service Account using the pattern INSTANCE-NAME-server. For example, a RabbitmqCluster named 'mycluster' will generate a Service Account named mycluster-server. In order to allow a Service Account to use PSPs, a Role with the verb 'use' must be bound to the Service Account. For example:
 
+```bash
 # Assuming RabbitmqCluster name is 'mycluster'
 
 kubectl create role rabbitmq:psp:unprivileged \
@@ -81,5 +85,12 @@ kubectl create rolebinding rabbitmq-mycluster:psp:unprivileged \
     --serviceaccount=some-namespace:mycluster-server
 
 # rolebinding "rabbitmq-mycluster:psp:unprivileged" created
+```
 
-Kubernetes documentation has an example to create RBAC rules and a policy.
+**[Kubernetes documentation](https://kubernetes.io/docs/concepts/policy/pod-security-policy/#example)** has an example to create RBAC rules and a policy.
+
+## Create a RabbitMQ Instance
+
+To create a RabbitMQ instance, a RabbitmqCluster resource definition must be created and applied. RabbitMQ Cluster Kubernetes Operator creates the necessary resources, such as Services and StatefulSet, in the same namespace in which the RabbitmqCluster was defined.
+
+First, create a YAML file to define a RabbitmqCluster resource named definition.yaml.

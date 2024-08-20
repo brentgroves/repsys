@@ -57,8 +57,6 @@ Will probably need to be physically on the servers to change the IPs.
 
 ## Diagrams
 
-- **[Report System Block and Sequence Diagrams](../../report_system/sequence_block.md)**
-
 - **[Report System Redundant K8s Clusters](../../report_system/report_system_redundant_k8s_clusters.md)**
 
 ## ToDo
@@ -81,29 +79,6 @@ This will involve adding a primary key to those tables without one. It also invo
 
 - **[Research List](../../../research/research_list.md)**\
 A list of all research for repsys.
-
-- **[Pod Security Admission](../../../research/a_l/k8s/concepts/pod_security_standards/pod_security_admission.md)**\
-  The Kubernetes Pod Security Standards define different isolation levels for Pods. These standards let you define how you want to restrict the behavior of pods in a clear, consistent fashion.
-
-  Kubernetes offers a built-in Pod Security admission controller to enforce the Pod Security Standards. Pod security restrictions are applied at the namespace level when pods are created.
-
-- **[DKMS](../../../research/a_l/linux/concepts/dkms.md)**\
-  ![](https://wiki.ubuntu.com/Kernel/Dev/DKMSPackaging?action=AttachFile&do=get&target=dkms.png)
-
-  Dynamic Kernel Module Support (DKMS) is a Linux framework that helps manage and install kernel modules that are external to the standard kernel distribution. These modules are often from hardware vendors and can add functionality to the Linux kernel, such as a hardware driver. DKMS has several benefits, including:\
-  **Compatibility**\
-  DKMS is compatible with most Linux distributions and monitors the system for kernel updates. When a new kernel is installed, DKMS automatically rebuilds the external modules using the latest kernel headers to ensure compatibility.\
-  **Convenience**\
-  DKMS is a convenient way to install additional drivers that are outside of the kernel tree.
-  However, DKMS also has some potential drawbacks, including:\
-  **Additional handling**\
-  Resident modules may require additional handling.
-  **Source code**\
-  Source code for NVIDIA-like modules with blob parts may not be convenient to deliver with DKMS.
-  **Module building**\
-  DKMS may not build a module if its function names have changed or if there are changes in how the kernel interacts with its components.
-  **Installation**\
-  DKMS doesn't guarantee proper installation if the kernel application binary interface changes.
 
 - **[CPU request](../../../research/a_l/k8s/concepts/cpu_requests.md)**
 
