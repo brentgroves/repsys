@@ -14,6 +14,12 @@
 
 This guide covers the installation of the RabbitMQ Cluster Kubernetes Operator in a Kubernetes cluster.
 
+## delete the operator
+
+```bash
+kubectl delete -f cluster-operator.yml
+```
+
 ## Compatibility
 
 The Operator requires
@@ -61,7 +67,7 @@ Installed plugin: rabbitmq
 \
  | Use this plugin:
  |      kubectl rabbitmq
- 
+
  | Documentation:
  |      https://github.com/rabbitmq/cluster-operator
  | Caveats:
