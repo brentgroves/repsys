@@ -13,6 +13,78 @@ kubectl delete -f cluster-operator.yml
 - **[Using Kubernetes RabbitMQ Cluster Kubernetes Operator](https://www.rabbitmq.com/kubernetes/operator/using-operator)**
 - **[examples](https://github.com/rabbitmq/cluster-operator/blob/main/docs/examples)**
 
+## **[Resource Limit Note](https://stackoverflow.com/questions/38869673/pod-in-pending-state-due-to-insufficient-cpu)**
+
+RabbitMQ has default resource requirements but microk8s has limits less than these requirements.
+
+Some reading material:
+
+<https://kubernetes.io/docs/tasks/configure-pod-container/assign-cpu-resource/#specify-a-cpu-request-and-a-cpu-limit>
+
+<https://kubernetes.io/docs/tasks/administer-cluster/manage-resources/cpu-default-namespace/#create-a-limitrange-and-a-pod>
+
+<https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/#how-pods-with-resource-limits-are-run>
+
+<https://cloud.google.com/blog/products/gcp/kubernetes-best-practices-resource-requests-and-limits>
+
+I recently had this same issue. After some research, I found that GKE has a default LimitRange with CPU requests limit set to 100m.
+
+You can validate this by running ```kubectl get limitrange -o=yaml```. It's going to display something like this:
+
+```yaml
+apiVersion: v1
+items:
+- apiVersion: v1
+  kind: LimitRange
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"v1","kind":"LimitRange","metadata":{"annotations":{},"name":"limits","namespace":"default"},"spec":{"limits":[{"defaultRequest":{"cpu":"100m"},"type":"Container"}]}}
+    creationTimestamp: 2017-11-16T12:15:40Z
+    name: limits
+    namespace: default
+    resourceVersion: "18741722"
+    selfLink: /api/v1/namespaces/default/limitranges/limits
+    uid: dcb25a24-cac7-11e7-a3d5-42010a8001b6
+  spec:
+    limits:
+    - defaultRequest:
+        cpu: 100m
+      type: Container
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""
+```
+
+```bash
+kubectl describe node
+Allocated resources:
+  (Total limits may be over 100 percent, i.e., overcommitted.)
+  Resource           Requests      Limits
+  --------           --------      ------
+  cpu                650m (65%)    300m (30%)
+  memory             2618Mi (16%)  2718Mi (17%)
+  ephemeral-storage  0 (0%)        0 (0%)
+  hugepages-1Gi      0 (0%)        0 (0%)
+  hugepages-2Mi      0 (0%)        0 (0%)
+```
+
+```yaml
+apiVersion: rabbitmq.com/v1beta1
+kind: RabbitmqCluster
+metadata:
+  name: rabbitmqcluster-sample
+spec:
+  resources:
+    requests:
+      cpu: 100m
+      memory: 2Gi
+    limits:
+      cpu: 100m
+      memory: 2Gi
+```
+
 ## Delete a RabbitMQ Instance
 
 To delete a RabbitMQ service instance, run
