@@ -34,6 +34,78 @@ This is the fastest way to get up and running with a RabbitMQ cluster deployed b
 Access to a Kubernetes cluster version 1.19 or above
 kubectl configured to access the cluster
 
+## **[Resource Limit Note](https://stackoverflow.com/questions/38869673/pod-in-pending-state-due-to-insufficient-cpu)**
+
+RabbitMQ has default resource requirements but microk8s has limits less than these requirements.
+
+Some reading material:
+
+<https://kubernetes.io/docs/tasks/configure-pod-container/assign-cpu-resource/#specify-a-cpu-request-and-a-cpu-limit>
+
+<https://kubernetes.io/docs/tasks/administer-cluster/manage-resources/cpu-default-namespace/#create-a-limitrange-and-a-pod>
+
+<https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/#how-pods-with-resource-limits-are-run>
+
+<https://cloud.google.com/blog/products/gcp/kubernetes-best-practices-resource-requests-and-limits>
+
+I recently had this same issue. After some research, I found that GKE has a default LimitRange with CPU requests limit set to 100m.
+
+You can validate this by running ```kubectl get limitrange -o=yaml```. It's going to display something like this:
+
+```yaml
+apiVersion: v1
+items:
+- apiVersion: v1
+  kind: LimitRange
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"v1","kind":"LimitRange","metadata":{"annotations":{},"name":"limits","namespace":"default"},"spec":{"limits":[{"defaultRequest":{"cpu":"100m"},"type":"Container"}]}}
+    creationTimestamp: 2017-11-16T12:15:40Z
+    name: limits
+    namespace: default
+    resourceVersion: "18741722"
+    selfLink: /api/v1/namespaces/default/limitranges/limits
+    uid: dcb25a24-cac7-11e7-a3d5-42010a8001b6
+  spec:
+    limits:
+    - defaultRequest:
+        cpu: 100m
+      type: Container
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""
+```
+
+```bash
+kubectl describe node
+Allocated resources:
+  (Total limits may be over 100 percent, i.e., overcommitted.)
+  Resource           Requests      Limits
+  --------           --------      ------
+  cpu                650m (65%)    300m (30%)
+  memory             2618Mi (16%)  2718Mi (17%)
+  ephemeral-storage  0 (0%)        0 (0%)
+  hugepages-1Gi      0 (0%)        0 (0%)
+  hugepages-2Mi      0 (0%)        0 (0%)
+```
+
+```yaml
+apiVersion: rabbitmq.com/v1beta1
+kind: RabbitmqCluster
+metadata:
+  name: rabbitmqcluster-sample
+spec:
+  resources:
+    requests:
+      cpu: 100m
+      memory: 2Gi
+    limits:
+      cpu: 100m
+      memory: 2Gi
+```
+
 ## Quickstart Steps
 
 This guide goes through the following steps:
@@ -111,7 +183,15 @@ and some rbac roles. These are required by the Operator to create, update and de
 apiVersion: rabbitmq.com/v1beta1
 kind: RabbitmqCluster
 metadata:
- name: hello-world
+  name: rabbitmqcluster-sample
+spec:
+  resources:
+    requests:
+      cpu: 100m
+      memory: 2Gi
+    limits:
+      cpu: 100m
+      memory: 2Gi
 ```
 
 Submit this using the following command:
@@ -119,34 +199,24 @@ Submit this using the following command:
 ```bash
 pushd .
 cd ~/src/repsys/k8s/rabbitmq
-kubectl apply -f helloworld.yaml
+kubectl apply -f helloworld-res.yaml
 # or
 # kubectl apply -f https://raw.githubusercontent.com/rabbitmq/cluster-operator/main/docs/examples/hello-world/rabbitmq.yaml
 
-kubectl edit pv persistence-rabbitmqcluster-sample-server-0
-kubectl edit pvc persistence-rabbitmqcluster-sample-server-0
-  volumeName: "persistence-rabbitmqcluster-sample-server-0"
 ```
 
-## **[Local Path Provisioner](https://github.com/rancher/local-path-provisioner)**
+## resource limit issue
 
-Dynamic provisioning the volume using hostPath or local.
-
-- Currently the Kubernetes Local Volume provisioner cannot do dynamic provisioning for the local volumes. **I believe MicroK8s can do
-
-- Local based persistent volumes are an experimental feature (example usage).
-
-If your Pod is stuck in the Pending state, most probably your cluster does not have a Physical Volume Provisioner. This can be verified as the following:
-
-```bash
-kubectl get pvc,pod
-NAME                               STATUS    VOLUME   CAPACITY   ACCESS MODES   STORAGECLASS   AGE
-persistence-hello-world-server-0   Pending                                                     30s
-```
+if you don't specify resource limits this is the error you get.
 
 In this case, and if this is not a production environment, you might want to install the Local Path Provisioner
 
 Note: On microk8s we don't normally use this local path provisioner but enable hostpath-storage which I believe can do dynamic provisioning. My guess is that the rabbitmq operator does not try but it does create the pvc with the hostpath-storage as a name.
+
+```bash
+kubectl logs rabbitmqcluster-sample-server-0
+# or 
+kubectl edit pvc persistence-rabbitmqcluster-sample-server-0
 
 status:
   conditions:
@@ -160,6 +230,9 @@ status:
     type: PodScheduled
   phase: Pending
   qosClass: Burstable
+```
+
+# deploy rabbitmq instance
 
 ```bash
 kubectl apply -f heeloworld-res.yaml
