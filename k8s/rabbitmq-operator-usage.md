@@ -6,6 +6,8 @@
 
 ## references
 
+kubectl delete -f cluster-operator.yml
+
 - **[github](https://github.com/rabbitmq/cluster-operator)**
 - **[Install](https://www.rabbitmq.com/kubernetes/operator/install-operator)**
 - **[Using Kubernetes RabbitMQ Cluster Kubernetes Operator](https://www.rabbitmq.com/kubernetes/operator/using-operator)**
@@ -22,6 +24,9 @@ where INSTANCE is the name of your RabbitmqCluster, or use
 kubectl delete rabbitmqcluster INSTANCE
 # or
 kubectl delete -f INSTANCE.yaml
+# or
+kubectl delete rabbitmqclusters.rabbitmq.com hello-world
+
 ```
 
 ## How to use the RabbitMQ Cluster Kubernetes Operator

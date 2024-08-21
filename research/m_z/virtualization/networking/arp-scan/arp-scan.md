@@ -82,4 +82,47 @@ Ending arp-scan 1.9.7: 256 hosts scanned in 2.106 seconds (121.56 hosts/sec). 0 
 
 arp-scan -I enp0s25 172.20.0.0-172.20.3.255
 
+sudo arp-scan -I enp0s25 10.1.97.30
+Interface: enp0s25, type: EN10MB, MAC: 18:03:73:1f:84:a4, IPv4: 10.1.0.113
+Starting arp-scan 1.9.7 with 1 hosts (https://github.com/royhills/arp-scan)
+
+1 packets received by filter, 0 packets dropped by kernel
+Ending arp-scan 1.9.7: 1 hosts scanned in 1.493 seconds (0.67 hosts/sec). 0 responded
+
+ping alb-ehs-01.busche-cnc.com
+
+PING alb-ehs-01.busche-cnc.com (10.1.97.30) 56(84) bytes of data.
+64 bytes from 10.1.97.30 (10.1.97.30): icmp_seq=1 ttl=127 time=11.5 ms
+64 bytes from 10.1.97.30 (10.1.97.30): icmp_seq=2 ttl=127 time=7.45 ms
+
+traceroute alb-ehs-01.busche-cnc.com 
+traceroute to alb-ehs-01.busche-cnc.com (10.1.97.30), 30 hops max, 60 byte packets
+ 1  _gateway (10.1.1.205)  0.698 ms  0.648 ms  0.614 ms
+
+nmap -n -sn -PR --send-eth 10.1.97.30
+ Starting Nmap 7.80 ( https://nmap.org ) at 2024-08-21 16:45 EDT
+Note: Host seems down. If it is really up, but blocking our ping probes, try -Pn
+Nmap done: 1 IP address (0 hosts up) scanned in 3.14 seconds
+
+nmap -n -sn -Pn --send-eth 10.1.97.30
+Starting Nmap 7.80 ( https://nmap.org ) at 2024-08-21 16:47 EDT
+Nmap scan report for 10.1.97.30
+Host is up.
+Nmap done: 1 IP address (1 host up) scanned in 0.00 seconds
+
+nmap -sT 10.1.97.30
+
+nmap -Pn -sT 10.1.97.30
+Starting Nmap 7.80 ( https://nmap.org ) at 2024-08-21 16:49 EDT
+Nmap scan report for 10.1.97.30
+Host is up (0.0086s latency).
+Not shown: 996 filtered ports
+PORT     STATE SERVICE
+135/tcp  open  msrpc
+139/tcp  open  netbios-ssn
+445/tcp  open  microsoft-ds
+3389/tcp open  ms-wbt-server
+
+nmap -n -sn -PnR --send-eth 10.1.97.30
+
 ```

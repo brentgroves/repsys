@@ -35,6 +35,12 @@ Example B.5. Duplicate Address Detection with arping
 arping -D -q -I enp0s25 -c 2 172.20.3.21
 echo $?
 0
+
+Interface: enp0s25, type: EN10MB, MAC: 18:03:73:1f:84:a4, IPv4: 10.1.0.113
+Starting arp-scan 1.9.7 with 1 hosts (https://github.com/royhills/arp-scan)
+
+3 packets received by filter, 0 packets dropped by kernel
+Ending arp-scan 1.9.7: 1 hosts scanned in 1.776 seconds (0.56 hosts/sec). 0 responded
 ```
 
 First, dietrich tests reachability of its preferred IP (192.168.99.35). Because the IP address is in use by tristan, dietrich receives a response. Any response by a device on the Ethernet indicating that an IP address is in use will cause the arping command to exit with a non-zero exit code (specifically, exit code 1).
