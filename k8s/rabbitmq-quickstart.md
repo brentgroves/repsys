@@ -162,8 +162,23 @@ status:
   qosClass: Burstable
 
 ```bash
-kubectl apply -f https://raw.githubusercontent.com/rancher/local-path-provisioner/master/deploy/local-path-storage.yaml
-kubectl annotate storageclass local-path storageclass.kubernetes.io/is-default-class=true
+kubectl apply -f heeloworld-res.yaml
+kubectl get rabbitmqclusters.rabbitmq.com
+NAME                     ALLREPLICASREADY   RECONCILESUCCESS   AGE
+rabbitmqcluster-sample   True               True               12m
+kubectl logs rabbitmqcluster-sample-server-0
+024-08-21 22:05:01.193675+00:00 [info] <0.675.0> Server startup complete; 8 plugins started.
+2024-08-21 22:05:01.193675+00:00 [info] <0.675.0>  * rabbitmq_prometheus
+2024-08-21 22:05:01.193675+00:00 [info] <0.675.0>  * rabbitmq_federation
+2024-08-21 22:05:01.193675+00:00 [info] <0.675.0>  * rabbitmq_peer_discovery_k8s
+2024-08-21 22:05:01.193675+00:00 [info] <0.675.0>  * rabbitmq_peer_discovery_common
+2024-08-21 22:05:01.193675+00:00 [info] <0.675.0>  * rabbitmq_management
+2024-08-21 22:05:01.193675+00:00 [info] <0.675.0>  * rabbitmq_management_agent
+2024-08-21 22:05:01.193675+00:00 [info] <0.675.0>  * rabbitmq_web_dispatch
+2024-08-21 22:05:01.193675+00:00 [info] <0.675.0>  * oauth2_client
+2024-08-21 22:05:01.285804+00:00 [info] <0.9.0> Time to start RabbitMQ: 190694 ms
+
+kubectl rabbitmq tail rabbitmqcluster-sample
 ```
 
 After that, you need to remove and re-create the previously created RabbitMQ Cluster object:
