@@ -17,7 +17,7 @@ chmod 755 ~/bin/shell_scripts/
 exit
 
 # upload shell scripts to server
-lftp brent@rephub12
+lftp brent@repsys11
 :~> cd ~/bin/shell_scripts #this is in dotfiles path
 :~> mput *.sh
 exit

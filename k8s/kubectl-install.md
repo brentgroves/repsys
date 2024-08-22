@@ -15,11 +15,11 @@ sudo snap install kubectl  --classic
 ## generate microk8s config
 
 ```bash
-ssh brent@rephub11
+ssh brent@repsys11_home
 cd ~
 mkdir .kube
 cd .kube
-microk8s config > rephub1_home.yaml
+microk8s config > repsys11_home.yaml
 nvim rephub1.yaml
 ```
 
@@ -64,18 +64,18 @@ kubectl get all
 
 ```bash
 # From development system
-cd ~/src/repsys/k8s/kubectl/all-config-files
-rm rephub1_home.yaml
+cd ~/src/k8s/all-config-files
+rm repsys11_home.yaml
 # From K8s node get new config file
-lftp brent@rephub11
-get /home/brent/.kube/rephub1_home.yaml
+lftp brent@repsys11
+get /home/brent/.kube/repsys11_home.yaml
 exit
 # Remove previous config files from nodes and hosts
-ssh brent@rephub11
+ssh brent@repsys11
 rm ~/.kube/*.yaml
 exit
 # Deploy all config files to other nodes and hosts
-lftp brent@rephub11
+lftp brent@repsys11
 cd .kube
 mput *.yaml
 
@@ -96,7 +96,7 @@ checkin changes
 ```bash
 ssh brent@reports5
 ~/startday.sh
-pushd ~/src/repsys/linux/kubectl/all-config-files
+pushd ~/src/k8s/all-config-files
 mkdir -p ~/.kube
 rm ~/.kube/*.yaml
 cp ./*.yaml ~/.kube/
@@ -114,6 +114,8 @@ cp* ~/.kube
 ## test config with scc
 
 ```bash
+scc.sh repsys11_home.yaml microk8s
+
 scc.sh reports3.yaml mayastor
 scc.sh reports3.yaml microk8s
 scc.sh reports-aks-mobex.yaml reports-aks-mobex
