@@ -29,6 +29,10 @@ kubectl delete -f cluster-operator.yml
 
 This is the fastest way to get up and running with a RabbitMQ cluster deployed by the Cluster Operator. More detailed resources are available for installation, usage and API reference.
 
+## Note
+
+CPU and Memory limits need to be set before I could get this to work.
+
 ## Prerequisites
 
 Access to a Kubernetes cluster version 1.19 or above
