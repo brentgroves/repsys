@@ -20,10 +20,38 @@ You can use custom resources to encapsulate data required by your own applicatio
 
 They're also the foundation for extending Kubernetes with your own controllers and operators.
 
-Custom resources aren't the right choice for every scenario, though. For example, you don't need to create custom resources for arbitrary config values used by your app. In this situation, a plain ConfigMap will be easier to work with. Custom resources should be reserved for unique functionality that's scoped to the namespace or cluster level. They're ideal for data that fits the Kubernetes declarative operation model, requires its own API, and will be managed with ecosystem tools such as kubectl and the Kubernetes dashboard.
+Custom resources aren't the right choice for every scenario, though. For example, you don't need to create custom resources for arbitrary config values used by your app. In this situation, a plain ConfigMap will be easier to work with. Custom resources should be reserved for unique functionality that's scoped to the namespace or cluster level. They're ideal for data that fits the Kubernetes **declarative operation model**, requires its own API, and will be managed with ecosystem tools such as kubectl and the Kubernetes dashboard.
 
-## ConfigMaps
+## **[ConfigMaps](../config_map.md)**
 
 A ConfigMap is an API object used to store non-confidential data in key-value pairs. Pods can consume ConfigMaps as environment variables, command-line arguments, or as configuration files in a volume.
 
 A ConfigMap allows you to decouple environment-specific configuration from your container images, so that your applications are easily portable.
+
+## CRDs, Controllers, and Operators
+
+Custom resources are usually encountered alongside controllers and operators. A Kubernetes controller **monitors specific resource types and carries out actions that achieve desired state changes**. The pod controller ensures containers are started in response to new pod manifests being added to your cluster, while cert-manager's controller obtains an SSL certificate when you create a CertificateRequest object.
+
+CRDs are rarely used without an accompanying controller. On their own, CRD instances are simple blobs of data in your cluster. The presence of custom objects used in this way is a good sign that a ConfigMap would be more appropriate for the situation.
+
+## Processing CRDs with Controllers
+
+Kubernetes controllers are loops that take actions in response to specific events occurring. The controller's cycle has three main phases:
+
+- **Observe:** The controller determines the cluster's desired state by monitoring for Kubernetes events that describe changes.
+- **Analyze:** The observed state is compared to the known existing state. This uncovers discrepancies such as new objects that aren't in the old state or fields that have had their values updated.
+- **Act:** The controller performs all the actions necessary to transition the cluster into the desired state.
+
+Creating controllers for your CRDs lets you process their data and carry out tasks inside your cluster. Take the BackgroundJob CRD mentioned in the introduction: you could write a controller that automatically runs a command in a container whenever a new BackgroundJob object is created.
+
+## You'd write a simple YAML manifest similar to this
+
+```yaml
+apiVersion: crds.example.com/v1
+kind: BackgroundJob
+metadata:
+  name: demo-job
+spec:
+  image: busybox:latest
+  command: "echo hello-world"
+```

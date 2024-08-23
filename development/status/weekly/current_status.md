@@ -85,7 +85,12 @@ This will involve adding a primary key to those tables without one. It also invo
 - **[Research List](../../../research/research_list.md)**\
 A list of all research for repsys.
 
-- **[Extending Kubernetes with Custom Resource Definitions (CRDs)](https://www.loft.sh/blog/extending-kubernetes-with-custom-resource-definitions-crds)**\
+- **[what is busybox](../../../research/a_l/busybox/busybox.md)**\
+  The Swiss Army Knife of Embedded Linux
+
+  Coming in somewhere between 1 and 5 Mb in on-disk size (depending on the variant), BusyBox⁠ is a very good ingredient to craft space-efficient distributions.
+
+- **[Extending Kubernetes with Custom Resource Definitions (CRDs)](../../../research/a_l/k8s/concepts/crd/extending_k8s_with_crds.md)**\
   CRDs extend the API with support for arbitrary data types. Each CRD you create gets its own API endpoints that you can use to query, create, and edit instances of that resource. Custom resources are fully supported within kubectl, so you can run commands like kubectl get backgroundjobs to interact with your application's objects.
 
   Like Windows regedit except rather than a hiarchical database it's a key-value store like redis but uses etcd.
