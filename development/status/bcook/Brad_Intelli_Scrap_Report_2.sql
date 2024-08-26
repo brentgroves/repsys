@@ -1,5 +1,5 @@
 -- Intelli Scrap Report 2
-
+-- select top 10 * from Accelerated_Production_v
 ;WITH
     prepod
     as
@@ -16,7 +16,7 @@
 
 SELECT report_date, part_no, sum(cast) as cast, sum(scrap) as scrap
 FROM(
-        SELECT
+                SELECT
             p.report_date,
             pa.part_no,
             sum(p.quantity) as 'cast',

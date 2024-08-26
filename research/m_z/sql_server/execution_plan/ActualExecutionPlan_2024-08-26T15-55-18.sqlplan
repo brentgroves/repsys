@@ -1,0 +1,1205 @@
+﻿<ShowPlanXML xmlns="http://schemas.microsoft.com/sqlserver/2004/07/showplan" Version="1.481" Build="14.0.3465.1">
+  <BatchSequence>
+    <Batch>
+      <Statements>
+        <StmtSimple StatementText="WITH prepod as (&#xA;select plexus_customer_no&#xA;,report_date  &#xA;--,rejected&#xA;--,note&#xA;--,quantity&#xA;from part_v_production&#xA;WHERE report_date &gt; dateadd(day, -32, current_timestamp)&#xA;AND report_date &lt; dateadd(day, -1, current_timestamp))&#xA;select top 10 * from prepod" StatementId="1" StatementCompId="4" StatementType="SELECT" StatementSqlHandle="0x0900DE2D54DB0905C114B6A468CB338E20F50000000000000000000000000000000000000000000000000000" DatabaseContextSettingsId="4" ParentObjectId="0" StatementParameterizationType="0" RetrievedFromCache="false" StatementSubTreeCost="0.0033371" StatementEstRows="10" SecurityPolicyApplied="false" StatementOptmLevel="TRIVIAL" QueryHash="0x15D3264866C0C1AC" QueryPlanHash="0x111BBD8D7B139F15" CardinalityEstimationModelVersion="70">
+          <StatementSetOptions QUOTED_IDENTIFIER="true" ARITHABORT="false" CONCAT_NULL_YIELDS_NULL="true" ANSI_NULLS="true" ANSI_PADDING="true" ANSI_WARNINGS="true" NUMERIC_ROUNDABORT="false"></StatementSetOptions>
+          <QueryPlan DegreeOfParallelism="0" NonParallelPlanReason="MaxDOPSetToOne" CachedPlanSize="80" CompileTime="18" CompileCPU="17" CompileMemory="1304">
+            <MemoryGrantInfo SerialRequiredMemory="0" SerialDesiredMemory="0"></MemoryGrantInfo>
+            <OptimizerHardwareDependentProperties EstimatedAvailableMemoryGrant="153600" EstimatedPagesCached="76800" EstimatedAvailableDegreeOfParallelism="1" MaxCompileMemory="4599544"></OptimizerHardwareDependentProperties>
+            <TraceFlags IsCompileTime="1">
+              <TraceFlag Value="661" Scope="Global"></TraceFlag>
+              <TraceFlag Value="3226" Scope="Global"></TraceFlag>
+              <TraceFlag Value="4136" Scope="Global"></TraceFlag>
+            </TraceFlags>
+            <TraceFlags IsCompileTime="0">
+              <TraceFlag Value="661" Scope="Global"></TraceFlag>
+              <TraceFlag Value="3226" Scope="Global"></TraceFlag>
+              <TraceFlag Value="4136" Scope="Global"></TraceFlag>
+            </TraceFlags>
+            <WaitStats>
+              <Wait WaitType="PAGEIOLATCH_SH" WaitTimeMs="3" WaitCount="4"></Wait>
+            </WaitStats>
+            <QueryTimeStats ElapsedTime="3" CpuTime="0"></QueryTimeStats>
+            <RelOp NodeId="0" PhysicalOp="Top" LogicalOp="Top" EstimateRows="10" EstimateIO="0" EstimateCPU="1e-006" AvgRowSize="19" EstimatedTotalSubtreeCost="0.0033371" Parallel="0" EstimateRebinds="0" EstimateRewinds="0" EstimatedExecutionMode="Row">
+              <OutputList>
+                <ColumnReference Database="[Part]" Schema="[dbo]" Table="[Production]" Alias="[T__P]" Column="Plexus_Customer_No"></ColumnReference>
+                <ColumnReference Database="[Part]" Schema="[dbo]" Table="[Production]" Alias="[T__P]" Column="Report_Date"></ColumnReference>
+              </OutputList>
+              <RunTimeInformation>
+                <RunTimeCountersPerThread Thread="0" ActualRows="10" Batches="0" ActualExecutionMode="Row" ActualElapsedms="3" ActualCPUms="0" ActualEndOfScans="1" ActualExecutions="1"></RunTimeCountersPerThread>
+              </RunTimeInformation>
+              <Top RowCount="0" IsPercent="0" WithTies="0">
+                <TopExpression>
+                  <ScalarOperator ScalarString="(10)">
+                    <Const ConstValue="(10)"></Const>
+                  </ScalarOperator>
+                </TopExpression>
+                <RelOp NodeId="1" PhysicalOp="Index Seek" LogicalOp="Index Seek" EstimateRows="10" EstimateRowsWithoutRowGoal="12837.9" EstimatedRowsRead="12837.9" EstimateIO="0.0646065" EstimateCPU="0.0142787" AvgRowSize="19" EstimatedTotalSubtreeCost="0.0033361" TableCardinality="4.08395e+008" Parallel="0" Partitioned="1" EstimateRebinds="0" EstimateRewinds="0" EstimatedExecutionMode="Row">
+                  <OutputList>
+                    <ColumnReference Database="[Part]" Schema="[dbo]" Table="[Production]" Alias="[T__P]" Column="Plexus_Customer_No"></ColumnReference>
+                    <ColumnReference Database="[Part]" Schema="[dbo]" Table="[Production]" Alias="[T__P]" Column="Report_Date"></ColumnReference>
+                  </OutputList>
+                  <RunTimeInformation>
+                    <RunTimeCountersPerThread Thread="0" ActualRows="10" Batches="0" ActualExecutionMode="Row" ActualElapsedms="3" ActualCPUms="0" ActualScans="1" ActualLogicalReads="4" ActualPhysicalReads="4" ActualReadAheads="0" ActualLobLogicalReads="0" ActualLobPhysicalReads="0" ActualLobReadAheads="0" ActualRowsRead="10" ActualEndOfScans="0" ActualExecutions="1"></RunTimeCountersPerThread>
+                  </RunTimeInformation>
+                  <RunTimePartitionSummary>
+                    <PartitionsAccessed PartitionCount="1">
+                      <PartitionRange Start="337" End="337"></PartitionRange>
+                    </PartitionsAccessed>
+                  </RunTimePartitionSummary>
+                  <IndexScan Ordered="1" ScanDirection="FORWARD" ForcedIndex="0" ForceSeek="0" ForceScan="0" NoExpandHint="0" Storage="RowStore">
+                    <DefinedValues>
+                      <DefinedValue>
+                        <ColumnReference Database="[Part]" Schema="[dbo]" Table="[Production]" Alias="[T__P]" Column="Plexus_Customer_No"></ColumnReference>
+                      </DefinedValue>
+                      <DefinedValue>
+                        <ColumnReference Database="[Part]" Schema="[dbo]" Table="[Production]" Alias="[T__P]" Column="Report_Date"></ColumnReference>
+                      </DefinedValue>
+                    </DefinedValues>
+                    <Object Database="[Part]" Schema="[dbo]" Table="[Production]" Index="[Report_Date]" Alias="[T__P]" IndexKind="NonClustered" Storage="RowStore"></Object>
+                    <SeekPredicates>
+                      <SeekPredicateNew>
+                        <SeekKeys>
+                          <Prefix ScanType="EQ">
+                            <RangeColumns>
+                              <ColumnReference Column="PtnId1000"></ColumnReference>
+                              <ColumnReference Database="[Part]" Schema="[dbo]" Table="[Production]" Alias="[T__P]" Column="Plexus_Customer_No"></ColumnReference>
+                            </RangeColumns>
+                            <RangeExpressions>
+                              <ScalarOperator ScalarString="RangePartitionNew(CONVERT(int,parsename(suser_name(),(2)),0),(0),(0),(1),(2),(4),(5),(6),(7),(8),(9),(10),(11),(13),(14),(17),(18),(19),(21),(22),(23),(24),(25),(27),(28),(29),(30),(31),(32),(33),(34),(36),(37),(38),(99),(110),(190),(194),(199),(296),(298),(299),(351),(374),(393),(395),(399),(9553),(9554),(9752),(9826),(9828),(9999),(19095),(19097),(19110),(19781),(19796),(19809),(19899),(19965),(19966),(19996),(19999),(20068),(20069),(20141),(20144),(20159),(20166),(20209),(20210),(20219),(20230),(20239),(20486),(20498),(20614),(20656),(20672),(20749),(20974),(21131),(21132),(21352),(21359),(22507),(22509),(22525),(22526),(22529),(22534),(22537),(22539),(22576),(22577),(22579),(22581),(22587),(22604),(22609),(22631),(22659),(33739),(33929),(39149),(47579),(47599),(47839),(48499),(48599),(48969),(49009),(49399),(49999),(50679),(51279),(51309),(51319),(53159),(53349),(54909),(58349),(58709),(58710),(58799),(58999),(59147),(59999),(61499),(62217),(63619),(65679),(65991),(69439),(73499),(73999),(75769),(76099),(76559),(77199),(78699),(78999),(79077),(79079),(79309),(79999),(82391),(82399),(82829),(83499),(83679),(83680),(83689),(83829),(83999),(85654),(85655),(85656),(85657),(85999),(87199),(89349),(89382),(89399),(91799),(92199),(92349),(94639),(96149),(96459),(98009),(99999),(101999),(102855),(103036),(103078),(103126),(103225),(103307),(103999),(104527),(104678),(104999),(107999),(109999),(119999),(129999),(138278),(138280),(138281),(138282),(138283),(138284),(138285),(138286),(138807),(139999),(141692),(141963),(142204),(142455),(142457),(144801),(145077),(145126),(145127),(145128),(145129),(145225),(145236),(145356),(145363),(145364),(145365),(145392),(145533),(145700),(146601),(146785),(149593),(149607),(149717),(149718),(149719),(149765),(149767),(149772),(149999),(150546),(150682),(156111),(156357),(157027),(157343),(157344),(159631),(160925),(160929),(163193),(164852),(164853),(164857),(164862),(164930),(165158),(166156),(166398),(166402),(166964),(168342),(168556),(172602),(173597),(174816),(175144),(175769),(175770),(175771),(261071),(261072),(261073),(261074),(261075),(262759),(263686),(264209),(267364),(268226),(268363),(268853),(268868),(269292),(269293),(269294),(269462),(269463),(270929),(271321),(271322),(271323),(271324),(271326),(271327),(271328),(271335),(271342),(271343),(271344),(271507),(271508),(271848),(271849),(271850),(271861),(271917),(272090),(274430),(275031),(275676),(275913),(275914),(275915),(275916),(278261),(278262),(278328),(280340),(281389),(285686),(285964),(286430),(287297),(287307),(288744),(289158),(289222),(289694),(289762),(289853),(289910),(290148),(290149),(290682),(290885),(290886),(291276),(291293),(291521),(291605),(291773),(291778),(294167),(294284),(294455),(294806),(294932),(295042),(295967),(999999))">
+                                <Intrinsic FunctionName="RangePartitionNew">
+                                  <ScalarOperator>
+                                    <Identifier>
+                                      <ColumnReference Column="ConstExpr1003">
+                                        <ScalarOperator>
+                                          <Convert DataType="int" Style="0" Implicit="0">
+                                            <ScalarOperator>
+                                              <Intrinsic FunctionName="parsename">
+                                                <ScalarOperator>
+                                                  <Intrinsic FunctionName="suser_name">
+                                                    <ScalarOperator>
+                                                      <Const ConstValue=""></Const>
+                                                    </ScalarOperator>
+                                                  </Intrinsic>
+                                                </ScalarOperator>
+                                                <ScalarOperator>
+                                                  <Const ConstValue="(2)"></Const>
+                                                </ScalarOperator>
+                                              </Intrinsic>
+                                            </ScalarOperator>
+                                          </Convert>
+                                        </ScalarOperator>
+                                      </ColumnReference>
+                                    </Identifier>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(0)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(0)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(1)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(2)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(4)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(5)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(6)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(7)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(8)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(9)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(10)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(11)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(13)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(14)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(17)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(18)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(19)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(21)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(22)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(23)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(24)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(25)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(27)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(28)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(29)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(30)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(31)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(32)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(33)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(34)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(36)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(37)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(38)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(99)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(110)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(190)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(194)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(199)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(296)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(298)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(299)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(351)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(374)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(393)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(395)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(399)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(9553)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(9554)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(9752)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(9826)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(9828)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(9999)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(19095)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(19097)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(19110)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(19781)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(19796)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(19809)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(19899)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(19965)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(19966)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(19996)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(19999)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(20068)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(20069)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(20141)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(20144)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(20159)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(20166)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(20209)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(20210)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(20219)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(20230)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(20239)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(20486)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(20498)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(20614)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(20656)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(20672)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(20749)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(20974)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(21131)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(21132)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(21352)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(21359)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(22507)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(22509)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(22525)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(22526)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(22529)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(22534)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(22537)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(22539)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(22576)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(22577)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(22579)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(22581)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(22587)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(22604)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(22609)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(22631)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(22659)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(33739)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(33929)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(39149)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(47579)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(47599)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(47839)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(48499)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(48599)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(48969)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(49009)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(49399)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(49999)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(50679)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(51279)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(51309)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(51319)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(53159)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(53349)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(54909)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(58349)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(58709)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(58710)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(58799)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(58999)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(59147)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(59999)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(61499)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(62217)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(63619)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(65679)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(65991)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(69439)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(73499)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(73999)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(75769)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(76099)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(76559)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(77199)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(78699)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(78999)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(79077)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(79079)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(79309)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(79999)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(82391)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(82399)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(82829)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(83499)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(83679)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(83680)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(83689)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(83829)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(83999)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(85654)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(85655)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(85656)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(85657)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(85999)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(87199)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(89349)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(89382)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(89399)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(91799)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(92199)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(92349)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(94639)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(96149)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(96459)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(98009)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(99999)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(101999)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(102855)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(103036)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(103078)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(103126)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(103225)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(103307)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(103999)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(104527)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(104678)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(104999)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(107999)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(109999)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(119999)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(129999)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(138278)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(138280)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(138281)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(138282)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(138283)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(138284)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(138285)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(138286)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(138807)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(139999)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(141692)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(141963)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(142204)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(142455)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(142457)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(144801)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(145077)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(145126)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(145127)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(145128)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(145129)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(145225)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(145236)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(145356)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(145363)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(145364)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(145365)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(145392)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(145533)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(145700)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(146601)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(146785)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(149593)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(149607)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(149717)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(149718)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(149719)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(149765)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(149767)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(149772)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(149999)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(150546)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(150682)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(156111)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(156357)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(157027)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(157343)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(157344)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(159631)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(160925)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(160929)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(163193)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(164852)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(164853)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(164857)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(164862)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(164930)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(165158)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(166156)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(166398)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(166402)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(166964)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(168342)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(168556)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(172602)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(173597)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(174816)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(175144)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(175769)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(175770)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(175771)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(261071)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(261072)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(261073)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(261074)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(261075)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(262759)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(263686)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(264209)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(267364)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(268226)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(268363)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(268853)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(268868)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(269292)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(269293)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(269294)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(269462)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(269463)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(270929)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(271321)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(271322)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(271323)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(271324)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(271326)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(271327)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(271328)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(271335)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(271342)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(271343)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(271344)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(271507)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(271508)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(271848)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(271849)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(271850)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(271861)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(271917)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(272090)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(274430)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(275031)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(275676)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(275913)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(275914)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(275915)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(275916)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(278261)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(278262)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(278328)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(280340)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(281389)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(285686)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(285964)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(286430)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(287297)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(287307)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(288744)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(289158)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(289222)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(289694)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(289762)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(289853)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(289910)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(290148)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(290149)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(290682)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(290885)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(290886)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(291276)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(291293)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(291521)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(291605)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(291773)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(291778)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(294167)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(294284)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(294455)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(294806)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(294932)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(295042)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(295967)"></Const>
+                                  </ScalarOperator>
+                                  <ScalarOperator>
+                                    <Const ConstValue="(999999)"></Const>
+                                  </ScalarOperator>
+                                </Intrinsic>
+                              </ScalarOperator>
+                              <ScalarOperator ScalarString="CONVERT(int,parsename(suser_name(),(2)),0)">
+                                <Identifier>
+                                  <ColumnReference Column="ConstExpr1003">
+                                    <ScalarOperator>
+                                      <Convert DataType="int" Style="0" Implicit="0">
+                                        <ScalarOperator>
+                                          <Intrinsic FunctionName="parsename">
+                                            <ScalarOperator>
+                                              <Intrinsic FunctionName="suser_name">
+                                                <ScalarOperator>
+                                                  <Const ConstValue=""></Const>
+                                                </ScalarOperator>
+                                              </Intrinsic>
+                                            </ScalarOperator>
+                                            <ScalarOperator>
+                                              <Const ConstValue="(2)"></Const>
+                                            </ScalarOperator>
+                                          </Intrinsic>
+                                        </ScalarOperator>
+                                      </Convert>
+                                    </ScalarOperator>
+                                  </ColumnReference>
+                                </Identifier>
+                              </ScalarOperator>
+                            </RangeExpressions>
+                          </Prefix>
+                          <StartRange ScanType="GT">
+                            <RangeColumns>
+                              <ColumnReference Database="[Part]" Schema="[dbo]" Table="[Production]" Alias="[T__P]" Column="Report_Date"></ColumnReference>
+                            </RangeColumns>
+                            <RangeExpressions>
+                              <ScalarOperator ScalarString="dateadd(day,(-32),getdate())">
+                                <Identifier>
+                                  <ColumnReference Column="ConstExpr1004">
+                                    <ScalarOperator>
+                                      <Intrinsic FunctionName="dateadd">
+                                        <ScalarOperator>
+                                          <Const ConstValue="(4)"></Const>
+                                        </ScalarOperator>
+                                        <ScalarOperator>
+                                          <Const ConstValue="(-32)"></Const>
+                                        </ScalarOperator>
+                                        <ScalarOperator>
+                                          <Intrinsic FunctionName="getdate"></Intrinsic>
+                                        </ScalarOperator>
+                                      </Intrinsic>
+                                    </ScalarOperator>
+                                  </ColumnReference>
+                                </Identifier>
+                              </ScalarOperator>
+                            </RangeExpressions>
+                          </StartRange>
+                          <EndRange ScanType="LT">
+                            <RangeColumns>
+                              <ColumnReference Database="[Part]" Schema="[dbo]" Table="[Production]" Alias="[T__P]" Column="Report_Date"></ColumnReference>
+                            </RangeColumns>
+                            <RangeExpressions>
+                              <ScalarOperator ScalarString="dateadd(day,(-1),getdate())">
+                                <Identifier>
+                                  <ColumnReference Column="ConstExpr1005">
+                                    <ScalarOperator>
+                                      <Intrinsic FunctionName="dateadd">
+                                        <ScalarOperator>
+                                          <Const ConstValue="(4)"></Const>
+                                        </ScalarOperator>
+                                        <ScalarOperator>
+                                          <Const ConstValue="(-1)"></Const>
+                                        </ScalarOperator>
+                                        <ScalarOperator>
+                                          <Intrinsic FunctionName="getdate"></Intrinsic>
+                                        </ScalarOperator>
+                                      </Intrinsic>
+                                    </ScalarOperator>
+                                  </ColumnReference>
+                                </Identifier>
+                              </ScalarOperator>
+                            </RangeExpressions>
+                          </EndRange>
+                        </SeekKeys>
+                      </SeekPredicateNew>
+                    </SeekPredicates>
+                  </IndexScan>
+                </RelOp>
+              </Top>
+            </RelOp>
+          </QueryPlan>
+        </StmtSimple>
+      </Statements>
+    </Batch>
+  </BatchSequence>
+</ShowPlanXML>

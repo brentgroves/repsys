@@ -80,10 +80,17 @@ This involves manual SQL creation of schema and automated copying of table recor
 This will involve adding a primary key to those tables without one. It also involves manual SQL creation of schema and automated copying of table records.
 - Create **[Plex ODBC connection instructions for Windows](../../../research/m_z/sql_server/p)**
 
+## Review
+
+- **[Brad_Intelli_Scrap_Report_2](../bcook/Brad_Intelli_Scrap_Report_2.sql)**
+
 ## Research
 
 - **[Research List](../../../research/research_list.md)**\
 A list of all research for repsys.
+
+- **[SQL Server Indexes](../../../research/m_z/sql_server/execution_plan/indexes.md)**\
+  An index in a table improves the query performance by speeding up the data lookup. By default, a query analyzer does a sequential scan on every row in a table until it finds the searched result. An index scan is much faster because an index acts as a pointer reference to the rows address in a table.
 
 - **[what is busybox](../../../research/a_l/busybox/busybox.md)**\
   The Swiss Army Knife of Embedded Linux
