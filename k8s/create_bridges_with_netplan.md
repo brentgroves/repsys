@@ -39,11 +39,33 @@ sudo cp /etc/netplan/50-cloud-init.yaml .
 sudo vi /etc/netplan/50-cloud-init.yaml
 ```
 
+## Finding an network interface to enslave
+
+```bash
+ip link show 
+...
+6: eno1: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq state UP mode DEFAULT group default qlen 1000
+    link/ether b8:ca:3a:6a:37:18 brd ff:ff:ff:ff:ff:ff
+    altname enp1s0f0
+7: eno2: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq master br0 state UP mode DEFAULT group default qlen 1000
+    link/ether b8:ca:3a:6a:37:19 brd ff:ff:ff:ff:ff:ff
+    altname enp1s0f1
+8: eno3: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq master br2 state UP mode DEFAULT group default qlen 1000
+    link/ether b8:ca:3a:6a:37:1a brd ff:ff:ff:ff:ff:ff
+    altname enp1s0f2
+9: eno4: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq state UP mode DEFAULT group default qlen 1000
+    link/ether b8:ca:3a:6a:37:1b brd ff:ff:ff:ff:ff:ff
+    altname enp1s0f3
+...
+```
+
 ## Finding free IP Addresses
 
 Finding an IP conflict is as simple as a single command, “arp-scan -l”. You may also wish to specify the -I option, which will allow you to pick an interface. Below, I have identified an IP address that is being claimed by two machines:
 
 ```bash
+nmap -sP 10.1.0.0/22
+# or
 sudo arp-scan -I enp0s25 -l
 [sudo] password for brent: 
 Interface: enp0s25, type: EN10MB, MAC: 18:03:73:1f:84:a4, IPv4: 10.1.0.113
@@ -124,9 +146,9 @@ network:
         eno2:
             dhcp4: no
         eno3:
-            dhcp4: true
+            dhcp4: no
         eno4:
-            dhcp4: true
+            dhcp4: no
         enp66s0f0:
             dhcp4: true
         enp66s0f1:
@@ -154,7 +176,7 @@ network:
         br2:
             dhcp4: no
             addresses:
-            - 10.1.0.124/22
+            - 10.1.0.127/22
             nameservers:
                 addresses:
                 - 10.1.2.69
@@ -162,7 +184,17 @@ network:
                 - 172.20.0.39
                 search: [BUSCHE-CNC.COM]
             interfaces: [eno3]
-
+        br3:
+            dhcp4: no
+            addresses:
+            - 10.1.0.140/22
+            nameservers:
+                addresses:
+                - 10.1.2.69
+                - 10.1.2.70
+                - 172.20.0.39
+                search: [BUSCHE-CNC.COM]
+            interfaces: [eno4]
     version: 2
 ```
 

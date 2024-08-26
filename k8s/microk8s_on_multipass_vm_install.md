@@ -43,9 +43,9 @@ network:
         eno2:
             dhcp4: no
         eno3:
-            dhcp4: true
+            dhcp4: no
         eno4:
-            dhcp4: true
+            dhcp4: no
         enp66s0f0:
             dhcp4: true
         enp66s0f1:
@@ -81,6 +81,17 @@ network:
                 - 172.20.0.39
                 search: [BUSCHE-CNC.COM]
             interfaces: [eno3]
+        br3:
+            dhcp4: no
+            addresses:
+            - 10.1.0.140/22
+            nameservers:
+                addresses:
+                - 10.1.2.69
+                - 10.1.2.70
+                - 172.20.0.39
+                search: [BUSCHE-CNC.COM]
+            interfaces: [eno4]
     version: 2
 ```
 
@@ -263,12 +274,11 @@ ip link show master br0
 ## retrieve the hardware address
 
 See how multipass configured the network. Until I can figure out how to pass the hardware address manaully during launch we will have to grab the one multipass or lxd creates.
+Note: On repsys11-c2-n2 the 50-cloud-init.yaml file already had the correct mac address.
 
 ```bash
-multipass exec -n repsys11-c2-n1 -- sudo networkctl -a status
-
-multipass exec -n repsys12-c1-n1 -- sudo networkctl -a status
-● 3: enp6s0                                                                    
+multipass exec -n repsys11-c2-n3 -- sudo networkctl -a status
+3: enp6s0                                                                    
                      Link File: /usr/lib/systemd/network/99-default.link
                   Network File: /run/systemd/network/10-netplan-extra0.network
                           Type: ether
@@ -278,15 +288,15 @@ multipass exec -n repsys12-c1-n1 -- sudo networkctl -a status
                         Driver: virtio_net
                         Vendor: Red Hat, Inc.
                          Model: Virtio network device
-                    HW Address: 52:54:00:c6:66:bf
+                    HW Address: 52:54:00:ff:17:97
                            MTU: 1500 (min: 68, max: 65535)
                          QDisc: mq
   IPv6 Address Generation Mode: eui64
           Queue Length (Tx/Rx): 2/2
               Auto negotiation: no
                          Speed: n/a
-                       Address: 10.1.3.182 (DHCP4 via 10.1.2.70)
-                                fe80::5054:ff:fec6:66bf
+                       Address: 10.1.2.142 (DHCP4 via 10.1.2.69)
+                                fe80::5054:ff:feff:1797
                        Gateway: 10.1.1.205
                            DNS: 10.1.2.69
                                 10.1.2.70
@@ -295,12 +305,8 @@ multipass exec -n repsys12-c1-n1 -- sudo networkctl -a status
              Activation Policy: up
            Required For Online: no
                DHCP4 Client ID: IAID:0x24721ac8/DUID
-             DHCP6 Client DUID: DUID-EN/Vendor:0000ab11717a840b6c41e7280000
+             DHCP6 Client DUID: DUID-EN/Vendor:0000ab1129b4197538261b490000
 
-Jul 18 18:43:51 repsys12-c1-n1 systemd-networkd[644]: enp6s0: Link UP
-Jul 18 18:43:51 repsys12-c1-n1 systemd-networkd[644]: enp6s0: Gained carrier
-Jul 18 18:43:51 repsys12-c1-n1 systemd-networkd[644]: enp6s0: DHCPv4 address 10.1.3.182/22 via 10.1.1.205
-Jul 18 18:43:53 repsys12-c1-n1 systemd-networkd[644]: enp6s0: Gained IPv6LL
 ```
 
 ## Step 3: Configure the extra interface
@@ -308,7 +314,7 @@ Jul 18 18:43:53 repsys12-c1-n1 systemd-networkd[644]: enp6s0: Gained IPv6LL
 We now need to configure the manual network interface inside the instance. We can achieve that using Netplan. The following command plants the required Netplan configuration file in the instance:
 
 ```bash
-multipass exec -n repsys12-c1-n1 -- sudo bash -c 'cat /etc/netplan/50-cloud-init.yaml'
+multipass exec -n repsys11-c2-n3 -- sudo bash -c 'cat /etc/netplan/50-cloud-init.yaml'
 # This file is generated from information provided by the datasource.  Changes
 # to it will not persist across an instance reboot.  To disable cloud-init's
 # network configuration capabilities, write a file
@@ -319,26 +325,29 @@ network:
         default:
             dhcp4: true
             match:
-                macaddress: 52:54:00:d2:75:85
+                macaddress: 52:54:00:14:9d:7b
         extra0:
             dhcp4: true
             dhcp4-overrides:
                 route-metric: 200
             match:
-                macaddress: 52:54:00:c6:66:bf
+                macaddress: 52:54:00:ff:17:97
             optional: true
     version: 2
 
-multipass exec -n repsys12-c1-n1 -- sudo bash -c 'cat << EOF > /etc/netplan/50-cloud-init.yaml
+
+# update netplan with hardware address
+# Make sure the mac address matches the extra0 macaddress
+multipass exec -n repsys11-c2-n3 -- sudo bash -c 'cat << EOF > /etc/netplan/50-cloud-init.yaml
 network:
     ethernets:
         default:
             dhcp4: true
             match:
-                macaddress: 52:54:00:d2:75:85
+                macaddress: 52:54:00:14:9d:7b
         extra0:
             addresses:
-              - 10.1.0.133/22
+              - 10.1.0.141/22
             nameservers:
                 addresses:
                 - 10.1.2.69
@@ -346,23 +355,22 @@ network:
                 - 172.20.0.39
                 search: [BUSCHE-CNC.COM]
             match:
-                macaddress: 52:54:00:c6:66:bf
+                macaddress: 52:54:00:ff:17:97
             optional: true
     version: 2
 EOF'
 
 # verify yaml
-
-multipass exec -n repsys12-c1-n1 -- sudo bash -c 'cat /etc/netplan/50-cloud-init.yaml'
+multipass exec -n repsys11-c2-n3 -- sudo bash -c 'cat /etc/netplan/50-cloud-init.yaml'
 network:
     ethernets:
         default:
             dhcp4: true
             match:
-                macaddress: 52:54:00:d2:75:85
+                macaddress: 52:54:00:14:9d:7b
         extra0:
             addresses:
-              - 10.1.0.133/22
+              - 10.1.0.141/22
             nameservers:
                 addresses:
                 - 10.1.2.69
@@ -370,17 +378,18 @@ network:
                 - 172.20.0.39
                 search: [BUSCHE-CNC.COM]
             match:
-                macaddress: 52:54:00:c6:66:bf
+                macaddress: 52:54:00:ff:17:97
             optional: true
     version: 2
 
 # if all looks good apply network changes
-multipass exec -n repsys12-c1-n1 -- sudo netplan apply
+multipass exec -n repsys11-c2-n3 -- sudo netplan apply
 WARNING:root:Cannot call Open vSwitch: ovsdb-server.service is not running.
 # check network interfaces with networkd cli
-multipass exec -n repsys12-c1-n1 -- sudo networkctl -a status
+multipass exec -n repsys11-c2-n3 -- sudo networkctl -a status
 # skip multipass default network interfaces
 ...
+
 ● 3: enp6s0                                                                    
                      Link File: /usr/lib/systemd/network/99-default.link
                   Network File: /run/systemd/network/10-netplan-extra0.network
@@ -391,32 +400,32 @@ multipass exec -n repsys12-c1-n1 -- sudo networkctl -a status
                         Driver: virtio_net
                         Vendor: Red Hat, Inc.
                          Model: Virtio network device
-                    HW Address: 52:54:00:c6:66:bf
+                    HW Address: 52:54:00:ff:17:97
                            MTU: 1500 (min: 68, max: 65535)
                          QDisc: mq
   IPv6 Address Generation Mode: eui64
           Queue Length (Tx/Rx): 2/2
               Auto negotiation: no
                          Speed: n/a
-                       Address: 10.1.0.133
-                                fe80::5054:ff:fec6:66bf
+                       Address: 10.1.0.141
+                                fe80::5054:ff:feff:1797
                            DNS: 10.1.2.69
                                 10.1.2.70
                                 172.20.0.39
                 Search Domains: BUSCHE-CNC.COM
              Activation Policy: up
            Required For Online: no
-             DHCP6 Client DUID: DUID-EN/Vendor:0000ab11717a840b6c41e7280000
+             DHCP6 Client DUID: DUID-EN/Vendor:0000ab1129b4197538261b490000
 
-Jul 18 18:43:51 repsys12-c1-n1 systemd-networkd[644]: enp6s0: Link UP
-Jul 18 18:43:51 repsys12-c1-n1 systemd-networkd[644]: enp6s0: Gained carrier
-Jul 18 18:43:51 repsys12-c1-n1 systemd-networkd[644]: enp6s0: DHCPv4 address 10.1.3.182/22 via 10.1.1.205
-Jul 18 18:43:53 repsys12-c1-n1 systemd-networkd[644]: enp6s0: Gained IPv6LL
-Jul 18 18:53:38 repsys12-c1-n1 systemd-networkd[644]: enp6s0: Re-configuring with /run/systemd/network/10-netplan-extra0.network
-Jul 18 18:53:38 repsys12-c1-n1 systemd-networkd[644]: enp6s0: DHCP lease lost
-Jul 18 18:53:38 repsys12-c1-n1 systemd-networkd[644]: enp6s0: DHCPv6 lease lost
-Jul 18 18:53:38 repsys12-c1-n1 systemd-networkd[644]: enp6s0: Re-configuring with /run/systemd/network/10-netplan-extra0.network
-Jul 18 18:53:38 repsys12-c1-n1 systemd-networkd[644]: enp6s0: DHCPv6 lease lost
+Aug 23 23:12:07 repsys11-c2-n3 systemd-networkd[635]: enp6s0: Link UP
+Aug 23 23:12:07 repsys11-c2-n3 systemd-networkd[635]: enp6s0: Gained carrier
+Aug 23 23:12:07 repsys11-c2-n3 systemd-networkd[635]: enp6s0: DHCPv4 address 10.1.2.142/22 via 10.1.1.205
+Aug 23 23:12:08 repsys11-c2-n3 systemd-networkd[635]: enp6s0: Gained IPv6LL
+Aug 26 22:41:13 repsys11-c2-n3 systemd-networkd[635]: enp6s0: Re-configuring with /run/systemd/network/10-netplan-extra0.network
+Aug 26 22:41:13 repsys11-c2-n3 systemd-networkd[635]: enp6s0: DHCP lease lost
+Aug 26 22:41:13 repsys11-c2-n3 systemd-networkd[635]: enp6s0: DHCPv6 lease lost
+Aug 26 22:41:13 repsys11-c2-n3 systemd-networkd[635]: enp6s0: Re-configuring with /run/systemd/network/10-netplan-extra0.network
+Aug 26 22:41:13 repsys11-c2-n3 systemd-networkd[635]: enp6s0: DHCPv6 lease lost
 
 ```
 
@@ -425,7 +434,18 @@ Jul 18 18:53:38 repsys12-c1-n1 systemd-networkd[644]: enp6s0: DHCPv6 lease lost
 You can confirm that the new IP is present in the instance with Multipass:
 
 ```bash
-multipass info repsys12-c1-n1
+multipass info repsys11-c2-n3
+Name:           repsys11-c2-n3
+State:          Running
+IPv4:           10.127.233.169
+                10.1.0.141
+Release:        Ubuntu 22.04.4 LTS
+Image hash:     d8f4fd471ec4 (Ubuntu 22.04 LTS)
+CPU(s):         2
+Load:           0.03 0.01 0.00
+Disk usage:     2.1GiB out of 77.5GiB
+Memory usage:   251.3MiB out of 15.6GiB
+Mounts:         --
 
 ```
 
@@ -446,6 +466,8 @@ rtt min/avg/max/mdev = 1.309/1.309/1.309/0.000 ms
 Confirm VM can ping lan and wan
 
 ```bash
+multipass exec -n repsys12-c1-n2 -- ping -c 1 -n 10.1.0.113
+
 multipass exec -n repsys12-c1-n1 -- ping -c 1 -n 10.1.0.113
 PING 10.1.0.113 (10.1.0.113) 56(84) bytes of data.
 64 bytes from 10.1.0.113: icmp_seq=1 ttl=64 time=0.560 ms
@@ -515,6 +537,7 @@ sudo usermod -a -G microk8s $USER
 mkdir ~/.kube
 sudo chown -f -R $USER ~/.kube
 # You will also need to re-enter the session for the group update to take place:
+# I could not do this on multipass vms so I just exited and re-ssh'd
 su - $USER
 -or-
 sudo usermod -a -G microk8s $USER  

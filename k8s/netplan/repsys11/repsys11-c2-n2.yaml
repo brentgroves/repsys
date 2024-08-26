@@ -1,4 +1,4 @@
-network: THIS IS A COPY OF N1 MUST SELECT AN IP AND MAC ADDRESS
+network: 
     ethernets:
         default:
             dhcp4: true
@@ -6,7 +6,7 @@ network: THIS IS A COPY OF N1 MUST SELECT AN IP AND MAC ADDRESS
                 macaddress: 52:54:00:a8:40:63
         extra0:
             addresses:
-            - 10.1.0.129/22
+            - 10.1.0.141/22
             nameservers:
                 addresses:
                 - 10.1.2.69
