@@ -1,5 +1,38 @@
 -- Intelli Scrap Report 2
 -- select top 10 * from Accelerated_Production_v
+
+/*
+table: part_v_production 
+primary key: plexus_customer_no,Production_No
+indexes:
+1. PK_Production_PT	
+Plexus_Customer_No,Production_No
+2. Report_Date	
+Plexus_Customer_No
+Report_Date
+Workcenter_Key
+Quantity
+*/
+
+/*
+SELECT top 10 *
+FROM part_v_production WITH (INDEX("[Report_Date]"))
+
+SELECT top 10 *
+FROM Accelerated_Production_v
+
+;WITH prepod as (
+select plexus_customer_no
+,report_date  
+--,rejected
+--,note
+--,quantity
+from part_v_production WITH (INDEX("[Report_Date]"))
+WHERE report_date > dateadd(day, -32, current_timestamp)
+AND report_date < dateadd(day, -1, current_timestamp))
+select top 10 * from prepod
+*/
+
 ;WITH
     prepod
     as
@@ -16,7 +49,7 @@
 
 SELECT report_date, part_no, sum(cast) as cast, sum(scrap) as scrap
 FROM(
-                SELECT
+                        SELECT
             p.report_date,
             pa.part_no,
             sum(p.quantity) as 'cast',
