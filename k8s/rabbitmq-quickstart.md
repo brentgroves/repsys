@@ -133,7 +133,7 @@ Let's start by installing the latest version of the Cluster Operator. This can b
 
 ```bash
 pushd
-cd ~//src/repsys/k8s/rabbitmq
+cd ~/src/repsys/k8s/rabbitmq
 kubectl apply -f "https://github.com/rabbitmq/cluster-operator/releases/latest/download/cluster-operator.yml"
 # or you can download it first
 curl -L -O https://github.com/rabbitmq/cluster-operator/releases/download/v2.9.0/cluster-operator.yml
@@ -236,7 +236,7 @@ status:
   qosClass: Burstable
 ```
 
-# deploy rabbitmq instance
+## deploy rabbitmq instance
 
 ```bash
 kubectl apply -f heeloworld-res.yaml

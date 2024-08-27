@@ -6,9 +6,19 @@
 
 ## references
 
+- **[ssh into multipass vms](./ssh_into_mutipass_vms.md)**
+- **[multipass ubuntu password set](https://askubuntu.com/questions/1230753/login-and-password-for-multipass-instance)**
 - **[How to Bridge Two Network Interfaces in Linux Using Netplan](https://www.tecmint.com/netplan-bridge-network-interfaces/)**
 - **[bridge commands](https://developers.redhat.com/articles/2022/04/06/introduction-linux-bridging-commands-and-features#spanning_tree_protocol)**
 - **[Create an instance with multiple network interfaces](https://multipass.run/docs/create-an-instance#heading--create-an-instance-with-multiple-network-interfaces)**
+
+## **[multipass ubuntu password set](https://askubuntu.com/questions/1230753/login-and-password-for-multipass-instance)**
+
+In multipass instance, set a password to ubuntu user. Needed to ftp from dev system. Multipass has transfer command but only works from the host.
+
+```bash
+sudo passwd ubuntu
+```
 
 ## Note
 
@@ -338,6 +348,29 @@ network:
 
 # update netplan with hardware address
 # Make sure the mac address matches the extra0 macaddress
+
+multipass exec -n repsys11-c2-n2 -- sudo bash -c 'cat << EOF > /etc/netplan/50-cloud-init.yaml
+network:
+    ethernets:
+        default:
+            dhcp4: true
+            match:
+                macaddress: 52:54:00:32:ff:d1
+        extra0:
+            addresses:
+              - 10.1.0.142/22
+            nameservers:
+                addresses:
+                - 10.1.2.69
+                - 10.1.2.70
+                - 172.20.0.39
+                search: [BUSCHE-CNC.COM]
+            match:
+                macaddress: 52:54:00:24:71:0c
+            optional: true
+    version: 2
+EOF'
+
 multipass exec -n repsys11-c2-n3 -- sudo bash -c 'cat << EOF > /etc/netplan/50-cloud-init.yaml
 network:
     ethernets:
@@ -485,6 +518,8 @@ PING google.com (142.250.191.238) 56(84) bytes of data.
 rtt min/avg/max/mdev = 9.039/9.039/9.039/0.000 ms
 
 ```
+
+## **[Setup ssh to VMs](./ssh_into_mutipass_vms.md)**
 
 ## **[install microk8s](https://microk8s.io/docs/install-multipass)**
 
@@ -650,21 +685,23 @@ cp repsys11_sql_server.yaml ~/.kube/config
 
 ```
 
-## add to config files
+## copy config files to server
 
 ```bash
-multipass shell microk8s-vm
-cat repsys11_sql_server.yaml
-# copy and paste
+# copy kube config files to server
+ssh brent@repsys12
+mkdir ~/.kube
+chmod 766 ~/.kube
+exit
+
 cd ~/src/k8s/all-config-files
-touch repsys11_sql_server.yaml
-# copy and paste config file and replace the server ip with the static one from the bridged network interface.
-nvim repsys11_sql_server.yaml
-
-cp repsys11_sql_server.yaml ~/.kube/
-# scc.sh repsys11_sql_server.yaml microk8s
-# scc.sh repsys11c2n1.yaml microk8s
-
+# upload kube config files to server .config dir
+lftp brent@repsys12
+# or ubuntu for multipass vms
+lftp brent@repsys12
+:~> cd .kube
+:~> mput *.yaml
+exit
 ```
 
 ## **[create a debug pod](https://medium.com/@shambhand2020/create-the-various-debug-or-test-pod-inside-kubernetes-cluster-e4862c767b96)**

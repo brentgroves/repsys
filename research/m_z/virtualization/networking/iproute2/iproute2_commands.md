@@ -50,9 +50,23 @@ Routing
 What’s the modern alternative of the command route -n ?
 A simple:
 
-[root@myserver.com ~]# ip ro
+[brent@repsys11 ~]# ip ro
 The output is slightly different but you get exactly the same information:
-
+default via 10.1.1.205 dev eno1 proto static
+10.1.0.0/22 dev br0 proto kernel scope link src 10.1.0.126
+10.1.0.0/22 dev br2 proto kernel scope link src 10.1.0.127
+10.1.0.0/22 dev br3 proto kernel scope link src 10.1.0.140
+10.1.0.0/22 dev eno1 proto kernel scope link src 10.1.0.125
+10.13.31.0/24 dev br1 proto kernel scope link src 10.13.31.1 linkdown
+10.127.233.0/24 dev mpbr0 proto kernel scope link src 10.127.233.1
+ubuntu@repsys11-c2-n2:~$ ip ro
+default via 10.127.233.1 dev enp5s0 proto dhcp src 10.127.233.252 metric 100 
+10.1.0.0/22 dev enp6s0 proto kernel scope link src 10.1.0.142 
+blackhole 10.1.41.128/26 proto 80 
+10.1.41.133 dev cali104635667e0 scope link 
+10.1.41.134 dev cali96e44e3d43b scope link 
+10.127.233.0/24 dev enp5s0 proto kernel scope link src 10.127.233.252 metric 100 
+10.127.233.1 dev enp5s0 proto dhcp scope link src 10.127.233.252 metric 100
 [me@mydesktop ~] route -n
 Kernel IP routing table
 Destination     Gateway         Genmask         Flags Metric Ref    Use Iface

@@ -5,7 +5,7 @@
 
 - **[Azure Setup (Ask for Access)](../../azure/mobexglobal.com/azure_setup.md)**
 - **[Ubuntu 22.04 Server Install](../linux/ubuntu22-04/server-install.md)**
-- **[MicroK8s](./microk8s_1.28_install.md)**
+- **[MicroK8s](./microk8s_install.md)**
 - **[Kubectl](./kubectl-install.md)**
 - **[Helm](./helm-install.md)**
 - **[Host Path Storage](./host_path_storage/host_path_storage.md)**

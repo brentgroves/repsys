@@ -1,0 +1,21 @@
+10.1.0.125	repsys11 # eno1
+10.1.0.125	repsys11.busche-cnc.com #eno1
+10.1.0.126	repsys11 # br0
+10.1.0.126	repsys11.busche-cnc.com #br0
+10.1.0.127	repsys11 # br2
+10.1.0.127	repsys11.busche-cnc.com #br2
+10.1.0.140	repsys11 # br3
+10.1.0.140	repsys11.busche-cnc.com #br3
+
+10.1.0.129	repsys11-c2-n1
+10.1.0.142	repsys11-c2-n2
+10.1.0.141	repsys11-c2-n3
+
+10.1.0.129	mysql_mgdw
+10.1.0.128	microk8s-vm
+10.1.0.128	mssql_mgdw
+10.1.0.130	repsys12
+10.1.0.130	repsys12.busche-cnc.com
+10.1.0.133	repsys12-c1-n1
+10.1.0.135	repsys13
+10.1.0.135	repsys13.busche-cnc.com
