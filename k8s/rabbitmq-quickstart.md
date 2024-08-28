@@ -93,6 +93,19 @@ Allocated resources:
   ephemeral-storage  0 (0%)        0 (0%)
   hugepages-1Gi      0 (0%)        0 (0%)
   hugepages-2Mi      0 (0%)        0 (0%)
+Non-terminated Pods:          (8 in total)
+  Namespace                   Name                                          CPU Requests  CPU Limits  Memory Requests  Memory Limits  Age
+  ---------                   ----                                          ------------  ----------  ---------------  -------------  ---
+  default                     mysql-0                                       0 (0%)        0 (0%)      0 (0%)           0 (0%)         42d
+  default                     rabbitmqcluster-sample-server-0               100m (10%)    100m (10%)  2Gi (12%)        2Gi (12%)      7d
+  default                     test-nginx                                    0 (0%)        0 (0%)      0 (0%)           0 (0%)         7d23h
+  kube-system                 calico-kube-controllers-796fb75cc-5pzgd       0 (0%)        0 (0%)      0 (0%)           0 (0%)         48d
+  kube-system                 calico-node-s8bsn                             250m (25%)    0 (0%)      0 (0%)           0 (0%)         23h
+  kube-system                 coredns-5986966c54-whdsr                      100m (10%)    0 (0%)      70Mi (0%)        170Mi (1%)     48d
+  kube-system                 hostpath-provisioner-7c8bdf94b8-nhqc5         0 (0%)        0 (0%)      0 (0%)           0 (0%)         8d
+  rabbitmq-system             rabbitmq-cluster-operator-6dcf5746f4-gzl94    200m (20%)    200m (20%)  500Mi (3%)       500Mi (3%)     7d3h
+
+
 ```
 
 ```yaml
