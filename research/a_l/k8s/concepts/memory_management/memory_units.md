@@ -1,8 +1,8 @@
 # **[Memory resource units](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/)**
 
-**[Current Status](../../../../development/status/weekly/current_status.md)**\
-**[Research List](../../../research_list.md)**\
-**[Back Main](../../../../README.md)**
+**[Current Status](../../../../../development/status/weekly/current_status.md)**\
+**[Research List](../../../../research_list.md)**\
+**[Back Main](../../../../../README.md)**
 
 Limits and requests for memory are measured in bytes. You can express memory as a plain integer or as a fixed-point number using one of these quantity suffixes: E, P, T, G, M, k. You can also use the power-of-two equivalents: Ei, Pi, Ti, Gi, Mi, Ki. For example, the following represent roughly the same value:
 
