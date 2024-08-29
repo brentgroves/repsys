@@ -46,8 +46,6 @@ kubectl configured to access the cluster
 
 ## **[Resource Limit Note](https://stackoverflow.com/questions/38869673/pod-in-pending-state-due-to-insufficient-cpu)**
 
-RabbitMQ has default resource requirements but microk8s has limits less than these requirements.
-
 Some reading material:
 
 <https://kubernetes.io/docs/tasks/configure-pod-container/assign-cpu-resource/#specify-a-cpu-request-and-a-cpu-limit>
@@ -234,7 +232,9 @@ kubectl apply -f helloworld-res.yaml
 
 ## resource limit issue
 
-if you don't specify resource limits this is the error you get.
+Note: DID NOT HAVE THIS ISSUE ONCE I ADDED 2 MORE NODES TO THE CLUSTER
+
+if you don't specify resource limits you might get an error if you don't have enough resources on your node.
 
 In this case, and if this is not a production environment, you might want to install the Local Path Provisioner
 
@@ -262,7 +262,7 @@ status:
 ## deploy rabbitmq instance
 
 ```bash
-kubectl apply -f heloworld-res.yaml
+kubectl apply -f heloworld.yaml
 kubectl get rabbitmqclusters.rabbitmq.com
 NAME                     ALLREPLICASREADY   RECONCILESUCCESS   AGE
 rabbitmqcluster-sample   True               True               12m
@@ -297,3 +297,5 @@ kubectl describe node
   hugepages-1Gi      0 (0%)      0 (0%)
   hugepages-2Mi      0 (0%)      0 (0%)
 ```
+
+## **[NEXT](https://www.rabbitmq.com/kubernetes/operator/quickstart-operator#access-the-management-ui)**

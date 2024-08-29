@@ -1,3 +1,4 @@
+THIS DID NOT WORK
 apiVersion: rabbitmq.com/v1beta1
 kind: RabbitmqCluster
 metadata:
