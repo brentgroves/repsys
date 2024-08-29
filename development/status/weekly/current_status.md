@@ -85,14 +85,18 @@ This will involve adding a primary key to those tables without one. It also invo
 - **[Research List](../../../research/research_list.md)**\
 A list of all research for repsys.
 
-- **[CGroups to limit resource consumption](../../../research/a_l/linux/concepts/cgroups/tutorial.md)**
+- **[Container security fundamentals part 4: Cgroups](../../../research/a_l/linux/concepts/cgroups/container_security_fundamentals.md)**
 
-- **[CPU request](../../../research/a_l/k8s/concepts/cpu_memory_limits/cpu_requests.md)**
+  Managing system resources can be a challenge when multiple processes are running on a host. A single misbehaving program could consume all available resources, causing the entire system to crash. To tackle this problem, Linux relies on control groups (cgroups) to manage each process's access to resources, such as CPU and memory.
 
   ...Let’s say we have a single node with 1 CPU core and three pods (each of which have one container and one thread) that are requesting 200, 400, and 200 millicores (m) of CPU, respectively. The scheduler is able to place them all on the node because the sum of requests is less than 1 CPU core:
 
-- **[SQL Server Indexes](../../../research/m_z/sql_server/execution_plan/indexes.md)**\
-  An index in a table improves the query performance by speeding up the data lookup. By default, a query analyzer does a sequential scan on every row in a table until it finds the searched result. An index scan is much faster because an index acts as a pointer reference to the rows address in a table.
+- **[Linux scheduling in Kubernetes](../../../research/a_l/k8s/concepts/cpu_management/linux_scheduling_in_k8s.md)**
+
+  In this section, we will cover how containers’ CPU requests and limits correlate to how the CFS assigns CPU time to those containers in the default CPU Manager policy. We will also explore how you can reduce the risk of throttling and use metrics to debug potential CPU-related application issues.
+
+- **[Protocol Engineering](../../../research/a_l/linux/concepts/protocol_engineering.md)**
+  Protocol engineering is the application of systematic methods to the development of communication protocols. It uses many of the principles of software engineering, but it is specific to the development of distributed systems.
 
 - **[what is busybox](../../../research/a_l/busybox/busybox.md)**\
   The Swiss Army Knife of Embedded Linux

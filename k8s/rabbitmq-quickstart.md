@@ -19,7 +19,13 @@ kubectl delete rabbitmqcluster INSTANCE
 where INSTANCE is the name of your RabbitmqCluster, or use
 
 ```bash
+kubectl get rabbitmqclusters.rabbitmq.com
+NAME                     ALLREPLICASREADY   RECONCILESUCCESS   AGE
+rabbitmqcluster-sample   True               True               7d22h
+
+kubectl delete rabbitmqcluster rabbitmqcluster-sample
 kubectl delete rabbitmqcluster INSTANCE
+
 # or
 kubectl delete -f INSTANCE.yaml
 # ie
@@ -31,7 +37,7 @@ This is the fastest way to get up and running with a RabbitMQ cluster deployed b
 
 ## Note
 
-CPU and Memory limits need to be set before I could get this to work.
+CPU limits need to be set before I could get this to work. But I only had a 1 node, 2 cpu cluster, with outer pods running so I will try again.
 
 ## Prerequisites
 
@@ -81,6 +87,10 @@ metadata:
   resourceVersion: ""
   selfLink: ""
 ```
+
+**[Yes](https://www.reddit.com/r/kubernetes/comments/191n7ci/cpu_use_higher_than_requests/)**, when you say request, you're defining what is the minimum CPU that the app will need in order to function, so you're requesting a minimum allocation that cannot be violated (your app is guaranteed requests CPU); not setting a hard limit. If your app makes use of more than that, and there is spare CPU left over after all pods are calculated, then your app is allowed to use that but if another app spins up and takes some away then your app will lose access to the excess capacity.
+
+This is a bit of an over simplification, I admit. But should help you to understand better. I highly recommend the robusta.dev article entitled "For the Love of God, Stop Using CPU Limits on Kubernetes (Updated)", which was
 
 ```bash
 kubectl describe node

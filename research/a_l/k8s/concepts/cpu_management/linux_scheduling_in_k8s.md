@@ -1,4 +1,4 @@
-# **[CPU requests](https://www.datadoghq.com/blog/kubernetes-cpu-requests-limits/)**
+# **[Linux scheduling in Kubernetes](https://www.datadoghq.com/blog/kubernetes-cpu-requests-limits/)**
 
 **[Current Status](../../../../development/status/weekly/current_status.md)**\
 **[Research List](../../../research_list.md)**\
@@ -18,7 +18,7 @@ Hyperthreading is a hardware technology that allows a single processor core to b
 
 The CPU Manager is a feature that was introduced in beta in Kubernetes v1.10 and moved to stable in v1.26. This feature allows you to use **[Linux CPUSets](https://www.kernel.org/doc/Documentation/cgroup-v1/cpusets.txt)** instead of the CFS to assign CPUs to workloads.
 
-By default, the CPU Manager policy is set to none, which means that the Linux CFS and CFS quota are responsible for assigning and limiting CPU resources in Kubernetes. Alternatively, you can set the CPU Manager policy to static to give containers exclusive access to specific cores. The mode that will best suit your requirements depends on the nature of your workload. These two modes differ greatly in their approaches to CPU allocation and limiting, so we will be covering both separately in this post.
+By default, the CPU Manager policy is set to none, which means that the Linux CFS, Completely Fair Scheduler, and CFS quota are responsible for assigning and limiting CPU resources in Kubernetes. Alternatively, you can set the CPU Manager policy to static to give containers exclusive access to specific cores. The mode that will best suit your requirements depends on the nature of your workload. These two modes differ greatly in their approaches to CPU allocation and limiting, so we will be covering both separately in this post.
 
 Before going any further, it is important to clarify that Kubernetes considers CPU to be a compressible resource. This means that even if a node is suffering from CPU pressure, the kubelet won’t evict pods, regardless of their Quality of Service class—but some (or all) of the containers on that node will be throttled. Later in this post, we will walk through metrics that can be helpful for troubleshooting application performance issues that may be related to throttling.
 
