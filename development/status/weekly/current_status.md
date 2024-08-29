@@ -28,10 +28,6 @@ The goal is to nail down the details of where the various parts of our report sy
 - DigiCert - John Biel
 - Our PKI
 
-## **[Sentinel One](../../../../../src/secrets/sentinelone/sentinelone.md)**
-
-Installed on development system and researched the Linux CLI.
-
 ## **[Network Upgrade Request for the Reporting System](../jdavis/network_upgrade.md)**
 
 - 60 static IP addresses.

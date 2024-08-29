@@ -6,4 +6,9 @@
 
 ## references
 
-<https://stackoverflow.com/questions/69030570/limiting-microk8s-maximum-memory-usage>
+- **[microk8s](https://stackoverflow.com/questions/69030570/limiting-microk8s-maximum-memory-usage)**
+
+## Container security fundamentals part 4: Cgroups
+
+Managing system resources can be a challenge when multiple processes are running on a host. A single misbehaving program could consume all available resources, causing the entire system to crash. To tackle this problem, Linux relies on control groups (cgroups) to manage each process's access to resources, such as CPU and memory.
+
