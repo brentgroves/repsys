@@ -262,7 +262,7 @@ status:
 ## deploy rabbitmq instance
 
 ```bash
-kubectl apply -f heeloworld-res.yaml
+kubectl apply -f heloworld-res.yaml
 kubectl get rabbitmqclusters.rabbitmq.com
 NAME                     ALLREPLICASREADY   RECONCILESUCCESS   AGE
 rabbitmqcluster-sample   True               True               12m
