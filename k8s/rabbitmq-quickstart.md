@@ -281,11 +281,18 @@ kubectl logs rabbitmqcluster-sample-server-0
 kubectl rabbitmq tail rabbitmqcluster-sample
 ```
 
-After that, you need to remove and re-create the previously created RabbitMQ Cluster object:
+## Delete the RabbitMQ Cluster object
 
 ```bash
 kubectl delete rabbitmqclusters.rabbitmq.com hello-world
 kubectl delete rabbitmqclusters.rabbitmq.com rabbitmqcluster-sample
+```
+
+## Issues
+
+If your K8s nodes have insufficient resources the rabbitmq pod won't be deployed.
+
+```bash
 https://stackoverflow.com/questions/38869673/pod-in-pending-state-due-to-insufficient-cpu
 kubectl describe node
   (Total limits may be over 100 percent, i.e., overcommitted.)
@@ -298,4 +305,162 @@ kubectl describe node
   hugepages-2Mi      0 (0%)      0 (0%)
 ```
 
-## **[NEXT](https://www.rabbitmq.com/kubernetes/operator/quickstart-operator#access-the-management-ui)**
+## Access The Management UI
+
+Next, let's access the Management UI.
+
+```bash
+username="$(kubectl get secret rabbitmqcluster-sample-default-user -o jsonpath='{.data.username}' | base64 --decode)"
+echo "username: $username"
+password="$(kubectl get secret rabbitmqcluster-sample-default-user -o jsonpath='{.data.password}' | base64 --decode)"
+echo "password: $password"
+
+kubectl port-forward "service/rabbitmqcluster-sample" 15672
+```
+
+Now we can open localhost:15672 in the browser and see the Management UI. The credentials are as printed in the commands above. Alternatively, you can run a curl command to verify access:
+
+```bash
+curl -u$username:$password localhost:15672/api/overview
+{"management_version":"3.8.9","rates_mode":"basic", ...}
+
+# Using the kubectl rabbitmq plugin, the Management UI can be accessed using:
+
+kubectl rabbitmq manage rabbitmqcluster-sample
+```
+
+## Connect An Application To The Cluster
+
+The next step would be to connect an application to the RabbitMQ Cluster in order to use its messaging capabilities. The perf-test application is frequently used within the RabbitMQ community for load testing RabbitMQ Clusters.
+
+Here, we will be using the hello-world service to find the connection address, and the hello-world-default-user to find connection credentials.
+
+```bash
+username="$(kubectl get secret rabbitmqcluster-sample-default-user -o jsonpath='{.data.username}' | base64 --decode)"
+password="$(kubectl get secret rabbitmqcluster-sample-default-user -o jsonpath='{.data.password}' | base64 --decode)"
+service="$(kubectl get service rabbitmqcluster-sample -o jsonpath='{.spec.clusterIP}')"
+echo "service = $service"
+kubectl run perf-test --image=pivotalrabbitmq/perf-test -- --uri amqp://$username:$password@$service
+# pod/perf-test created
+```
+
+The Advanced Message Queuing Protocol is an open standard application layer protocol for message-oriented middleware. The defining features of AMQP are message orientation, queuing, routing, reliability and security.
+
+These steps are automated in the kubectl rabbitmq plugin which may simply be run as:
+
+```bash
+kubectl rabbitmq perf-test hello-world
+
+# We can now view the perf-test logs by running:
+
+kubectl logs --follow perf-test
+...
+id: test-141948-895, time: 16.001s, sent: 25651 msg/s, received: 25733 msg/s, min/median/75th/95th/99th consumer latency: 1346110/1457130/1495463/1529703/1542172 µs
+id: test-141948-895, time: 17.001s, sent: 26933 msg/s, received: 26310 msg/s, min/median/75th/95th/99th consumer latency: 1333807/1411182/1442417/1467869/1483273 µs
+id: test-141948-895, time: 18.001s, sent: 26292 msg/s, received: 25505 msg/s, min/median/75th/95th/99th consumer latency: 1329488/1428657/1455482/1502191/1518218 µs
+id: test-141948-895, time: 19.001s, sent: 23727 msg/s, received: 26055 msg/s, min/median/75th/95th/99th consumer latency: 1355788/1450757/1480030/1514469/1531624 µs
+id: test-141948-895, time: 20.001s, sent: 25009 msg/s, received: 25202 msg/s, min/median/75th/95th/99th consumer latency: 1327462/1447157/1474394/1509857/1521303 µs
+id: test-141948-895, time: 21.001s, sent: 28487 msg/s, received: 25942 msg/s, min/median/75th/95th/99th consumer latency: 1350527/1454599/1490094/1519461/1531042 µs
+...
+```
+
+As can be seen, perf-test is able to produce and consume about 25,000 messages per second.
+
+## delete perf-test
+
+```bash
+kubectl delete perf-test
+```
+
+## create nodeport like ClusterIP port
+
+look at the ClusterIP port specs:
+
+```bash
+kubectl describe svc rabbitmqcluster-sample         
+Name:              rabbitmqcluster-sample
+Namespace:         default
+Labels:            app.kubernetes.io/component=rabbitmq
+                   app.kubernetes.io/name=rabbitmqcluster-sample
+                   app.kubernetes.io/part-of=rabbitmq
+Annotations:       <none>
+Selector:          app.kubernetes.io/name=rabbitmqcluster-sample
+Type:              ClusterIP
+IP Family Policy:  SingleStack
+IP Families:       IPv4
+IP:                10.152.183.176
+IPs:               10.152.183.176
+Port:              amqp  5672/TCP
+TargetPort:        5672/TCP
+Endpoints:         10.1.187.130:5672
+Port:              management  15672/TCP
+TargetPort:        15672/TCP
+Endpoints:         10.1.187.130:15672
+Port:              prometheus  15692/TCP
+TargetPort:        15692/TCP
+Endpoints:         10.1.187.130:15692
+Session Affinity:  None
+Events:            <none>
+```
+
+create a nodeport like the ClusterIP port:
+Nodeport range: 30000 and 32767
+
+```yaml
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app.kubernetes.io/component=rabbitmq
+    app.kubernetes.io/name=rabbitmqcluster-sample
+    app.kubernetes.io/part-of=rabbitmq
+  name: rabbitmqcluster-sample-np
+spec:
+  ports:
+  - name: rabbitmqcluster-sample-np
+    nodePort: 32672
+    port: 5672
+    protocol: TCP
+    targetPort: 5672
+  selector:
+    app.kubernetes.io/name=rabbitmqcluster-sample
+  type: NodePort
+```
+
+```bash
+pushd .
+cd ~/src/repsys/k8s/rabbitmq
+kubectl apply -f nodeport.yaml
+kubectl describe svc rabbitmqcluster-sample-np   
+Name:                     rabbitmqcluster-sample-np
+Namespace:                default
+Labels:                   app.kubernetes.io/component=rabbitmq
+                          app.kubernetes.io/name=rabbitmqcluster-sample
+                          app.kubernetes.io/part-of=rabbitmq
+Annotations:              <none>
+Selector:                 app.kubernetes.io/name=rabbitmqcluster-sample
+Type:                     NodePort
+IP Family Policy:         SingleStack
+IP Families:              IPv4
+IP:                       10.152.183.45
+IPs:                      10.152.183.45
+Port:                     rabbitmqcluster-sample-np  5672/TCP
+TargetPort:               5672/TCP
+NodePort:                 rabbitmqcluster-sample-np  32672/TCP
+Endpoints:                10.1.187.130:5672
+Session Affinity:         None
+External Traffic Policy:  Cluster
+Events:                   <none>      
+
+
+```
+
+## Next Steps
+
+Now that you are up and running with the basics, you can explore what the Cluster Operator can do for you!
+
+You can do so by:
+
+Looking at more examples such as monitoring the deployed RabbitMQ Cluster using Prometheus, enabling TLS, etc.
+Looking at the API reference documentation.
+Checking out our GitHub repository and contributing to this guide, other docs, and the codebase!

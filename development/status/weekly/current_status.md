@@ -85,6 +85,10 @@ This will involve adding a primary key to those tables without one. It also invo
 - **[Research List](../../../research/research_list.md)**\
 A list of all research for repsys.
 
+- **[Send SMS Text Message With Python Using GMail SMTP For Free](../../../research/m_z/sms/sms.md)**
+
+This is a demonstration on how to send a text message with Python. In this example, we use GMail to send the SMS message; but any host can work with the correct SMTP settings.
+
 - **[Container security fundamentals part 4: Cgroups](../../../research/a_l/linux/concepts/cgroups/container_security_fundamentals.md)**
 
   Managing system resources can be a challenge when multiple processes are running on a host. A single misbehaving program could consume all available resources, causing the entire system to crash. To tackle this problem, Linux relies on control groups (cgroups) to manage each process's access to resources, such as CPU and memory.

@@ -19,7 +19,9 @@ use (
 	./volumes/go/tutorials/oauth2/github_authentication_flow
 	./volumes/go/tutorials/oidc/go_oidc_example
 	./volumes/go/tutorials/prometheus/counter
+	./volumes/go/tutorials/rabbitmq/hellorabbit/receiver
+	./volumes/go/tutorials/rabbitmq/hellorabbit/sender
 	./volumes/go/tutorials/redis_sentinel/redis_sentinel_test
-	./volumes/go/tutorials/webhook/webhook
 	./volumes/go/tutorials/ssl/ssl_server
+	./volumes/go/tutorials/webhook/webhook
 )
