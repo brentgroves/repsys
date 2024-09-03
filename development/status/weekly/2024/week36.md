@@ -85,32 +85,27 @@ This will involve adding a primary key to those tables without one. It also invo
 - **[Research List](../../../research/research_list.md)**\
 A list of all research for repsys.
 
-- **[Next - Create cluster with kubeadm](../../../research/a_l/k8s/kubeadm/create_cluster_with_kubeadm.md)**
+- **[Send SMS Text Message With Python Using GMail SMTP For Free](../../../research/m_z/sms/sms.md)**
 
-- **[NEXT - tls bootstrapping](../../../research/a_l/k8s/concepts/tls_bootstrapping.md)**
+This is a demonstration on how to send a text message with Python. In this example, we use GMail to send the SMS message; but any host can work with the correct SMTP settings.
 
-- **[What’s the difference between client certificates vs. server certificates?](https://www.digicert.com/faq/public-trust-and-certificates/whats-the-difference-between-client-certificates-vs-server-certificates)**
+- **[Container security fundamentals part 4: Cgroups](../../../research/a_l/linux/concepts/cgroups/container_security_fundamentals.md)**
 
-  **[Client certificates](https://www.digicert.com/tls-ssl/client-certificates)** are digital certificates for users and individuals to prove their identity to a server. Client certificates tend to be used within private organizations to authenticate requests to remote servers. Whereas server certificates are more commonly known as **[TLS/SSL certificates](https://www.digicert.com/tls-ssl/tls-ssl-certificates)** and are used to protect servers and web domains. Server certificates perform a very similar role to Client certificates, except the latter is used to identify the client/individual and the former authenticates the owner of the site.
+  Managing system resources can be a challenge when multiple processes are running on a host. A single misbehaving program could consume all available resources, causing the entire system to crash. To tackle this problem, Linux relies on control groups (cgroups) to manage each process's access to resources, such as CPU and memory.
 
-  **What is a client certificate?**\
-  Client certificates are, as the name indicates, used to identify a client or a user, authenticating the client to the server and establishing precisely who they are. To some, the mention of PKI or ‘Client certificates’ may conjure up images of businesses protecting and completing their customers’ online transactions, yet such certificates are found throughout our daily lives, in any number of flavors; when we sign into a VPN, use a bank card at an ATM, or a card to gain access to a building or within public transport smart cards. These digital certificates are even found in petrol pumps, the robots on car assembly lines and even in our passports.
+  ...Let’s say we have a single node with 1 CPU core and three pods (each of which have one container and one thread) that are requesting 200, 400, and 200 millicores (m) of CPU, respectively. The scheduler is able to place them all on the node because the sum of requests is less than 1 CPU core:
 
-  In Continental Europe and in many other countries, the use of client certificates is particularly widespread, with governments issuing ID cards that have multiple uses, such as to pay local taxes, electricity bills and for drivers’ licenses. And the reason why is simple—client certificates play a vital role in ensuring people are safe online.  
+- **[Linux scheduling in Kubernetes](../../../research/a_l/k8s/concepts/cpu_management/linux_scheduling_in_k8s.md)**
 
-- **[TLS Bootstrapping](https://kubernetes.io/docs/reference/access-authn-authz/kubelet-tls-bootstrapping/)**
+  In this section, we will cover how containers’ CPU requests and limits correlate to how the CFS assigns CPU time to those containers in the default CPU Manager policy. We will also explore how you can reduce the risk of throttling and use metrics to debug potential CPU-related application issues.
 
-  In a Kubernetes cluster, the components on the worker nodes - kubelet and kube-proxy - need to communicate with Kubernetes control plane components, specifically kube-apiserver. In order to ensure that communication is kept private, not interfered with, and ensure that each component of the cluster is talking to another trusted component, we strongly recommend using client TLS certificates on nodes.
+- **[Protocol Engineering](../../../research/a_l/linux/concepts/protocol_engineering.md)**
+  Protocol engineering is the application of systematic methods to the development of communication protocols. It uses many of the principles of software engineering, but it is specific to the development of distributed systems.
 
-  The normal process of bootstrapping these components, especially worker nodes that need certificates so they can communicate safely with kube-apiserver, can be a challenging process as it is often outside of the scope of Kubernetes and requires significant additional work. This in turn, can make it challenging to initialize or scale a cluster.
+- **[what is busybox](../../../research/a_l/busybox/busybox.md)**\
+  The Swiss Army Knife of Embedded Linux
 
-  In order to simplify the process, beginning in version 1.4, Kubernetes introduced a certificate request and signing API. The proposal can be found **[here](https://github.com/kubernetes/kubernetes/pull/20439)**.
-
-- **[bootstrap tokens](../../../research/a_l/k8s/concepts/bootstrap_tokens.md)**
-
-  Bootstrap tokens are a simple bearer token that is meant to be used when creating new clusters or joining new nodes to an existing cluster. It was built to support kubeadm, but can be used in other contexts for users that wish to start clusters without kubeadm. It is also built to work, via RBAC policy, with the **[kubelet TLS Bootstrapping system](https://kubernetes.io/docs/reference/access-authn-authz/kubelet-tls-bootstrapping/).
-
-  A Bearer Token is an opaque string, not intended to have any meaning to clients using it. Some servers will issue tokens that are a short string of hexadecimal characters, while others may use structured tokens such as JSON Web Tokens.
+  Coming in somewhere between 1 and 5 Mb in on-disk size (depending on the variant), BusyBox⁠ is a very good ingredient to craft space-efficient distributions.
 
 - **[Extending Kubernetes with Custom Resource Definitions (CRDs)](../../../research/a_l/k8s/concepts/crd/extending_k8s_with_crds.md)**\
   CRDs extend the API with support for arbitrary data types. Each CRD you create gets its own API endpoints that you can use to query, create, and edit instances of that resource. Custom resources are fully supported within kubectl, so you can run commands like kubectl get backgroundjobs to interact with your application's objects.
