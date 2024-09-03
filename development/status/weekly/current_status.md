@@ -85,6 +85,12 @@ This will involve adding a primary key to those tables without one. It also invo
 - **[Research List](../../../research/research_list.md)**\
 A list of all research for repsys.
 
+- **[Next - Kubernetes Services in AKS](../../../research/a_l/azure/aks/k8s_services.md)**\
+  ![](https://learn.microsoft.com/en-us/azure/aks/media/concepts-network/aks-clusterip.png)
+  ![](https://learn.microsoft.com/en-us/azure/aks/media/concepts-network/aks-nodeport.png)
+  ![](https://learn.microsoft.com/en-us/azure/aks/media/concepts-network/aks-loadbalancer.png)
+- **[Next - Ingress Controllers](../../../research/a_l/azure/aks/ingress_controllers.md)**\
+
 - **[Next - Create cluster with kubeadm](../../../research/a_l/k8s/kubeadm/create_cluster_with_kubeadm.md)**
 
 - **[NEXT - tls bootstrapping](../../../research/a_l/k8s/concepts/tls_bootstrapping.md)**

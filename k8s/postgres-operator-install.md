@@ -56,6 +56,9 @@ kubectl delete svc acid-minimal-cluster
 kubectl delete svc acid-minimal-cluster-repl  
 kubectl delete endpoint acid-minimal-cluster-config  
 
+kubectl get configmap
+kubectl delete configmap postgres-operator
+
 ```
 
 <https://postgres-operator.readthedocs.io/en/latest/quickstart/>

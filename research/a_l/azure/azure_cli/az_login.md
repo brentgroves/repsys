@@ -36,6 +36,10 @@ AzureCloud         True         N/A(tenant level account)  Enabled  5269b021-533
 
 # login in as bgroves@mobexglobal.com
 az login
+Tenant: Mobex Global
+Subscription: sub_mgmain_itservices (f7d0cfcb-65b9-4f1c-8c9d-f8f993e4722a)
+
+# old output
 [
   {
     "cloudName": "AzureCloud",
