@@ -85,6 +85,10 @@ This will involve adding a primary key to those tables without one. It also invo
 - **[Research List](../../../research/research_list.md)**\
 A list of all research for repsys.
 
+- **[AKS Free tier](https://learn.microsoft.com/en-us/azure/aks/free-standard-pricing-tiers)**
+
+- **[AKS simple web app](https://medium.com/@dheemandas1997/deploy-simple-static-web-application-on-azure-kubernetes-service-aks-a-step-by-step-guide-e94932a9ce65)**
+
 - **[Understanding MVVM: Model-View-ViewModel Architecture Explained](../../../research/a_l/application_architecture/model_view_viewmodel.md)**\
   Model-View-ViewModel (MVVM) is a design pattern that helps you separate your application logic from the user interface. It's a different way to think about your code, but it can make your applications easier to build and test. The Model-View-ViewModel pattern is an architectural software design pattern in which the model represents the data, the view is what the user sees and interacts with, and the viewmodel acts as a mediator between the model and view.
 
