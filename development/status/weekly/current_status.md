@@ -85,6 +85,21 @@ This will involve adding a primary key to those tables without one. It also invo
 - **[Research List](../../../research/research_list.md)**\
 A list of all research for repsys.
 
+- **[Understanding MVVM: Model-View-ViewModel Architecture Explained](../../../research/a_l/application_architecture/model_view_viewmodel.md)**\
+  Model-View-ViewModel (MVVM) is a design pattern that helps you separate your application logic from the user interface. It's a different way to think about your code, but it can make your applications easier to build and test. The Model-View-ViewModel pattern is an architectural software design pattern in which the model represents the data, the view is what the user sees and interacts with, and the viewmodel acts as a mediator between the model and view.
+
+  ![mvvm](https://www.datocms-assets.com/48294/1724770090-model-view-viewmodel-mvvm.webp?auto=format&dpr=0.5&w=1600)
+
+- **[Presentation Domain Data Layering](../../../research/a_l/application_architecture/presentation_domain_data_layering.md)**\
+One of the most common ways to modularize an information-rich program is to separate it into three broad layers: presentation (UI), domain logic (aka business logic), and data access. So you often see web applications divided into a web layer that knows about handling HTTP requests and rendering HTML, a business logic layer that contains validations and calculations, and a data access layer that sorts out how to manage persistent data in a database or remote services.
+
+  ![pddl](https://martinfowler.com/bliki/images/presentationDomainDataLayering/all_basic.png)
+
+- **[Modularizing React Applications with Established UI Patterns](../../../research/a_l/application_architecture/modularize_react_applications.md)**\
+  The application keeps evolving, and then you find some patterns emerge. There are a bunch of objects that do not belong to any user interface, and they also don’t care about whether the underlying data is from remote service, local storage or cache. And then, you want to split them into different layers. Here is a detailed explanation about the layer splitting **[Presentation Domain Data Layering](https://martinfowler.com/bliki/PresentationDomainDataLayering.html)**.
+
+  ![e5](https://martinfowler.com/articles/modularizing-react-apps/evolution-5.png)
+
 - **[Next - Kubernetes Services in AKS](../../../research/a_l/azure/aks/k8s_services.md)**\
   ![](https://learn.microsoft.com/en-us/azure/aks/media/concepts-network/aks-clusterip.png)
   ![](https://learn.microsoft.com/en-us/azure/aks/media/concepts-network/aks-nodeport.png)
