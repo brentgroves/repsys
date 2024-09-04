@@ -85,6 +85,8 @@ This will involve adding a primary key to those tables without one. It also invo
 - **[Research List](../../../research/research_list.md)**\
 A list of all research for repsys.
 
+- **[Deploy RabbitMQ Azure](https://www.youtube.com/watch?v=8-p0LflTgyw)**
+
 - **[AKS Free tier](https://learn.microsoft.com/en-us/azure/aks/free-standard-pricing-tiers)**
 
 - **[AKS simple web app](https://medium.com/@dheemandas1997/deploy-simple-static-web-application-on-azure-kubernetes-service-aks-a-step-by-step-guide-e94932a9ce65)**
