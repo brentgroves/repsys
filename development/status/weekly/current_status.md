@@ -101,7 +101,7 @@ One of the most common ways to modularize an information-rich program is to sepa
 
   ![pddl](https://martinfowler.com/bliki/images/presentationDomainDataLayering/all_basic.png)
 
-- **[Modularizing React Applications with Established UI Patterns](../../../research/a_l/application_architecture/modularize_react_applications.md)**\
+- **[Modularizing React Applications with Established UI Patterns](../../../research/m_z/reactjs/modularize_react_applications.md)**\
   The application keeps evolving, and then you find some patterns emerge. There are a bunch of objects that do not belong to any user interface, and they also don’t care about whether the underlying data is from remote service, local storage or cache. And then, you want to split them into different layers. Here is a detailed explanation about the layer splitting **[Presentation Domain Data Layering](https://martinfowler.com/bliki/PresentationDomainDataLayering.html)**.
 
   ![e5](https://martinfowler.com/articles/modularizing-react-apps/evolution-5.png)
