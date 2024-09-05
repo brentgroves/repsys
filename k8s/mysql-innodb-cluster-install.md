@@ -34,7 +34,7 @@ ls -alh /var/snap/microk8s/common/default-storage
 kubectl get statefulsets
 kubectl get pods
 kubectl get svc
-
+kubectl delete service/mycluster-np
 kubectl get InnoDBCluster --all-namespaces
 ```
 

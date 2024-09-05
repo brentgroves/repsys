@@ -116,21 +116,6 @@ Non-terminated Pods:          (8 in total)
 
 ```
 
-```yaml
-apiVersion: rabbitmq.com/v1beta1
-kind: RabbitmqCluster
-metadata:
-  name: rabbitmqcluster-sample
-spec:
-  resources:
-    requests:
-      cpu: 100m
-      memory: 2Gi
-    limits:
-      cpu: 100m
-      memory: 2Gi
-```
-
 ## Quickstart Steps
 
 This guide goes through the following steps:
@@ -155,7 +140,22 @@ Let's start by installing the latest version of the Cluster Operator. This can b
 ```bash
 pushd
 cd ~/src/repsys/k8s/rabbitmq
+scc.sh reports-aks-user.yaml reports-aks
+set-cluster-context cluster: reports-aks-user.yaml
+set-cluster-context context: reports-aks
+Switched to context "reports-aks".
+
 kubectl apply -f "https://github.com/rabbitmq/cluster-operator/releases/latest/download/cluster-operator.yml"
+namespace/rabbitmq-system created
+customresourcedefinition.apiextensions.k8s.io/rabbitmqclusters.rabbitmq.com created
+serviceaccount/rabbitmq-cluster-operator created
+role.rbac.authorization.k8s.io/rabbitmq-cluster-leader-election-role created
+clusterrole.rbac.authorization.k8s.io/rabbitmq-cluster-operator-role created
+clusterrole.rbac.authorization.k8s.io/rabbitmq-cluster-service-binding-role created
+rolebinding.rbac.authorization.k8s.io/rabbitmq-cluster-leader-election-rolebinding created
+clusterrolebinding.rbac.authorization.k8s.io/rabbitmq-cluster-operator-rolebinding created
+deployment.apps/rabbitmq-cluster-operator created
+
 # or you can download it first
 curl -L -O https://github.com/rabbitmq/cluster-operator/releases/download/v2.9.0/cluster-operator.yml
 kubectl apply -f cluster-operator.yml
@@ -170,6 +170,7 @@ kubectl apply -f cluster-operator.yml
 ```
 
 The Cluster Operator can also be installed using the kubectl rabbitmq plugin:
+Note: Have not used this plugin yet.
 
 ```bash
 kubectl rabbitmq install-cluster-operator
@@ -204,30 +205,92 @@ rabbitmqclusters.rabbitmq.com                    2021-01-14T11:12:26Z
 
 and some rbac roles. These are required by the Operator to create, update and delete RabbitMQ Clusters.
 
+```bash
+kubectl get roles -n rabbitmq-system
+NAME                                    CREATED AT
+rabbitmq-cluster-leader-election-role   2024-09-05T21:54:01Z
+```
+
+## Check resources limits in nodes
+
+```bash
+scc.sh reports-aks-user.yaml reports-aks
+kubectl describe node
+...
+Allocatable:
+  cpu:                3860m
+  ephemeral-storage:  233966001789
+  hugepages-1Gi:      0
+  hugepages-2Mi:      0
+  memory:             28376888Ki
+  pods:               110
+
+...
+Allocated resources:
+  (Total limits may be over 100 percent, i.e., overcommitted.)
+  Resource           Requests     Limits
+  --------           --------     ------
+  cpu                970m (25%)   9190m (238%)
+  memory             1170Mi (4%)  6920Mi (24%)
+  ephemeral-storage  0 (0%)       0 (0%)
+  hugepages-1Gi      0 (0%)       0 (0%)
+  hugepages-2Mi      0 (0%)       0 (0%)
+Events:              <none>
+```
+
+## review **[examples](https://github.com/rabbitmq/cluster-operator/tree/main/docs/examples)** to determine how you want your cluster configured
+
 ```yaml
 apiVersion: rabbitmq.com/v1beta1
 kind: RabbitmqCluster
 metadata:
-  name: rabbitmqcluster-sample
+  name: resource-limits
 spec:
+  replicas: 1
   resources:
     requests:
-      cpu: 100m
-      memory: 2Gi
+      cpu: 500m
+      memory: 1Gi
     limits:
-      cpu: 100m
-      memory: 2Gi
+      cpu: 800m
+      memory: 1Gi
 ```
+
+## deploy rabbitmq instance
 
 Submit this using the following command:
 
 ```bash
 pushd .
 cd ~/src/repsys/k8s/rabbitmq
-kubectl apply -f helloworld-res.yaml
+kubectl apply -f helloworld-x.yaml
+rabbitmqcluster.rabbitmq.com/resource-limits created
+kubectl get pvc                          
+NAME                                   STATUS    VOLUME   CAPACITY   ACCESS MODES   STORAGECLASS   AGE
+persistence-resource-limits-server-0   Pending                                      default        2m50s
+NAME                           READY   STATUS    RESTARTS   AGE
+pod/resource-limits-server-0   0/1     Pending   0          3m40s
+
+NAME                            TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)                        AGE
+service/kubernetes              ClusterIP   10.0.0.1     <none>        443/TCP                        542d
+service/resource-limits         ClusterIP   10.0.5.235   <none>        5672/TCP,15672/TCP,15692/TCP   3m40s
+service/resource-limits-nodes   ClusterIP   None         <none>        4369/TCP,25672/TCP             3m40s
+
+NAME                                      READY   AGE
+statefulset.apps/resource-limits-server   0/1     3m40s
+
+NAME                                           ALLREPLICASREADY   RECONCILESUCCESS   AGE
+rabbitmqcluster.rabbitmq.com/resource-limits   False              Unknown            3m40s
 # or
 # kubectl apply -f https://raw.githubusercontent.com/rabbitmq/cluster-operator/main/docs/examples/hello-world/rabbitmq.yaml
 
+```
+
+## AKS provisioning failed secret keys for app are expired
+
+```bash
+kubectl describe pvc persistence-resource-limits-server-0
+  Warning  ProvisioningFailed    8m17s                   disk.csi.azure.com_csi-azuredisk-controller-78fd6d8dc4-zjsh2_113b5463-5433-4f4c-849d-b82e107b03b6  failed to provision volume with StorageClass "default": rpc error: code = Internal desc = Retriable: false, RetryAfter: 0s, HTTPStatusCode: 401, RawError: azure.BearerAuthorizer#WithAuthorization: Failed to refresh the Token for request to http://localhost:7788/subscriptions/f7d0cfcb-65b9-4f1c-8c9d-f8f993e4722a/resourceGroups/mc_reports-aks_reports-aks_centralus/providers/Microsoft.Compute/disks/pvc-176f38ad-ea61-4d1b-9708-b5225ec5b80d?api-version=2022-03-02: StatusCode=401 -- Original Error: adal: Refresh request failed. Status Code = '401'. Response body: {"error":"invalid_client","error_description":"AADSTS7000222: The provided client secret keys for app '15cdd566-98bb-4130-8ec5-5c58cffb34bf' are expired. Visit the Azure portal to create new keys for your app: https://aka.ms/NewClientSecret, or consider using certificate credentials for added security: https://aka.ms/certCreds. Trace ID: e780dfdd-08b2-49e9-a982-efd37fa30501 Correlation ID: 6ef388dd-4ac2-4bf4-8a14-55908a8ab492 Timestamp: 2024-09-05 22:43:44Z","error_codes":[7000222],"timestamp":"2024-09-05 22:43:44Z","trace_id":"e780dfdd-08b2-49e9-a982-efd37fa30501","correlation_id":"6ef388dd-4ac2-4bf4-8a14-55908a8ab492","error_uri":"https://login.microsoftonline.com/error?code=7000222"} Endpoint https://login.microsoftonline.com/b4b87e8f-df64-41ff-9ba4-a4930ebc804b/oauth2/token
 ```
 
 ## resource limit issue
@@ -242,9 +305,8 @@ Note: On microk8s we don't normally use this local path provisioner but enable h
 
 ```bash
 kubectl logs rabbitmqcluster-sample-server-0
-# or 
+# or insufficient cpu
 kubectl edit pvc persistence-rabbitmqcluster-sample-server-0
-
 status:
   conditions:
 
@@ -257,9 +319,22 @@ status:
     type: PodScheduled
   phase: Pending
   qosClass: Burstable
+
+## 
+kubectl edit pvc persistence-resource-limits-server-0
+kubectl edit pvc persistence-resource-limits-server-0
+
+E0905 18:59:42.778307 4005976 memcache.go:265] couldn't get current server API group list: Get "https://172.20.88.61:16443/api?timeout=32s": tls: failed to verify certificate: x509: certificate signed by unknown authority (possibly because of "crypto/rsa: verification error" while trying to verify candidate authority certificate "10.152.183.1")
+E0905 18:59:42.790231 4005976 memcache.go:265] couldn't get current server API group list: Get "https://172.20.88.61:16443/api?timeout=32s": tls: failed to verify certificate: x509: certificate signed by unknown authority (possibly because of "crypto/rsa: verification error" while trying to verify candidate authority certificate "10.152.183.1")
+E0905 18:59:42.801023 4005976 memcache.go:265] couldn't get current server API group list: Get "https://172.20.88.61:16443/api?timeout=32s": tls: failed to verify certificate: x509: certificate signed by unknown authority (possibly because of "crypto/rsa: verification error" while trying to verify candidate authority certificate "10.152.183.1")
+E0905 18:59:42.811875 4005976 memcache.go:265] couldn't get current server API group list: Get "https://172.20.88.61:16443/api?timeout=32s": tls: failed to verify certificate: x509: certificate signed by unknown authority (possibly because of "crypto/rsa: verification error" while trying to verify candidate authority certificate "10.152.183.1")
+E0905 18:59:42.823036 4005976 memcache.go:265] couldn't get current server API group list: Get "https://172.20.88.61:16443/api?timeout=32s": tls: failed to verify certificate: x509: certificate signed by unknown authority (possibly because of "crypto/rsa: verification error" while trying to verify candidate authority certificate "10.152.183.1")
+Unable to connect to the server: tls: failed to verify certificate: x509: certificate signed by unknown authority (possibly because of "crypto/rsa: verification error" while trying to verify candidate authority certificate "10.152.183.1")
+
+
 ```
 
-## deploy rabbitmq instance
+## deploy rabbitmq instance again
 
 ```bash
 kubectl apply -f heloworld.yaml
@@ -284,6 +359,8 @@ kubectl rabbitmq tail rabbitmqcluster-sample
 ## Delete the RabbitMQ Cluster object
 
 ```bash
+kubectl get rabbitmqclusters.rabbitmq.com
+kubectl delete rabbitmqclusters.rabbitmq.com resource-limits
 kubectl delete rabbitmqclusters.rabbitmq.com hello-world
 kubectl delete rabbitmqclusters.rabbitmq.com rabbitmqcluster-sample
 ```

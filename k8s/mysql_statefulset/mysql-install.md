@@ -33,6 +33,7 @@ sudo chmod 777 ~/backups
 
 ```bash
 mysqldump -u root -p -h reports31 --port=30031 --column-statistics=0 --add-drop-table --routines --all-databases > /home/brent/backups/reports31/mysql/$(/bin/date +\%Y-\%m-\%d-\%R:\%S).sql.bak
+
 ```
 
 ## Create a StorageClass

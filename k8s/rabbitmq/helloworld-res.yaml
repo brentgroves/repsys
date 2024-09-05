@@ -1,3 +1,4 @@
+# This worked on microk8s
 apiVersion: rabbitmq.com/v1beta1
 kind: RabbitmqCluster
 metadata:

@@ -2,6 +2,15 @@
     "version": "0.2.0",
     "configurations": [
         {
+            // Tried this but think it is better to use Chrome and React Developer Tools
+            // extension instead.
+            "type": "chrome",
+            "request": "launch",
+            "name": "Launch Chrome against localhost",
+            "url": "http://localhost:3000",
+            "webRoot": "${workspaceFolder}/volumes/reactjs/my-app"
+        },
+        {
             "type": "fpDebug",
             "request": "launch",
             "name": "Debug Pascal helloworld program",
