@@ -19,6 +19,21 @@ When you want to update the credentials for an AKS cluster, you can choose to ei
 - Update the credentials for the existing service principal.
 - Create a new service principal and update the cluster to use these new credentials.
 
+**Warning**\
+If you choose to create a new service principal, wait around 30 minutes for the service principal permission to propagate across all regions. Updating a large AKS cluster to use these credentials can take a long time to complete.
+
+## Check the expiration date of your service principal
+
+To check the expiration date of your service principal, use the az ad app credential list command. The following example gets the service principal ID for the $CLUSTER_NAME cluster in the $RESOURCE_GROUP_NAME resource group using the az aks show command. The service principal ID is set as a variable named SP_ID.
+
+Azure CLI
+
+```bash
+SP_ID=$(az aks show --resource-group $RESOURCE_GROUP_NAME --name $CLUSTER_NAME \
+    --query servicePrincipalProfile.clientId -o tsv)
+az ad app credential list --id "$SP_ID" --query "[].endDateTime" -o tsv
+```
+
 ## **[Alternative to service principal is managed identities](https://learn.microsoft.com/en-us/azure/aks/use-managed-identity)** I have not used this way
 
 Alternatively, you can use a managed identity for permissions instead of a service principal. Managed identities don't require updates or rotations. For more information, see **[Use managed identities](https://learn.microsoft.com/en-us/azure/aks/use-managed-identity)**.
