@@ -11,11 +11,26 @@
 - **[Using Kubernetes RabbitMQ Cluster Kubernetes Operator](https://www.rabbitmq.com/kubernetes/operator/using-operator)**
 - **[examples](https://github.com/rabbitmq/cluster-operator/blob/main/docs/examples)**
 
-## NEXT - create new secret keys
+## NEXT - **[Azure AKS Client Secret expired - How to change?](https://stackoverflow.com/questions/53748832/azure-aks-client-secret-expired-how-to-change)**
+
+Right now AKS is not able to update Loadbalancer values or mount persistant storage.
 
 ```bash
  Original Error: adal: Refresh request failed. Status Code = '401'. Response body: {"error":"invalid_client","error_description":"AADSTS7000222: The provided client secret keys for app '15cdd566-98bb-4130-8ec5-5c58cffb34bf' are expired. Visit the Azure portal to create new keys for your app: https://aka.ms/NewClientSecret, or consider using certificate credentials for added security: https://aka.ms/certCreds. Trace ID
  ```
+
+AKS client credentials can be updated via command:
+
+```bash
+az aks update-credentials \
+    --resource-group myResourceGroup \
+    --name myAKSCluster \
+    --reset-service-principal \
+    --service-principal $SP_ID \
+    --client-secret $SP_SECRET
+```
+
+Official documentation: <https://learn.microsoft.com/en-us/azure/aks/update-credentials#update-aks-cluster-with-new-credentials>
 
 ## Delete a RabbitMQ Instance
 
