@@ -6,6 +6,39 @@
 
 This guide lets you quickly evaluate Istio. If you are already familiar with Istio or interested in installing other configuration profiles or advanced deployment models, refer to our which Istio installation method should I use? FAQ page.
 
+## references
+
+- **[microk8s istio](https://gist.github.com/Realiserad/391855c4a0fb0072994e5ad2a53d65c0)**
+
+## Uninstall
+
+To delete the Bookinfo sample application and its configuration, see **[Bookinfo cleanup](https://istio.io/latest/docs/examples/bookinfo/#cleanup)**.
+
+The Istio uninstall deletes the RBAC permissions and all resources hierarchically under the istio-system namespace. It is safe to ignore errors for non-existent resources because they may have been deleted hierarchically.
+
+```
+$ kubectl delete -f samples/addons
+$ istioctl uninstall -y --purge
+
+The istio-system namespace is not removed by default. If no longer needed, use the following command to remove it:
+
+$ kubectl delete namespace istio-system
+
+The label to instruct Istio to automatically inject Envoy sidecar proxies is not removed by default. If no longer needed, use the following command to remove it:
+
+$ kubectl label namespace default istio-injection-
+
+If you installed the Kubernetes Gateway API CRDs and would now like to remove them, run one of the following commands:
+
+If you ran any tasks that required the experimental version of the CRDs:
+
+$ kubectl kustomize "github.com/kubernetes-sigs/gateway-api/config/crd/experimental?ref=v1.1.0" | kubectl delete -f -
+
+Otherwise:
+
+$ kubectl kustomize "github.com/kubernetes-sigs/gateway-api/config/crd?ref=v1.1.0" | kubectl delete -f -
+```
+
 ## Install Istio
 
 Go to the Istio release page to download the installation file for your OS, or download and extract the latest release automatically (Linux or macOS):
@@ -69,7 +102,37 @@ Made this installation the default for injection and validation.
 
 Add a namespace label to instruct Istio to automatically inject Envoy sidecar proxies when you deploy your application later:
 
+### NOTE
+
+Install this to namespace shown at <https://gist.github.com/Realiserad/391855c4a0fb0072994e5ad2a53d65c0> instead of default
+
 ```bash
 $ kubectl label namespace default istio-injection=enabled
 namespace/default labeled
+```
+
+## Install the Kubernetes Gateway API CRDs
+
+The Kubernetes Gateway API CRDs do not come installed by default on most Kubernetes clusters, so make sure they are installed before using the Gateway API.
+
+Install the Gateway API CRDs, if they are not already present:
+
+```bash
+kubectl get crd gateways.gateway.networking.k8s.io &> /dev/null || \
+{ kubectl kustomize "github.com/kubernetes-sigs/gateway-api/config/crd?ref=v1.1.0" | kubectl apply -f -; }
+ustomresourcedefinition.apiextensions.k8s.io/gatewayclasses.gateway.networking.k8s.io created
+customresourcedefinition.apiextensions.k8s.io/gateways.gateway.networking.k8s.io created
+customresourcedefinition.apiextensions.k8s.io/grpcroutes.gateway.networking.k8s.io created
+customresourcedefinition.apiextensions.k8s.io/httproutes.gateway.networking.k8s.io created
+customresourcedefinition.apiextensions.k8s.io/referencegrants.gateway.networking.k8s.io created
+```
+
+## Deploy the sample application
+
+You have configured Istio to inject sidecar containers into any application you deploy in your default namespace.
+
+1. Deploy the **[Bookinfo sample application](https://istio.io/latest/docs/examples/bookinfo/)**:
+
+```bash
+kubectl apply -f https://raw.githubusercontent.com/istio/istio/release-1.23/samples/bookinfo/platform/kube/bookinfo.yaml
 ```

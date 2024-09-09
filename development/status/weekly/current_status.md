@@ -100,7 +100,7 @@ Just like you did for repsys11-c2
 - **[Understanding MVVM: Model-View-ViewModel Architecture Explained](../../../research/a_l/application_architecture/model_view_viewmodel.md)**\
   Model-View-ViewModel (MVVM) is a design pattern that helps you separate your application logic from the user interface. It's a different way to think about your code, but it can make your applications easier to build and test. The Model-View-ViewModel pattern is an architectural software design pattern in which the model represents the data, the view is what the user sees and interacts with, and the viewmodel acts as a mediator between the model and view.
 
-  ![mvvm](https://www.datocms-assets.com/48294/1724770090-model-view-viewmodel-mvvm.webp?auto=format&dpr=0.5&w=1600)
+![mvvm](https://www.datocms-assets.com/48294/1724770090-model-view-viewmodel-mvvm.webp?auto=format&dpr=0.5&w=1600)
 
 - **[Presentation Domain Data Layering](../../../research/a_l/application_architecture/presentation_domain_data_layering.md)**\
 One of the most common ways to modularize an information-rich program is to separate it into three broad layers: presentation (UI), domain logic (aka business logic), and data access. So you often see web applications divided into a web layer that knows about handling HTTP requests and rendering HTML, a business logic layer that contains validations and calculations, and a data access layer that sorts out how to manage persistent data in a database or remote services.

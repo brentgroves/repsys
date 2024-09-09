@@ -71,9 +71,11 @@ If we could separate different concerns into files or folders with structures, t
 
 Martin Fowler has a great summary of the concept of view-model-data layering.
 
+```quote
 On the whole I've found this to be an effective form of modularization for many applications and one that I regularly use and encourage. It's biggest advantage is that it allows me to increase my focus by allowing me to think about the three topics (i.e., view, model, data) relatively independently.
 
 -- Martin Fowler
+```
 
 Layered architectures have been used to cope the challenges in large GUI applications, and certainly we can use these established patterns of front-end organization in our “React applications”.
 

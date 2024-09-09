@@ -17,4 +17,4 @@ export NAMESPACE=tutorial
 kubectl create namespace $NAMESPACE
 ```
 
-**[Install Istio](https://istio.io/latest/docs/setup/getting-started/)** using the demo profile.
+**[Install Istio](./install_istio.md)** using the demo profile.
