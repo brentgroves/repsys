@@ -94,6 +94,8 @@ A list of all research for repsys.
 - **[Deploy RabbitMQ Azure](https://www.youtube.com/watch?v=8-p0LflTgyw)**
 Just like you did for repsys11-c2
 - **[AKS Free tier](https://learn.microsoft.com/en-us/azure/aks/free-standard-pricing-tiers)**
+- **[Building Scalable Microservices: Creating a GRPC Service with Go and Consuming it in a React App via Envoy](../../../research/a_l/envoy/go_react_envoy.md)**\
+In today’s blog post, we’ll explore the process of creating a GRPC service using Go and consuming it in a React app with the help of Envoy proxy. GRPC is a high-performance, language-agnostic remote procedure call (RPC) framework, and when combined with Go and Envoy, it becomes a powerful tool for building distributed systems. We’ll walk through each step of the process, from setting up the GRPC service in Go to creating a React app that communicates with it via Envoy.
 
 - **[Learn Microservices using Kubernetes and Istio](../../../research/a_l/istio/learn_microservices_with_istio_on_k8s.md)**\
 
