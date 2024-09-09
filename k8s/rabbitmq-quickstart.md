@@ -355,10 +355,15 @@ Unable to connect to the server: tls: failed to verify certificate: x509: certif
 
 ```
 
-## deploy rabbitmq instance again
+## check cluster
 
 ```bash
-kubectl apply -f heloworld.yaml
+# aks cluster
+kubectl get rabbitmqclusters.rabbitmq.com
+NAME              ALLREPLICASREADY   RECONCILESUCCESS   AGE
+resource-limits   True               True               2m6s
+
+# microk8s cluster
 kubectl get rabbitmqclusters.rabbitmq.com
 NAME                     ALLREPLICASREADY   RECONCILESUCCESS   AGE
 rabbitmqcluster-sample   True               True               12m
@@ -408,6 +413,15 @@ kubectl describe node
 Next, let's access the Management UI.
 
 ```bash
+# aks
+username="$(kubectl get secret resource-limits-default-user -o jsonpath='{.data.username}' | base64 --decode)"
+echo "username: $username"
+password="$(kubectl get secret resource-limits-default-user -o jsonpath='{.data.password}' | base64 --decode)"
+echo "password: $password"
+
+kubectl port-forward "service/resource-limits" 15672
+
+# microk8s
 username="$(kubectl get secret rabbitmqcluster-sample-default-user -o jsonpath='{.data.username}' | base64 --decode)"
 echo "username: $username"
 password="$(kubectl get secret rabbitmqcluster-sample-default-user -o jsonpath='{.data.password}' | base64 --decode)"
@@ -434,6 +448,15 @@ The next step would be to connect an application to the RabbitMQ Cluster in orde
 Here, we will be using the hello-world service to find the connection address, and the hello-world-default-user to find connection credentials.
 
 ```bash
+# aks
+username="$(kubectl get secret resource-limits-default-user -o jsonpath='{.data.username}' | base64 --decode)"
+password="$(kubectl get secret resource-limits-default-user -o jsonpath='{.data.password}' | base64 --decode)"
+service="$(kubectl get service resource-limits -o jsonpath='{.spec.clusterIP}')"
+echo "service = $service"
+kubectl run perf-test --image=pivotalrabbitmq/perf-test -- --uri amqp://$username:$password@$service
+# pod/perf-test created
+
+# microk8s
 username="$(kubectl get secret rabbitmqcluster-sample-default-user -o jsonpath='{.data.username}' | base64 --decode)"
 password="$(kubectl get secret rabbitmqcluster-sample-default-user -o jsonpath='{.data.password}' | base64 --decode)"
 service="$(kubectl get service rabbitmqcluster-sample -o jsonpath='{.spec.clusterIP}')"
@@ -467,7 +490,7 @@ As can be seen, perf-test is able to produce and consume about 25,000 messages p
 ## delete perf-test
 
 ```bash
-kubectl delete perf-test
+kubectl delete pod perf-test
 ```
 
 ## create nodeport like ClusterIP port

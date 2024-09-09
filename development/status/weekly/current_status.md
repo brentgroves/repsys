@@ -95,6 +95,10 @@ A list of all research for repsys.
 Just like you did for repsys11-c2
 - **[AKS Free tier](https://learn.microsoft.com/en-us/azure/aks/free-standard-pricing-tiers)**
 
+- **[Learn Microservices using Kubernetes and Istio](../../../research/a_l/istio/learn_microservices_with_istio_on_k8s.md)**\
+
+In short, the microservice architectural style is an approach to developing a single application as a suite of small services, each running in its own process and communicating with lightweight mechanisms, often an HTTP resource API. These services are built around business capabilities and independently deployable by fully automated deployment machinery. There is a bare minimum of centralized management of these services, which may be written in different programming languages and use different data storage technologies.
+
 - **[AKS simple web app](https://medium.com/@dheemandas1997/deploy-simple-static-web-application-on-azure-kubernetes-service-aks-a-step-by-step-guide-e94932a9ce65)**
 
 - **[Understanding MVVM: Model-View-ViewModel Architecture Explained](../../../research/a_l/application_architecture/model_view_viewmodel.md)**\
@@ -119,8 +123,6 @@ One of the most common ways to modularize an information-rich program is to sepa
 - **[Next - Ingress Controllers](../../../research/a_l/azure/aks/ingress_controllers.md)**\
 
 - **[Next - Create cluster with kubeadm](../../../research/a_l/k8s/kubeadm/create_cluster_with_kubeadm.md)**
-
-- **[NEXT - tls bootstrapping](../../../research/a_l/k8s/concepts/tls_bootstrapping.md)**
 
 - **[What’s the difference between client certificates vs. server certificates?](https://www.digicert.com/faq/public-trust-and-certificates/whats-the-difference-between-client-certificates-vs-server-certificates)**
 
