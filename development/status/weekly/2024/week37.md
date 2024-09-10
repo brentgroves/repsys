@@ -3,6 +3,10 @@
 **[All Status](../weekly/status_list.md)**\
 **[Back to Main](../../../README.md)**
 
+## Thoughts
+
+I could put in tickets for software to be installed on our k8s clusters if that would help.
+
 ## Important date
 
 March remove active directory.  
@@ -84,6 +88,12 @@ This will involve adding a primary key to those tables without one. It also invo
 
 - **[Research List](../../../research/research_list.md)**\
 A list of all research for repsys.
+
+- NEXT **[Update or rotate the credentials for an Azure Kubernetes Service (AKS) cluster](../../../../azure/update_credentials.md)**
+
+```bash
+ Original Error: adal: Refresh request failed. Status Code = '401'. Response body: {"error":"invalid_client","error_description":"AADSTS7000222: The provided client secret keys for app '15cdd566-98bb-4130-8ec5-5c58cffb34bf' are expired. Visit the Azure portal to create new keys for your app: https://aka.ms/NewClientSecret, or consider using certificate credentials for added security: https://aka.ms/certCreds. Trace ID
+ ```
 
 - **[Deploy RabbitMQ Azure](../../../k8s/rabbitmq-quickstart.md)**
 Just like you did for repsys11-c2

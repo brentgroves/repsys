@@ -16,7 +16,8 @@ func main() {
 	// conn, err := amqp.Dial("amqp://guest:guest@localhost:5672/")
 	// username="$(kubectl get secret rabbitmqcluster-sample-default-user -o jsonpath='{.data.username}' | base64 --decode)"
 	// password="$(kubectl get secret rabbitmqcluster-sample-default-user -o jsonpath='{.data.password}' | base64 --decode)"
-	conn, err := amqp.Dial("amqp://default_user_ur_9_UJ1UUV0kFbT1v9:password@repsys11-c2-n1:32672/") // delete me
+	// conn, err := amqp.Dial("amqp://default_user_ur_9_UJ1UUV0kFbT1v9:password@repsys11-c2-n1:32672/") // delete me
+	conn, err := amqp.Dial("amqp://default_user__rDlt8SqGfm2unYYV0z:TY0G0L34M34pZ9XJiNdSuY5sbBcwxb-w@172.168.159.107:5672/") // delete me
 
 	failOnError(err, "Failed to connect to RabbitMQ")
 	defer conn.Close()
