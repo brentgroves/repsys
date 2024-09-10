@@ -100,6 +100,11 @@ func failOnError(err error, msg string) {
 Get k8s credentials
 
 ```bash
+# aks
+username="$(kubectl get secret resource-limits-default-user -o jsonpath='{.data.username}' | base64 --decode)"
+password="$(kubectl get secret resource-limits-default-user -o jsonpath='{.data.password}' | base64 --decode)"
+
+# on-prem
 username="$(kubectl get secret rabbitmqcluster-sample-default-user -o jsonpath='{.data.username}' | base64 --decode)"
 password="$(kubectl get secret rabbitmqcluster-sample-default-user -o jsonpath='{.data.password}' | base64 --decode)"
 ```

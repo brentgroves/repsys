@@ -493,11 +493,43 @@ As can be seen, perf-test is able to produce and consume about 25,000 messages p
 kubectl delete pod perf-test
 ```
 
+## Load bal https://medium.com/cooking-with-azure/tcp-load-balancing-with-ingress-in-aks-702ac93f2246#id_token=eyJhbGciOiJSUzI1NiIsImtpZCI6ImQ3YjkzOTc3MWE3ODAwYzQxM2Y5MDA1MTAxMmQ5NzU5ODE5MTZkNzEiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL2FjY291bnRzLmdvb2dsZS5jb20iLCJhenAiOiIyMTYyOTYwMzU4MzQtazFrNnFlMDYwczJ0cDJhMmphbTRsamRjbXMwMHN0dGcuYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJhdWQiOiIyMTYyOTYwMzU4MzQtazFrNnFlMDYwczJ0cDJhMmphbTRsamRjbXMwMHN0dGcuYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJzdWIiOiIxMTM3NzAwNDYwNDMyMTAxNTEyNTIiLCJlbWFpbCI6ImJyZW50Lmdyb3Zlc0BnbWFpbC5jb20iLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwibmJmIjoxNzI1OTc2NzE3LCJuYW1lIjoiYnJlbnQgZ3JvdmVzIiwicGljdHVyZSI6Imh0dHBzOi8vbGgzLmdvb2dsZXVzZXJjb250ZW50LmNvbS9hL0FDZzhvY0xyV2tISmQ5NFZUMUFlY0lLRTRFV2ZKaGd5S29HX09GUDVpd29SRlB6eUdkWHpMMTA9czk2LWMiLCJnaXZlbl9uYW1lIjoiYnJlbnQiLCJmYW1pbHlfbmFtZSI6Imdyb3ZlcyIsImlhdCI6MTcyNTk3NzAxNywiZXhwIjoxNzI1OTgwNjE3LCJqdGkiOiIzOGRmZTUyYTQwZjRhOTllZWJlZDIxZDQ1NWVjMTMxMTM4MGYwYTFjIn0.K0w0oShUa8HeOV4gGmL1hoSmw18mfMoJCfGHtK3M457r8lJeCutUr6A5I36mec9VxXW9aYNuVdlvAX3AAiecC_PB6BF7yKWk9AugEIlSk11omKPCainVpFZYM94rLAXIFJKrhQAWVLohd5TjBCSUaX8eHyXkuIKP2ecBTZt-J7IPbL5Yxxp-Tvox-Y5KTLap0-PMGlEldaIFyIKk40Z_O8Ifso7JEESfGywCWOUXoW6wlz0G9dBcdTXftEvQmZdZ63UcrfIG6EXiHuOtW5b2sHHUTz-GrBHPvG_37YDxrLNc_9nrzH06OJVht2k7inb5ex00z9tPACRWPr56liXBow
+
 ## create nodeport like ClusterIP port
 
+**[aks note](https://learn.microsoft.com/en-us/answers/questions/200402/how-to-publish-services-on-aks-with-nodeport-servi)**
+**[node-pools](https://learn.microsoft.com/en-us/answers/questions/200402/how-to-publish-services-on-aks-with-nodeport-servi)**
 look at the ClusterIP port specs:
 
 ```bash
+# aks
+kubectl describe svc resource-limits         
+Name:                     resource-limits
+Namespace:                default
+Labels:                   app.kubernetes.io/component=rabbitmq
+                          app.kubernetes.io/name=resource-limits
+                          app.kubernetes.io/part-of=rabbitmq
+Annotations:              <none>
+Selector:                 app.kubernetes.io/name=resource-limits
+Type:                     ClusterIP
+IP Family Policy:         SingleStack
+IP Families:              IPv4
+IP:                       10.0.176.228
+IPs:                      10.0.176.228
+Port:                     amqp  5672/TCP
+TargetPort:               5672/TCP
+Endpoints:                10.244.2.16:5672
+Port:                     management  15672/TCP
+TargetPort:               15672/TCP
+Endpoints:                10.244.2.16:15672
+Port:                     prometheus  15692/TCP
+TargetPort:               15692/TCP
+Endpoints:                10.244.2.16:15692
+Session Affinity:         None
+Internal Traffic Policy:  Cluster
+Events:                   <none>
+
+# on-prem
 kubectl describe svc rabbitmqcluster-sample         
 Name:              rabbitmqcluster-sample
 Namespace:         default
@@ -527,6 +559,35 @@ Events:            <none>
 create a nodeport like the ClusterIP port:
 Nodeport range: 30000 and 32767
 
+```bash
+kubectl describe svc resource-limits         
+
+Name:                     resource-limits
+Namespace:                default
+Labels:                   app.kubernetes.io/component=rabbitmq
+                          app.kubernetes.io/name=resource-limits
+                          app.kubernetes.io/part-of=rabbitmq
+Annotations:              <none>
+Selector:                 app.kubernetes.io/name=resource-limits
+Type:                     ClusterIP
+IP Family Policy:         SingleStack
+IP Families:              IPv4
+IP:                       10.0.176.228
+IPs:                      10.0.176.228
+Port:                     amqp  5672/TCP
+TargetPort:               5672/TCP
+Endpoints:                10.244.2.16:5672
+Port:                     management  15672/TCP
+TargetPort:               15672/TCP
+Endpoints:                10.244.2.16:15672
+Port:                     prometheus  15692/TCP
+TargetPort:               15692/TCP
+Endpoints:                10.244.2.16:15692
+Session Affinity:         None
+Internal Traffic Policy:  Cluster
+Events:                   <none>
+```
+
 ```yaml
 apiVersion: v1
 kind: Service
@@ -551,6 +612,32 @@ spec:
 ```bash
 pushd .
 cd ~/src/repsys/k8s/rabbitmq
+# aks
+kubectl apply -f nodeport-aks.yaml
+kubectl describe svc resource-limits-np         
+
+Name:                     resource-limits-np
+Namespace:                default
+Labels:                   app.kubernetes.io/component=rabbitmq
+                          app.kubernetes.io/name=resource-limits
+                          app.kubernetes.io/part-of=rabbitmq
+Annotations:              <none>
+Selector:                 app.kubernetes.io/name=resource-limits
+Type:                     NodePort
+IP Family Policy:         SingleStack
+IP Families:              IPv4
+IP:                       10.0.203.24
+IPs:                      10.0.203.24
+Port:                     resource-limits-np  5672/TCP
+TargetPort:               5672/TCP
+NodePort:                 resource-limits-np  32672/TCP
+Endpoints:                10.244.2.16:5672
+Session Affinity:         None
+External Traffic Policy:  Cluster
+Internal Traffic Policy:  Cluster
+Events:                   <none>
+
+# on-prem
 kubectl apply -f nodeport.yaml
 kubectl describe svc rabbitmqcluster-sample-np   
 Name:                     rabbitmqcluster-sample-np
