@@ -85,6 +85,8 @@ This will involve adding a primary key to those tables without one. It also invo
 - **[Research List](../../../research/research_list.md)**\
 A list of all research for repsys.
 
+- **[mqtt browser client](http://www.steves-internet-guide.com/using-javascript-mqtt-client-websockets/)**
+
 - **[mqtt wss](https://moreillon.medium.com/encrypted-mosquitto-mqtt-broker-in-kubernetes-26bb7acd11c7)**
 <http://www.steves-internet-guide.com/mqtt-websockets/>
 <https://github.com/eclipse/paho.mqtt.javascript>
