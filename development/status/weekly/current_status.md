@@ -86,6 +86,8 @@ This will involve adding a primary key to those tables without one. It also invo
 A list of all research for repsys.
 
 - **[mqtt browser client](http://www.steves-internet-guide.com/using-javascript-mqtt-client-websockets/)**
+- **[k8s mqtt deployment](https://moreillon.medium.com/encrypted-mosquitto-mqtt-broker-in-kubernetes-26bb7acd11c7)**
+- **[encryped mosquitto](https://moreillon.medium.com/encrypted-mosquitto-mqtt-broker-in-kubernetes-26bb7acd11c7)
 
 - **[mqtt wss](https://moreillon.medium.com/encrypted-mosquitto-mqtt-broker-in-kubernetes-26bb7acd11c7)**
 <http://www.steves-internet-guide.com/mqtt-websockets/>
