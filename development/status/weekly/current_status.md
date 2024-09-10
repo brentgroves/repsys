@@ -85,6 +85,12 @@ This will involve adding a primary key to those tables without one. It also invo
 - **[Research List](../../../research/research_list.md)**\
 A list of all research for repsys.
 
+- **[mqtt wss](https://moreillon.medium.com/encrypted-mosquitto-mqtt-broker-in-kubernetes-26bb7acd11c7)**
+<http://www.steves-internet-guide.com/mqtt-websockets/>
+<https://github.com/eclipse/paho.mqtt.javascript>
+
+- **[Next - Connect to RabbitMQ with React.js](https://cloudamqp.github.io/amqp-client.js/)**
+<!-- https://github.com/cloudamqp/amqp-client.js -->
 - **[Deploy RabbitMQ Azure](../../../k8s/rabbitmq-quickstart.md)**
 Just like you did for repsys11-c2
 - **[AKS Free tier](https://learn.microsoft.com/en-us/azure/aks/free-standard-pricing-tiers)**
