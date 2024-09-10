@@ -91,7 +91,7 @@ A list of all research for repsys.
  Original Error: adal: Refresh request failed. Status Code = '401'. Response body: {"error":"invalid_client","error_description":"AADSTS7000222: The provided client secret keys for app '15cdd566-98bb-4130-8ec5-5c58cffb34bf' are expired. Visit the Azure portal to create new keys for your app: https://aka.ms/NewClientSecret, or consider using certificate credentials for added security: https://aka.ms/certCreds. Trace ID
  ```
 
-- **[Deploy RabbitMQ Azure](https://www.youtube.com/watch?v=8-p0LflTgyw)**
+- **[Deploy RabbitMQ Azure](../../../k8s/rabbitmq-quickstart.md)**
 Just like you did for repsys11-c2
 - **[AKS Free tier](https://learn.microsoft.com/en-us/azure/aks/free-standard-pricing-tiers)**
 - **[Building Scalable Microservices: Creating a GRPC Service with Go and Consuming it in a React App via Envoy](../../../research/a_l/envoy/go_react_envoy.md)**\
