@@ -65,13 +65,15 @@ func main() {
  }
 ```
 
-## Step 2: Create a Protobuf Definition
+## **[Install Protobuf](./protobuf-install.md)**
+
+## Create a Protobuf Definition
 
 Define your service and messages using Protocol Buffers (Protobuf). Create a .proto file inside the “proto” folder, e.g., UserInfo.proto, and define your service and message types:
 
 ```bash
-mkdir ~/src/repsys/volumes/go/tutorials/go_react_envoy/go-grpc-server-with-envoy/proto
-cd ~/src/repsys/volumes/go/tutorials/go_react_envoy/go-grpc-server-with-envoy/proto
+mkdir ~/src/repsys/volumes/go/tutorials/grpc/go-grpc-server-with-envoy/proto
+cd ~/src/repsys/volumes/go/tutorials/grpc/go-grpc-server-with-envoy/proto
 touch UserInfo.proto
 
 ```proto
@@ -120,9 +122,6 @@ service Usr {
 Compile the .proto file to generate Go code:
 
 ```bash
-# Install protoc
-go install google.golang.org/protobuf/cmd/protoc-gen-go@latest
-go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@latest
 protoc ./proto/userInfo.proto --go_out=. --go-grpc_out=.
 # this command creates app/proto/*.go files
 ```
@@ -139,8 +138,8 @@ import (
  "log"
  "net"
  "time"
-
- "github.com/digvijay17july/golang-projects/go-grpc-react-example/go-grpc-server-with-envoy/app/proto"
+ "go-grpc-server-with-envoy/app/proto"
+//  "github.com/digvijay17july/golang-projects/go-grpc-react-example/go-grpc-server-with-envoy/app/proto"
  "google.golang.org/grpc"
 )
 
@@ -171,4 +170,32 @@ func main() {
  }
 
 }
+```
+
+## Step 4: Building and Running the GRPC Service Docker image
+
+Dockerfile for the Grpc Service app-
+
+```dockerfile
+FROM golang:1.21.4-alpine
+
+WORKDIR /app
+
+COPY go.sum ./
+
+
+COPY . ./
+
+RUN go build -o  /go-grpc-server-with-envoy
+
+EXPOSE 8080
+
+CMD [ "/go-grpc-server-with-envoy" ]
+```
+
+## Build the image-
+
+```bash
+cd ~/src/repsys/volumes/go/tutorials/grpc/go-grpc-server-with-envoy
+docker build -t go-grpc-server-with-envoy .
 ```

@@ -84,17 +84,67 @@ This will involve adding a primary key to those tables without one. It also invo
 
 - **[Research List](../../../research/research_list.md)**\
 A list of all research for repsys.
+- **[NEXT - Encrypted Mosquitto MQTT broker in Kubernetes](../../../k8s/mosquitto_install.md#aks-ingress)**\
+
+- **[Comparing AKS Ingress options](../../../research/a_l/azure/aks/ingress_controllers.md)**
+
+Microsoft recommends it thier application routing addon which works with their DNS Zones and Key vault.  I may use it later but will try to configure the standard **[NGinx Ingress](https://kubernetes.github.io/ingress-nginx/)** first.
+
+| Feature                                       | Application Routing addon | Application Gateway for Containers       | Azure Service Mesh/Istio-based service mesh |
+|-----------------------------------------------|---------------------------|------------------------------------------|---------------------------------------------|
+| Ingress/Gateway controller                    | NGINX ingress controller  | Azure Application Gateway for Containers | Istio Ingress Gateway                       |
+| API                                           | Ingress API               | Ingress API and Gateway API              | Gateway API                                 |
+| Hosting                                       | In-cluster                | Azure hosted                             | In-cluster                                  |
+| Scaling                                       | Autoscaling               | Autoscaling                              | Autoscaling                                 |
+| Load balancing                                | Internal/External         | External                                 | Internal/External                           |
+| SSL termination                               | In-cluster                | Yes: Offloading and E2E SSL              | In-cluster                                  |
+| mTLS                                          | N/A                       | Yes to backend                           | N/A                                         |
+| Static IP Address                             | N/A                       | FQDN                                     | N/A                                         |
+| Azure Key Vault stored SSL certificates       | Yes                       | Yes                                      | N/A                                         |
+| Azure DNS integration for DNS zone management | Yes                       | Yes                                      | N/A                                         |
+
+- **[YAML Tutorial: Everything You Need to Get Started in Minutes](../../../research/m_z/yaml/yaml_getting_started.md)**\
+YAML Ain't Markup Language (YAML) is a data serialization language that is consistently listed as one of the most popular programming languages. It's often used as a format for configuration files, but its object serialization abilities make it a viable replacement for languages like JSON. This YAML tutorial will demonstrate the language syntax with a guide and some simple coding examples in Python. YAML has broad language support and maps easily into native data structures. It's also easy for humans to read, which is why it's a good choice for configuration. The YAML acronym was shorthand for Yet Another Markup Language. But the maintainers renamed it to YAML Ain't Markup Language to place more emphasis on its data-oriented features.
 
 - **[mqtt browser client](http://www.steves-internet-guide.com/using-javascript-mqtt-client-websockets/)**
 - **[k8s mqtt deployment](https://moreillon.medium.com/encrypted-mosquitto-mqtt-broker-in-kubernetes-26bb7acd11c7)**
-- **[encryped mosquitto](https://moreillon.medium.com/encrypted-mosquitto-mqtt-broker-in-kubernetes-26bb7acd11c7)
+- **[Encrypted Mosquitto MQTT broker in Kubernetes](../../../k8s/mosquitto_install.md#aks-ingress)**\
+Eclipse Mosquitto is an open-source MQTT broker supporting MQTT(S) and Websocket (WS), popular for applications such as IoT.
 
-- **[mqtt wss](https://moreillon.medium.com/encrypted-mosquitto-mqtt-broker-in-kubernetes-26bb7acd11c7)**
-<http://www.steves-internet-guide.com/mqtt-websockets/>
-<https://github.com/eclipse/paho.mqtt.javascript>
+Thank you eclipse for supporting WS so we can you MQTT directly in a browser without going through some separate API server we have to build ourselves!
 
-- **[Next - Connect to RabbitMQ with React.js](https://cloudamqp.github.io/amqp-client.js/)**
-<!-- https://github.com/cloudamqp/amqp-client.js -->
+```yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mosquitto-config
+data:
+  mosquitto.conf: |
+
+    persistence true
+    persistence_location /mosquitto/data/
+    log_dest stdout
+    
+    # MQTTS listener
+    listener 8883
+    protocol mqtt
+
+    cafile /etc/ssl/certs/ca-certificates.crt
+    keyfile /mosquitto/certs/tls.key
+    certfile /mosquitto/certs/tls.crt
+
+    # WS Listener
+    listener 9001
+    protocol websockets
+```
+
+As MQTTS connections are encrypted directly at the Mosquitto container level, port 883 is exposed directly via a NodePort, mapped here to 30883. This will allow MQTTS connections to be established via mqtts://mqtt.example.com:30883.
+On the other hand, WS connections are encrypted externally, which is handled with an Ingress as described in the following section.
+
+**Don't know if this is good or bad** since the IC or Gateway usually handles SSL terminations in K8s.
+
+- **[more mqtt websockets](http://www.steves-internet-guide.com/mqtt-websockets/)**
+- **[mqtt websocket javascript client](https://github.com/eclipse/paho.mqtt.javascript)**
 - **[Deploy RabbitMQ Azure](../../../k8s/rabbitmq-quickstart.md)**
 Just like you did for repsys11-c2
 - **[AKS Free tier](https://learn.microsoft.com/en-us/azure/aks/free-standard-pricing-tiers)**
