@@ -49,8 +49,15 @@ kubectl delete rabbitmqcluster INSTANCE
 
 # or
 kubectl delete -f INSTANCE.yaml
-# ie
+
+# Delete the operator
+cd ~/src/repsys/k8s/rabbitmq
 kubectl delete -f cluster-operator.yml
+kubectl get all -n rabbitmq-system 
+kubectl delete svc rabbitmqcluster-sample-np
+kubectl delete svc rabbitmq-loadbalancer
+
+
 
 ```
 
@@ -494,6 +501,8 @@ kubectl delete pod perf-test
 ```
 
 ## Create a Load Balancer
+
+This is useful in AKS so that rabbitmq can be accessed from an external IP
 
 ```bash
 pushd .

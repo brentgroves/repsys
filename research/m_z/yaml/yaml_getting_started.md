@@ -10,7 +10,24 @@
 
 YAML Ain't Markup Language (YAML) is a data serialization language that is consistently listed as one of the most popular programming languages. It's often used as a format for configuration files, but its object serialization abilities make it a viable replacement for languages like JSON. This YAML tutorial will demonstrate the language syntax with a guide and some simple coding examples in Python. YAML has broad language support and maps easily into native data structures. It's also easy for humans to read, which is why it's a good choice for configuration. The YAML acronym was shorthand for Yet Another Markup Language. But the maintainers renamed it to YAML Ain't Markup Language to place more emphasis on its data-oriented features.
 
-YAML Tutorial Quick Start: A Simple File
+## **[YAML Multiline - with test parser!](https://yaml-multiline.info/)**
+
+Find the right syntax for your YAML multiline strings
+
+There are two types of formats that YAML supports for strings: block scalar and flow scalar formats. (Scalars are what YAML calls basic values like numbers or strings, as opposed to complex types like arrays or objects.) Block scalars have more control over how they are interpreted, whereas flow scalars have more limited escaping support.
+
+### Block Scalars
+
+A block scalar header has three parts:
+
+**Block Style Indicator:** The block style indicates how newlines inside the block should behave. If you would like them to be kept as newlines, use the literal style, indicated by a pipe (|). If instead you want them to be replaced by spaces, use the folded style, indicated by a right angle bracket (>). (To get a newline using the folded style, leave a blank line by putting two newlines in. Lines with extra indentation are also not folded.)
+
+**Block Chomping Indicator:** The chomping indicator controls what should happen with newlines at the end of the string. The default, clip, puts a single newline at the end of the string. To remove all newlines, strip them by putting a minus sign (-) after the style indicator. Both clip and strip ignore how many newlines are actually at the end of the block; to keep them all put a plus sign (+) after the style indicator.
+
+**Indentation Indicator:** Ordinarily, the number of spaces you're using to indent a block will be automatically guessed from its first line. You may need a block indentation indicator if the first line of the block starts with extra spaces. In this case, simply put the number of spaces used for indentation (between 1 and 9) at the end of the header.
+
+## YAML Tutorial Quick Start: A Simple File
+
 Let's take a look at a YAML file for a brief overview.
 
 ```yaml
@@ -105,6 +122,17 @@ stuff : {'foo': 'bar', 'bar': 'foo'}
 ```
 
 When we tell python to print a dictionary as a string, it uses the inline syntax we'll see below. We can see from the output that our document is a python dictionary with two strings and another dictionary nested inside it. YAML's simple nesting gives us the power to build sophisticated objects. But that's only the beginning.
+
+## **[Break a String Using a Block-Chomping Indicator](https://kodekloud.com/blog/yaml-multiline-string/#:~:text=With%20the%20plus%20%22%2B%22%20syntax,the%20end%20of%20the%20string.)**
+
+With the plus "+" syntax, you keep all the line breaks at the end of the string. With the minus "-" syntax, you remove all the line breaks at the end of the string. If you do not provide the block chomping indicator, one line break will be automatically added to the end of the string.
+
+Break a String Using a Block-Chomping Indicator
+You can mix the block scalar styles with a block-chomping indicator, using a "+" or "-" to handle the line breaks at the end of the string.
+
+- With the plus "+" syntax, you keep all the line breaks at the end of the string.
+- With the minus "-" syntax, you remove all the line breaks at the end of the string.
+- If you do not provide the block chomping indicator, one line break will be automatically added to the end of the string.
 
 ## **[pipe operator](https://www.bevansbench.com/blog/understanding-pipe-character-yaml-multiline-strings-explained)**
 

@@ -6,6 +6,7 @@
 
 ## references
 
+- **[MQTT 5](https://www.hivemq.com/blog/mqtt5-essentials-part3-upgrade-to-mqtt5-now/)**
 - **[JavaScript Client Library for node.js and browsers](https://github.com/mqttjs/MQTT.js)**
 - **[Eclipse Mosquitto](https://mosquitto.org/)**
 - **[Somebody's K8s config files](https://github.com/abalage/mosquitto-mqtt-k8s/blob/main/base/mosquitto.conf)**
