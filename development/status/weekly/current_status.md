@@ -84,6 +84,9 @@ This will involve adding a primary key to those tables without one. It also invo
 
 - **[Research List](../../../research/research_list.md)**\
 A list of all research for repsys.
+
+- **[Full stack app in istio](https://medium.com/@SabujJanaCodes/running-a-full-stack-app-in-istio-service-mesh-part-1-87b828f4d1cc)\
+
 - **[NEXT - Encrypted Mosquitto MQTT broker in Kubernetes](../../../k8s/mosquitto_install.md#aks-ingress)**\
 
 - **[Comparing AKS Ingress options](../../../research/a_l/azure/aks/ingress_controllers.md)**
