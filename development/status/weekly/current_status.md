@@ -85,6 +85,9 @@ This will involve adding a primary key to those tables without one. It also invo
 - **[Research List](../../../research/research_list.md)**\
 A list of all research for repsys.
 
+- **[Cloud native certificate management](../../../research/a_l/k8s/concepts/cert_manager/cert_manager.md)**\
+cert-manager is a powerful and extensible X.509 certificate controller for Kubernetes and OpenShift workloads. It will obtain certificates from a variety of Issuers, both popular public Issuers as well as private Issuers, and ensure the certificates are valid and up-to-date, and will attempt to renew certificates at a configured time before expiry.
+
 - **[RabbitMQ tutorial - Work Queues](../../../research/m_z/rabbitmq/work_queues.md)**\
   The main idea behind Work Queues (aka: Task Queues) is to avoid doing a resource-intensive task immediately and having to wait for it to complete. Instead we schedule the task to be done later. We encapsulate a task as a message and send it to a queue. A worker process running in the background will pop the tasks and eventually execute the job. When you run many workers the tasks will be shared between them.
 
@@ -92,12 +95,11 @@ A list of all research for repsys.
 
 ![jobs](https://quarkus.io/assets/images/posts/redis-job-queue/pattern.png)
 
-- **[Comparing AKS Ingress options](../../../research/a_l/azure/aks/ingress_controllers.md)**
-
-- **[Full stack app in istio](https://medium.com/@SabujJanaCodes/running-a-full-stack-app-in-istio-service-mesh-part-1-87b828f4d1cc)\
-RPCs like DCOM/Corba where you develop a language agnostic service interface and use a compiler to generate the service interface to the actual service implementation.
+- **[Full stack app in istio](https://medium.com/@SabujJanaCodes/running-a-full-stack-app-in-istio-service-mesh-part-1-87b828f4d1cc)**\
+RPCs like DCOM/Corba where you develop a language agnostic service interface and use a compiler to generate tcert-manager is a powerful and extensible X.509 certificate controller for Kubernetes and OpenShift workloads. It will obtain certificates from a variety of Issuers, both popular public Issuers as well as private Issuers, and ensure the certificates are valid and up-to-date, and will attempt to renew certificates at a configured time before expiry.e service interface to the actual service implementation.
 
 - **[NEXT - Encrypted Mosquitto MQTT broker in Kubernetes](../../../k8s/mosquitto_install.md#aks-ingress)**\
+A MQTT broker installed in Azure AKS seems to be the only/best solution to insert report requests into a publish/subsribe queue directly from a browser without relying on a http server that can be accessed by microservices installed in an on-prem k8s cluster. Will have to use a different AMQP broker in an on-prem k8s cluster to achieve the work queues pattern.
 
 - **[Comparing AKS Ingress options](../../../research/a_l/azure/aks/ingress_controllers.md)**
 
