@@ -1,12 +1,8 @@
-# **[RabbitMQ tutorial - Work Queues](../../../volumes/go/tutorials/rabbitmq/work_queue/work_queues.md)**
+# **[RabbitMQ tutorial - Work Queues](https://www.rabbitmq.com/tutorials/tutorial-two-go)**
 
 **[Back to Research List](../../../research//research_list.md)**\
 **[Back to Current Status](../../../development/status/weekly/current_status.md)**\
 **[Back to Main](../../../README.md)**
-
-## references
-
--**[RabbitMQ tutorial - Work Queues](https://www.rabbitmq.com/tutorials/tutorial-two-go)**
 
 ## Work Queues
 
@@ -22,7 +18,7 @@ If you're having trouble going through this tutorial you can contact us through 
 
 ## Background
 
-In the first tutorial we wrote programs to send and receive messages from a named queue. In this one we'll create a Work Queue that will be used to distribute time-consuming tasks among multiple workers.
+In the **[first tutorial](https://www.rabbitmq.com/tutorials/tutorial-one-go)** we wrote programs to send and receive messages from a named queue. In this one we'll create a Work Queue that will be used to distribute time-consuming tasks among multiple workers.
 
 The main idea behind Work Queues (aka: Task Queues) is to avoid doing a resource-intensive task immediately and having to wait for it to complete. Instead we schedule the task to be done later. We encapsulate a task as a message and send it to a queue. A worker process running in the background will pop the tasks and eventually execute the job. When you run many workers the tasks will be shared between them.
 
@@ -35,3 +31,22 @@ This concept is especially useful in web applications where it's impossible to h
 In the previous part of this tutorial we sent a message containing "Hello World!". Now we'll be sending strings that stand for complex tasks. We don't have a real-world task, like images to be resized or pdf files to be rendered, so let's fake it by just pretending we're busy - by using the time.Sleep function. We'll take the number of dots in the string as its complexity; every dot will account for one second of "work". For example, a fake task described by Hello... will take three seconds.
 
 We will slightly modify the send.go code from our previous example, to allow arbitrary messages to be sent from the command line. This program will schedule tasks to our work queue, so let's name it new_task.go:
+
+```go
+ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+defer cancel()
+
+body := bodyFrom(os.Args)
+err = ch.PublishWithContext(ctx,
+  "",           // exchange
+  q.Name,       // routing key
+  false,        // mandatory
+  false,
+  amqp.Publishing {
+    DeliveryMode: amqp.Persistent,
+    ContentType:  "text/plain",
+    Body:         []byte(body),
+  })
+failOnError(err, "Failed to publish a message")
+log.Printf(" [x] Sent %s", body)
+```
