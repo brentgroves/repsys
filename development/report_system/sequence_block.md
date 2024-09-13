@@ -14,13 +14,15 @@
 block-beta
   columns 5
   a1["Web Report Request"] a2<["1. request"]>(right) space:2 a5[("Data Warehouse")]
-  b1<["7. status"]>(up) space:1 b3<["2. request"]>(down) space:1 b5<["4. result"]>(up)
-  space:1 c2<["6. status"]>(left) c3(("Message Queue")) c4<["5. status / 3. request"]>(x) c5["ETL Runner"]
+  b1<["7. status"]>(up) space:1 b3<["1. request"]>(down) space:1 b5<["4. result"]>(up)
+  space:1 c2<["7. status"]>(left) c3(("Message Queue")) c4<["6. status / 3. request"]>(x) c5["ETL Runner"]
+  space:4 b6<["5. source"]>(down)
+  space:4 c6["Data Source"]
  
   classDef cloud fill:#696,stroke:#333;
   classDef onprem fill:#969,stroke:#333;
   class a1,a3,c3,a5  cloud
-  class c5 onprem
+  class c5,c6 onprem
 ```
 
 ## Sequence Diagram
