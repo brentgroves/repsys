@@ -4,6 +4,10 @@
 **[Research List](../../../research_list.md)**\
 **[Back Main](../../../../README.md)**
 
+## references
+
+- **[another tutorial](https://medium.com/@anilbidary/domain-name-based-routing-on-aks-azure-kubernetes-service-using-ingress-cert-manager-and-9b4028d762ed)**
+
 In this tutorial you will learn how to deploy and configure cert-manager on Azure Kubernetes Service (AKS) and how to deploy an HTTPS web server and make it available on the Internet. You will learn how to configure cert-manager to get a signed certificate from Let's Encrypt, which will allow clients to connect to your HTTPS website securely. You will configure cert-manager to use the Let's Encrypt DNS-01 challenge protocol with Azure DNS, using workload identity federation to authenticate to Azure.
 
 ## Part 1
