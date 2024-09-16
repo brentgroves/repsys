@@ -85,6 +85,9 @@ This will involve adding a primary key to those tables without one. It also invo
 - **[Research List](../../../research/research_list.md)**\
 A list of all research for repsys.
 
+- **[Deploy cert-manager on Azure Kubernetes Service (AKS) and use Let's Encrypt to sign a certificate for an HTTPS website](../../../research/a_l/azure/aks/cert_manager_on_aks_using_lets_encrypt.md)**\
+Studied basics of certificate management in k8s. Now attempt to implement an HTTPS website using Let's Encrypt.
+
 - **[Cloud native certificate management](../../../research/a_l/k8s/concepts/cert_manager/cert_manager.md)**\
 cert-manager is a powerful and extensible X.509 certificate controller for Kubernetes and OpenShift workloads. It will obtain certificates from a variety of Issuers, both popular public Issuers as well as private Issuers, and ensure the certificates are valid and up-to-date, and will attempt to renew certificates at a configured time before expiry.
 
