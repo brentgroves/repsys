@@ -98,9 +98,6 @@ cert-manager is a powerful and extensible X.509 certificate controller for Kuber
 - **[Full stack app in istio](https://medium.com/@SabujJanaCodes/running-a-full-stack-app-in-istio-service-mesh-part-1-87b828f4d1cc)**\
 RPCs like DCOM/Corba where you develop a language agnostic service interface and use a compiler to generate tcert-manager is a powerful and extensible X.509 certificate controller for Kubernetes and OpenShift workloads. It will obtain certificates from a variety of Issuers, both popular public Issuers as well as private Issuers, and ensure the certificates are valid and up-to-date, and will attempt to renew certificates at a configured time before expiry.e service interface to the actual service implementation.
 
-- **[NEXT - Encrypted Mosquitto MQTT broker in Kubernetes](../../../k8s/mosquitto_install.md#aks-ingress)**\
-A MQTT broker installed in Azure AKS seems to be the only/best solution to insert report requests into a publish/subsribe queue directly from a browser without relying on a http server that can be accessed by microservices installed in an on-prem k8s cluster. Will have to use a different AMQP broker in an on-prem k8s cluster to achieve the work queues pattern.
-
 - **[Comparing AKS Ingress options](../../../research/a_l/azure/aks/ingress_controllers.md)**
 
 Microsoft recommends it thier application routing addon which works with their DNS Zones and Key vault.  I may use it later but will try to configure the standard **[NGinx Ingress](https://kubernetes.github.io/ingress-nginx/)** first.
@@ -118,12 +115,29 @@ Microsoft recommends it thier application routing addon which works with their D
 | Azure Key Vault stored SSL certificates       | Yes                       | Yes                                      | N/A                                         |
 | Azure DNS integration for DNS zone management | Yes                       | Yes                                      | N/A                                         |
 
+- **[What is Envoy](../../../research/a_l/envoy/envoy.md)**\
+
+Note: I have never seen any tech like this before :-)
+
+Envoy is an L7 proxy and communication bus designed for large modern service oriented architectures. The project was born out of the belief that:
+
+The network should be transparent to applications. When network and application problems do occur it should be easy to determine the source of the problem.
+
+**Out of process architecture:** Envoy is a self contained process that is designed to run alongside every application server. All of the Envoys form a transparent communication mesh in which each application sends and receives messages to and from localhost and is unaware of the network topology. The out of process architecture has two substantial benefits over the traditional library approach to service to service communication:
+
+Envoy works with any application language. A single Envoy deployment can form a mesh between Java, C++, Go, PHP, Python, etc. It is becoming increasingly common for service oriented architectures to use multiple application frameworks and languages. Envoy transparently bridges the gap.
+
+As anyone that has worked with a large service oriented architecture knows, deploying library upgrades can be incredibly painful. Envoy can be deployed and upgraded quickly across an entire infrastructure transparently.
+
 - **[YAML Tutorial: Everything You Need to Get Started in Minutes](../../../research/m_z/yaml/yaml_getting_started.md)**\
 YAML Ain't Markup Language (YAML) is a data serialization language that is consistently listed as one of the most popular programming languages. It's often used as a format for configuration files, but its object serialization abilities make it a viable replacement for languages like JSON. This YAML tutorial will demonstrate the language syntax with a guide and some simple coding examples in Python. YAML has broad language support and maps easily into native data structures. It's also easy for humans to read, which is why it's a good choice for configuration. The YAML acronym was shorthand for Yet Another Markup Language. But the maintainers renamed it to YAML Ain't Markup Language to place more emphasis on its data-oriented features.
 
 - **[mqtt browser client](http://www.steves-internet-guide.com/using-javascript-mqtt-client-websockets/)**
 - **[k8s mqtt deployment](https://moreillon.medium.com/encrypted-mosquitto-mqtt-broker-in-kubernetes-26bb7acd11c7)**
 - **[Encrypted Mosquitto MQTT broker in Kubernetes](../../../k8s/mosquitto_install.md#aks-ingress)**\
+
+A MQTT broker installed in Azure AKS seems to be the only/best solution to insert report requests into a publish/subsribe queue directly from a browser without relying on a http server that can be accessed by microservices installed in an on-prem k8s cluster. Will have to use a different AMQP broker in an on-prem k8s cluster to achieve the work queues pattern.
+
 Eclipse Mosquitto is an open-source MQTT broker supporting MQTT(S) and Websocket (WS), popular for applications such as IoT.
 
 Thank you eclipse for supporting WS so we can you MQTT directly in a browser without going through some separate API server we have to build ourselves!
@@ -163,7 +177,7 @@ On the other hand, WS connections are encrypted externally, which is handled wit
 - **[Deploy RabbitMQ Azure](../../../k8s/rabbitmq-quickstart.md)**
 Just like you did for repsys11-c2
 - **[AKS Free tier](https://learn.microsoft.com/en-us/azure/aks/free-standard-pricing-tiers)**
-- **[Building Scalable Microservices: Creating a GRPC Service with Go and Consuming it in a React App via Envoy](../../../research/a_l/envoy/go_react_envoy.md)**\
+- **[Building Scalable Microservices: Creating a GRPC Service with Go and Consuming it in a React App via Envoy](../../../research/a_l/envoy/go_grpc_server_with_envoy.md)**\
 In today’s blog post, we’ll explore the process of creating a GRPC service using Go and consuming it in a React app with the help of Envoy proxy. GRPC is a high-performance, language-agnostic remote procedure call (RPC) framework, and when combined with Go and Envoy, it becomes a powerful tool for building distributed systems. We’ll walk through each step of the process, from setting up the GRPC service in Go to creating a React app that communicates with it via Envoy.
 
 - **[Learn Microservices using Kubernetes and Istio](../../../research/a_l/istio/learn_microservices_with_istio_on_k8s.md)**\
