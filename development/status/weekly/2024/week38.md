@@ -60,6 +60,12 @@ Ligonier Telephone
 
 Each Dell PowerEdge R620S has 132 GB of RAM so each can run a 4 node K8s cluster with the report system installed.  Two can be used for production and backup report system deployments. The third can be used for Albion or home development.
 
+## Diagrams
+
+- **[Report System Block and Sequence Diagrams](../../report_system/sequence_block.md)**
+
+- **[Report System Redundant K8s Clusters](../../report_system/report_system_redundant_k8s_clusters.md)**
+
 ## ToDo
 
 - Create Firewall rule for repsys Azure SQL db which include new Albion/Avilla public IP
@@ -70,50 +76,20 @@ This involves manual SQL creation of schema and automated copying of table recor
 This will involve adding a primary key to those tables without one. It also involves manual SQL creation of schema and automated copying of table records.
 - Create **[Plex ODBC connection instructions for Windows](../../../research/m_z/sql_server/p)**
 
-## Repsys Architecture
+## Review
 
-### Diagrams
-
-- **[Report System Block and Sequence Diagrams](../../report_system/sequence_block.md)**
-- **[Report System Redundant K8s Clusters](../../report_system/report_system_redundant_k8s_clusters.md)**
-
-### **[Websockets and Microservices](../../report_system/repsys_architecture_notes.md)**
-
-Below are some real world example of Websockets in Microservices Architecture:
-
-- **Google Docs:** Has the feature for multiple users to work on the documents at once through applying real-time collaborative editing based on WebSockets.
-- **Slack:** Implements the efficient messaging and notification system based on WebSockets for effective collaboration across the teams.
-- **WhatsApp Web:** Utilizes WebSockets to maintain message and notifications syncronization from the mobile app to the web clients.
-- **Vehicle Tracking Systems:** Combines WebSockets to receive, process and oversee the real time location information of vehicles for the improvement of fleet management and logistics.
+- **[Brad_Intelli_Scrap_Report_2](../bcook/Brad_Intelli_Scrap_Report_2.sql)**
 
 ## Research
 
 - **[Research List](../../../research/research_list.md)**\
 A list of all research for repsys.
 
-- **[Websockets in Microservices Architecture](../../../research/a_l/application_architecture/websockets_in_microservice_architecture.md)**\
+- **[Deploy cert-manager on Azure Kubernetes Service (AKS) and use Let's Encrypt to sign a certificate for an HTTPS website](../../../research/a_l/azure/aks/cert_manager_on_aks_using_lets_encrypt.md)**\
+Studied basics of certificate management in k8s. Now attempt to implement an HTTPS website using Let's Encrypt.
 
-## WebSockets vs. Traditional Communication Protocols(HTTP, Rest Apis, gRPC)
-
-|         Feature        |                     WebSockets                     |                       HTTP                      |                    REST APIs                    |                   gRPC                   |
-|:----------------------:|:--------------------------------------------------:|:-----------------------------------------------:|:-----------------------------------------------:|:----------------------------------------:|
-|   Communication Type   |             Full-duplex, bidirectional             |                 Request-response                |                 Request-response                |        Full-duplex, bidirectional        |
-|     Connection Type    |                     Persistent                     |                  Non-persistent                 |                  Non-persistent                 |                Persistent                |
-|     Message Format     |                Text or binary frames               |               Text (HTTP messages)              |                 Text (JSON/XML)                 |         Binary (Protocol Buffers)        |
-|         Latency        |                         Low                        | Higher due to connection setup for each request | Higher due to connection setup for each request |                    Low                   |
-|        Overhead        |            Low (single connection setup)           |       High (connection setup per request)       |       High (connection setup per request)       |       Low (single connection setup)      |
-|        Use Cases       | Real-time applications, gaming, chat, live updates |         Web browsing, document retrieval        |       Web services, CRUD operations, APIs       | Low-latency communication, microservices |
-|       Scalability      |          High (efficient for many clients)         |      Moderate (higher resource consumption)     |      Moderate (higher resource consumption)     |   High (efficient binary serialization)  |
-| Ease of Implementation |                      Moderate                      |                       Easy                      |                       Easy                      |   Moderate (requires Protocol Buffers)   |
-|     Standardization    |                Supports TLS (wss://)               |             Supports TLS (https://)             |             Supports TLS (https://)             |               Supports TLS               |
-|    Interoperability    |  Supported by most modern web browsers and servers |              Universally supported              |              Universally supported              |          Requires gRPC libraries         |
-
-- **[What is protobuf](../../../research/m_z/protobuf/what_is_protobuf.md)**\
-  Protocol Buffers are a language-neutral, platform-neutral extensible mechanism for serializing structured data.
-
-  It’s like JSON, except it’s smaller and faster, and it generates native language bindings. You define how you want your data to be structured once, then you can use special generated source code to easily write and read your structured data to and from a variety of data streams and using a variety of languages.
-
-  Protocol buffers are a combination of the definition language (created in .proto files), the code that the proto compiler generates to interface with data, language-specific runtime libraries, the serialization format for data that is written to a file (or sent across a network connection), and the serialized data.
+- **[Cloud native certificate management](../../../research/a_l/k8s/concepts/cert_manager/cert_manager.md)**\
+cert-manager is a powerful and extensible X.509 certificate controller for Kubernetes and OpenShift workloads. It will obtain certificates from a variety of Issuers, both popular public Issuers as well as private Issuers, and ensure the certificates are valid and up-to-date, and will attempt to renew certificates at a configured time before expiry.
 
 - **[RabbitMQ tutorial - Work Queues](../../../research/m_z/rabbitmq/work_queues.md)**\
   The main idea behind Work Queues (aka: Task Queues) is to avoid doing a resource-intensive task immediately and having to wait for it to complete. Instead we schedule the task to be done later. We encapsulate a task as a message and send it to a queue. A worker process running in the background will pop the tasks and eventually execute the job. When you run many workers the tasks will be shared between them.
@@ -122,27 +98,42 @@ A list of all research for repsys.
 
 ![jobs](https://quarkus.io/assets/images/posts/redis-job-queue/pattern.png)
 
-- **[What is Envoy](../../../research/a_l/envoy/envoy.md)**
-
-  Note: I have never seen any tech like this before :-)
-
-  Envoy is an L7 proxy and communication bus designed for large modern service oriented architectures. The project was born out of the belief that:
-
-  The network should be transparent to applications. When network and application problems do occur it should be easy to determine the source of the problem.
-
-  **Out of process architecture:** Envoy is a self contained process that is designed to run alongside every application server. All of the Envoys form a transparent communication mesh in which each application sends and receives messages to and from localhost and is unaware of the network topology. The out of process architecture has two substantial benefits over the traditional library approach to service to service communication:
-
-  Envoy works with any application language. A single Envoy deployment can form a mesh between Java, C++, Go, PHP, Python, etc. It is becoming increasingly common for service oriented architectures to use multiple application frameworks and languages. Envoy transparently bridges the gap.
-
-  As anyone that has worked with a large service oriented architecture knows, deploying library upgrades can be incredibly painful. Envoy can be deployed and upgraded quickly across an entire infrastructure transparently.
-
-  ![goenvoy](https://miro.medium.com/v2/resize:fit:720/format:webp/1*xV7ITojvENF-CMgXE-MJ4w.png)
-
-- **[Building Scalable Microservices: Creating a GRPC Service with Go and Consuming it in a React App via Envoy](../../../research/a_l/envoy/go_grpc_server_with_envoy.md)**\
-In today’s blog post, we’ll explore the process of creating a GRPC service using Go and consuming it in a React app with the help of Envoy proxy. GRPC is a high-performance, language-agnostic remote procedure call (RPC) framework, and when combined with Go and Envoy, it becomes a powerful tool for building distributed systems. We’ll walk through each step of the process, from setting up the GRPC service in Go to creating a React app that communicates with it via Envoy.
-
 - **[Full stack app in istio](https://medium.com/@SabujJanaCodes/running-a-full-stack-app-in-istio-service-mesh-part-1-87b828f4d1cc)**\
 RPCs like DCOM/Corba where you develop a language agnostic service interface and use a compiler to generate tcert-manager is a powerful and extensible X.509 certificate controller for Kubernetes and OpenShift workloads. It will obtain certificates from a variety of Issuers, both popular public Issuers as well as private Issuers, and ensure the certificates are valid and up-to-date, and will attempt to renew certificates at a configured time before expiry.e service interface to the actual service implementation.
+
+- **[Comparing AKS Ingress options](../../../research/a_l/azure/aks/ingress_controllers.md)**
+
+Microsoft recommends it thier application routing addon which works with their DNS Zones and Key vault.  I may use it later but will try to configure the standard **[NGinx Ingress](https://kubernetes.github.io/ingress-nginx/)** first.
+
+| Feature                                       | Application Routing addon | Application Gateway for Containers       | Azure Service Mesh/Istio-based service mesh |
+|-----------------------------------------------|---------------------------|------------------------------------------|---------------------------------------------|
+| Ingress/Gateway controller                    | NGINX ingress controller  | Azure Application Gateway for Containers | Istio Ingress Gateway                       |
+| API                                           | Ingress API               | Ingress API and Gateway API              | Gateway API                                 |
+| Hosting                                       | In-cluster                | Azure hosted                             | In-cluster                                  |
+| Scaling                                       | Autoscaling               | Autoscaling                              | Autoscaling                                 |
+| Load balancing                                | Internal/External         | External                                 | Internal/External                           |
+| SSL termination                               | In-cluster                | Yes: Offloading and E2E SSL              | In-cluster                                  |
+| mTLS                                          | N/A                       | Yes to backend                           | N/A                                         |
+| Static IP Address                             | N/A                       | FQDN                                     | N/A                                         |
+| Azure Key Vault stored SSL certificates       | Yes                       | Yes                                      | N/A                                         |
+| Azure DNS integration for DNS zone management | Yes                       | Yes                                      | N/A                                         |
+
+- **[What is Envoy](../../../research/a_l/envoy/envoy.md)**\
+
+Note: I have never seen any tech like this before :-)
+
+Envoy is an L7 proxy and communication bus designed for large modern service oriented architectures. The project was born out of the belief that:
+
+The network should be transparent to applications. When network and application problems do occur it should be easy to determine the source of the problem.
+
+**Out of process architecture:** Envoy is a self contained process that is designed to run alongside every application server. All of the Envoys form a transparent communication mesh in which each application sends and receives messages to and from localhost and is unaware of the network topology. The out of process architecture has two substantial benefits over the traditional library approach to service to service communication:
+
+Envoy works with any application language. A single Envoy deployment can form a mesh between Java, C++, Go, PHP, Python, etc. It is becoming increasingly common for service oriented architectures to use multiple application frameworks and languages. Envoy transparently bridges the gap.
+
+As anyone that has worked with a large service oriented architecture knows, deploying library upgrades can be incredibly painful. Envoy can be deployed and upgraded quickly across an entire infrastructure transparently.
+
+- **[YAML Tutorial: Everything You Need to Get Started in Minutes](../../../research/m_z/yaml/yaml_getting_started.md)**\
+YAML Ain't Markup Language (YAML) is a data serialization language that is consistently listed as one of the most popular programming languages. It's often used as a format for configuration files, but its object serialization abilities make it a viable replacement for languages like JSON. This YAML tutorial will demonstrate the language syntax with a guide and some simple coding examples in Python. YAML has broad language support and maps easily into native data structures. It's also easy for humans to read, which is why it's a good choice for configuration. The YAML acronym was shorthand for Yet Another Markup Language. But the maintainers renamed it to YAML Ain't Markup Language to place more emphasis on its data-oriented features.
 
 - **[mqtt browser client](http://www.steves-internet-guide.com/using-javascript-mqtt-client-websockets/)**
 - **[k8s mqtt deployment](https://moreillon.medium.com/encrypted-mosquitto-mqtt-broker-in-kubernetes-26bb7acd11c7)**
