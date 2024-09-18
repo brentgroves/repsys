@@ -91,22 +91,38 @@ Below are some real world example of Websockets in Microservices Architecture:
 - **[Research List](../../../research/research_list.md)**\
 A list of all research for repsys.
 
-- **[Websockets in Microservices Architecture](../../../research/a_l/application_architecture/websockets_in_microservice_architecture.md)**\
+- **[Sessions and Cookies](../../../research/m_z/virtualization/networking/http/session_and_cookies.md)**
 
-## WebSockets vs. Traditional Communication Protocols(HTTP, Rest Apis, gRPC)
+  When a user logs into the website, a session is created. In this session, you can created variable called “session variable” that store data in a key/value format ( like cookies ).
 
-|         Feature        |                     WebSockets                     |                       HTTP                      |                    REST APIs                    |                   gRPC                   |
-|:----------------------:|:--------------------------------------------------:|:-----------------------------------------------:|:-----------------------------------------------:|:----------------------------------------:|
-|   Communication Type   |             Full-duplex, bidirectional             |                 Request-response                |                 Request-response                |        Full-duplex, bidirectional        |
-|     Connection Type    |                     Persistent                     |                  Non-persistent                 |                  Non-persistent                 |                Persistent                |
-|     Message Format     |                Text or binary frames               |               Text (HTTP messages)              |                 Text (JSON/XML)                 |         Binary (Protocol Buffers)        |
-|         Latency        |                         Low                        | Higher due to connection setup for each request | Higher due to connection setup for each request |                    Low                   |
-|        Overhead        |            Low (single connection setup)           |       High (connection setup per request)       |       High (connection setup per request)       |       Low (single connection setup)      |
-|        Use Cases       | Real-time applications, gaming, chat, live updates |         Web browsing, document retrieval        |       Web services, CRUD operations, APIs       | Low-latency communication, microservices |
-|       Scalability      |          High (efficient for many clients)         |      Moderate (higher resource consumption)     |      Moderate (higher resource consumption)     |   High (efficient binary serialization)  |
-| Ease of Implementation |                      Moderate                      |                       Easy                      |                       Easy                      |   Moderate (requires Protocol Buffers)   |
-|     Standardization    |                Supports TLS (wss://)               |             Supports TLS (https://)             |             Supports TLS (https://)             |               Supports TLS               |
-|    Interoperability    |  Supported by most modern web browsers and servers |              Universally supported              |              Universally supported              |          Requires gRPC libraries         |
+  This session is associated with a randomly generated unique ID, which is created by the server. It’s called “session ID”.
+
+  The generated session ID is then sent to the user’s browser and stored as a cookie, while the session data is stored on the server-side.
+
+  Now, when the browser send a request to the server, it’ll send the cookies with the request.
+
+  The server will receive the cookie from the incoming request and retrieve the value of the session ID.
+
+  ![session](https://miro.medium.com/v2/resize:fit:720/format:webp/1*Mc3AiM1OIL4rH4DaC9m6Dg.png)
+
+  Afterwards, the server will search for the session and retrieve all the data stored within it once it is found.
+
+- **[Websockets in Microservices Architecture](../../../research/a_l/application_architecture/websockets_in_microservice_architecture.md)**
+
+  ## WebSockets vs. Traditional Communication Protocols(HTTP, Rest Apis, gRPC)
+
+  |         Feature        |                     WebSockets                     |                       HTTP                      |                    REST APIs                    |                   gRPC                   |
+  |:----------------------:|:--------------------------------------------------:|:-----------------------------------------------:|:-----------------------------------------------:|:----------------------------------------:|
+  |   Communication Type   |             Full-duplex, bidirectional             |                 Request-response                |                 Request-response                |        Full-duplex, bidirectional        |
+  |     Connection Type    |                     Persistent                     |                  Non-persistent                 |                  Non-persistent                 |                Persistent                |
+  |     Message Format     |                Text or binary frames               |               Text (HTTP messages)              |                 Text (JSON/XML)                 |         Binary (Protocol Buffers)        |
+  |         Latency        |                         Low                        | Higher due to connection setup for each request | Higher due to connection setup for each request |                    Low                   |
+  |        Overhead        |            Low (single connection setup)           |       High (connection setup per request)       |       High (connection setup per request)       |       Low (single connection setup)      |
+  |        Use Cases       | Real-time applications, gaming, chat, live updates |         Web browsing, document retrieval        |       Web services, CRUD operations, APIs       | Low-latency communication, microservices |
+  |       Scalability      |          High (efficient for many clients)         |      Moderate (higher resource consumption)     |      Moderate (higher resource consumption)     |   High (efficient binary serialization)  |
+  | Ease of Implementation |                      Moderate                      |                       Easy                      |                       Easy                      |   Moderate (requires Protocol Buffers)   |
+  |     Standardization    |                Supports TLS (wss://)               |             Supports TLS (https://)             |             Supports TLS (https://)             |               Supports TLS               |
+  |    Interoperability    |  Supported by most modern web browsers and servers |              Universally supported              |              Universally supported              |          Requires gRPC libraries         |
 
 - **[What is protobuf](../../../research/m_z/protobuf/what_is_protobuf.md)**\
   Protocol Buffers are a language-neutral, platform-neutral extensible mechanism for serializing structured data.

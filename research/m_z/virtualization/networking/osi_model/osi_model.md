@@ -1,8 +1,8 @@
 # # **[OSI Model](https://www.geeksforgeeks.org/open-systems-interconnection-model-osi/)**
 
-**[Back to Research List](../../../research_list.md)**\
-**[Back to Current Status](../../../../development/status/weekly/current_status.md)**\
-**[Back to Main](../../../../README.md)**
+**[Back to Research List](../../../../research_list.md)**\
+**[Back to Current Status](../../../../../development/status/weekly/current_status.md)**\
+**[Back to Main](../../../../../README.md)**
 
 ![osi](https://media.geeksforgeeks.org/wp-content/uploads/20240615010645/OSI-Model.png)
 

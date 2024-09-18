@@ -145,3 +145,10 @@ Below are some real world example of Websockets in Microservices Architecture:
 - **Slack:** Implements the efficient messaging and notification system based on WebSockets for effective collaboration across the teams.
 - **WhatsApp Web:** Utilizes WebSockets to maintain message and notifications syncronization from the mobile app to the web clients.
 - **Vehicle Tracking Systems:** Combines WebSockets to receive, process and oversee the real time location information of vehicles for the improvement of fleet management and logistics.
+
+## Common Challenges in Using WebSockets with Microservices
+
+1. Scalability and Load Balancing:
+
+- **Challenge:** WebSocket architectures imply distributing connections by instances of microservices while at the same time ensuring that they have sticky sessions.
+- **Solution:** Essentially, the WebSocket connections can be distributed horizontally if an organization chooses to implement a large-scale WebSocket server or if it uses load balancers which support WebSocket protocols.
