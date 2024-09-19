@@ -15,12 +15,12 @@ block-beta
   columns 5
   a1["Web Report Request"] a2<["1. request via websocket"]>(right) a3[/"{user,reportid,params...}"/]space:2
   space:2 b3<["publish to request topic"]>(down) space:2
-  space:2 c3(("MQTT Queue (request topic)")) c4<["2. subscribe to request"]>(left) c5["Requester (microservice)"]
+  space:2 c3(("MQTT Queue (request topic)")) c4<["2. subscribe to request"]>(left) c5["Report request (microservice)"]
   space:4 d6<["3. publish to AMQP broker"]>(down)
   e1(("AMQP Report Work Queues")) space:1 e3<["4. publish to report_id work queue"]>(left) space:1 e5{"Pick work queue based on reportid"}
   f1<["3. subscribe to work queue"]>(up) space:4
-  g1["Unique Runner \n 1 or more\n for each possible report\n (microservice)"] g2<["publish status to user topic\n (each user has a topic)"]>(right) g3(("MQTT Queue (user topic)"))
-g4<["subscribe to user topic\nFormat of topic is id_{userId}"]>(left) g5["Web Report Request"]
+  g1["Report Runner (microservice)"] g2<["publish to user topic"]>(right)
+
 %%  https://designwizard.com/blog/colour-combination/
   classDef Grey fill:#949398FF,color:#F4DF4EFF;  
   classDef RedBlack fill:red,color:black;
@@ -33,23 +33,29 @@ g4<["subscribe to user topic\nFormat of topic is id_{userId}"]>(left) g5["Web Re
 %% classDef Title2 fill:#FF99FF00, stroke-width:0, color:grey, font-weight:bold, font-size: 17px;
 
   class a1,a5  Coral
-  class c3,g3 Grey
+  class c3 Grey
   class c5 Violet
   class e1 Black
   class e5 Blue
   class g1 Mint
 ```
 
-## Flow Summary
+<!-- ## simple block
 
-1. Customer requests a report
-2. Request published to request topic of MQTT broker.
-3. Requester microservice subscribes to request topic.
-4. Requester adds request to unique report queue of AMQP broker.
-5. Report runner, 1 or more runners for each possible report.
-6. Runner publishes status to the user's private topic.
-7. Requester subcribes to logged in user's topic.
-8. Requester shows request status
+```mermaid
+block-beta
+  columns 5
+  a1["Web Report Request"] a2<["1. request via websocket"]>(right) a3[/"{user,reportid,params...}"/]space:1 a5[("Data Warehouse")]
+  b1<["7. status"]>(up) space:1 b3<["publish to request topic"]>(down) space:1 b5<["4. result"]>(up)
+  space:1 c2<["7. status"]>(left) c3(("MQTT Queue (request topic)")) c4<["6. status / 3. request"]>(x) c5["ETL Runner"]
+  space:4 b6<["5. source"]>(down)
+  space:4 c6["Data Source"]
+ 
+  classDef cloud fill:#696,stroke:#333;
+  classDef onprem fill:#969,stroke:#333;
+  class a1,c3,a5  cloud
+  class c5,c6 onprem
+``` -->
 
 ## Sequence Diagram
 
