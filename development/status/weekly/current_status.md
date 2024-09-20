@@ -62,8 +62,7 @@ Each Dell PowerEdge R620S has 132 GB of RAM so each can run a 4 node K8s cluster
 
 ## ToDo
 
-- - **[Full Stack App in istio Service Mesh](../../../research/a_l/istio/full_stack_app_in_istio.md)**
-
+- **[Full Stack App in istio Service Mesh](../../../research/a_l/istio/full_stack_app_in_istio.md)**
 - Create Firewall rule for repsys Azure SQL db which include new Albion/Avilla public IP
 - **[Deploy mssql data warehouse hosted on one of our r620 k8s cluster to Azure SQL server.](../../../research/m_z/sql_server/migration/onprem_to_azure_sql.md)**\
 This involves manual SQL creation of schema and automated copying of table records.
@@ -73,7 +72,8 @@ This will involve adding a primary key to those tables without one. It also invo
 
 ## Repsys Architecture
 
-**[Repsys Architecture Choices](../../report_system/architecture_choices.md)**
+**[Architecture Choices](../../report_system/architecture_choices.md)**
+**[Databases and Schemas](../../report_system/databases_shemas.md)**
 
 ### Patterns
 
