@@ -62,8 +62,9 @@ Each Dell PowerEdge R620S has 132 GB of RAM so each can run a 4 node K8s cluster
 
 ## ToDo
 
-- Create Firewall rule for repsys Azure SQL db which include new Albion/Avilla public IP
+- - **[Full Stack App in istio Service Mesh](../../../research/a_l/istio/full_stack_app_in_istio.md)**
 
+- Create Firewall rule for repsys Azure SQL db which include new Albion/Avilla public IP
 - **[Deploy mssql data warehouse hosted on one of our r620 k8s cluster to Azure SQL server.](../../../research/m_z/sql_server/migration/onprem_to_azure_sql.md)**\
 This involves manual SQL creation of schema and automated copying of table records.
 - Deploy on-premise mysql stateful-set data warehouse to InnoDB HA MySQL database hosted on one of our r620 k8s cluster.\
@@ -76,9 +77,11 @@ This will involve adding a primary key to those tables without one. It also invo
 
 - **[Microservices](../../../research/a_l/application_architecture/microservices.md)**
 - **[Service Mesh](../../../research/a_l/application_architecture/service_mesh.md)**
+- **[Learn microservices with istio](../../../research/a_l/istio/learn_microservices_with_istio_on_k8s.md)**
 - **[Websockets and Microservices](../../report_system/repsys_architecture_notes.md)**
 - **[Modularize React.js applications](../../../research/m_z/reactjs/modularize_react_applications.md)**
 - **[GoRoutines: Concurrency in Golang](../../../research/a_l/golang/goroutines.md)**
+- - **[Full Stack App in istio Service Mesh](../../../research/a_l/istio/full_stack_app_in_istio.md)**
 
 ### Diagrams
 
