@@ -73,6 +73,8 @@ This will involve adding a primary key to those tables without one. It also invo
 
 ## Repsys Architecture
 
+**[Repsys Architecture Choices](../../report_system/architecture_choices.md)**
+
 ### Patterns
 
 - **[Microservices](../../../research/a_l/application_architecture/microservices.md)**
@@ -81,7 +83,7 @@ This will involve adding a primary key to those tables without one. It also invo
 - **[Websockets and Microservices](../../report_system/repsys_architecture_notes.md)**
 - **[Modularize React.js applications](../../../research/m_z/reactjs/modularize_react_applications.md)**
 - **[GoRoutines: Concurrency in Golang](../../../research/a_l/golang/goroutines.md)**
-- - **[Full Stack App in istio Service Mesh](../../../research/a_l/istio/full_stack_app_in_istio.md)**
+- **[Full Stack App in istio Service Mesh](../../../research/a_l/istio/full_stack_app_in_istio.md)**
 
 ### Diagrams
 
@@ -89,7 +91,6 @@ This will involve adding a primary key to those tables without one. It also invo
 - **[Report System Redundant K8s Clusters](../../report_system/report_system_redundant_k8s_clusters.md)**
 
 ### **[Report System Components](../../report_system/component_menu.md)**
-
 
 ## Research
 
