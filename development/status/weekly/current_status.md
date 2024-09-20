@@ -78,6 +78,7 @@ This will involve adding a primary key to those tables without one. It also invo
 - **[Service Mesh](../../../research/a_l/application_architecture/service_mesh.md)**
 - **[Websockets and Microservices](../../report_system/repsys_architecture_notes.md)**
 - **[Modularize React.js applications](../../../research/m_z/reactjs/modularize_react_applications.md)**
+- **[GoRoutines: Concurrency in Golang](../../../research/a_l/golang/goroutines.md)**
 
 ### Diagrams
 
