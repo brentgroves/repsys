@@ -72,19 +72,23 @@ This will involve adding a primary key to those tables without one. It also invo
 
 ## Repsys Architecture
 
-### Diagrams
+### Patterns
 
-- **[Report System Block and Sequence Diagrams](../../report_system/sequence_block.md)**
-- **[Report System Redundant K8s Clusters](../../report_system/report_system_redundant_k8s_clusters.md)**
-
-### **[Websockets and Microservices](../../report_system/repsys_architecture_notes.md)**
-
+- **[Websockets and Microservices](../../report_system/repsys_architecture_notes.md)**
 Below are some real world example of Websockets in Microservices Architecture:
 
 - **Google Docs:** Has the feature for multiple users to work on the documents at once through applying real-time collaborative editing based on WebSockets.
 - **Slack:** Implements the efficient messaging and notification system based on WebSockets for effective collaboration across the teams.
 - **WhatsApp Web:** Utilizes WebSockets to maintain message and notifications syncronization from the mobile app to the web clients.
 - **Vehicle Tracking Systems:** Combines WebSockets to receive, process and oversee the real time location information of vehicles for the improvement of fleet management and logistics.
+
+### Diagrams
+
+- **[Report System Block and Sequence Diagrams](../../report_system/sequence_block.md)**
+- **[Report System Redundant K8s Clusters](../../report_system/report_system_redundant_k8s_clusters.md)**
+
+### **[component menu](../../report_system/component_menu.md)**
+
 
 ## Research
 

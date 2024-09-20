@@ -13,9 +13,9 @@
 ```mermaid
 block-beta
   columns 5
-  a1["Web Report Request"] a2<["request via websocket"]>(right) a3[/"{user,reportid,params...}"/]space:2
+  a1["Report Requester"] a2<["request via websocket"]>(right) a3[/"{user,reportid,params...}"/]space:2
   space:2 b3<["publish to request topic"]>(down) space:2
-  space:2 c3(("MQTT Queue (request topic)")) c4<["subscribe to request"]>(left) c5["Requester (microservice)"]
+  space:2 c3(("MQTT Queue (request topic)")) c4<["subscribe to request"]>(left) c5["Request Dispatcher (daemon)"]
   space:4 d6<["publish to AMQP broker"]>(down)
   space:2 e1(("AMQP Report Work Queues")) e4<["publish to report_id work queue"]>(left) e5{"Pick work queue based on reportid"}
   space:2 f1<["subscribe to work queue"]>(up) space:2
@@ -23,7 +23,7 @@ block-beta
   space:2 h1<["Runner's outputs"]>(down) space:2
   i["The runner only executes ETL scripts.\n It will call other microservices to do any other tasks."]:5  
   space:1 j1<["Email Excel"]>(down) space:1 j4<["Publish Status"]>(down) space:1
-space:1 k2["Email Excel (microservice)"] space:1 k4["Publish Status (microservice)"] space:1
+space:1 k2["Email Excel (microservice)"] space:1 k4["Report Status (microservice)"] space:1
 space:3 l4<["Publish user_id topic"]>(down) space:1
 space:3 m4(("MQTT Queue (user_id topic)")) space:1
 space:3 n4<["Subscribe user_id topic"]>(down) space:1
