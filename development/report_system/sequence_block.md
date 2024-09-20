@@ -15,13 +15,13 @@ block-beta
   columns 5
   a1["Report Requester"] a2<["request via websocket"]>(right) a3[/"{user,reportid,params...}"/]space:2
   space:2 b3<["publish to request topic"]>(down) space:2
-  space:2 c3(("MQTT Queue (request topic)")) c4<["subscribe to request"]>(left) c5["Request Dispatcher (daemon)"]
+  space:2 c3(("MQTT Queue (request topic)")) c4<["subscribe to request"]>(left) c5["Request dispatch daemon"]
   space:4 d6<["publish to AMQP broker"]>(down)
   space:2 e1(("AMQP Report Work Queues")) e4<["publish to report_id work queue"]>(left) e5{"Pick work queue based on reportid"}
   space:2 f1<["subscribe to work queue"]>(up) space:2
-  space:2 g1["Unique Runner for every report.\n Since using queues\n scaling possilbe.\n Uses GoRoutines\n to run ETL scripts.\n(microservice)"] space:2
-  space:2 h1<["Runner's outputs"]>(down) space:2
-  i["The runner only executes ETL scripts.\n It will call other microservices to do any other tasks."]:5  
+  space:2 g1["Unique request_daemon for every report.\n Since using queues scaling possilbe.\n Uses GoRoutines to run ETL scripts.\n(daemon)"] space:2
+  space:2 h1<["request_daemon's outputs"]>(down) space:2
+  i["The request_daemon only executes ETL scripts.\n It will call other microservices to do any other tasks."]:5  
   space:1 j1<["Email Excel"]>(down) space:1 j4<["Publish Status"]>(down) space:1
 space:1 k2["Email Excel (microservice)"] space:1 k4["Report Status (microservice)"] space:1
 space:3 l4<["Publish user_id topic"]>(down) space:1
@@ -58,29 +58,29 @@ space:3 o1["Web Report Request"]
 
 ## Flow Summary
 
-1. Customer requests a report
+1. Customer requests report from requester web app. 
 2. Request published to request topic of MQTT broker.
-3. Requester microservice subscribes to request topic.
-4. Requester adds request to unique report queue of AMQP broker.
-5. Report runner, 1 or more runners for each possible report.
-6. Runner publishes status to the user's private topic.
-7. Requester subcribes to logged in user's topic.
-8. Requester shows request status
-9. Emailer microservice Email's Excel file
+3. Request dispatch daemon subscribes to request topic.
+4. Request daemon pushes new request to appropriate report queue of AMQP broker.
+5. First report runner daemon to pull request from queue processes the request.
+6. runner daemon calls report status microservice after each ETL script or error to the user's private topic in MQTT broker.
+7. runner daemon calls emailer microservice to email Excel file.
 
 ## Sequence Diagram
 
 ```mermaid
 sequenceDiagram
-    participant requester as Report Request
-    participant identity as Identity Provider
-    participant queue as Message Queue
-    participant runner as Report Runner
+    participant requester as Report Requester
+    participant identity as IAM Identity Provider
+    participant request_topic as MQTT Request Topic
+    participant request_daemon as Request Daemon
+    participant work_queue as AMQP Work Queue
+    participant runner_daemon as Report Runner Daemon
+    participant status_microservice as Status Microservice
+    participant userid_topic as MQTT UserID topic
+    participant mailer as Mail Service
 
-    participant mail as Mail Service
-    participant dw as Data Warehouse
-
-    Note over requester,runner: The user must be authenticate to submit report requests
+    Note over requester,request_daemon: The user must be authenticate to submit report requests
     requester->>+identity: Logs in using credentials
 
     alt Invalid Credentials
@@ -88,16 +88,20 @@ sequenceDiagram
     else Valid Credentials
         identity->>-requester: Successfully logged in
 
-        Note over requester,runner: When the user is authenticated, they can now submit report requests
-        requester->>+queue: Submit new report request
-        queue->>runner: Inform report runner
-        runner->>dw: Store Report
-        par Notifications
-            runner->>mail: Email excel
-        and Response
-            queue-->>-requester: Report Status
-        end
+        Note over requester,request_daemon: When the user is authenticated, they can now submit report requests
+        requester->>+request_topic: Publish new report request
+        request_daemon->>request_topic: Subscribed to report request topic
+        request_daemon->>work_queue: Add report request
+        runner_daemon->>work_queue: Remove next report request
+        runner_daemon->>runner_daemon: Create report (GoRoutines)
+        runner_daemon->>status_microservice: Report Status
+        status_microservice->>userid_topic: Publish Report Status
+        userid_topic->>requester: Subscribed to UserID topic
+        requester->>requester: Show report status
+        runner_daemon->>mailer: Call Email microservice
+        mailer->>mailer: Email Excel file
 
     end
 
 ```
+
