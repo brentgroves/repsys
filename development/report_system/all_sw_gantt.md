@@ -8,40 +8,71 @@
 gantt
     dateFormat  YYYY-MM-DD
     title       Report System IT & Development
-    excludes    weekends
-    %% (`excludes` accepts specific dates in YYYY-MM-DD format, days of the week ("sunday") or "weekends", but not the word "weekdays".)
 
-    section Platforms
-    Dell R620s                :p1,2024-03-01,30d
-    OpenStack                 :p2,2024-03-01,30d
-    MicroK8s                  :p3,2024-03-01,30d
+    section HW
+    Dell R620s                  :p1,2024-09-01,1d
+
+    section OS
+    Ubuntu 24.04                :os1,after p1,1d
+
+    section Kubernetes
+    MicroK8s                    :k1,after os1,1d
 
     section Storage
-    Micro Ceph                :s1,2024-03-01,5d
-    Minio S3 Object Storage   :s2,after s1, 5d
+    Hostpath                    :s1,after k1,1d  
+    Minio S3                    :s2,after s1,1d
+
+    section Service Mesh
+    Istio                       :sm1,after s2,1d
+
+    section IAM
+    keycloak                    :i1,after sm1,1d  
+
+    section Web App
+    Requester                   :w1,after i1,1d  
+
+    section MQTT WS 
+    Mosquitto                   :m1,after w1,1d  
+
+    section Msg Topics
+    UserID                      :t1,after m1,1d
+
+    section Cache
+    Redis                       :mq1,after t1,1d
+
+    section Queues
+    TB                          :q1,after mq1,1d
+
+```
+
+```mermaid
+gantt
+    dateFormat  YYYY-MM-DD
+    title       Report System IT & Development
 
     section Databases
-    Azure SQL DB              :db1,after s2,5d
-    MySQL InnoDB              :db2,after db1,5d
-    Postgres                  :db3, after db2, 5d
-    MongoDB                   :db4, after db3, 5d
-    Redis Operator            :active,db5, after db4, 5d
+    MySQL InnoDB                :db1,2024-09-01,1d
+    MSSQL                       :db2,after db1,1d
+    MongoDB                     :db3,after db2,1d
 
-    section Ingres
-    NGinx IC                  :i1,after db5, 5d
-    Kong API Gateway          :i2, after i1, 5d  
-
-    section Observability
-    Metric Server             :o1,after i2,5d
-    Prometheus                :o2,after o1,5d
-    Grafana                   :o3,after o2,5d
-
-    section Maintenance
-    Kured Operator            :m1,after o3, 5d
-    Transfer from MI to Azure SQL db :m2, after m1,5d
+    section Schemas
+    TB work area                :sc1,after db3,1d  
+    TB current                  :sc2,after sc1,1d    
+    TB BI                       :sc3,after sc2,1d  
+    TB Object                   :sc4,after sc3,1d    
 
     section Development
-    Runner                  :active,d1,2024-04-22,5d
-    Requester               :d2,after d1,5d
+    Requester                   :d1,after sc4,1d
+    TB Runner                   :d2,after d1,1d
+    Status Microservice         :d3,after d2,1d
+    Mailer Microservice         :d4,after d3,1d
+    Storage Microservice        :d5,after d4,1d
 
+    section Observability
+    Metric Server               :o1,after d5,1d
+    Prometheus                  :o2,after o1,1d
+    Grafana                     :o3,after o2,1d
+
+    section Maintenance
+    Kured Operator              :m1,after o3,1d
 ```
