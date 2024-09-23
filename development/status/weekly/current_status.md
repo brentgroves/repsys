@@ -35,6 +35,10 @@
 - **[Research List](../../../research/research_list.md)**\
 A list of all research for repsys.
 
+- **[What is IOPS (Input/Output Operations Per Second)?  Understanding the Key Metric for Storage Performance](../../../research/m_z/storage/iops.md)**
+
+  When measuring the performance of storage devices, one key metric often used is IOPS or Input/Output Operations Per Second. This metric provides an important measure of how fast a storage device can read and write data, which ultimately affects its overall performance.
+
 - **[Sessions and Cookies](../../../research/m_z/virtualization/networking/http/session_and_cookies.md)**
 
   When a user logs into the website, a session is created. In this session, you can created variable called “session variable” that store data in a key/value format ( like cookies ).
@@ -50,23 +54,6 @@ A list of all research for repsys.
   ![session](https://miro.medium.com/v2/resize:fit:720/format:webp/1*Mc3AiM1OIL4rH4DaC9m6Dg.png)
 
   Afterwards, the server will search for the session and retrieve all the data stored within it once it is found.
-
-- **[Websockets in Microservices Architecture](../../../research/a_l/application_architecture/websockets_in_microservice_architecture.md)**
-
-  ## WebSockets vs. Traditional Communication Protocols(HTTP, Rest Apis, gRPC)
-
-  |         Feature        |                     WebSockets                     |                       HTTP                      |                    REST APIs                    |                   gRPC                   |
-  |:----------------------:|:--------------------------------------------------:|:-----------------------------------------------:|:-----------------------------------------------:|:----------------------------------------:|
-  |   Communication Type   |             Full-duplex, bidirectional             |                 Request-response                |                 Request-response                |        Full-duplex, bidirectional        |
-  |     Connection Type    |                     Persistent                     |                  Non-persistent                 |                  Non-persistent                 |                Persistent                |
-  |     Message Format     |                Text or binary frames               |               Text (HTTP messages)              |                 Text (JSON/XML)                 |         Binary (Protocol Buffers)        |
-  |         Latency        |                         Low                        | Higher due to connection setup for each request | Higher due to connection setup for each request |                    Low                   |
-  |        Overhead        |            Low (single connection setup)           |       High (connection setup per request)       |       High (connection setup per request)       |       Low (single connection setup)      |
-  |        Use Cases       | Real-time applications, gaming, chat, live updates |         Web browsing, document retrieval        |       Web services, CRUD operations, APIs       | Low-latency communication, microservices |
-  |       Scalability      |          High (efficient for many clients)         |      Moderate (higher resource consumption)     |      Moderate (higher resource consumption)     |   High (efficient binary serialization)  |
-  | Ease of Implementation |                      Moderate                      |                       Easy                      |                       Easy                      |   Moderate (requires Protocol Buffers)   |
-  |     Standardization    |                Supports TLS (wss://)               |             Supports TLS (https://)             |             Supports TLS (https://)             |               Supports TLS               |
-  |    Interoperability    |  Supported by most modern web browsers and servers |              Universally supported              |              Universally supported              |          Requires gRPC libraries         |
 
 - **[Learn Microservices using Kubernetes and Istio](../../../research/a_l/istio/learn_microservices_with_istio_on_k8s.md)**
 
