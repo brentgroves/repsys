@@ -35,9 +35,6 @@
 - **[Research List](../../../research/research_list.md)**\
 A list of all research for repsys.
 
-- **[Quarkus and GraalVM](../../../research/a_l/java/quarkus_graalvm.md)**\
-Quarkus is a Java framework tailored for deployment on Kubernetes. Key technology components surrounding it are OpenJDK HotSpot and GraalVM. Wikipedia
-
 - **[What is IOPS (Input/Output Operations Per Second)?  Understanding the Key Metric for Storage Performance](../../../research/m_z/storage/iops.md)**
 
   When measuring the performance of storage devices, one key metric often used is IOPS or Input/Output Operations Per Second. This metric provides an important measure of how fast a storage device can read and write data, which ultimately affects its overall performance.
