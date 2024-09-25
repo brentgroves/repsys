@@ -16,32 +16,40 @@ To delete the Bookinfo sample application and its configuration, see **[Bookinfo
 
 The Istio uninstall deletes the RBAC permissions and all resources hierarchically under the istio-system namespace. It is safe to ignore errors for non-existent resources because they may have been deleted hierarchically.
 
+```bash
+kubectl delete -f samples/addons
+istioctl uninstall -y --purge
 ```
-$ kubectl delete -f samples/addons
-$ istioctl uninstall -y --purge
 
 The istio-system namespace is not removed by default. If no longer needed, use the following command to remove it:
 
-$ kubectl delete namespace istio-system
+```bash
+kubectl delete namespace istio-system
+```
 
 The label to instruct Istio to automatically inject Envoy sidecar proxies is not removed by default. If no longer needed, use the following command to remove it:
 
-$ kubectl label namespace default istio-injection-
+```bash
+kubectl label namespace default istio-injection-
+```
 
 If you installed the Kubernetes Gateway API CRDs and would now like to remove them, run one of the following commands:
 
 If you ran any tasks that required the experimental version of the CRDs:
 
-$ kubectl kustomize "github.com/kubernetes-sigs/gateway-api/config/crd/experimental?ref=v1.1.0" | kubectl delete -f -
+```bash
+kubectl kustomize "github.com/kubernetes-sigs/gateway-api/config/crd/experimental?ref=v1.1.0" | kubectl delete -f -
+```
 
 Otherwise:
 
-$ kubectl kustomize "github.com/kubernetes-sigs/gateway-api/config/crd?ref=v1.1.0" | kubectl delete -f -
+```bash
+kubectl kustomize "github.com/kubernetes-sigs/gateway-api/config/crd?ref=v1.1.0" | kubectl delete -f -
 ```
 
 ## Install Istio
 
-Go to the Istio release page to download the installation file for your OS, or download and extract the latest release automatically (Linux or macOS):
+1. Go to the Istio release page to download the installation file for your OS, or download and extract the latest release automatically (Linux or macOS):
 
 ```bash
 pushd .
@@ -52,27 +60,26 @@ curl -L https://istio.io/downloadIstio | sh -
 # Istio 1.23.0 Download Complete!
 
 # Istio has been successfully downloaded into the istio-1.23.0 folder on your system.
+```
 
-# Next Steps:
-# See https://istio.io/latest/docs/setup/install/ to add Istio to your Kubernetes cluster.
+## Step 2
 
-# To configure the istioctl client tool for your workstation,
-# add the /home/brent/Downloads/istio-1.23.0/bin directory to your environment path variable with:
-         export PATH="$PATH:/usr/local/bin/istio-1.23.0/bin"
+Move to the Istio package directory. For example, if the package is istio-1.23.0:
 
-Begin the Istio pre-installation check by running:
-         istioctl x precheck 
-
-Need more information? Visit https://istio.io/latest/docs/setup/install/ 
+```bash
+sudo cp istio-1.23.0/bin/istioctl /usr/local/bin/
 
 ```
 
-I added path to dotfiles.
-
 The installation directory contains:
 
-Sample applications in samples/
-The istioctl client binary in the bin/ directory.
+- Sample applications in samples/
+- The istioctl client binary in the bin/ directory.
+
+```bash
+ls ~/Downloads/istio-1.23.0                   
+bin  LICENSE  manifests  manifest.yaml  README.md  samples  tools
+```
 
 ## Install Istio on K8s
 
@@ -80,19 +87,15 @@ For this guide, we use the demo **[configuration profile](https://istio.io/lates
 
 Unlike **[Istio Gateways](https://istio.io/latest/docs/concepts/traffic-management/#gateways)**, creating **[Kubernetes Gateways](https://gateway-api.sigs.k8s.io/api-types/gateway/)** will, by default, also deploy **[gateway proxy servers](https://istio.io/latest/docs/tasks/traffic-management/ingress/gateway-api/#automated-deployment)**. Because they won’t be used, we disable the deployment of the default Istio gateway services that are normally installed as part of the demo profile.
 
-## **[Istio as a Proxy for External Services](https://istio.io/latest/blog/2019/proxy/)**  
-
-Note: Not using Istio as a proxy for external services.
-Configure Istio ingress gateway to act as a proxy for external services.
-
 Install Istio using the demo profile, without any gateways:
 
 ```bash
 scc.sh repsys11c2n1.yaml microk8s 
 pushd .
-cp /usr/local/bin/istio-1.23.0/samples/bookinfo/demo-profile-no-gateways.yaml ~/src/repsys/research/a_l/istio 
-cd /usr/local/bin/istio-1.23.0
+# Make a backup
+cp ~/Downloads/istio-1.23.0/samples/bookinfo/demo-profile-no-gateways.yaml ~/src/repsys/research/a_l/istio 
 
+cd ~/Downloads/istio-1.23.0
 istioctl install -f samples/bookinfo/demo-profile-no-gateways.yaml -y
 ✔ Istio core installed
 ✔ Istiod installed
@@ -101,10 +104,6 @@ Made this installation the default for injection and validation.
 ```
 
 Add a namespace label to instruct Istio to automatically inject Envoy sidecar proxies when you deploy your application later:
-
-### NOTE
-
-Install this to namespace shown at <https://gist.github.com/Realiserad/391855c4a0fb0072994e5ad2a53d65c0> instead of default
 
 ```bash
 $ kubectl label namespace default istio-injection=enabled
