@@ -10,10 +10,10 @@
 
 ## Repsys Architecture
 
-**[Architecture Choices](../../report_system/architecture_choices.md)**
-**[Databases and Schemas](../../report_system/databases_shemas.md)**
+- **[Architecture Choices](../../report_system/architecture_choices.md)**
+- **[Databases and Schemas](../../report_system/databases_shemas.md)**
 
-### Patterns
+### **[Design Patterns](../../../research/a_l/application_architecture/design_pattern.md)**
 
 - **[Microservices](../../../research/a_l/application_architecture/microservices.md)**
 - **[Service Mesh](../../../research/a_l/application_architecture/service_mesh.md)**
@@ -22,6 +22,14 @@
 - **[Modularize React.js applications](../../../research/m_z/reactjs/modularize_react_applications.md)**
 - **[GoRoutines: Concurrency in Golang](../../../research/a_l/golang/goroutines.md)**
 - **[Full Stack App in istio Service Mesh](../../../research/a_l/istio/full_stack_app_in_istio.md)**
+
+## **[AntiPatterns](../../../research/a_l/application_architecture/antipattern.md)**
+
+- **[Ops Embedded in Dev Team](../../../research/a_l/application_architecture/platform_engineer.md#antipattern)**
+
+  ![anti](https://cdn.prod.website-files.com/6489e23dd070ba71d41a33b2/649163cff008fbb11c51cb9f_6200ce7b574bad7eea1a5e1b_61bcb69ae99f82039b617b4d_image4.png)
+
+  This type of antipatterns has been shown by a number of studies, such as the State of DevOps by Puppet or, most recently, by Humanitec’s Benchmarking study. In the latter, top and low performing organizations were clustered, based on standard DevOps metrics (lead time, deployment frequency, MTTR, etc.). As shown below, a stunning 44% of low performing organizations experience the above antipattern, with some developers doing DevOps tasks on their own and helping less experienced colleagues. This is compared to top performers, where 100% of the organizations have successfully implemented a true “you build it, you run it” approach.
 
 ### Diagrams
 
@@ -34,6 +42,31 @@
 
 - **[Research List](../../../research/research_list.md)**\
 A list of all research for repsys.
+
+- **[What is platform engineering?](../../../research/a_l/application_architecture/platform_engineer.md)**
+
+  Platform engineering is the discipline of designing and building toolchains and workflows that enable self-service capabilities for software engineering organizations in the cloud-native era. Platform engineers provide an integrated product most often referred to as an “Internal Developer Platform” covering the operational necessities of the entire lifecycle of an application. An Internal Developer Platform (IDP) encompasses a variety of technologies and tools, integrated in a manner that reduces cognitive load on developers while retaining essential context and underlying technologies. It helps operations structure their setup and enable developer self-service. Platform engineering done right means providing golden paths and paved roads that match the preferred abstraction level of the individual developer, who interacts with the IDP.
+
+  At the same time that cloud started becoming a thing, with AWS launching in 2006, the concept of DevOps gained ground and established itself as the new golden standard for engineering teams. While cloud native drove huge improvements in areas like scalability, availability and operability, it also meant setups became a lot more complex. **Gone were the days of running a single script to deploy a monolithic application consuming one relational database.**
+
+  **Suddenly, engineers had to master 10 different tools**, Helm charts, Terraform modules, etc. just to deploy and test a simple code change to one of multiple environments in your multi-cluster microservice setup. The problem is that throughout this toolchain evolution, the industry seemingly decided that division of labor (Ops and Devs), which proved successful in virtually every other sector of the global economy, was not a good idea. Instead, the DevOps paradigm was championed as the way to achieve a high performing setup.
+
+- **[Service Mesh](../../../research/a_l/istio/service_mesh_101.md)**\
+  When building software, code can be structured as a single large program (monolith) or multiple smaller programs (microservices). While it is true that many organizations are migrating from monolith to microservices to leverage the flexibility and scalability microservices offer, it gets difficult to manage them as their number grows. Challenges arise in tracking, latency control, optimizing load between replicas of a service, service-to-service communication security, and maintaining resilience. All these features can be encoded with the service giving an opportunity for vulnerabilities & mixing of business logic with management logic.
+
+  Implementing a reliable service discovery mechanism and maintaining an up-to-date service registry becomes difficult. **[Adopting Kubernetes](https://www.infracloud.io/kubernetes-consulting-partner/)** resolves some deployment issues, but runtime issues persist due to tight coupling with the application. Testing new features and making changes while maintaining infrastructure security becomes challenging.
+
+  Service mesh fills this gap and helps build a secure infrastructure with the optimized usage of the service by adding reliability, observability, and security features across all services uniformly without any application code change. In this blog post, we will understand the concept of the service mesh, its components, its functionality, and how it can be helpful in Kubernetes and beyond.
+
+  ## What is a service mesh?
+
+  Service mesh is an infrastructure layer deployed alongside an application, which means all the network complexities are handled outside the application code. It operates independently from the application and provides capabilities to optimize networking and enable service-to-service communication. By configuring and managing network behavior and traffic flow through policies, the service mesh enhances the application’s networking capabilities.
+
+  ## Why is a service mesh needed?
+
+  There are multiple reasons why an organization would wish to implement a service mesh. We can start with the API endpoint discovery feature of service mesh that helps in identifying the backend service based on the client’s request and preventing the exposure of the API to unauthorized access. Another reason is that an outbound proxy can only protect the cluster or VMs from the outside. However, once a request enters the infrastructure, all communication becomes insecure, and the request gains access to all the services. This leaves it vulnerable to potential threats.
+
+  Service mesh fills this gap and routes all the inter-service communication through proxies. It allows platform engineers to rate limit, trace, access control, etc. the service request which helps in keeping the infrastructure secure. Though very frequently used with Kubernetes and microservices, service mesh can be used outside of microservices and containers on virtual or bare metal servers. Let us understand the architecture of service mesh to know how we can modernize existing services.
 
 - **[Quarkus and GraalVM](../../../research/a_l/java/quarkus_graalvm.md)**\
 Quarkus is a Java framework tailored for deployment on Kubernetes. Key technology components surrounding it are OpenJDK HotSpot and GraalVM. Wikipedia
