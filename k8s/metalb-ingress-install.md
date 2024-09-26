@@ -45,6 +45,8 @@ so the traffic is first seen by the metalb loadbalancer which then sends it to o
 
 If one node goes down network connections will still be possible. I don't know if this **[layer2](../research/metallb/metalb_layer2.md)** or BPG fail-over works without additional configuration.
 
+Reference cluster specific load balancer files in the cluster's netplan dir, i.e. **[repsys11-c2-n1](./netplan/repsys11/loadbalancer.md)**.
+
 ```bash
 # Scan sub-network for IPs to be used as load balancer.
 nmap -sP 172.20.88.0/22
@@ -91,8 +93,31 @@ For load balancing in a MicroK8s cluster, MetalLB can make use of Ingress to pro
 
 ```bash
 microk8s enable ingress
+Infer repository core for addon ingress
+Enabling Ingress
+ingressclass.networking.k8s.io/public created
+ingressclass.networking.k8s.io/nginx created
+namespace/ingress created
+serviceaccount/nginx-ingress-microk8s-serviceaccount created
+clusterrole.rbac.authorization.k8s.io/nginx-ingress-microk8s-clusterrole created
+role.rbac.authorization.k8s.io/nginx-ingress-microk8s-role created
+clusterrolebinding.rbac.authorization.k8s.io/nginx-ingress-microk8s created
+rolebinding.rbac.authorization.k8s.io/nginx-ingress-microk8s created
+configmap/nginx-load-balancer-microk8s-conf created
+configmap/nginx-ingress-tcp-microk8s-conf created
+configmap/nginx-ingress-udp-microk8s-conf created
+daemonset.apps/nginx-ingress-microk8s-controller created
+Ingress is enabled
 
-microk8s kubectl get all --namespace ingress -o wide
+kubectl get all --namespace ingress -o wide 
+
+NAME                                          READY   STATUS    RESTARTS   AGE   IP             NODE             NOMINATED NODE   READINESS GATES
+pod/nginx-ingress-microk8s-controller-4dtt2   1/1     Running   0          17m   10.1.41.132    repsys11-c2-n2   <none>           <none>
+pod/nginx-ingress-microk8s-controller-kq8qf   1/1     Running   0          17m   10.1.226.37    repsys11-c2-n1   <none>           <none>
+pod/nginx-ingress-microk8s-controller-x9gp7   1/1     Running   0          17m   10.1.187.134   repsys11-c2-n3   <none>           <none>
+
+NAME                                               DESIRED   CURRENT   READY   UP-TO-DATE   AVAILABLE   NODE SELECTOR   AGE   CONTAINERS               IMAGES                                            SELECTOR
+daemonset.apps/nginx-ingress-microk8s-controller   3         3         3       3            3           <none>          17m   nginx-ingress-microk8s   registry.k8s.io/ingress-nginx/controller:v1.8.0   name=nginx-ingress-microk8s
 
 # Update Nginx Ingress Controller to route InnoDB port to MySQL router
 # Update the config map to forward port to service
@@ -118,15 +143,17 @@ kubectl edit ds nginx-ingress-microk8s-controller -n ingress
           protocol: TCP
 
 kubectl get all -n ingress -o wide
+
 # Create an ingress service for the load balancer to use.
 # ssh to dev system
-pushd ~/src/reports/k8s
-kubectl apply -f manifests/ingress/ingress-service.yaml
+pushd .
+cd ~/src/repsys/k8s
+kubectl apply -f nginx/ingress-service.yaml
 service/ingress created
 # verify arp request for a load balancer succeeded in finding an external IP and database pass-through ports are shown.
 kubectl get svc -n ingress                             
-NAME      TYPE           CLUSTER-IP       EXTERNAL-IP   PORT(S)                                     AGE
-ingress   LoadBalancer   10.152.183.151   10.1.0.110    80:32206/TCP,443:30188/TCP,3306:32692/TCP   28s
+NAME      TYPE           CLUSTER-IP      EXTERNAL-IP   PORT(S)                      AGE
+ingress   LoadBalancer   10.152.183.18   10.1.0.143    80:30449/TCP,443:31993/TCP   11s
 
 # watch the pods restart with the updated configuration
 kubectl get pods -n ingress -o wide
@@ -135,7 +162,7 @@ kubectl get pods -n ingress -o wide
 # Reference: https://fabianlee.org/2021/07/29/kubernetes-microk8s-with-multiple-metallb-endpoints-and-nginx-ingress-controllers/
 
 pushd ~/src/repsys/k8s
-kubectl apply -f ./manifests/ingress/golang-hello-world/deployment/golang-hello-world-web.yaml
+kubectl apply -f ./nginx/golang-hello-world/deployment/golang-hello-world-web.yaml
 service/golang-hello-world-web-service created
 deployment.apps/golang-hello-world-web created
 kubectl get pods -l app=golang-hello-world-web
@@ -168,11 +195,11 @@ Host: 10.152.183.171:8080
 # generate real certificate using our pki
 ```
 
-**[generate and install certs](../volume/pki/gen-and-install-certs.md)**
+**[generate and install certs](../../../pki/gen-and-install-certs.md)**
 
 ```bash
 # make sure kubectl is pointing to the correct K8s cluster
-kubectl create -n default secret tls tls-credential --key=/home/brent/src/repsys/volumes/pki/intermediateCA/private/reports51.busche-cnc.com.san.key.pem --cert=/home/brent/src/repsys/volumes/pki/intermediateCA/certs/server-chain/reports51.busche-cnc.com-ca-chain-bundle.cert.pem
+kubectl create -n default secret tls tls-credential --key=/home/brent/src/pki/intermediateCA/private/repsys.linamar.com.san.key.pem --cert=/home/brent/src/pki/intermediateCA/certs/server-chain/repsys.linamar.com-ca-chain-bundle.cert.pem
 secret/tls-credential created
 
 # shows both tls secrets
@@ -186,10 +213,12 @@ kubectl get secret -n default tls-credential -o json | jq -r '.data."tls.crt"' |
 kubectl get secret -n default tls-credential -o json | jq -r '.data."tls.key"' | base64 -d
 
 # Update host property in the ingres yaml. 
-pushd ~/src/reports/k8s
-code ./manifests/ingress/golang-hello-world/ingress/golang-hello-world-web-on-nginx-fqdn.yaml
+pushd .
+
+cd ~/src/repsys/k8s
+code ./nginx/golang-hello-world/ingress/golang-hello-world-web-on-nginx-fqdn.yaml
 # Now that the host property has the same value as that of one of the alt names in SAN certificate previously deployed to the cluster, create the ingress object.
-kubectl apply -f ./manifests/ingress/golang-hello-world/ingress/golang-hello-world-web-on-nginx-fqdn.yaml
+kubectl apply -f ./nginx/golang-hello-world/ingress/golang-hello-world-web-on-nginx-fqdn.yaml
 Warning: annotation "kubernetes.io/ingress.class" is deprecated, please use 'spec.ingressClassName' instead
 ingress.networking.k8s.io/golang-hello-world-web-service created
 
@@ -198,13 +227,27 @@ kubectl get ingress --namespace default
 NAME                             CLASS    HOSTS       ADDRESS     PORTS     AGE
 golang-hello-world-web-service   <none>   reports11.busche-cnc.com   127.0.0.1   80, 443   96s
 
+# ping load balancer ip
+# golang hello-world service pod should reply 
+
+ping repsys.linamar.com                                                                                     
+PING repsys.linamar.com (10.1.0.143) 56(84) bytes of data.
+From repsys11-c2-n3 (10.1.0.141) icmp_seq=2 Redirect Host(New nexthop: repsys.linamar.com (10.1.0.143))
+From repsys11-c2-n3 (10.1.0.141) icmp_seq=3 Redirect Host(New nexthop: repsys.linamar.com (10.1.0.143))
+From repsys11-c2-n3 (10.1.0.141) icmp_seq=5 Redirect Host(New nexthop: repsys.linamar.com (10.1.0.143))
+
+# verify certs our in openssl trust store dir
+ls /etc/ssl/certs/
+ca.cert.pem
+intermediate.pem
+
+
 # verify certificates
 # https://curl.se/docs/sslcerts.html
 # https://www.baeldung.com/linux/curl-https-connection 
 # Make sure cert chain was added to linux cert store.  
-- See **[gen-and-install-certs.md](../volumes/pki/gen-and-install-certs.md)**
 # verify the cert chain from our PKI is returned using this command:
-openssl s_client -showcerts -connect reports51.busche-cnc.com:443 -servername reports51.busche-cnc.com -CApath /etc/ssl/certs 
+openssl s_client -showcerts -connect repsys.linamar.com:443 -servername repsys.linamar.com -CApath /etc/ssl/certs 
 
 openssl s_client -showcerts -connect reports11.busche-cnc.com:443 -servername reports11.busche-cnc.com -CApath /etc/ssl/certs 
 
@@ -215,10 +258,9 @@ openssl s_client -showcerts -connect reports11.busche-cnc.com:443 -servername re
 # https://phoenixnap.com/kb/microk8s-ingress
 # https://mswis.com/configure-microk8s-kubernetes-load-balancer-with-tls/
 
-curl -v --cacert /home/brent/src/repsys/volumes/pki/intermediateCA/certs/ca-chain/ca-chain-bundle.cert.pem https://reports51.busche-cnc.com/myhello/
+curl -v --cacert /home/brent/src/pki/intermediateCA/certs/ca-chain/ca-chain-bundle.cert.pem https://repsys.linamar.com/myhello/
 
-curl -v https://reports51.busche-cnc.com/myhello/
-curl -v https://reports11.busche-cnc.com/myhello/
+curl -v https://repsys.linamar.com/myhello/
 
 # Delete test deployment
 
