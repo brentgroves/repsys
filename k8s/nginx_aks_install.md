@@ -134,8 +134,18 @@ cert-manager-webhook                 ClusterIP      10.0.194.134   <none>       
 ingress-nginx-controller             LoadBalancer   10.0.135.65    23.101.116.170   80:31260/TCP,443:30197/TCP   548d   app.kubernetes.io/component=controller,app.kubernetes.io/instance=ingress-nginx,app.kubernetes.io/name=ingress-nginx
 ingress-nginx-controller-admission   ClusterIP      10.0.55.173    <none>           443/TCP                      548d   app.kubernetes.io/component=controller,app.kubernetes.io/instance=ingress-nginx,app.kubernetes.io/name=ingress-nginx
 
+curl repsys.linamar.com
 curl 23.101.116.170 
+
 ```
+
+To test the routes for the ingress controller, browse to the two applications. Open a web browser to the IP address of your NGINX ingress controller, such as EXTERNAL_IP. The first demo application is displayed in the web browser, as shown in the following example:
+
+![home](https://learn.microsoft.com/en-us/previous-versions/azure/aks/media/ingress-basic/app-one.png)
+
+Now add the /hello-world-two path to the IP address, such as EXTERNAL_IP/hello-world-two. The second demo application with the custom title is displayed:
+
+![2nd app](https://learn.microsoft.com/en-us/previous-versions/azure/aks/media/ingress-basic/app-two.png)
 
 ## **[go to magic section](https://www.enabler.no/en/blog/mosquitto-mqtt-broker-in-kubernetes)**
 

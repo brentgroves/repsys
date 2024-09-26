@@ -202,6 +202,8 @@ Host: 10.152.183.171:8080
 kubectl create -n default secret tls tls-credential --key=/home/brent/src/pki/intermediateCA/private/repsys.linamar.com.san.key.pem --cert=/home/brent/src/pki/intermediateCA/certs/server-chain/repsys.linamar.com-ca-chain-bundle.cert.pem
 secret/tls-credential created
 
+kubectl create -n ingress-test secret tls tls-credential --key=/home/brent/src/pki/intermediateCA/private/repsys.linamar.com.san.key.pem --cert=/home/brent/src/pki/intermediateCA/certs/server-chain/repsys.linamar.com-ca-chain-bundle.cert.pem
+
 # shows both tls secrets
 kubectl get secrets --namespace default
 NAME             TYPE                DATA   AGE
@@ -209,8 +211,14 @@ tls-credential   kubernetes.io/tls   2      54s
 
 # show cert chain
 kubectl get secret -n default tls-credential -o json | jq -r '.data."tls.crt"' | base64 -d
+
+kubectl get secret -n ingress-test tls-credential -o json | jq -r '.data."tls.crt"' | base64 -d
+
 # show server cert key
 kubectl get secret -n default tls-credential -o json | jq -r '.data."tls.key"' | base64 -d
+
+kubectl get secret -n ingress-test tls-credential -o json | jq -r '.data."tls.key"' | base64 -d
+
 
 # Update host property in the ingres yaml. 
 pushd .
