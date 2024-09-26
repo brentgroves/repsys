@@ -4,13 +4,17 @@
 **[Current Status](../status/weekly/current_status.md)**\
 **[Back to Main](../../README.md)**
 
-- **[istio tls termination web app](https://www.danielstechblog.io/run-the-istio-ingress-gateway-with-tls-termination-and-tls-passthrough/)**
-
-- **[Request Level Authentication and Authorization with Istio and Keycloak](../../research/a_l/istio/authentication_and_authorization.md)**
+## First
+Keycloak on K8s with TLS termination.
 
 - **[Keycloak getting started](../../research/a_l/iam/keycloak/keycloak_getting_started.md)**
 - **[Cofiguring Keycloak](../../research/a_l/iam/keycloak/configuring_keycloak.md)**
 - **[Configuring Keycloak for production](../../research/a_l/iam/keycloak/configuration_production.md)**
+
+- **[istio tls termination web app](https://www.danielstechblog.io/run-the-istio-ingress-gateway-with-tls-termination-and-tls-passthrough/)**
+
+- **[Request Level Authentication and Authorization with Istio and Keycloak](../../research/a_l/istio/authentication_and_authorization.md)**
+
 - **[istio secure gateway](../../research/a_l/istio/secure_gateway.md)**
 
 - **[istio with your PKI](../../research/a_l/istio/pki/cert_managment.md)**
