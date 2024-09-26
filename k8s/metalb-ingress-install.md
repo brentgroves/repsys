@@ -11,7 +11,7 @@ Ingress is a Kubernetes API object that defines DNS routing rules for external t
 
 ## Issues
 
-When the Load Balancer is enabled external kubectl connections become slower and timeout.  You can update the ~/.kube/config file to use an IP address of a node that is not occupied by the load balancer but it's still slow.
+When the Load Balancer is enabled external kubectl connections become slower and timeout.  You can update the ~/.kube/config file to use an IP address of a node that is not occupied by the load balancer but it's still slow. I believe this was happening because I did not use separate IP addresses for the load balancer.  Once I picked new unused IP addresses for the load balancer kubectl connections were fine.
 
 ## References
 
