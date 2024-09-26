@@ -3,6 +3,10 @@
 **[All Status](../weekly/status_list.md)**\
 **[Back to Main](../../../README.md)**
 
+## Questions
+
+Is there any Kubernetes clusters currently running at Linamar? The need is to install reporting software used to run reports requiring live data or reports that time out when run from Intelliplex.
+
 ## ToDo
 
 - **[ToDo List](../../report_system/todo_list.md)**

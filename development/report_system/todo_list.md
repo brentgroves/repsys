@@ -4,6 +4,8 @@
 **[Current Status](../status/weekly/current_status.md)**\
 **[Back to Main](../../README.md)**
 
+- **[istio tls termination web app](https://www.danielstechblog.io/run-the-istio-ingress-gateway-with-tls-termination-and-tls-passthrough/)**
+
 - **[Request Level Authentication and Authorization with Istio and Keycloak](../../research/a_l/istio/authentication_and_authorization.md)**
 
 - **[Keycloak getting started](../../research/a_l/iam/keycloak/keycloak_getting_started.md)**
