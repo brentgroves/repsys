@@ -147,3 +147,5 @@ nginxgateway.gateway.nginx.org/nginx-gateway-config created
 ## NEXT
 
 **[4. Verify the Deployment](https://docs.nginx.com/nginx-gateway-fabric/installation/installing-ngf/manifests/)**
+
+If tlsroute is not supported on Azure. Try another option like NGINX IC.
