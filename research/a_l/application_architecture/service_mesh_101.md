@@ -22,4 +22,10 @@ Service mesh is an infrastructure layer deployed alongside an application, which
 
 There are multiple reasons why an organization would wish to implement a service mesh. We can start with the API endpoint discovery feature of service mesh that helps in identifying the backend service based on the client’s request and preventing the exposure of the API to unauthorized access. Another reason is that an outbound proxy can only protect the cluster or VMs from the outside. However, once a request enters the infrastructure, all communication becomes insecure, and the request gains access to all the services. This leaves it vulnerable to potential threats.
 
-Service mesh fills this gap and routes all the inter-service communication through proxies. It allows platform engineers to rate limit, trace, access control, etc. the service request which helps in keeping the infrastructure secure. Though very frequently used with Kubernetes and microservices, service mesh can be used outside of microservices and containers on virtual or bare metal servers. Let us understand the architecture of service mesh to know how we can modernize existing services.
+**[Service mesh](https://glossary.cncf.io/service-mesh/)** fills this gap and routes all the inter-service communication through proxies. It allows **[platform engineers](../application_architecture/platform_engineer.md)** to rate limit, trace, access control, etc. the service request which helps in keeping the infrastructure secure. Though very frequently used with Kubernetes and microservices, service mesh can be used outside of microservices and containers on virtual or bare metal servers. Let us understand the architecture of service mesh to know how we can modernize existing services.
+
+## Service mesh architecture
+
+Service mesh is designed on the basis of the **[Software Defined Network (SDN)](../../m_z/virtualization/networking/sdn.md)** architecture. It has two major components, i.e. control plane and the data plane. With one or more control planes that act as the brain of the service mesh, multiple data planes can be configured to process the traffic flow using the policy specified by the control plane.
+
+![sm](https://www.infracloud.io/assets/img/blog/demystifying-service-mesh/service-mesh-architecture.png)

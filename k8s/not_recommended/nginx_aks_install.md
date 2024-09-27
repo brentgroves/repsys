@@ -4,9 +4,14 @@
 **[Current Status](../development/status/weekly/current_status.md)**\
 **[Back to Main](../README.md)**
 
+## Not Recommended
+
+Recommend **[NGinx Gateway Fabric](../nginx_gateway_fabric_install.md)**
+
 ## references
 
 - **[AKS Ingress](../research/a_l/azure/aks/ingress_controllers.md)**
+- **[Create an ingress controller](https://kubernetes.github.io/ingress-nginx/deploy/#azure)**
 - **[Azure AKS unmanaged ingress](https://learn.microsoft.com/en-us/azure/aks/ingress-basic?tabs=azure-cli#create-an-ingress-controller)**
 
 ## Ingress
@@ -25,6 +30,36 @@ There are multiple ways to install the Ingress-Nginx Controller:
 - with specific addons (e.g. for minikube or MicroK8s).
 
 On most Kubernetes clusters, the ingress controller will work without requiring any extra configuration. If you want to get started as fast as possible, you can check the quick start instructions. However, in many environments, you can improve the performance or get better logs by enabling extra features. We recommend that you check the environment-specific instructions for details about optimizing the ingress controller for your particular environment or cloud provider.
+
+## Remove Nginx Ingress Controller
+
+```bash
+pushd .
+cd ~/src/repsys/k8s/ingress/aks
+scc.sh reports-aks-user.yaml reports-aks
+
+kubectl delete -f ./deploy.yaml
+namespace "ingress-nginx" deleted
+serviceaccount "ingress-nginx" deleted
+role.rbac.authorization.k8s.io "ingress-nginx" deleted
+clusterrole.rbac.authorization.k8s.io "ingress-nginx" deleted
+rolebinding.rbac.authorization.k8s.io "ingress-nginx" deleted
+clusterrolebinding.rbac.authorization.k8s.io "ingress-nginx" deleted
+configmap "ingress-nginx-controller" deleted
+service "ingress-nginx-controller" deleted
+service "ingress-nginx-controller-admission" deleted
+deployment.apps "ingress-nginx-controller" deleted
+ingressclass.networking.k8s.io "nginx" deleted
+validatingwebhookconfiguration.admissionregistration.k8s.io "ingress-nginx-admission" deleted
+Error from server (NotFound): error when deleting "./deploy.yaml": serviceaccounts "ingress-nginx-admission" not found
+Error from server (NotFound): error when deleting "./deploy.yaml": roles.rbac.authorization.k8s.io "ingress-nginx-admission" not found
+Error from server (NotFound): error when deleting "./deploy.yaml": clusterroles.rbac.authorization.k8s.io "ingress-nginx-admission" not found
+Error from server (NotFound): error when deleting "./deploy.yaml": rolebindings.rbac.authorization.k8s.io "ingress-nginx-admission" not found
+Error from server (NotFound): error when deleting "./deploy.yaml": clusterrolebindings.rbac.authorization.k8s.io "ingress-nginx-admission" not found
+Error from server (NotFound): error when deleting "./deploy.yaml": jobs.batch "ingress-nginx-admission-create" not found
+Error from server (NotFound): error when deleting "./deploy.yaml": jobs.batch "ingress-nginx-admission-patch" not found
+
+```
 
 ## Azure
 
@@ -72,6 +107,12 @@ Note: I created another Load balancer for rabbitmq and got an entirely different
 
 ## Run demo applications
 
+### Clean up demo
+
+```bash
+kubectl delete namespace ingress-test
+```
+
 To see the ingress controller in action, run two demo applications in your AKS cluster. In this example, you use kubectl apply to deploy two instances of a simple Hello world application.
 
 Create an **[aks-helloworld-one.yaml](./ingress/aks/aks-helloworld-one.yaml)** file and copy in the following example YAML:
@@ -117,7 +158,7 @@ Create the ingress resource using the kubectl apply command.
 
 ```bash
 pushd .
-cd ~/src/repsys/k8s/ingress/aks
+cd ~/src/repsys/k8s/nginx/aks
 scc.sh reports-aks-user.yaml reports-aks
 kubectl apply -f hello-world-ingress.yaml --namespace ingress-test
 ```

@@ -17,6 +17,8 @@ To delete the Bookinfo sample application and its configuration, see **[Bookinfo
 The Istio uninstall deletes the RBAC permissions and all resources hierarchically under the istio-system namespace. It is safe to ignore errors for non-existent resources because they may have been deleted hierarchically.
 
 ```bash
+pushd .
+cd ~/Downloads/istio-1.23.0
 kubectl delete -f samples/addons
 istioctl uninstall -y --purge
 ```

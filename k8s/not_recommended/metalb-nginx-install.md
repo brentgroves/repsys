@@ -4,6 +4,10 @@
 **[Current Status](../development/status/weekly/current_status.md)**\
 **[Back to Main](../README.md)**
 
+## Not Recommended
+
+Recommend **[NGinx Gateway Fabric](../nginx_gateway_fabric_install.md)**
+
 Ingress is a Kubernetes API object that defines DNS routing rules for external traffic coming into a Kubernetes cluster. Using Ingress, cluster administrators set up granular load balancing, SSL/TLS termination, and name-based virtual hosting for their cluster services.
 
 **![External Load Balancer/Gateway](https://fabianlee.org/wp-content/uploads/2021/07/microk8s-3node.png)**
@@ -29,6 +33,18 @@ When the Load Balancer is enabled external kubectl connections become slower and
 <https://www.percona.com/blog/expose-databases-on-kubernetes-with-ingress>
 
 ## Remove Ingress
+
+```bash
+pushd .
+cd ~/src/repsys/k8s
+# Delete test deployment
+
+kubectl delete deployment.apps/golang-hello-world-web
+kubectl delete service/golang-hello-world-web-service
+kubectl delete ingress golang-hello-world-web-service
+kubectl delete -n default secret tls-credential 
+
+kubectl delete -f nginx/microk8s/ingress-service.yaml
 
 microk8s disable ingress
 

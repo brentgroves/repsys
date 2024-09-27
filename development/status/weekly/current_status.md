@@ -23,7 +23,8 @@ Mills River Production and Downtime Tracking System.
 
 - **[Request Level Authentication and Authorization](../../../research/a_l/istio/authentication_and_authorization.md#what-is-request-level-authentication-and-authorization)**
 - **[Microservices](../../../research/a_l/application_architecture/microservices.md)**
-- **[Service Mesh](../../../research/a_l/application_architecture/service_mesh.md)**
+- **[Service Mesh](../../../research/a_l/application_architecture/service_mesh_101.md)**
+  ![sm](https://www.infracloud.io/assets/img/blog/demystifying-service-mesh/service-mesh-architecture.png)
 - **[Learn microservices with istio](../../../research/a_l/istio/learn_microservices_with_istio_on_k8s.md)**
 - **[Websockets and Microservices](../../report_system/repsys_architecture_notes.md)**
 - **[Modularize React.js applications](../../../research/m_z/reactjs/modularize_react_applications.md)**
@@ -49,6 +50,12 @@ Mills River Production and Downtime Tracking System.
 
 - **[Research List](../../../research/research_list.md)**\
 A list of all research for repsys.
+
+- **[Docker Niagara](https://www.broudyprecision.com/docker-niagara/)**
+
+  **[Video](https://youtu.be/rzshJ82JxDY)**
+
+  With the upcoming release of Niagara Framework® 4.13, Niagara will be available as a Docker® container that packages together the Niagara core, the JRE (Java Runtime Environment), and any additional modules required at runtime. This containerized delivery mechanism has advantages during development, at first provisioning for a given customer and for each version upgrade compared to standard deployment and integration processes.
 
 - **[What is platform engineering?](../../../research/a_l/application_architecture/platform_engineer.md)**
 
