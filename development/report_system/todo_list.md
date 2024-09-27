@@ -5,7 +5,12 @@
 **[Back to Main](../../README.md)**
 
 ## First
-Keycloak on K8s with TLS termination.
+Get Keycloak on K8s with TLS termination using nginx ingress.
+
+## Second 
+Get TLS termination with istio and k8s gateway api.
+https://istio.io/latest/docs/tasks/traffic-management/ingress/secure-ingress/
+https://gateway-api.sigs.k8s.io/guides/tls/
 
 - **[Keycloak getting started](../../research/a_l/iam/keycloak/keycloak_getting_started.md)**
 - **[Cofiguring Keycloak](../../research/a_l/iam/keycloak/configuring_keycloak.md)**
