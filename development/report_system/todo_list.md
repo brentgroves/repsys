@@ -6,6 +6,7 @@
 
 ## First
 Get Keycloak on K8s with TLS termination using nginx ingress.
+https://docs.nginx.com/nginx-gateway-fabric/overview/gateway-architecture/
 
 ## Second 
 Get TLS termination with istio and k8s gateway api.
