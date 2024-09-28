@@ -4,6 +4,10 @@
 **[Current Status](../status/weekly/current_status.md)**\
 **[Back to Main](../../README.md)**
 
+## 
+- **[Docker Container Debug](https://code.visualstudio.com/docs/containers/debug-common)**
+- **[Debug Pods](https://kubernetes.io/docs/tasks/debug/debug-application/debug-running-pod/)**
+
 ## First
 Get Keycloak on K8s with TLS termination using nginx ingress.
 https://docs.nginx.com/nginx-gateway-fabric/overview/gateway-architecture/
