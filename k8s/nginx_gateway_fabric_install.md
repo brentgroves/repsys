@@ -53,10 +53,6 @@ Deploying NGINX Gateway Fabric with Kubernetes manifests takes only a few steps.
 **Note:**\
 The **[Gateway API](https://github.com/kubernetes-sigs/gateway-api)** resources from the standard channel must be installed before deploying NGINX Gateway Fabric. If they are already installed in your cluster, please ensure they are the correct version as supported by the NGINX Gateway Fabric - see the **[Technical Specifications](https://github.com/nginxinc/nginx-gateway-fabric/blob/v1.4.0/README.md#technical-specifications)**.
 
-```bash
-kubectl kustomize "https://github.com/nginxinc/nginx-gateway-fabric/config/crd/gateway-api/experimental?ref=v1.4.0" | kubectl apply -f -
-```
-
 To install the Gateway API resources, run the following:
 
 Note: These are standard k8s crds not nginx.
@@ -185,10 +181,15 @@ There are two options for accessing NGINX Gateway Fabric depending on the type o
     For GCP or Azure, run:
 
     ```bash
+    # azure
     kubectl get svc nginx-gateway -n nginx-gateway
     NAME            TYPE           CLUSTER-IP    EXTERNAL-IP     PORT(S)                      AGE
 
     nginx-gateway   LoadBalancer   10.0.160.21   52.228.166.50   80:30244/TCP,443:31999/TCP   17h
+    # repsys11-c2-n1
+    kubectl get svc nginx-gateway -n nginx-gateway
+    NAME            TYPE           CLUSTER-IP      EXTERNAL-IP   PORT(S)                      AGE
+    nginx-gateway   LoadBalancer   10.152.183.50   10.1.0.143    80:30833/TCP,443:31343/TCP   82s
     ```
 
     In AWS, the NLB (Network Load Balancer) DNS (directory name system) name will be reported by Kubernetes instead of a public IP. To get the DNS name, run:
@@ -221,3 +222,11 @@ In the **[Comparing AKS Ingress options](../research/a_l/azure/aks/ingress_contr
 ## Important:**\
 
 By default Helm and manifests configure NGINX Gateway Fabric on ports 80 and 443, affecting any gateway **[listeners](https://gateway-api.sigs.k8s.io/references/spec/#gateway.networking.k8s.io/v1.Listener)** on these ports. To use different ports, update the configuration. NGINX Gateway Fabric requires a configured **[gateway resource](https://gateway-api.sigs.k8s.io/api-types/gateway/#gateway)** with a valid listener to listen on any ports.
+
+NGINX Gateway Fabric uses the created service to update the Addresses field in the Gateway Status resource. Using a LoadBalancer service sets this field to the IP address and/or hostname of that service. Without a service, the pod IP address is used.
+
+This gateway is associated with the NGINX Gateway Fabric through the gatewayClassName field. The default installation of NGINX Gateway Fabric creates a GatewayClass with the name nginx. NGINX Gateway Fabric will only configure gateways with a gatewayClassName of nginx unless you change the name via the --gatewayclass command-line flag.
+
+## THIS may work
+
+**[ingress with tls termination example](https://github.com/MicrosoftDocs/azure-docs/blob/90f41730b9836e89d3e53b44707109c32b5e52d0/articles/aks/ingress-own-tls.md)**

@@ -4,6 +4,10 @@
 **[Research List](../../../research_list.md)**\
 **[Back Main](../../../../README.md)**
 
+## references
+
+**[gateway v1](https://gateway-api.sigs.k8s.io/reference/spec/#gateway.networking.k8s.io%2fv1.Gateway)**
+
 A Gateway is 1:1 with the lifecycle of the configuration of infrastructure. When a user creates a Gateway, some load balancing infrastructure is provisioned or configured (see below for details) by the GatewayClass controller. Gateway is the resource that triggers actions in this API. Other resources in this API are configuration snippets until a Gateway has been created to link the resources together.
 
 The Gateway spec defines the following:

@@ -1,0 +1,76 @@
+# describe gateway
+
+```bash
+kubectl describe gateway/cafe  
+Name:         cafe
+Namespace:    default
+Labels:       <none>
+Annotations:  <none>
+API Version:  gateway.networking.k8s.io/v1
+Kind:         Gateway
+Metadata:
+  Creation Timestamp:  2024-09-28T20:05:00Z
+  Generation:          1
+  Resource Version:    186206287
+  UID:                 fed02a88-3036-4e38-ac74-be9da58df8fe
+Spec:
+  Gateway Class Name:  nginx
+  Listeners:
+    Allowed Routes:
+      Namespaces:
+        From:  Same
+    Name:      http
+    Port:      80
+    Protocol:  HTTP
+Status:
+  Addresses:
+    Type:   IPAddress
+    Value:  52.228.166.50
+  Conditions:
+    Last Transition Time:  2024-09-28T20:05:00Z
+    Message:               Gateway is accepted
+    Observed Generation:   1
+    Reason:                Accepted
+    Status:                True
+    Type:                  Accepted
+    Last Transition Time:  2024-09-28T20:05:00Z
+    Message:               Gateway is programmed
+    Observed Generation:   1
+    Reason:                Programmed
+    Status:                True
+    Type:                  Programmed
+  Listeners:
+    Attached Routes:  0
+    Conditions:
+      Last Transition Time:  2024-09-28T20:05:00Z
+      Message:               Listener is accepted
+      Observed Generation:   1
+      Reason:                Accepted
+      Status:                True
+      Type:                  Accepted
+      Last Transition Time:  2024-09-28T20:05:00Z
+      Message:               Listener is programmed
+      Observed Generation:   1
+      Reason:                Programmed
+      Status:                True
+      Type:                  Programmed
+      Last Transition Time:  2024-09-28T20:05:00Z
+      Message:               All references are resolved
+      Observed Generation:   1
+      Reason:                ResolvedRefs
+      Status:                True
+      Type:                  ResolvedRefs
+      Last Transition Time:  2024-09-28T20:05:00Z
+      Message:               No conflicts
+      Observed Generation:   1
+      Reason:                NoConflicts
+      Status:                False
+      Type:                  Conflicted
+    Name:                    http
+    Supported Kinds:
+      Group:  gateway.networking.k8s.io
+      Kind:   HTTPRoute
+      Group:  gateway.networking.k8s.io
+      Kind:   GRPCRoute
+Events:       <none>
+```
