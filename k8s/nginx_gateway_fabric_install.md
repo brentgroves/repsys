@@ -6,6 +6,8 @@
 
 ## references
 
+- **[AKS Loadbalancer and TLS termination](https://stackoverflow.com/questions/53383614/configuring-an-aks-load-balancer-for-https-access)**
+
 - **[Create an ingress controller](https://blog.nashtechglobal.com/hands-on-kubernetes-gateway-api-with-nginx-gateway-fabric/)**
 - **[Installation with Kubernetes manifests](https://docs.nginx.com/nginx-gateway-fabric/installation/installing-ngf/manifests/)**
 
@@ -57,6 +59,8 @@ kubectl kustomize "https://github.com/nginxinc/nginx-gateway-fabric/config/crd/g
 
 To install the Gateway API resources, run the following:
 
+Note: These are standard k8s crds not nginx.
+
 ```bash
 pushd .
 cd ~/src/repsys/k8s/nginx_gateway_fabric
@@ -89,6 +93,8 @@ customresourcedefinition.apiextensions.k8s.io/udproutes.gateway.networking.k8s.i
 ```
 
 ## 2. Deploy the NGINX Gateway Fabric CRDs
+
+Note: These resources are made by NGINX.
 
 ```bash
 pushd .
@@ -124,6 +130,8 @@ curl https://raw.githubusercontent.com/nginxinc/nginx-gateway-fabric/v1.4.0/depl
 
 **Did a diff** on the experimental deploy and the azure deploy and decided to add the node selector lines to the experimental deploy and call it azure_deploy.yaml. I was thinking these experimental features may not work in azure
 
+Note: I made a mistake here and thought I was deploying experimental_deploy_azure.yaml but actually ran the following command: ```kubectl apply -f https://raw.githubusercontent.com/nginxinc/nginx-gateway-fabric/v1.4.0/deploy/experimental/deploy.yaml``` which is the unmodified experimental deployment yaml. If this works for Azure that means we don't have to modify the experimental deployment to include a nodeSelector=linux statement.
+
 ```bash
 pushd .
 cd ~/src/repsys/k8s/nginx_gateway_fabric
@@ -144,8 +152,72 @@ gatewayclass.gateway.networking.k8s.io/nginx created
 nginxgateway.gateway.nginx.org/nginx-gateway-config created
 ```
 
-## NEXT
-
 **[4. Verify the Deployment](https://docs.nginx.com/nginx-gateway-fabric/installation/installing-ngf/manifests/)**
 
-If tlsroute is not supported on Azure. Try another option like NGINX IC.
+To confirm that NGINX Gateway Fabric is running, check the pods in the nginx-gateway namespace:
+
+```bash
+kubectl get pods -n nginx-gateway
+```
+
+The output should look similar to this (note that the pod name will include a unique string):
+
+```bash
+NAME                             READY   STATUS    RESTARTS   AGE
+nginx-gateway-7f89b76fd4-lp47m   2/2     Running   0          16h
+```
+
+## 5. Access NGINX Gateway Fabric
+
+There are two options for accessing NGINX Gateway Fabric depending on the type of LoadBalancer service you chose during installation:
+
+- If the LoadBalancer type is NodePort, Kubernetes will randomly allocate two ports on every node of the cluster. To access the NGINX Gateway Fabric, use an IP address of any node of the cluster along with the two allocated ports.
+
+    **Tip:**\
+    Read more about the type NodePort in the **[Kubernetes documentation](https://kubernetes.io/docs/concepts/services-networking/service/#type-nodeport)**.
+- If the LoadBalancer type is LoadBalancer:
+
+  - For GCP or Azure, Kubernetes will allocate a cloud load balancer for load balancing the NGINX Gateway Fabric pods. Use the public IP of the load balancer to access NGINX Gateway Fabric.
+  - For AWS, Kubernetes will allocate a Network Load Balancer (NLB) in TCP mode with the PROXY protocol enabled to pass the client’s information (the IP address and the port).
+
+    Use the public IP of the load balancer to access NGINX Gateway Fabric. To get the public IP which is reported in the EXTERNAL-IP column:
+
+    For GCP or Azure, run:
+
+    ```bash
+    kubectl get svc nginx-gateway -n nginx-gateway
+    NAME            TYPE           CLUSTER-IP    EXTERNAL-IP     PORT(S)                      AGE
+
+    nginx-gateway   LoadBalancer   10.0.160.21   52.228.166.50   80:30244/TCP,443:31999/TCP   17h
+    ```
+
+    In AWS, the NLB (Network Load Balancer) DNS (directory name system) name will be reported by Kubernetes instead of a public IP. To get the DNS name, run:
+
+    ```bash
+    kubectl get svc nginx-gateway -n nginx-gateway
+    ```
+
+    **Note:**\
+    We recommend using the NLB DNS whenever possible, but for testing purposes, you can resolve the DNS name to get the IP address of the load balancer:
+
+    ```nslookup <dns-name>```
+
+**Tip:**\
+Learn more about type LoadBalancer in the **[Kubernetes documentation](https://kubernetes.io/docs/concepts/services-networking/service/#type-loadbalancer)**.
+
+For AWS, additional options regarding an allocated load balancer are available, such as its type and SSL termination. Read the Kubernetes documentation to learn more.
+
+## Note:\
+
+Tlsroute may not be supported on **[Azure Loadbalancers](https://stackoverflow.com/questions/53383614/configuring-an-aks-load-balancer-for-https-access)**.
+
+You are right, the default Load Balancer created by AKS is a Layer 4 LB and doesn't support SSL offloading. The equivalent of the AWS Application Load Balancer in Azure is the Application Gateway. As of now there is no option in AKS which allows to choose the Application Gateway instead of a classic load balancer, but like alev said, there is an **[ongoing project](https://github.com/Azure/application-gateway-kubernetes-ingress/)** that still in preview which will allow to deploy a special ingress controller that will drive the routing rules on an external Application Gateway based on your ingress rules. If you really need something that is production ready, here are your options :
+
+- Deploy an Ingress controller like NGINX, Traefik, etc. and use cert-manager to generate your certificate.
+- Create an Application Gateway and manage your own routing rule that will point to the default layer 4 LB (k8s LoadBalancer service or via the ingress controller)
+
+In the **[Comparing AKS Ingress options](../research/a_l/azure/aks/ingress_controllers.md#compare-ingress-options)** table it is shown that the only option to provide TLS termination externally is the **[Azure Application Gateway for Containers](https://gateway-api.sigs.k8s.io/api-types/gateway/#gateway)**
+
+## Important:**\
+
+By default Helm and manifests configure NGINX Gateway Fabric on ports 80 and 443, affecting any gateway **[listeners](https://gateway-api.sigs.k8s.io/references/spec/#gateway.networking.k8s.io/v1.Listener)** on these ports. To use different ports, update the configuration. NGINX Gateway Fabric requires a configured **[gateway resource](https://gateway-api.sigs.k8s.io/api-types/gateway/#gateway)** with a valid listener to listen on any ports.
