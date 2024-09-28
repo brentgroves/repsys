@@ -7,6 +7,7 @@
 ## Debugging Pods/Containers
 - **[Docker Container Debug](https://code.visualstudio.com/docs/containers/debug-common)**
 - **[Debug Pods](https://kubernetes.io/docs/tasks/debug/debug-application/debug-running-pod/)**
+- **[Golang http handler](https://medium.com/geekculture/demystifying-http-handlers-in-golang-a363e4222756)**
 
 ## First
 Get Keycloak on K8s with TLS termination using nginx ingress.
