@@ -208,7 +208,7 @@ Learn more about type LoadBalancer in the **[Kubernetes documentation](https://k
 
 For AWS, additional options regarding an allocated load balancer are available, such as its type and SSL termination. Read the Kubernetes documentation to learn more.
 
-## Note:\
+## Note
 
 Tlsroute may not be supported on **[Azure Loadbalancers](https://stackoverflow.com/questions/53383614/configuring-an-aks-load-balancer-for-https-access)**.
 

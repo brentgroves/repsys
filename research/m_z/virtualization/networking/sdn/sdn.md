@@ -1,8 +1,8 @@
 # **[Software-Defined Networking (SDN) Definition](https://en.wikipedia.org/wiki/Software-defined_networking#:~:text=Software%2Ddefined%20networking%20(SDN),computing%20than%20to%20traditional%20network)**
 
-**[Current Status](../../../development/status/weekly/current_status.md)**\
-**[Research List](../../../research/research_list.md)**\
-**[Back Main](../../../README.md)**
+**[Current Status](../../../../../development/status/weekly/current_status.md)**\
+**[Research List](../../../../../research/research_list.md)**\
+**[Back Main](../../../../../README.md)**
 
 ## references
 

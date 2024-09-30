@@ -14,6 +14,6 @@ In this guide, we will show how to configure HTTPS termination for your applicat
 
 ## Before you begin
 
-**[Install](https://docs.nginx.com/nginx-gateway-fabric/installation/)** NGINX Gateway Fabric.
+**[Install](../../../k8s/nginx_gateway_fabric_install.md)** NGINX Gateway Fabric.
 
 Save the public IP address and port of NGINX Gateway Fabric into shell variables:

@@ -4,6 +4,23 @@
 **[Research List](../../../research/research_list.md)**\
 **[Back Main](../../../README.md)**
 
+## Clean-up
+
+```bash
+pushd .
+cd ~/src/repsysk8s/nginx_gateway_fabric
+kubectl delete httproute coffee
+kubectl delete gateway cafe
+kubectl delete deployment coffee
+kubectl delete svc coffee
+# aks
+scc.sh reports-aks-user.yaml reports-aks
+
+# microk8s
+scc.sh repsys11c2n1.yaml microk8s 
+
+```
+
 ## Routing traffic to applications
 
 Learn how to route external traffic to your Kubernetes applications using NGINX Gateway Fabric.
@@ -172,9 +189,21 @@ spec:
 EOF
 ```
 
+![coffee](https://docs.nginx.com/nginx-gateway-fabric/img/route-all-traffic-config.png)
+
 To attach the coffee HTTPRoute to the cafe gateway, we specify the gateway name in the **[parentRefs](https://gateway-api.sigs.k8s.io/references/spec/#gateway.networking.k8s.io/v1.CommonRouteSpec)** field. The attachment will succeed if the hostnames and protocol in the HTTPRoute are allowed by at least one of the gateway’s listeners.
 
 The **[hostnames](https://gateway-api.sigs.k8s.io/references/spec/#gateway.networking.k8s.io/v1.HTTPRouteSpec)** field allows you to list the hostnames that the HTTPRoute matches. In this case, incoming requests handled by the http listener with the HTTP host header “cafe.example.com” will match this HTTPRoute and will be routed according to the rules in the spec.
+
+### **[HOST request header](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Host)**
+
+The Host request header specifies the host and port number of the server to which the request is being sent.
+
+If no port is included, the default port for the service requested is implied (e.g., 443 for an HTTPS URL, and 80 for an HTTP URL).
+
+A Host header field must be sent in all HTTP/1.1 request messages. A 400 (Bad Request) status code may be sent to any HTTP/1.1 request message that lacks or contains more than one Host header field.
+
+### continue
 
 The rules field defines routing rules for the HTTPRoute. A rule is selected if the request satisfies one of the rule’s matches. To forward traffic for all paths to the coffee service we specify a match with the PathPrefix “/” and target the coffee service using the backendRef field.
 
@@ -183,7 +212,8 @@ The rules field defines routing rules for the HTTPRoute. A rule is selected if t
 To test the configuration, we will send a request to the public IP and port of NGINX Gateway Fabric that you saved in the Before you begin section and verify that the response comes from one of the coffee pods.
 
 **Note:**\
-Your clients should be able to resolve the domain name “cafe.example.com” to the public IP of the NGINX Gateway Fabric. In this guide we will simulate that using curl’s --resolve option.
+Your clients should be able to **[resolve](https://everything.curl.dev/usingcurl/connections/name.html)** the domain name “cafe.example.com” to the public IP of the NGINX Gateway Fabric. In this guide we will simulate that using curl’s --resolve option. FYI, I added repsys.linamar.com to my hosts file so I can test using a browser and don't need the resolve parameter when using curl.
+
 First, let’s send a request to the path “/”:
 
 ```bash
@@ -202,6 +232,7 @@ Date: 28/Sep/2024:20:35:40 +0000
 URI: /
 Request ID: 13c7ac8dafe48f01abec6f0c16ab4891
 
+# AKS test
 scc.sh reports-aks-user.yaml reports-aks
 kubectl get svc nginx-gateway -n nginx-gateway
 
@@ -222,7 +253,7 @@ Request ID: 2e0b4e4c39e052bede55ec9f402a5db2
 
 ```
 
-## **[curl --resolve](https://everything.curl.dev/usingcurl/connections/name.html#provide-a-custom-ip-address-for-a-name)**
+### Note: **[curl --resolve](https://everything.curl.dev/usingcurl/connections/name.html#provide-a-custom-ip-address-for-a-name)**
 
 Do you know better than the name resolver where curl should go? Then you can give an IP address to curl yourself. If you want to redirect port 80 access for example.com to instead reach your localhost:
 
@@ -261,6 +292,9 @@ Request ID: efdf6d84d67a6838dbb87116f68681fa
 ```
 
 Requests to hostnames other than “repsys.linamar.com” should not be routed to the coffee application, since the cafe HTTPRoute only matches requests with the “cafe.example.com"need hostname. To verify this, send a request to the hostname “notrepsys.linamar.com”:
+
+**Note:**\
+I added notrepsys.linamar.com to my hosts file with the same IP address as that of repsys.linamar.com.
 
 ```bash
 curl --resolve notrepsys.linamar.com:$GW_PORT:$GW_IP http://notrepsys.linamar.com:$GW_PORT/

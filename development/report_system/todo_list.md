@@ -4,6 +4,9 @@
 **[Current Status](../status/weekly/current_status.md)**\
 **[Back to Main](../../README.md)**
 
+- **[Service Mesh 101](../../research/a_l/application_architecture/service_mesh_101.md)**
+- **[TLS termination using NGINX Gateway Fabric](../../research/m_z/nginx_gateway_fabric/https_termination.md)**
+
 ## Debugging Pods/Containers
 
 - **[Docker Container Debug](https://code.visualstudio.com/docs/containers/debug-common)**
@@ -14,12 +17,12 @@
 - **[Packet Filter](https://github.com/ghedo/go.pkt)**
 - **[Golang http handler](https://medium.com/geekculture/demystifying-http-handlers-in-golang-a363e4222756)**
 
-## First
+## Keycloak with TLS termination using nginx ingress
 
 Get Keycloak on K8s with TLS termination using nginx ingress.
 <https://docs.nginx.com/nginx-gateway-fabric/overview/gateway-architecture/>
 
-## Second
+## TLS termination using istio gateway
 
 Get TLS termination with istio and k8s gateway api.
 <https://istio.io/latest/docs/tasks/traffic-management/ingress/secure-ingress/>

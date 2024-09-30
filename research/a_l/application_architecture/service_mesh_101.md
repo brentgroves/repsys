@@ -7,7 +7,7 @@
 ## references
 
 - **[video](https://www.infracloud.io/cloud-native-talks/request-level-authentication-istio-keycloak/)**
-)
+
 When building software, code can be structured as a single large program (monolith) or multiple smaller programs (microservices). While it is true that many organizations are migrating from monolith to microservices to leverage the flexibility and scalability microservices offer, it gets difficult to manage them as their number grows. Challenges arise in tracking, latency control, optimizing load between replicas of a service, service-to-service communication security, and maintaining resilience. All these features can be encoded with the service giving an opportunity for vulnerabilities & mixing of business logic with management logic.
 
 Implementing a reliable service discovery mechanism and maintaining an up-to-date service registry becomes difficult. **[Adopting Kubernetes](https://www.infracloud.io/kubernetes-consulting-partner/)** resolves some deployment issues, but runtime issues persist due to tight coupling with the application. Testing new features and making changes while maintaining infrastructure security becomes challenging.
