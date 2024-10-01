@@ -4,6 +4,7 @@
 **[Current Status](../status/weekly/current_status.md)**\
 **[Back to Main](../../README.md)**
 
+- **[START HERE - https termination](../../research/m_z/nginx_gateway_fabric/https_termination.md#set-up)**
 - **[Service Mesh 101](../../research/a_l/application_architecture/service_mesh_101.md)**
 - **[TLS termination using NGINX Gateway Fabric](../../research/m_z/nginx_gateway_fabric/https_termination.md)**
 
