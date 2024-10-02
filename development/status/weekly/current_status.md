@@ -3,10 +3,6 @@
 **[All Status](../weekly/status_list.md)**\
 **[Back to Main](../../../README.md)**
 
-## Questions
-
-Mills River Production and Downtime Tracking System.
-
 ## Network setup
 
 **[Network access](../jdavis/network_access.md)**
@@ -21,11 +17,26 @@ Mills River Production and Downtime Tracking System.
 - **[Architecture Choices](../../report_system/architecture_choices.md)**
 - **[Databases and Schemas](../../report_system/databases_shemas.md)**
 
+## **[Threat Protection](../../report_system/threat_protection.md)**
+
+- **[Mastering Istio Rate Limiting for Efficient Traffic Management](../../research/a_l/istio/threat_protection/rate_limiting.md)**
+
+A SYN flood (half-open attack) is a type of denial-of-service (DDoS) attack which aims to make a server unavailable to legitimate traffic by consuming all available server resources. By repeatedly sending initial connection request (SYN) packets, the attacker is able to overwhelm all available ports on a targeted server machine, causing the targeted device to respond to legitimate traffic sluggishly or not at all.
+
+Rate limiting is remarkably effective and ridiculously simple. It's also regularly forgotten. Rate limiting is a defensive measure you can use to prevent your server or application from being paralyzed. By restricting the number of similar requests that can hit your server within a window of time, you ensure your server won't be overwhelmed and debilitated.
+
 ### **[Design Patterns](../../../research/a_l/application_architecture/design_pattern.md)**
+
+- **[Service Mesh](../../../research/a_l/application_architecture/service_mesh_101.md)**
+
+  When building software, code can be structured as a single large program (monolith) or multiple smaller programs (microservices). While it is true that many organizations are migrating from monolith to microservices to leverage the flexibility and scalability microservices offer, it gets difficult to manage them as their number grows. Challenges arise in tracking, latency control, optimizing load between replicas of a service, service-to-service communication security, and maintaining resilience. All these features can be encoded with the service giving an opportunity for vulnerabilities & mixing of business logic with management logic.
+
+  **Service mesh** fills this gap and helps build a secure infrastructure with the optimized usage of the service by adding reliability, observability, and security features across all services uniformly without any application code change.
+
+  **Service mesh** is an infrastructure layer deployed alongside an application, which means all the network complexities are handled outside the application code. It operates independently from the application and provides capabilities to optimize networking and enable service-to-service communication. By configuring and managing network behavior and traffic flow through policies, the service mesh enhances the application’s networking capabilities.
 
 - **[Request Level Authentication and Authorization](../../../research/a_l/istio/authentication_and_authorization.md#what-is-request-level-authentication-and-authorization)**
 - **[Microservices](../../../research/a_l/application_architecture/microservices.md)**
-- **[Service Mesh](../../../research/a_l/application_architecture/service_mesh_101.md)**
   ![sm](https://www.infracloud.io/assets/img/blog/demystifying-service-mesh/service-mesh-architecture.png)
 - **[Learn microservices with istio](../../../research/a_l/istio/learn_microservices_with_istio_on_k8s.md)**
 - **[Websockets and Microservices](../../report_system/repsys_architecture_notes.md)**
@@ -167,3 +178,7 @@ Ligonier Telephone
 ## 3 Dell PowerEdge R620s
 
 Each Dell PowerEdge R620S has 132 GB of RAM so each can run a 4 node K8s cluster with the report system installed.  Two can be used for production and backup report system deployments. The third can be used for Albion or home development.
+
+## Questions
+
+Mills River Production and Downtime Tracking System.
