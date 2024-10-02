@@ -4,6 +4,11 @@
 **[Current Status](../status/weekly/current_status.md)**\
 **[Back to Main](../../README.md)**
 
+- **[Create secret for repsys.linamar.com secret](../../research/a_l/k8s/secrets/secrets.md)**
+A Secret is an object that contains a small amount of sensitive data such as a password, a token, or a key. Such information might otherwise be put in a Pod specification or in a container image. Using a Secret means that you don't need to include confidential data in your application code.
+
+Because Secrets can be created independently of the Pods that use them, there is less risk of the Secret (and its data) being exposed during the workflow of creating, viewing, and editing Pods. Kubernetes, and applications that run in your cluster, can also take additional precautions with Secrets, such as avoiding writing sensitive data to nonvolatile storage.
+
 - **[Mastering Istio Rate Limiting for Efficient Traffic Management](../../research/a_l/istio/threat_protection/rate_limiting.md)**
 
 - **[START HERE - https termination](../../research/m_z/nginx_gateway_fabric/https_termination.md#set-up)**

@@ -3,14 +3,18 @@
 **[All Status](../weekly/status_list.md)**\
 **[Back to Main](../../../README.md)**
 
-## Network setup
+## Question
 
-**[Network access](../jdavis/network_access.md)**
+- Does Linamar have an **[transparent proxy server](../../../research/a_l/k8s/concepts/proxy_servers.md#transparent-proxy)** or some other **threat protection software** that would prevent some web apps from working?
 
 ## ToDo
 
 - **[ToDo List](../../report_system/todo_list.md)**
 - **[ToDo Gnatt](../../report_system/todo_gantt.md)**
+
+## Network setup
+
+**[Network access](../jdavis/network_access.md)**
 
 ## Repsys Architecture
 
