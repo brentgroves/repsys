@@ -8,13 +8,14 @@
 
 How can I get both https termination and rate limiting for the report system web app using NGINX, istio, or kong?
 
-| Software      | routing                                                              | https termination                                                        | rate limiting | IAM | Identity Provider |
-|---------------|----------------------------------------------------------------------|--------------------------------------------------------------------------|---------------|-----|-------------------|
-| Nginx Gateway | **[ng](../../research/m_z/nginx_gateway_fabric/routing_traffic.md)** | **[nght](../../research/m_z/nginx_gateway_fabric/https_termination.md)** |               |     |                   |
-| Nginx Ingress |                                                                      |                                                                          |               |     |                   |
-| istio mesh    |                                                                      |                                                                          |               |     |                   |
-| kong api      |                                                                      |                                                                          |               |     |                   |
-| keycloak      |                                                                      |                                                                          |               |     |                   |
-| Entra ID      |                                                                      |                                                                          |               |     |                   |
+**[TLS pass-through Fallback](https://gist.github.com/denji/12b3a568f092ab951456)**
 
+| Software      | routing                                                              | https termination                                                        | tls passthrough                                                        | rate limiting | IAM | Identity Provider |
+|---------------|----------------------------------------------------------------------|--------------------------------------------------------------------------|------------------------------------------------------------------------|---------------|-----|-------------------|
+| Nginx Gateway | **[ngroute](../../research/m_z/nginx_gateway_fabric/routing_traffic.md)** | **[nghttps](../../research/m_z/nginx_gateway_fabric/https_termination.md)** | **[ngtls](../../research/m_z/nginx_gateway_fabric/tls_passthrough.md)** |               |     |                   |
+| Nginx Ingress |                                                                      |                                                                          |                                                                        |               |     |                   |
+| istio mesh    |                                                                      |                                                                          |                                                                        |               |     |                   |
+| kong api      |                                                                      |                                                                          |                                                                        |               |     |                   |
+| keycloak      |                                                                      |                                                                          |                                                                        |               |     |                   |
+| Entra ID      |                                                                      |                                                                          |                                                                        |               |     |                   |
 **[nght](../../research/m_z/nginx_gateway_fabric/https_termination.md)**

@@ -166,3 +166,5 @@ kubectl get secret -n certificate cafe-secret -o json | jq -r '.data."tls.crt"' 
 kubectl get secret -n certificate cafe-secret -o json | jq -r '.data."tls.key"' | base64 -d
 
 ```
+
+To create the access-to-cafe-secret referencegrant, copy and paste the following into your terminal:
