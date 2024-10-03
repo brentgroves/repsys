@@ -7,6 +7,11 @@
 
 - Does Linamar have an **[transparent proxy server](../../../research/a_l/k8s/concepts/proxy_servers.md#transparent-proxy)** or some other **threat protection software** that would prevent some web apps from working?
 
+## High Level Summary
+
+- Adding repsys.linamar.com and keycloak.linamar.com https termination and rate limiting threat protection to k8s platform so both can be used by the report system without adding any code.
+- Working on setting up redundant kubernetes platforms in both Avilla and Azure.
+
 ## ToDo
 
 - **[ToDo List](../../report_system/todo_list.md)**
