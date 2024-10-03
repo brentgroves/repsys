@@ -7,11 +7,23 @@
 
 - Does Linamar have an **[transparent proxy server](../../../research/a_l/k8s/concepts/proxy_servers.md#transparent-proxy)** or some other **threat protection software** that would prevent some web apps from working?
 
+```text
+The following is in markdown format it can be viewed better from https://markdownlivepreview.com/. if you copy and paste the contents below.
+```
+
 ## High Level Summary
 
-- **[How can we](../../report_system/platform_features.md#https-and-rate-limiting-features)** get both https termination and rate limiting for the report system web app using NGINX, istio, or kong?
-- Adding repsys.linamar.com and keycloak.linamar.com https termination and rate limiting threat protection to k8s platform so both can be used by the report system without adding any code.
-- Working on setting up redundant kubernetes platforms in both Avilla and Azure.
+- Setup redundant **[kubernetes](https://kubernetes.io/docs/concepts/overview/)** clusters on-prem at Avilla with **[MicroK8s](https://microk8s.io/docs)** and in the cloud on **[Azure AKS](https://learn.microsoft.com/en-us/azure/aks/what-is-aks)**. 2 weeks
+- Research how best get http routing, https termination, and **[rate limiting](https://www.getambassador.io/blog/configure-rate-limits-prevent-ddos-best-practices)** features for the report system web app using **[NGINX Gateway Fabric](https://docs.nginx.com/nginx-gateway-fabric/)**, **[istio service mesh](https://istio.io/latest/about/service-mesh/)**, or **[Kong API Gateway](https://konghq.com/products/kong-gateway)**? We are attempting to offload as much of the non-business logic to OSS. 2 weeks.
+- Create TLS certificates for repsys.linamar.com and keycloak.linamar.com using our internal **[PKI](https://www.keyfactor.com/education-center/what-is-pki/)** and **[OpenSSL](https://www.golinuxcloud.com/openssl-create-certificate-chain-linux/)** that passes SAN certificate validation at **[Sectigo Certificate Linter](https://crt.sh/lintcert)**
+
+<https://tableconvert.com/markdown-generator>
+
+| task                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          | estimate |   |   |   |   |   |   |   |   |
+|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------|---|---|---|---|---|---|---|---|
+| Setup redundant **[kubernetes](https://kubernetes.io/docs/concepts/overview/)** clusters on-prem at Avilla with **[MicroK8s](https://microk8s.io/docs)** and in the cloud on **[Azure AKS](https://learn.microsoft.com/en-us/azure/aks/what-is-aks)**.                                                                                                                                                                                                                                                        | 2 weeks  |   |   |   |   |   |   |   |   |
+| Research how best get http routing, https termination, and **[rate limiting](https://www.getambassador.io/blog/configure-rate-limits-prevent-ddos-best-practices)** features for the report system web app using **[NGINX Gateway Fabric](https://docs.nginx.com/nginx-gateway-fabric/)**, **[istio service mesh](https://istio.io/latest/about/service-mesh/)**, or **[Kong API Gateway](https://konghq.com/products/kong-gateway)**? We are attempting to offload as much of the non-business logic to OSS. | 2 weeks  |   |   |   |   |   |   |   |   |
+| Create TLS certificates for repsys.linamar.com and keycloak.linamar.com using our internal **[PKI](https://www.keyfactor.com/education-center/what-is-pki/)** and **[OpenSSL](https://www.golinuxcloud.com/openssl-create-certificate-chain-linux/)** that passes SAN certificate validation at **[Sectigo Certificate Linter](https://crt.sh/lintcert)**                                                                                                                                                     | 1 week   |   |   |   |   |   |   |   |   |
 
 ## **[Platform Features](../../report_system/feature_list.md)**
 
