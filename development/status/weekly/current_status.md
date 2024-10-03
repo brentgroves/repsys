@@ -79,37 +79,8 @@ A list of all research for repsys.
 
   With the upcoming release of Niagara Framework® 4.13, Niagara will be available as a Docker® container that packages together the Niagara core, the JRE (Java Runtime Environment), and any additional modules required at runtime. This containerized delivery mechanism has advantages during development, at first provisioning for a given customer and for each version upgrade compared to standard deployment and integration processes.
 
-- **[What is platform engineering?](../../../research/a_l/application_architecture/platform_engineer.md)**
-
-  **Gone are the days of running a single script to deploy a monolithic application consuming one relational database.** We now have transactional and reporting databases. We also have cache and message queue servers, containers and container orchestrators, identity and access management servers, PKI systems, and tls as well as mTLS certificate management for microservices, declarative tools to manage infrastructure through code. The platform engineer takes care of all these new things.
-
-- **[Keycloak](../../../research/a_l/istio/authentication_and_authorization.md#what-is-keycloak)**\
-
-  We used to have IAM embedded embedded in our code, but now we can separate this code from our main code by using an IAM server. These servers handle all the IAM chores and integrate with popular identity providers so you can leverage existing tenants.
-
-- **[Service Mesh](../../../research/a_l/application_architecture/service_mesh_101.md)**\
-  When building software, code can be structured as a single large program (monolith) or multiple smaller programs (microservices). While it is true that many organizations are migrating from monolith to microservices to leverage the flexibility and scalability microservices offer, it gets difficult to manage them as their number grows. Challenges arise in tracking, latency control, optimizing load between replicas of a service, service-to-service communication security, and maintaining resilience. All these features can be encoded with the service giving an opportunity for vulnerabilities & mixing of business logic with management logic.
-
-  Implementing a reliable service discovery mechanism and maintaining an up-to-date service registry becomes difficult. **[Adopting Kubernetes](https://www.infracloud.io/kubernetes-consulting-partner/)** resolves some deployment issues, but runtime issues persist due to tight coupling with the application. Testing new features and making changes while maintaining infrastructure security becomes challenging.
-
-  Service mesh fills this gap and helps build a secure infrastructure with the optimized usage of the service by adding reliability, observability, and security features across all services uniformly without any application code change. In this blog post, we will understand the concept of the service mesh, its components, its functionality, and how it can be helpful in Kubernetes and beyond.
-
-  ## What is a service mesh?
-
-  Service mesh is an infrastructure layer deployed alongside an application, which means all the network complexities are handled outside the application code. It operates independently from the application and provides capabilities to optimize networking and enable service-to-service communication. By configuring and managing network behavior and traffic flow through policies, the service mesh enhances the application’s networking capabilities.
-
-  ## Why is a service mesh needed?
-
-  There are multiple reasons why an organization would wish to implement a service mesh. We can start with the API endpoint discovery feature of service mesh that helps in identifying the backend service based on the client’s request and preventing the exposure of the API to unauthorized access. Another reason is that an outbound proxy can only protect the cluster or VMs from the outside. However, once a request enters the infrastructure, all communication becomes insecure, and the request gains access to all the services. This leaves it vulnerable to potential threats.
-
-  Service mesh fills this gap and routes all the inter-service communication through proxies. It allows platform engineers to rate limit, trace, access control, etc. the service request which helps in keeping the infrastructure secure. Though very frequently used with Kubernetes and microservices, service mesh can be used outside of microservices and containers on virtual or bare metal servers. Let us understand the architecture of service mesh to know how we can modernize existing services.
-
-- **[Quarkus and GraalVM](../../../research/a_l/java/quarkus_graalvm.md)**\
-Quarkus is a Java framework tailored for deployment on Kubernetes. Key technology components surrounding it are OpenJDK HotSpot and GraalVM. Wikipedia
-
-- **[What is IOPS (Input/Output Operations Per Second)?  Understanding the Key Metric for Storage Performance](../../../research/m_z/storage/iops.md)**
-
-  When measuring the performance of storage devices, one key metric often used is IOPS or Input/Output Operations Per Second. This metric provides an important measure of how fast a storage device can read and write data, which ultimately affects its overall performance.
+- **[Proxy](../../../research/a_l/k8s/concepts/proxy_servers.md)**
+- **[Gateway, Ingress Controllers, vs Service Mesh](../../../research/a_l/k8s/concepts/gateways_ingess_service_mesh.md)**
 
 - **[Sessions and Cookies](../../../research/m_z/virtualization/networking/http/session_and_cookies.md)**
 
