@@ -9,8 +9,20 @@
 
 ## High Level Summary
 
+- **[How can we](../../report_system/platform_features.md#https-and-rate-limiting-features)** get both https termination and rate limiting for the report system web app using NGINX, istio, or kong?
 - Adding repsys.linamar.com and keycloak.linamar.com https termination and rate limiting threat protection to k8s platform so both can be used by the report system without adding any code.
 - Working on setting up redundant kubernetes platforms in both Avilla and Azure.
+
+## **[Platform Features](../../report_system/feature_list.md)**
+
+| Software      | routing | tls termination | rate limiting | IAM | Identity Provider |
+|---------------|---------|-----------------|---------------|-----|-------------------|
+| Nginx Gateway |         |                 |               |     |                   |
+| Nginx Ingress |         |                 |               |     |                   |
+| istio mesh    |         |                 |               |     |                   |
+| kong api      |         |                 |               |     |                   |
+| keycloak      |         |                 |               |     |                   |
+| Entra ID      |         |                 |               |     |                   |
 
 ## ToDo
 
