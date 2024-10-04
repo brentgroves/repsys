@@ -171,7 +171,7 @@ To create the access-to-cafe-secret referencegrant, copy and paste the following
 
 ```bash
 pushd .
-cd ~/src/repsys/k8s/nginx_gate_fabric
+cd ~/src/repsys/k8s/nginx_gateway_fabric
 
 
 # Azure aks
@@ -188,4 +188,48 @@ GW_PORT=80
 GW_HTTP_PORT=80
 GW_HTTPS_PORT=443
 
+kubectl apply -f - <<EOF
+apiVersion: gateway.networking.k8s.io/v1beta1
+kind: ReferenceGrant
+metadata:
+  name: access-to-cafe-secret
+  namespace: certificate
+spec:
+  to:
+  - group: ""
+    kind: Secret
+    name: cafe-secret # if you omit this name, then Gateways in default namespace can access all Secrets in the certificate namespace
+  from:
+  - group: gateway.networking.k8s.io
+    kind: Gateway
+    namespace: default
+EOF
+
+referencegrant.gateway.networking.k8s.io/access-to-cafe-secret created
+```
+
+To create the cafe **[gateway](../../a_l/k8s/gateway_api/gateway_tls.md)**, copy and paste the following into your terminal:
+
+```bash
+kubectl apply -f - <<EOF
+apiVersion: gateway.networking.k8s.io/v1
+kind: Gateway
+metadata:
+  name: cafe
+spec:
+  gatewayClassName: nginx
+  listeners:
+  - name: http
+    port: 80
+    protocol: HTTP
+  - name: https
+    port: 443
+    protocol: HTTPS
+    tls:
+      mode: Terminate
+      certificateRefs:
+      - kind: Secret
+        name: cafe-secret
+        namespace: certificate
+EOF
 ```
