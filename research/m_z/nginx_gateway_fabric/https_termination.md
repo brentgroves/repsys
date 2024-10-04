@@ -168,3 +168,24 @@ kubectl get secret -n certificate cafe-secret -o json | jq -r '.data."tls.key"' 
 ```
 
 To create the access-to-cafe-secret referencegrant, copy and paste the following into your terminal:
+
+```bash
+pushd .
+cd ~/src/repsys/k8s/nginx_gate_fabric
+
+
+# Azure aks
+scc.sh reports-aks-user.yaml reports-aks
+kubectl get svc nginx-gateway -n nginx-gateway
+NAME            TYPE           CLUSTER-IP    EXTERNAL-IP     PORT(S)                      AGE
+nginx-gateway   LoadBalancer   10.0.160.21   52.228.166.50   80:30244/TCP,443:31999/TCP   3d22h
+
+GW_IP=52.228.166.50
+GW_PORT=80
+
+# Save the ports of NGINX Gateway Fabric:
+# Don't know what this is for so be careful with these variables.
+GW_HTTP_PORT=80
+GW_HTTPS_PORT=443
+
+```

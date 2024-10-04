@@ -39,3 +39,5 @@ GatewayStatus is used to surface the status of a Gateway relative to the desired
 - Conditions- Describe the current status conditions of the Gateway.
 
 Both Conditions and Listeners.conditions follow the conditions pattern used elsewhere in Kubernetes. This is a list that includes a type of condition, the status of the condition and the last time this condition changed.
+
+## **[Gateway object](https://kubernetes.io/docs/concepts/services-networking/gateway/)**

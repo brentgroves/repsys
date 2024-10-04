@@ -6,7 +6,7 @@
 
 - **[NGINX rate limiting](https://www.f5.com/company/blog/nginx/microservices-march-protect-kubernetes-apis-with-rate-limiting)**
 - **[5 things to know about nginx gateway fabric](https://blog.nginx.org/blog/5-things-to-know-about-nginx-gateway-fabric)**
-- **[How do I choose between Gateway,Ingress Controller, and Service Mesh](https://www.f5.com/company/blog/nginx/how-do-i-choose-api-gateway-vs-ingress-controller-vs-service-mesh)**
+- **[How do I choose between Gateway,Ingress Controller, and Service Mesh](../../research/m_z/nginx_gateway_fabric/choose_gateway_ingress_or_mesh.md)**
 - **[Create secret for repsys.linamar.com secret](../../research/a_l/k8s/secrets/secrets.md)**
 A Secret is an object that contains a small amount of sensitive data such as a password, a token, or a key. Such information might otherwise be put in a Pod specification or in a container image. Using a Secret means that you don't need to include confidential data in your application code.
 
