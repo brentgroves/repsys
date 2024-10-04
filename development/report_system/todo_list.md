@@ -4,6 +4,8 @@
 **[Current Status](../status/weekly/current_status.md)**\
 **[Back to Main](../../README.md)**
 
+- **[K8S Gateway API and TLS](https://imesh.ai/blog/secure-tls-kubernetes-gateway-api/)**
+- **[F5 Nginx rate-limit](https://docs.nginx.com/nginx/admin-guide/security-controls/controlling-access-proxied-http/)**
 - **[NGINX rate limiting](https://www.f5.com/company/blog/nginx/microservices-march-protect-kubernetes-apis-with-rate-limiting)**
 - **[5 things to know about nginx gateway fabric](https://blog.nginx.org/blog/5-things-to-know-about-nginx-gateway-fabric)**
 - **[How do I choose between Gateway,Ingress Controller, and Service Mesh](../../research/m_z/nginx_gateway_fabric/choose_gateway_ingress_or_mesh.md)**
