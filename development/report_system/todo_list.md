@@ -16,7 +16,10 @@ Because Secrets can be created independently of the Pods that use them, there is
 
 - **[Mastering Istio Rate Limiting for Efficient Traffic Management](../../research/a_l/istio/threat_protection/rate_limiting.md)**
 
-- **[START HERE - https termination](../../research/m_z/nginx_gateway_fabric/https_termination.md#set-up)**
+- **[START HERE - https termination](../../research/m_z/nginx_gateway_fabric/https_termination.md#send-traffic)**
+
+- **[NEXT - tls passthrough](../../research/m_z/nginx_gateway_fabric/tls_passthrough.md)**
+
 - **[Service Mesh 101](../../research/a_l/application_architecture/service_mesh_101.md)**
 - **[TLS termination using NGINX Gateway Fabric](../../research/m_z/nginx_gateway_fabric/https_termination.md)**
 

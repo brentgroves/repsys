@@ -2,7 +2,8 @@
 
 ## references
 
-<https://www.tablesgenerator.com/markdown_tables>
+- **[markdown tables](https://www.tablesgenerator.com/markdown_tables)**
+- **[markdown table generator](https://tableconvert.com/markdown-generator)**
 
 A manager of a warehouse wants to know how much a typical supplier delivers in 1000 dollar units. He/she takes a sample of 12 suppliers, at random, obtaining the following results:
 

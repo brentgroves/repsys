@@ -21,6 +21,8 @@ scc.sh repsys11c2n1.yaml microk8s
 
 ```
 
+![types](https://gateway-api.sigs.k8s.io/images/tls-termination-types.png)
+
 ## HTTPS termination
 
 Learn how to terminate HTTPS traffic using NGINX Gateway Fabric.
@@ -232,4 +234,63 @@ spec:
         name: cafe-secret
         namespace: certificate
 EOF
+
+kubectl get gateway                           
+NAME   CLASS   ADDRESS         PROGRAMMED   AGE
+cafe   nginx   52.228.166.50   True         22h
+(base)  brent@reports-alb  ~/src/repsys/k8s/nginx_gate
 ```
+
+This gateway configures:
+
+- http listener for HTTP traffic
+- https listener for HTTPS traffic. It terminates TLS connections using the cafe-secret we created.
+To create the httproute resources, copy and paste the following into your terminal:
+
+```bash
+kubectl apply -f - <<EOF
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: cafe-tls-redirect
+spec:
+  parentRefs:
+  - name: cafe
+    sectionName: http
+  hostnames:
+  - "cafe.example.com"
+  rules:
+  - filters:
+    - type: RequestRedirect
+      requestRedirect:
+        scheme: https
+        port: 443
+---
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: coffee
+spec:
+  parentRefs:
+  - name: cafe
+    sectionName: https
+  hostnames:
+  - "cafe.example.com"
+  rules:
+  - matches:
+    - path:
+        type: PathPrefix
+        value: /coffee
+    backendRefs:
+    - name: coffee
+      port: 80
+EOF
+httproute.gateway.networking.k8s.io/cafe-tls-redirect created
+httproute.gateway.networking.k8s.io/coffee created
+```
+
+The first route issues a requestRedirect from the http listener on port 80 to https on port 443. The second route binds the coffee route to the https listener.
+
+## Send Traffic
+
+START HERE

@@ -93,3 +93,80 @@ spec:
         group: ""
         name: bar-example-com-cert
 ```
+
+## Wildcard TLS listeners
+
+In this example, the Gateway is configured with a wildcard certificate for *.example.com and a different certificate for foo.example.com. Since a specific match takes priority, the Gateway will serve foo-example-com-cert for requests to foo.example.com and wildcard-example-com-cert for all other requests.
+
+```yaml
+apiVersion: gateway.networking.k8s.io/v1
+kind: Gateway
+metadata:
+  name: wildcard-tls-gateway
+spec:
+  gatewayClassName: example
+  listeners:
+  - name: foo-https
+    protocol: HTTPS
+    port: 443
+    hostname: foo.example.com
+    tls:
+      certificateRefs:
+      - kind: Secret
+        group: ""
+        name: foo-example-com-cert
+  - name: wildcard-https
+    protocol: HTTPS
+    port: 443
+    hostname: "*.example.com"
+    tls:
+      certificateRefs:
+      - kind: Secret
+        group: ""
+        name: wildcard-example-com-cert
+```
+
+## Cross namespace certificate references¶
+
+In this example, the Gateway is configured to reference a certificate in a different namespace. This is allowed by the ReferenceGrant created in the target namespace. Without that ReferenceGrant, the cross-namespace reference would be invalid.
+
+```yaml
+apiVersion: gateway.networking.k8s.io/v1
+kind: Gateway
+metadata:
+  name: cross-namespace-tls-gateway
+  namespace: gateway-api-example-ns1
+spec:
+  gatewayClassName: example
+  listeners:
+  - name: https
+    protocol: HTTPS
+    port: 443
+    hostname: "*.example.com"
+    tls:
+      certificateRefs:
+      - kind: Secret
+        group: ""
+        name: wildcard-example-com-cert
+        namespace: gateway-api-example-ns2
+---
+apiVersion: gateway.networking.k8s.io/v1beta1
+kind: ReferenceGrant
+metadata:
+  name: allow-ns1-gateways-to-ref-secrets
+  namespace: gateway-api-example-ns2
+spec:
+  from:
+  - group: gateway.networking.k8s.io
+    kind: Gateway
+    namespace: gateway-api-example-ns1
+  to:
+  - group: ""
+    kind: Secret
+```
+
+## Upstream TLS¶
+
+Upstream TLS settings are configured using the experimental BackendTLSPolicy attached to a Service via a target reference.
+
+This resource can be used to describe the SNI the Gateway should use to connect to the backend and how the certificate served by the backend Pod(s) should be verified.
