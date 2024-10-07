@@ -208,6 +208,10 @@ spec:
 EOF
 
 referencegrant.gateway.networking.k8s.io/access-to-cafe-secret created
+
+kubectl get referencegrant -n certificate                                                  
+NAME                    AGE
+access-to-cafe-secret   2d22h
 ```
 
 To create the cafe **[gateway](../../a_l/k8s/gateway_api/gateway_tls.md)**, copy and paste the following into your terminal:
@@ -287,6 +291,11 @@ spec:
 EOF
 httproute.gateway.networking.k8s.io/cafe-tls-redirect created
 httproute.gateway.networking.k8s.io/coffee created
+
+kubectl get httproute                    
+NAME                HOSTNAMES              AGE
+cafe-tls-redirect   ["cafe.example.com"]   47h
+coffee              ["cafe.example.com"]   47h
 ```
 
 The first route issues a requestRedirect from the http listener on port 80 to https on port 443. The second route binds the coffee route to the https listener.
