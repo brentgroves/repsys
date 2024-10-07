@@ -4,6 +4,14 @@
 **[Current Status](../status/weekly/current_status.md)**\
 **[Back to Main](../../README.md)**
 
+- **[istio getting started](https://istio.io/latest/docs/setup/getting-started/)**
+- **[Mastering Istio Rate Limiting for Efficient Traffic Management](../../research/a_l/istio/threat_protection/rate_limiting.md)**
+
+- **[istio gateway](https://istio.io/latest/docs/reference/config/networking/gateway/)**
+
+- **[example app](https://medium.com/@SabujJanaCodes/running-a-full-stack-app-in-istio-service-mesh-part-1-87b828f4d1cc)**
+- **[istio tls termination web app](https://www.danielstechblog.io/run-the-istio-ingress-gateway-with-tls-termination-and-tls-passthrough/)**
+
 - **[K8S Gateway API and TLS](https://imesh.ai/blog/secure-tls-kubernetes-gateway-api/)**
 - **[F5 Nginx rate-limit](https://docs.nginx.com/nginx/admin-guide/security-controls/controlling-access-proxied-http/)**
 - **[NGINX rate limiting](https://www.f5.com/company/blog/nginx/microservices-march-protect-kubernetes-apis-with-rate-limiting)**
@@ -14,9 +22,7 @@ A Secret is an object that contains a small amount of sensitive data such as a p
 
 Because Secrets can be created independently of the Pods that use them, there is less risk of the Secret (and its data) being exposed during the workflow of creating, viewing, and editing Pods. Kubernetes, and applications that run in your cluster, can also take additional precautions with Secrets, such as avoiding writing sensitive data to nonvolatile storage.
 
-- **[Mastering Istio Rate Limiting for Efficient Traffic Management](../../research/a_l/istio/threat_protection/rate_limiting.md)**
-
-- **[START HERE - https termination](../../research/m_z/nginx_gateway_fabric/https_termination.md#send-traffic)**
+- **[https termination](../../research/m_z/nginx_gateway_fabric/https_termination.md#send-traffic)**
 
 - **[NEXT - tls passthrough](../../research/m_z/nginx_gateway_fabric/tls_passthrough.md)**
 

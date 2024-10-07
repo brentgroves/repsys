@@ -187,6 +187,8 @@ GW_PORT=80
 
 # Save the ports of NGINX Gateway Fabric:
 # Don't know what this is for so be careful with these variables.
+# After peeking ahead I see that these variables are used in a curl command:
+# curl --resolve cafe.example.com:$GW_HTTP_PORT:$GW_IP http://cafe.example.com:$GW_HTTP_PORT/coffee --include
 GW_HTTP_PORT=80
 GW_HTTPS_PORT=443
 
@@ -302,4 +304,99 @@ The first route issues a requestRedirect from the http listener on port 80 to ht
 
 ## Send Traffic
 
-START HERE
+Using the external IP address and port for NGINX Gateway Fabric, we can send traffic to our coffee application.
+
+**Note:**\
+If you have a DNS record allocated for cafe.example.com, you can send the request directly to that hostname, without needing to resolve.
+To test that NGINX sends an HTTPS redirect, we will send requests to the coffee service on the HTTP port. We will use curl’s --include option to print the response headers (we are interested in the Location header).
+
+```bash
+curl --resolve cafe.example.com:$GW_HTTP_PORT:$GW_IP http://cafe.example.com:$GW_HTTP_PORT/coffee --include
+
+HTTP/1.1 302 Moved Temporarily
+Server: nginx
+Date: Mon, 07 Oct 2024 21:40:45 GMT
+Content-Type: text/html
+Content-Length: 138
+Connection: keep-alive
+Location: https://cafe.example.com/coffee
+
+<html>
+<head><title>302 Found</title></head>
+<body>
+<center><h1>302 Found</h1></center>
+<hr><center>nginx</center>
+</body>
+</html>
+```
+
+Now we will access the application over HTTPS. Since our certificate is self-signed, we will use curl’s --insecure option to turn off certificate verification.
+
+```bash
+curl --resolve cafe.example.com:$GW_HTTPS_PORT:$GW_IP https://cafe.example.com:$GW_HTTPS_PORT/coffee --insecure 
+Server address: 10.244.2.25:8080
+Server name: coffee-9bf875848-vgjx6
+Date: 07/Oct/2024:21:45:26 +0000
+URI: /coffee
+Request ID: b20605dcc2a20fa6d95d3c85d707ecb2
+
+# Add cafe.example.com to /etc/hosts file
+curl https://cafe.example.com:$GW_HTTPS_PORT/coffee --insecure 
+
+```
+
+## View the certificate
+
+```bash
+openssl s_client -connect cafe.example.com:443 -showcerts > cafe_example_com.pem
+# or
+openssl s_client -connect cafe.example.com:443
+...
+-----BEGIN CERTIFICATE-----
+MIICsjCCAZoCCQC7BuWWudmFCDANBgkqhkiG9w0BAQsFADAbMRkwFwYDVQQDDBBj
+YWZlLmV4YW1wbGUuY29tMB4XDTIyMDcxNDIxNTIzOVoXDTIzMDcxNDIxNTIzOVow
+GzEZMBcGA1UEAwwQY2FmZS5leGFtcGxlLmNvbTCCASIwDQYJKoZIhvcNAQEBBQAD
+ggEPADCCAQoCggEBALqY2tG4W9i+Ec2avuxCjkokgQLuzMtSTgsTMhHn+vQRlHjo
+W1KFs/AWeKnTQ+rMeJUclz+83t0DkrE8pR+1GcJHNtZSLoCDaIQ7CarNgcWZKJ8B
+5X3gU/XyRGf26sTDwlsSsdHD5Se7+eZosOq7GMQw+nGGcUgEm/T5PC/cNOXM3elF
+TO/Nu1+h34NToAl3Pu1vBZLp3PTDmCKahDNWCVmBPQjM4R8TDllXa0t9gZ514RG5
+XyYY3mw6iS2+GWXUye21nYUxPHYl5xDv4sAWhdWlIpxyYBSBEDcs3zBR6lQu9i1d
+tGY8tbwnUfqETGsYulssNjqOyWUDpWIzXblxIeUCAwEAATANBgkqhkiG9w0BAQsF
+AAOCAQEAr9+ebtSWsJxKLkKfTdzMHHXNwf9eqUlsmMvf0gAueJMJTGmytmbZ9imt
+/dgZZXTOaLIGPohgpiKIyyUQeWFCat4tqZCOUdamIh8i4CXzARXTsoqCNzsM/6LE
+a3nWlVrKifdv+ZLrF//nW4USo8J1h+Px9ccKiD6YSDUPDCDhuEKEYw/lzhP2U9sf
+yzpBJTd8zqr3zZN3FYiHNh3bTaA/6v/cSirjcS+Q0Ax8EjsC61F4U178C7V5dB+4
+rkOO/P6P4PYV54Yds/F16ZFILqA4CBbq1DLnadqjlr7sOo9vg3gXSLapUVGmgkht
+zVVOXmfSFx9/t00GR/ymGOlDImiW0g==
+-----END CERTIFICATE-----
+...
+
+# compare to k8s secret we just added
+
+kubectl get secret -n certificate cafe-secret -o json | jq -r '.data."tls.crt"' | base64 -d
+
+-----BEGIN CERTIFICATE-----
+MIICsjCCAZoCCQC7BuWWudmFCDANBgkqhkiG9w0BAQsFADAbMRkwFwYDVQQDDBBj
+YWZlLmV4YW1wbGUuY29tMB4XDTIyMDcxNDIxNTIzOVoXDTIzMDcxNDIxNTIzOVow
+GzEZMBcGA1UEAwwQY2FmZS5leGFtcGxlLmNvbTCCASIwDQYJKoZIhvcNAQEBBQAD
+ggEPADCCAQoCggEBALqY2tG4W9i+Ec2avuxCjkokgQLuzMtSTgsTMhHn+vQRlHjo
+W1KFs/AWeKnTQ+rMeJUclz+83t0DkrE8pR+1GcJHNtZSLoCDaIQ7CarNgcWZKJ8B
+5X3gU/XyRGf26sTDwlsSsdHD5Se7+eZosOq7GMQw+nGGcUgEm/T5PC/cNOXM3elF
+TO/Nu1+h34NToAl3Pu1vBZLp3PTDmCKahDNWCVmBPQjM4R8TDllXa0t9gZ514RG5
+XyYY3mw6iS2+GWXUye21nYUxPHYl5xDv4sAWhdWlIpxyYBSBEDcs3zBR6lQu9i1d
+tGY8tbwnUfqETGsYulssNjqOyWUDpWIzXblxIeUCAwEAATANBgkqhkiG9w0BAQsF
+AAOCAQEAr9+ebtSWsJxKLkKfTdzMHHXNwf9eqUlsmMvf0gAueJMJTGmytmbZ9imt
+/dgZZXTOaLIGPohgpiKIyyUQeWFCat4tqZCOUdamIh8i4CXzARXTsoqCNzsM/6LE
+a3nWlVrKifdv+ZLrF//nW4USo8J1h+Px9ccKiD6YSDUPDCDhuEKEYw/lzhP2U9sf
+yzpBJTd8zqr3zZN3FYiHNh3bTaA/6v/cSirjcS+Q0Ax8EjsC61F4U178C7V5dB+4
+rkOO/P6P4PYV54Yds/F16ZFILqA4CBbq1DLnadqjlr7sOo9vg3gXSLapUVGmgkht
+zVVOXmfSFx9/t00GR/ymGOlDImiW0g==
+-----END CERTIFICATE-----
+
+openssl s_client -connect cafe.example.com:443 -showcerts > cafe_example_com.pem
+
+## Further reading
+
+To learn more about redirects using the Gateway API, see the following resource:
+
+**[Gateway API Redirects](https://gateway-api.sigs.k8s.io/guides/http-redirect-rewrite/)**
