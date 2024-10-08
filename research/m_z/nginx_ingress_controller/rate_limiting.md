@@ -6,10 +6,13 @@
 
 ## refenence
 
-<https://docs.nginx.com/nginx-gateway-fabric/overview/custom-policies/>
-
-- **[ingress rate limiting](https://www.f5.com/company/blog/nginx/microservices-march-protect-kubernetes-apis-with-rate-limiting)**
+- **[This might work](https://www.f5.com/company/blog/nginx/microservices-march-protect-kubernetes-apis-with-rate-limiting)**
+- **[Try to add tls termination](https://kubernetes.github.io/ingress-nginx/examples/tls-termination/)**
 - **[NGINX ingress controller rate limiting](https://www.civo.com/learn/rate-limiting-applications-with-nginx-ingress)**
+- **[Annotations](https://github.com/kubernetes/ingress-nginx/blob/main/docs/user-guide/nginx-configuration/annotations.md)**
+- **[Advanced Configurations](https://docs.nginx.com/nginx-ingress-controller/configuration/ingress-resources/advanced-configuration-with-annotations/)**
+- **[ingress rate limiting](https://www.f5.com/company/blog/nginx/microservices-march-protect-kubernetes-apis-with-rate-limiting)**
+- **[Setting up request rate limiting](<https://dzone.com/articles/setting-up-request-rate-limiting-with-nginx-ingres#:~:text=To%20apply%20rate%20limiting%20using,what%20rules%20should%20be%20applied.&text=In%20this%20example%2C%20we%20set,per%20second%20(%20limit%2Drps%20)>**
 
 ## Summary
 

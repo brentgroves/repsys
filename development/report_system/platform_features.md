@@ -10,6 +10,8 @@ How can I get both https termination and rate limiting for the report system web
 
 Default Rate limiting is usually provided by cloud provider's load balancer such as is the case for Azure AKS.
 
+To get **[DOS feature](https://docs.nginx.com/nginx-ingress-controller/installation/integrations/app-protect-dos/installation/)**, such as rate-limiting, in NGINX we need to pay for NGINX Plus. In the docs you will always see some note like: "To use NGINX App Protect WAF with NGINX Ingress Controller, you must have NGINX Plus."
+
 **[TLS pass-through Fallback](https://gist.github.com/denji/12b3a568f092ab951456)**
 
 | Software      | routing                                                              | https termination                                                        | tls passthrough                                                        | rate limiting | IAM | Identity Provider |
