@@ -1,6 +1,6 @@
 Software,routing,https termination,tls passthrough,rate limiting,IAM,Identity Provider
 Nginx Gateway,**[ngroute](../../research/m_z/nginx_gateway_fabric/routing_traffic.md)**,**[nghttps](../../research/m_z/nginx_gateway_fabric/https_termination.md)**,**[ngtls](../../research/m_z/nginx_gateway_fabric/tls_passthrough.md)**,,, 
-Nginx Ingress,,,,,,
+Nginx Ingress,**[nic](../../,,,,,
 Istio mesh,,,,,,
 kong api,,,,,,
 keycloak,,,,,,

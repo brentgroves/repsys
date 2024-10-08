@@ -10,7 +10,13 @@ How can I get both https termination and rate limiting for the report system web
 
 Default Rate limiting is usually provided by cloud provider's load balancer such as is the case for Azure AKS.
 
-To get **[DOS feature](https://docs.nginx.com/nginx-ingress-controller/installation/integrations/app-protect-dos/installation/)**, such as rate-limiting, in NGINX we need to pay for NGINX Plus. In the docs you will always see some note like: "To use NGINX App Protect WAF with NGINX Ingress Controller, you must have NGINX Plus."
+Nginx Gateway Fabric would achieve rate limiting using custom policies but currently it has only about four custom policies and rate limiting is not one of them.
+
+**[Nginx Ingress Controller](../../k8s/ingress-lb-install.md)** can do both **[rate limiting](../../research/m_z/nginx_ingress_controller/rate_limiting.md)** and tls termination but F5 seems to be pushing Nginx Gateway Fabric so I don't like the idea of using the Ingress controller.
+
+Istio does not seem to be a good fit for a SPA like react.js, but I would like to use it for non-SPA microservices such as the email server.
+
+**[Kong](../../k8s/kong-experimental-install.md)** supports **[tls termination](https://docs.konghq.com/kubernetes-ingress-controller/latest/guides/services/tls/)** and **[basic rate limiting](https://docs.konghq.com/gateway/latest/get-started/rate-limiting/)** via a free plugin.
 
 **[TLS pass-through Fallback](https://gist.github.com/denji/12b3a568f092ab951456)**
 
