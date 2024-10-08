@@ -11,7 +11,9 @@ Thank you Jared for setting up the network for our report system.  I know it's n
 Brent
 260-564-4868
 
-The following is in markdown format it can be viewed better from <https://markdownlivepreview.com/>.
+```text
+The following is in markdown format it can be viewed better from https://markdownlivepreview.com/>.
+```
 
 ## Network Access
 

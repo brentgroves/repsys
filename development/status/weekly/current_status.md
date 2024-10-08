@@ -39,9 +39,9 @@ The following is in markdown format it can be viewed better from https://markdow
 - **[ToDo List](../../report_system/todo_list.md)**
 - **[ToDo Gnatt](../../report_system/todo_gantt.md)**
 
-## Network setup
+## Load Balancer
 
-**[Network access](../jdavis/network_access.md)**
+**[Load Balancer](../../report_system/load_balancer.md)**
 
 ## Repsys Architecture
 
@@ -94,6 +94,12 @@ Rate limiting is remarkably effective and ridiculously simple. It's also regular
 
 - **[Research List](../../../research/research_list.md)**\
 A list of all research for repsys.
+
+- **[Application Delivery Controller](../../../research/a_l/k8s/load_balancer/load_balancer_adc.md)**
+
+  In the current era, demanding digital transformations has led to several transforming initiatives like mobility and collaborative mobile workspaces. The new standards in the digital strategy of businesses is leveraging the cloud technology and enhancing application infrastructure to gain better profitability while eliminating data-breach risks. As applications play a decisive role in this regard, it is important to ensure their peak performance, which is critically dependent on traffic management.
+
+  I would say Linamar's **[F5 Load Balancer](https://www.f5.com/glossary/load-balancer)** qualifies as an ADC.
 
 - **[Docker Niagara](https://www.broudyprecision.com/docker-niagara/)**
 
