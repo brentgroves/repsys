@@ -49,7 +49,7 @@ Ok, so we have just seen how an API Gateway can route Southbound traffic to the 
 ## Load Balancer
 
 - **[Load Balancer](../../report_system/load_balancer.md)**
-- **[NGINX reverse-proxy as Load Balancer to Kong Gateway on K8s](../../../research/a_l/k8s/adv_k8s_setup_series/adv_kong_no_loadbalancer.md)**\
+- **[NGINX reverse-proxy as Load Balancer to Kong Gateway on K8s](../../../research/a_l/k8s/gateway_api/adv_gateway_series/adv_gw_no_loadbalancer.md)**\
 For the purposes of this solution, you can consider the NGINX as a manually configured, replacement, external load balancer. This method should be able to be used to connect Linamar's F5 Load Balancer to our K8s Cluster by replacing references to NGINX with the F5 Load Balancer. I believe F5 has acquired NGINX and uses it as there software load balancer.
 
 ## Repsys Architecture
