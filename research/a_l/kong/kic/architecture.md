@@ -1,4 +1,4 @@
-# **[Controllers](https://docs.konghq.com/kubernetes-ingress-controller/latest/concepts/architecture/)**
+# **[Architecture](https://docs.konghq.com/kubernetes-ingress-controller/latest/concepts/architecture/)**
 
 **[Current Status](../../../../development/status/weekly/current_status.md)**\
 **[Research List](../../../research_list.md)**\
