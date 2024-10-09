@@ -1,10 +1,29 @@
-# Feature List
+# Platform Features
 
 **[Development Menu](./menu.md)**\
 **[Current Status](../status/weekly/current_status.md)**\
 **[Back to Main](../../README.md)**
 
-## https and rate limiting features
+This is a list of features provide by all the OSS software running on our K8s cluster.  The idea behind platform engineering is to provide as many services as possible through production quality OSS.  This helps our developers focus on business logic instead of functionality already freely available.
+
+## **[Kong API Gateway](../../research/a_l/k8s/adv_k8s_setup_series/need_for_api_gateway.md#other-features-of-an-api-gateway)**
+
+### Features of an API Gateway
+
+Ok, so we have just seen how an API Gateway can route Southbound traffic to the required Service and microservice within our cluster but this is only one of the features of an API gateway. Others include:
+
+- Routing based on host, path, headers and more
+- Load balancing
+- Security
+- Enforcing authentication
+- Service monitoring
+- Request monitoring and tracing
+- A/B testing
+- API versioning
+- Rating limiting / circuit breaking
+- Request transformation
+
+## Which Gateway should we use for https and rate limiting features
 
 How can I get both https termination and rate limiting for the report system web app using NGINX, istio, or kong?
 

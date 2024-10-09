@@ -28,7 +28,7 @@ Follow these steps to uninstall NGINX Gateway Fabric and Gateway API from your K
 
 ```bash
 kubectl delete namespace nginx-gateway
-kubectl delete cluterrole nginx-gateway
+kubectl delete clusterrole nginx-gateway
 kubectl delete clusterrolebinding nginx-gateway
 kubectl delete -f https://raw.githubusercontent.com/nginxinc/nginx-gateway-fabric/v1.4.0/deploy/crds.yaml
 ```

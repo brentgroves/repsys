@@ -17,40 +17,45 @@ The following is in markdown format it can be viewed better from https://markdow
 - Research how best get http routing, https termination, and **[rate limiting](https://www.getambassador.io/blog/configure-rate-limits-prevent-ddos-best-practices)** features for the report system web app using **[NGINX Gateway Fabric](https://docs.nginx.com/nginx-gateway-fabric/)**, **[istio service mesh](https://istio.io/latest/about/service-mesh/)**, or **[Kong API Gateway](https://konghq.com/products/kong-gateway)**? We are attempting to offload as much of the non-business logic to OSS. 2 weeks.
 - Create TLS certificates for repsys.linamar.com and keycloak.linamar.com using our internal **[PKI](https://www.keyfactor.com/education-center/what-is-pki/)** and **[OpenSSL](https://www.golinuxcloud.com/openssl-create-certificate-chain-linux/)** that passes SAN certificate validation at **[Sectigo Certificate Linter](https://crt.sh/lintcert)**
 
-|
-
-## **[Platform Features](../../report_system/platform_features.md)**
-
-This is a list of features provide by all the OSS software running on our K8s cluster.  The idea behind platform engineering is to provide as many services as possible through production quality OSS.  This helps our developers focus on business logic instead of functionality already freely available.
-
-### Features of an API Gateway
-
-Ok, so we have just seen how an API Gateway can route Southbound traffic to the required Service and microservice within our cluster but this is only one of the features of an API gateway. Others include:
-
-- Routing based on host, path, headers and more
-- Load balancing
-- Security
-- Enforcing authentication
-- Service monitoring
-- Request monitoring and tracing
-- A/B testing
-- API versioning
-- Rating limiting / circuit breaking
-- Request transformation
-
-## **[Task List](../../report_system/task_list.md)**
-
- task                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          | estimate |   |   |   |   |   |   |   |   |
+| task                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          | estimate |   |   |   |   |   |   |   |   |
 |---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------|---|---|---|---|---|---|---|---|
 | Setup redundant **[kubernetes](https://kubernetes.io/docs/concepts/overview/)** clusters on-prem at Avilla with **[MicroK8s](https://microk8s.io/docs)** and in the cloud on **[Azure AKS](https://learn.microsoft.com/en-us/azure/aks/what-is-aks)**.                                                                                                                                                                                                                                                        | 2 weeks  |   |   |   |   |   |   |   |   |
 | Research how best get http routing, https termination, and **[rate limiting](https://www.getambassador.io/blog/configure-rate-limits-prevent-ddos-best-practices)** features for the report system web app using **[NGINX Gateway Fabric](https://docs.nginx.com/nginx-gateway-fabric/)**, **[istio service mesh](https://istio.io/latest/about/service-mesh/)**, or **[Kong API Gateway](https://konghq.com/products/kong-gateway)**? We are attempting to offload as much of the non-business logic to OSS. | 2 weeks  |   |   |   |   |   |   |   |   |
 | Create TLS certificates for repsys.linamar.com and keycloak.linamar.com using our internal **[PKI](https://www.keyfactor.com/education-center/what-is-pki/)** and **[OpenSSL](https://www.golinuxcloud.com/openssl-create-certificate-chain-linux/)** that passes SAN certificate validation at **[Sectigo Certificate Linter](https://crt.sh/lintcert)**                                                                                                                                                     | 1 week   |   |   |   |   |   |   |   |   |
 
+## https and rate limiting features
+
+How can I get both https termination and rate limiting for the report system web app using NGINX, istio, or kong?
+
+Default Rate limiting is usually provided by cloud provider's load balancer such as is the case for Azure AKS.
+
+Nginx Gateway Fabric would achieve rate limiting using custom policies but currently it has only about four custom policies and rate limiting is not one of them.
+
+**[Nginx Ingress Controller](../../k8s/ingress-lb-install.md)** can do both **[rate limiting](../../research/m_z/nginx_ingress_controller/rate_limiting.md)** and tls termination but F5 seems to be pushing Nginx Gateway Fabric so I don't like the idea of using the Ingress controller.
+
+Istio does not seem to be a good fit for a SPA like react.js, but I would like to use it for non-SPA microservices such as the email server.
+
+**[Kong](../../k8s/kong-experimental-install.md)** supports **[tls termination](https://docs.konghq.com/kubernetes-ingress-controller/latest/guides/services/tls/)** and **[basic rate limiting](https://docs.konghq.com/gateway/latest/get-started/rate-limiting/)** via a free plugin.
+
+**[TLS pass-through Fallback](https://gist.github.com/denji/12b3a568f092ab951456)**
+
+| Software      | routing                                                              | https termination                                                        | tls passthrough                                                        | rate limiting | IAM | Identity Provider |
+|---------------|----------------------------------------------------------------------|--------------------------------------------------------------------------|------------------------------------------------------------------------|---------------|-----|-------------------|
+| Nginx Gateway | **[ngroute](../../research/m_z/nginx_gateway_fabric/routing_traffic.md)** | **[nghttps](../../research/m_z/nginx_gateway_fabric/https_termination.md)** | **[ngtls](../../research/m_z/nginx_gateway_fabric/tls_passthrough.md)** |               |     |                   |
+| Nginx Ingress |                                                                      |                                                                          |                                                                        |               |     |                   |
+| istio mesh    |                                                                      |                                                                          |                                                                        |               |     |                   |
+| kong api      |                                                                      |                                                                          |                                                                        |               |     |                   |
+| keycloak      |                                                                      |                                                                          |                                                                        |               |     |                   |
+| Entra ID      |                                                                      |                                                                          |                                                                        |               |     |                   |
+
+## ToDo
+
+- **[ToDo List](../../report_system/todo_list.md)**
+- **[ToDo Gnatt](../../report_system/todo_gantt.md)**
+
 ## Load Balancer
 
-- **[Load Balancer](../../report_system/load_balancer.md)**
-- **[NGINX reverse-proxy as Load Balancer to Kong Gateway on K8s](../../../research/a_l/k8s/adv_k8s_setup_series/adv_kong_no_loadbalancer.md)**\
-For the purposes of this solution, you can consider the NGINX as a manually configured, replacement, external load balancer. This method should be able to be used to connect Linamar's F5 Load Balancer to our K8s Cluster by replacing references to NGINX with the F5 Load Balancer. I believe F5 has acquired NGINX and uses it as there software load balancer.
+**[Load Balancer](../../report_system/load_balancer.md)**
 
 ## Repsys Architecture
 
