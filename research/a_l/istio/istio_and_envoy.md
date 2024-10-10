@@ -189,4 +189,135 @@ In short, requests enter the mesh via a Gateway, which has awareness of the host
 
 As we can see from the manifests and diagram, by instructing Envoy proxies in how they should behave via Istio resources, we are now in full control of the traffic.
 
+## Security and authentication with Envoy
+
+Envoy functionality is also useful when augmenting the security of an Istio service mesh. We’ve mentioned already that Envoy acts as a policy enforcer inside of a mesh, which in practice means:
+
+- making sure that only authorized service-to-service communication can happen within the mesh (peer authentication)
+- implementing request authentication by means of JWT validation (given the necessity to act as edge proxy and thus face external sources)
+- acting as a policy enforcement point for all of the above
+
+If we needed to secure our services from the earlier “life of a request diagram,” we would need to instruct Istio to do the following:
+
+- enforce mutual TLS authentication between all of our internal services either mesh-wide or per service. This would instruct Envoy to authenticate requests based on present certificates
+- set the JWT validation (multiple providers supported) on the Envoy edge proxy, which acts as ingress into the mesh
+- further control certificate expiration and renewal, keeping the secure naming and service identities updated
+
+Some of these functionalities (such as certificate management) come out of the box, but others may need to be explicitly enabled. In our earlier manifest example, we can see that client-side mutual TLS authentication has already been enabled (see DestinationRule for external service). If on the other hand we wanted to enable peer and request authentication for that service and its mesh, the configuration would look as follows:
+
+```yaml
+---
+apiVersion: security.istio.io/v1beta1
+kind: PeerAuthentication
+metadata:
+ name: "enforce-mtls"
+spec:
+ selector:
+   matchLabels:
+     app: demo-app
+ mtls:
+   mode: STRICT
+---
+apiVersion: security.istio.io/v1beta1
+kind: RequestAuthentication
+metadata:
+name: demo-app-jwt
+spec:
+ selector:
+   matchLabels:
+     app: demo-app
+ jwtRules:
+ - issuer: "https://demo-tenant.us.auth0.com/"
+   jwksUri: "https://demo-tenant.us.auth0.com/.well-known/jwks.json"
+---
+apiVersion: security.istio.io/v1beta1
+kind: AuthorizationPolicy
+metadata:
+ name: require-jwt
+spec:
+ selector:
+   matchLabels:
+     app: demo-app
+ action: ALLOW
+ rules:
+ - from:
+   - source:
+      requestPrincipals: ["*"]
+```
+
+As a result of this configuration:
+
+- the Envoy proxy (running as a sidecar in the demo-app) would only accept TLS connections via the line mode: STRICT
+- external requests landing on the Ingress gateway have to provide a valid JWT token (here we’re using Auth0 tenant as an example) in order to authenticate
+- only successfully authenticated requests would then be authorized to connect to the demo-app
+- We have now added a layer of security, eliminating any unwanted traffic to and from our service.
+
+## Observability as a way to understand the network
+
+We now see how Envoy augments Istio with richer traffic management and security features, but frankly, none of this is very useful unless we can also look more deeply into the mesh itself.
+
+The complexity of service meshes and their varied options mean that configuration mistakes or unexplained events will eventually happen. There’s really no escaping it.
+
+In order to conduct effective debugging, in an ideal world we would need rich metrics, verbose logs, request tracing, correlation of configuration changes to mesh behavior, and more. Thankfully, this is exactly what Envoy and Istio give us.
+
+There are three types of telemetry sources based on Envoy that are made available by Istio by default:
+
+- **Metrics** for every service within the mesh, such as error rates or traffic volume, alongside control plane metrics
+- **distributed tracing:** allowing us to visualize call flows and see service dependencies or sources of latency and errors
+- **access logs:** giving us insight into each Envoy proxy and documenting what happens to every incoming or outgoing request
+
+Integrations with popular tools, such as Grafana and Prometheus, also come as add-ons with Istio deployments and can be adjusted during setup. This gives mesh operators the ability to enable or customize exported data and get Envoy to add or drop metric dimensions, or tell Istio to include or exclude metrics.
+
+There are 3 types of metrics that are collected and exported by Istio:
+
+- **proxy-level metrics:** rich metrics from every sidecar that Envoy proxy has deployed, containing information on each passing request and details on configuration changes and proxy health
+- **service-level metrics:** these are abstracted by Istio to the level of individual services running in a mesh, covering the 4 key metrics of latency, traffic, errors, and saturation
+- **control-plane metrics:** provides insight into Istio components and their overall health and performance
+
+Consumption of the Istio metrics, coming from Prometheus, can be done either from a local (to mesh) instance or via Prometheus federation with an external entity. The same can be also said when visualizing metrics via Grafana (or similar), or when using managed observability platforms like NewRelic or Datadog.
+
+The main idea remains the same: you either keep the metrics locally or keep them and send them elsewhere for processing.
+
+When it comes to metric customization, the flexibility of Envoy’s use of filters provides many powerful metric management options. Filters are a rather advanced topic though, and beyond the scope of this article—but to point you in the right direction, we have provided some useful examples of Envoy filter usage here and here.
+
+With regards to distributed tracing, Istio supports tracing backends such as Zipkin and Jaeger, integrating with Envoy tracing capabilities. It must be noted however that some help from applications running in the mesh is needed, specifically surrounding the propagation of B3 (x-b3-*) and “x-request-id” headers emitted by Istio and Envoy. Configuring this differs between programming languages and HTTP servers, and you can find a good idea of what this involves here and here.
+
+Lastly, access logs are probably the most straightforward of the observability metrics. Envoy produces access logs for both HTTP and TCP listeners and allows for the configuration of log format. Istio wraps these configurations into its configuration, exposing it via a global mesh configuration.
+
+At the end of the day, it’s all about processing the logs from Envoy’s stdout or file output, whether for debugging or auditing purposes. You can find a short example of how to quickly explore these logs here.
+
+## Extensibility of Envoy with WebAssembly
+
+We touched briefly on the idea of Envoy filters, which are used to customize metrics and this would have been a good example of Envoy extensibility, but there are many other options.
+
+New features called WebAssembly-based extensibility and the Proxy-Wasm configuration interface were introduced in version 1.5 of Istio.. Since then the Istio project has also led the adoption of Wasm extensibility, introducing alternative features and growing the number of available extensions.
+
+Put simply, Wasm allows for portable, sandboxed execution of code in a self-sufficient way. Envoy supports Wasm extensions and Istio uses these as a means of customization. Additionally, the Proxy-Wasm initiative is meant to unify the way extensions are written. As an example, provided SDKs (written in C++, Rust, and AssemblyScript) are built on top of these conventions.
+
+For the end user or mesh operator, it's all about enabling your Envoy proxies to do things outside of Envoy’s native capability. This is an advanced topic as it might require writing extensions to suit your needs, but chances are high that something’s already available in the Istio ecosystem.
+
+## Best practices and a word of caution
+This article has emphasized Istio (and Envoy) seamlessly integrating with your existing infrastructure without requiring any major changes. And for most cases that’s completely true. However, the bigger and quirkier your infrastructure and apps get, the higher the chances are of facing compatibility or configuration issues. After all, Istio and Envoy bring an intermediary into what was originally direct communication, diverting requests and traffic through another layer. This extra step can sometimes cause problems for your applications.
+
+So, before immediately rushing to build Istio into your infrastructure, keep the following in mind:
+
+- kubernetes deployments that simply boil down to port usage or very basic pod requirements present little problem
+- proxy awareness of applications Implementing this may or may not be required and is dependent on the software stack and boils down to having a proxy in between. A good example of such awareness is the usage of server first protocol applications, such as MySQL or MongoDB
+header manipulation. This is applicable to HTTP traffic (the most common traffic within a service mesh) and is caused by Envoy header manipulation, which is essential to its routing capability
+- Istio brings many useful features surrounding security and traffic management, but adds complexity
+- migration process. No matter how seamless Istio is designed to be, it still requires the addition of a new component (Istio) and its insertion into every app. There is also the potential need to migrate networking objects, like Kubernetes Ingress services, onto Istio’s Gateway
+- cost of maintenance. Istio is another application in your infrastructure and needs to be monitored and updated to remain healthy. It also typically requires more experienced engineers, adding to your overheads.
+- debugging. Last but not least, debugging is never straightforward and with additional layers in the way, it definitely doesn’t get any easier. To help, there are many diagnostic tools available for Istio and Envoy
+
+While the above points might sound a little discouraging, they’re there to set realistic expectations. If you’re already considering using a service mesh (with Istio or otherwise), the benefits will likely outweigh the complexity.
+
+## Setting up Istio in the playground
+
+- **A running Kubernetes cluster:** the easiest way would be to use kind on your laptop. Alternatively, Istio docs have a great selection of platform-specific cluster setups.
+
+- **deploy Istio with istioctl:** while some of you may not have this as a first choice, preferring Helm chart or Operator deployment instead, iistioctl is still the best way for a quick set-up.
+
+- **deploy “real-life” applications:** you can opt for any app of your choosing or just go with the official **[Bookinfo](https://istio.io/latest/docs/setup/getting-started/#bookinfo)** or **[HelloWorld](https://github.com/istio/istio/tree/master/samples/helloworld)** app if you want to. But it’s better to have a few components in your lab that allow proper traffic flow and experimentation.
+
+start playing: experiment with Istio functions and features to any degree, even to the point of destruction. Then, redeploy the environment with new parameters, or choose any of these tasks that might interest you
 
