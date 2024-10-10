@@ -1,4 +1,4 @@
-# **[Running a Full Stack App in Istio Service Mesh — Part 1](https://istio.io/latest/docs/examples/microservices-istio/)**
+# **[Running a Full Stack App in Istio Service Mesh — Part 1](https://medium.com/@SabujJanaCodes/running-a-full-stack-app-in-istio-service-mesh-part-1-87b828f4d1cc)**
 
 **[Current Status](../../../development/status/weekly/current_status.md)**\
 **[Research List](../../../research/research_list.md)**\
@@ -12,6 +12,17 @@ In this blog, we will take a simplified full stack app and make it up and runnin
 
 In further blogs, we will build upon this example to inspect further Istio features like Security, Observability and Traffic Routing.
 
-Architecture
+## Architecture
+
 The following drawing showcases what we are trying to achieve through this blog.
 
+![arch](https://miro.medium.com/v2/resize:fit:720/format:webp/1*JhBo-pfV4xHdyMkmGS9KBw.png)**
+
+We have a full stack app and we want to run it inside Istio. We also want to expose this app publicly outside the service mesh, so that external users will be able to use our service.
+
+Our workload service consists of 2 parts:
+
+- **web-frontend** — the frontend of our app
+- **customers-backend** — the backend of our app
+
+The entire code for the project can be found at my Github repo: ```https://github.com/JanaSabuj/istio-blogproject```
