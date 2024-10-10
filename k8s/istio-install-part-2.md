@@ -284,3 +284,45 @@ kubectl port-forward svc/bookinfo-gateway-istio 8080:80
 # Start a new terminal to test
 curl http://localhost:8080/productpage
 ```
+
+## View the dashboard
+
+Istio integrates with **[several different telemetry applications](https://istio.io/latest/docs/ops/integrations/)**. These can help you gain an understanding of the structure of your service mesh, display the topology of the mesh, and analyze the health of your mesh.
+
+Use the following instructions to deploy the **[Kiali dashboard](https://istio.io/latest/docs/ops/integrations/kiali/)**, along with **[Prometheus](https://istio.io/latest/docs/ops/integrations/prometheus/)**, **[Grafana](https://istio.io/latest/docs/ops/integrations/grafana/)**, and **[Jaeger](https://istio.io/latest/docs/ops/integrations/jaeger/)**.
+
+### 1. Install Kiali and the other addons and wait for them to be deployed
+
+```bash
+kubectl apply -f samples/addons
+kubectl rollout status deployment/kiali -n istio-system
+Waiting for deployment "kiali" rollout to finish: 0 of 1 updated replicas are available...
+deployment "kiali" successfully rolled out
+```
+
+### 2. Access the Kiali dashboard
+
+```bash
+istioctl dashboard kiali
+```
+
+### 3. select Graph
+
+In the left navigation menu, select Graph and in the Namespace drop down, select default
+
+To see trace data, you must send requests to your service. The number of requests depends on Istio’s sampling rate and can be configured using the Telemetry API. With the default sampling rate of 1%, you need to send at least 100 requests before the first trace is visible. To send 100 requests to the productpage service, use the following command:
+
+```bash
+export GATEWAY_URL=10.1.0.144
+
+# before pressing enter remove \ after productpage";
+cat <<EOF > ./test.sh 
+#!/bin/bash
+for i in {1..100}
+do
+   curl -s -o /dev/null "http://$GATEWAY_URL/productpage";
+done
+EOF
+chmod 777 test.sh 
+./test.sh
+```
