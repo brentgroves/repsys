@@ -1,5 +1,5 @@
-OSS,Feature,Description,Research,Status
+Software,Feature,Description,Research,Status
 Novu,Notification system,Push notifications are a powerful way to keep users engaged by delivering timely and relevant information directly to their devices.,**[Notification Platforms](../../research/topics/notification_platforms.md)**,Researching
-Istio,ADC load balancing,Ingress for K8s network,**[Ingress](../../research/topics/ingress.md)**,Pretty Sure
-Istio,TLS termination,TLS support for microservices,**[istio](../../research/a_l/istio/learn_microservices_with_istio_on_k8s.md)**,Pretty Sure
-Keycloak,IAM, Authentication and Authorization,**[keycloak and Microsoft Entra](../../../research/a_l/keycloak/keycloak.md)**,Pretty Sure
+Istio,K8s Gateway,Ingress for K8s network,**[Gateways](../../research/topics/k8s_gateways.md)**,On-Prem
+Auth0,IAM, Authentication and Authorization,**[Auth0 and Microsoft Entra](https://auth0.com/blog/why-auth0-by-okta/)**,Free Tier
+Keycloak,IAM, Authentication and Authorization,**[keycloak and Microsoft Entra](../../../research/a_l/keycloak/keycloak.md)**,Docker
