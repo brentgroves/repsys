@@ -1,4 +1,4 @@
-# **[Rest vs grpc](https://nordicapis.com/7-api-testing-tools-that-support-grpc/)**
+# **[Rest vs gRPC](https://nordicapis.com/7-api-testing-tools-that-support-grpc/)**
 
 **[Current Status](../../development/status/weekly/current_status.md)**\
 **[Research List](../../research/research_list.md)**\
