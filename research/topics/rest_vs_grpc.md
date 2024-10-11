@@ -13,3 +13,5 @@ Istio supports proxying any TCP traffic. This includes HTTP, HTTPS, gRPC, as wel
 ## **[gRPC on K8s with Istio](https://itnext.io/effectively-communicate-between-microservices-k8s-and-istio-proxy-edition-1fd33561d67a)**
 
 Istio Envoy sidecar helps gRPC client to use all instances of the gRPC server effectively.
+
+## **[gRPC docker and k8s example](https://github.com/adavarski/gRPC-go-k8s-example)**
