@@ -5,47 +5,14 @@
 
 ## Research Topics
 
-### Find notification api for report system
+- **[Should the report system use rest or grpc?](../../../research/topics/rest_vs_grpc.md)**
+- **[Are there any good OSS notification platforms accessible from web browsers](../../../research/topics/notification_platforms.md)**
 
-**search:**\
-notification api node.sj
-
-- **[tutorial](https://dev.to/sanjampreetsingh/step-by-step-guide-to-setting-up-push-notifications-in-nodejs-backend-configuration-53gn)**
-
-## Question
-
-- Does Linamar have an **[transparent proxy server](../../../research/a_l/k8s/concepts/proxy_servers.md#transparent-proxy)** or some other **threat protection software** that would prevent some web apps from working?
-
-```text
-The following is in markdown format it can be viewed better from https://markdownlivepreview.com/. if you copy and paste the contents below.
-```
-
-## High Level Summary
-
-- Setup redundant **[kubernetes](https://kubernetes.io/docs/concepts/overview/)** clusters on-prem at Avilla with **[MicroK8s](https://microk8s.io/docs)** and in the cloud on **[Azure AKS](https://learn.microsoft.com/en-us/azure/aks/what-is-aks)**. 2 weeks
-- Research how best get http routing, https termination, and **[rate limiting](https://www.getambassador.io/blog/configure-rate-limits-prevent-ddos-best-practices)** features for the report system web app using **[NGINX Gateway Fabric](https://docs.nginx.com/nginx-gateway-fabric/)**, **[istio service mesh](https://istio.io/latest/about/service-mesh/)**, or **[Kong API Gateway](https://konghq.com/products/kong-gateway)**? We are attempting to offload as much of the non-business logic to OSS. 2 weeks.
-- Create TLS certificates for repsys.linamar.com and keycloak.linamar.com using our internal **[PKI](https://www.keyfactor.com/education-center/what-is-pki/)** and **[OpenSSL](https://www.golinuxcloud.com/openssl-create-certificate-chain-linux/)** that passes SAN certificate validation at **[Sectigo Certificate Linter](https://crt.sh/lintcert)**
-
-|
+## **[High Level Summary](./high_level_status.md#high-level-summary)**
 
 ## **[Platform Features](../../report_system/platform_features.md)**
 
 This is a list of features provide by all the OSS software running on our K8s cluster.  The idea behind platform engineering is to provide as many services as possible through production quality OSS.  This helps our developers focus on business logic instead of functionality already freely available.
-
-### Features of an API Gateway
-
-Ok, so we have just seen how an API Gateway can route Southbound traffic to the required Service and microservice within our cluster but this is only one of the features of an API gateway. Others include:
-
-- Routing based on host, path, headers and more
-- Load balancing
-- Security
-- Enforcing authentication
-- Service monitoring
-- Request monitoring and tracing
-- A/B testing
-- API versioning
-- Rating limiting / circuit breaking
-- Request transformation
 
 ## **[Task List](../../report_system/task_list.md)**
 
@@ -54,12 +21,6 @@ Ok, so we have just seen how an API Gateway can route Southbound traffic to the 
 | Setup redundant **[kubernetes](https://kubernetes.io/docs/concepts/overview/)** clusters on-prem at Avilla with **[MicroK8s](https://microk8s.io/docs)** and in the cloud on **[Azure AKS](https://learn.microsoft.com/en-us/azure/aks/what-is-aks)**.                                                                                                                                                                                                                                                        | 2 weeks  |   |   |   |   |   |   |   |   |
 | Research how best get http routing, https termination, and **[rate limiting](https://www.getambassador.io/blog/configure-rate-limits-prevent-ddos-best-practices)** features for the report system web app using **[NGINX Gateway Fabric](https://docs.nginx.com/nginx-gateway-fabric/)**, **[istio service mesh](https://istio.io/latest/about/service-mesh/)**, or **[Kong API Gateway](https://konghq.com/products/kong-gateway)**? We are attempting to offload as much of the non-business logic to OSS. | 2 weeks  |   |   |   |   |   |   |   |   |
 | Create TLS certificates for repsys.linamar.com and keycloak.linamar.com using our internal **[PKI](https://www.keyfactor.com/education-center/what-is-pki/)** and **[OpenSSL](https://www.golinuxcloud.com/openssl-create-certificate-chain-linux/)** that passes SAN certificate validation at **[Sectigo Certificate Linter](https://crt.sh/lintcert)**                                                                                                                                                     | 1 week   |   |   |   |   |   |   |   |   |
-
-## Load Balancer
-
-- **[Load Balancer](../../report_system/load_balancer.md)**
-- **[NGINX reverse-proxy as Load Balancer to Kong Gateway on K8s](../../../research/a_l/k8s/gateway_api/adv_gateway_series/adv_gw_no_loadbalancer.md)**\
-For the purposes of this solution, you can consider the NGINX as a manually configured, replacement, external load balancer. This method should be able to be used to connect Linamar's F5 Load Balancer to our K8s Cluster by replacing references to NGINX with the F5 Load Balancer. I believe F5 has acquired NGINX and uses it as there software load balancer.
 
 ## Repsys Architecture
 
@@ -119,14 +80,7 @@ A list of all research for repsys.
 
   I would say Linamar's **[F5 Load Balancer](https://www.f5.com/glossary/load-balancer)** qualifies as an ADC.
 
-- **[Docker Niagara](https://www.broudyprecision.com/docker-niagara/)**
-
-  **[Video](https://youtu.be/rzshJ82JxDY)**
-
-  With the upcoming release of Niagara Framework® 4.13, Niagara will be available as a Docker® container that packages together the Niagara core, the JRE (Java Runtime Environment), and any additional modules required at runtime. This containerized delivery mechanism has advantages during development, at first provisioning for a given customer and for each version upgrade compared to standard deployment and integration processes.
-
 - **[Proxy](../../../research/a_l/k8s/concepts/proxy_servers.md)**
-- **[Gateway, Ingress Controllers, vs Service Mesh](../../../research/a_l/k8s/concepts/gateways_ingess_service_mesh.md)**
 
 - **[Sessions and Cookies](../../../research/m_z/virtualization/networking/http/session_and_cookies.md)**
 

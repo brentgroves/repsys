@@ -7,8 +7,8 @@ COPY go.sum ./
 
 COPY . ./
 
-RUN go build -o  /go-grpc-server-with-envoy
+RUN go build -o  /go-grpc-server-with-envoy2
 
 EXPOSE 8080
 
-CMD [ "/go-grpc-server-with-envoy" ]
+CMD [ "/go-grpc-server-with-envoy2" ]

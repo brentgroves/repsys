@@ -1,5 +1,5 @@
-Feature,Software,time,description
-notification system,**[vapid](https://dev.to/sanjampreetsingh/step-by-step-guide-to-setting-up-push-notifications-in-nodejs-backend-configuration-53gn)**,Push notifications are a powerful way to keep users engaged by delivering timely and relevant information directly to their devices.,1 week,
-loadbalance,**[istio](../../research/a_l/istio/learn_microservices_with_istio_on_k8s.md)**,routing,1 week,loadbalance requests to k8s services.
-tls termination,**[istio](../../research/a_l/istio/learn_microservices_with_istio_on_k8s.md)**,routing,1 week,loadbalance requests to k8s services.
-IAM,**[istio](../../research/a_l/istio/learn_microservices_with_istio_on_k8s.md)**,routing,1 week,loadbalance requests to k8s services.
+OSS,Feature,Description,Research,Status
+Novu,Notification system,Push notifications are a powerful way to keep users engaged by delivering timely and relevant information directly to their devices.,**[Notification Platforms](../../research/topics/notification_platforms.md)**,Researching
+Istio,ADC load balancing,Ingress for K8s network,**[Ingress](../../research/topics/ingress.md)**,Pretty Sure
+Istio,TLS termination,TLS support for microservices,**[istio](../../research/a_l/istio/learn_microservices_with_istio_on_k8s.md)**,Pretty Sure
+Keycloak,IAM, Authentication and Authorization,**[keycloak and Microsoft Entra](../../../research/a_l/keycloak/keycloak.md)**,Pretty Sure

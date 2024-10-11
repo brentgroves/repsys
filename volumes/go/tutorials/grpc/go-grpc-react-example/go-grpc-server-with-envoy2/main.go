@@ -2,13 +2,14 @@ package main
 
 import (
 	"context"
+	"go-grpc-server-with-envoy2/app/proto"
 	"log"
 	"net"
 	"time"
 
-	"github.com/digvijay17july/golang-projects/go-grpc-react-example/go-grpc-server-with-envoy/app/proto"
+	"google.golang.org/grpc/reflection"
 
-	//  "github.com/digvijay17july/golang-projects/go-grpc-react-example/go-grpc-server-with-envoy/app/proto"
+	// "github.com/digvijay17july/golang-projects/go-grpc-react-example/go-grpc-server-with-envoy/app/proto"
 	"google.golang.org/grpc"
 )
 
@@ -17,7 +18,7 @@ type server struct {
 }
 
 func (*server) GetUser(ctx context.Context, in *proto.UserRequest) (*proto.UserResponse, error) {
-
+	log.Printf("GetUser************************")
 	others := make(map[string]string)
 	others["secondary"] = "233453"
 	phone := &proto.PhoneNumber{Primary: "1234567890", Others: others}
@@ -31,6 +32,8 @@ func main() {
 		log.Fatalf("failed to listen: %v", err)
 	}
 	s := grpc.NewServer()
+	// Register reflection service on gRPC server.
+	reflection.Register(s)
 	grpcServer := &server{}
 	proto.RegisterUsrServer(s, grpcServer)
 	log.Printf("Starting server on port :%v", lis.Addr())
