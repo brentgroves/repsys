@@ -1,7 +1,5 @@
-Software,routing,https termination,tls passthrough,rate limiting,IAM,Identity Provider
-Nginx Gateway,**[ngroute](../../research/m_z/nginx_gateway_fabric/routing_traffic.md)**,**[nghttps](../../research/m_z/nginx_gateway_fabric/https_termination.md)**,**[ngtls](../../research/m_z/nginx_gateway_fabric/tls_passthrough.md)**,,, 
-Nginx Ingress,**[nic](../../,,,,,
-Istio mesh,,,,,,
-kong api,,,,,,
-keycloak,,,,,,
-Entra ID,,,,,,
+Feature,Software,time,description
+notification system,**[vapid](https://dev.to/sanjampreetsingh/step-by-step-guide-to-setting-up-push-notifications-in-nodejs-backend-configuration-53gn)**,Push notifications are a powerful way to keep users engaged by delivering timely and relevant information directly to their devices.,1 week,
+loadbalance,**[istio](../../research/a_l/istio/learn_microservices_with_istio_on_k8s.md)**,routing,1 week,loadbalance requests to k8s services.
+tls termination,**[istio](../../research/a_l/istio/learn_microservices_with_istio_on_k8s.md)**,routing,1 week,loadbalance requests to k8s services.
+IAM,**[istio](../../research/a_l/istio/learn_microservices_with_istio_on_k8s.md)**,routing,1 week,loadbalance requests to k8s services.

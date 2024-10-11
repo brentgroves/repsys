@@ -30,7 +30,7 @@ How can I get both https termination and rate limiting for the report system web
 Default Rate limiting is usually provided by cloud provider's load balancer such as is the case for Azure AKS.
 
 Nginx Gateway Fabric would achieve rate limiting using custom policies but currently it has only about four custom policies and rate limiting is not one of them.
-
+**[](../../research/a_l/istio/learn_microservices_with_istio_on_k8s.md)
 **[Nginx Ingress Controller](../../k8s/ingress-lb-install.md)** can do both **[rate limiting](../../research/m_z/nginx_ingress_controller/rate_limiting.md)** and tls termination but F5 seems to be pushing Nginx Gateway Fabric so I don't like the idea of using the Ingress controller.
 
 Istio does not seem to be a good fit for a SPA like react.js, but I would like to use it for non-SPA microservices such as the email server.

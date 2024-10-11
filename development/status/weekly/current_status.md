@@ -3,6 +3,15 @@
 **[All Status](../weekly/status_list.md)**\
 **[Back to Main](../../../README.md)**
 
+## Research Topics
+
+### Find notification api for report system
+
+**search:**\
+notification api node.sj
+
+- **[tutorial](https://dev.to/sanjampreetsingh/step-by-step-guide-to-setting-up-push-notifications-in-nodejs-backend-configuration-53gn)**
+
 ## Question
 
 - Does Linamar have an **[transparent proxy server](../../../research/a_l/k8s/concepts/proxy_servers.md#transparent-proxy)** or some other **threat protection software** that would prevent some web apps from working?
