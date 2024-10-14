@@ -5,8 +5,8 @@
 
 ## Research Topics
 
-- **[Should the report system use rest or grpc?](../../../research/topics/rest_vs_grpc.md)**
-- **[Are there any good OSS notification platforms accessible from web browsers](../../../research/topics/notification_platforms.md)**
+- **[Should the report system use REST or gRPC?](../../../research/topics/rest_vs_grpc_and_envoy.md#summary)**
+- **[How should we notify a customer there report is finished?](../../../research/topics/notification_platforms.md)**
 
 ## **[High Level Summary](./high_level_status.md#high-level-summary)**
 
