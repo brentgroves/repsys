@@ -1,5 +1,5 @@
 Software,routing,https termination,https passthrough,rate limiting
-Nginx Gateway,**[yes](../../research/m_z/nginx_gateway_fabric/routing_traffic.md)**,**[nghttps](../../research/m_z/nginx_gateway_fabric/https_termination.md)**,**[yes](../../research/m_z/nginx_gateway_fabric/tls_passthrough.md)**,no
+Nginx Gateway,**[yes](../../research/m_z/nginx_gateway_fabric/routing_traffic.md)**,**[yes](../../research/m_z/nginx_gateway_fabric/https_termination.md)**,**[yes](../../research/m_z/nginx_gateway_fabric/tls_passthrough.md)**,no
 Nginx Ingress,yes,yes,**[yes](https://kubernetes.github.io/ingress-nginx/user-guide/tls/)**,**[yes](../../research/m_z/nginx_ingress_controller/rate_limiting.md)**
 Istio,**[yes](../../research/a_l/istio/learn_microservices_with_istio_on_k8s.md)**,**[yes](../../research/a_l/istio/learn_microservices_with_istio_on_k8s.md)**,**[yes](../../research/a_l/istio/learn_microservices_with_istio_on_k8s.md)**,yes
 Kong,**[yes](../../k8s/kong-install.md)**,**[yes](https://docs.konghq.com/kubernetes-ingress-controller/latest/guides/services/tls/)**,**[yes](https://docs.konghq.com/kubernetes-ingress-controller/latest/guides/services/tls/)**,**[yes](https://docs.konghq.com/gateway/latest/get-started/rate-limiting/)**

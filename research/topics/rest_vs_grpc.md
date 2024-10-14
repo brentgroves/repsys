@@ -1,4 +1,4 @@
-# **[Rest vs gRPC and Envoy](https://nordicapis.com/7-api-testing-tools-that-support-grpc/)**
+# **[Should the report system use REST or gRPC based micro services?](https://nordicapis.com/7-api-testing-tools-that-support-grpc/)**
 
 **[Current Status](../../development/status/weekly/current_status.md)**\
 **[Research List](../../research/research_list.md)**\
@@ -26,7 +26,7 @@ Istio Envoy sidecar helps gRPC client to use all instances of the gRPC server ef
 
 ## summary
 
-gRPC gives you HTTP 2 feature support such as streaming and an IDL language enabling you to generate client code in any language using the protoc compiler. Would like to try gRPC for it's client generation ability and HTTP2 streaming support.
+Either REST or gRPC would be a perfectly acceptable way of implementing our micro services. The deciding factor for me was that gRPC gives you HTTP 2 feature support such as streaming and an IDL language enabling you to generate client code in any language using the protoc compiler, so will try out gRPC micro services.
 
 ### HTTP 1.1 vs HTTP 2
 

@@ -8,11 +8,15 @@
 
 How should we notify a customer there report is finished?
 
-We used to use a **[websocket](https://www.pubnub.com/guides/websockets/)** from the browser to a server but authenticating the user to the websocket was never implemented.
+We used a **[websocket](https://www.pubnub.com/guides/websockets/)** in the tool tracker from the browser to a REST server but authenticating the user to the websocket was never implemented and there doesn't seem to be a simple secure way of knowing who is connecting to the websocket.
 
 Stumbled across **[Novu](https://novu.co/)** which is the first open-source notification infrastructure that manages all forms of communication from email to SMS, Push notifications, etc.
 
 **[Web push](../a_l/application_architecture/web_push.md)** notifications are notifications that can be sent to a user via desktop and mobile web. These alert-style messages slide in at the top or bottom right-hand corner of a desktop screen, depending on the operating system, or appear on a mobile device in a manner nearly identical to push notifications delivered from apps. Website push notifications are delivered on a user’s desktop or mobile screen whenever their browser is open — whether or not the user is on the website.
+
+## Summary
+
+Use HTTP2 push notifications because there is a industry standard way of knowing who you are sending messages to.
 
 ## Novu
 
