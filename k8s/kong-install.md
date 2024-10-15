@@ -1,5 +1,9 @@
 # **[Install KIC with Kong Gateway Operator](https://docs.konghq.com/gateway-operator/latest/get-started/kic/install/)**
 
+## Note
+
+**Uninstalling this was not easy because I could not find any documentation!**
+
 Both Kong Gateway Operator and Kong Ingress Controller can be configured using the **[Kubernetes Gateway API](https://github.com/kubernetes-sigs/gateway-api)**.
 
 You can configure your GatewayClass and Gateway objects in a vendor independent way and Kong Gateway Operator translates those requirements in to Kong specific configuration.
