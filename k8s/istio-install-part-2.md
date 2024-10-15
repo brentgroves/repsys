@@ -11,7 +11,7 @@ This guide lets you quickly evaluate Istio. If you are already familiar with Ist
 - **[microk8s istio](https://gist.github.com/Realiserad/391855c4a0fb0072994e5ad2a53d65c0)**
 - **[install/uninstall k8s gateway crds](https://gateway-api.sigs.k8s.io/guides/)**
 
-## 1
+## 1 create namespace
 
 ```bash
 pushd .
@@ -24,8 +24,6 @@ export NAMESPACE=tutorial
 kubectl create namespace $NAMESPACE
 namespace/tutorial created
 ```
-
-## 4. **[Install Istio](./istio-install-part-2.md) using the default profile
 
 ## 6. Create a Kubernetes Ingress resource for these common Istio services
 
