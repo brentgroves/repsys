@@ -10,57 +10,7 @@ This guide lets you quickly evaluate Istio. If you are already familiar with Ist
 
 - **[microk8s istio](https://gist.github.com/Realiserad/391855c4a0fb0072994e5ad2a53d65c0)**
 
-## Uninstall
-
-To delete the Bookinfo sample application and its configuration, see **[Bookinfo cleanup](https://istio.io/latest/docs/examples/bookinfo/#cleanup)**.
-
-When you’re finished experimenting with the Bookinfo sample, uninstall and clean it up using the following command:
-
-```bash
-pushd .
-cd ~/Downloads/istio-1.23.2
-# See what this script does before you run it.
-cp ~/Downloads/istio-1.23.2/samples/bookinfo/platform/kube/cleanup.sh ~/src/repsys/k8s/istio/
-./samples/bookinfo/platform/kube/cleanup.sh
-# we probably could do this:
-kubectl delete -f https://raw.githubusercontent.com/istio/istio/release-1.23/samples/bookinfo/platform/kube/bookinfo.yaml
-
-```
-
-The Istio uninstall deletes the RBAC permissions and all resources hierarchically under the istio-system namespace. It is safe to ignore errors for non-existent resources because they may have been deleted hierarchically.
-
-```bash
-pushd .
-cd ~/Downloads/istio-1.23.2
-kubectl delete -f samples/addons
-istioctl uninstall -y --purge
-```
-
-The istio-system namespace is not removed by default. If no longer needed, use the following command to remove it:
-
-```bash
-kubectl delete namespace istio-system
-```
-
-The label to instruct Istio to automatically inject Envoy sidecar proxies is not removed by default. If no longer needed, use the following command to remove it:
-
-```bash
-kubectl label namespace default istio-injection-
-```
-
-If you installed the Kubernetes Gateway API CRDs and would now like to remove them, run one of the following commands:
-
-If you ran any tasks that required the experimental version of the CRDs:
-
-```bash
-kubectl kustomize "github.com/kubernetes-sigs/gateway-api/config/crd/experimental?ref=v1.1.0" | kubectl delete -f -
-```
-
-Otherwise:
-
-```bash
-kubectl kustomize "github.com/kubernetes-sigs/gateway-api/config/crd?ref=v1.1.0" | kubectl delete -f -
-```
+## **[Cleanup](./istio-cleanup.md)**
 
 ## Install Istio
 

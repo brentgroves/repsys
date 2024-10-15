@@ -7,21 +7,17 @@
 
 ## **[Platform Features](../../report_system/platform_features.md)**
 
+This is a list of features provide by all the OSS software running on our K8s cluster.  The idea behind platform engineering is to provide as many services as possible through production quality OSS.  This helps our developers focus on business logic instead of functionality already freely available.
+
+## **[High Level Summary](./high_level_status.md#high-level-summary)**
+
 ## **[Task List](../../report_system/task_list.md)**
 
-## **[What is site reliability engineering?](../../../research/a_l/application_architecture/sre.md)**
-
-Site reliability engineering (SRE) is the practice of using software tools to automate IT infrastructure tasks such as system management and application monitoring. Organizations use SRE to ensure their software applications remain reliable amidst frequent updates from development teams. SRE especially improves the reliability of scalable software systems because managing a large system using software is more sustainable than manually managing hundreds of machines.
-
-## What is monitoring in site reliability engineering?
-
-Monitoring is a process of observing predefined metrics in an application. Developers decide which parameters are critical in determining the application's health and set them in monitoring tools. Site reliability engineering (SRE) teams collect critical information that reflects the system performance and visualize it in charts.
-
-## Istio Service Mesh SRE monitoring
-
-![pdb](https://www.istioworkshop.io/images/grafana-istio-dashboards.png?width=50pc)
-
-![db](https://www.istioworkshop.io/images/istio-performance-dashboard.png?width=50pc)
+ task                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          | estimate |   |   |   |   |   |   |   |   |
+|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------|---|---|---|---|---|---|---|---|
+| Setup redundant **[kubernetes](https://kubernetes.io/docs/concepts/overview/)** clusters on-prem at Avilla with **[MicroK8s](https://microk8s.io/docs)** and in the cloud on **[Azure AKS](https://learn.microsoft.com/en-us/azure/aks/what-is-aks)**.                                                                                                                                                                                                                                                        | 2 weeks  |   |   |   |   |   |   |   |   |
+| Research how best get http routing, https termination, and **[rate limiting](https://www.getambassador.io/blog/configure-rate-limits-prevent-ddos-best-practices)** features for the report system web app using **[NGINX Gateway Fabric](https://docs.nginx.com/nginx-gateway-fabric/)**, **[istio service mesh](https://istio.io/latest/about/service-mesh/)**, or **[Kong API Gateway](https://konghq.com/products/kong-gateway)**? We are attempting to offload as much of the non-business logic to OSS. | 2 weeks  |   |   |   |   |   |   |   |   |
+| Create TLS certificates for repsys.linamar.com and keycloak.linamar.com using our internal **[PKI](https://www.keyfactor.com/education-center/what-is-pki/)** and **[OpenSSL](https://www.golinuxcloud.com/openssl-create-certificate-chain-linux/)** that passes SAN certificate validation at **[Sectigo Certificate Linter](https://crt.sh/lintcert)**                                                                                                                                                     | 1 week   |   |   |   |   |   |   |   |   |
 
 ## Repsys Architecture
 
@@ -29,6 +25,12 @@ Monitoring is a process of observing predefined metrics in an application. Devel
 - **[Databases and Schemas](../../report_system/databases_shemas.md)**
 
 ## **[Threat Protection](../../report_system/threat_protection.md)**
+
+- **[Mastering Istio Rate Limiting for Efficient Traffic Management](../../research/a_l/istio/threat_protection/rate_limiting.md)**
+
+  A SYN flood (half-open attack) is a type of denial-of-service (DDoS) attack which aims to make a server unavailable to legitimate traffic by consuming all available server resources. By repeatedly sending initial connection request (SYN) packets, the attacker is able to overwhelm all available ports on a targeted server machine, causing the targeted device to respond to legitimate traffic sluggishly or not at all.
+
+  Rate limiting is remarkably effective and ridiculously simple. It's also regularly forgotten. Rate limiting is a defensive measure you can use to prevent your server or application from being paralyzed. By restricting the number of similar requests that can hit your server within a window of time, you ensure your server won't be overwhelmed and debilitated.
 
 ### **[Design Patterns](../../../research/a_l/application_architecture/design_pattern.md)**
 

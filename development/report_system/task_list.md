@@ -1,35 +1,19 @@
-# Task List
+# Status
 
-**[Development Menu](./menu.md)**\
-**[Current Status](../status/weekly/current_status.md)**\
-**[Back to Main](../../README.md)**
+**[All Status](../weekly/status_list.md)**\
+**[Back to Main](../../../README.md)**
 
-```mermaid
-gantt
-    dateFormat  YYYY-MM-DD
-    title       Task List
-    excludes    weekends
-    %% (`excludes` accepts specific dates in YYYY-MM-DD format, days of the week ("sunday") or "weekends", but not the word "weekdays".)
+## references
 
-    section K8s
-    Redis Operator                                :d1,2024-04-22,5d
-    section Development
-    K8s API access                                :d1,2024-04-29,1d
-    Redis Pub/Sub TB queue                        :d2,after d1,2d
-    Redis TB mutex                                :d3,after d2,2d
-    Azure SQL MI to Azure SQL DB                  :d4,after d3,5d   
-    Requester HTML Mockup                         :d5,after d4,5d  
-    Test k8s.io from within Cluster               :d6,after d5,5d  
- 
+- **[table generator](https://tableconvert.com/markdown-generator)**
+- **[Another table generator](https://www.tablesgenerator.com/markdown_tables)**
 
+```text
+The following is in markdown format it can be viewed better from https://markdownlivepreview.com/. if you copy and paste the contents below.
 ```
 
-## Task Notes
-
-- **[Test k8s.io from within Cluster](https://github.com/kubernetes/client-go/blob/master/examples/in-cluster-client-configuration/main.go)**
-  - read database passwords from k8s secret and write to k8s log.
-- **[Research Redis mutex](https://dev.to/jdvert/handling-mutexes-in-distributed-systems-with-redis-and-go-5g0d)**
-- **[Research Redis Pub/Sub](https://redis.io/docs/latest/develop/interact/pubsub/)**
-- **[In-Cluster K8s API access](https://github.com/kubernetes/client-go/tree/master/examples/in-cluster-client-configuration)**
-- **[Out-of-Cluster K8s API access](https://github.com/kubernetes/client-go/blob/master/examples/out-of-cluster-client-configuration/README.md)**
-- **[Sessions and Cookies](https://www.sohamkamani.com/web-security-basics/#sessions-and-cookies)**
+| task                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          | estimate |
+|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------|
+| Setup redundant **[kubernetes](https://kubernetes.io/docs/concepts/overview/)** clusters on-prem at Avilla with **[MicroK8s](https://microk8s.io/docs)** and in the cloud on **[Azure AKS](https://learn.microsoft.com/en-us/azure/aks/what-is-aks)**.                                                                                                                                                                                                                                                        | 2 weeks  |
+| Research how best get http routing, https termination, and **[rate limiting](https://www.getambassador.io/blog/configure-rate-limits-prevent-ddos-best-practices)** features for the report system web app using **[NGINX Gateway Fabric](https://docs.nginx.com/nginx-gateway-fabric/)**, **[istio service mesh](https://istio.io/latest/about/service-mesh/)**, or **[Kong API Gateway](https://konghq.com/products/kong-gateway)**? We are attempting to offload as much of the non-business logic to OSS. | 2 weeks  |
+| Create TLS certificates for repsys.linamar.com and keycloak.linamar.com using our internal **[PKI](https://www.keyfactor.com/education-center/what-is-pki/)** built with **[OpenSSL](https://www.golinuxcloud.com/openssl-create-certificate-chain-linux/)** that passes SAN certificate validation at **[Sectigo Certificate Linter](https://crt.sh/lintcert)**                                                                                                                                              | 1 week   |
