@@ -2,7 +2,7 @@
 
 ## Note
 
-**Uninstalling this was not easy because I could not find any documentation!**
+**Uninstalling this was not easy because I could not find any documentation!**  Now that I have thought about it.  If I would have deleted the gatewayclass and gateway configuration after deleting the echo service and before uninstalling the kgo helm chart and deleting the kong-system namespace things might have gone smoothly.
 
 Both Kong Gateway Operator and Kong Ingress Controller can be configured using the **[Kubernetes Gateway API](https://github.com/kubernetes-sigs/gateway-api)**.
 

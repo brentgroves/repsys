@@ -5,11 +5,11 @@
 
 ## **[Research Topics](../../../research/topics/research_summary.md)**
 
-## **[High Level Summary](./high_level_status.md#high-level-summary)**
-
 ## **[Platform Features](../../report_system/platform_features.md)**
 
 This is a list of features provide by all the OSS software running on our K8s cluster.  The idea behind platform engineering is to provide as many services as possible through production quality OSS.  This helps our developers focus on business logic instead of functionality already freely available.
+
+## **[High Level Summary](./high_level_status.md#high-level-summary)**
 
 ## **[Task List](../../report_system/task_list.md)**
 

@@ -1,7 +1,7 @@
 # **[OSS Notification Platforms](https://novu.co/)**
 
 **[Current Status](../../development/status/weekly/current_status.md)**\
-**[Research List](../../research/research_list.md)**\
+**[Research Summary](./research_summary.md)**\
 **[Back Main](../../README.md)**
 
 ## How should we notify a customer there report is finished?

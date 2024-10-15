@@ -1,7 +1,7 @@
 # **[Should the report system use REST or gRPC based micro services?](https://nordicapis.com/7-api-testing-tools-that-support-grpc/)**
 
 **[Current Status](../../development/status/weekly/current_status.md)**\
-**[Research List](../../research/research_list.md)**\
+**[Research Summary](./research_summary.md)**\
 **[Back Main](../../README.md)**
 
 ## references
