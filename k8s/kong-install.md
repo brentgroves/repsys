@@ -18,12 +18,118 @@ cd ~/src/repsys/k8s/kong
 scc.sh reports-aks-user.yaml reports-aks
 kubectl delete -f echo-service.yaml
 
+kubectl delete gatewayclass kong
+kubectl delete GatewayConfiguration kong
 # list releases
 # helm list -n <namespace>
 helm list -n kong-system
+WARNING: Kubernetes configuration file is group-readable. This is insecure. Location: /home/brent/.kube/config
+WARNING: Kubernetes configuration file is world-readable. This is insecure. Location: /home/brent/.kube/config
+NAME    NAMESPACE       REVISION        UPDATED                                 STATUS          CHART                   APP VERSION
+kgo     kong-system     1               2024-10-09 17:40:36.742480888 -0400 EDT deployed        gateway-operator-0.2.1  1.3 
 
 # helm uninstall <name-of-the-release> -n <namespace>
-helm uninstall kgo
+helm uninstall kgo -n kong-system
+
+# This does not delete kong deployments which get created when a gatewayclass is installed.
+
+kubectl get all                         
+NAME                                                 READY   STATUS    RESTARTS   AGE
+pod/controlplane-kong-4trrn-f8tfg-76d585b8cf-xmrf2   1/1     Running   0          5d
+pod/dataplane-kong-dckgd-xj867-7c9596778f-bzt4h      1/1     Running   0          5d
+
+NAME                                            TYPE           CLUSTER-IP    EXTERNAL-IP       PORT(S)        AGE
+service/controlplane-webhook-kong-4trrn-trhph   ClusterIP      10.0.200.36  
+ <none>            8080/TCP       5d
+# kubectl delete service/controlplane-webhook-kong-4trrn-trhph 
+
+service/dataplane-admin-kong-dckgd-224dn        ClusterIP      None          <none>            8444/TCP       5d
+kubectl delete service/dataplane-admin-kong-dckgd-224dn
+kubectl patch service dataplane-admin-kong-dckgd-224dn -n default -p '{"metadata":{"finalizers":null}}'
+
+service/dataplane-ingress-kong-dckgd-rdl4k      LoadBalancer   10.0.61.63    172.169.103.249   80:32308/TCP   5d
+# kubectl delete service/dataplane-ingress-kong-dckgd-rdl4k
+
+kubectl patch service dataplane-ingress-kong-dckgd-rdl4k -n default -p '{"metadata":{"finalizers":null}}'
+
+
+service/kubernetes                              ClusterIP      10.0.0.1      <none>            443/TCP        581d
+
+NAME                                            READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/controlplane-kong-4trrn-f8tfg   1/1     1            1           5d
+deployment.apps/dataplane-kong-dckgd-xj867      1/1     1            1           5d
+# kubectl delete deployment.apps/controlplane-kong-4trrn-f8tfg
+# kubectl delete deployment.apps/dataplane-kong-dckgd-xj867  
+kubectl patch deployment.apps/dataplane-kong-dckgd-xj867 -n default -p '{"metadata":{"finalizers":null}}'
+NAME                                                       DESIRED   CURRENT   READY   AGE
+replicaset.apps/controlplane-kong-4trrn-f8tfg-76d585b8cf   1         1         1       5d
+replicaset.apps/dataplane-kong-dckgd-xj867-7c9596778f      1         1         1       5d
+# kong delete replicaset.apps/dataplane-kong-dckgd-xj867-7c9596778f 
+NAME                                                  READY   PROVISIONED
+controlplane.gateway-operator.konghq.com/kong-4trrn   True    True
+# kubectl delete controlplane.gateway-operator.konghq.com/kong-4trrn 
+# kubectl logs controlplane.gateway-operator.konghq.com/kong-4trrn
+# error: no kind "ControlPlane" is registered for version "gateway-operator.konghq.com/v1beta1" in scheme "pkg/scheme/scheme.go:28"
+kubectl patch controlplane.gateway-operator.konghq.com/kong-4trrn -n default -p '{"metadata":{"finalizers":null}}'
+kubectl describe controlplane.gateway-operator.konghq.com/kong-4trrn
+Name:         kong-4trrn
+Namespace:    default
+Labels:       gateway-operator.konghq.com/managed-by=gateway
+Annotations:  <none>
+API Version:  gateway-operator.konghq.com/v1beta1
+Kind:         ControlPlane
+Metadata:
+  Creation Timestamp:             2024-10-09T22:00:36Z
+  Deletion Grace Period Seconds:  0
+  Deletion Timestamp:             2024-10-14T22:54:33Z
+  Finalizers:
+    gateway-operator.konghq.com/cleanup-clusterrole
+    gateway-operator.konghq.com/cleanup-clusterrolebinding
+    gateway-operator.konghq.com/cleanup-validatingwebhookconfiguration
+
+kubectl delete gateway kong 
+kubectl patch gateway/kong -n default -p '{"metadata":{"finalizers":null}}'
+error: application/strategic-merge-patch+json is not supported by gateway.networking.k8s.io/v1, Kind=Gateway: the body of the request was in an unknown format - accepted media types include: application/json-patch+json, application/merge-patch+json, application/apply-patch+yaml
+kubectl delete gateway kong --force
+Warning: Immediate deletion does not wait for confirmation that the running resource has been terminated. The resource may continue to run on the cluster indefinitely.
+gateway.gateway.networking.k8s.io "kong" force deleted
+
+# kubectl edit gateway kong
+# Then delete the finalizer line along with all finalizers
+# do the same with anything that wont delete
+# kubectl edit controlplane.gateway-operator.konghq.com/kong-4trrn
+kubectl delete  httproute echo
+kubectl delete ns kong-system
+kubectl delete clusterrolebinding controlplane-kong-4trrn-5dxrg 
+kubectl delete clusterrole kong-4trrn-2j9qt
+kubectl delete validatingwebhookconfiguration kong-4trrn
+kubectl delete validatingwebhookconfiguration gateway-operator-validation.konghq.com
+NAME                                               READY
+dataplane.gateway-operator.konghq.com/kong-dckgd   True
+# kubectl delete dataplane.gateway-operator.konghq.com/kong-dckgd
+
+kubectl get svc                    
+NAME                                    TYPE           CLUSTER-IP    EXTERNAL-IP       PORT(S)        AGE
+controlplane-webhook-kong-4trrn-trhph   ClusterIP      10.0.200.36   <none>            8080/TCP       5d
+dataplane-admin-kong-dckgd-224dn        ClusterIP      None          <none>            8444/TCP       5d
+dataplane-ingress-kong-dckgd-rdl4k      LoadBalancer   10.0.61.63    172.169.103.249   80:32308/TCP   5d
+kubernetes                              ClusterIP      10.0.0.1  
+    <none>            443/TCP        581d
+
+controlplanes.gateway-operator.konghq.com                2024-10-09T21:40:32Z
+dataplanemetricsextensions.gateway-operator.konghq.com   2024-10-09T21:40:32Z
+dataplanes.gateway-operator.konghq.com                   2024-10-09T21:40:32Z
+gatewayconfigurations.gateway-operator.konghq.com        2024-10-09T21:40:32Z
+ingressclassparameterses.configuration.konghq.com        2024-10-09T21:40:33Z
+kongclusterplugins.configuration.konghq.com              2024-10-09T21:40:33Z
+kongconsumergroups.configuration.konghq.com              2024-10-09T21:40:33Z
+kongconsumers.configuration.konghq.com                   2024-10-09T21:40:33Z
+kongcustomentities.configuration.konghq.com              2024-10-09T21:40:33Z
+kongingresses.configuration.konghq.com                   2024-10-09T21:40:33Z
+konglicenses.configuration.konghq.com                    2024-10-09T21:40:33Z
+kongplugins.configuration.konghq.com                     2024-10-09T21:40:33Z
+kongupstreampolicies.configuration.konghq.com            2024-10-09T21:40:33Z
+kongvaults.configuration.konghq.com                      2024-10-09T21:40:33Z
 
 ```
 
