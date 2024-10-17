@@ -3,6 +3,10 @@
 **[All Status](../weekly/status_list.md)**\
 **[Back to Main](../../../README.md)**
 
+## Adrian Wise
+
+Migrate Mobex Azure report system resources to Azure Subscriptions Linamar Special Projects EA 
+
 ## **[Next AKS TLS istio](https://learn.microsoft.com/en-us/azure/aks/istio-secure-gateway#configure-a-tls-ingress-gateway)**
 
 ## **[Research Topics](../../../research/topics/research_summary.md)**

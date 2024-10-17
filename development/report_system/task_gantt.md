@@ -4,9 +4,11 @@
 **[Current Status](../status/weekly/current_status.md)**\
 **[Back to Main](../../README.md)**
 
+
 ## references
 
 - **[gantt](https://mermaid.js.org/syntax/gantt.html)**
+
 ```mermaid
 gantt
     dateFormat  YYYY-MM-DD
@@ -23,6 +25,20 @@ gantt
     Deploy Prometheus and Grafana                   :active,done,t50,after t40,12h
 
 ```
+
+## Task Notes
+
+| Setup redundant **[kubernetes](https://kubernetes.io/docs/concepts/overview/)** clusters on-prem at Avilla with **[MicroK8s](https://microk8s.io/docs)** and in the cloud on **[Azure AKS](https://learn.microsoft.com/en-us/azure/aks/what-is-aks)**                                                                                                                                                                                                                                                        | 2 weeks |
+|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------|
+| Research how best get http routing, https termination, and **[rate limiting](https://www.getambassador.io/blog/configure-rate-limits-prevent-ddos-best-practices)** features for the report system web app using **[NGINX Gateway Fabric](https://docs.nginx.com/nginx-gateway-fabric/)**, **[istio service mesh](https://istio.io/latest/about/service-mesh/)**, or **[Kong API Gateway](https://konghq.com/products/kong-gateway)**? We are attempting to offload as much of the non-business logic to OSS | 2 weeks |
+| Create TLS certificates for repsys.linamar.com  using our internal **[PKI](https://www.keyfactor.com/education-center/what-is-pki/)** built with **[OpenSSL](https://www.golinuxcloud.com/openssl-create-certificate-chain-linux/)** that passes SAN certificate validation at **[Sectigo Certificate Linter](https://crt.sh/lintcert)**                                                                                                                                                                     | 1 day   |
+| **[Deploy Istio and Sample App](../../k8s/istio-install-part-1.md)**                                                                                                                                                                                                                                                                                                                                                                                                                                         | 1 day   |
+| **[Create HTTP route to Sample App](../../k8s/istio-install-part-1.md)**                                                                                                                                                                                                                                                                                                                                                                                                                                     | 1 day   |
+| **[Enable TLS termination at Gateway](../../k8s/istio-install-part-2.md)**                                                                                                                                                                                                                                                                                                                                                                                                                                   | 1 day   |
+| **[Deploy Prometheus and Grafana](../../k8s/istio-install-part-1.md)**                                                                                                                                                                                                                                                                                                                                                                                                                                       | 1 day   |
+
+
+## example gantt
 
 ```mermaid
 gantt
@@ -56,12 +72,3 @@ gantt
     Add gantt diagram to demo page      :20h
     Add another diagram to demo page    :48h
 ```
-## Task Notes
-
-- **[Test k8s.io from within Cluster](https://github.com/kubernetes/client-go/blob/master/examples/in-cluster-client-configuration/main.go)**
-  - read database passwords from k8s secret and write to k8s log.
-- **[Research Redis mutex](https://dev.to/jdvert/handling-mutexes-in-distributed-systems-with-redis-and-go-5g0d)**
-- **[Research Redis Pub/Sub](https://redis.io/docs/latest/develop/interact/pubsub/)**
-- **[In-Cluster K8s API access](https://github.com/kubernetes/client-go/tree/master/examples/in-cluster-client-configuration)**
-- **[Out-of-Cluster K8s API access](https://github.com/kubernetes/client-go/blob/master/examples/out-of-cluster-client-configuration/README.md)**
-- **[Sessions and Cookies](https://www.sohamkamani.com/web-security-basics/#sessions-and-cookies)**
