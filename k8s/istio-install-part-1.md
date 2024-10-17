@@ -119,6 +119,25 @@ You have configured Istio to inject sidecar containers into any application you 
 ### 1. Deploy the **[Bookinfo sample application](https://istio.io/latest/docs/examples/bookinfo/)**
 
 ```bash
+pushd .
+cd ~/Downloads/istio-1.23.0
+
+kubectl apply -f samples/bookinfo/platform/kube/bookinfo.yaml
+service/details created
+serviceaccount/bookinfo-details created
+deployment.apps/details-v1 created
+service/ratings created
+serviceaccount/bookinfo-ratings created
+deployment.apps/ratings-v1 created
+service/reviews created
+serviceaccount/bookinfo-reviews created
+deployment.apps/reviews-v1 created
+deployment.apps/reviews-v2 created
+deployment.apps/reviews-v3 created
+service/productpage created
+serviceaccount/bookinfo-productpage created
+deployment.apps/productpage-v1 created
+# or
 kubectl apply -f https://raw.githubusercontent.com/istio/istio/release-1.23/samples/bookinfo/platform/kube/bookinfo.yaml
 
 service/details created
@@ -169,7 +188,6 @@ Validate that the app is running inside the cluster by checking for the page tit
 # When used with -s, --silent, it makes curl show an error message if it fails.
 
 kubectl exec "$(kubectl get pod -l app=ratings -o jsonpath='{.items[0].metadata.name}')" -c ratings -- curl -sS productpage:9080/productpage | grep -o "<title>.*</title>"
-
 <title>Simple Bookstore App</title>
 ```
 
@@ -188,6 +206,13 @@ cp samples/bookinfo/gateway-api/bookinfo-gateway.yaml ~/src/repsys/k8s/istio/
 kubectl apply -f samples/bookinfo/gateway-api/bookinfo-gateway.yaml
 gateway.gateway.networking.k8s.io/bookinfo-gateway created
 httproute.gateway.networking.k8s.io/bookinfo created
+
+# Azure
+scc.sh reports-aks-user.yaml reports-aks
+kubectl apply -f samples/bookinfo/gateway-api/bookinfo-gateway.yaml
+
+gateway.gateway.networking.k8s.io/bookinfo-gateway unchanged
+httproute.gateway.networking.k8s.io/bookinfo configured
 ```
 
 By default, Istio creates a LoadBalancer service for a gateway. As we will access this gateway by a tunnel, we don’t need a load balancer. If you want to learn about how load balancers are configured for external IP addresses, read the **[ingress gateways](https://istio.io/latest/docs/tasks/traffic-management/ingress/ingress-control/)** documentation.
@@ -196,9 +221,25 @@ By default, Istio creates a LoadBalancer service for a gateway. As we will acces
 
 ```bash
 # Before change the svc is of type loadbalancer
+# Microk8s
+scc.sh repsys11c2n1.yaml microk8s  
 kubectl get svc                                                    
 NAME                     TYPE           CLUSTER-IP       EXTERNAL-IP   PORT(S)                        AGE
-bookinfo-gateway-istio   LoadBalancer   10.152.183.184   10.1.0.144    15021:30091/TCP,80:30551/TCP   3m11s
+bookinfo-gateway-istio   LoadBalancer   10.152.183.114   10.1.0.144    15021:30377/TCP,80:30444/TCP   6s
+# get gateway
+kubectl get gateway
+NAME               CLASS   ADDRESS      PROGRAMMED   AGE
+bookinfo-gateway   istio   10.1.0.144   True         112s
+
+# Azure AKS
+scc.sh reports-aks-user.yaml reports-aks
+kubectl get svc 
+NAME                     TYPE           CLUSTER-IP     EXTERNAL-IP     PORT(S)                        AGE
+bookinfo-gateway-istio   LoadBalancer   10.0.133.32    20.15.156.95   15021:31202/TCP,80:31760/TCP   53m
+# get gateway
+kubectl get gateway                     
+NAME               CLASS   ADDRESS         PROGRAMMED   AGE
+bookinfo-gateway   istio   20.15.156.95   True         10m
 
 kubectl annotate gateway bookinfo-gateway networking.istio.io/service-type=ClusterIP --namespace=default
 # to change back to loadbalancer
@@ -214,6 +255,11 @@ kubectl get gateway
 NAME               CLASS   ADDRESS      PROGRAMMED   AGE
 bookinfo-gateway   istio   10.1.0.144   True         25m
 
+# Azure
+kubectl get gateway
+NAME               CLASS   ADDRESS         PROGRAMMED   AGE
+bookinfo-gateway   istio   20.15.156.95   True         34m
+
 # with clusterip
 kubectl get gateway
 NAME               CLASS   ADDRESS                                            PROGRAMMED   AGE
@@ -226,7 +272,12 @@ You will connect to the Bookinfo productpage service through the gateway you jus
 
 ```bash
 # with loadbalancer
+# Microk8s
+scc.sh repsys11c2n1.yaml microk8s  
 curl http://10.1.0.144/productpage
+# Azure AKS
+scc.sh reports-aks-user.yaml reports-aks
+curl http://20.15.156.95/productpage
 
 # with clusterip
 # from a separate terminal

@@ -51,7 +51,7 @@ configmap "istio-services-grafana-dashboards" deleted
 deployment.apps "jaeger" deleted
 service "tracing" deleted
 service "zipkin" deleted
-service "jaeger-collector" deleted
+service "jaeger-collhttps://istio.io/latest/docs/setup/platform-setup/azure/ector" deleted
 serviceaccount "kiali" deleted
 configmap "kiali" deleted
 clusterrole.rbac.authorization.k8s.io "kiali" deleted
