@@ -3,6 +3,7 @@ Setup redundant **[kubernetes](https://kubernetes.io/docs/concepts/overview/)** 
 Create TLS certificates for repsys.linamar.com  using our internal **[PKI](https://www.keyfactor.com/education-center/what-is-pki/)** built with **[OpenSSL](https://www.golinuxcloud.com/openssl-create-certificate-chain-linux/)** that passes SAN certificate validation at **[Sectigo Certificate Linter](https://crt.sh/lintcert)**,1 day
 **[Deploy Istio and Sample App](https://istio.io/latest/docs/setup/getting-started/)**,1 day
 **[Create HTTP route to Sample App](https://istio.io/latest/docs/setup/getting-started/#bookinfo)**,1 day
-**[Enable TLS termination at Gateway](https://www.danielstechblog.io/run-the-istio-ingress-gateway-with-tls-termination-and-tls-passthrough/)**,1 day
-**[Enable TLS termination at sidecar](https://istio.io/latest/docs/tasks/traffic-management/ingress/ingress-sidecar-tls-termination/)**,1 day
+**[Secure ingress gateway for Istio service mesh add-on for Azure Kubernetes Service](https://learn.microsoft.com/en-us/azure/aks/istio-secure-gateway)**,1 day
+**[Secure ingress gateway for Istio service mesh on MicroK8s](https://istio.io/latest/docs/tasks/traffic-management/ingress/secure-ingress/)**,1 day
+**[Ingress Sidecar TLS Termination](https://istio.io/latest/docs/tasks/traffic-management/ingress/ingress-sidecar-tls-termination/)**,1 day
 **[Deploy Prometheus and Grafana](https://hshahin.com/monitoring-istio-on-aks-with-prometheus-and-grafana/)**,1 day

@@ -4,7 +4,6 @@
 **[Current Status](../status/weekly/current_status.md)**\
 **[Back to Main](../../README.md)**
 
-
 ## references
 
 - **[gantt](https://mermaid.js.org/syntax/gantt.html)**
@@ -12,21 +11,23 @@
 ```mermaid
 gantt
     dateFormat  YYYY-MM-DD
-    title       Report System
+    title       Report System Time Line
     excludes    weekends
     %% (`excludes` accepts specific dates in YYYY-MM-DD format, days of the week ("sunday") or "weekends", but not the word "weekdays".)
 
     section K8s Gateway 
     Create TLS Certificates for repsys.linamar.com  :done,t10,2024-10-15,1d
-    Deploy Istio and Sample App                     :crit,done,t20,after t10,1d
+    Deploy Istio service mesh and Sample App                     :crit,done,t20,after t10,1d
     Create HTTP route to Sample App                 :done,t30,after t20,1d
-    Enable TLS termination at Gateway               :active,done,t40,after t30,12h
+    Secure ingress gateway for AKS Istio service mesh               :active,done,t40,after t30,12h
+    Secure ingress gateway for MicroK8s Istio service mesh          :active,done,t45,after t40,12h
+    Ingress Sidecar TLS Termination                                 :active,done,t47,after t45,12h
     section Metrics and Observability 
-    Deploy Prometheus and Grafana                   :active,done,t50,after t40,12h
+    Deploy Prometheus and Grafana                   :active,done,t50,after t47,12h
 
 ```
 
-## Task Notes
+## Report System Task List
 
 | Setup redundant **[kubernetes](https://kubernetes.io/docs/concepts/overview/)** clusters on-prem at Avilla with **[MicroK8s](https://microk8s.io/docs)** and in the cloud on **[Azure AKS](https://learn.microsoft.com/en-us/azure/aks/what-is-aks)**                                                                                                                                                                                                                                                        | 2 weeks |
 |--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------|
@@ -34,9 +35,10 @@ gantt
 | Create TLS certificates for repsys.linamar.com  using our internal **[PKI](https://www.keyfactor.com/education-center/what-is-pki/)** built with **[OpenSSL](https://www.golinuxcloud.com/openssl-create-certificate-chain-linux/)** that passes SAN certificate validation at **[Sectigo Certificate Linter](https://crt.sh/lintcert)**                                                                                                                                                                     | 1 day   |
 | **[Deploy Istio and Sample App](../../k8s/istio-install-part-1.md)**                                                                                                                                                                                                                                                                                                                                                                                                                                         | 1 day   |
 | **[Create HTTP route to Sample App](../../k8s/istio-install-part-1.md)**                                                                                                                                                                                                                                                                                                                                                                                                                                     | 1 day   |
-| **[Enable TLS termination at Gateway](../../k8s/istio-install-part-2.md)**                                                                                                                                                                                                                                                                                                                                                                                                                                   | 1 day   |
+| **[Secure ingress gateway for Istio service mesh add-on for Azure Kubernetes Service](../../../azure/mobexglobal.com/aks/istio_secure_gateway.md)**                                                                                                                                                                                                                                                                                                                                                          | 1 day   |
+| **[Secure ingress gateway for Istio service mesh on MicroK8s](../../k8s/istio-install-part-2.md)**                                                                                                                                                                                                                                                                                                                                                                                                           | 1 day   |
+| **[Ingress Sidecar TLS Termination](../../../azure/mobexglobal.com/aks/istio_ingress_sidecar_tls_termination.md)**                                                                                                                                                                                                                                                                                                                                                                                           | 1 day   |
 | **[Deploy Prometheus and Grafana](../../k8s/istio-install-part-1.md)**                                                                                                                                                                                                                                                                                                                                                                                                                                       | 1 day   |
-
 
 ## example gantt
 
