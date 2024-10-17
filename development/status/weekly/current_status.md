@@ -3,6 +3,8 @@
 **[All Status](../weekly/status_list.md)**\
 **[Back to Main](../../../README.md)**
 
+## **[Next AKS TLS istio](https://learn.microsoft.com/en-us/azure/aks/istio-secure-gateway#configure-a-tls-ingress-gateway)**
+
 ## **[Research Topics](../../../research/topics/research_summary.md)**
 
 ## **[Platform Features](../../report_system/platform_features.md)**
