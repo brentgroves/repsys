@@ -1,4 +1,13 @@
 Research,Summary
+**[Tutorial: Create a Go module](./go_modules.md)**,"This tutorial's sequence includes seven brief topics that each illustrate a different part of the language.
+
+1. Create a module -- Write a small module with functions you can call from another module.
+2. Call your code from another module -- Import and use your new module.
+3. Return and handle an error -- Add simple error handling.
+4. Return a random greeting -- Handle data in slices (Go's dynamically-sized arrays).
+5. Return greetings for multiple people -- Store key/value pairs in a map.
+6. Add a test -- Use Go's built-in unit testing features to test your code.
+7. Compile and install the application -- Compile and install your code locally."
 **[Can we use the terraform Infrastructure as code system to recreate our Azure AKS Cloud resources needed for our report system?](./terraform.md#can-we-use-the-terraform-infrastructure-as-code-system-to-recreate-our-azure-aks-cloud-resources-needed-for-our-report-system)**,"Terraform would be a good way to automate creation or recreation of our entire Azure Cloud infrastructure in a reproducable way. It could be used to tear down and rebuild all of our Azure Cloud resources. So after all of our OSS and custom apps have been deployed to our Azure AKS and we have a working report system it would be a good idea to be able to quickly recreate it if something goes wrong with the K8s cluster."
 **[Can we use Ansible to automate reoccuring tasks associated with managing our report system?](ansible.md#can-we-use-ansible-to-automate-reoccuring-tasks-associated-with-managing-our-report-system)**,"Yes. Ansible is an open-source automation tool that helps automate various IT tasks such as configuration management application deployment and task automation. It uses an agentless architecture meaning it does not require any software to be installed on the target systems. Instead, it uses SSH for communication and Python for scripting."
 **[How should we notify a customer there report is finished?](./research_summary.md)**,"Use HTTP2 push notifications because there is a industry standard way of knowing who you are sending messages to."

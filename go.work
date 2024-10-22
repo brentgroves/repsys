@@ -15,10 +15,13 @@ use (
 	./volumes/go/tutorials/http/basics/fileserver
 	./volumes/go/tutorials/http/basics/webapp/gowiki
 	./volumes/go/tutorials/k8s/out-of-cluster-client-configuration
+	./volumes/go/tutorials/modules/greetings3
+	./volumes/go/tutorials/modules/hello3
 	./volumes/go/tutorials/msal/graphtutorial
 	./volumes/go/tutorials/oauth2/authentication_flow
 	./volumes/go/tutorials/oauth2/github_authentication_flow
 	./volumes/go/tutorials/oidc/go_oidc_example
+	./volumes/go/tutorials/oop/vin1
 	./volumes/go/tutorials/prometheus/counter
 	./volumes/go/tutorials/rabbitmq/hellorabbit/receiver
 	./volumes/go/tutorials/rabbitmq/hellorabbit/sender

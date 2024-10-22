@@ -1,4 +1,4 @@
-# **[Building Scalable Microservices: Creating a GRPC Service with Go and Consuming it in a React App via Envoy](../../../volumes/go/tutorials/grpc/go_grpc_server_with_envoy.md)**
+# **[Building Scalable Microservices: Creating a GRPC Service with Go and Consuming it in a React App via Envoy](../../../volumes/go/tutorials/grpc/go-grpc-react-example/go_grpc_server_with_envoy.md)**
 
 **[Current Status](../../../development/status/weekly/current_status.md)**\
 **[Research List](../../research_list.md)**\
