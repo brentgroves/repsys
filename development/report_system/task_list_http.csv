@@ -1,9 +1,10 @@
-Setup redundant **[kubernetes](https://kubernetes.io/docs/concepts/overview/)** clusters on-prem at Avilla with **[MicroK8s](https://microk8s.io/docs)** and in the cloud on **[Azure AKS](https://learn.microsoft.com/en-us/azure/aks/what-is-aks)**, 2 weeks
-"Research how best get http routing, https termination, and **[rate limiting](https://www.getambassador.io/blog/configure-rate-limits-prevent-ddos-best-practices)** features for the report system web app using **[NGINX Gateway Fabric](https://docs.nginx.com/nginx-gateway-fabric/)**, **[istio service mesh](https://istio.io/latest/about/service-mesh/)**, or **[Kong API Gateway](https://konghq.com/products/kong-gateway)**? We are attempting to offload as much of the non-business logic to OSS", 2 weeks
-Create TLS certificates for repsys.linamar.com  using our internal **[PKI](https://www.keyfactor.com/education-center/what-is-pki/)** built with **[OpenSSL](https://www.golinuxcloud.com/openssl-create-certificate-chain-linux/)** that passes SAN certificate validation at **[Sectigo Certificate Linter](https://crt.sh/lintcert)**,1 day
-**[Deploy Istio and Sample App](https://istio.io/latest/docs/setup/getting-started/)**,1 day
-**[Create HTTP route to Sample App](https://istio.io/latest/docs/setup/getting-started/#bookinfo)**,1 day
-**[Secure ingress gateway for Istio service mesh add-on for Azure Kubernetes Service](https://learn.microsoft.com/en-us/azure/aks/istio-secure-gateway)**,1 day
-**[Secure ingress gateway for Istio service mesh on MicroK8s](https://istio.io/latest/docs/tasks/traffic-management/ingress/secure-ingress/)**,1 day
-**[Ingress Sidecar TLS Termination](https://istio.io/latest/docs/tasks/traffic-management/ingress/ingress-sidecar-tls-termination/)**,1 day
-**[Deploy Prometheus and Grafana](https://hshahin.com/monitoring-istio-on-aks-with-prometheus-and-grafana/)**,1 day
+Setup **[kubernetes](https://kubernetes.io/docs/concepts/overview/)** clusters on-prem at Avilla with **[MicroK8s](https://microk8s.io/docs)** and in the cloud on **[Azure AKS](https://learn.microsoft.com/en-us/azure/aks/what-is-aks)**, 2 weeks
+Create TLS Clint/Server certificate for repsys.linamar.com  using our internal **[PKI](https://www.keyfactor.com/education-center/what-is-pki/)** built with **[OpenSSL](https://www.golinuxcloud.com/openssl-create-certificate-chain-linux/)** that passes SAN certificate validation at **[Sectigo Certificate Linter](https://crt.sh/lintcert)**,1 day
+**[Deploy Istio and Sample App on MicroK8s](https://istio.io/latest/docs/setup/getting-started/)**,1 day
+**[Deploy Istio and Sample App on Azure AKS](https://learn.microsoft.com/en-us/azure/aks/istio-deploy-addon)**,3 day
+**[Setup secure ingress gateway for Istio service mesh add-on for Azure Kubernetes Service](https://learn.microsoft.com/en-us/azure/aks/istio-secure-gateway)**,1 day
+**[Setup Secure ingress gateway for Istio service mesh on MicroK8s](https://istio.io/latest/docs/tasks/traffic-management/ingress/secure-ingress/)**,1 day
+**[Deploy Kiali Prometheus and Grafana for observability](https://istio.io/latest/docs/tasks/observability/kiali/)**,1 day
+**[Configure Istio service mesh for Auth0 authentication](https://istio.io/latest/docs/concepts/security/)**",3 days
+**[Request Level Authentication and Authorization with Istio and Keycloak](https://www.infracloud.io/blogs/request-level-authentication-authorization-istio-keycloak/)**,3 day
+**[Deploy Prometheus and Grafana to Azure AKS](https://www.youtube.com/watch?v=nWKdpcqtMSs)**,1 day
