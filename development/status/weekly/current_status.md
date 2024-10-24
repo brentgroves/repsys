@@ -5,21 +5,13 @@
 
 ## Next
 
-**[Tutorial: Create a Go](./go_modules.md)**,"This tutorial's sequence includes seven brief topics that each illustrate a different part of the language.
-
-1. Create a module -- Write a small module with functions you can call from another module.
-2. Call your code from another module -- Import and use your new module.
-3. Return and handle an error -- Add simple error handling.
-4. Return a random greeting -- Handle data in slices (Go's dynamically-sized arrays).
-5. Return greetings for multiple people -- Store key/value pairs in a map.
-6. Add a test -- Use Go's built-in unit testing features to test your code.
-7. Compile and install the application -- Compile and install your code locally."
+- Add repsys.linamar.com client/server certificates to azure key vault.
 
 ## Summary
 
-- **Infastructure as Code**: With Iac we code or declare the creation of networks, VMs, and the installation of software. Like Ansible best because Terraform is strictly declarative which is a good thing if you have all the parameters you need to declare the exact setup of your platform. 
+- **Infastructure as Code**: With Iac we code or declare the creation of networks, VMs, and the installation of software. Like Ansible best because Terraform is strictly declarative which is a good thing if you have all the parameters you need to declare the exact setup of your platform.
 - **Authentication and Authorization**: While deploying our service mesh noticed that Microsoft put a lot of effort to create their own version of Istio.  They also have integrated Microsoft Entra with Azure Kubernetes Services.  This allows access to other Azure resources such as Azure Key Vault.  The reason for using Azure Key Vault is its hardware security module (HSM) which is a physical computing device that safeguards and manages secrets.
-- **Mutual TLS (mTLS):** authentication is a method that verifies the identity of both the client and the server in a connection, making it more secure than traditional TLS. In order for the customer to access the report system web app a client certificate must be installed in their browser. Also to get the browser secure lock to show without a security warning message our certificate chain must be installed in the OS trust store. 
+- **Mutual TLS (mTLS):** authentication is a method that verifies the identity of both the client and the server in a connection, making it more secure than traditional TLS. In order for the customer to access the report system web app a client certificate must be installed in their browser. Also to get the browser secure lock to show without a security warning message our certificate chain must be installed in the OS trust store.
 
 **[GoLang OOP](https://www.toptal.com/golang/golang-oop-tutorial)**
 
