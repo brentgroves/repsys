@@ -7,6 +7,7 @@
 ## references
 
 - **[hash table](https://www.geeksforgeeks.org/hash-table-data-structure/)**
+- **[string hash function](https://www.hackerearth.com/practice/data-structures/hash-tables/basics-of-hash-tables/tutorial/)**
 
 Hash tables are a type of data structure in which the address/index value of the data element is generated from a hash function. This enables very fast data access as the index value behaves as a key for the data value.
 
