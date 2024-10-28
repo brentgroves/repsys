@@ -163,6 +163,8 @@ kubectl kustomize "github.com/kubernetes-sigs/gateway-api/config/crd?ref=v1.1.0"
 ## Verify
 
 ```bash
+kubectl get all -n istio-system
+kubectl describe ns default 
 kubectl get all                                                                                                    
 NAME          READY   STATUS    RESTARTS          AGE
 pod/mysql-0   1/1     Running   2479 (5d6h ago)   91d
