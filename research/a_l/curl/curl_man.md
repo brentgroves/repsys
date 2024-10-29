@@ -1,4 +1,4 @@
-<https://curl.se/docs/manpage.html>
+**[manpage](https://curl.se/docs/manpage.html)**
 
 Help with options:
 curl --help | grep -- "-f"
@@ -9,6 +9,14 @@ Some Examples:
 -L follow redirects
 -f fail silently
 -s, --silent
+-I, --head
+(HTTP FTP FILE) Fetch the headers only. HTTP-servers feature the command HEAD which this uses to get nothing but the header of a document. When used on an FTP or FILE URL, curl displays the file size and last modification time only.
+-H
+Note that you use the -H flag to set the Host HTTP header to “httpbin.example.com”. This is needed because your ingress Gateway is configured to handle “httpbin.example.com”, but in your test environment you have no DNS binding for that host and are simply sending your request to the ingress IP.
+
+```bash
+curl -s -I -HHost:httpbin.example.com "http://$INGRESS_HOST:$INGRESS_PORT/status/200"
+```
 
 curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs <https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim>
 
