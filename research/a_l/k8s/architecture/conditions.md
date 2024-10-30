@@ -1,0 +1,253 @@
+# **[What the heck are Conditions in Kubernetes controllers?](https://maelvls.dev/kubernetes-conditions/)**
+
+**[Current Status](../../../../development/status/weekly/current_status.md)**\
+**[Research List](../../../research_list.md)**\
+**[Back Main](../../../../README.md)**
+
+While building a Kubernetes controller using CRDs, I stumbled across ‘conditions’ in the status field. What are conditions and how should I implement them in my controller?
+
+In this post, I will explain what ‘status conditions’ are in Kubernetes and show how they can be used in your own controllers.
+
+In the following, a ‘component’ is considered to be one sync loop. A sync loop (also called reconciliation loop) is what must be done in order to synchronize the ‘desired state’ with the ‘observed state’.
+
+Kubernetes itself is made of multiple binaries (kubelet on each node, one apiserver, one kube-controller-manager and one kube-scheduler). And each of these binaries have multiple components (i.e., sync loops):
+
+| binary                  | sync loop = component | reads | creates    | updates    |
+|-------------------------|-----------------------|-------|------------|------------|
+| kube-controller-manager | syncDeployment        | Pod   | ReplicaSet | Deployment |
+| kube-controller-manager | syncReplicaSet        |       | Pod        |            |
+| kubelet                 | syncPod               |       |            | Pod        |
+| kube-scheduler          | scheduleOne           |       |            | Pod        |
+| kubelet                 | syncNodeStatus        |       |            | Node       |
+
+We can see that one single object (Pod) can be read, edited and updated by different components. When I say ‘edited’, I mean the sync loop edits the status (which contains the conditions), not the rest. The status is a way of communicating between components/sync loops.
+
+We also fully embraced the controller model, even for Kubelet, by making Kubelets report back to apiserver (<http://issues.k8s.io/156>) and patch status (<http://issues.k8s.io/2726>) so that the API could be used as the source of truth by other controllers.
+
+Rather than rigid fine-grained state enumerations that couldn't be evolved, we initially adopted simple basic states that could report open-ended reasons for being in each state (<http://issues.k8s.io/1146>), and later non-orthogonal, extensible conditions (<http://issues.k8s.io/7856>).
+
+## Pod example
+
+Let’s read a Pod manifest:
+
+```yaml
+# kubectl -n cert-manager get pods -oyaml
+kind: Pod
+status:
+  conditions:
+    - lastTransitionTime: "2019-10-22T16:29:24Z"
+      status: "True"
+      type: PodScheduled
+    - lastTransitionTime: "2019-10-22T16:29:24Z"
+      status: "True"
+      type: Initialized
+    - lastTransitionTime: "2019-10-22T16:29:31Z"
+      status: "True"
+      type: ContainersReady
+    - lastTransitionTime: "2019-10-22T16:29:31Z"
+      status: "True"
+      type: Ready
+  containerStatuses:
+    - image: quay.io/jetstack/cert-manager-controller:v0.6.1
+      ready: true
+      state: { running: { startedAt: "2019-10-22T16:29:31Z" } }
+  phase: Running
+```
+
+A condition contains a Status and a Type. It may also contain a Reason and a Message. For example:
+
+```yaml
+- lastTransitionTime: "2019-10-22T16:29:31Z"
+  status: "True"
+  type: ContainersReady
+```
+
+The **[pod-lifecycle](https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#pod-conditions)** documentation explains the difference between the ‘phase’ and ‘conditions:
+
+1. The top-level phase is an aggregated state that answers some user-facing questions such as is my pod in a terminal state? but has gaps since the actual state is contained in the conditions.
+2. The conditions array is a set of types (Ready, PodScheduled…) with a status (True, False or Unknown) that make up the ‘computed state’ of a Pod at any time. As we will see later, the state is almost always ‘partial’ (open-ended conditions).
+
+Now, let’s see what I mean by ‘components’. The status of a Pod is not updated by a single Sync loop: it is updated by multiple components: the kubelet, and the kube-scheduler. Here is a list of the condition types per component:
+
+| Possible condition types for a Pod | Component that updates this condition type |
+|------------------------------------|--------------------------------------------|
+| PodScheduled                       | scheduleOne (kube-scheduler)               |
+| Unschedulable                      | scheduleOne (kube-scheduler)               |
+| Initialized                        | syncPod (kubelet)                          |
+| ContainersReady                    | syncPod (kubelet)                          |
+| Ready                              | syncPod (kubelet)                          |
+
+Although conditions are a good way to convey information to the user, they also serve as a way of communicating between components (e.g., between kube-scheduler and apiserver) but also to external components (e.g. a custom controller that wants to trigger something as soon as a pod becomes ‘Unschedulable’, and maybe order more VMs to the cloud provider and add it as a node.
+
+As you will see below, the ‘conditions’ array is considered to be containing all the ‘ground truth’. The ‘phase’ just an abstraction of these conditions.
+
+## What other projects do
+
+- **[cluster-api](https://github.com/kubernetes-sigs/cluster-api)** and its providers (e.g., cluster-api-gcp-provider) do not use Conditions at all:
+
+(Feng Min, Nov 2018) Brian Grant (@bgrant0607) and Eric Tune (@erictune) have indicated that the API pattern of having “Conditions” lists in object statuses is soon to be deprecated. These have generally been used as a timeline of state transitions for the object’s reconciliation, and difficult to consume for clients that just want a meaningful representation of the object’s current state. There are no existing examples of the new pattern to follow instead, just the guidance that we should use top-level fields in the status to represent meaningful information. We can revisit the specifics when new patterns start to emerge in core.
+
+Instead of using a list of conditions, cluster-api projects go like that:
+
+```yaml
+status:
+  ready: false
+  phase: "Failed"
+  failureReason: "GcpMachineCrashed"
+  failureMessage: "VM crashed: ..."
+```
+
+- **[cert-manager](https://github.com/jetstack/cert-manager)** uses Conditions, but the only type is ‘Ready’. The rest of the information is given in Ready’s Reason field. That might be unfortunate for users or other components that are willing to use cert-manager’s API, similarly to what happens with the PodSchedulable condition and its reason, PodReasonUnschedulable. For example, the **[Issuer’s Sync](https://github.com/jetstack/cert-manager/blob/b91b7d8d3/pkg/controller/issuers/sync.go#L61-L69)**:
+
+```yaml
+kind: Issuer
+status:
+  conditions:
+    - type: "Ready"
+      status: "False"
+      reason: "ErrorConfig"
+      message: "Resource validation failed: .
+```
+
+- Openshift uses conditions a lot but does not use the standard ‘Ready’ type. For example, cluster-version-operators (CVO) has a kind: ClusterOperator with condition types ‘Available’, ‘Progressing’, ‘Degraded’ and ‘Upgradeable’.
+
+## Conditions vs. State machine
+
+(**[api-conventions.md](https://github.com/kubernetes/community/blob/4c9ef2d/contributors/devel/sig-architecture/api-conventions.md)**, July 2017) Conditions are observations and not, themselves, state machines.
+
+So, what is the difference between a state in a state machine and an observation? A state machine has a known a fixed state. In comparison, conditions offers an ‘open-world’ perspective with the Unknown value. For example, the status of a Pod is partly constructed by the kube-scheduler, partly by the kubelet.
+
+But when an object gets created, no conditions are present. What does that mean?
+
+(Tim Hockin, May 2015) The absence of a condition should be interpreted the same as Unknown.
+
+In the end, this set of conditions are just a way of communicating changes of state between components, and this state can always be reconstructed by observing the system:
+
+(principles.md, 2015) Object status must be 100% reconstructable by observation. Any history kept (E.g., through conditions or other fields in ‘status’) must be just an optimization and not required for correct operation.
+
+Do not define comprehensive state machines for objects with behaviors associated with state transitions and/or “assumed” states that cannot be ascertained by observation.
+
+One last comment that explains why the Kubernetes docs don’t have any state-machine diagram:
+
+(Tim Hockin, Apr 2016) This [state-machine-alike diagram representing the Pod states] is not strictly correct though, because a pod can cease to be “ready” but not die. We’ve intentionally NOT drawn this as a state-machine because conditions are really orthogonal concepts. We report a singular status as part of kubectl, so maybe we should document THAT, but it’s more complicated than this diagram captures.
+
+## Conditions vs. Events
+
+Events are meant to save history (for non-machine consumption, i.e., for humans). The set of conditions describes the ‘current’ state:
+
+(Brian Grant, Aug 2017 Status, represented as conditions or otherwise, should be complementary to events pertaining to the resource. Events provide additional information for debugging and tracing, akin to log messages, but aren’t intended to be used for event-driven automation.
+
+It was reminded in 2019:
+
+(Kenneth Owens, Oct 2019) Events are used to express point in time occurrences, and Conditions are used to express the current state of an ongoing process. For instance, Pod creation is an event, Deployment progressing is a condition.
+
+## Orthogonality vs. Extensibility
+
+In 2015, the Kubernetes team seemed to be attached to the idea of ‘orthogonality’ between conditions.
+
+(David Oppenheimer, Apr 2015) To avoid confusion, Conditions should be orthogonal. The ones you suggested – Instantiated, Initialized, and Terminated – don’t seem to be orthogonal (in fact I would expect a pod to transition from FFF to TFF to TTF to TTT). What you’ve described sounds more like a state machine than a set of orthogonal conditions, and I think Conditions should only be used for the latter.
+
+In 2017, things start to get confusing: each condition represents one non-orthogonal “state” of a resource?! Conditions are orthogonal to each other, but the states that they represent may be non-orthogonal…
+
+(Brian Grant, Aug 2017) Conditions were created as a way to wean contributors off of the idea of state machines with mutually exclusive states (called “phase”).
+
+Each condition should represent a non-orthogonal “state” of a resource – is the resource in that state or not (or unknown).
+
+Arbitrarily typed/structured status properties specific to a particular resource should just be status fields.
+
+## non-orthogonal state
+
+A non-orthogonal state is a quantum state that is not perpendicular to another state in a given space. When two states are non-orthogonal, it's not possible to reliably distinguish between them. This is because the inner product of two orthogonal states is zero.
+
+## Distinguishing non-orthogonal states
+
+The closer two states are to each other, the easier it is to distinguish them. When the states are orthogonal, they are completely distinguishable
+
+I did not find anywhere a definition of ‘orthogonal condition’; my guess is that two conditions are orthogonal when they explain two uncorrelated parts of the system.
+
+But in 2019, the narrative seems to have changed: Brian Grant talks about ‘non-orthogonal & extensible conditions’.
+
+(Brian Grant, Mar 2019) Rather than rigid fine-grained state enumerations that couldn’t be evolved, we initially adopted simple basic states that could report open-ended reasons for being in each state (<http://issues.k8s.io/1146>), and later non-orthogonal, extensible conditions (<http://issues.k8s.io/7856>).
+
+## Orthogonality was hard to implement anyway
+
+(Steven E. Harris, Aug 2019) The burden is on the status type author to come up with dimensions that are orthogonal; that required careful thought when writing my own condition types.
+
+Here is what I think: you should definitely use conditions, but don’t bother with orthogonality. Just use conditions that represent important changes for the object, beginning with the ‘Ready’ condition type. ‘Ready’ is the strongest condition of all and indicates something 100% operational.
+
+## Are Conditions still used?
+
+There was an extensive discussion, started in 2015, about removing or keeping the “phase” field. In 2017, the same thread turned into “should we keep using conditions?"; Brian Grant found conditions cumbersome (an array is harder to deal with than top-level fields) and confusing because of the open-ended statuses (True, False, Unknown). In late 2017, Brian Grant did a survey and found out that conditions are still what controller authors should use. In 2019, Daniel Smith reminded us that conditions are not going away:
+
+(Daniel Smith, May 2019) Conditions are not going to be removed.
+
+The ground truth is set as conditions by the components that are nearby, e.g. kubelet sets “DiskPressure = True”.
+
+The set of conditions is summarized into phases (or secondary conditions) for consumption by general controllers. E.g., if there is disk pressure, that can be aggregated into conditionSummary.schedulable: false. The process doing this needs to know all possible gound truth statements; the process of summarizing them isolates the rest of the cluster from needing to know this.
+
+## Conditions vs. Reasons
+
+Do I really need to bother with this .status.conditions array, can I just use .status.phase with a simple enum? Or just a reason as part of an existing ‘Ready’ condition?
+
+At first, Kubernetes would rely on many Reasons:
+
+(api-conventions.md, July 2017) In condition types, and everywhere else they appear in the API, Reason is intended to be a one-word, CamelCase representation of the category of cause of the current status, and Message is intended to be a human-readable phrase or sentence, which may contain specific details of the individual occurrence.
+
+Reason is intended to be used in concise output, such as one-line kubectl get output, and in summarizing occurrences of causes, whereas Message is intended to be presented to users in detailed status explanations, such as kubectl describe output.
+
+Later, they mode to non-orthogonal (read: may-be-corrolated conditions):
+
+(Brian Grant, Mar 2019) Rather than rigid fine-grained state enumerations that couldn’t be evolved, we initially adopted simple basic states that could report open-ended reasons for being in each state (2014), and later non-orthogonal, extensible conditions (2017).
+
+Since the Pod conditions do not have a ‘Reason’ field (in the previous Pod example), let’s take a look at the Node conditions instead:
+
+```yaml
+kind: Node
+status:
+  conditions:
+    - type: DiskPressure
+      status: "False"
+      reason: KubeletHasNoDiskPressure
+      message: kubelet has no disk pressure
+      lastHeartbeatTime: "2019-11-17T14:18:26Z"
+      lastTransitionTime: "2019-10-22T16:27:53Z"
+    - type: Ready
+      status: "True"
+      reason: KubeletReady
+      message: kubelet is posting ready status. AppArmor enabled
+      lastHeartbeatTime: "2019-11-17T14:18:26Z"
+      lastTransitionTime: "2019-10-22T16:27:53Z"
+```
+
+Here, the ‘Ready’ condition type has an additional ‘Reason’ field that gives the user more information about the transition. The Reason field is sometimes used by other components: for example, PodReasonUnschedulable is a reason of the PodSchedulable condition type. This reason is set by the kube-scheduler and is ‘consumed’ by the kubelet (or the reverse, I can’t really tell).
+
+So, Reason of another condition or Condition? If you feel that this state might be interesting to the rest of the system, then use a proper Condition.
+
+Regarding the ‘phase’ top-level field, I would recommend to offer it to your users when the conditions alone cannot help them answer questions such as has my pod terminated?.
+
+## How many conditions?
+
+If you think that the ‘Errored’ state can be useful for other components or the user (e.g. kubectl wait --for=condition=errored), then add it. If you think it is important for other components or for the user to know that something is in progress, go ahead and add a ‘InProgress’ condition.
+
+Regarding the naming of condition types, here is some advice:
+
+(api-conventions.md, July 2017) Condition types should indicate state in the “abnormal-true” polarity. For example, if the condition indicates when a policy is invalid, the “is valid” case is probably the norm, so the condition should be called “Invalid”.
+
+Also, remember that these types are part of your API and you should keep in mind that they require maintaining backwards- and forwards-compatibility. Adding a new condition is not free: you must maintain them over time.
+
+(api-conventions.md, July 2017) The meaning of a Condition can not be changed arbitrarily - it becomes part of the API, and has the same backwards- and forwards-compatibility concerns of any other part of the API.
+
+Conditions are also a clean way of letting third-party components (such as the cluster-api controller) to add their own ‘named’ conditions to an existing object, e.g. to a Pod (see **[pod-readiness-gate](https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#pod-readiness-gate)**):
+
+```yaml
+Kind: Pod
+spec:
+  readinessGates:
+    - conditionType: "www.example.com/feature-1"
+status:
+  conditions:
+    - type: Ready # this is a builtin PodCondition
+      status: "False"
+    - type: "www.example.com/feature-1" # an extra PodCondition
+      status: "False"
+```

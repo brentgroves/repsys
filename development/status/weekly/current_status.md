@@ -5,15 +5,14 @@
 
 ## Next
 
-- Add repsys.linamar.com client/server certificates to azure key vault.
+- **[GoLang OOP](https://www.toptal.com/golang/golang-oop-tutorial)**
+- **[Building Scalable Microservices: Creating a GRPC Service with Go and Consuming it in a React App via Envoy](https://medium.com/@digvijay17july/building-scalable-microservices-creating-a-grpc-service-with-go-and-consuming-it-in-a-react-app-1de3c4385c05)**
 
 ## Summary
 
 - **Infastructure as Code**: With Iac we code or declare the creation of networks, VMs, and the installation of software. Like Ansible best because Terraform is strictly declarative which is a good thing if you have all the parameters you need to declare the exact setup of your platform.
 - **Authentication and Authorization**: While deploying our service mesh noticed that Microsoft put a lot of effort to create their own version of Istio.  They also have integrated Microsoft Entra with Azure Kubernetes Services.  This allows access to other Azure resources such as Azure Key Vault.  The reason for using Azure Key Vault is its hardware security module (HSM) which is a physical computing device that safeguards and manages secrets.
 - **Mutual TLS (mTLS):** authentication is a method that verifies the identity of both the client and the server in a connection, making it more secure than traditional TLS. In order for the customer to access the report system web app a client certificate must be installed in their browser. Also to get the browser secure lock to show without a security warning message our certificate chain must be installed in the OS trust store.
-
-**[GoLang OOP](https://www.toptal.com/golang/golang-oop-tutorial)**
 
 ## **[Research Topics](../../../research/topics/research_summary.md)**
 
