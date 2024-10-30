@@ -31,8 +31,8 @@ service/httpbin created
 deployment.apps/httpbin created
 
 ###### ERROR httpbin does not work always crashes
-cd ~/Downloads/istio-1.23.0
-kubectl apply -f samples/httpbin/httpbin.yaml
+# cd ~/Downloads/istio-1.23.0
+# kubectl apply -f samples/httpbin/httpbin.yaml
 
 ```
 
@@ -149,6 +149,10 @@ kubectl create -n istio-system secret tls httpbin-credential \
   --cert=example_certs1/httpbin.example.com.crt
 
 secret/httpbin-credential created  
+
+kubectl get secret -n istio-system httpbin-credential -o json | jq -r '.data."tls.crt"' | base64 -d
+kubectl get secret -n istio-system httpbin-credential -o json | jq -r '.data."tls.key"' | base64 -d
+
 ```
 
 ## Configure the ingress gateway
@@ -184,6 +188,23 @@ EOF
 gateway.gateway.networking.k8s.io/mygateway created
 ```
 
+Because creating a Kubernetes Gateway resource will also deploy an associated proxy service, run the following command to wait for the gateway to be ready:
+
+```bash
+kubectl wait --for=condition=programmed gtw httpbin-gateway
+gateway.gateway.networking.k8s.io/httpbin-gateway condition met
+
+kubectl describe gtw mygateway -n istio-system
+...
+    Last Transition Time:  2024-10-29T22:22:11Z
+    Message:               Resource programmed, assigned to service(s) mygateway-istio.istio-system.svc.cluster.local:443
+    Observed Generation:   2
+    Reason:                Programmed
+    Status:                True
+    Type:                  Programmed
+...    
+```
+
 ## Next, configure the gateway’s ingress traffic routes by defining a corresponding HTTPRoute
 
 ```bash
@@ -215,9 +236,25 @@ httproute.gateway.networking.k8s.io/httpbin created
 
 ## Finally, get the gateway address and port from the Gateway resource
 
+Because creating a Kubernetes Gateway resource will also deploy an associated proxy service, run the following command to wait for the gateway to be ready:
+
 ```bash
-kubectl wait --for=condition=programmed gtw mygateway -n istio-system
-gateway.gateway.networking.k8s.io/mygateway condition met
+kubectl wait --for=condition=programmed gtw httpbin-gateway
+gateway.gateway.networking.k8s.io/httpbin-gateway condition met
+
+kubectl get gtw mygateway -n istio-system -o jsonpath='{.status.conditions}'
+kubectl get gtw mygateway -n istio-system -o json | jq -r '.status."conditions"'
+
+kubectl describe gtw mygateway -n istio-system
+...
+    Last Transition Time:  2024-10-29T22:22:11Z
+    Message:               Resource programmed, assigned to service(s) mygateway-istio.istio-system.svc.cluster.local:443
+    Observed Generation:   2
+    Reason:                Programmed
+    Status:                True
+    Type:                  Programmed
+...    
+
 export INGRESS_HOST=$(kubectl get gtw mygateway -n istio-system -o jsonpath='{.status.addresses[0].value}')
 echo $INGRESS_HOST
 10.1.0.144
@@ -399,6 +436,17 @@ spec:
 EOF
 ```
 
+## Set env variables
+
+```bash
+export INGRESS_HOST=$(kubectl get gtw mygateway -n istio-system -o jsonpath='{.status.addresses[0].value}')
+echo $INGRESS_HOST
+10.1.0.144
+export SECURE_INGRESS_PORT=$(kubectl get gtw mygateway -n istio-system -o jsonpath='{.spec.listeners[?(@.name=="https-helloworld")].port}')
+echo $SECURE_INGRESS_PORT
+443
+```
+
 ## Send an HTTPS request to helloworld.example.com
 
 ```bash
@@ -416,4 +464,149 @@ curl -v -HHost:httpbin.example.com --resolve "httpbin.example.com:$SECURE_INGRES
 ...
 * Connection #0 to host httpbin.example.com left intact
 I'm a teapot!%   
+```
+
+## Configure a mutual TLS ingress gateway
+
+You can extend your gateway’s definition to support **[mutual TLS](https://en.wikipedia.org/wiki/Mutual_authentication)**.
+
+### 1. Change the credentials of the ingress gateway by deleting its secret and creating a new one. The server uses the CA certificate to verify its clients, and we must use the key ca.crt to hold the CA certificate
+
+```bash
+pushd .
+cd ~/src/repsys/k8s/istio
+
+kubectl -n istio-system delete secret httpbin-credential
+kubectl create -n istio-system secret generic httpbin-credential \
+  --from-file=tls.key=example_certs1/httpbin.example.com.key \
+  --from-file=tls.crt=example_certs1/httpbin.example.com.crt \
+  --from-file=ca.crt=example_certs1/example.com.crt
+secret/httpbin-credential created 
+
+```
+
+Optionally, the credential may include a certificate revocation list (CRL) using the key ca.crl. If so, add another argument to the above example to provide the CRL: –from-file=ca.crl=/some/path/to/your-crl.pem.
+
+The credential may also include an OCSP Staple using the key tls.ocsp-staple which can be specified by an additional argument: --from-file=tls.ocsp-staple=/some/path/to/your-ocsp-staple.pem.
+
+### 2. Configure the ingress gateway
+
+Because the Kubernetes Gateway API does not currently support mutual TLS termination in a Gateway, we use an Istio-specific option, gateway.istio.io/tls-terminate-mode: MUTUAL, to configure it:
+
+```yaml
+cat <<EOF | kubectl apply -f -
+apiVersion: gateway.networking.k8s.io/v1
+kind: Gateway
+metadata:
+  name: mygateway
+  namespace: istio-system
+spec:
+  gatewayClassName: istio
+  listeners:
+  - name: https
+    hostname: "httpbin.example.com"
+    port: 443
+    protocol: HTTPS
+    tls:
+      mode: Terminate
+      certificateRefs:
+      - name: httpbin-credential
+      options:
+        gateway.istio.io/tls-terminate-mode: MUTUAL
+    allowedRoutes:
+      namespaces:
+        from: Selector
+        selector:
+          matchLabels:
+            kubernetes.io/metadata.name: default
+EOF
+gateway.gateway.networking.k8s.io/mygateway configured
+```
+
+### 3. Attempt to send an HTTPS request using the prior approach and see how it fails
+
+```bash
+curl -v -HHost:httpbin.example.com --resolve "httpbin.example.com:$SECURE_INGRESS_PORT:$INGRESS_HOST" \
+--cacert example_certs1/example.com.crt "https://httpbin.example.com:$SECURE_INGRESS_PORT/status/418"
+...
+* TLSv1.2 (IN), TLS header, Supplemental data (23):
+* TLSv1.3 (IN), TLS alert, unknown (628):
+* OpenSSL SSL_read: error:0A00045C:SSL routines::tlsv13 alert certificate required, errno 0
+* Failed receiving HTTP2 data
+* OpenSSL SSL_write: SSL_ERROR_ZERO_RETURN, errno 0
+* Failed sending HTTP2 data
+* Connection #0 to host httpbin.example.com left intact
+curl: (56) OpenSSL SSL_read: error:0A00045C:SSL routines::tlsv13 alert certificate required, errno 0
+```
+
+### 4.Pass a client certificate and private key to curl and resend the request
+
+Pass your client’s certificate with the --cert flag and your private key with the --key flag to curl:
+
+```bash
+curl -v -HHost:httpbin.example.com --resolve "httpbin.example.com:$SECURE_INGRESS_PORT:$INGRESS_HOST" \
+  --cacert example_certs1/example.com.crt --cert example_certs1/client.example.com.crt --key example_certs1/client.example.com.key \
+  "https://httpbin.example.com:$SECURE_INGRESS_PORT/status/418"
+...
+  * Connection #0 to host httpbin.example.com left intact
+I'm a teapot!%  
+
+
+curl -v -HHost:httpbin.example.com --resolve "httpbin.example.com:$SECURE_INGRESS_PORT:$INGRESS_HOST" \
+  --cacert example_certs1/example.com.crt --cert example_certs1/httpbin.example.com.crt --key example_certs1/httpbin.example.com.key \
+  "https://httpbin.example.com:$SECURE_INGRESS_PORT/status/418"
+...
+  * Connection #0 to host httpbin.example.com left intact
+I'm a teapot!%  
+
+curl -v -HHost:httpbin.example.com --resolve "httpbin.example.com:$SECURE_INGRESS_PORT:$INGRESS_HOST" \
+  --cacert example_certs1/example.com.crt --cert example_certs1/helloworld.example.com.crt --key example_certs1/helloworld.example.com.key \
+  "https://httpbin.example.com:$SECURE_INGRESS_PORT/status/418"
+* Connection #0 to host httpbin.example.com left intact
+I'm a teapot!%   
+
+
+curl -v -HHost:httpbin.example.com --resolve "httpbin.example.com:$SECURE_INGRESS_PORT:$INGRESS_HOST" \
+  --cacert example_certs1/example.com.crt --cert example_certs1/client.bookinfo.com.crt --key example_certs1/client.bookinfo.com.key \
+  "https://httpbin.example.com:$SECURE_INGRESS_PORT/status/418"
+
+* TLSv1.2 (IN), TLS header, Supplemental data (23):
+* TLSv1.3 (IN), TLS alert, unknown CA (560):
+* OpenSSL SSL_read: error:0A000418:SSL routines::tlsv1 alert unknown ca, errno 0
+* Failed receiving HTTP2 data
+* OpenSSL SSL_write: SSL_ERROR_ZERO_RETURN, errno 0
+* Failed sending HTTP2 data
+* Connection #0 to host httpbin.example.com left intact
+curl: (56) OpenSSL SSL_read: error:0A000418:SSL routines::tlsv1 alert unknown ca, errno 0  
+
+
+```
+
+Note: The client certificate has to be signed by the ca.crt.
+
+```bash
+kubectl create -n istio-system secret generic httpbin-credential \
+  --from-file=tls.key=example_certs1/httpbin.example.com.key \
+  --from-file=tls.crt=example_certs1/httpbin.example.com.crt \
+  --from-file=ca.crt=example_certs1/example.com.crt
+secret/httpbin-credential created 
+
+# This works because helloworld.example.com.crt was signed by example_certs1/example.com.crt
+curl -v -HHost:httpbin.example.com --resolve "httpbin.example.com:$SECURE_INGRESS_PORT:$INGRESS_HOST" \
+  --cacert example_certs1/example.com.crt --cert example_certs1/helloworld.example.com.crt --key example_certs1/helloworld.example.com.key \
+  "https://httpbin.example.com:$SECURE_INGRESS_PORT/status/418"
+
+openssl x509 -req -sha256 -days 365 -CA example_certs1/example.com.crt -CAkey example_certs1/example.com.key -set_serial 1 -in example_certs1/helloworld.example.com.csr -out example_certs1/helloworld.example.com.crt
+
+# This works because helloworld.example.com.crt was signed by example_certs1/example.com.crt
+curl -v -HHost:httpbin.example.com --resolve "httpbin.example.com:$SECURE_INGRESS_PORT:$INGRESS_HOST" \
+  --cacert example_certs1/example.com.crt --cert example_certs1/client.bookinfo.com.crt --key example_certs1/client.bookinfo.com.key \
+  "https://httpbin.example.com:$SECURE_INGRESS_PORT/status/418"
+
+* OpenSSL SSL_read: error:0A000418:SSL routines::tlsv1 alert unknown ca, errno 0
+* Failed receiving HTTP2 data
+* OpenSSL SSL_write: SSL_ERROR_ZERO_RETURN, errno 0
+* Failed sending HTTP2 data
+* Connection #0 to host httpbin.example.com left intact
+curl: (56) OpenSSL SSL_read: error:0A000418:SSL routines::tlsv1 alert unknown ca, errno 0
 ```
