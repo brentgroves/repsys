@@ -57,8 +57,8 @@ service/httpbin created
 deployment.apps/httpbin created
 
 ###### ERROR httpbin does not work always crashes
-cd ~/Downloads/istio-1.23.0
-kubectl apply -f samples/httpbin/httpbin.yaml
+# cd ~/Downloads/istio-1.23.0
+# kubectl apply -f samples/httpbin/httpbin.yaml
 
 ```
 
@@ -96,6 +96,16 @@ Because creating a Kubernetes Gateway resource will also deploy an associated pr
 ```bash
 kubectl wait --for=condition=programmed gtw httpbin-gateway
 gateway.gateway.networking.k8s.io/httpbin-gateway condition met
+
+kubectl describe gtw mygateway -n istio-system
+...
+    Last Transition Time:  2024-10-29T22:22:11Z
+    Message:               Resource programmed, assigned to service(s) mygateway-istio.istio-system.svc.cluster.local:443
+    Observed Generation:   2
+    Reason:                Programmed
+    Status:                True
+    Type:                  Programmed
+...    
 ```
 
 Configure routes for traffic entering via the Gateway:
