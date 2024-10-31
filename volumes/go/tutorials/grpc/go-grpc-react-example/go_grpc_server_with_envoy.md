@@ -65,7 +65,7 @@ func main() {
  }
 ```
 
-## **[Install Protobuf](./protobuf-install.md)**
+## **[Install Protobuf](../protobuf-install.md)**
 
 ## Create a Protobuf Definition
 
