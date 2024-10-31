@@ -16,6 +16,8 @@ Protobuf is an essential tool for developers looking to optimize data serializat
 sudo apt install protobuf-compiler
 which protoc           
 /bin/protoc
+# or
+/home/brent/anaconda3/bin/protoc
 
 ```bash
 # Install protoc and golang plugins
