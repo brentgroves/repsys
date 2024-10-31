@@ -5,6 +5,7 @@
 
 ## Next
 
+- **[gRPC Basics](https://grpc.io/docs/languages/go/basics/)**
 - **[GoLang OOP](https://www.toptal.com/golang/golang-oop-tutorial)**
 - **[Building Scalable Microservices: Creating a GRPC Service with Go and Consuming it in a React App via Envoy](https://medium.com/@digvijay17july/building-scalable-microservices-creating-a-grpc-service-with-go-and-consuming-it-in-a-react-app-1de3c4385c05)**
 
