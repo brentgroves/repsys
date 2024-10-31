@@ -1,4 +1,4 @@
-# **[Azure](../../azure/mobexglobal.com/aks/istio-install-aks.md)**
+# **[Azure](../../azure/mobexglobal.com/aks/install_istio_add_on_azure.md)**
 
 **[Current Status](../../../development/status/weekly/current_status.md)**\
 **[Research List](../../../research/research_list.md)**\

@@ -116,6 +116,10 @@ openssl req -out example_certs1/client.example.com.csr -newkey rsa:2048 -nodes -
 openssl x509 -req -sha256 -days 365 -CA example_certs1/example.com.crt -CAkey example_certs1/example.com.key -set_serial 1 -in example_certs1/client.example.com.csr -out example_certs1/client.example.com.crt
 Certificate request self-signature ok
 subject=CN = client.example.com, O = client organization
+
+# convert to pkcs12 format
+openssl pkcs12 -export -out example_certs1/client.example.com.p12.crt -inkey example_certs1/client.example.com.key -in example_certs1/client.example.com.crt
+
 ```
 
 You can confirm that you have all of the needed files by running the following command:
@@ -523,9 +527,23 @@ EOF
 gateway.gateway.networking.k8s.io/mygateway configured
 ```
 
+## Set mTLS env variables
+
+```bash
+export INGRESS_HOST=$(kubectl get gtw mygateway -n istio-system -o jsonpath='{.status.addresses[0].value}')
+echo $INGRESS_HOST
+10.1.0.144
+export SECURE_INGRESS_PORT=$(kubectl get gtw mygateway -n istio-system -o jsonpath='{.spec.listeners[?(@.name=="https-helloworld")].port}')
+echo $SECURE_INGRESS_PORT
+443
+```
+
 ### 3. Attempt to send an HTTPS request using the prior approach and see how it fails
 
 ```bash
+pushd .
+cd ~/src/repsys/k8s/istio
+
 curl -v -HHost:httpbin.example.com --resolve "httpbin.example.com:$SECURE_INGRESS_PORT:$INGRESS_HOST" \
 --cacert example_certs1/example.com.crt "https://httpbin.example.com:$SECURE_INGRESS_PORT/status/418"
 ...
@@ -544,13 +562,15 @@ curl: (56) OpenSSL SSL_read: error:0A00045C:SSL routines::tlsv13 alert certifica
 Pass your client’s certificate with the --cert flag and your private key with the --key flag to curl:
 
 ```bash
+pushd .
+cd ~/src/repsys/k8s/istio
+
 curl -v -HHost:httpbin.example.com --resolve "httpbin.example.com:$SECURE_INGRESS_PORT:$INGRESS_HOST" \
   --cacert example_certs1/example.com.crt --cert example_certs1/client.example.com.crt --key example_certs1/client.example.com.key \
   "https://httpbin.example.com:$SECURE_INGRESS_PORT/status/418"
 ...
   * Connection #0 to host httpbin.example.com left intact
 I'm a teapot!%  
-
 
 curl -v -HHost:httpbin.example.com --resolve "httpbin.example.com:$SECURE_INGRESS_PORT:$INGRESS_HOST" \
   --cacert example_certs1/example.com.crt --cert example_certs1/httpbin.example.com.crt --key example_certs1/httpbin.example.com.key \
@@ -564,7 +584,9 @@ curl -v -HHost:httpbin.example.com --resolve "httpbin.example.com:$SECURE_INGRES
   "https://httpbin.example.com:$SECURE_INGRESS_PORT/status/418"
 * Connection #0 to host httpbin.example.com left intact
 I'm a teapot!%   
+```
 
+```bash
 
 curl -v -HHost:httpbin.example.com --resolve "httpbin.example.com:$SECURE_INGRESS_PORT:$INGRESS_HOST" \
   --cacert example_certs1/example.com.crt --cert example_certs1/client.bookinfo.com.crt --key example_certs1/client.bookinfo.com.key \
@@ -609,4 +631,32 @@ curl -v -HHost:httpbin.example.com --resolve "httpbin.example.com:$SECURE_INGRES
 * Failed sending HTTP2 data
 * Connection #0 to host httpbin.example.com left intact
 curl: (56) OpenSSL SSL_read: error:0A000418:SSL routines::tlsv1 alert unknown ca, errno 0
+```
+
+## Try in browser <https://httpbin.example.com/status/418>
+
+```bash
+Access to httpbin.example.com was denied
+httpbin.example.com didn’t accept your login certificate, or one may not have been provided.
+Try contacting the system admin.
+ERR_BAD_SSL_CLIENT_AUTH_CERT
+```
+
+### Import Client certificate
+
+Since we generated this certificate we have the private key which is used on the client as the server uses the server private key.  To import into chrome type "chrome://settings/certificates" and select the import button from the your certificates tab.
+
+```bash
+openssl pkcs12 -export -out example_certs1/client.example.com.p12.crt -inkey example_certs1/client.example.com.key -in example_certs1/client.example.com.crt
+```
+
+## Set all env variables
+
+```bash
+export INGRESS_HOST=$(kubectl get gtw mygateway -n istio-system -o jsonpath='{.status.addresses[0].value}')
+echo $INGRESS_HOST
+10.1.0.144
+export SECURE_INGRESS_PORT=$(kubectl get gtw mygateway -n istio-system -o jsonpath='{.spec.listeners[?(@.name=="https")].port}')
+echo $SECURE_INGRESS_PORT
+443
 ```
