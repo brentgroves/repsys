@@ -534,6 +534,8 @@ export INGRESS_HOST=$(kubectl get gtw mygateway -n istio-system -o jsonpath='{.s
 echo $INGRESS_HOST
 10.1.0.144
 export SECURE_INGRESS_PORT=$(kubectl get gtw mygateway -n istio-system -o jsonpath='{.spec.listeners[?(@.name=="https-helloworld")].port}')
+export SECURE_INGRESS_PORT=$(kubectl get gtw mygateway -n istio-system -o jsonpath='{.spec.listeners[?(@.name=="https")].port}')
+
 echo $SECURE_INGRESS_PORT
 443
 ```
