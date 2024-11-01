@@ -11,7 +11,9 @@
 
 ## Linmar Network Transition
 
-1. 10.188.x.x network cable ran to my development system in Albion IT office in addition to 10.1.0.x network cable.
+1. A 2nd network cable to my dev system in Albion office so that I can access Albion and Avilla r620 systems I.e. a 10.188.x.x and 10.1.0.x network cable.
+2. Move one R620 to Avilla and assign Avilla network address to it, i.e. 10.188.x.x or 10.187.x.x i forget which is Avilla's network number.
+3. Configure it from Albion development system since the R620 has Ubuntu server not Ubuntu desktop.
 
 ## Summary
 
