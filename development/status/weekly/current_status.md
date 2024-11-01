@@ -9,6 +9,10 @@
 - **[GoLang OOP](https://www.toptal.com/golang/golang-oop-tutorial)**
 - **[Building Scalable Microservices: Creating a GRPC Service with Go and Consuming it in a React App via Envoy](https://medium.com/@digvijay17july/building-scalable-microservices-creating-a-grpc-service-with-go-and-consuming-it-in-a-react-app-1de3c4385c05)**
 
+## Linmar Network Transition
+
+1. 10.188.x.x network cable ran to my development system in Albion IT office in addition to 10.1.0.x network cable.
+
 ## Summary
 
 - **Infastructure as Code**: With Iac we code or declare the creation of networks, VMs, and the installation of software. Like Ansible best because Terraform is strictly declarative which is a good thing if you have all the parameters you need to declare the exact setup of your platform.
