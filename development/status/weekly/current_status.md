@@ -15,6 +15,21 @@
 - **Authentication and Authorization**: While deploying our service mesh noticed that Microsoft put a lot of effort to create their own version of Istio.  They also have integrated Microsoft Entra with Azure Kubernetes Services.  This allows access to other Azure resources such as Azure Key Vault.  The reason for using Azure Key Vault is its hardware security module (HSM) which is a physical computing device that safeguards and manages secrets.
 - **Mutual TLS (mTLS):** authentication is a method that verifies the identity of both the client and the server in a connection, making it more secure than traditional TLS. In order for the customer to access the report system web app a client certificate must be installed in their browser. Also to get the browser secure lock to show without a security warning message our certificate chain must be installed in the OS trust store.
 
+## Secure Gateway Meeting
+
+TLS is a cross-cutting concern so if the platform can perform the encryption/decription it would offload the task from the microservices. Fortunately, any K8s gateway can perform TLS termination. Istio service mesh is the gateway the report system uses and is a control plane to envoy proxies which has the following feature support:
+
+- TLS/mTLS termination
+- automatic retries
+- circuit breaking 
+- global rate limiting 
+- request shadowing
+- outlier detection
+
+**Issue:** K8s Cluster provides http listerners for multiple hosts providing services such as the request web app and keycloak IAM. These microservices can be reached using repsys.linamar.com and keycloack.linamar.com FQDN. Unfortunately, at the stage when the TLS protocol serves certificates the name of the host is not known.  To solve this issue an extention to TLS, SNI, was created to identify the hostname in a TLS handshake but requires a host key/value pair to be sent in the http request header.  This is viable when your client is cURL or some program but not a good solution when your client is a browser.  
+**Solution:** To get around this limation we use a SAN certificate which is valid for every host name.
+
+
 ## **[Research Topics](../../../research/topics/research_summary.md)**
 
 ## **[Platform Features](../../report_system/platform_features.md)**
