@@ -3,23 +3,12 @@
 **[All Status](../weekly/status_list.md)**\
 **[Back to Main](../../../README.md)**
 
-## Next
-
-- **[gRPC Basics](https://grpc.io/docs/languages/go/basics/)**
-- **[GoLang OOP](https://www.toptal.com/golang/golang-oop-tutorial)**
-- **[Building Scalable Microservices: Creating a GRPC Service with Go and Consuming it in a React App via Envoy](https://medium.com/@digvijay17july/building-scalable-microservices-creating-a-grpc-service-with-go-and-consuming-it-in-a-react-app-1de3c4385c05)**
+## Summary
 
 ## Linmar Network Transition
 
-1. A 2nd network cable to my dev system in Albion office so that I can access Albion and Avilla r620 systems I.e. a 10.188.x.x and 10.1.0.x network cable.
-2. Move one R620 to Avilla and assign Avilla network address to it, i.e. 10.188.x.x or 10.187.x.x i forget which is Avilla's network number.
-3. Configure it from Albion development system since the R620 has Ubuntu server not Ubuntu desktop.
-
-## Summary
-
-- **Infastructure as Code**: With Iac we code or declare the creation of networks, VMs, and the installation of software. Like Ansible best because Terraform is strictly declarative which is a good thing if you have all the parameters you need to declare the exact setup of your platform.
-- **Authentication and Authorization**: While deploying our service mesh noticed that Microsoft put a lot of effort to create their own version of Istio.  They also have integrated Microsoft Entra with Azure Kubernetes Services.  This allows access to other Azure resources such as Azure Key Vault.  The reason for using Azure Key Vault is its hardware security module (HSM) which is a physical computing device that safeguards and manages secrets.
-- **Mutual TLS (mTLS):** authentication is a method that verifies the identity of both the client and the server in a connection, making it more secure than traditional TLS. In order for the customer to access the report system web app a client certificate must be installed in their browser. Also to get the browser secure lock to show without a security warning message our certificate chain must be installed in the OS trust store.
+1. Move one R620 to Avilla and assign Avilla network address to it, i.e. 10.188.x.x or 10.187.x.x i forget which is Avilla's network number.
+2. Configure it from Albion development system since the R620 has Ubuntu server not Ubuntu desktop.
 
 ## Secure Gateway Meeting
 
