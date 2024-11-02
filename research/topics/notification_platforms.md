@@ -18,11 +18,15 @@ notifications are notifications that can be sent to a user via desktop and mobil
 
 Stumbled across **[Novu](https://novu.co/)** which is the first open-source notification infrastructure that manages all forms of communication from email to SMS, Push notifications, etc.
 
+## **[Apprise](https://github.com/caronc/apprise)**
+
 ## **[Novu](https://novu.co/)**
 
 **[Novu example](https://dev.to/novu/how-to-add-in-app-notifications-to-any-web-app-1b4n)**
 
 ## **[NotifyOne](https://medium.com/@prashantmishra_61952/introducing-notifyone-the-ultimate-open-source-notification-system-c9aeb81ba292)**
+
+Need AWS SQS and S3.
 
 Free Setup Support for Early Clients
 To accelerate our project’s adoption and ensure a smooth transition, We are committed to supporting early clients with the setup and onboarding for free.
