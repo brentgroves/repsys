@@ -82,4 +82,6 @@ Ending arp-scan 1.9.7: 256 hosts scanned in 2.106 seconds (121.56 hosts/sec). 0 
 
 arp-scan -I enp0s25 172.20.0.0-172.20.3.255
 
+arp-scan -I enp0s25 172.20.88.0-172.20.89.255
+
 ```

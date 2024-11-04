@@ -15,14 +15,54 @@ sudo apt-get install nmap -y
 
 ## In-Use IP addresses
 
+```bash
 nmap -sP 10.1.0.0/22
 nmap -sP 192.168.1/24
+
+nmap -sP 172.20.88.0/24
+nmap -sP 172.20.88.0/22
+Starting Nmap 7.80 ( https://nmap.org ) at 2024-11-04 15:44 EST
+Nmap scan report for 172.20.89.60
+Host is up (0.035s latency).
+Nmap scan report for 172.20.89.84
+Host is up (0.035s latency).
+Nmap scan report for 172.20.89.86
+Host is up (0.035s latency).
+Nmap scan report for 172.20.89.101
+Host is up (0.030s latency).
+Nmap done: 256 IP addresses (4 hosts up) scanned in 14.95 seconds
+
+Nmap scan report for 172.20.88.100
+Host is up (0.030s latency).
+Nmap scan report for 172.20.89.60
+Host is up (0.029s latency).
+Nmap scan report for 172.20.89.84
+Host is up (0.034s latency).
+Nmap scan report for 172.20.89.86
+Host is up (0.035s latency).
+Nmap scan report for 172.20.89.101
+Host is up (0.036s latency).
+Nmap scan report for 172.20.91.1
+Host is up (0.034s latency).
+Nmap scan report for 172.20.91.2
+Host is up (0.030s latency).
+Nmap scan report for 172.20.91.3
+Host is up (0.029s latency).
+Nmap scan report for 172.20.91.17
+Host is up (0.030s latency).
+Nmap scan report for 172.20.91.24
+Host is up (0.039s latency).
+Nmap scan report for 172.20.91.35
+Host is up (0.059s latency).
+Nmap done: 1024 IP addresses (23 hosts up) scanned in 6.61 seconds
+```
 
 ## timestamp requests
 
 A live host will send back a reply, signalling its presence on the network. Using the -PP option, Nmap will send ICMP timestamp requests (type 13), expecting ICMP timestamp replies (type 14) in return. If a type 14 ICMP packet is received, then Nmap assumes the host is alive.
 
 ```bash
+sudo nmap -PP 172.20.89.60
 sudo nmap -PP repsys13
 
 [sudo] password for brent: 
