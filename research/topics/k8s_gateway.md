@@ -4,6 +4,20 @@
 **[Research Summary](./research_summary.md)**\
 **[Back Main](../../README.md)**
 
+## Secure Gateway Meeting
+
+TLS is a cross-cutting concern so if the platform can perform the encryption/decription it would offload the task from the microservices. Fortunately, any K8s gateway can perform TLS termination. Istio service mesh is the gateway the report system uses and is a control plane to envoy proxies which has the following feature support:
+
+- TLS/mTLS termination
+- automatic retries
+- circuit breaking
+- global rate limiting
+- request shadowing
+- outlier detection
+
+**Issue:** K8s Cluster provides http listerners for multiple hosts providing services such as the request web app and keycloak IAM. These microservices can be reached using repsys.linamar.com and keycloack.linamar.com FQDN. Unfortunately, at the stage when the TLS protocol serves certificates the name of the host is not known.  To solve this issue an extention to TLS, SNI, was created to identify the hostname in a TLS handshake but requires a host key/value pair to be sent in the http request header.  This is viable when your client is cURL or some program but not a good solution when your client is a browser.  
+**Solution:** To get around this limation we use a SAN certificate which is valid for every host name.
+
 ## Features of an API Gateway
 
 Ok, so we have just seen how an API Gateway can route Southbound traffic to the required Service and microservice within our cluster but this is only one of the features of an API gateway. Others include:

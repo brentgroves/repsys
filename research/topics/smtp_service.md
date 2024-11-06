@@ -6,7 +6,7 @@
 
 ## references
 
-- **[Send emails using Gomail](https://mailtrap.io/blog/golang-send-email/)**
+- **[Send emails using SMTP provider](https://mailtrap.io/blog/golang-send-email/)**
 
 Gomail is a community-driven package for Go that truly is, as its creators say, “simple and efficient.”
 
