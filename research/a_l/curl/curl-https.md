@@ -1,8 +1,14 @@
+# Curl HTTPs
+
+**[Current Status](../../../development/status/weekly/current_status.md)**\
+**[Research List](../../research_list.md)**\
+**[Back Main](../../../README.md)**
+
 For windows do this:
-curl https://reports01/myhello/ --ssl-no-revoke 
+curl <https://reports01/myhello/> --ssl-no-revoke
 
 For ubuntu do this:
-https://ubuntu.com/server/docs/security-trust-store
+<https://ubuntu.com/server/docs/security-trust-store>
 
 ls /etc/ssl/certs show a list of all certificates.
 
@@ -20,7 +26,7 @@ $ sudo update-ca-certificates
 Note: It is important to have the .crt extension on the file, otherwise it will not be processed.
 
 After this point you can use Ubuntu’s tools like curl and wget to connect to local sites.
-https://betterstack.com/community/questions/how-to-list-all-available-ca-ssl-certificates-on-ubuntu/
+<https://betterstack.com/community/questions/how-to-list-all-available-ca-ssl-certificates-on-ubuntu/>
 To list all available CA SSL certificates run the following lines of code:
 
 awk -v cmd='openssl x509 -noout -subject' '
@@ -33,9 +39,7 @@ But beware that you may get an error if SSL servers forget to provide the interm
 
 openssl s_client -showcerts -connect the-git-server:443
 
-
-
-https://www.baeldung.com/linux/curl-https-connection
+<https://www.baeldung.com/linux/curl-https-connection>
 Self-Signed Certificates
 
 Sometimes, if a server is using a self-signed certificate, we’ll encounter the error “SSL certificate problem: self-signed certificate” when making a curl request. This means that the server is not using a certificate that was signed by a trusted authority.
@@ -45,7 +49,7 @@ Let’s say we’re running a local Spring Boot project that’s configured with
 
 One way to handle this is to force curl to ignore the certificate verification, using the -k or –insecure flag:
 
-curl -k https://localhost:8443/baeldung
+curl -k <https://localhost:8443/baeldung>
 
 However, ignoring HTTPS errors can be very insecure. Instead, another option is to use the certificate from the server we’re trying to access.
 3.1. Getting Server Certificate
@@ -59,9 +63,8 @@ openssl s_client -showcerts -connect <Domain Name or IP Address>:<Port>
 openssl s_client -showcerts -connect reports01:443
 openssl s_client -showcerts -connect reports11:443
 
-
 The -showcerts option prints out the complete certificate chain. We can save the certificates into a file to invoke the endpoint:
 
-openssl s_client -showcerts -connect https://localhost:8443/baeldung </dev/null | sed -n -e '/-.BEGIN/,/-.END/ p' > baeldung.pem
+openssl s_client -showcerts -connect <https://localhost:8443/baeldung> </dev/null | sed -n -e '/-.BEGIN/,/-.END/ p' > baeldung.pem
 
-openssl s_client -showcerts -connect https://reports01/myhello </dev/null | sed -n -e '/-.BEGIN/,/-.END/ p' > mkcert.pem
+openssl s_client -showcerts -connect <https://reports01/myhello> </dev/null | sed -n -e '/-.BEGIN/,/-.END/ p' > mkcert.pem
