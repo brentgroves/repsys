@@ -12,6 +12,8 @@
 
 ## SMTP Service Example
 
+Just like we use mTLS to verify that both the client is allowed to use the service and the server is who she says she is mail system use public keys to ensure they are authorized to send email for a domain.
+  
 Tesing an SMTP service provider that automatically validates all the necessary DNS records (SPF, DKIM, DMARC). DKIM keys are rotated quarterly. to send excel files to the report system customers. Will set up a quick meeting to show it sending an excel file to linamar and DNS record setup. Using the free tier, we can send 1000 email per month. 
 
 Use golang mail package and free tier **[mailtrap](https://mailtrap.io/blog/smtp-providers/)** SMTP service to send email with excel attachment to linamar user.
