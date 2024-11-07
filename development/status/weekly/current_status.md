@@ -12,9 +12,16 @@
 
 ## SMTP Service Example
 
-Just like we use mTLS to verify that both the client is allowed to use the service and the server is who she says she is mail system use public keys to ensure they are authorized to send email for a domain.
-  
-Tesing an SMTP service provider that automatically validates all the necessary DNS records (SPF, DKIM, DMARC). DKIM keys are rotated quarterly. to send excel files to the report system customers. Will set up a quick meeting to show it sending an excel file to linamar and DNS record setup. Using the free tier, we can send 1000 email per month. 
+Tesing an SMTP service provider that uses and validates their DMARC, DKIM, and SPF email authentication methods. Together, they help prevent spammers, phishers, and other unauthorized parties from sending emails on behalf of a domain* they do not own. One good thing about mailtrap is they rotate their DKIM regularly.
+
+Domains that have not set up SPF, DKIM, and DMARC correctly may find that their emails get quarantined as spam, or are not delivered to their recipients. They are also in danger of having spammers impersonate them.
+
+Will set up a quick meeting to show it sending an excel file to linamar user. Using the free tier, we can send 1000 email per month. 
+
+**DomainKeys Identified Mail (DKIM)** is an email security standard that uses public-key cryptography to verify the authenticity of emails. DKIM works by attaching a digital signature to an email, which is then checked by the recipient's mail server to ensure the email is genuine: 
+- **Signing:** The sender uses their private key to sign the email's header. 
+- **Storing:** The domain's public key is stored in a DKIM record. 
+- **Verifying:** The recipient's mail server uses the public key from the DKIM record to verify that the sender's private key was used to sign the email. If the signature verifies, the email is considered authentic and passes DKIM. 
 
 Use golang mail package and free tier **[mailtrap](https://mailtrap.io/blog/smtp-providers/)** SMTP service to send email with excel attachment to linamar user.
 
@@ -23,6 +30,7 @@ Use golang mail package and free tier **[mailtrap](https://mailtrap.io/blog/smtp
 A **DKIM** record is a specialized DNS TXT record that stores the public key used to verify an email's authenticity. 
 
 **DMARC** is an important part of email security. Learn how a DMARC record works, how to construct a DMARC policy, and how DNS TXT records are used for DMARC.
+
 
 ## **[Research Topics](../../../research/topics/research_summary.md)**
 
