@@ -19,7 +19,7 @@ Meanwhile, DMARC tells mail servers what to do when DKIM or SPF fail, whether th
 
 Domains that have not set up SPF, DKIM, and DMARC correctly may find that their emails get quarantined as spam, or are not delivered to their recipients. They are also in danger of having spammers impersonate them.
 
-*A domain, roughly speaking, is a website address like "example.com". Domains form the second half of an email address: alice@example.com, for instance.
+*A domain, roughly speaking, is a website address like "example.com". Domains form the second half of an email address: <alice@example.com>, for instance.
 
 ## How does SPF work?
 
@@ -28,6 +28,7 @@ Sender Policy Framework (SPF) is a way for a domain to list all the servers they
 SPF records list all the IP addresses of all the servers that are allowed to send emails from the domain, just as an employee directory lists the names of all employees for an organization. Mail servers that receive an email message can check it against the SPF record before passing it on to the recipient's inbox.
 
 ## How does DKIM work?
+
 DomainKeys Identified Mail (DKIM) enables domain owners to automatically "sign" emails from their domain, just as the signature on a check helps confirm who wrote the check. The DKIM "signature" is a digital signature that uses cryptography to mathematically verify that the email came from the domain.
 
 Specifically, DKIM uses public key cryptography:
@@ -42,8 +43,7 @@ Domain-based Message Authentication Reporting and Conformance (DMARC) tells a re
 
 DMARC policies are stored in DMARC records. A DMARC record can also contain instructions to send reports to domain administrators about which emails are passing and failing these checks. DMARC reports give administrators the information they need to decide how to adjust their DMARC policies (for example, what to do if legitimate emails are erroneously getting marked as spam).
 
-
-## Specifically, DKIM uses public key cryptography:
+## Specifically, DKIM uses public key cryptography
 
 A DKIM record stores the domain's public key, and mail servers receiving emails from the domain can check this record to obtain the public key
 The private key is kept secret by the sender, who signs the email's header with this key
@@ -55,9 +55,8 @@ SPF, DKIM, and DMARC records are stored in the Domain Name System (DNS), which i
 
 DKIM, SPF, and DMARC records are all stored as DNS TXT records. A DNS TXT record stores text that a domain owner wants to associate with the domain. This record can be used in a variety of ways, since it can contain any arbitrary text. DKIM, SPF, and DMARC are three of several applications for DNS TXT records.
 
-
-
 ## What is the Simple Mail Transfer Protocol (SMTP)?
+
 The Simple Mail Transfer Protocol (SMTP) is a technical standard for transmitting electronic mail (email) over a network. Like other networking protocols, SMTP allows computers and servers to exchange data regardless of their underlying hardware or software. Just as the use of a standardized form of addressing an envelope allows the postal service to operate, SMTP standardizes the way email travels from sender to recipient, making widespread email delivery possible.
 
 SMTP is a mail delivery protocol, not a mail retrieval protocol. A postal service delivers mail to a mailbox, but the recipient still has to retrieve the mail from the mailbox. Similarly, SMTP delivers an email to an email provider's mail server, but separate protocols are used to retrieve that email from the mail server so the recipient can read it.
@@ -92,9 +91,9 @@ DATA: This precedes the content of the email, like:
 
 DATA
 Date: Mon, 4 April 2022
-From: Alice alice@example.com
+From: Alice <alice@example.com>
 Subject: Eggs benedict casserole
-To: Bob bob@example.com
+To: Bob <bob@example.com>
 
 Hi Bob,
 I will bring the eggs benedict casserole recipe on Friday.
@@ -119,15 +118,15 @@ Extended Simple Mail Transfer Protocol (ESMTP) is a version of the protocol that
 
 ESMTP has some additional commands, including "EHLO", an "extended hello" message that enables the use of ESMTP at the start of the connection.
 
-**DomainKeys Identified Mail (DKIM)** is an email security standard that uses public-key cryptography to verify the authenticity of emails. DKIM works by attaching a digital signature to an email, which is then checked by the recipient's mail server to ensure the email is genuine: 
-Signing: The sender uses their private key to sign the email's header. 
-Storing: The domain's public key is stored in a DKIM record. 
-Verifying: The recipient's mail server uses the public key from the DKIM record to verify that the sender's private key was used to sign the email. If the signature verifies, the email is considered authentic and passes DKIM. 
+**DomainKeys Identified Mail (DKIM)** is an email security standard that uses public-key cryptography to verify the authenticity of emails. DKIM works by attaching a digital signature to an email, which is then checked by the recipient's mail server to ensure the email is genuine:
+Signing: The sender uses their private key to sign the email's header.
+Storing: The domain's public key is stored in a DKIM record.
+Verifying: The recipient's mail server uses the public key from the DKIM record to verify that the sender's private key was used to sign the email. If the signature verifies, the email is considered authentic and passes DKIM.
 
 ## How does SMTP work?
 
 In the Simple Mail Transfer Protocol (SMTP) model, the sender's email client or server acts as the SMTP client, and the sender’s email server acts as the SMTP server. This client initiates a connection to the server and transmits the email, complete with recipient details, subject, and body. The server processes this email and determines the suitable next server based on the recipient's address. This next server could either be another SMTP server in the transmission route or the final destination, i.e., the recipient's email server. Once the message arrives at the recipient's server, it's delivered to the recipient's inbox using a different protocol, such as POP or IMAP.
 
 ## How do SMTP servers send emails?
-SMTP servers send emails by following a series of steps. First, the sender's email client or server establishes a connection with the recipient's SMTP server and supplies necessary information, such as the recipient’s email address. The SMTP server then processes this information and verifies the recipient's address to decide whether accept the email or not. If the recipient's address is valid, the email is queued for delivery. The recipient's server then attempts to deliver the email to the recipient's email inbox or a designated folder.
 
+SMTP servers send emails by following a series of steps. First, the sender's email client or server establishes a connection with the recipient's SMTP server and supplies necessary information, such as the recipient’s email address. The SMTP server then processes this information and verifies the recipient's address to decide whether accept the email or not. If the recipient's address is valid, the email is queued for delivery. The recipient's server then attempts to deliver the email to the recipient's email inbox or a designated folder.

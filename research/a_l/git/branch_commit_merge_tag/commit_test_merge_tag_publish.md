@@ -4,9 +4,7 @@
 
 ```bash
 pushd .
-cd ~/src/go/tutorials/oop/vin1
-# or
-cd ~/src/go/tutorials/oop/vin_main
+cd ~/src/go/tutorials/unit_tests/test_tips/go_test_tips
 
 # Run go mod tidy, which removes any dependencies the module might have accumulated that are no longer necessary.
 go mod tidy
@@ -19,9 +17,10 @@ This runs the unit tests you’ve written to use the Go testing framework.
 
 ```bash
 go test ./... -v
-FAIL    github.com/brentgroves/vin1     0.007s
-ok      github.com/brentgroves/vin1     0.005s
-ok      github.com/brentgroves/vin_main 0.004s
+=== RUN   TestFib
+--- PASS: TestFib (0.00s)
+PASS
+ok      github.com/brentgroves/go_test_tips     0.005s
 # more details
 go test -v
 === RUN   TestVIN_Manufacturer
@@ -34,36 +33,25 @@ ok      github.com/brentgroves/vin1     0.004s
 ## If passed tests checkin branch
 
 ```bash
-cd ~/src/go/tutorials/oop/vin1
+cd ~/src/go/tutorials/unit_tests/test_tips/go_test_tips
 
 git add -A # git commit -a wont add files
-git commit -a -m "vin1: using constructors"
-
-
-cd ~/src/go/tutorials/oop/vin_main
-git add -A # git commit -a wont add files
-git commit -a -m "vin_main: bind function"
+git commit -a -m "go_test_tips: init_commit"
 
 [hotfix 1fb7853] Fix broken email address
  1 file changed, 2 insertions(+)
 
 # https://graphite.dev/guides/how-to-use-git-push-origin
 
-git push --set-upstream origin use_constructors
-Enumerating objects: 14, done.
-Counting objects: 100% (14/14), done.
-Delta compression using up to 4 threads
-Compressing objects: 100% (9/9), done.
-Writing objects: 100% (9/9), 1.34 KiB | 685.00 KiB/s, done.
-Total 9 (delta 4), reused 0 (delta 0), pack-reused 0
-remote: Resolving deltas: 100% (4/4), completed with 2 local objects.
-remote: 
-remote: Create a pull request for 'use_constructors' on GitHub by visiting:
-remote:      https://github.com/brentgroves/vin_main/pull/new/use_constructors
-remote: 
-To github.com:brentgroves/vin_main.git
- * [new branch]      use_constructors -> use_constructors
-Branch 'use_constructors' set up to track remote branch 'use_constructors' from 'origin'.
+git push origin init_commit
+...
+To github.com:brentgroves/go_test_tips.git
+   69096db..2a8e02f  init_commit -> init_commit
+
+git branch -r -v   
+  origin/HEAD         -> origin/main
+  origin/main         2f290c0 vin1: using constructors
+  origin/polymorphism acdb768 vin1: polymorphism
 
 # https://phoenixnap.com/kb/git-list-remote-branches
 # git branch -r. Lists all the remote branches.
@@ -71,26 +59,7 @@ Branch 'use_constructors' set up to track remote branch 'use_constructors' from 
 # git ls-remote. Lists all the references in the remote repository, including the branches.
 # git remote show [remote_name]. Shows information about the specified remote, including the remote branches.
 # git branch -a. Shows all the local and remote branches.
-
-git branch -r -v
-  origin/HEAD             -> origin/main
-  origin/main             7a70d92 vin_main: using constructors
-  origin/use_constructors 7a70d92 vin_main: using constructors
-
-git remote show origin          
-* remote origin
-  Fetch URL: git@github.com:brentgroves/vin_main.git
-  Push  URL: git@github.com:brentgroves/vin_main.git
-  HEAD branch: main
-  Remote branches:
-    main             tracked
-    use_constructors tracked
-  Local branches configured for 'git pull':
-    main             merges with remote main
-    use_constructors merges with remote use_constructors
-  Local refs configured for 'git push':
-    main             pushes to main             (up to date)
-    use_constructors pushes to use_constructors (up to date)
+# git remote show origin          
 ```
 
 ## Merge feature branch with main
@@ -99,17 +68,20 @@ Verify all changes have been committed to feature branch.
 
 ```bash
 pushd .
-cd ~/src/go/tutorials/oop/vin1
-# or
-cd ~/src/go/tutorials/oop/vin_main
+cd ~/src/go/tutorials/unit_tests/test_tips/go_test_tips
 
 git switch main
-git merge bind_function
-Updating 7d6c79c..109aeef
+Switched to branch 'main'
+Your branch is up to date with 'origin/main'.
+
+git merge init_commit
+Updating 2f290c0..acdb768
 Fast-forward
- vin_test.go | 15 +++++++++++++++
- 1 file changed, 15 insertions(+)
- create mode 100644 vin_test.go
+ vin-stages/4/vin.go      | 49 +++++++++++++++++++++++++++++++++++++++++++++++++
+ vin-stages/4/vin_test.go | 51 +++++++++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 100 insertions(+)
+ create mode 100644 vin-stages/4/vin.go
+ create mode 100644 vin-stages/4/vin_test.go
 ```
 
 ## Run go test ./... from main to make sure everything is working
@@ -117,17 +89,10 @@ Fast-forward
 This runs the unit tests you’ve written to use the Go testing framework.
 
 ```bash
-go test ./... -v
-FAIL    github.com/brentgroves/vin1     0.007s
-ok      github.com/brentgroves/vin1     0.005s
-ok      github.com/brentgroves/vin_main 0.004s
-# more details
-go test -v
-=== RUN   TestVIN_Manufacturer
---- PASS: TestVIN_Manufacturer (0.00s)
+=== RUN   TestFib
+--- PASS: TestFib (0.00s)
 PASS
-ok      github.com/brentgroves/vin1     0.004s
-
+ok      github.com/brentgroves/go_test_tips     (cached)
 ```
 
 ## Commit merge changes and Tag main with new version
@@ -141,7 +106,7 @@ git log --pretty=oneline
 
 # If no commit is specified, a tag defaults to the current commit.
 # git tag -a v0.x.0 -m "my version 0.x.0"
-git tag -a v0.5.0 -m "use constructors"
+git tag -a v0.1.0 -m "initial commit"
 git log --pretty=oneline
 
 ```
@@ -169,7 +134,7 @@ By default, the git push command doesn’t transfer tags to remote servers. You 
 git ls-remote --tags origin
 
 # git push origin v0.x.0
-git push origin v0.5.0
+git push origin v0.1.0
 Enumerating objects: 1, done.
 Counting objects: 100% (1/1), done.
 Writing objects: 100% (1/1), 159 bytes | 159.00 KiB/s, done.
@@ -188,7 +153,7 @@ Precede the command with a statement to set the GOPROXY environment variable to 
 
 ```bash
 # GOPROXY=proxy.golang.org go list -m github.com/brentgroves/greetings3@v0.x.0
-GOPROXY=proxy.golang.org go list -m github.com/brentgroves/vin1@v0.5.0
+GOPROXY=proxy.golang.org go list -m github.com/brentgroves/go_test_tips@v0.1.0
 github.com/brentgroves/vin1 v0.3.0
 
 ```

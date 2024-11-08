@@ -23,12 +23,19 @@ Make sure the main branch just the way you want it and all changes have been com
 
 ```bash
 # git diff, git diff HEAD HEAD~1 and git diff --staged
-cd ~/src/go/tutorials/oop/vin1
-# or
-cd ~/src/go/tutorials/oop/vin_main
+cd ~/src/go/tutorials/unit_tests/test_tips/go_interfaces/mock_interfaces
+
 # List branches
 git branch
 # git checkout -b feature1
-git checkout -b use_constructors 
+git checkout -b init_commit 
 Switched to a new branch 'add_test'
+
+# https://graphite.dev/guides/how-to-use-git-push-origin
+git push --set-upstream origin init_commit
+remote: Create a pull request for 'polymorphism' on GitHub by visiting:
+remote:      https://github.com/brentgroves/vin_main/pull/new/polymorphism
+To github.com:brentgroves/go_test_tips.git
+ * [new branch]      mock_things -> mock_things
+Branch 'mock_things' set up to track remote branch 'mock_things' from 'origin'.
 ```
