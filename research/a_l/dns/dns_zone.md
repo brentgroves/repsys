@@ -8,6 +8,7 @@
 
 - **[nslookup](https://www.nslookup.io/)**
 - **[dns record types](https://www.nslookup.io/learning/dns-record-types/)**
+- **[DNS Lookup](https://www.whoisfreaks.com/)**
 
 A Domain Name System (DNS) zone represents a portion of the DNS namespace owned and managed as a single unit by one organization. The global DNS is composed of many zones.
 The most well-known zones are the DNS root zone, where the DNS begins, and the Top Level Domains (TLDs) such as .com, .net, .org, etc. Below the TLDs, virtually every recognizable brand with a presence on the Internet has its very own DNS zone. So, for example, individual DNS zones exist for google.com, wikipedia.org, bit.ly, and millions upon millions of other domains.

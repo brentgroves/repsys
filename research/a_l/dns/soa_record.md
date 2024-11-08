@@ -6,6 +6,7 @@
 
 ## references
 
+- **[nslookup](https://www.nslookup.io/)**
 - **[dns record types](https://www.nslookup.io/learning/dns-record-types/)**
 
 All **[DNS zones](https://www.nslookup.io/learning/what-is-a-dns-zone/)** begin with a Start Of Authority (SOA) record. The SOA record states that authority for a zone is starting at a particular point in the global tree of DNS names.

@@ -4,34 +4,20 @@
 **[Research List](../../research_list.md)**\
 **[Back Main](../../../README.md)**
 
-The Domain Name System (DNS) gives resources stable human-readable names to solve various potential internet problems; for example, it translates domain names to IP addresses so users don’t have to remember long numbers to access websites. Administrators can create records of several standardized types, and each type solves a specific problem. If you ever wondered how DNS records work, what each record type does, and how to manage DNS records, this article is the right place to start.
+## references
 
-## What Is a DNS Record?
+- **[nslookup](https://www.nslookup.io/)**
+- **[dns record types](https://www.nslookup.io/learning/dns-record-types/)**
+- **[DNS Lookup](https://www.whoisfreaks.com/)**
 
-Every interaction on the internet involves a translation process, where a human-readable domain name becomes a machine-understandable IP address. DNS records are the essential building blocks of this process. They come in several types to handle different aspects of internet operations, such as routing emails (MX records) and aliasing one domain name to another (CNAME records.)
+## How do DNS lookups use DNS zones?
 
-DNS records are aliases for short pieces of text stored in a DNS database, and each one maps a specific domain to an IP address or another piece of data. For example, if you have the alias example.com, you can send it to a DNS server to connect to the aliased value 2606:2800:220:1:248:1893:25c8:1946.
+A DNS lookup occurs when a piece of software, such as a web browser, needs to map a DNS name to an IP address or another piece of DNS data. The result of a DNS lookup is often an IP address, but it may be something else. For example, a DNS MX record lookup is used to retrieve the mail servers for a domain.
 
-![nip](https://assets.gcore.pro/blog_containerizing_prod/uploads/2023/09/dns-records-explained-1.png)
+DNS lookups are performed by a software component called a DNS resolver. The DNS resolver begins each query at the DNS root domain by sending a DNS query to one of the DNS root servers. The root server will usually respond with a delegation. The resolver then sends the same query to one of the DNS servers listed in the delegation. These servers might respond with another delegation. This process continues until the DNS resolver gets an answer from one of the DNS servers authoritative for the zone.
 
-Alt:
+A DNS resolver performing a DNS lookup for a typical name such as <www.example.org> will move through three DNS zones:
 
-Each DNS record contains various pieces of information like the name of the host, the type of DNS record, the data associated with it, and the TTL (time to live) value. We’ll explain all the information inside a record later in this article. Understanding DNS records is fundamental to maintaining a reliable and efficient online presence.
-
-## What Problems Do DNS Records Solve?
-
-The primary problems DNS records solve are giving IP addresses human-readable names (i.e., domain names) and decoupling services from one another. You achieve the latter by adding a DNS record as an indirection between services, so if one service’s IP or domain name changes, you only need to change the related DNS record, and the consuming service can remain unchanged. Let’s look at some examples:
-
-- The A record maps a domain name like example.com to an IPv4 address like 192.168.0.1.
-- The CNAME record maps a domain name like mail.example.com to another domain name like customer123.mailprovider.net.
-- The TXT name maps a domain name like hello.example.com to arbitrary text like “Hello, world!”.
-
-Don’t fret if these examples don’t yet make sense to you, as we will look into the details in the following sections of this article. By the end of the article, you’ll know what they mean!
-
-## How Do DNS Records Work?
-
-Every time you type a URL into your browser, click on a link, or send an email (among other things) a DNS query is initiated in a process called DNS lookup. This query works its way through the hierarchical structure of the DNS until it reaches the DNS server responsible for the specific domain. This server contains the DNS records for that domain. You can learn about this process in our dedicated article under “How Does DNS Lookup Work?”
-
-Each domain has several DNS records associated with it, like an address book, that help to direct traffic to the right location. For instance, an A record translates a domain name into an IP address that computers can understand. Here’s a table showing the range of DNS records:
-
-DNS
+- The root: Authority begins with the DNS root zone. The root zone contains a delegation to the org zone.
+- org: The org zone contains a delegation to the example.org zone.
+- example.org: The example.org zone would typically contain A or AAAA records for <www.example.org>.
