@@ -15,7 +15,7 @@
 
 ### **[SMTP Research](../../../research/topics/smtp_service.md)**
 
-### **[EDI Research](../../../research/topics/edi.md)**
+### **[Cloud-Based EDI for Full Integration](../../../research/topics/edi.md)**
 
 ## **[Platform Features](../../report_system/platform_features.md)**
 
