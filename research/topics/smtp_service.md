@@ -8,6 +8,22 @@
 
 - **[Send emails using SMTP provider](https://mailtrap.io/blog/golang-send-email/)**
 
+## SMTP Service Setup
+
+- **[TXT records](../../research/a_l/dns/txt/txt_record.md)**
+- **[SPF records](../../research/a_l/dns/txt/spf_txt_record.md)**
+- **[DKIM records](../../research/a_l/dns/txt/dkim_txt_record.md)**
+- **[DMARC records](../../research/a_l/dns/txt/dmarc_txt_record.md)**
+
+Domains that have not set up SPF, DKIM, and DMARC correctly may find that their emails get quarantined as spam, or are not delivered to their recipients. They are also in danger of having spammers impersonate them.
+
+Will set up a quick meeting to show it sending an excel file to linamar user. Using the free tier, we can send 1000 email per month. 
+
+**DomainKeys Identified Mail (DKIM)** is an email security standard that uses public-key cryptography to verify the authenticity of emails. DKIM works by attaching a digital signature to an email, which is then checked by the recipient's mail server to ensure the email is genuine: 
+- **Signing:** The sender uses their private key to sign the email's header. 
+- **Storing:** The domain's public key is stored in a DKIM record. 
+- **Verifying:** The recipient's mail server uses the public key from the DKIM record to verify that the sender's private key was used to sign the email. If the signature verifies, the email is considered authentic and passes DKIM. 
+
 Gomail is a community-driven package for Go that truly is, as its creators say, “simple and efficient.”
 
 It supports the following:
