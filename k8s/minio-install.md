@@ -8,6 +8,7 @@ I tried the MicroK8s addon but it seems pretty outdated and I could not get the 
 
 ## references
 
+- **[Minio K8s Operator](https://min.io/docs/minio/kubernetes/upstream/operations/installation.html)**
 <https://min.io/docs/minio/kubernetes/upstream/reference/kubectl-minio-plugin.html>
 
 <https://min.io/docs/minio/kubernetes/upstream/reference/kubectl-minio-plugin/kubectl-minio-init.html>
