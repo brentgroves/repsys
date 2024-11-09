@@ -6,8 +6,14 @@
 
 ## references
 
+- **[DNS Provider Lookup](https://mxtoolbox.com/DnsLookup.aspx)**
 - **[nslookup](https://www.nslookup.io/)**
 - **[dns record types](https://www.nslookup.io/learning/dns-record-types/)**
+- **[DNS Lookup](https://www.whoisfreaks.com/)**
+- **[TXT lookup tool](https://www.nslookup.io/txt-lookup/)**
+- **[MX lookup tool](https://www.nslookup.io/mx-lookup/)**
+- **[NS lookup tool](https://www.nslookup.io/ns-lookup/)**
+- **[SOA lookup tool](https://www.nslookup.io/soa-lookup/)**
 
 All **[DNS zones](https://www.nslookup.io/learning/what-is-a-dns-zone/)** begin with a Start Of Authority (SOA) record. The SOA record states that authority for a zone is starting at a particular point in the global tree of DNS names.
 For example, when creating a new DNS zone for ohmcar.org (a fictitious electric car company) then the process of zone creation would include the creation of a SOA record at ohmcar.org.

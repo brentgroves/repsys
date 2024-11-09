@@ -6,8 +6,14 @@
 
 ## references
 
+- **[DNS Provider Lookup](https://mxtoolbox.com/DnsLookup.aspx)**
 - **[nslookup](https://www.nslookup.io/)**
 - **[dns record types](https://www.nslookup.io/learning/dns-record-types/)**
+- **[DNS Lookup](https://www.whoisfreaks.com/)**
+- **[TXT lookup tool](https://www.nslookup.io/txt-lookup/)**
+- **[MX lookup tool](https://www.nslookup.io/mx-lookup/)**
+- **[NS lookup tool](https://www.nslookup.io/ns-lookup/)**
+- **[SOA lookup tool](https://www.nslookup.io/soa-lookup/)**
 
 The NS or “name server” DNS record type is used to specify the **[authoritative name servers](https://www.nslookup.io/learning/recursive-vs-authoritative-dns/)** for a domain. It tells DNS resolvers which servers to contact when it's looking for DNS records for that domain name. This is what allows different organizations to own different domain names.
 

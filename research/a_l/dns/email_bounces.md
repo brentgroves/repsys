@@ -7,9 +7,14 @@
 ## references
 
 - **[mailtrap bounces](https://mailtrap.io/sending/suppressions)**
+- **[DNS Provider Lookup](https://mxtoolbox.com/DnsLookup.aspx)**
 - **[nslookup](https://www.nslookup.io/)**
 - **[dns record types](https://www.nslookup.io/learning/dns-record-types/)**
 - **[DNS Lookup](https://www.whoisfreaks.com/)**
+- **[TXT lookup tool](https://www.nslookup.io/txt-lookup/)**
+- **[MX lookup tool](https://www.nslookup.io/mx-lookup/)**
+- **[NS lookup tool](https://www.nslookup.io/ns-lookup/)**
+- **[SOA lookup tool](https://www.nslookup.io/soa-lookup/)**
 
 There are multiple bounce types that you could see in the report for a sent email. All of the bounce messages we receive are sorted into soft bounce categories or, if it's a permanent delivery failure, it's classified as a hard bounce.
 

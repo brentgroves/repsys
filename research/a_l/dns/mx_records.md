@@ -6,9 +6,14 @@
 
 ## references
 
+- **[DNS Provider Lookup](https://mxtoolbox.com/DnsLookup.aspx)**
 - **[nslookup](https://www.nslookup.io/)**
 - **[dns record types](https://www.nslookup.io/learning/dns-record-types/)**
 - **[DNS Lookup](https://www.whoisfreaks.com/)**
+- **[TXT lookup tool](https://www.nslookup.io/txt-lookup/)**
+- **[MX lookup tool](https://www.nslookup.io/mx-lookup/)**
+- **[NS lookup tool](https://www.nslookup.io/ns-lookup/)**
+- **[SOA lookup tool](https://www.nslookup.io/soa-lookup/)**
 
 The MX or “mail exchange” DNS record type is critical to the delivery of email via the Simple Mail Transfer Protocol (SMTP). MX records are used to specify a list of mail servers for a domain. If MX records are not created and maintained correctly, email for the domain will not be delivered reliably or perhaps at all.
 The MX record type was introduced in the original DNS specifications (**[RFC 1034](https://datatracker.ietf.org/doc/html/rfc1034)** and **[1035](https://datatracker.ietf.org/doc/html/rfc1034)**) in 1987.

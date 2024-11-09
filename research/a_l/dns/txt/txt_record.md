@@ -6,9 +6,14 @@
 
 ## references
 
+- **[DNS Provider Lookup](https://mxtoolbox.com/DnsLookup.aspx)**
 - **[nslookup](https://www.nslookup.io/)**
 - **[dns record types](https://www.nslookup.io/learning/dns-record-types/)**
 - **[DNS Lookup](https://www.whoisfreaks.com/)**
+- **[TXT lookup tool](https://www.nslookup.io/txt-lookup/)**
+- **[MX lookup tool](https://www.nslookup.io/mx-lookup/)**
+- **[NS lookup tool](https://www.nslookup.io/ns-lookup/)**
+- **[SOA lookup tool](https://www.nslookup.io/soa-lookup/)**
 
 The TXT or “descriptive text” DNS record type was created to hold human-readable text. It now plays a critical role in the prevention of spam on the Internet.
 The TXT record type was introduced in the original DNS specifications (**[RFC 1034](https://datatracker.ietf.org/doc/html/rfc1034)** and **[RPF 1035](https://datatracker.ietf.org/doc/html/rfc1035)**) in 1987. They were to be used for notes and text created by DNS administrators. There was originally no definitive purpose for TXT records. They were used for whatever information the DNS administrator thought was useful. This included contact information, the locations and owners of machines, humorous messages, and other administrivia.
@@ -65,3 +70,27 @@ Today, TXT records are mainly used for:
 - MTA-STS — SMTP MTA Strict Transport Security
 - Domain verification
 - DNS-SD — DNS Service Discovery
+
+## SMTP MTA Strict Transport Security (MTA-STS)
+
+MTA-STS is specified in RFC 8461. MTA-STS allows a mail service provider to declare it accepts Transport Layer Security (TLS) to secure SMTP connections. It can also specify if other SMTP servers should refuse to deliver email to the domain if TLS is unavailable.
+
+Below is a simple example of a TXT record for MTA-STS. The existence of this record signals that SMTP servers should attempt to retrieve the MTA-STS policy for the example.org domain using an HTTPS get request. This record also gives the current policy ID.
+
+_mta-sts.example.org. 3600 TXT "v=STSv1; id=20220601120000Z;"
+
+## Domain verification
+
+In recent years it has become popular to use a DNS TXT record to prove ownership of a domain. A service provider gives the domain's administrator a challenge string. The administrator must publish the challenge string in a TXT record in their DNS zone. The service provider performs a DNS query for the TXT record and verifies that the challenge string has been published. This proves that the administrator controls DNS for the domain.
+
+The format of the domain verification TXT record varies with provider. Always follow your provider's instructions exactly. The name of the service is usually included in the challenge string, so to verify a domain with Google the record might look something like this:
+
+```example.org. 3600 TXT "google=6e6922db-e3e6-4a36-904e-a805c28087fa"```
+
+The IETF draft **[sahib-domain-verification-techniques](https://www.ietf.org/archive/id/draft-sahib-domain-verification-techniques-03.html)** contains a survey of current uses of this method.
+
+## DNS Service Discovery (DNS-SD)
+
+DNS-SD is specified in **[RFC 6763](https://datatracker.ietf.org/doc/html/rfc6763)**. DNS-SD allows services to be discovered by application clients through the DNS. This is an alternative to SRV records. The record data of the TXT record contains a set of key/value pairs preceded by length bytes. DNS-SD is not currently in widespread use.
+
+**DNS provider** is that hosts your domain and uses Domain Name System (DNS) records to unite your domain with email, websites, and other web services. You're able to access the DNS zone provided by your domain host to manage the DNS records. These records are absolutely essential to keep your website and emails running

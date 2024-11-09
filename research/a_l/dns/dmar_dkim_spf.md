@@ -1,4 +1,4 @@
-# **[What’s the difference between client certificates vs. server certificates?](https://www.digicert.com/faq/public-trust-and-certificates/whats-the-difference-between-client-certificates-vs-server-certificates)**
+# **[What are DMARC, DKIM, and SPF?](https://www.cloudflare.com/learning/email-security/dmarc-dkim-spf/#:~:text=Specifically%2C%20DKIM%20uses%20public%20key,email's%20header%20with%20this%20key)**
 
 **[Back to Research List](../../../research/research_list.md)**\
 **[Back to Current Status](../../../development/status/weekly/current_status.md)**\
@@ -6,10 +6,14 @@
 
 ## References
 
-- **[How does SMTP work](https://aws.amazon.com/what-is/smtp/#:~:text=Gmail%20account%20credentials.-,How%20does%20SMTP%20work%3F,details%2C%20subject%2C%20and%20body)**.
-- **[](https://www.cloudflare.com/learning/email-security/what-is-smtp/)**
-
-## **[What are DMARC, DKIM, and SPF?](https://www.cloudflare.com/learning/email-security/dmarc-dkim-spf/#:~:text=Specifically%2C%20DKIM%20uses%20public%20key,email's%20header%20with%20this%20key)**
+- **[DNS Provider Lookup](https://mxtoolbox.com/DnsLookup.aspx)**
+- **[nslookup](https://www.nslookup.io/)**
+- **[dns record types](https://www.nslookup.io/learning/dns-record-types/)**
+- **[DNS Lookup](https://www.whoisfreaks.com/)**
+- **[TXT lookup tool](https://www.nslookup.io/txt-lookup/)**
+- **[MX lookup tool](https://www.nslookup.io/mx-lookup/)**
+- **[NS lookup tool](https://www.nslookup.io/ns-lookup/)**
+- **[SOA lookup tool](https://www.nslookup.io/soa-lookup/)**
 
 DMARC, DKIM, and SPF are three email authentication methods. Together, they help prevent spammers, phishers, and other unauthorized parties from sending emails on behalf of a domain* they do not own.
 

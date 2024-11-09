@@ -6,9 +6,14 @@
 
 ## references
 
+- **[DNS Provider Lookup](https://mxtoolbox.com/DnsLookup.aspx)**
 - **[nslookup](https://www.nslookup.io/)**
 - **[dns record types](https://www.nslookup.io/learning/dns-record-types/)**
 - **[DNS Lookup](https://www.whoisfreaks.com/)**
+- **[TXT lookup tool](https://www.nslookup.io/txt-lookup/)**
+- **[MX lookup tool](https://www.nslookup.io/mx-lookup/)**
+- **[NS lookup tool](https://www.nslookup.io/ns-lookup/)**
+- **[SOA lookup tool](https://www.nslookup.io/soa-lookup/)**
 
 Sender Policy Framework (SPF) records in the DNS identify the mail servers allowed to send email for a domain. SPF protects domains and their brands from email abuse by spammers and hackers.
 The Simple Mail Transfer Protocol (SMTP) is used to send email. SMTP does not include validation that the sending mail server is allowed to send mail for a domain. So, anyone can use SMTP to send email that appears to be from any domain they wish. For example, a hacker might try to send phishing emails to Bank of America customers from <accounts@bankofamerica.com> to gain access to their bank accounts.
