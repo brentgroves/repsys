@@ -29,3 +29,8 @@ Only needed for Microsoft Teams tab accessibility.
 - Azure SQL Server 
   - Secured by IP
   - cost $50/month
+
+## Linmar Network Transition
+
+1. Move one R620 to Avilla and assign Avilla network address to it, i.e. 10.188.x.x or 10.187.x.x i forget which is Avilla's network number.
+2. Configure it from Albion development system since the R620 has Ubuntu server not Ubuntu desktop.

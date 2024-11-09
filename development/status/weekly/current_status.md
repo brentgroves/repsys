@@ -3,12 +3,7 @@
 **[All Status](../weekly/status_list.md)**\
 **[Back to Main](../../../README.md)**
 
-## Summary
-
-## Linmar Network Transition
-
-1. Move one R620 to Avilla and assign Avilla network address to it, i.e. 10.188.x.x or 10.187.x.x i forget which is Avilla's network number.
-2. Configure it from Albion development system since the R620 has Ubuntu server not Ubuntu desktop.
+## **[Report System Service](../../report_system/report_system.md)**
 
 ## **[Research Topics](../../../research/topics/research_summary.md)**
 
