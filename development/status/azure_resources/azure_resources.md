@@ -1,8 +1,6 @@
-# Report System
+# Report System and Azure Resource Usage Summary
 
-**[Development Menu](./menu.md)**\
-**[Current Status](../status/weekly/current_status.md)**\
-**[Back to Main](../../README.md)**
+The following is in markdown format it can be viewed better from <https://markdownlivepreview.com/> by copying and pasting the contents below.
 
 ## What is it
 
@@ -51,11 +49,6 @@ ETL stands for "extract, transform, and load". It's a process that organizations
   - Generate and email Excel from report table records.
   - Uniquely identify and archive result sets for later use.
 
-## Diagrams
-
-- **[Platform](../../development/report_system/platform_menu.md)**
-- **[K8s Clusters](../../development/report_system/k8s_clusters.md)**
-
 ## Azure resources
 
 We mostly use "free and open source software" on our on-prem Kubernetes Cluster.  The following costs are for the cloud-based version of the report system and are only needed for Microsoft Teams tab accessibility.
@@ -67,8 +60,3 @@ We mostly use "free and open source software" on our on-prem Kubernetes Cluster.
 - Azure SQL Server
   - Secured by IP
   - cost $50/month
-
-## Linmar Network Transition
-
-1. Move one R620 to Avilla and assign Avilla network address to it, i.e. 10.187.x.x
-2. Configure it from Albion development system since the R620 has Ubuntu server not Ubuntu desktop.

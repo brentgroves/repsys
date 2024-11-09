@@ -12,17 +12,11 @@ Component,type,references
 |**[Istio Service Mesh](https://istio.io/latest/docs/overview/what-is-istio/)**  | OSS   |**[Istio Operator](../../k8s/istio-install.md)**   |
 |**[Redis Sentinel One](https://www.einfochips.com/blog/redis-cache-and-its-use-cases-for-modern-application/)**   |OSS   |**[Redis Operator](../../k8s/redis_sentinel.md)**   |
 |**[Mysql InnoDB Cluster](https://dev.mysql.com/doc/mysql-operator/en/#:~:text=MySQL%20Operator%20for%20Kubernetes%20manages,the%20MySQL%20Operator%20Release%20Notes.)**   |OSS   |**[Mysql InnoDB Cluster Operator](../../k8s/mysql-innodb-cluster-install.md)**   |
-|**[Microsoft SQL Server availability group](https://dh2i.com/blog/dxoperator-for-sql-server-availability-group/)**   |third party   |**[Microsoft SQL Server Operator](../../k8s/mssql-statefulset-install.md)**   |
+|**[Microsoft SQL Server Availability Group](https://dh2i.com/blog/dxoperator-for-sql-server-availability-group/)**   |third party   |**[Microsoft SQL Server Operator](../../k8s/mssql-statefulset-install.md)**   |
 |**[Auth0 IAM Platform](https://www.weareplanet.com/blog/what-is-auth0#:~:text=Auth0%20is%20a%20platform%20companies,security%20and%20compliance%20much%20easier.)**  |third party   |**[Register App with Azure Entra](https://auth0.com/docs/authenticate/identity-providers/enterprise-identity-providers/azure-active-directory/v2)**   |
 |**[MongoDB](https://www.mongodb.com/company/what-is-mongodb)**   |OSS   |**[MongoDB Community Operator](https://www.mongodb.com/try/download/community-kubernetes-operator)**   |
 |**[Minio Object Store](https://www.mongodb.com/try/download/community-kubernetes-operator)**   |third party   |**[Minio Operator](../../k8s/minio-install.md)**   |
-|Request dispatcher   |custom   |**[requester](../../k8s/)**   |
-|runner TB   |custom   |**[runner TB](../../k8s/)**  |
-|email Excel  | custom  |**[email Excel](../../k8s/)**   |
-|report status   |custom   |**[report status](../../k8s/)**   |
-|   |   |   |
-|   |   |   |
-|   |   |   |
-|   |   |   |
-|   |   |   |
-|   |   |   |
+|Request Acceptor   |custom   |**[gRPC Microservice](https://grpc.io/docs/what-is-grpc/introduction/)**   |
+|TB Runner    |custom   |**[Goroutine Daemon](https://www.geeksforgeeks.org/goroutines-concurrency-in-golang/)**  |
+|Email Excel  | custom  |**[gRPC Microservice](https://grpc.io/docs/what-is-grpc/introduction/)**   |
+|Http2 - Web Push Notifications  | custom  |**[Push Notifications & App Push Notifications](https://www.webpushnotifications.com/)**   |
