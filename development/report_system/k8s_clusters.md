@@ -4,7 +4,7 @@
 **[Current Status](../status/weekly/current_status.md)**\
 **[Back to Main](../../README.md)**
 
-The following is a mermaid mindmap and can be viewed from <<https://mermaid.live/>
+The following is a mermaid mindmap and can be viewed from <https://mermaid.live/>
 
 ## On-Prem Kubernetes Cluster
 

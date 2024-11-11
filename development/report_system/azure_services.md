@@ -39,6 +39,8 @@ The plan is to run the minimal components of the report system from this 1-node 
 resource: reports-aks
 resource group: reports-aks
 Node pools: 1 node pool
-cost: $290/month
+VM: Standard_D8_v3 which has 8 vCPU and 32 GB ram.
+cost: $350/month
+
 status: This service is running but the request/viewer/archive apps are not ready yet.
 ```
