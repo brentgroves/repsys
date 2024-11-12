@@ -32,3 +32,14 @@ None of the SOAP nodes on the message path should process the header block direc
 All SOAP nodes on the message path are expected to examine the header block (provided that the header has not been removed by a node earlier in the message path).
 - <http://www.w3.org/2003/05/soap-envelope/ultimateReceiver>
 Only the ultimate receiver node is expected to examine the header block.
+
+## mustUnderstand
+
+This attribute is used to ensure that SOAP nodes do not ignore header blocks which are important to the overall purpose of the application. If a SOAP node determines, by using the role or actor attribute, that it should process a header block, the action taken depends on the value of the mustUnderstand attribute.
+1 (SOAP 1.1) or true (SOAP 1.2): The node must either process the header block in a manner consistent with its specification, or not at all (and throw a fault).
+0 (SOAP 1.1) or false (SOAP 1.2): The node is not obliged to process the header block.
+In effect, the mustUnderstand attribute indicates whether processing of the header block is mandatory or optional.
+
+## relay (SOAP 1.2 only)
+
+When a SOAP intermediary node processes a header block, the SOAP intermediary node removes the header block from the SOAP message. By default, the SOAP intermediary node also removes all header blocks that it ignored (because the mustUnderstand attribute had a value of false). However, when the relay attribute is specified with a value of true, the SOAP intermediary node retains the unprocessed header block in the message.
