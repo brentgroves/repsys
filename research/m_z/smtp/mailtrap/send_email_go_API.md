@@ -14,6 +14,14 @@
 
 - **[Grey Listing](https://serverfault.com/questions/136262/get-off-greylisting-the-reason-why-our-emails-bounced-back)**
 
+```yaml
+textMailtrap Sending IP: 45.158.83.2
+Mailbox Provider: Mimecast Email Protection
+Recipient MX: ca-smtp-inbound-1.mimecast.com
+Full Response: 451 Internal resource temporarily unavailable - https://community.mimecast.com/docs/DOC-1369#451 [hvdCXJ3kNHqXghC5FW76MA.ca13]
+Bounce Category: Greylisting
+```
+
 ## Send emails in Go using email API
 
 Prefer having an automated sending process? If so, I suggest using Mailtrap’s very own **[Email API](https://mailtrap.io/email-api/)**. The API is regularly maintained and updated by a team of developers, which means you can sit back and enjoy stress-free coding.
