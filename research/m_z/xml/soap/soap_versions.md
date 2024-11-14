@@ -1,4 +1,4 @@
-# **[XML Soap](https://www.w3schools.com/xml/xml_soap.asp)**
+# **[Differences in SOAP versions](https://www.ibm.com/docs/en/was-nd/8.5.5?topic=soap-differences-in-versions)**
 
 - **[Current Status](../../../../development/status/weekly/current_status.md)**\
 - **[Research List](../../../../research/research_list.md)**\

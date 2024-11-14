@@ -12,6 +12,8 @@
 
 ## EMail bounce
 
+Sent an Email and it was successfully delivered after an initial soft bounce.
+
 - **[Grey Listing](https://serverfault.com/questions/136262/get-off-greylisting-the-reason-why-our-emails-bounced-back)**
 
 ```yaml

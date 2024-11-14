@@ -1,8 +1,8 @@
 # **[The structure of a SOAP message](https://www.w3schools.com/xml/xml_soap.asp)**
 
-**[Current Status](../../../development/status/weekly/current_status.md)**\
-**[Research List](../../../research/research_list.md)**\
-**[Back Main](../../../README.md)**
+- **[Current Status](../../../../development/status/weekly/current_status.md)**\
+- **[Research List](../../../../research/research_list.md)**\
+- **[Back Main](../../../../README.md)**
 
 A SOAP message is encoded as an XML document, consisting of an <Envelope> element, which contains an optional <Header> element, and a mandatory <Body> element. The <Fault> element, contained in <Body>, is used for reporting errors.
 

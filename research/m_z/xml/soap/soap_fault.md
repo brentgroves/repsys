@@ -1,8 +1,8 @@
 # **[The SOAP fault](https://www.ibm.com/docs/en/integration-bus/10.0?topic=message-soap-fault)**
 
-**[Current Status](../../../development/status/weekly/current_status.md)**\
-**[Research List](../../../research/research_list.md)**\
-**[Back Main](../../../README.md)**
+- **[Current Status](../../../../development/status/weekly/current_status.md)**\
+- **[Research List](../../../../research/research_list.md)**\
+- **[Back Main](../../../../README.md)**
 
 The SOAP body (the <Body> element) is a mandatory sub-element of the SOAP envelope, which contains information intended for the ultimate recipient of the message.
 

@@ -1,12 +1,13 @@
-# **[XML Schema Tutorial](https://www.w3schools.com/xml/schema_intro.asp)**
+# **[XML Schema Tutorial](https://www.w3schools.com/xml/xml_wsdl.asp)**
 
-**[Current Status](../../../development/status/weekly/current_status.md)**\
-**[Research List](../../../research/research_list.md)**\
-**[Back Main](../../../README.md)**
+- **[Current Status](../../../../development/status/weekly/current_status.md)**\
+- **[Research List](../../../../research/research_list.md)**\
+- **[Back Main](../../../../README.md)**
 
-## references
-
-- **[DTD Tutorial](https://www.w3schools.com/xml/xml_dtd_intro.asp)**
+- WSDL stands for Web Services Description Language
+- WSDL is used to describe web services
+- WSDL is written in XML
+- WSDL is a W3C recommendation from 26. June 2007
 
 ## What is an XML Schema
 
@@ -19,6 +20,59 @@ An XML Schema describes the structure of an XML document, just like a DTD.
 An XML document with correct syntax is called "Well Formed".
 
 An XML document validated against an XML Schema is both "Well Formed" and "Valid".
+
+## XML XSD
+
+The base XML schema:
+
+```<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:hfp="http://www.w3.org/2001/XMLSchema-hasFacetAndProperty" targetNamespace="http://www.w3.org/2001/XMLSchema" blockDefault="#all" elementFormDefault="qualified" version="1.0" xml:lang="EN">```
+
+## **[What is the difference between targetNamespace and xmlns:target](https://stackoverflow.com/questions/7190572/targetnamespace-and-xmlns-without-prefix-what-is-the-difference)**
+
+```xml
+<schema xmlns="http://www.w3.org/2001/SchemaXML"
+        targetNamespace="http://www.example.com/name"
+        xmlns:target="http://www.example.com/name">
+```
+
+Answered quite well over here: targetNamespace and xmlns without prefix, what is the difference?
+
+To restate:
+
+- targetNamespace="" - As the current XML document is a schema this attribute defines the namespace that this schema is intended to target, or validate.
+
+xmlns="" - Defines the default namespace within the current document for all non-prefixed elements (i.e no yada: in <yada:elementName>)
+
+xmlns:target="" - here you are just defining your own namespace with the prefix target:, this is unrelated to the previous two special cases.
+
+The prefix "target" in xmlns:target="<http://www.example.com/name>" is nothing special. How would a schema processor know that you wanted that to be the target namespace for your schema? targetNamespace does just that - it declares the namespace that components of your schema belong to.
+
+## Simple Type
+
+```xml
+<xs:simpleType name="string" id="string">
+<xs:annotation>
+<xs:appinfo>
+<hfp:hasFacet name="length"/>
+<hfp:hasFacet name="minLength"/>
+<hfp:hasFacet name="maxLength"/>
+<hfp:hasFacet name="pattern"/>
+<hfp:hasFacet name="enumeration"/>
+<hfp:hasFacet name="whiteSpace"/>
+<hfp:hasProperty name="ordered" value="false"/>
+<hfp:hasProperty name="bounded" value="false"/>
+<hfp:hasProperty name="cardinality" value="countably infinite"/>
+<hfp:hasProperty name="numeric" value="false"/>
+</xs:appinfo>
+<xs:documentation source="http://www.w3.org/TR/xmlschema-2/#string"/>
+</xs:annotation>
+<xs:restriction base="xs:anySimpleType">
+<xs:whiteSpace value="preserve" id="string.preserve"/>
+</xs:restriction>
+</xs:simpleType>
+```
+
+## Complex Type
 
 ```xml
 <?xml version="1.0"?>
@@ -122,24 +176,5 @@ With XML Schema, your XML files can carry a description of its own format.
 With XML Schema, independent groups of people can agree on a standard for interchanging data.
 
 With XML Schema, you can verify data.
-
-## XML Schemas Support Data Types
-
-One of the greatest strengths of XML Schemas is the support for data types:
-
-- It is easier to describe document content
-- It is easier to define restrictions on data
-- It is easier to validate the correctness of data
-- It is easier to convert data between different data types
-
-## XML Schemas use XML Syntax
-
-Another great strength about XML Schemas is that they are written in XML:
-
-- You don't have to learn a new language
-- You can use your XML editor to edit your Schema files
-- You can use your XML parser to parse your Schema files
-- You can manipulate your Schemas with the XML DOM
-- You can transform your Schemas with XSLT
 
 If you want to study XML Schema, please read our **[XML Schema Tutorial](https://www.w3schools.com/xml/schema_intro.asp)**.

@@ -1,8 +1,8 @@
 # **[The SOAP tree](https://www.ibm.com/docs/en/integration-bus/10.0?topic=soap-tree-overview)**
 
-**[Current Status](../../../development/status/weekly/current_status.md)**\
-**[Research List](../../../research/research_list.md)**\
-**[Back Main](../../../README.md)**
+- **[Current Status](../../../../development/status/weekly/current_status.md)**\
+- **[Research List](../../../../research/research_list.md)**\
+- **[Back Main](../../../../README.md)**
 
 The SOAP nodes act as points in the flow where web service processing is configured and applied. Properties on the SOAP nodes control the processing carried out and can be configured by supplying a WSDL definition, or by manually configuring properties, or both.
 

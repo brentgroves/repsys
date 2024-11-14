@@ -1,8 +1,8 @@
 # **[The SOAP header](https://www.ibm.com/docs/en/integration-bus/10.0?topic=message-soap-header#ac55790_)**
 
-**[Current Status](../../../development/status/weekly/current_status.md)**\
-**[Research List](../../../research/research_list.md)**\
-**[Back Main](../../../README.md)**
+- **[Current Status](../../../../development/status/weekly/current_status.md)**\
+- **[Research List](../../../../research/research_list.md)**\
+- **[Back Main](../../../../README.md)**
 
 The SOAP header (the <Header> element) is an optional sub-element of the SOAP envelope, and is used to pass application-related information that is processed by SOAP nodes along the message flow.
 

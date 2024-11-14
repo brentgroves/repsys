@@ -1,8 +1,8 @@
 # **[What is a web service?](https://www.ibm.com/docs/en/integration-bus/10.0?topic=services-what-is-web-service)**
 
-**[Current Status](../../../development/status/weekly/current_status.md)**\
-**[Research List](../../../research/research_list.md)**\
-**[Back Main](../../../README.md)**
+- **[Current Status](../../../../development/status/weekly/current_status.md)**\
+- **[Research List](../../../../research/research_list.md)**\
+- **[Back Main](../../../../README.md)**
 
 Last Updated: 2023-06-21
 A web service is defined by the World Wide Web Consortium (W3C) as a software system designed to support interoperable machine-to-machine interaction over a network.
