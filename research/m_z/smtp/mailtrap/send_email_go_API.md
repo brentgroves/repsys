@@ -22,6 +22,14 @@ Mailbox Provider: Mimecast Email Protection
 Recipient MX: ca-smtp-inbound-1.mimecast.com
 Full Response: 451 Internal resource temporarily unavailable - https://community.mimecast.com/docs/DOC-1369#451 [hvdCXJ3kNHqXghC5FW76MA.ca13]
 Bounce Category: Greylisting
+
+Soft Bounce
+2024-11-14 23:50:19 UTC +00:00
+Mailtrap Sending IP: 45.158.83.1
+Mailbox Provider: Mimecast Email Protection
+Recipient MX: ca-smtp-inbound-1.mimecast.com
+Full Response: 451 Internal resource temporarily unavailable - https://community.mimecast.com/docs/DOC-1369#451 [awJWelutPTGmK05TkLalew.ca14]
+Bounce Category: Greylisting
 ```
 
 ## Send emails in Go using email API
@@ -117,4 +125,80 @@ log.Fatal(err)
 fmt.Println(string(body))
 
 }
+```
+
+## Send email with attachments
+
+A working example is in **[send.go](../../../../../go/tutorials/smtp/mailtrap/go_mailtrap/module/go_mailtrap/attachments/send.go)**:
+
+To add attachments, add the attachments field under html and specify the following, as in the code snippet below:
+
+```go
+import (
+ "bytes"
+ "encoding/base64"
+ "fmt"
+ "io"
+ "log"
+ "net/http"
+ "os"
+ "time"
+)
+
+// within main function
+ // Open the file
+ file, err := os.Open("attachment.txt")
+ if err != nil {
+  log.Fatalf("Failed to open file: %v", err)
+ }
+ defer file.Close()
+
+ // Read all contents of the file
+ fileData, err := io.ReadAll(file)
+ if err != nil {
+  log.Fatalf("Failed to read file: %v", err)
+ }
+
+ // Encode the file data to base64
+ encodedFileData := base64.StdEncoding.EncodeToString(fileData)
+
+message := []byte(`{
+    "from": { "email": "john.doe@your.domain" },
+    "to": [
+        { "email": "kate.doe@example.com" }
+    ],
+    "subject": "Here’s your attached file!",
+    "text": "Check out the attached file.",
+    "html": "<p>Check out the attached <strong>file</strong>.</p>",
+    "attachments": [
+        {
+          "filename": "example.pdf",
+          "content": "` + encodedFileData + `",
+          "type": "application/pdf",
+          "disposition": "attachment"
+        }
+    ]
+}`)
+```
+
+## EMail Attachment Soft bounce
+
+Sent an Email and it was successfully delivered after an initial soft bounce.
+
+- **[Grey Listing](https://serverfault.com/questions/136262/get-off-greylisting-the-reason-why-our-emails-bounced-back)**
+
+```yaml
+textMailtrap Sending IP: 45.158.83.2
+Mailbox Provider: Mimecast Email Protection
+Recipient MX: ca-smtp-inbound-1.mimecast.com
+Full Response: 451 Internal resource temporarily unavailable - https://community.mimecast.com/docs/DOC-1369#451 [hvdCXJ3kNHqXghC5FW76MA.ca13]
+Bounce Category: Greylisting
+
+Soft Bounce
+2024-11-14 23:50:19 UTC +00:00
+Mailtrap Sending IP: 45.158.83.1
+Mailbox Provider: Mimecast Email Protection
+Recipient MX: ca-smtp-inbound-1.mimecast.com
+Full Response: 451 Internal resource temporarily unavailable - https://community.mimecast.com/docs/DOC-1369#451 [awJWelutPTGmK05TkLalew.ca14]
+Bounce Category: Greylisting
 ```
