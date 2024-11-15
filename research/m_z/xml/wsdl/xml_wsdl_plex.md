@@ -7,7 +7,7 @@
 ## references
 
 - **[Restriction/Facets](../xsd/xml_restrictions.md)**
-
+- **[Plex](../../../../../secrets/plex/windows_odbc_connection.md)**
 - Is an XSD for Web Services
 - WSDL stands for Web Services Description Language
 - WSDL is used to describe web services
