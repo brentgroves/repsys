@@ -7,6 +7,10 @@
 
 ## **[Research Topics](../../../research/topics/research_summary.md)**
 
+### **[Understanding the Purpose of Kubectl Rollout Restart](../../../research/a_l/k8s/kubectl/rollout.md)**
+
+A rollout restart is a way to update running pods in a StatefulSet with new or updated configuration without disrupting the availability of running pods or services.
+
 ### **[SMTP Research](../../../research/topics/smtp_service.md)**
 
 ### **[Cloud-Based EDI for Full Integration](../../../research/topics/edi.md)**

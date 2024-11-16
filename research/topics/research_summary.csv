@@ -1,4 +1,5 @@
 Research,Summary
+**[Kubectl Series](./kubectl_series)**,"Understanding the Kubectl CLI is essential to administering any K8s Cluster. This series helps you learn many basic k8s administraion tasks."
 **[SMTP Service](./smtp_service.md)**,"Looking for a reliable SMTP that can help them test, send, and control their email infrastructure all in one place"
 **[Secure Gateway Meeting](../../k8s/istio-secure-gateways.md)**,"Show an example of Istio service mesh implenting a secure mTLS gateway into the K8s Cluster to a sample app."
 **[What are K8s conditions](../../../research/a_l/k8s/architecture/conditions.md)**,"Rather than rigid fine-grained state enumerations that couldn't be evolved, we initially adopted simple basic states that could report open-ended reasons for being in each state (<http://issues.k8s.io/1146>), and later non-orthogonal, extensible conditions (<http://issues.k8s.io/7856>)"
