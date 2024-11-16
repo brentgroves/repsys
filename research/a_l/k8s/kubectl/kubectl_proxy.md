@@ -68,3 +68,71 @@ metadata
 sections :
 ... apiServer : http://localhost:8001/getting-started
 ```
+
+## How Do I Start Using It?
+
+To access the Kubernetes API server through a local proxy, you must specify your proxy in settings.yaml by adding `kubectl.proxyURL: "https://<IP>:5555":`
+
+![np](https://cdn.prod.website-files.com/65a5be30bf4809bb3a2e8aff/65de6a24f3bc7cfdb5711e46_ethernet2.jpeg)
+
+## How Do I Connect to the Kubernetes API Server?
+
+You can connect to the Kubernetes API server from a local machine by specifying proxyName in the kubectl.contexts object in settings.yaml. To view the contexts that are already configured, use kubectl config get-contexts.
+
+```bash
+kubectl config get-contexts
+CURRENT   NAME      CLUSTER   AUTHINFO                          NAMESPACE
+*         repsys1   repsys1   clusterUser_reports-aks_repsys1 
+
+kubectl config set-context <context_name> --proxy=https://<ip>:5555
+```
+
+The kubectl proxy commands must be run separately from where you run your applications. If you run your proxy commands in the same shell, you must specify an explicit proxy with the command. For example, if you use the same shell to run your applications and the kubectl proxy commands, you must add the -p flag for each command.
+
+```bash
+kubectl proxy -p 5555 
+kubectl get nodes -p 5555 
+curl localhost:5555/api/v1/namespaces/default/services/kubernetes
+```
+
+Alternatively, you can use a separate terminal tab to run your applications and proxy commands.
+
+## Where Is the Log Output?
+
+The logs for all kubectl proxy commands are printed on standard output (stdout). When you run kubectl proxy, the log output shows how the commands interact with the Kubernetes API server.
+
+## How Do I Connect to a Remote Proxy?
+
+To connect to a remote proxy, you must specify a URL in the --url flag in your kubectl proxy command. For example:
+
+```bash
+kubectl proxy --url https://192.168.0.28:5555 # Remote machine. 
+kubectl proxy -n default --url http://192.168.0.28:8080 # Remote machine.
+```
+
+The -n defaults to the current context defined in your .kube/config file.
+
+## How Do I Configure My Firewall to Allow a Remote Proxy?
+
+Suppose you're running a remote Kubernetes API server (such as one in Google Container Engine, AWS, etc.). In that case, you can configure your firewall to allow access to the port that the Kubernetes API server specifies (e.g., 8080).
+
+-p &lt;port> The port on which to serve the API (default: 8443)
+
+--http-address=<address> The IP address on which to serve the API. If not specified, you use 160.202.73.11
+--https-address=<address> The IP address on which to serve HTTPS requests. If not specified, you use 0.0.0.0
+
+Here's how you can allow access to Kubernetes on the container engine:
+
+```bash
+-p 8080 -p 443 -http-address 192.168.0.28 --https-address 192.168.0.28
+```
+
+These rules will work without creating a firewall rule (unless it's part of a larger port specification). There are two exceptions: if you're running on OpenShift Origin and you want to access your Kubernetes cluster on port 443 with TLS/SSL, or if you want to access the Kubernetes API server outside of your network (e.g., on the internet). See the sections below for more.
+
+To run kubectl proxy on Google Container Engine, you must create a firewall rule that allows access to Google Container Engine services (e.g., <http://container-name:2443>).
+
+Here's an example of running kubectl proxy on Google Container Engine with TLS/SSL (type in "--tls" to get a list of options):
+
+```bash
+-p 443 -p 8443 -https-address=0.0.0.0 -http-address=192.168.0.28 --tls --context="cluster:<container_name>" --user cloud-user@cloud-router:client-certificate-authority=/etc/kubernetes/ssl/client.pem --user cloud-user@cloud-router:client-key/ca.crt:/path/to/client.key
+```
