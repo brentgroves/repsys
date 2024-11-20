@@ -16,6 +16,14 @@
 - **[NS lookup tool](https://www.nslookup.io/ns-lookup/)**
 - **[SOA lookup tool](https://www.nslookup.io/soa-lookup/)**
 
+```bash
+# Linamar has many subdomains. Creating a sub-domain for DKIM records make emailing more secure.
+ 
+dig plexemail._domainkey.linamar.com txt
+dig linamar.com txt
+
+```
+
 A Domain Name System (DNS) zone represents a portion of the DNS namespace owned and managed as a single unit by one organization. The global DNS is composed of many zones.
 The most well-known zones are the DNS root zone, where the DNS begins, and the Top Level Domains (TLDs) such as .com, .net, .org, etc. Below the TLDs, virtually every recognizable brand with a presence on the Internet has its very own DNS zone. So, for example, individual DNS zones exist for google.com, wikipedia.org, bit.ly, and millions upon millions of other domains.
 

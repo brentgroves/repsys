@@ -8,6 +8,7 @@ Using OpenSSL to Test Server Connection
 Test the Connection to Port 443
 The s_client command is used to analyze client-to-server communication. For example, it helps determine whether a port is open, if it can accept a secure connection, what kind of SSL certificate is present, and when it expires.
 
+If conda is activated and you are relying on certificates in the linux trust store then you must deactiviate conda.  `conda deactiviate` to use openssl version bound to linux standard trust store.
 Here is the most basic syntax.
 
 ```bash

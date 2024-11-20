@@ -6,6 +6,7 @@
 
 ## references
 
+- **[DNS Checker](https://dnschecker.org/)**
 - **[DNS Provider Lookup](https://mxtoolbox.com/DnsLookup.aspx)**
 - **[nslookup](https://www.nslookup.io/)**
 - **[dns record types](https://www.nslookup.io/learning/dns-record-types/)**
