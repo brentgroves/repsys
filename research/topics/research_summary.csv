@@ -1,4 +1,6 @@
 Research,Summary
+**[Accurate OEE System](./oee.md)**,"This MES system is made to collect the start and end times of tool operations, tool changes, and pallet changes for specific CNC and jobs. This software was developed 2 years ago for RDX and Knuckles but was not finished."
+**[Backups](./backup.md)**,"Research how best to backup the hypervisor and K8s VMs."
 **[Kubectl Series](./kubectl_series)**,"Understanding the Kubectl CLI is essential to administering any K8s Cluster. This series helps you learn many basic k8s administraion tasks."
 **[SMTP Service](./smtp_service.md)**,"Looking for a reliable SMTP that can help them test, send, and control their email infrastructure all in one place"
 **[Secure Gateway Meeting](../../k8s/istio-secure-gateways.md)**,"Show an example of Istio service mesh implenting a secure mTLS gateway into the K8s Cluster to a sample app."
