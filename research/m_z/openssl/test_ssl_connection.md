@@ -4,8 +4,104 @@
 **[Research List](../../research_list.md)**\
 **[Back Main](../../../README.md)**
 
-Using OpenSSL to Test Server Connection
-Test the Connection to Port 443
+## references
+
+**[debug option](https://stackoverflow.com/questions/17203562/openssl-s-client-cert-proving-a-client-certificate-was-sent-to-the-server)**
+
+## Using OpenSSL to Test Server Connection
+
+## Using OpenSSL to Test Web Connection
+
+First, check your OpenSSL version. To do so, run the following command.
+
+`openssl version`
+
+You will receive the following output.
+
+```bash
+freddy@freddy-vm:~$ openssl version
+OpenSSL 3.0.2 15 Mar 2022 (Library: OpenSSL 3.0.2 15 Mar 2022)
+```
+
+If you want more details, you can append the -a flag.
+
+```bash
+freddy@freddy-vm:~$ openssl version -a
+OpenSSL 3.0.2 15 Mar 2022 (Library: OpenSSL 3.0.2 15 Mar 2022)
+built on: Mon Jul  4 11:20:23 2022 UTC
+platform: debian-amd64
+options:  bn(64,64)
+compiler: gcc -fPIC -pthread -m64 -Wa,--noexecstack -Wall -Wa,--noexecstack -g -O2 -ffile-prefix-map=/build/openssl-Q8dQt3/openssl-3.0.2=. -flto=auto -ffat-lto-objects -flto=auto -ffat-lto-objects -fstack-protector-strong -Wformat -Werror=format-security -DOPENSSL_TLS_SECURITY_LEVEL=2 -DOPENSSL_USE_NODELETE -DL_ENDIAN -DOPENSSL_PIC -DOPENSSL_BUILDING_OPENSSL -DNDEBUG -Wdate-time -D_FORTIFY_SOURCE=2
+OPENSSLDIR: "/usr/lib/ssl"
+ENGINESDIR: "/usr/lib/x86_64-linux-gnu/engines-3"
+MODULESDIR: "/usr/lib/x86_64-linux-gnu/ossl-modules"
+Seeding source: os-specific
+CPUINFO: OPENSSL_ia32cap=0xfffa32034f8bffff:0x27ab
+```
+
+This server is running the Ubuntu 22.04 LTS operating system with OpenSSL version 3.0.2 but the commands below should work on the older OpenSSL versions as well.
+
+To see all options available, use the help tool by running the openssl help command.
+
+```bash
+freddy@freddy-vm:~$ openssl help
+help:
+
+Standard commands
+asn1parse         ca                ciphers           cmp               
+cms               crl               crl2pkcs7         dgst              
+dhparam           dsa               dsaparam          ec                
+ecparam           enc               engine            errstr            
+fipsinstall       gendsa            genpkey           genrsa            
+help              info              kdf               list              
+mac               nseq              ocsp              passwd            
+pkcs12            pkcs7             pkcs8             pkey              
+pkeyparam         pkeyutl           prime             rand              
+rehash            req               rsa               rsautl            
+s_client          s_server          s_time            sess_id           
+smime             speed             spkac             srp               
+storeutl          ts                verify            version           
+x509              
+
+Message Digest commands (see the `dgst' command for more details)
+blake2b512        blake2s256        md4               md5               
+rmd160            sha1              sha224            sha256            
+sha3-224          sha3-256          sha3-384          sha3-512          
+sha384            sha512            sha512-224        sha512-256        
+shake128          shake256          sm3               
+
+Cipher commands (see the `enc' command for more details)
+aes-128-cbc       aes-128-ecb       aes-192-cbc       aes-192-ecb       
+aes-256-cbc       aes-256-ecb       aria-128-cbc      aria-128-cfb      
+aria-128-cfb1     aria-128-cfb8     aria-128-ctr      aria-128-ecb      
+aria-128-ofb      aria-192-cbc      aria-192-cfb      aria-192-cfb1     
+aria-192-cfb8     aria-192-ctr      aria-192-ecb      aria-192-ofb      
+aria-256-cbc      aria-256-cfb      aria-256-cfb1     aria-256-cfb8     
+aria-256-ctr      aria-256-ecb      aria-256-ofb      base64            
+bf                bf-cbc            bf-cfb            bf-ecb            
+bf-ofb            camellia-128-cbc  camellia-128-ecb  camellia-192-cbc  
+camellia-192-ecb  camellia-256-cbc  camellia-256-ecb  cast              
+cast-cbc          cast5-cbc         cast5-cfb         cast5-ecb         
+cast5-ofb         des               des-cbc           des-cfb           
+des-ecb           des-ede           des-ede-cbc       des-ede-cfb       
+des-ede-ofb       des-ede3          des-ede3-cbc      des-ede3-cfb      
+des-ede3-ofb      des-ofb           des3              desx              
+rc2               rc2-40-cbc        rc2-64-cbc        rc2-cbc           
+rc2-cfb           rc2-ecb           rc2-ofb           rc4               
+rc4-40            seed              seed-cbc          seed-cfb          
+seed-ecb          seed-ofb          sm4-cbc           sm4-cfb           
+sm4-ctr           sm4-ecb           sm4-ofb 
+```
+
+For additional help, check the info and **[man](https://www.liquidweb.com/kb/what-are-man-pages/)** pages using one of the following commands.
+
+```bash
+freddy@freddy-vm:~$ man openssl
+freddy@freddy-vm:~$ info openssl
+```
+
+## Test the Connection to Port 443
+
 The s_client command is used to analyze client-to-server communication. For example, it helps determine whether a port is open, if it can accept a secure connection, what kind of SSL certificate is present, and when it expires.
 
 If conda is activated and you are relying on certificates in the linux trust store then you must deactiviate conda.  `conda deactiviate` to use openssl version bound to linux standard trust store.
@@ -18,6 +114,11 @@ openssl s_client -connect <URL or IP>:<port>
 For the URL or IP portion, use your URL or IP address. The port should be the port you wish to test. So, for the domain example.org, the command and subsequent output look like the following.
 
 ```bash
+```bash
+conda deactivate
+openssl s_client -connect "httpbin.linamar.com:$SECURE_INGRESS_PORT_EXTERNAL" \
+-CAfile linamar_certs/ca-chain-bundle.cert.pem -cert linamar_certs/client.linamar.com.san.cert.pem -key linamar_certs/client.linamar.com.san.key.pem
+
 freddy@freddy-vm:~$ openssl s_client -connect example.org:443    
 CONNECTED(00000003)
 depth=2 C = US, O = DigiCert Inc, OU = www.digicert.com, CN = DigiCert Global Root CA
@@ -200,7 +301,183 @@ Last-Modified: Thu, 17 Oct 2019 07:18:26 GMT
 Server: ECS (dcb/7EA3)
 X-Cache: HIT
 Content-Length: 648
+```
+
 The successful OpenSSL test connection to port 443 provides quite a bit of information such as the certificate chain, ciphers that are in use, the TLS protocol version used, and the overall SSL handshake process. If you are trying to send the HEAD request and it gives you an HTTP/1.1 400 Bad Request error, you need to append the -crlf flag. This flag will help the server understand what we are trying to do.
 
+```bash
 freddy@freddy-vm:~$ openssl s_client -connect example.org:443 -crlf
+```
+
+You can press CTRL + C to quit or insert the echo command, which will terminate the OpenSSL test connection to the server immediately after a check.
+
+## What Will the Output Be if You Cannot Establish a Connection?
+
+You can expect a similar output if the port is closed or the web server is down.
+
+```bash
+freddy@freddy-vm:~$ openssl s_client -connect example.org:443 -tls1_2
+4037C54E1A7F0000:error:8000006F:system library:BIO_connect:Connection refused:../crypto/bio/bio_sock2.c:125:calling connect()
+4037C54E1A7F0000:error:10000067:BIO routines:BIO_connect:connect error:../crypto/bio/bio_sock2.c:127:
+connect:errno=111
+```
+
+## Can Your OpenSSL Test Connection Be Shorter?
+
+Yes. You can achieve this by adding the -brief flag, which excludes most of the output.
+
+```bash
+freddy@freddy-vm:~$ openssl s_client -connect example.org:443 -brief
+CONNECTION ESTABLISHED
+Protocol version: TLSv1.3
+Ciphersuite: TLS_AES_256_GCM_SHA384
+Peer certificate: C = US, ST = California, L = Los Angeles, O = Internet\C2\A0Corporation\C2\A0for\C2\A0Assigned\C2\A0Names\C2\A0and\C2\A0Numbers, CN = <www.example.org>
+Hash used: SHA256
+Signature type: RSA-PSS
+Verification: OK
+Server Temp Key: ECDH, prime256v1, 256 bits
+```
+
+So, in this case, the port is open, and we can establish the connection. But just because the connection over a secure port was established doesn’t mean that the certificate is valid.
+
+If your certificate is expired for example, or the certificate hostname doesn’t match your domain it would still show you the output above even though your visitors would be getting security warnings in their browsers.
+
+## Certificate Expiry Date
+
+Another useful OpenSSL command is x509. If you pipe s_client output into x509 with the -date flag, you can get the start and end date for certificates. Also, use the -noout flag to suppress outputting the encoded certificate and save screen space. You will also add an echo command and ignore errors using 2>/dev/null to give a cleaner output.
+
+```bash
+freddy@freddy-vm:~$ echo | openssl s_client -connect example.org:443 2>/dev/null | openssl x509 -noout -dates
+notBefore=Mar 14 00:00:00 2022 GMT
+notAfter=Mar 14 23:59:59 2023 GMT
+```
+
+## Can You Make an OpenSSL Test Connection With a Specific TLS Version?
+
+Yes. You can specify your desired TLS version by using flags. Instead of using decimal delineation, use underscores. Some flag examples would be -tls1_1, -tls1_2, or -tls1_3. For the following command and subsequent output, the test SSL connection established with OpenSSL uses TLS version 1.2.
+
+```bash
+freddy@freddy-vm:~$ echo | openssl s_client -connect example.com:443 -tls1_2 -brief
+CONNECTION ESTABLISHED
+Protocol version: TLSv1.2
+Ciphersuite: ECDHE-RSA-AES128-GCM-SHA256
+Peer certificate: C = US, ST = California, L = Los Angeles, O = Internet\C2\A0Corporation\C2\A0for\C2\A0Assigned\C2\A0Names\C2\A0and\C2\A0Numbers, CN = www.example.org
+Hash used: SHA256
+Signature type: RSA-PSS
+Verification: OK
+Supported Elliptic Curve Point Formats: uncompressed:ansiX962_compressed_prime:ansiX962_compressed_char2
+Server Temp Key: ECDH, prime256v1, 256 bits
+DONE
+```
+
+## How Can You Check Your Certificate SANs?
+
+The Subject Alternative Name (SAN) in a certificate allows for securing multiple domains with just one certificate. You can check it by piping the s_client output into an x509 command. Here is the appropriate syntax.
+
+**[pipe echo](https://stackoverflow.com/questions/19147280/how-do-you-pipe-echo-into-openssl)**
+
+```bash
+# without the echo openssl stays connected
+# Note that echo -e "OPTIONS / HTTP/1.0\r\n\r\n" sends a (third) newline at the end. To suppress it use echo -ne "OPTIONS / HTTP/1.0\r\n\r\n". And you can use openssl s_client ... -ign_eof -pause at the right side.
+
+echo | openssl s_client -connect example.org:443 2>/dev/null | openssl x509 -noout -ext subjectAltName
+X509v3 Subject Alternative Name: 
+    DNS:www.example.org, DNS:example.net, DNS:example.edu, DNS:example.com, DNS:example.org, DNS:www.example.com, DNS:www.example.edu, DNS:www.example.net
+```
+
+## Using OpenSSL to Test Mail Server Connection
+
+We can use OpenSSL to troubleshoot connection to the mail server using IMAP, POP3, and SMTP protocols. Depending on the tested port, you need to instruct the mail server to upgrade the connection to a secure one, accomplished using the STARTTLS command.
+
+## What Are Explicit and Implicit Ports?
+
+Explicit ports are not automatically secured and start the TLS handshake to secure the connection only if they receive a STARTTLS command. You have a choice of connecting over a secure or unsecured connection.
+
+Implicit ports are always secured and will immediately start the TLS handshake to secure the connection. If this is not possible, the connection is rejected entirely.
+
+## OpenSSL Test Connection for IMAP
+
+Here are the syntax and output for explicit port 143. Change mail.example.org to the URL for your mailserver.
+
+```bash
+# openssl s_client -connect repsys-dev.mail.protection.outlook.com:25 -starttls imap -brief
+openssl s_client -connect repsys.dev:143 -starttls imap -brief
+CONNECTION ESTABLISHED
+Protocol version: TLSv1.2
+Ciphersuite: ECDHE-RSA-AES256-GCM-SHA384
+Peer certificate: CN = example.org
+Hash used: SHA256
+Signature type: RSA
+Verification: OK
+Supported Elliptic Curve Point Formats: uncompressed:ansiX962_compressed_prime:ansiX962_compressed_char2
+Server Temp Key: ECDH, prime256v1, 256 bits
+. OK Pre-login capabilities listed, post-login capabilities have more.
+```
+
+Here are the syntax and output for the implicit port 993. Change mail.example.org to the URL for your mailserver.
+
+```bash
+freddy@freddy-vm:~$ openssl s_client -connect mail.example.org:993 -brief
+CONNECTION ESTABLISHED
+Protocol version: TLSv1.2
+Ciphersuite: ECDHE-RSA-AES256-GCM-SHA384
+Peer certificate: CN = example.org
+Hash used: SHA256
+Signature type: RSA
+Verification: OK
+Supported Elliptic Curve Point Formats: uncompressed:ansiX962_compressed_prime:ansiX962_compressed_char2
+Server Temp Key: ECDH, prime256v1, 256 bits
+* OK [CAPABILITY IMAP4rev1 SASL-IR LOGIN-REFERRALS ID ENABLE IDLE NAMESPACE LITERAL+ AUTH=PLAIN AUTH=LOGIN] Dovecot ready.
+```
+
+## OpenSSL test connection for POP3
+
+Here are the syntax and output for explicit port 110. Remember to change mail.example.org to the URL for your mailserver.
+
+```bash
+freddy@freddy-vm:~$ openssl s_client -connect mail.example.org:110 -starttls pop3 -brief
+CONNECTION ESTABLISHED
+Protocol version: TLSv1.2
+Ciphersuite: ECDHE-RSA-AES256-GCM-SHA384
+Peer certificate: CN = example.org
+Hash used: SHA256
+Signature type: RSA
+Verification: OK
+Supported Elliptic Curve Point Formats: uncompressed:ansiX962_compressed_prime:ansiX962_compressed_char2
+Server Temp Key: ECDH, prime256v1, 256 bits
++OK Dovecot ready.
+```
+
+Here are the syntax and output for implicit port 993. Change mail.example.org to the URL for your mailserver.
+
+```bash
+freddy@freddy-vm:~$ openssl s_client -connect mail.example.org:993 -brief
+CONNECTION ESTABLISHED
+Protocol version: TLSv1.2
+Ciphersuite: ECDHE-RSA-AES256-GCM-SHA384
+Peer certificate: CN = example.org
+Hash used: SHA256
+Signature type: RSA
+Verification: OK
+Supported Elliptic Curve Point Formats: uncompressed:ansiX962_compressed_prime:ansiX962_compressed_char2
+Server Temp Key: ECDH, prime256v1, 256 bits
+* OK [CAPABILITY IMAP4rev1 SASL-IR LOGIN-REFERRALS ID ENABLE IDLE NAMESPACE LITERAL+ AUTH=PLAIN AUTH=LOGIN] Dovecot ready.
+```
+
+## OpenSSL test connection for SMTP
+
+Here are the syntax and output for explicit ports 25 and 587. Change mail.example.org to the URL for your mailserver.
+
+```bash
+freddy@freddy-vm:~$ openssl s_client -connect mail.example.org:25 -starttls smtp -brief
+CONNECTION ESTABLISHED
+Protocol version: TLSv1.2
+Ciphersuite: ECDHE-RSA-AES256-GCM-SHA384
+Peer certificate: CN = example.org
+Hash used: SHA256
+Signature type: RSA
+Verification: OK
+Supported Elliptic Curve Point Formats: uncompressed:ansiX962_compressed_prime:ansiX962_compressed_char2
+Server Temp Key: ECDH, prime256v1, 256 bits
+250 HELP
 ```
