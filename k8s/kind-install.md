@@ -303,6 +303,7 @@ Exported logs to: ./somedir
 
 The structure of the logs will look more or less like this:
 
+```bash
 .
 ├── docker-info.txt
 └── kind-control-plane/
@@ -313,4 +314,6 @@ The structure of the logs will look more or less like this:
     ├── kubelet.log
     ├── kubernetes-version.txt
     └── pods/
+```
+
 The logs contain information about the Docker host, the containers running kind, the Kubernetes cluster itself, etc.

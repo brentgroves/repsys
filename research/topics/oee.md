@@ -14,14 +14,15 @@ A manufacturing execution system, or MES, is a comprehensive, dynamic software s
 
 ## Alternatives
 
+- Find out if Mach2 can calculate OEE in Albion for Jake Kunkel and Mike Percell
+    Mach2 calculates OEE for each Cell and retains the data for a short period of time. Jake and Mike are looking for an OEE report over time for Multiple CNC so an Intelliplex or Power BI report seems a better fit for the requirement.
+
 - Create a Power BI report from our advanced reporting system.
 
     This report may not be any better than the OEE VP Plex report we are currently using. We can add some checks that would check for cases such as the operator updating Plex slightly after their shift. This report depends on our Reporting System which is scheduled to be completed in the Feb/March timeframe.
 
     Estimated Time to complete: 1 month after our advanced reporting system is completed.
-
-- Find out if Mach2 can calculate OEE in Albion for Jake Kunkel and Mike Percell
-
+- Predator
 - Create an Accurate OEE System.
 
     This MES system is made to collect the start and end times of tool operations, tool changes, and pallet changes for specific CNC and jobs. This software was developed 2 years ago for RDX and Knuckles but was not finished.
