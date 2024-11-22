@@ -1,12 +1,35 @@
 # **[Kind Installation](https://kind.sigs.k8s.io/docs/user/quick-start/)**
 
-**[Current Status](../../../development/status/weekly/current_status.md)**\
-**[Research List](../../../research/research_list.md)**\
-**[Back Main](../../../README.md)**
+**[Current Status](../../development/status/weekly/current_status.md)**\
+**[Research List](../../research/research_list.md)**\
+**[Back Main](../../README.md)**
 
-## references
+If you are a go developer you may find the **[go install option](https://kind.sigs.k8s.io/docs/user/quick-start/#installing-with-go-install)** convenient.
 
-- **[Kind Quick Start](https://kind.sigs.k8s.io/docs/user/quick-start/)
+Otherwise we supply downloadable release binaries, **[community-managed packages](https://kind.sigs.k8s.io/docs/user/quick-start/#installing-with-a-package-manager)**, and a source installation guide.
+
+Stable tagged releases (currently v0.25.0) are generally strongly recommended for CI usage in particular.
+
+You may need to install the latest code from source at HEAD if you are developing Kubernetes itself at HEAD / the latest sources.
+
+## Installing From Release Binaries
+
+Pre-built binaries are available on our releases page.
+
+To install, download the binary for your platform from “Assets”, then rename it to kind (or perhaps kind.exe on Windows) and place this into your $PATH at your preferred binary installation directory.
+
+On Linux:
+
+```bash
+pushd .
+cd ~/Downloads
+# For AMD64 / x86_64
+[ $(uname -m) = x86_64 ] && curl -Lo ./kind https://kind.sigs.k8s.io/dl/v0.25.0/kind-linux-amd64
+# For ARM64
+[ $(uname -m) = aarch64 ] && curl -Lo ./kind https://kind.sigs.k8s.io/dl/v0.25.0/kind-linux-arm64
+chmod +x ./kind
+sudo mv ./kind /usr/local/bin/kind
+```
 
 ## Creating a Cluster
 
