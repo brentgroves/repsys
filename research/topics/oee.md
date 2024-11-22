@@ -16,20 +16,21 @@ A manufacturing execution system, or MES, is a comprehensive, dynamic software s
 
 - Create a Power BI report from our advanced reporting system.
 
-This report may not be any better than the OEE VP Plex report we are currently using. We can add some checks that would check for cases such as the operator updating Plex slightly after their shift. This report depends on our Advanced Reporting System which is scheduled to be completed in the Feb/March timeframe.
+    This report may not be any better than the OEE VP Plex report we are currently using. We can add some checks that would check for cases such as the operator updating Plex slightly after their shift. This report depends on our Reporting System which is scheduled to be completed in the Feb/March timeframe.
+
+    Estimated Time to complete: 1 month after our advanced reporting system is completed.
+
+- Find out if Mach2 can calculate OEE for Jake Kunkel and Mike Percell
 
 - Create an Accurate OEE System.
 
-This MES system is made to collect the start and end times of tool operations, tool changes, and pallet changes for specific CNC and jobs. This software was developed 2 years ago for RDX and Knuckles but was not finished.
+    This MES system is made to collect the start and end times of tool operations, tool changes, and pallet changes for specific CNC and jobs. This software was developed 2 years ago for RDX and Knuckles but was not finished.
 
-+ CNC Module or Serial Port Data Logger.
-+ GCode changes amounting to 1 command before any tool operation and 1 command after the tool operation.
-+ Network connection to each CNC to monitor.
-+ MES software to collect data 
-+ Power BI reports for OEE, tool operation, tool change, and pallet change times.
+  - CNC Module or Serial Port Data Logger.
+  - GCode changes amounting to 1 command before any tool operation and 1 command after the tool operation.
+  - Network connection to each CNC to monitor.
+  - MES software to collect data
+  - Power BI reports for OEE, tool operation, tool change, and pallet change times.
+  - Sustaining software engineer
 
-Estimate Time to Complete: 1 year
-
-
-
-
+    Estimate Time to Complete: 1 year
