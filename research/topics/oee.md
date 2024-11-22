@@ -20,7 +20,7 @@ A manufacturing execution system, or MES, is a comprehensive, dynamic software s
 
     Estimated Time to complete: 1 month after our advanced reporting system is completed.
 
-- Find out if Mach2 can calculate OEE for Jake Kunkel and Mike Percell
+- Find out if Mach2 can calculate OEE in Albion for Jake Kunkel and Mike Percell
 
 - Create an Accurate OEE System.
 
