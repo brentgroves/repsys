@@ -33,7 +33,14 @@ nginx1-585f98d7bf-84rxg 1/1 Running 0 12s
 
 kubectl get pod nginx1-585f98d7bf-84rxg -o yaml 
 
-apiVersion: v1 kind: Pod metadata: (...) spec: containers: - image: nginx (...) serviceAccount: default serviceAccountName: default
+apiVersion: v1 kind: 
+Pod metadata: (...) 
+spec: 
+containers: 
+- image: nginx 
+(...) 
+serviceAccount: default 
+serviceAccountName: default
 ```
 
 ## OK, What Does It Mean?
@@ -43,12 +50,25 @@ So, it turns out that your pods have the default service account assigned even w
 We can validate that as well. Let's get into our freshly deployed nginx pod and try to connect to a Kubernetes API from there. For that, we'll need to export a few environment variables and then use the curl command to send an HTTP request to the Kubernetes API.
 
 ```bash
+kubectl exec --stdin --tty nginx1-6485cf84db-kjrg5 -- /bin/bash
+
 # Export the internal Kubernetes API server hostname 
-$ APISERVER=https://kubernetes.default.svc # Export the path to ServiceAccount mount directory 
-$ SERVICEACCOUNT=/var/run/secrets/kubernetes.io/serviceaccount # Read the ServiceAccount bearer token 
-$ TOKEN=$(cat ${SERVICEACCOUNT}/token) # Reference the internal Kubernetes certificate authority (CA) 
-$ CACERT=${SERVICEACCOUNT}/ca.crt # Make a call to the Kubernetes API with TOKEN 
-$ curl --cacert ${CACERT} --header "Authorization: Bearer ${TOKEN}" -X GET ${APISERVER}/api/v1/namespaces/default/pods { "kind": "Status", "apiVersion": "v1", "metadata": {}, "status": "Failure", "message": "pods is forbidden: User \"system:serviceaccount:default:default\" cannot list resource \"pods\" in API group \"\" in the namespace \"default\"", "reason": "Forbidden", "details": { "kind": "pods" }, "code": 403 }#
+APISERVER=https://kubernetes.default.svc # Export the path to ServiceAccount mount directory 
+SERVICEACCOUNT=/var/run/secrets/kubernetes.io/serviceaccount # Read the ServiceAccount bearer token 
+TOKEN=$(cat ${SERVICEACCOUNT}/token) # Reference the internal Kubernetes certificate authority (CA) 
+CACERT=${SERVICEACCOUNT}/ca.crt # Make a call to the Kubernetes API with TOKEN 
+curl --cacert ${CACERT} --header "Authorization: Bearer ${TOKEN}" -X GET ${APISERVER}/api/v1/namespaces/default/pods 
+{
+  "kind": "Status",
+  "apiVersion": "v1",
+  "metadata": {},
+  "status": "Failure",
+  "message": "pods is forbidden: User \"system:serviceaccount:default:default\" cannot list resource \"pods\" in API group \"\" in the namespace \"default\"",
+  "reason": "Forbidden",
+  "details": {
+    "kind": "pods"
+  },
+  "code": 403
 ```
 
 ## As you can see, the default service account indeed doesn't have many permissions. It's really only there to fulfil the requirement that each pod has a service account assigned to it
@@ -60,13 +80,17 @@ So, if you want your pod to actually be able to talk to the Kubernetes API and d
 The easiest way to create a service account is by executing the kubectl create serviceaccount command followed by a desired service account name.
 
 ```bash
-kubectl create serviceaccount nginx-serviceaccount serviceaccount/nginx-serviceaccount created 
+kubectl create serviceaccount nginx-serviceaccount 
+serviceaccount/nginx-serviceaccount created 
 ```
 
 Just like with anything else in Kubernetes, it's worth knowing how to create one using the YAML definition file. In the case of service accounts, it's actually really simple and looks like this:
 
 ```yaml
-apiVersion: v1 kind: ServiceAccount metadata: name: nginx-serviceaccount 
+apiVersion: v1 
+kind: ServiceAccount 
+metadata: 
+name: nginx-serviceaccount 
 ```
 
 I'll save it as nginx-sa.yaml and apply that simple YAML file using kubectl apply -f nginx-sa.yaml:
@@ -78,7 +102,7 @@ kubectl apply -f nginx-sa.yaml serviceaccount/nginx-serviceaccount created
 You can see from the output above that a service account was created, but you can double-check that with kubectl get serviceaccounts, or kubectl get as for short.
 
 ```bash
-$ kubectl get serviceaccounts 
+kubectl get serviceaccounts 
 NAME SECRETS AGE 
 default 1 3h14m 
 nginx-serviceaccount 1 72s 
@@ -95,10 +119,10 @@ OK, you created a new service account for your pod, but by default, it won't do 
 For the purpose of the demo, you can assign a built-in Kubernetes ClusterRole called "view" that allows viewing all resources. You then need to create a RoleBinding for your Service Account.
 
 ```yaml
-kubectl create rolebinding nginx-sa-readonly \ 
---clusterrole=view \ 
+kubectl create rolebinding nginx-sa-readonly \
+--clusterrole=view \
 --serviceaccount=default:nginx-serviceaccount \
- --namespace=default 
+--namespace=default 
 ```
 
 Now, any pod using the new ServiceAccount should be able to view all resources in the default namespace. To validate that, you can perform the same test you did earlier, but first you need to assign that ServiceAccount to your nginx pod.
@@ -108,13 +132,44 @@ Now, any pod using the new ServiceAccount should be able to view all resources i
 As mentioned previously, if you don't specify any service account for your pod, it will be assigned a "default" service account. You just created a new service account for your needs, so you'll want to use that one instead. For that, you need to pass the service account name as the value for serviceAccountName key in a spec section of your deployment definition file.
 
 ```yaml
-apiVersion: apps/v1 kind: Deployment metadata: name: nginx1 labels: app: nginx1 spec: replicas: 2 selector: matchLabels: app: nginx1 template: metadata: labels: app: nginx1 spec: serviceAccountName: nginx-serviceaccount containers: - name: nginx1 image: nginx ports: - containerPort: 80
+cat <<EOF | kubectl apply -f -
+apiVersion: apps/v1 
+kind: Deployment 
+metadata: 
+    name: nginx1 
+    labels: 
+        app: nginx1 
+spec: 
+    replicas: 2 
+    selector: 
+        matchLabels: 
+            app: nginx1 
+    template: 
+        metadata: 
+            labels: 
+                app: nginx1 
+        spec: 
+            serviceAccountName: nginx-serviceaccount 
+            containers: 
+            - name: nginx1 
+              image: nginx 
+              ports: 
+              - containerPort: 80
+EOF
 ```
 
 That's it. Now, after applying this definition, you can try to perform the same test as before from within the pod.
 
 ```bash
-curl --cacert ${CACERT} --header "Authorization: Bearer ${TOKEN}" -X GET ${APISERVER}/api/v1/namespaces/default/pods { "kind": "PodList", "apiVersion": "v1", "metadata": { "resourceVersion": "52233" }, "items": [ { "metadata": { "name": "nginx1-65448895f9-5j6b6", "generateName": "nginx1-65448895f9-", "namespace": "default", "uid": "b09bfa93-a388-4cd9-9495-131f620613d0", "resourceVersion": "49536", (...) 
+kubectl exec --stdin --tty nginx1-fdb5cd75b-5z6ln -- /bin/bash
+# Export the internal Kubernetes API server hostname 
+APISERVER=https://kubernetes.default.svc # Export the path to ServiceAccount mount directory 
+SERVICEACCOUNT=/var/run/secrets/kubernetes.io/serviceaccount # Read the ServiceAccount bearer token 
+TOKEN=$(cat ${SERVICEACCOUNT}/token) # Reference the internal Kubernetes certificate authority (CA) 
+CACERT=${SERVICEACCOUNT}/ca.crt # Make a call to the Kubernetes API with TOKEN 
+
+curl --cacert ${CACERT} --header "Authorization: Bearer ${TOKEN}" -X GET ${APISERVER}/api/v1/namespaces/default/pods 
+{ "kind": "PodList", "apiVersion": "v1", "metadata": { "resourceVersion": "52233" }, "items": [ { "metadata": { "name": "nginx1-65448895f9-5j6b6", "generateName": "nginx1-65448895f9-", "namespace": "default", "uid": "b09bfa93-a388-4cd9-9495-131f620613d0", "resourceVersion": "49536", (...) 
 ```
 
 And as expected, now it works fine. If, for any reason, your pods need access to a Kubernetes API, you create a new ServiceAccount for it, then assign a role or ClusterRole to it via RoleBinding, then specify the ServiceAccount name in your deployment.
