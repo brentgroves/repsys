@@ -6,6 +6,8 @@
 
 ## references
 
+- **[External Authorization via OIDC](https://www.digihunch.com/2022/02/istio-external-authorization/)**
+
 - **[conditions page](https://istio.io/latest/docs/reference/config/security/conditions/)**
 
 Istio’s authorization features provide mesh-, namespace-, and workload-wide access control for your workloads in the mesh. This level of control provides the following benefits:
