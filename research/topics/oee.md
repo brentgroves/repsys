@@ -23,11 +23,13 @@ A manufacturing execution system, or MES, is a comprehensive, dynamic software s
 
     Estimated Time to complete: 1 month after our advanced reporting system is completed.
 - Predator
+
 - Create an Accurate OEE System.
 
     This MES system is made to collect the start and end times of tool operations, tool changes, and pallet changes for specific CNC and jobs. This software was developed 2 years ago for RDX and Knuckles but was not finished.
 
-  - CNC Module or Serial Port Data Logger.
+  To Do:
+  - CNC Network Module or Serial Port Data Logger.
   - GCode changes amounting to 1 command before any tool operation and 1 command after the tool operation.
   - Network connection to each CNC to monitor.
   - MES software to collect data
