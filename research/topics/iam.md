@@ -4,8 +4,11 @@
 **[Research Summary](./research_summary.md)**\
 **[Back Main](../../README.md)**
 
+![j](https://cdn.sanity.io/images/141x4uzu/production/c4ac5fa7137769d84630fd3d1fac135b1ee94c39-6336x4292.png)
+
 ## references
 
+- **[JWKS](../a_l/istio/security/jwks.md)**
 - **[Authenticating and Authorizing end-users with Istio and Auth0](https://auth0.com/blog/securing-kubernetes-clusters-with-istio-and-auth0/)**
 - **[Istio Authentication and Authorization](../a_l/istio/authentication_and_authorization.md)**
 - **[Authenticating and Authorizing end-users with Istio and Auth0 in Azure AKS](../../../azure/mobexglobal.com/aks/istio_auth0.md)**

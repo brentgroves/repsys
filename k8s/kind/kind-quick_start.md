@@ -66,7 +66,22 @@ To see all the clusters you have created, you can use the get clusters command.
 For example, let’s say you create two clusters:
 
 ```bash
+# The default node image is now Kubernetes v1.31.2
 kind create cluster # Default cluster context name is `kind`.
+kind create cluster --image=kindest/node:v1.31.2
+Creating cluster "kind" ...
+ ✓ Ensuring node image (kindest/node:v1.31.2) 🖼 
+ ✓ Preparing nodes 📦  
+ ✓ Writing configuration 📜 
+ ✓ Starting control-plane 🕹️ 
+ ✓ Installing CNI 🔌 
+ ✓ Installing StorageClass 💾 
+Set kubectl context to "kind-kind"
+You can now use your cluster with:
+
+kubectl cluster-info --context kind-kind
+
+Thanks for using kind! 😊
 ...
 kind create cluster --name kind-2
 ```

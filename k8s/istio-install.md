@@ -20,11 +20,19 @@ This guide lets you quickly evaluate Istio. If you are already familiar with Ist
 pushd .
 cd ~/Downloads
 curl -L https://istio.io/downloadIstio | sh -
-# Downloading istio-1.23.0 from https://github.com/istio/istio/releases/download/1.23.0/istio-1.23.0-linux-amd64.tar.gz ...
+Istio has been successfully downloaded into the istio-1.24.1 folder on your system.
 
-# Istio 1.23.0 Download Complete!
+Next Steps:
+See https://istio.io/latest/docs/setup/install/ to add Istio to your Kubernetes cluster.
 
-# Istio has been successfully downloaded into the istio-1.23.0 folder on your system.
+To configure the istioctl client tool for your workstation,
+add the /home/brent/Downloads/istio-1.24.1/bin directory to your environment path variable with:
+         export PATH="$PATH:/home/brent/Downloads/istio-1.24.1/bin"
+
+Begin the Istio pre-installation check by running:
+istioctl x precheck 
+
+Need more information? Visit https://istio.io/latest/docs/setup/install/ 
 ```
 
 ## Step 2
@@ -34,8 +42,11 @@ Move to the Istio package directory. For example, if the package is istio-1.23.0
 ```bash
 # remove old version
 sudo rm /usr/local/bin/istioctl
-sudo cp istio-1.23.2/bin/istioctl /usr/local/bin/
+sudo cp istio-1.24.1/bin/istioctl /usr/local/bin/
 
+istioctl x precheck 
+✔ No issues found when checking the cluster. Istio is safe to install or upgrade!
+  To get started, check out https://istio.io/latest/docs/setup/getting-started/.
 ```
 
 The installation directory contains:
@@ -44,7 +55,7 @@ The installation directory contains:
 - The istioctl client binary in the bin/ directory.
 
 ```bash
-ls ~/Downloads/istio-1.23.2                   
+ls ~/Downloads/istio-1.24.1                   
 bin  LICENSE  manifests  manifest.yaml  README.md  samples  tools
 ```
 
@@ -57,10 +68,10 @@ Unlike **[Istio Gateways](https://istio.io/latest/docs/concepts/traffic-manageme
 Install Istio using the demo profile, without any gateways:
 
 ```bash
-scc.sh repsys11c2n1.yaml microk8s 
+scc.sh kind.yaml microk8s 
 pushd .
 
-cd ~/Downloads/istio-1.23.0
+cd ~/Downloads/istio-1.24.1
 
 # If you are going to use the Gateway API instructions, you can install Istio using the minimal profile because you will not need the istio-ingressgateway which is otherwise installed by default:
 
