@@ -26,7 +26,7 @@ In all cases, Istio stores the authentication policies in the Istio config store
 
 ## Mutual TLS authentication
 
-Istio tunnels service-to-service communication through the client- and server-side PEPs, which are implemented as Envoy proxies. When a workload sends a request to another workload using mutual TLS authentication, the request is handled as follows:
+Istio tunnels service-to-service communication through the client- and server-side policy enforcement point,PEPs, which are implemented as Envoy proxies. When a workload sends a request to another workload using mutual TLS authentication, the request is handled as follows:
 
 - Istio re-routes the outbound traffic from a client to the client’s local sidecar Envoy.
 - The client side Envoy starts a mutual TLS handshake with the server side Envoy. During the handshake, the client side Envoy also does a secure naming check to verify that the service account presented in the server certificate is authorized to run the target service.
@@ -80,35 +80,51 @@ Istio outputs identities with both types of authentication, as well as other cla
 
 This section provides more details about how Istio authentication policies work. As you’ll remember from the Architecture section, authentication policies apply to requests that a service receives. To specify client-side authentication rules in mutual TLS, you need to specify the TLSSettings in the DestinationRule. You can find more information in our **[TLS settings reference docs](https://istio.io/latest/docs/reference/config/networking/destination-rule/#ClientTLSSettings)**.
 
+Like other Istio configurations, you can specify authentication policies in .yaml files. You deploy policies using kubectl. The following example authentication policy specifies that transport authentication for the workloads with the app:reviews label must use mutual TLS:
+
+```yaml
+apiVersion: security.istio.io/v1
+kind: PeerAuthentication
+metadata:
+  name: "example-peer-policy"
+  namespace: "foo"
+spec:
+  selector:
+    matchLabels:
+      app: reviews
+  mtls:
+    mode: STRICT
+```
+
 Breaking down a monolithic application into atomic services offers various benefits, including better agility, better scalability and better ability to reuse services. However, microservices also have particular security needs:
 
-To defend against man-in-the-middle attacks, they need traffic encryption.
-To provide flexible service access control, they need mutual TLS and fine-grained access policies.
-To determine who did what at what time, they need auditing tools.
+- To defend against man-in-the-middle attacks, they need traffic encryption.
+- To provide flexible service access control, they need mutual TLS and fine-grained access policies.
+- To determine who did what at what time, they need auditing tools.
+
 Istio Security provides a comprehensive security solution to solve these issues. This page gives an overview on how you can use Istio security features to secure your services, wherever you run them. In particular, Istio security mitigates both insider and external threats against your data, endpoints, communication, and platform.
 
 ## Security overview
 
 The Istio security features provide strong identity, powerful policy, transparent TLS encryption, and authentication, authorization and audit (AAA) tools to protect your services and data. The goals of Istio security are:
 
-Security by default: no changes needed to application code and infrastructure
-Defense in depth: integrate with existing security systems to provide multiple layers of defense
-Zero-trust network: build security solutions on distrusted networks
+- Security by default: no changes needed to application code and infrastructure
+- Defense in depth: integrate with existing security systems to provide multiple layers of defense
+- Zero-trust network: build security solutions on distrusted networks
+
 Visit our mutual TLS Migration docs to start using Istio security features with your deployed services. Visit our Security Tasks for detailed instructions to use the security features.
 
-High-level architecture
+## High-level architecture
+
 Security in Istio involves multiple components:
 
-A Certificate Authority (CA) for key and certificate management
-
-The configuration API server distributes to the proxies:
-
-authentication policies
-authorization policies
-secure naming information
-Sidecar and perimeter proxies work as Policy Enforcement Points (PEPs) to secure communication between clients and servers.
-
-A set of Envoy proxy extensions to manage telemetry and auditing
+- A Certificate Authority (CA) for key and certificate management
+- The configuration API server distributes to the proxies:
+  - authentication policies
+  - authorization policies
+  - secure naming information
+  - Sidecar and perimeter proxies work as Policy Enforcement Points (PEPs) to secure communication between clients and servers.
+- A set of Envoy proxy extensions to manage telemetry and auditing
 
 The control plane handles configuration from the API server and configures the PEPs in the data plane. The PEPs are implemented using Envoy. The following diagram shows the architecture.
 
@@ -127,7 +143,9 @@ The following list shows examples of service identities that you can use on diff
 - Kubernetes: Kubernetes service account
 - GCE: GCP service account
 - On-premises (non-Kubernetes): user account, custom service account, service name, Istio service account, or GCP service account. The custom service account refers to the existing service account just like the identities that the customer’s Identity Directory manages.
-Identity and certificate management
+
+## Identity and certificate management
+
 Istio securely provisions strong identities to every workload with X.509 certificates. Istio agents, running alongside each Envoy proxy, work together with istiod to automate key and certificate rotation at scale. The following diagram shows the identity provisioning flow.
 
 ## Identity Provisioning Workflow
@@ -157,56 +175,6 @@ Peer authentication: used for service-to-service authentication to verify the cl
 - Google Auth
 
 In all cases, Istio stores the authentication policies in the Istio config store via a custom Kubernetes API. Istiod keeps them up-to-date for each proxy, along with the keys where appropriate. Additionally, Istio supports authentication in permissive mode to help you understand how a policy change can affect your security posture before it is enforced.
-
-## Mutual TLS authentication
-
-Istio tunnels service-to-service communication through the client- and server-side PEPs, which are implemented as Envoy proxies. When a workload sends a request to another workload using mutual TLS authentication, the request is handled as follows:
-
-Istio re-routes the outbound traffic from a client to the client’s local sidecar Envoy.
-The client side Envoy starts a mutual TLS handshake with the server side Envoy. During the handshake, the client side Envoy also does a secure naming check to verify that the service account presented in the server certificate is authorized to run the target service.
-The client side Envoy and the server side Envoy establish a mutual TLS connection, and Istio forwards the traffic from the client side Envoy to the server side Envoy.
-The server side Envoy authorizes the request. If authorized, it forwards the traffic to the backend service through local TCP connections.
-Istio configures TLSv1_2 as the minimum TLS version for both client and server with the following cipher suites:
-
-ECDHE-ECDSA-AES256-GCM-SHA384
-
-ECDHE-RSA-AES256-GCM-SHA384
-
-ECDHE-ECDSA-AES128-GCM-SHA256
-
-ECDHE-RSA-AES128-GCM-SHA256
-
-AES256-GCM-SHA384
-
-AES128-GCM-SHA256
-
-## Permissive mode
-
-Istio mutual TLS has a permissive mode, which allows a service to accept both plaintext traffic and mutual TLS traffic at the same time. This feature greatly improves the mutual TLS onboarding experience.
-
-Many non-Istio clients communicating with a non-Istio server presents a problem for an operator who wants to migrate that server to Istio with mutual TLS enabled. Commonly, the operator cannot install an Istio sidecar for all clients at the same time or does not even have the permissions to do so on some clients. Even after installing the Istio sidecar on the server, the operator cannot enable mutual TLS without breaking existing communications.
-
-With the permissive mode enabled, the server accepts both plaintext and mutual TLS traffic. The mode provides greater flexibility for the on-boarding process. The server’s installed Istio sidecar takes mutual TLS traffic immediately without breaking existing plaintext traffic. As a result, the operator can gradually install and configure the client’s Istio sidecars to send mutual TLS traffic. Once the configuration of the clients is complete, the operator can configure the server to mutual TLS only mode. For more information, visit the Mutual TLS Migration tutorial.
-
-## Secure naming
-
-Server identities are encoded in certificates, but service names are retrieved through the discovery service or DNS. The secure naming information maps the server identities to the service names. A mapping of identity A to service name B means “A is authorized to run service B”. The control plane watches the apiserver, generates the secure naming mappings, and distributes them securely to the PEPs. The following example explains why secure naming is critical in authentication.
-
-Suppose the legitimate servers that run the service datastore only use the infra-team identity. A malicious user has the certificate and key for the test-team identity. The malicious user intends to impersonate the service to inspect the data sent from the clients. The malicious user deploys a forged server with the certificate and key for the test-team identity. Suppose the malicious user successfully hijacked (through DNS spoofing, BGP/route hijacking, ARP spoofing, etc.) the traffic sent to the datastore and redirected it to the forged server.
-
-When a client calls the datastore service, it extracts the test-team identity from the server’s certificate, and checks whether test-team is allowed to run datastore with the secure naming information. The client detects that test-team is not allowed to run the datastore service and the authentication fails.
-
-Note that, for non HTTP/HTTPS traffic, secure naming doesn’t protect from DNS spoofing, in which case the attacker modifies the destination IPs for the service. Since TCP traffic does not contain Host information and Envoy can only rely on the destination IP for routing, Envoy may route traffic to services on the hijacked IPs. This DNS spoofing can happen even before the client-side Envoy receives the traffic.
-
-## Authentication architecture
-
-You can specify authentication requirements for workloads receiving requests in an Istio mesh using peer and request authentication policies. The mesh operator uses .yaml files to specify the policies. The policies are saved in the Istio configuration storage once deployed. The Istio controller watches the configuration storage.
-
-Upon any policy changes, the new policy is translated to the appropriate configuration telling the PEP how to perform the required authentication mechanisms. The control plane may fetch the public key and attach it to the configuration for JWT validation. Alternatively, Istiod provides the path to the keys and certificates the Istio system manages and installs them to the application pod for mutual TLS. You can find more info in the Identity and certificate management section.
-
-Istio sends configurations to the targeted endpoints asynchronously. Once the proxy receives the configuration, the new authentication requirement takes effect immediately on that pod.
-
-Client services, those that send requests, are responsible for following the necessary authentication mechanism. For request authentication, the application is responsible for acquiring and attaching the JWT credential to the request. For peer authentication, Istio automatically upgrades all traffic between two PEPs to mutual TLS. If authentication policies disable mutual TLS mode, Istio continues to use plain text between PEPs. To override this behavior explicitly disable mutual TLS mode with destination rules. You can find out more about how mutual TLS works in the Mutual TLS authentication section.
 
 ## Authentication Architecture
 

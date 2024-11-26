@@ -22,3 +22,15 @@ Read the Istio authorization concepts.
 Install Istio using Istio installation guide.
 
 Deploy two workloads: httpbin and curl. Deploy these in one namespace, for example foo. Both workloads run with an Envoy proxy in front of each. Deploy the example namespace and workloads using these commands:
+
+To observe other aspects of JWT validation, use the script gen-jwt.py to generate new tokens to test with different issuer, audiences, expiry date, etc. The script can be downloaded from the Istio repository:
+
+```bash
+wget --no-verbose https://raw.githubusercontent.com/istio/istio/release-1.24/security/tools/jwt/samples/gen-jwt.py
+```
+
+You also need the key.pem file:
+
+```bash
+wget --no-verbose https://raw.githubusercontent.com/istio/istio/release-1.24/security/tools/jwt/samples/key.pem
+```
