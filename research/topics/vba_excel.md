@@ -4,6 +4,12 @@
 **[Research Summary](./research_summary.md)**\
 **[Back Main](../../README.md)**
 
+## references
+
+- **[excel to sql database](https://learn.microsoft.com/en-us/sql/relational-databases/import-export/import-data-from-excel-to-sql?view=sql-server-ver16)**
+- **[How to Turn Excel File with VBA & Macros into a Web Application](https://www.youtube.com/watch?v=v3WmgVCGEWI)**
+- **[excel vba to web app](https://www.reddit.com/r/html5/comments/cqrcbx/turning_an_excel_spreadsheet_with_vba_macros_into/)**
+
 The following is in markdown format it can be viewed better from <https://markdownlivepreview.com/> by copying and pasting the contents below.
 
 ## Important **[VBA Excel](https://www.datacamp.com/tutorial/vba-excel)** Terms
