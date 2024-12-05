@@ -4,6 +4,13 @@
 **[Research List](../../research/research_list.md)**\
 **[Back Main](../../README.md)**
 
+## Gateways
+
+```bash
+scc.sh kind.yaml kind-kind
+kubectl port-forward -n istio-system svc/istio-ingressgateway 8000:80 
+```
+
 If you are a go developer you may find the **[go install option](https://kind.sigs.k8s.io/docs/user/quick-start/#installing-with-go-install)** convenient.
 
 Otherwise we supply downloadable release binaries, **[community-managed packages](https://kind.sigs.k8s.io/docs/user/quick-start/#installing-with-a-package-manager)**, and a source installation guide.
