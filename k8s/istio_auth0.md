@@ -165,7 +165,7 @@ By labeling the namespace with istio-injection=enabled, pods that are deployed i
 ```bash
 pushd .
 cd ~/src/repsys/k8s/istio-auth0-integration
-
+scc.sh kind.yaml kind-kind 
 kubectl config set-context $(kubectl config current-context) --namespace=demo
 kubectl apply -f platform/kube/bookinfo.yaml
 service/details created

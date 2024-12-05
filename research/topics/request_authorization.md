@@ -8,6 +8,14 @@
 
 how to implement request level authorization with istio
 
+## references
+
+- **[Istio Secure Gateway](../../../azure/mobexglobal.com/aks/istio_secure_gateway_linamar.md)**
+- **[Istio and Keycloak](../a_l/istio/istio_keycloak.md)**
+- **[Full Stack App](../a_l/istio/full_stack_app_in_istio.md)**
+- **[Istio Auth0](../../k8s/istio_auth0.md)**
+- **[End User Authentication](../a_l/istio/security/end_user_authentication.md)**
+
 ## reference
 
 - <https://stackoverflow.com/questions/59897998/how-to-use-authorization-and-jwt-with-istio>

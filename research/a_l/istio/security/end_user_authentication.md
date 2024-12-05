@@ -32,6 +32,8 @@ Understand Istio authentication policy and related mutual TLS authentication con
 Install Istio on a Kubernetes cluster with the default configuration profile, as described in installation steps.
 
 ```bash
+scc.sh kind.yaml kind-kind
+kubectl port-forward -n istio-system svc/istio-ingressgateway 8000:80 
 istioctl install --set profile=default
 ```
 
@@ -46,10 +48,17 @@ kubectl delete ns foo
 ```bash
 pushd .
 cd ~/Downloads/istio-1.24.1/
+scc.sh aks_repsys1.yaml repsys1 
+scc.sh kind.yaml kind-kind
 kubectl create ns foo
 kubectl label namespace foo istio-injection=enabled
+# or for aks
+kubectl label namespace foo istio.io/rev=asm-1-22
+
 kubectl apply -f <(istioctl kube-inject -f samples/httpbin/httpbin.yaml) -n foo
-# or
+# above gives error on aks
+# Error: could not read valid configmap "istio" from namespace "istio-system": configmaps "istio" not found - Use --meshConfigFile or re-run kube-inject with `-i <istioSystemNamespace> and ensure valid MeshConfig exists
+# or for aks
 kubectl apply -f samples/httpbin/httpbin.yaml -n foo
 serviceaccount/httpbin created
 service/httpbin created
@@ -62,7 +71,7 @@ deployment.apps/httpbin created
 pushd .
 cd ~/Downloads/istio-1.24.1/
 kubectl apply -f samples/httpbin/httpbin-gateway.yaml -n foo
-# or
+# or for aks
 kubectl apply -n foo -f - <<EOFk
 apiVersion: networking.istio.io/v1
 kind: Gateway
@@ -70,7 +79,7 @@ metadata:
   name: httpbin-gateway
 spec:
   selector:
-    istio: ingressgateway
+    istio: aks-istio-ingressgateway-external
   servers:
   - port:
       number: 80
@@ -158,6 +167,7 @@ If you provide a token in the authorization header, its implicitly default locat
 ## no token
 
 ```bash
+curl "localhost:8000/headers" -s -o /dev/null -w "%{http_code}\n"
 curl "$INGRESS_HOST:$INGRESS_PORT/headers" -s -o /dev/null -w "%{http_code}\n"
 # or for kind cluster
 curl "localhost:8000/headers" -s -o /dev/null -w "%{http_code}\n"

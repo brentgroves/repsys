@@ -97,6 +97,7 @@ kind-2
 In order to interact with a specific cluster, you only need to specify the cluster name as a context in kubectl:
 
 ```bash
+scc.sh kind.yaml kind-kind 
 kubectl cluster-info --context kind-kind
 kubectl cluster-info --context kind-kind-2
 ```

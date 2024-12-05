@@ -12,6 +12,7 @@ Create an Accurate OEE System.
 This MES system is made to collect the start and end times of tool operations, tool changes, and pallet changes for specific CNC and jobs. This software was developed 2 years ago for RDX and Knuckles but was not finished.
 
 To Do:
+
 - CNC Network Module or Serial Port Data Logger.
 - GCode changes amounting to 1 command before any tool operation and 1 command after the tool operation.
 - Network connection to each CNC to monitor.
@@ -24,23 +25,42 @@ To Do:
 ## Report System
 
 ### Azure K8s
+
 - K8s Resource Group
 
 ### Production K8s
+
 - 1st server vlan port us.archive.ubuntu.com egress
 
 ### Development K8s
+
+Use putty to access: 10.188.10.21
+<https://faz.linamar.com/p/login/>
+
+- Where is the Firewall Config request
+- Can I have access to desktop vlan
 - 1st regular user vlan port internet access
 
-# INC0417507 "ppar excel macro file error message" 
+### Busche Reporter
+
+reason: Cleaning out old tooling.
+
+- Where used and tool list
+- Put 2 tickets in no response.
+- Jake will contact Jared.
+I need pointer to the database.
+
+cat tree with leaves.
+
+### INC0417507 "ppar excel macro file error message"
 
 The following is in markdown format it can be viewed better from <https://markdownlivepreview.com/> by copying and pasting the contents below.
 
-## Suggest
+### Suggest
 
-Find a **[VBA Excel](https://www.datacamp.com/tutorial/vba-excel)** programmer to work on this for the immediate future.  For the long-term solution, I suggest we migrate this VBA Excel program to a Web App, SQL database, and Power BI. The downside to this suggestion is that it would take some time. The upside is that the Web App can perform validation on the dates and other information before being saved to the database. Using VBA it is easy to create complex programs to solve business needs quickly, but it is difficult to make these programs robust. 
+Find a **[VBA Excel](https://www.datacamp.com/tutorial/vba-excel)** programmer to work on this for the immediate future.  For the long-term solution, I suggest we migrate this VBA Excel program to a Web App, SQL database, and Power BI. The downside to this suggestion is that it would take some time. The upside is that the Web App can perform validation on the dates and other information before being saved to the database. Using VBA it is easy to create complex programs to solve business needs quickly, but it is difficult to make these programs robust.
 
-## Summary
+### Summary
 
 Talked to Elden and Vladimir. It works now but they don't want it resolved so I didn't. The reason is that Vlad knows how to resolve this issue but he would like to make the VBA Excel program more robust so it doesn't happen again.  The long explanation: The image shows the error with a trim function on sheet2.cells(18,10). The issue was resolved by removing the worksheet and starting from scratch using the template file. I am guessing this trim function error was not the root cause but the result of trying to fix the initial problem a date that was either entered incorrectly or somehow became corrupted.  The next time any error occurs with this worksheet delete the dates and reenter them one at a time.  If this does not work save the worksheet so the error can be debugged before any other changes are made.
 
