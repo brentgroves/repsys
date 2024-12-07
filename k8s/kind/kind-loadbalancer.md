@@ -18,29 +18,113 @@ scc.sh kind.yaml kind-kind
 kubectl port-forward -n istio-system svc/istio-ingressgateway 8000:80 
 ```
 
-## **[Kind LoadBalancer](https://kind.sigs.k8s.io/docs/user/loadbalancer/)**
+## **[Cloud Provider Kind](https://github.com/kubernetes-sigs/cloud-provider-kind)**
 
-This guide covers how to get service of type LoadBalancer working in a kind cluster using Cloud Provider KIND.
+## Kubernetes Cloud Provider for KIND
 
-This guide complements **[Cloud Provider KIND installation docs](https://github.com/kubernetes-sigs/cloud-provider-kind?tab=readme-ov-file#install)**.
+KIND has demonstrated to be a very versatile, efficient, cheap and very useful tool for Kubernetes testing. However, KIND doesn't offer capabilities for testing all the features that depend on cloud-providers, specifically the Load Balancers, causing a gap on testing and a bad user experience, since is not easy to connect to the applications running on the cluster.
 
-## Installing Cloud Provider KIND
+cloud-provider-kind aims to fill this gap and provide an agnostic and cheap solution for all the Kubernetes features that depend on a cloud-provider using KIND.
 
-Cloud Provider KIND can be installed using golang
+Cloud Provider KIND runs as a standalone binary in your host and connects to your KIND cluster and provisions new Load Balancer containers for your Services. It requires privileges to open ports on the system and to connect to the container runtime.
+
+## Cleanup
+
+```bash
+kubectl delete -f  usage.yaml  
+pod "foo-app" deleted
+pod "bar-app" deleted
+service "foo-service" deleted
+```
+
+## Install
+
+You can install cloud-provider-kind using go install:
 
 ```bash
 go install sigs.k8s.io/cloud-provider-kind@latest
 ```
 
-or downloading one of the **[released binaries](https://github.com/kubernetes-sigs/cloud-provider-kind/releases)**.
+This will install the binary in $GOBIN (typically ~/go/bin); you can make it available elsewhere if appropriate:
 
-Cloud Provider KIND runs as a standalone binary in your host and connects to your KIND cluster and provisions new Load Balancer containers for your Services. It requires privileges to open ports on the system and to connect to the container runtime.
+```bash
+sudo install ~/go/bin/cloud-provider-kind /usr/local/bin
+```
+
+## How to use it
+
+Run a KIND cluster:
+
+```bash
+$ kind create cluster
+Creating cluster "kind" ...
+ ✓ Ensuring node image (kindest/node:v1.26.0) 🖼
+ ✓ Preparing nodes 📦
+ ✓ Writing configuration 📜
+ ✓ Starting control-plane 🕹️
+ ✓ Installing CNI 🔌
+ ✓ Installing StorageClass 💾
+Set kubectl context to "kind-kind"
+You can now use your cluster with:
+
+kubectl cluster-info --context kind-kind
+
+Have a question, bug, or feature request? Let us know! https://kind.sigs.k8s.io/#community 🙂
+```
+
+Note
+
+Control-plane nodes need to remove the special label node.kubernetes.io/exclude-from-external-load-balancers to be able to access the workloads running on those nodes using a LoadBalancer Service.
+
+```bash
+$ kubectl label node kind-control-plane node.kubernetes.io/exclude-from-external-load-balancers-
+node/kind-control-plane unlabeled
+# or if node isn't control plane?
+label "node.kubernetes.io/exclude-from-external-load-balancers" not found.
+node/kind-control-plane not labeled
+```
+
+Once the cluster is running, we need to run the cloud-provider-kind in a terminal and keep it running. The cloud-provider-kind will monitor all your KIND clusters and Services with Type LoadBalancer and create the corresponding LoadBalancer containers that will expose those Services.
+
+```bash
+# from a separate terminal
+cloud-provider-kind
+I0416 19:58:18.391222 2526219 controller.go:98] Creating new cloud provider for cluster kind
+I0416 19:58:18.398569 2526219 controller.go:105] Starting service controller for cluster kind
+I0416 19:58:18.399421 2526219 controller.go:227] Starting service controller
+I0416 19:58:18.399582 2526219 shared_informer.go:273] Waiting for caches to sync for service
+I0416 19:58:18.500460 2526219 shared_informer.go:280] Caches are synced for service
+...
+
+kubectl get all -n istio-system
+...
+NAME                           TYPE           CLUSTER-IP      EXTERNAL-IP   PORT(S)                                                                      AGE
+service/istio-egressgateway    ClusterIP      10.96.65.154    <none>        80/TCP,443/TCP                                                               11d
+service/istio-ingressgateway   LoadBalancer   10.96.20.134    172.21.0.3    15021:32564/TCP,80:31067/TCP,443:32190/TCP,31400:32692/TCP,15443:30233/TCP   11d
+service/istiod                 ClusterIP      10.96.145.115   <none>        15010/TCP,15012/TCP,443/TCP,15014/TCP  
+...
+```
+
+## Terminate Cloud Provider Kind
+
+```bash
+^c
+^CI1206 19:20:02.905075  146066 app.go:69] Exiting: received signal
+I1206 19:20:02.905201  146066 controller.go:253] Shutting down service controller
+I1206 19:20:02.905346  146066 controller.go:304] Cleaning resources for cluster kind
+I1206 19:20:02.968697  146066 loadbalancer.go:42] Ensure LoadBalancer deleted cluster: kind service: istio-ingressgateway
+````
 
 ## Using LoadBalancer
 
 The following example creates a loadbalancer service that routes to two http-echo pods, one that outputs foo and the other outputs bar.
 
 ```bash
+cd ~/src/repsys/k8s/kind/loadbalancer
+scc.sh kind.yaml kind-kind
+kubectl apply -f https://kind.sigs.k8s.io/examples/loadbalancer/usage.yaml
+# or
+kubectl apply -f - <<EOF 
 kind: Pod
 apiVersion: v1
 metadata:
@@ -84,105 +168,12 @@ spec:
   ports:
   - port: 5678
     targetPort: 8080
-```
-
-## **[Cloud Provider Kind](https://github.com/kubernetes-sigs/cloud-provider-kind)**
-
-## Kubernetes Cloud Provider for KIND
-
-KIND has demonstrated to be a very versatile, efficient, cheap and very useful tool for Kubernetes testing. However, KIND doesn't offer capabilities for testing all the features that depend on cloud-providers, specifically the Load Balancers, causing a gap on testing and a bad user experience, since is not easy to connect to the applications running on the cluster.
-
-cloud-provider-kind aims to fill this gap and provide an agnostic and cheap solution for all the Kubernetes features that depend on a cloud-provider using KIND.
-
-## Install
-
-You can install cloud-provider-kind using go install:
-
-```bash
-go install sigs.k8s.io/cloud-provider-kind@latest
-```
-
-This will install the binary in $GOBIN (typically ~/go/bin); you can make it available elsewhere if appropriate:
-
-```bash
-sudo install ~/go/bin/cloud-provider-kind /usr/local/bin
-```
-
-Starting with v0.4.0, the docker image for cloud-provider-kind is available at registry.k8s.io/cloud-provider-kind/cloud-controller-manager
-
-You can also build it locally:
-
-```bash
-git clone https://github.com/kubernetes-sigs/cloud-provider-kind.git
-Cloning into 'cloud-provider-kind'...
-remote: Enumerating objects: 6779, done.
-remote: Counting objects: 100% (6779/6779), done.
-remote: Compressing objects: 100% (4225/4225), done.q
-remote: Total 6779 (delta 2150), reused 6755 (delta 2135), pack-reused 0
-Receiving objects: 100% (6779/6779), 9.05 MiB | 1.83 MiB/s, done.
-Resolving deltas: 100% (2150/2150), done.
-
-cd cloud-provider-kind && make
-sudo mv ./bin/cloud-provider-kind  /usr/local/bin/cloud-provider-kind
-```
-
-Another alternative is to run it as a container, but this will require to mount the docker socket inside the container:
-
-```bash
-docker build . -t cloud-provider-kind
-# using the host network
-docker run --rm --network host -v /var/run/docker.sock:/var/run/docker.sock cloud-provider-kind
-# or the kind network
-docker run --rm --network kind -v /var/run/docker.sock:/var/run/docker.sock cloud-provider-kind
-```
-
-Or using compose.yaml file:
-
-```bash
-# using the `kind` network (`host` is the default value for NET_MODE)
-NET_MODE=kind docker compose up -d
-```
-
-## How to use it
-
-Run a KIND cluster:
-
-```bash
-$ kind create cluster
-Creating cluster "kind" ...
- ✓ Ensuring node image (kindest/node:v1.26.0) 🖼
- ✓ Preparing nodes 📦
- ✓ Writing configuration 📜
- ✓ Starting control-plane 🕹️
- ✓ Installing CNI 🔌
- ✓ Installing StorageClass 💾
-Set kubectl context to "kind-kind"
-You can now use your cluster with:
-
-kubectl cluster-info --context kind-kind
-
-Have a question, bug, or feature request? Let us know! https://kind.sigs.k8s.io/#community 🙂
-```
-
-Note
-
-Control-plane nodes need to remove the special label node.kubernetes.io/exclude-from-external-load-balancers to be able to access the workloads running on those nodes using a LoadBalancer Service.
-
-```bash
-$ kubectl label node kind-control-plane node.kubernetes.io/exclude-from-external-load-balancers-
-node/kind-control-plane unlabeled
-```
-
-Once the cluster is running, we need to run the cloud-provider-kind in a terminal and keep it running. The cloud-provider-kind will monitor all your KIND clusters and Services with Type LoadBalancer and create the corresponding LoadBalancer containers that will expose those Services.
-
-```bash
-bin/cloud-provider-kind
-I0416 19:58:18.391222 2526219 controller.go:98] Creating new cloud provider for cluster kind
-I0416 19:58:18.398569 2526219 controller.go:105] Starting service controller for cluster kind
-I0416 19:58:18.399421 2526219 controller.go:227] Starting service controller
-I0416 19:58:18.399582 2526219 shared_informer.go:273] Waiting for caches to sync for service
-I0416 19:58:18.500460 2526219 shared_informer.go:280] Caches are synced for service
-...
+EOF
+pod/foo-app created
+pod/bar-app created
+service/foo-service created
+# or
+kubectl apply -f https://kind.sigs.k8s.io/examples/loadbalancer/usage.yaml
 ```
 
 ## Creating a Service and exposing it via a LoadBalancer
