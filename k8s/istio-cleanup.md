@@ -10,12 +10,13 @@ When you’re finished experimenting with the Bookinfo sample, uninstall and cle
 
 ```bash
 pushd .
-cd ~/Downloads/istio-1.23.2
+cd ~/Downloads/istio-1.xx.x
 scc.sh repsys11c2n1.yaml microk8s  
 
 # See what this script does before you run it.
-cp ~/Downloads/istio-1.23.2/samples/bookinfo/platform/kube/cleanup.sh ~/src/repsys/k8s/istio/
-./samples/bookinfo/platform/kube/cleanup.sh
+cp ~/Downloads/istio-1.23.2/samples/bookinfo/platform/kube/cleanup.sh ~/src/repsys/k8s/istio/bookinfo
+cd ~/src/repsys/k8s/istio/bookinfo
+./cleanup.sh
 namespace ? [default] 
 using NAMESPACE=default
 gateway.gateway.networking.k8s.io "bookinfo-gateway" deleted

@@ -10,9 +10,40 @@ This guide lets you quickly evaluate Istio. If you are already familiar with Ist
 
 - **[microk8s istio](https://gist.github.com/Realiserad/391855c4a0fb0072994e5ad2a53d65c0)**
 
-## **[Cleanup](./istio-cleanup.md)**
+## Cleanup
+
+- **[Cleanup Bookinfo app](./istio-cleanup.md)**
+
+### Uninstall Istio
+
+To uninstall Istio:
+
+```bash
+# if cloud provider kind was ever in use then you must run it before
+# uninstalling istio or the loadbalancer service will not be removed
+cloud-provider-kind # see note above
+istioctl uninstall -y --purge
+kubectl delete namespace istio-system
+```
+
+### remove istioctl
+
+```bash
+pushd .
+cd ~/Downloads
+# remove old version
+sudo rm /usr/local/bin/istioctl
+```
 
 ## Install Istio
+
+### Pre Install
+
+Before installing Istio on Kind start cloud-kind-provider
+
+```bash
+sudo cloud-provider-kind
+```
 
 1. Go to the Istio release page to download the installation file for your OS, or download and extract the latest release automatically (Linux or macOS):
 
@@ -22,17 +53,7 @@ cd ~/Downloads
 curl -L https://istio.io/downloadIstio | sh -
 Istio has been successfully downloaded into the istio-1.24.1 folder on your system.
 
-Next Steps:
-See https://istio.io/latest/docs/setup/install/ to add Istio to your Kubernetes cluster.
-
-To configure the istioctl client tool for your workstation,
-add the /home/brent/Downloads/istio-1.24.1/bin directory to your environment path variable with:
-         export PATH="$PATH:/home/brent/Downloads/istio-1.24.1/bin"
-
-Begin the Istio pre-installation check by running:
-istioctl x precheck 
-
-Need more information? Visit https://istio.io/latest/docs/setup/install/ 
+# Need more information? Visit https://istio.io/latest/docs/setup/install/ 
 ```
 
 ## Step 2
@@ -40,6 +61,8 @@ Need more information? Visit https://istio.io/latest/docs/setup/install/
 Move to the Istio package directory. For example, if the package is istio-1.23.0:
 
 ```bash
+pushd .
+cd ~/Downloads
 # remove old version
 sudo rm /usr/local/bin/istioctl
 sudo cp istio-1.24.1/bin/istioctl /usr/local/bin/
