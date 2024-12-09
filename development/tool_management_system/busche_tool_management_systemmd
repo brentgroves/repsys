@@ -12,8 +12,14 @@ The following is in markdown format it can be viewed better by copying the conte
 
 Options:
 
-1. The laptops and desktops connected to the Linamar network to have access to the Busche Reporter and the Busche Tool List database.
-2. Employees needing access to the Busche Reporter should be able to remote into a VM with access to the Busche Reporter and the Busche Tool List database.
+1. The laptops and desktops connected to the Linamar network to have access to a Crystal Report Viewer, Busche Reporter, and the Busche Tool List database.
+2. Employees needing access to the Crystal Report Viewer, Busche Reporter, should be able to remote into a VM with access to this SQL database and Report Viewer.
+
+## Reason for request
+
+- All Job Tooling data from 2004 until the time Mobex Global bought Busche was entered in the Busche Tool List SQL database.
+- Several Crystal reports access this database to identify tooling associated with each job.
+- We need to get rid of tooling no longer needed.
 
 ## History
 

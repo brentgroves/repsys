@@ -4,6 +4,13 @@
 **[Research List](../../../research/research_list.md)**\
 **[Back Main](../../../README.md)**
 
+## Specific K8s Instructions
+
+- **[Azure AKS](../../azure/mobexglobal.com/aks/istio_secure_gateway_linamar.md)**
+- **[Kind](../../k8s/kind/istio_secure_gateway_linamar.md)**
+
+## Generic Instructions
+
 The **[Control Ingress Traffic](https://istio.io/latest/docs/tasks/traffic-management/ingress/ingress-control/)** task describes how to configure an ingress gateway to expose an HTTP service to external traffic. This task shows how to expose a secure HTTPS service using either simple or mutual TLS.
 
 Istio supports the Kubernetes Gateway API and intends to make it the default API for traffic management in the future. The following instructions allow you to choose to use either the Gateway API or the Istio configuration API when configuring traffic management in the mesh. Follow instructions under either the Gateway API or Istio APIs tab, according to your preference.

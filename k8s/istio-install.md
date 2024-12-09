@@ -39,7 +39,7 @@ sudo rm /usr/local/bin/istioctl
 
 ### Pre Install
 
-Before installing Istio on Kind start cloud-kind-provider
+Before installing Istio on Kind start **[cloud-kind-provider](./kind/kind-loadbalancer.md)**
 
 ```bash
 sudo cloud-provider-kind
@@ -140,6 +140,9 @@ The Kubernetes Gateway API CRDs do not come installed by default on most Kuberne
 Install the Gateway API CRDs, if they are not already present:
 
 ```bash
+kubectl get crd gateways.gateway.networking.k8s.io &> /dev/null || \
+  { kubectl apply -f kubectl apply -f https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.2.0/standard-install.yaml; }
+# or  
 kubectl get crd gateways.gateway.networking.k8s.io &> /dev/null || \
 { kubectl kustomize "github.com/kubernetes-sigs/gateway-api/config/crd?ref=v1.1.0" | kubectl apply -f -; }
 ustomresourcedefinition.apiextensions.k8s.io/gatewayclasses.gateway.networking.k8s.io created
