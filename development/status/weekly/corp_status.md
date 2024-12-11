@@ -5,6 +5,16 @@
 
 ![np](https://cdn.prod.website-files.com/65a5be30bf4809bb3a2e8aff/65de6a24f3bc7cfdb5711e46_ethernet2.jpeg)
 
+## Christian's Summary
+
+Reporting System – Brent Groves – Est 1-3mo
+                Build and deploy a reporting system for live data from Plex ERP. Meant for complex and critical reports such as Trial Balance reports-Project is on track.
+Brent- told our Trial Balance report user, Dan Martin, that he could use the report system by February. The time to complete the report system includes the time to set up Kubernetes Clusters in a way that enables us to offload non-business logic tasks such as IAM, https termination, and rate limiting to the platform instead of the code. Azure users group has been added, Azure VM memory has been increases. Dmark, DKIM and SPF for email from Southfield to customer-testing once ready need to work with shared services to add on linamar DKIM and SPF records
+
+## ODBC Connection
+
+Not able to connect from to Plex from Windows desktop using ODBC. Are ODBC connections blocked?
+
 ## OEE System
 
 Create an Accurate OEE System.

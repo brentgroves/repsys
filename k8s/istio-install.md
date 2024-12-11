@@ -21,7 +21,7 @@ To uninstall Istio:
 ```bash
 # if cloud provider kind was ever in use then you must run it before
 # uninstalling istio or the loadbalancer service will not be removed
-cloud-provider-kind # see note above
+sudo cloud-provider-kind # see note above
 istioctl uninstall -y --purge
 kubectl delete namespace istio-system
 ```
