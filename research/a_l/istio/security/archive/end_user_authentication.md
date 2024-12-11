@@ -53,8 +53,6 @@ istioctl install --set profile=default
 kubectl delete ns foo
 ```
 
-## Install **[sample apps](../../../../../k8s/kind/istio_secure_gateway_linamar.md)**
-
 ## Setup
 
 ```bash
