@@ -12,8 +12,8 @@ The following is in markdown format it can be viewed better by copying the conte
 
 Options:
 
-1. The laptops and desktops connected to the Linamar network to have access to a Crystal Report Viewer, Busche Reporter, and the Busche Tool List database.
-2. Employees needing access to the Crystal Report Viewer, Busche Reporter, should be able to remote into a VM with access to this SQL database and Report Viewer.
+1. Normal Way - The laptops and desktops connected to the Linamar network to have access to a Crystal Report Viewer, Busche Reporter, and the Busche Tool List database.
+2. Remote into VM Way - Employees needing access to the Crystal Report Viewer, Busche Reporter, should be able to remote into a VM with access to this SQL database and Report Viewer.
 
 ## Reason for request
 
