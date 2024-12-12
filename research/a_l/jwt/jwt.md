@@ -5,7 +5,26 @@
 <https://jwt.io/>
 <https://jwt.io/libraries>
 
+## **[JSON Web Signature (JWS) Overview](https://openid.net/specs/draft-jones-json-web-signature-04.html)**
+
+JWS represents signed content using JSON data structures and base64url encoding. The representation consists of three parts: the **JWS Header, the JWS Payload, and the JWS Signature**. The three parts are base64url-encoded for transmission, and typically represented as the concatenation of the encoded strings in that order, with the three strings being separated by period ('.') characters.
+
+The JWS Header describes the signature method and parameters employed. The JWS Payload is the message content to be secured. The JWS Signature ensures the integrity of both the JWS Header and the JWS Payload.
+
+## 3.1.  Example JWS
+
+The following example JWS Header declares that the encoded object is a JSON Web Token (JWT) [JWT] and the JWS Header and the JWS Payload are signed using the HMAC SHA-256 algorithm:
+
+```json
+{ 
+ "typ":"JWT",
+ "alg":"HS256"
+}
+```
+
 ## JSON Web Tokens
+
+JSON Web Tokens are a specific type of *[JSON Web Signature (JWS)](https://openid.net/specs/draft-jones-json-web-signature-04.html)** which is a specification for sending signed content.
 
 JSON Web Tokens are an open, industry standard RFC 7519 method for representing claims securely between two parties.
 

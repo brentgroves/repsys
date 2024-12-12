@@ -52,7 +52,7 @@ With the permissive mode enabled, the server accepts both plaintext and mutual T
 
 ## Secure naming
 
-Server identities are encoded in certificates, but service names are retrieved through the discovery service or DNS. The secure naming information maps the server identities to the service names. A mapping of identity A to service name B means “A is authorized to run service B”. The control plane watches the apiserver, generates the secure naming mappings, and distributes them securely to the PEPs. The following example explains why secure naming is critical in authentication.
+Server identities are encoded in certificates, but service names are retrieved through the discovery service or DNS. **The secure naming information maps the server identities to the service names.** A mapping of identity A to service name B means “A is authorized to run service B”. The control plane watches the apiserver, generates the secure naming mappings, and distributes them securely to the PEPs. The following example explains why secure naming is critical in authentication.
 
 The Envoy data plane is a universal Policy Enforcement Point (PEP) that intercepts all traffic and can apply policies at the application layer.
 
@@ -96,110 +96,6 @@ spec:
     mode: STRICT
 ```
 
-Breaking down a monolithic application into atomic services offers various benefits, including better agility, better scalability and better ability to reuse services. However, microservices also have particular security needs:
-
-- To defend against man-in-the-middle attacks, they need traffic encryption.
-- To provide flexible service access control, they need mutual TLS and fine-grained access policies.
-- To determine who did what at what time, they need auditing tools.
-
-Istio Security provides a comprehensive security solution to solve these issues. This page gives an overview on how you can use Istio security features to secure your services, wherever you run them. In particular, Istio security mitigates both insider and external threats against your data, endpoints, communication, and platform.
-
-## Security overview
-
-The Istio security features provide strong identity, powerful policy, transparent TLS encryption, and authentication, authorization and audit (AAA) tools to protect your services and data. The goals of Istio security are:
-
-- Security by default: no changes needed to application code and infrastructure
-- Defense in depth: integrate with existing security systems to provide multiple layers of defense
-- Zero-trust network: build security solutions on distrusted networks
-
-Visit our mutual TLS Migration docs to start using Istio security features with your deployed services. Visit our Security Tasks for detailed instructions to use the security features.
-
-## High-level architecture
-
-Security in Istio involves multiple components:
-
-- A Certificate Authority (CA) for key and certificate management
-- The configuration API server distributes to the proxies:
-  - authentication policies
-  - authorization policies
-  - secure naming information
-  - Sidecar and perimeter proxies work as Policy Enforcement Points (PEPs) to secure communication between clients and servers.
-- A set of Envoy proxy extensions to manage telemetry and auditing
-
-The control plane handles configuration from the API server and configures the PEPs in the data plane. The PEPs are implemented using Envoy. The following diagram shows the architecture.
-
-## Security Architecture
-
-In the following sections, we introduce the Istio security features in detail.
-
-## Istio identity
-
-Identity is a fundamental concept of any security infrastructure. At the beginning of a workload-to-workload communication, the two parties must exchange credentials with their identity information for mutual authentication purposes. On the client side, the server’s identity is checked against the secure naming information to see if it is an authorized runner of the workload. On the server side, the server can determine what information the client can access based on the authorization policies, audit who accessed what at what time, charge clients based on the workloads they used, and reject any clients who failed to pay their bill from accessing the workloads.
-
-The Istio identity model uses the first-class service identity to determine the identity of a request’s origin. This model allows for great flexibility and granularity for service identities to represent a human user, an individual workload, or a group of workloads. On platforms without a service identity, Istio can use other identities that can group workload instances, such as service names.
-
-The following list shows examples of service identities that you can use on different platforms:
-
-- Kubernetes: Kubernetes service account
-- GCE: GCP service account
-- On-premises (non-Kubernetes): user account, custom service account, service name, Istio service account, or GCP service account. The custom service account refers to the existing service account just like the identities that the customer’s Identity Directory manages.
-
-## Identity and certificate management
-
-Istio securely provisions strong identities to every workload with X.509 certificates. Istio agents, running alongside each Envoy proxy, work together with istiod to automate key and certificate rotation at scale. The following diagram shows the identity provisioning flow.
-
-## Identity Provisioning Workflow
-
-Istio provisions keys and certificates through the following flow:
-
-istiod offers a gRPC service to take certificate signing requests (CSRs).
-When started, the Istio agent creates the private key and CSR, and then sends the CSR with its credentials to istiod for signing.
-The CA in istiod validates the credentials carried in the CSR. Upon successful validation, it signs the CSR to generate the certificate.
-When a workload is started, Envoy requests the certificate and key from the Istio agent in the same container via the Envoy secret discovery service (SDS) API.
-The Istio agent sends the certificates received from istiod and the private key to Envoy via the Envoy SDS API.
-Istio agent monitors the expiration of the workload certificate. The above process repeats periodically for certificate and key rotation.
-Authentication
-Istio provides two types of authentication:
-
-Peer authentication: used for service-to-service authentication to verify the client making the connection. Istio offers mutual TLS as a full stack solution for transport authentication, which can be enabled without requiring service code changes. This solution:
-
-- Provides each service with a strong identity representing its role to enable interoperability across clusters and clouds.
-- Secures service-to-service communication.
-- Provides a key management system to automate key and certificate generation, distribution, and rotation.
-- Request authentication: Used for end-user authentication to verify the credential attached to the request. Istio enables request-level authentication with JSON Web Token (JWT) validation and a streamlined developer experience using a custom authentication provider or any OpenID Connect providers, for example:
-
-- ORY Hydra
-- Keycloak
-- Auth0
-- Firebase Auth
-- Google Auth
-
-In all cases, Istio stores the authentication policies in the Istio config store via a custom Kubernetes API. Istiod keeps them up-to-date for each proxy, along with the keys where appropriate. Additionally, Istio supports authentication in permissive mode to help you understand how a policy change can affect your security posture before it is enforced.
-
-## Authentication Architecture
-
-Istio outputs identities with both types of authentication, as well as other claims in the credential if applicable, to the next layer: authorization.
-
-## Authentication policies1
-
-This section provides more details about how Istio authentication policies work. As you’ll remember from the Architecture section, authentication policies apply to requests that a service receives. To specify client-side authentication rules in mutual TLS, you need to specify the TLSSettings in the DestinationRule. You can find more information in our TLS settings reference docs.
-
-Like other Istio configurations, you can specify authentication policies in .yaml files. You deploy policies using kubectl. The following example authentication policy specifies that transport authentication for the workloads with the app:reviews label must use mutual TLS:
-
-```yaml
-apiVersion: security.istio.io/v1
-kind: PeerAuthentication
-metadata:
-  name: "example-peer-policy"
-  namespace: "foo"
-spec:
-  selector:
-    matchLabels:
-      app: reviews
-  mtls:
-    mode: STRICT
-```
-
 ## Policy storage
 
 Istio stores mesh-scope policies in the root namespace. These policies have an empty selector apply to all workloads in the mesh. Policies that have a namespace scope are stored in the corresponding namespace. They only apply to workloads within their namespace. If you configure a selector field, the authentication policy only applies to workloads matching the conditions you configured.
@@ -218,9 +114,9 @@ selector:
 
 If you don’t provide a value for the selector field, Istio matches the policy to all workloads in the storage scope of the policy. Thus, the selector fields help you specify the scope of the policies:
 
-- Mesh-wide policy: A policy specified for the root namespace without or with an empty selector field.
-- Namespace-wide policy: A policy specified for a non-root namespace without or with an empty selector field.
-- Workload-specific policy: a policy defined in the regular namespace, with non-empty selector field.
+- **Mesh-wide policy:** A policy specified for the root namespace without or with an empty selector field.
+- **Namespace-wide policy:** A policy specified for a non-root namespace without or with an empty selector field.
+- **Workload-specific policy:** a policy defined in the regular namespace, with non-empty selector field.
 
 Peer and request authentication policies follow the same hierarchy principles for the selector fields, but Istio combines and applies them in slightly different ways.
 
@@ -238,9 +134,10 @@ Istio can combine all matching request authentication policies to work as if the
 
 Peer authentication policies specify the mutual TLS mode Istio enforces on target workloads. The following modes are supported:
 
-- PERMISSIVE: Workloads accept both mutual TLS and plain text traffic. This mode is most useful during migrations when workloads without sidecar cannot use mutual TLS. Once workloads are migrated with sidecar injection, you should switch the mode to STRICT.
-- STRICT: Workloads only accept mutual TLS traffic.
-- DISABLE: Mutual TLS is disabled. From a security perspective, you shouldn’t use this mode unless you provide your own security solution.
+- **PERMISSIVE:** Workloads accept both mutual TLS and plain text traffic. This mode is most useful during migrations when workloads without sidecar cannot use mutual TLS. Once workloads are migrated with sidecar injection, you should switch the mode to STRICT.
+- **STRICT:** Workloads only accept mutual TLS traffic.
+- **DISABLE:** Mutual TLS is disabled. From a security perspective, you shouldn’t use this mode unless you provide your own security solution.
+
 When the mode is unset, the mode of the parent scope is inherited. Mesh-wide peer authentication policies with an unset mode use the PERMISSIVE mode by default.
 
 The following peer authentication policy requires all workloads in namespace foo to use mutual TLS:
@@ -254,11 +151,12 @@ metadata:
 spec:
   mtls:
     mode: STRICT
+
 ```
 
 With workload-specific peer authentication policies, you can specify different mutual TLS modes for different ports. You can only use ports that workloads have claimed for port-wide mutual TLS configuration. The following example disables mutual TLS on port 80 for the app:example-app workload, and uses the mutual TLS settings of the namespace-wide peer authentication policy for all other ports:
 
-```yaml
+```
 apiVersion: security.istio.io/v1
 kind: PeerAuthentication
 metadata:
@@ -311,5 +209,6 @@ When you use peer authentication policies and mutual TLS, Istio extracts the ide
 
 You can change an authentication policy at any time and Istio pushes the new policies to the workloads almost in real time. However, Istio can’t guarantee that all workloads receive the new policy at the same time. The following recommendations help avoid disruption when updating your authentication policies:
 
-- Use intermediate peer authentication policies using the PERMISSIVE mode when changing the mode from DISABLE to STRICT and vice-versa. When all workloads switch successfully to the desired mode, you can apply the policy with the final mode. You can use Istio telemetry to verify that workloads have switched successfully.
-- When migrating request authentication policies from one JWT to another, add the rule for the new JWT to the policy without removing the old rule. Workloads then accept both types of JWT, and you can remove the old rule when all traffic switches to the new JWT. However, each JWT has to use a different location.
+Use intermediate peer authentication policies using the PERMISSIVE mode when changing the mode from DISABLE to STRICT and vice-versa. When all workloads switch successfully to the desired mode, you can apply the policy with the final mode. You can use Istio telemetry to verify that workloads have switched successfully.
+
+When migrating request authentication policies from one JWT to another, add the rule for the new JWT to the policy without removing the old rule. Workloads then accept both types of JWT, and you can remove the old rule when all traffic switches to the new JWT. However, each JWT has to use a different location.

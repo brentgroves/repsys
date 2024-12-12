@@ -55,6 +55,16 @@ eyJhdWQiOiJodHRwczovL2V4YW1wbGUuY29tIiwiZXhwIjoxNTM1MjQyNDcyLCJpYXQiOjE1MzI1NjQw
 DlSkxICjk2h1LarwJgXPbXQe7DwpLMOCvWp3I4GMcBP_5_QYPhVNBPQEeTKAUuQjYwlxZ5zVQnyp8ujvyf1Lqw
 ```
 
+kid is an optional header claim which holds a key identifier, particularly useful when you have multiple keys to sign the tokens and you need to look up the right one to verify the signature.
+
+Once signed, a JWT is a JWS. Consider the definition from the RFC 7515:
+
+4.1.4. "kid" (Key ID) Header Parameter
+
+The kid (key ID) Header Parameter is a hint indicating which key was used to secure the JWS. This parameter allows originators to explicitly signal a change of key to recipients. The structure of the kid value is unspecified. Its value MUST be a case-sensitive string. Use of this Header Parameter is OPTIONAL.
+
+When used with a JWK, the kid value is used to match a JWK kid parameter value.
+
 Verify the previous token:
 
 ```bash
