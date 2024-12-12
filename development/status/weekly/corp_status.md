@@ -11,9 +11,26 @@ Reporting System – Brent Groves – Est 1-3mo
                 Build and deploy a reporting system for live data from Plex ERP. Meant for complex and critical reports such as Trial Balance reports-Project is on track.
 Brent- told our Trial Balance report user, Dan Martin, that he could use the report system by February. The time to complete the report system includes the time to set up Kubernetes Clusters in a way that enables us to offload non-business logic tasks such as IAM, https termination, and rate limiting to the platform instead of the code. Azure users group has been added, Azure VM memory has been increases. Dmark, DKIM and SPF for email from Southfield to customer-testing once ready need to work with shared services to add on linamar DKIM and SPF records
 
+## Busche Tool List database
+
+- VM vrs normal solution
+- SQL Server 2012 to 2016 database transfer
+- Windows share for DSN and Crystal Reports.
+- Crystal Report viewers access to Windows share.
+- Excel to Plex and Tool List database
+
 ## ODBC Connection
 
-Not able to connect from to Plex from Windows desktop using ODBC. Are ODBC connections blocked?
+Not able to connect to Plex from Windows desktop using ODBC. Are ODBC connections blocked?
+
+## INC0417507 "ppar excel macro file error message" 
+
+Find a **[VBA Excel](https://www.datacamp.com/tutorial/vba-excel)** programmer to work on this for the immediate future.  For the long-term solution, 
+
+Options:
+
+- Reporting System
+I suggest we migrate this VBA Excel program to a Web App, SQL database, and Power BI.
 
 ## OEE System
 
