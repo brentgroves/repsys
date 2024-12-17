@@ -8,9 +8,6 @@
 - **[gorilla mux](https://curity.io/resources/learn/go-api/)**
 - **[crud with golang and htmx](https://coderonfleek.medium.com/htmx-go-build-a-crud-app-with-golang-and-htmx-081383026466)**
 
-https://github.com/auth0/go-jwt-middleware/blob/master/README.md
-https://www.codedaily.io/tutorials/Unit-Test-Token-Verification-for-Auth0-using-Jest-and-mock-jwks
-https://mestrak.com/blog/testing-secure-apis-by-mocking-jwt-and-jwks-3g8e
 ## **[Plex Ticket](../tickets/plex.md)**
 
 ## **[IT Structures Tickets](../tickets/tickets.md)**
