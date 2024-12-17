@@ -6,6 +6,7 @@
 ![np](https://cdn.prod.website-files.com/65a5be30bf4809bb3a2e8aff/65de6a24f3bc7cfdb5711e46_ethernet2.jpeg)
 
 - **[gorilla mux](https://curity.io/resources/learn/go-api/)**
+- **[crud with golang and htmx](https://coderonfleek.medium.com/htmx-go-build-a-crud-app-with-golang-and-htmx-081383026466)**
 
 https://github.com/auth0/go-jwt-middleware/blob/master/README.md
 https://www.codedaily.io/tutorials/Unit-Test-Token-Verification-for-Auth0-using-Jest-and-mock-jwks
