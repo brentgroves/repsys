@@ -5,6 +5,9 @@
 
 ![np](https://cdn.prod.website-files.com/65a5be30bf4809bb3a2e8aff/65de6a24f3bc7cfdb5711e46_ethernet2.jpeg)
 
+https://github.com/auth0/go-jwt-middleware/blob/master/README.md
+https://www.codedaily.io/tutorials/Unit-Test-Token-Verification-for-Auth0-using-Jest-and-mock-jwks
+https://mestrak.com/blog/testing-secure-apis-by-mocking-jwt-and-jwks-3g8e
 ## **[Plex Ticket](../tickets/plex.md)**
 
 ## **[IT Structures Tickets](../tickets/tickets.md)**
