@@ -5,6 +5,8 @@
 
 ![np](https://cdn.prod.website-files.com/65a5be30bf4809bb3a2e8aff/65de6a24f3bc7cfdb5711e46_ethernet2.jpeg)
 
+- **[Tailwind.css](https://tailwindcss.com/)**
+- **[Flask render_templates](https://www.tutorialspoint.com/flask/flask_templates.htm)**
 - **[Let's Encrypt with Istio](https://invisibl.io/blog/secure-your-microservices-ingress-in-istio-with-lets-encrypt/)**
 - **[gorilla mux](https://curity.io/resources/learn/go-api/)**
 - **[crud with golang and htmx](https://coderonfleek.medium.com/htmx-go-build-a-crud-app-with-golang-and-htmx-081383026466)**
