@@ -7,6 +7,7 @@
 
 - **[gorilla mux](https://curity.io/resources/learn/go-api/)**
 - **[crud with golang and htmx](https://coderonfleek.medium.com/htmx-go-build-a-crud-app-with-golang-and-htmx-081383026466)**
+- **[Graph QL in Golang](https://gqlgen.com/getting-started/)**
 
 ## **[Plex Ticket](../tickets/plex.md)**
 
