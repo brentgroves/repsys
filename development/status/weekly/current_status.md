@@ -9,6 +9,7 @@
 - **[crud with golang and htmx](https://coderonfleek.medium.com/htmx-go-build-a-crud-app-with-golang-and-htmx-081383026466)**
 - **[Microservices with go and grpc](https://dev.to/nikl/building-production-grade-microservices-with-go-and-grpc-a-step-by-step-developer-guide-with-example-2839)**
 - **[Graph QL in Golang](https://gqlgen.com/getting-started/)**
+- **[Web Server](https://h2o.examp1e.net/)**
 
 ## **[Plex Ticket](../tickets/plex.md)**
 
