@@ -5,6 +5,10 @@
 
 ![np](https://cdn.prod.website-files.com/65a5be30bf4809bb3a2e8aff/65de6a24f3bc7cfdb5711e46_ethernet2.jpeg)
 
+- **[auth0 golang login](https://auth0.com/docs/quickstart/webapp/golang/01-login)**
+- **[auth0 flask login](https://auth0.com/docs/quickstart/webapp/python/interactive)**
+- **[auth python library](https://authlib.org/)**
+- **[Istio and Keycloak](https://www.infracloud.io/blogs/request-level-authentication-authorization-istio-keycloak/)**
 - **[Tailwind.css](https://tailwindcss.com/)**
 - **[Flask render_templates](https://www.tutorialspoint.com/flask/flask_templates.htm)**
 - **[Let's Encrypt with Istio](https://invisibl.io/blog/secure-your-microservices-ingress-in-istio-with-lets-encrypt/)**
