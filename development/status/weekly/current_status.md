@@ -5,6 +5,7 @@
 
 ![np](https://cdn.prod.website-files.com/65a5be30bf4809bb3a2e8aff/65de6a24f3bc7cfdb5711e46_ethernet2.jpeg)
 
+- **[Basic Go Web App](https://go.dev/doc/articles/wiki/)**
 - **[Basic Go Web App with HTMLX](https://coderonfleek.medium.com/htmx-go-build-a-crud-app-with-golang-and-htmx-081383026466)**
 - **[auth0 golang login](https://auth0.com/docs/quickstart/webapp/golang/01-login)**
 - **[auth0 flask login](https://auth0.com/docs/quickstart/webapp/python/interactive)**
