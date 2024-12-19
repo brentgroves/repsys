@@ -1,5 +1,13 @@
 # Plex ODBC connection from Linamar Networks Public IP
 
+Note: If necessary, please ensure on your Firewall that both inbound and outbound communication on port 19995 is enabled as well as IP address 38.97.236.75 is whitelisted.  If you can do subnets in your firewall, please whitelist 38.97.236.0/24.  This is more scalable if additional IPs are added or changed in the future.
+
+Plex does not have to whitelist our address, we may have to whitelist their address. I looked through all our previous Plex cases that have to do with ODBC and we never had to request an IP to be whitelisted.
+
+Here’s the wiki article on connecting to ODBC
+
+<https://www.plexonline.com/d388bb2f-9154-4807-9a53-39cf8b2911d0/Wiki/Wiki.asp?Wiki_Key=38640&ssAction=replace&FLH=&WikiButton=&WikiGraph=#658>
+
 Our ODBC connection from Ligtel Avilla Public IP, 64.184.36.239, is not working.  ODBC connection from Ligtel Albion Public IP, 64.184.36.240 still works and should be kept.
 
 Please Contact Plex Customer Care to request the IP addresses for ODBC.
