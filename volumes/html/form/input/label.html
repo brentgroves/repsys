@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Runs Param</title>
+</head>
+<style>
+  .button {
+    border: none;
+    color: white;
+    padding: 16px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    transition-duration: 0.4s;
+    cursor: pointer;
+  }
+
+  .button1 {
+    background-color: white;
+    color: black;
+    border: 2px solid #04AA6D;
+  }
+
+  .button1:hover {
+    background-color: #04AA6D;
+    color: white;
+  }
+
+  .button2 {
+    background-color: white;
+    color: black;
+    border: 2px solid #008CBA;
+  }
+
+  .button2:hover {
+    background-color: #008CBA;
+    color: white;
+  }
+</style>
+
+<body>
+  <!-- The HTML <form> element is used to create an HTML form for user input: -->
+  <!-- The <form> element is a container for different types of input elements, such as: text fields, checkboxes, radio buttons, submit buttons, etc. -->
+
+  <!-- All the different form elements are covered in this chapter: HTML Form Elements.    -->
+  <form>
+    <!-- .The <input> Element
+    The HTML <input> element is the most used form element.
+    
+    An <input> element can be displayed in many ways, depending on the type attribute.
+    
+    Here are some examples:
+    form elements -->
+    <!-- <input type="text">	Displays a single-line text input field -->
+    <!-- Text Fields
+    The <input type="text"> defines a single-line input field for text input. -->
+    <label for="fname">First name:</label><br>
+    <input type="text" id="fname" name="fname"><br>
+    <label for="lname">Last name:</label><br>
+    <input type="text" id="lname" name="lname">
+    <!-- Note: The form itself is not visible. Also note that the default width of an input field is 20 characters. -->
+    <!-- The <label> Element -->
+    <br>
+    Notice the use of the label element in the example above.
+
+    The labe> tag defines a label for many form elements.
+    The label element is useful for screen-reader users, because the screen-reader will read out loud the label
+    when the user focuses on the input element.
+    The label element also helps users who have difficulty clicking on very small regions (such as radio buttons
+    or checkboxes) - because when the user clicks the text within the label element, it toggles the radio
+    button/checkbox.
+    The for attribute of the label tag should be equal to the id attribute of the input element to bind
+    them together.
+  </form>
+
+
+</body>
+
+</html>
