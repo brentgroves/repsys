@@ -66,7 +66,7 @@ customresourcedefinition.apiextensions.k8s.io/mysqlbackups.mysql.oracle.com crea
 customresourcedefinition.apiextensions.k8s.io/clusterkopfpeerings.zalando.org created
 customresourcedefinition.apiextensions.k8s.io/kopfpeerings.zalando.org created
 
-Next deploy MySQL Operator for Kubernetes, which also includes RBAC definitions as noted in the output:
+# Next deploy MySQL Operator for Kubernetes, which also includes RBAC definitions as noted in the output:
 
 
 kubectl apply -f https://raw.githubusercontent.com/mysql/mysql-operator/trunk/deploy/deploy-operator.yaml
@@ -78,6 +78,14 @@ namespace/mysql-operator created
 serviceaccount/mysql-operator-sa created
 deployment.apps/mysql-operator created
 
+# Verify that the operator is running by checking the deployment that is managing the operator inside the mysql-operator namespace, a configurable namespace defined by deploy-operator.yaml:
+
+```bash
+kubectl get deployment mysql-operator --namespace mysql-operator
+NAME             READY   UP-TO-DATE   AVAILABLE   AGE
+mysql-operator   1/1     1            1           2m19s
+
+# check all
 kubectl get all -n mysql-operator
 NAME                                  READY   STATUS    RESTARTS   AGE
 pod/mysql-operator-78688bfb4b-52lh6   1/1     Running   0          59s

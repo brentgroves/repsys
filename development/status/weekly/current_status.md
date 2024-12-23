@@ -5,6 +5,8 @@
 
 ![np](https://cdn.prod.website-files.com/65a5be30bf4809bb3a2e8aff/65de6a24f3bc7cfdb5711e46_ethernet2.jpeg)
 
+- **[Azure AKS master class](https://github.com/stacksimplify/azure-aks-kubernetes-masterclass)**
+- **[Busche Tool List and Azure SQL with firewall IP](../azure_resources/azure_toollist.md)**
 - Register Web App
 - **[Basic Go Web App](https://go.dev/doc/articles/wiki/)**
 - **[Basic Go Web App with HTMLX](https://coderonfleek.medium.com/htmx-go-build-a-crud-app-with-golang-and-htmx-081383026466)**

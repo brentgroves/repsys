@@ -40,9 +40,9 @@ kubectl get InnoDBCluster --all-namespaces
 
 In this install we are using using kubectl not helm.
 
-## deploy db_credentials k8s secret
+## install k8s credentials secret
 
-The secret should have been installed previously **[secret install](./db_credentials/db_credentials.md)**
+The secret should have been installed previously **[secret install](../../k8s/secrets/install_credentials_secret.md)**
 
 ## **[Configure a new MySQL InnoDB Cluster](https://dev.mysql.com/doc/mysql-operator/en/mysql-operator-innodbcluster-common.html)**
 
@@ -50,7 +50,7 @@ This section covers common options defined while setting up a MySQL InnoDB Clust
 
 **[PVC tutorial](https://bluexp.netapp.com/blog/cvo-blg-kubernetes-persistent-volume-claims-explained)**
 
-Look in **[mysql-innodb-cluster dir](./mysql-innodb-cluster/mysql-innodb-mayastor-cluster.yaml)** for different config files.
+Look in **[mysql-innodb-cluster dir](./mysql-innodb-cluster/)** for different config files.
 
 Sample with alot of options:
 
@@ -87,9 +87,28 @@ spec:
 ```bash
 pushd .
 cd ~/src/repsys/k8s
+# pick storage class
+
+kubectl get sc                                                                                                     
+NAME                    PROVISIONER          RECLAIMPOLICY   VOLUMEBINDINGMODE      ALLOWVOLUMEEXPANSION   AGE
+azurefile               file.csi.azure.com   Delete          Immediate              true                   65d
+azurefile-csi           file.csi.azure.com   Delete          Immediate              true                   65d
+azurefile-csi-premium   file.csi.azure.com   Delete          Immediate              true                   65d
+azurefile-premium       file.csi.azure.com   Delete          Immediate              true                   65d
+default (default)       disk.csi.azure.com   Delete          WaitForFirstConsumer   true                   65d
+managed                 disk.csi.azure.com   Delete          WaitForFirstConsumer   true                   65d
+managed-csi             disk.csi.azure.com   Delete          WaitForFirstConsumer   true                   65d
+managed-csi-premium     disk.csi.azure.com   Delete          WaitForFirstConsumer   true                   65d
+managed-premium         disk.csi.azure.com   Delete          WaitForFirstConsumer   true                   65d
+
+# create namespace to deploy cluster
+kubectl create ns innodb
+# switch to desired namespace
+kubectl config set-context $(kubectl config current-context) --namespace=innodb
+
 # pick which storage class
 ## for mayastor
-kubectl apply -f ./mysql-innodb-cluster/mysql-innodb-cluster-2-instance-storage-path.yaml
+kubectl apply -f ./mysql-innodb-cluster/mysql-innodb-cluster-1-instance-storage-path.yaml
 
 kubectl get pvc,pv
 
