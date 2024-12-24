@@ -1,8 +1,8 @@
 # **[Storage options for applications in Azure Kubernetes Service (AKS)](https://learn.microsoft.com/en-us/azure/aks/concepts-storage)**
 
-**[Current Status](../../../../development/status/weekly/current_status.md)**\
-**[Research List](../../../research_list.md)**\
-**[Back Main](../../../../README.md)**
+**[Current Status](../../../../../development/status/weekly/current_status.md)**\
+**[Research List](../../../../research_list.md)**\
+**[Back Main](../../../../../README.md)**
 
 Applications running in Azure Kubernetes Service (AKS) might need to store and retrieve data. While some application workloads can use local, fast storage on unneeded, emptied nodes, others require storage that persists on more regular data volumes within the Azure platform.
 
@@ -71,7 +71,7 @@ By contrast, ephemeral OS disks are stored only on the host machine, just like a
 
  Note
 
-When you don't explicitly request Azure managed disks for the OS, AKS defaults to ephemeral OS if possible for a given node pool configuration.
+When you don't explicitly request **[Azure managed disks](https://learn.microsoft.com/en-us/azure/virtual-machines/managed-disks-overview)** for the OS, AKS defaults to ephemeral OS if possible for a given node pool configuration.
 
 Size requirements and recommendations for ephemeral OS disks are available in the Azure VM documentation. The following are some general sizing considerations:
 
