@@ -1,4 +1,4 @@
-# Azure Resource and Busche Tool List
+# Azure Virtual Desktop, Azure SQL DB, and Busche Tool List
 
 The following is in markdown format it can be viewed better from <https://markdownlivepreview.com/> by copying and pasting the contents below.
 
@@ -7,7 +7,7 @@ The following is in markdown format it can be viewed better from <https://markdo
 - Can we create a Azure SQL database with the standard S1 service tier and 20 DTU capacity at $50/month for the report system.
 - Is it ok to put the Busche Tool list in that Azure SQL database?
 
-## What is being requested?
+## What is discussed?
 
 A way to run the "Where Used" and "Tool List" Crystal Reports.
 
@@ -16,13 +16,19 @@ A way to run the "Where Used" and "Tool List" Crystal Reports.
 - The laptops and desktops have Crystal Report Viewer installed and a connection to a share containing the Crystal reports and ODBC DSNs.
 - A central share containing Crystal reports and multiple ODBC DSNs.
 
-## 2. **[Windows 10 or Windows 11 Enterprise multi-session remote desktops](https://learn.microsoft.com/en-us/mem/intune/fundamentals/azure-virtual-desktop-multi-session)**
+## 2. **[Azure Virtual Desktop Way](https://learn.microsoft.com/en-us/mem/intune/fundamentals/azure-virtual-desktop-multi-session)**
+
+Securely deliver virtual desktops and applications remotely with maximum control to any device from a flexible cloud virtual desktop infrastructure (VDI) platform. Bring together Microsoft 365 and Azure to provide users with the only multi-session Windows 11 and Windows 10 experience, with exceptional scale and reduced IT costs.
+
+Only manage the image and virtual machines you use for the sessions in your Azure subscription, not the infrastructure. You don't need to personally manage the supporting infrastructure roles, such as a gateway or broker, like you do with Remote Desktop Services.
+
+**[Windows 10 or Windows 11 Enterprise multi-session remote desktops](https://learn.microsoft.com/en-us/mem/intune/fundamentals/azure-virtual-desktop-multi-session)**
 
 Windows 10 or Windows 11 Enterprise multi-session is a new Remote Desktop Session Host exclusive to **[Azure Virtual Desktop on Azure](https://learn.microsoft.com/en-us/azure/virtual-desktop/)**. It provides the following benefits:
 
-Allows multiple concurrent user sessions.
-Gives users a familiar Windows 10 or Windows 11 experience.
-Supports use of existing per-user Microsoft 365 licensing.
+- Allows multiple concurrent user sessions.
+- Gives users a familiar Windows 10 or Windows 11 experience.
+- Supports use of existing per-user Microsoft 365 licensing.
 
 - Crystal Report Viewer.
 - A Share containing Crystal reports and ODBC DSNs.
