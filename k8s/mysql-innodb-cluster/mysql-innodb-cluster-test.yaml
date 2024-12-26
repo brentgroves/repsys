@@ -10,7 +10,6 @@ spec:
   router:
     instances: 1
   datadirVolumeClaimTemplate:
-    storageClassName: kind-retain
     accessModes: 
       - ReadWriteOnce
     resources:

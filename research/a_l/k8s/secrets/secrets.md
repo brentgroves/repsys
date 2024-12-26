@@ -4,6 +4,11 @@
 **[Research List](../../../research_list.md)**\
 **[Back Main](../../../../README.md)**
 
+## references
+
+- **[Azure Secrets are encrypted](https://learn.microsoft.com/en-us/azure/aks/concepts-security#kubernetes-secrets)**
+- **[Azure encryption at rest](https://learn.microsoft.com/en-us/azure/security/fundamentals/encryption-atrest)**
+
 ## Secrets
 
 A Secret is an object that contains a small amount of sensitive data such as a password, a token, or a key. Such information might otherwise be put in a Pod specification or in a container image. Using a Secret means that you don't need to include confidential data in your application code.
@@ -40,6 +45,55 @@ You can use Secrets for purposes such as the following:
 - **[Allow the kubelet to pull container images from private registries](https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/)**.
 
 ## **[tls secrets](https://kubernetes.io/docs/concepts/configuration/secret/#tls-secrets)**
+
+## Types of Secret
+
+When creating a Secret, you can specify its type using the type field of the Secret resource, or certain equivalent kubectl command line flags (if available). The Secret type is used to facilitate programmatic handling of the Secret data.
+
+Kubernetes provides several built-in types for some common usage scenarios. These types vary in terms of the validations performed and the constraints Kubernetes imposes on them.
+
+| Built-in Type                       | Usage                                 |
+|-------------------------------------|---------------------------------------|
+| Opaque                              | arbitrary user-defined data           |
+| kubernetes.io/service-account-token | ServiceAccount token                  |
+| kubernetes.io/dockercfg             | serialized ~/.dockercfg file          |
+| kubernetes.io/dockerconfigjson      | serialized ~/.docker/config.json file |
+| kubernetes.io/basic-auth            | credentials for basic authentication  |
+| kubernetes.io/ssh-auth              | credentials for SSH authentication    |
+| kubernetes.io/tls                   | data for a TLS client or server       |
+| bootstrap.kubernetes.io/token       | bootstrap token data                  |
+
+You can define and use your own Secret type by assigning a non-empty string as the type value for a Secret object (an empty string is treated as an Opaque type).
+
+Kubernetes doesn't impose any constraints on the type name. However, if you are using one of the built-in types, you must meet all the requirements defined for that type.
+
+If you are defining a type of Secret that's for public use, follow the convention and structure the Secret type to have your domain name before the name, separated by a /. For example: cloud-hosting.example.net/cloud-api-credentials.
+
+## Opaque Secrets
+
+Opaque is the default Secret type if you don't explicitly specify a type in a Secret manifest. When you create a Secret using kubectl, you must use the generic subcommand to indicate an Opaque Secret type. For example, the following command creates an empty Secret of type Opaque:
+
+`kubectl create secret generic empty-secret`
+
+The output looks like:
+
+```bash
+NAME           TYPE     DATA   AGE
+empty-secret   Opaque   0      2m6s
+```
+
+The DATA column shows the number of data items stored in the Secret. In this case, 0 means you have created an empty Secret.
+
+To create an InnoDB Cluster with kubectl, first create a secret containing credentials for a new MySQL root user, a secret named 'mypwds' in this example:
+
+```bash
+$> kubectl create secret generic mypwds \
+        --from-literal=rootUser=root \
+        --from-literal=rootHost=% \
+        --from-literal=rootPassword="sakila"
+```
+
+## from somewhere else
 
 The kubernetes.io/tls Secret type is for storing a certificate and its associated key that are typically used for TLS.
 

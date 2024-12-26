@@ -38,6 +38,13 @@ kubectl delete service/mycluster-np
 kubectl get InnoDBCluster --all-namespaces
 ```
 
+Start the load balancer if using Kind
+
+```bash
+scc.sh kind.yaml kind-kind
+sudo cloud-provider-kind
+```
+
 In this install we are using using kubectl not helm.
 
 ## install k8s credentials secret
@@ -85,6 +92,7 @@ spec:
 ```
 
 ```bash
+scc.sh kind.yaml kind-kind
 pushd .
 cd ~/src/repsys/k8s
 # pick storage class
@@ -106,9 +114,46 @@ kubectl create ns innodb
 # switch to desired namespace
 kubectl config set-context $(kubectl config current-context) --namespace=innodb
 
+# Add a namespace label to instruct Istio to automatically inject Envoy sidecar proxies when you deploy your application later:
+
+```bash
+kubectl label namespace innodb istio-injection=enabled
+```
+
+## **[Setting PersistentVolumeClaim Size](https://dev.mysql.com/doc/mysql-operator/en/mysql-operator-innodbcluster-common.html)**
+
+Set a MySQL instance's storage configuration. For storing the MySQL Server's Data Directory (datadir), a PersistentVolumeClaim (PVC) is used for each MySQL Server pod. Each PVC follows the naming scheme datadir-{clustername}-[0-9]. A datadirVolumeClaimTemplate template allows setting different options, including size and storage class. For example:
+
+```yaml
+  datadirVolumeClaimTemplate:
+    storageClassName: innodb-retain
+    accessModes: 
+      - ReadWriteOnce
+    resources:
+      requests:
+        storage: 40Gi
+```
+
+For additional configuration information, see the official **[Storage: Persistent Volumes documentation](https://kubernetes.io/docs/concepts/storage/persistent-volumes/)**. The datadirVolumeClaimTemplate object is set to x-kubernetes-preserve-unknown-fields: true.
+
+## Note
+
+MySQL Operator for Kubernetes currently does not support storage resizing.
+
+```bash
+pushd .
+cd ~/src/repsys/k8s/mysql-innodb-cluster
+
+kubectl get sc                                        
+NAME                 PROVISIONER             RECLAIMPOLICY   VOLUMEBINDINGMODE      ALLOWVOLUMEEXPANSION   AGE
+standard (default)   rancher.io/local-path   Delete          WaitForFirstConsumer   false                  31d
+
+# install custom storage class
+kubectl apply -f custom_storage_classes/kind_retain.yaml
+
 # pick which storage class
-## for mayastor
-kubectl apply -f ./mysql-innodb-cluster/mysql-innodb-cluster-1-instance-storage-path.yaml
+
+kubectl apply -f ./mysql-innodb-cluster-1-instance-storage-path.yaml
 
 kubectl get pvc,pv
 
@@ -200,10 +245,14 @@ kubectl port-forward service/mycluster 3306
 Forwarding from 127.0.0.1:3306 -> 6446
 Forwarding from [::1]:3306 -> 6446
 
+mysqlsh root@localhost:3306 --sql --password=""
+\quit
+
 ```
 
 ## Connecting with a node-port
 
+<!-- https://stackoverflow.com/questions/62432961/how-to-use-nodeport-with-kind -->
 ```bash
 # use ClusterIP service yaml to make nodeport svc
 # specifically look at the spec selector.
@@ -213,7 +262,7 @@ kubectl get svc mycluster -o yaml
 
 pushd ~/src/reports/k8s
 
-kubectl apply -f ./mysql-innodb-cluster/nodeport.yaml
+kubectl apply -f ./nodeport.yaml
 ```
 
 ## old method to backup/restore mysql

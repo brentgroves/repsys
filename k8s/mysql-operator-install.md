@@ -106,5 +106,78 @@ replicaset.apps/mysql-operator-78688bfb4b   1         1         1       59s
 NAME             READY   UP-TO-DATE   AVAILABLE   AGE
 mysql-operator   1/1     1            1           37s
 
+# version check
 
+kubectl describe deployment mysql-operator --namespace mysql-operator
+
+Name:                   mysql-operator
+Namespace:              mysql-operator
+CreationTimestamp:      Mon, 23 Dec 2024 15:35:39 -0500
+Labels:                 app.kubernetes.io/component=controller
+                        app.kubernetes.io/created-by=mysql-operator
+                        app.kubernetes.io/instance=mysql-operator
+                        app.kubernetes.io/managed-by=mysql-operator
+                        app.kubernetes.io/name=mysql-operator
+                        app.kubernetes.io/version=9.1.0-2.2.2
+                        version=1.0
+Annotations:            deployment.kubernetes.io/revision: 1
+Selector:               name=mysql-operator
+Replicas:               1 desired | 1 updated | 1 total | 1 available | 0 unavailable
+StrategyType:           RollingUpdate
+MinReadySeconds:        0
+RollingUpdateStrategy:  25% max unavailable, 25% max surge
+Pod Template:
+  Labels:           name=mysql-operator
+  Service Account:  mysql-operator-sa
+  Containers:
+   mysql-operator:
+    Image:      container-registry.oracle.com/mysql/community-operator:9.1.0-2.2.2
+    Port:       <none>
+    Host Port:  <none>
+    Args:
+      mysqlsh
+      --log-level=@INFO
+      --pym
+      mysqloperator
+      operator
+    Readiness:  exec [cat /tmp/mysql-operator-ready] delay=1s timeout=1s period=3s #success=1 #failure=3
+    Environment:
+      MYSQLSH_USER_CONFIG_HOME:                 /mysqlsh
+      MYSQLSH_CREDENTIAL_STORE_SAVE_PASSWORDS:  never
+    Mounts:
+      /mysqlsh from mysqlsh-home (rw)
+      /tmp from tmpdir (rw)
+  Volumes:
+   mysqlsh-home:
+    Type:       EmptyDir (a temporary directory that shares a pod's lifetime)
+    Medium:     
+    SizeLimit:  <unset>
+   tmpdir:
+    Type:          EmptyDir (a temporary directory that shares a pod's lifetime)
+    Medium:        
+    SizeLimit:     <unset>
+  Node-Selectors:  <none>
+  Tolerations:     <none>
+Conditions:
+  Type           Status  Reason
+  ----           ------  ------
+  Available      True    MinimumReplicasAvailable
+  Progressing    True    NewReplicaSetAvailable
+OldReplicaSets:  <none>
+NewReplicaSet:   mysql-operator-575fb64d89 (1/1 replicas created)
+Events:          <none>
+
+```
+
+## **[Router and Server Versions and Instances](https://dev.mysql.com/doc/mysql-operator/en/mysql-operator-innodbcluster-common.html)**
+
+By default, MySQL Operator for Kubernetes installs MySQL Server with the same version as the Operator, and installs Router with the same version as MySQL Server. It also installs 3 MySQL instances and 1 Router instance by default. Optionally configure each:
+
+```yaml
+spec:
+  instances: 3
+  version: 9.1.0
+  router:
+    instances: 1
+    version: 9.1.0
 ```
