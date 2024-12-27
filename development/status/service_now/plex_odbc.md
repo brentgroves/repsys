@@ -1,5 +1,9 @@
 # Plex ODBC connection from Linamar Networks Public IP
 
+## **[Connection reset by peer (2310)](https://stackoverflow.com/questions/1434451/what-does-connection-reset-by-peer-mean)**
+
+"Connection reset by peer (2310) (SQLDriverConnect)" indicates a network error where the connection to a SQL database was abruptly closed by the server, usually due to a network issue like a faulty connection, firewall blocking, or the server itself shutting down unexpectedly.
+
 Note: If necessary, please ensure on your Firewall that both inbound and outbound communication on port 19995 is enabled as well as IP address 38.97.236.75 is whitelisted.  If you can do subnets in your firewall, please whitelist 38.97.236.0/24.  This is more scalable if additional IPs are added or changed in the future.
 
 Plex does not have to whitelist our address, we may have to whitelist their address. I looked through all our previous Plex cases that have to do with ODBC and we never had to request an IP to be whitelisted.

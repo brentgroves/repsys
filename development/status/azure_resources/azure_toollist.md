@@ -16,11 +16,7 @@ A way to run the "Where Used" and "Tool List" Crystal Reports.
 - The laptops and desktops have Crystal Report Viewer installed and a connection to a share containing the Crystal reports and ODBC DSNs.
 - A central share containing Crystal reports and multiple ODBC DSNs.
 
-## 2. **[Azure Virtual Desktop Way](https://learn.microsoft.com/en-us/mem/intune/fundamentals/azure-virtual-desktop-multi-session)**
-
-Securely deliver virtual desktops and applications remotely with maximum control to any device from a flexible cloud virtual desktop infrastructure (VDI) platform. Bring together Microsoft 365 and Azure to provide users with the only multi-session Windows 11 and Windows 10 experience, with exceptional scale and reduced IT costs.
-
-Only manage the image and virtual machines you use for the sessions in your Azure subscription, not the infrastructure. You don't need to personally manage the supporting infrastructure roles, such as a gateway or broker, like you do with Remote Desktop Services.
+### 2. **[Azure Virtual Desktop Way](https://learn.microsoft.com/en-us/mem/intune/fundamentals/azure-virtual-desktop-multi-session)**
 
 **[Windows 10 or Windows 11 Enterprise multi-session remote desktops](https://learn.microsoft.com/en-us/mem/intune/fundamentals/azure-virtual-desktop-multi-session)**
 
@@ -32,6 +28,12 @@ Windows 10 or Windows 11 Enterprise multi-session is a new Remote Desktop Sessio
 
 - Crystal Report Viewer.
 - A Share containing Crystal reports and ODBC DSNs.
+
+#### Azure Virtual Desktop cost
+
+When using Windows 10 or 11 Enterprise multi-session for remote desktops, the primary cost is tied to the Azure Virtual Desktop (AVD) service, where you can access these desktops at no additional cost if you already have an eligible Windows or Microsoft 365 license; essentially, the cost is primarily based on the underlying Azure VM resources you provision for your desktop environment, including CPU, memory, and storage.
+
+cost: $350/month for **[Standard_D8_v3](https://learn.microsoft.com/en-us/azure/virtual-machines/sizes/general-purpose/dv3-series?tabs=sizebasic)** VM which has 8 vCPU and 32 GB ram.
 
 ## For either way
 
