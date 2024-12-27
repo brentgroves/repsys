@@ -135,7 +135,7 @@ I created the secret by doing this:
 
 ```bash
 pushd .
-cd ~/src/k8s/repsys/namespaces/mgdw/
+cd ~//src/k8s/secrets/namespaces/mgdw
 kubectl apply -f credentials.yaml 
 kubectl get secret credentials -o jsonpath='{.data.password2}' | base64 --decode
 ```

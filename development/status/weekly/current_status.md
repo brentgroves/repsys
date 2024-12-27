@@ -5,7 +5,10 @@
 
 ![np](https://cdn.prod.website-files.com/65a5be30bf4809bb3a2e8aff/65de6a24f3bc7cfdb5711e46_ethernet2.jpeg)
 
-- Need Github access
+## Need Github access
+
+### can I get an exception for this policy?
+
 You cannot visit github.com right now because the website uses HSTS.
 
 Application Blocked!
