@@ -49,10 +49,13 @@ Reference cluster specific load balancer files in the cluster's netplan dir, i.e
 # Scan sub-network for IPs to be used as load balancer.
 nmap -sP 172.20.88.0/22
 nmap -sP 10.1.0.0/22
+nmap -sP 192.168.1.0/24
 
-microk8s enable metallb:172.20.88.57-172.20.88.58
-# microk8s enable metallb:172.20.88.59-172.20.88.60
-microk8s enable metallb:10.1.0.8-10.1.0.9
+# home
+microk8s enable metallb:192.168.1.70-192.168.90
+Infer repository core for addon metallb
+Enabling MetalLB
+Your input value (192.168.1.70-192.168.90) is not a valid IP Range
 
 kubectl get IPAddressPool -A                           
 NAMESPACE        NAME                  AGE

@@ -15,7 +15,7 @@ sudo snap install kubectl  --classic
 ## generate microk8s config
 
 ```bash
-ssh brent@repsys11_home
+ssh brent@repsys11
 cd ~
 mkdir .kube
 cd .kube

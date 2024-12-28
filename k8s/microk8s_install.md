@@ -93,14 +93,3 @@ microk8s kubectl get node -o wide
 microk8s enable rbac
 ```
 
-## Hello RabbitMQ
-
-Now that we have the Operator deployed, let's create the simplest RabbitMQ Cluster.
-
-This example can be found in the Cluster Operator GitHub repo. As mentioned on the page:
-
-This is the simplest RabbitmqCluster definition. The only explicitly specified property is the name of the cluster. Everything else will be configured according to the Cluster Operator's defaults.
-
-The examples folder has many other references such as creating a RabbitMQ Cluster with TLS, mTLS, setting up a Cluster with production defaults, adding community plugins, etc.
-
-Continuing with our example, we will submit the following yaml to Kubernetes:
