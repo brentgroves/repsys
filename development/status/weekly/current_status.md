@@ -5,26 +5,7 @@
 
 ![np](https://cdn.prod.website-files.com/65a5be30bf4809bb3a2e8aff/65de6a24f3bc7cfdb5711e46_ethernet2.jpeg)
 
-## Need Github access
-
-### can I get an exception for this policy?
-
-You cannot visit github.com right now because the website uses HSTS.
-
-Application Blocked!
-You have tried to access an application ( Github ) which is in violation of Linamar's internet usage policy.
-
-Category:
-URL: <https://github.com/>
-Client IP: 10.187.40.123
-Server IP: 140.82.114.3
-User name:
-Group Name:
-
-For further assistance please contact your Desktop Support Technician.
-
-No further action is required on your part.
-
+- **[Kubernetes VLAN request](../k8s_vlan/k8s_vlan.md)**
 - **[Busche Tool List and Azure SQL with firewall IP](../azure_resources/azure_toollist.md)**
 - Register Web App
 - **[Basic Go Web App](https://go.dev/doc/articles/wiki/)**
