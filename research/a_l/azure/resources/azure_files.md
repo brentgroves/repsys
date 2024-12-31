@@ -37,3 +37,27 @@ You can use Azure Files to simplify new cloud development projects. For example:
 
     - Containerization:
     You can also use Azure file shares as persistent volumes for stateful containers. Containers deliver "build once, run anywhere" capabilities that enable developers to accelerate innovation. For the containers that access raw data at every start, a shared file system is required to allow these containers to access the file system no matter which instance they run on.
+
+## **[Azure Files Pricing](https://azure.microsoft.com/en-us/pricing/details/storage/files/)**
+
+### Provisioned v2
+
+In a provisioned model, the primary costs of the Azure file share are based on the amount of storage, IOPS, and throughput you provision when you create or update your file share, regardless of how much you use. With the provisioned v2 billing model, you have the ability to separately provision storage, IOPS, and throughput, although we will recommend IOPS and throughput provisioning to you based on the amount of provisioned storage you select. For more information on the provisioned v2 billing model, see **[understanding the provisioned v2 billing model](https://go.microsoft.com/fwlink/?linkid=2286278&clcid=0x409)**.
+
+### Provisioned storage
+
+The maximum storage size of the file share, specified in GiB. You are charged for the storage you’ve provision regardless of what you use. Provisioned storage can be changed after share creation.
+
+$0.0073 per provisioned GiB per month
+
+### Provisioned IOPS
+
+The maximum IOPS, or transactions per second, of the file share. You are charged for the IOPS you’ve provisioned regardless of how many IOs you use. Provisioned IOPS can be changed after share creation.
+
+$0.0402 per provisioned IO per sec per month
+
+### Provisioned throughput
+
+The maximum amount of data that can be transferred per second of the file share. You are charged for the throughput you’ve provisioned regardless of what you use. Provisioned throughput can be changed after share creation.
+
+$0.0599 per provisioned MiB per sec per month

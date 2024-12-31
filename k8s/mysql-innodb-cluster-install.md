@@ -4,6 +4,10 @@
 **[Current Status](../development/status/weekly/current_status.md)**\
 **[Back to Main](../README.md)**
 
+## Azure Issue
+
+Could not get the MySQL Operator to install a MySQL InnoDB cluster on Azure.
+
 ## mayastor issue
 
 - Installed a 3 instance MySQL InnoDB cluster using mysql-innodb-mayastor-cluster.yaml. It worked until I rebooted then had a problem like on rephub1_home.
@@ -96,18 +100,7 @@ scc.sh kind.yaml kind-kind
 pushd .
 cd ~/src/repsys/k8s
 # pick storage class
-
-kubectl get sc                                                                                                     
-NAME                    PROVISIONER          RECLAIMPOLICY   VOLUMEBINDINGMODE      ALLOWVOLUMEEXPANSION   AGE
-azurefile               file.csi.azure.com   Delete          Immediate              true                   65d
-azurefile-csi           file.csi.azure.com   Delete          Immediate              true                   65d
-azurefile-csi-premium   file.csi.azure.com   Delete          Immediate              true                   65d
-azurefile-premium       file.csi.azure.com   Delete          Immediate              true                   65d
-default (default)       disk.csi.azure.com   Delete          WaitForFirstConsumer   true                   65d
-managed                 disk.csi.azure.com   Delete          WaitForFirstConsumer   true                   65d
-managed-csi             disk.csi.azure.com   Delete          WaitForFirstConsumer   true                   65d
-managed-csi-premium     disk.csi.azure.com   Delete          WaitForFirstConsumer   true                   65d
-managed-premium         disk.csi.azure.com   Delete          WaitForFirstConsumer   true                   65d
+kubectl get sc
 
 # create namespace to deploy cluster
 kubectl create ns innodb

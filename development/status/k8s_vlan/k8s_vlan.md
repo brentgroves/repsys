@@ -15,6 +15,7 @@ A VLAN like the desktop VLAN 10.x.40.0 with these Firewall changes.
 - Allow UDP traffic from [NPort Serial Device Servers](https://www.moxa.com/en/products/industrial-edge-connectivity/serial-device-servers/general-device-servers/nport-p5150a-series) connected to CNC to UDP listener application running in K8s cluster.
 ![Serial Device Server](https://cdn-cms.azureedge.net/Moxa/media/PDIM/S100000208/moxa-nport-p5150a-series-appearance-image-eng.png)
 - Allow **[mTLS](https://www.cloudflare.com/learning/access-management/what-is-mutual-tls/#:~:text=Mutual%20TLS%20(mTLS)%20is%20a,other%20using%20the%20TLS%20protocol.)** access to On-Prem production K8s through **[Istio zero-trust service mesh gateway](https://istio.io/latest/about/service-mesh/#what-is-istio)** from users to run reports.
+- Allow connection from development machines and K8s nodes to SQL Server TCP port 1433 of MSC vending machines.
 
 ## Applications running in K8s Clusters
 
