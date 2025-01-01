@@ -1,8 +1,8 @@
 # **[⎈ A Hands-On Guide to Kubernetes RBAC With a User Creation 🛠️](https://medium.com/@muppedaanvesh/a-hand-on-guide-to-kubernetes-rbac-with-a-user-creation-%EF%B8%8F-1ad9aa3cafb1)**
 
-**[Current Status](../../../../development/status/weekly/current_status.md)**\
-**[Research List](../../../research_list.md)**\
-**[Back Main](../../../../README.md)**
+**[Current Status](../../../../../../development/status/weekly/current_status.md)**\
+**[Research List](../../../../../research_list.md)**\
+**[Back Main](../../../../../../README.md)**
 
 a Kubernetes cluster, managing access control is crucial for maintaining security and ensuring that only authorized users have access to resources. Kubernetes RBAC (Role-Based Access Control) provides a powerful mechanism for controlling access to Kubernetes resources based on roles and permissions.
 
