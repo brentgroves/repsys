@@ -5,6 +5,7 @@
 
 ![np](https://cdn.prod.website-files.com/65a5be30bf4809bb3a2e8aff/65de6a24f3bc7cfdb5711e46_ethernet2.jpeg)
 
+- **[Godaddy to Route53](https://medium.com/@rivera5656/migrating-a-domain-from-godaddy-to-aws-route-53-using-terraform-e12f3dec24bc)**
 - **[Kubernetes VLAN request](../k8s_vlan/k8s_vlan.md)**
 - **[Busche Tool List and Azure SQL with firewall IP](../azure_resources/azure_toollist.md)**
 - Register Web App
