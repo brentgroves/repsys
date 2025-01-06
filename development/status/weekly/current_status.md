@@ -5,6 +5,8 @@
 
 ![np](https://cdn.prod.website-files.com/65a5be30bf4809bb3a2e8aff/65de6a24f3bc7cfdb5711e46_ethernet2.jpeg)
 
+- Browsing to github.com allowed. Need access to the worlds largest source of code to learn from.
+- Allow both inbound and outbound tcp communication on port 19995. This is to establash an ODBC connection to the Plex ERP at test.odbc.plex.com,38.97.236.97, and odbc.plex.com,38.97.236.75.
 - **[Godaddy to Route53](https://medium.com/@rivera5656/migrating-a-domain-from-godaddy-to-aws-route-53-using-terraform-e12f3dec24bc)**
 - **[Kubernetes VLAN request](../k8s_vlan/k8s_vlan.md)**
 - **[Busche Tool List and Azure SQL with firewall IP](../azure_resources/azure_toollist.md)**
