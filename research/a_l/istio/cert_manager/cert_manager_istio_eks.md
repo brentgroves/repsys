@@ -4,6 +4,10 @@
 **[Research List](../../../research_list.md)**\
 **[Back Main](../../../../README.md)**
 
+## NOTE
+
+This is the one I followed first since it describes a Route53 Issuer which I have.
+
 ## references
 
 - **[cert-manager](https://istio.io/latest/docs/ops/integrations/certmanager/)**
@@ -23,3 +27,35 @@ In this article, we will look at how to automate this entire process so that whe
 ## Overview
 
 We will be using the following components to automatically provision a TLS certificate for our Microservice and map the ingress to a DNS endpoint.
+
+## cert-manager
+
+**[cert-manager](https://cert-manager.io/docs/installation/supported-releases/)** is a native Kubernetes certificate management controller. It can help with issuing certificates from a variety of sources, such as Let’s Encrypt, HashiCorp Vault, Venafi, a simple signing key pair, or self-signed.
+
+## external-dns
+
+**[external-dns](https://github.com/kubernetes-sigs/external-dns)** sets up DNS records at DNS providers that are external to Kubernetes such that Kubernetes services are discoverable via the external DNS providers and allows the controlling of DNS records to be done dynamically, in a DNS provider agnostic way.
+
+external-dns will be used to create Amazon Route53 entries for our Microservice.
+
+## Istio Service Mesh
+
+Istio is an open-source service mesh that layers transparently onto existing distributed applications.
+
+## Step By Step Guide
+
+The below setup is performed on an EKS Cluster running Kubernetes version 1.21 with DNS hosted on Route53. IRSA (IAM Roles for Service Accounts) is used for accessing AWS services from EKS.
+
+## Pre-requisites
+
+You need to have the following installed on your laptop:
+
+- eksctl – We will be creating an Amazon EKS Cluster to deploy our Microservice
+- Helm – To deploy all required components
+- kubectl – To connect to our Kubernetes cluster
+
+## Create an EKS Cluster
+
+Skipped this step since I'm using AKS.
+
+Instead study **[Deploy cert-manager on Azure Kubernetes Service (AKS) and use Let's Encrypt to sign a certificate for an HTTPS website](getting_started_aks_lets_encrypt.md)**
