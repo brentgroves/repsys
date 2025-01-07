@@ -115,9 +115,10 @@ As an alternative to the YAML manifests referenced above, we also provide an off
 Note: cert-manager should never be embedded as a sub-chart into other Helm charts. cert-manager manages non-namespaced resources in your cluster and should only be installed once.
 
 ```bash
-$ helm install \
+helm install \
   cert-manager jetstack/cert-manager \
   --namespace cert-manager \
-  --version v1.1.1 \
-  # --set installCRDs=true
+  --create-namespace \
+  --version v1.16.2 \
+  --set crds.enabled=true
 ```
