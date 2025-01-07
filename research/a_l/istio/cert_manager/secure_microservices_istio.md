@@ -1,8 +1,16 @@
-# **[Cert-Manager and Istio: Choosing Ingress Options for the Istio-based service mesh add-on for AKS](https://medium.com/microsoftazure/cert-manager-and-istio-choosing-ingress-options-for-the-istio-based-service-mesh-add-on-for-aks-c633c97fa4f2)**
+# **[Secure your Microservices Ingress in Istio with Let’s Encrypt](https://invisibl.io/blog/secure-your-microservices-ingress-in-istio-with-lets-encrypt/)**
 
 **[Current Status](../../../../development/status/weekly/current_status.md)**\
 **[Research List](../../../research_list.md)**\
 **[Back Main](../../../../README.md)**
+
+## references
+
+- **[cert-manager installation documentation](https://cert-manager.io/docs/installation/kubernetes/)**
+- **[Requesting Certificates](https://cert-manager.io/docs/usage/)**
+- **[Deploy cert-manager on Azure Kubernetes Service (AKS) and use Let's Encrypt to sign a certificate for an HTTPS website](https://cert-manager.io/docs/tutorials/getting-started-aks-letsencrypt/)**
+- **[Cert-Manager and Istio: Choosing Ingress Options for the Istio-based service mesh add-on for AKS](https://medium.com/microsoftazure/cert-manager-and-istio-choosing-ingress-options-for-the-istio-based-service-mesh-add-on-for-aks-c633c97fa4f2)**
+- **[Kubernetes, Istio, Cert Manager, and Let’s Encrypt](https://medium.com/@rd.petrusek/kubernetes-istio-cert-manager-and-lets-encrypt-c3e0822a3aaf)**
 
 ## NOTE
 
@@ -59,3 +67,57 @@ You need to have the following installed on your laptop:
 Skipped this step since I'm using AKS.
 
 Instead study **[Deploy cert-manager on Azure Kubernetes Service (AKS) and use Let's Encrypt to sign a certificate for an HTTPS website](getting_started_aks_lets_encrypt.md)**
+
+## Install Istio Service Mesh using Istioctl
+
+Already done.
+
+## Install cert-manager
+
+cert-manager is used to request certificates from Let’s Encrypt. Certificates are issued and renewed automatically. DNS-01 challenge is used to verify the domain hosted in Route53.
+
+Helm is used to install and configure the cert-manager. Since the service account is created (sa-cert-manager) during the cluster creation, we will use the same and disable automatic service account creation.
+
+Step 5: Install cert-manager through Helm by running the following commands
+
+Note: This is different from the one in the **[getting started guide](./getting_started_aks_lets_encrypt.md)**. Probably should use the one in the getting started guide since it is newer and for aks.
+
+```bash
+helm repo add jetstack https://charts.jetstack.io
+
+helm install cert-manager --namespace cert-manager \
+--version v1.5.4  jetstack/cert-manager \
+--set serviceAccount.create=false \
+--set serviceAccount.name=sa-cert-manager \
+--set prometheus.enabled=false \
+--set webhook.timeoutSeconds=4  \
+--set installCRDs=true \
+--set securityContext.fsGroup=1001 \
+--set securityContext.runAsUser=1001
+```
+
+## compare install to the latest **[install guide](https://cert-manager.io/docs/installation/)**
+
+cert-manager runs within your Kubernetes cluster as a series of deployment resources. It utilizes CustomResourceDefinitions to configure Certificate Authorities and request certificates.
+
+It is deployed using regular YAML manifests, like any other application on Kubernetes.
+
+Once cert-manager has been deployed, you must configure Issuer or ClusterIssuer resources which represent certificate authorities. More information on configuring different Issuer types can be found in the respective configuration guides.
+
+Note: From cert-manager v0.14.0 onward, the minimum supported version of Kubernetes is v1.11.0. Users still running Kubernetes v1.10 or below should upgrade to a supported version before installing cert-manager.
+
+Warning: You should not install multiple instances of cert-manager on a single cluster. This will lead to undefined behavior and you may be banned from providers such as Let's Encrypt.
+
+## **[Installing with Helm](https://cert-manager.io/docs/installation/helm/)**
+
+As an alternative to the YAML manifests referenced above, we also provide an official Helm chart for installing cert-manager.
+
+Note: cert-manager should never be embedded as a sub-chart into other Helm charts. cert-manager manages non-namespaced resources in your cluster and should only be installed once.
+
+```bash
+$ helm install \
+  cert-manager jetstack/cert-manager \
+  --namespace cert-manager \
+  --version v1.1.1 \
+  # --set installCRDs=true
+```
