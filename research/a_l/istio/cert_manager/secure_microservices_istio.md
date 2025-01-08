@@ -16,14 +16,6 @@
 
 This is the one I followed first since it describes a Route53 Issuer which I have.
 
-## references
-
-- **[cert-manager](https://istio.io/latest/docs/ops/integrations/certmanager/)**
-- **[Requesting Certificates](https://cert-manager.io/docs/usage/)**
-- **[Deploy cert-manager on Azure Kubernetes Service (AKS) and use Let's Encrypt to sign a certificate for an HTTPS website](https://cert-manager.io/docs/tutorials/getting-started-aks-letsencrypt/)**
-- **[Secure your Microservices Ingress in Istio with Let’s Encrypt](https://invisibl.io/blog/secure-your-microservices-ingress-in-istio-with-lets-encrypt/)**
-- **[Kubernetes, Istio, Cert Manager, and Let’s Encrypt](https://medium.com/@rd.petrusek/kubernetes-istio-cert-manager-and-lets-encrypt-c3e0822a3aaf)**
-
 Let’s say you have a Microservice that you would like to expose to the Internet. One of the key requirements before you expose the service is to make it available at a secure endpoint (such as <https://checkout.example.com>).
 
 Even though this is a simple requirement, this is often thought out towards the end of the deployment steps (typically when you are about to make DNS changes). This is primarily because the steps involved in procuring certificates and configuring them have been hard. And then once the certificates are deployed, someone got to make sure they are renewed on time. These challenges are amplified when you operate a number of Microservices and there are many disparate teams managing them.
@@ -76,7 +68,7 @@ Already done.
 
 cert-manager is used to request certificates from Let’s Encrypt. Certificates are issued and renewed automatically. DNS-01 challenge is used to verify the domain hosted in Route53.
 
-Helm is used to install and configure the cert-manager. Since the service account is created (sa-cert-manager) during the cluster creation, we will use the same and disable automatic service account creation.
+Helm is used to install and configure the cert-manager. Since the service account is created (sa-cert-manager) during the cluster creation, we will use the same and disable automatic service account creation. I DON'T KNOW ABOUT THIS sa-cert-manager service account.
 
 Step 5: Install cert-manager through Helm by running the following commands
 
