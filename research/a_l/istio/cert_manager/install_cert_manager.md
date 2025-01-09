@@ -19,7 +19,7 @@ Learn about the various ways you can install cert-manager and how to choose betw
 ### Default static install
 
 You don't require any tweaking of the cert-manager install parameters.
-
+en
 The default static configuration can be installed as follows:
 
 ```bash
