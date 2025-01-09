@@ -17,3 +17,5 @@ cert-manager creates TLS certificates for workloads in your Kubernetes or OpenSh
 cert-manager can obtain certificates from a **[variety of certificate authorities](https://cert-manager.io/docs/configuration/issuers/)**, including: Let's Encrypt, HashiCorp Vault, Venafi and private PKI.
 
 With cert-manager's **[Certificate resource](https://cert-manager.io/docs/usage/certificate/)**, the private key and certificate are stored in a Kubernetes Secret which is mounted by an application Pod or used by an Ingress controller. With csi-driver, **[csi-driver-spiffe](https://cert-manager.io/docs/usage/csi-driver-spiffe/)**, or **[istio-csr](https://cert-manager.io/docs/usage/istio-csr/)** , the private key is generated on-demand, before the application starts up; the private key never leaves the node and it is not stored in a Kubernetes Secret.
+
+![cm](https://cert-manager.io/images/high-level-overview.svg)

@@ -88,29 +88,26 @@ helm install cert-manager --namespace cert-manager \
 --set securityContext.runAsUser=1001
 ```
 
-## compare install to the latest **[install guide](https://cert-manager.io/docs/installation/)**
+## Step 6: Create a file called “cluster-issuer.yaml” with the following content. 
 
-cert-manager runs within your Kubernetes cluster as a series of deployment resources. It utilizes CustomResourceDefinitions to configure Certificate Authorities and request certificates.
+Note: This is important because I have a route53 account.
 
-It is deployed using regular YAML manifests, like any other application on Kubernetes.
-
-Once cert-manager has been deployed, you must configure Issuer or ClusterIssuer resources which represent certificate authorities. More information on configuring different Issuer types can be found in the respective configuration guides.
-
-Note: From cert-manager v0.14.0 onward, the minimum supported version of Kubernetes is v1.11.0. Users still running Kubernetes v1.10 or below should upgrade to a supported version before installing cert-manager.
-
-Warning: You should not install multiple instances of cert-manager on a single cluster. This will lead to undefined behavior and you may be banned from providers such as Let's Encrypt.
-
-## **[Installing with Helm](https://cert-manager.io/docs/installation/helm/)**
-
-As an alternative to the YAML manifests referenced above, we also provide an official Helm chart for installing cert-manager.
-
-Note: cert-manager should never be embedded as a sub-chart into other Helm charts. cert-manager manages non-namespaced resources in your cluster and should only be installed once.
+Make sure to update the email address field.
 
 ```bash
-helm install \
-  cert-manager jetstack/cert-manager \
-  --namespace cert-manager \
-  --create-namespace \
-  --version v1.16.2 \
-  --set crds.enabled=true
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: letsencrypt
+  namespace: cert-manager
+spec:
+  acme:
+    email: support@example.com
+    privateKeySecretRef:
+      name: letsencrypt
+    server: https://acme-v02.api.letsencrypt.org/directory
+    solvers:
+    - dns01:
+        route53:
+          region: us-east-1
 ```
