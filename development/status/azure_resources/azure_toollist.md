@@ -6,9 +6,6 @@ The following is in markdown format it can be viewed better from <https://markdo
 
 A way to run the "Where Used" and "Tool List" Crystal Reports.
 
-Need
-- space needed.
-- seedeep
 ## Reason for request
 
 - All Job Tooling data from 2004 until the time Mobex Global bought Busche was entered in the Busche Tool List SQL database.
@@ -17,10 +14,10 @@ Need
 
 ## Topics
 
-- Current Status. 
-  - On-prem VM running on server VLAN. 
-  - Need to Install an acceptable SQL Server version. 
-  - Need to copy DSN and Crystal Reports to a share accessible to the **[Crystal report viewer](https://www.sap.com/registration/trial.e58efd26-79e3-4f97-8726-10c1327b0538.html)**. 
+- Current Status.
+  - On-prem VM running on server VLAN.
+  - Need to Install an acceptable SQL Server version.
+  - Need to copy DSN and Crystal Reports to a share accessible to the **[Crystal report viewer](https://www.sap.com/registration/trial.e58efd26-79e3-4f97-8726-10c1327b0538.html)**.
   - **[SQL Server 2019](https://learn.microsoft.com/en-us/sql/database-engine/install-windows/supported-version-and-edition-upgrades-2019?view=sql-server-ver16)** would work.
   - When you **[install 2019](https://learn.microsoft.com/en-us/answers/questions/1166282/how-to-update-sql-server-2012-to-2019)**, pick update existing instance. You should be sure to backup the databases first in case of any issues.  
 - Alternate Way
@@ -67,4 +64,3 @@ Use Azure Files to replace or supplement traditional on-premises file servers or
 ### Provisioned v2
 
 In a provisioned model, the primary costs of the Azure file share are based on the amount of storage, IOPS, and throughput you provision when you create or update your file share, regardless of how much you use. With the provisioned v2 billing model, you have the ability to separately provision storage, IOPS, and throughput, although we will recommend IOPS and throughput provisioning to you based on the amount of provisioned storage you select. For more information on the provisioned v2 billing model, see **[understanding the provisioned v2 billing model](https://go.microsoft.com/fwlink/?linkid=2286278&clcid=0x409)**.
-
