@@ -2,7 +2,9 @@
 
 The following is in markdown format it can be viewed better from <https://markdownlivepreview.com/> by copying and pasting the contents below.
 
-## Purpose
+![cp](https://res.cloudinary.com/canonical/image/fetch/f_auto,q_auto,fl_sanitize,w_4096,h_1377/https://assets.ubuntu.com/v1/e55cc8c0-wide-server.png)
+
+s## Purpose
 
 - We need to shut down the Mobex Azure Tenant.
 
@@ -35,7 +37,7 @@ The following is in markdown format it can be viewed better from <https://markdo
   Find a **[VBA Excel](https://www.datacamp.com/tutorial/vba-excel)** programmer to work on this for the immediate future.  For the long-term solution, I suggest we migrate this VBA Excel program to a Web App, SQL database, and Power BI. The downside to this suggestion is that it would take some time. The upside is that the Web App can perform validation on the dates and other information before being saved to the database. Using VBA it is easy to create complex programs to solve business needs quickly, but it is difficult to make these programs robust.
 - Linus Technical Support
   Research and make recommendations to improve platform stability. 
-   
+
 ## Azure Resources
 
 - **[Azure Kubernetes Service, 2nd best Kubernetes platform](https://azure.microsoft.com/en-gb/products/kubernetes-service)**
