@@ -22,6 +22,7 @@ The following is in markdown format it can be viewed better from <https://markdo
 - Mike Percel
 - Vladimir Chevtchenko
 - Elden Maynard
+
 ## Projects
 
 - Automatic end-user requestable Excel from Plex ERP
