@@ -33,7 +33,9 @@ The following is in markdown format it can be viewed better from <https://markdo
   Automatically collect cnc,job, and start/end tool operation times for problematic tooling.
 - INC0417507 - Excel to Power BI Transition
   Find a **[VBA Excel](https://www.datacamp.com/tutorial/vba-excel)** programmer to work on this for the immediate future.  For the long-term solution, I suggest we migrate this VBA Excel program to a Web App, SQL database, and Power BI. The downside to this suggestion is that it would take some time. The upside is that the Web App can perform validation on the dates and other information before being saved to the database. Using VBA it is easy to create complex programs to solve business needs quickly, but it is difficult to make these programs robust.
-
+- Linus Technical Support
+  Research and make recommendations to improve platform stability. 
+   
 ## Azure Resources
 
 - **[Azure Kubernetes Service, 2nd best Kubernetes platform](https://azure.microsoft.com/en-gb/products/kubernetes-service)**
