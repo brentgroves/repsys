@@ -29,9 +29,7 @@ s## Purpose
 
 - Automatic end-user requestable Excel from Plex ERP
   - **[End-user request kicks off scripts to extract data from the Plex ERP, transforms it, and then loads the result into a database table in the data warehouse.](https://grpc.io/docs/what-is-grpc/introduction/)**
-  - Produce Excel, archive result set, and email to end user.
 - **[Tool Management](https://en.wikipedia.org/wiki/Tool_management)**
-
   Move away managing tooling in Excel and the Busche Tool List to a more rubust and easy to use system.
 - **[Tool Tracker](https://en.wikipedia.org/wiki/Manufacturing_execution_system)**
   Automatically collect cnc,job, and start/end tool operation times for problematic tooling.
@@ -45,10 +43,17 @@ s## Purpose
   - Prove **[security](https://www.infracloud.io/blogs/request-level-authentication-authorization-istio-keycloak/)**
  and reliability of **[Azure AKS](https://learn.microsoft.com/en-us/azure/aks/what-is-aks#:~:text=Azure%20Kubernetes%20Service%20(AKS)%20is,of%20that%20responsibility%20to%20Azure.)**. 
   
+  - **[Site reliability engineering (SRE) teams](https://aws.amazon.com/what-is/sre/#:~:text=Site%20reliability%20engineering%20(SRE)%20teams%20collect%20critical%20information%20that%20reflects,application%20responds%20to%20a%20request.)**
+
+    Site reliability engineering (SRE) is the practice of using software tools to automate IT infrastructure tasks such as system management and application monitoring. Organizations use SRE to ensure their software applications remain reliable amidst frequent updates from development teams. SRE especially improves the reliability of scalable software systems because managing a large system using software is more sustainable than manually managing hundreds of machines.
+
   - **[Istio Service Mesh SRE monitoring](https://sysdig.com/blog/monitor-istio/)**
 
     ![isre](https://sysdig.com/wp-content/uploads/image8-6.png)
 
+  - **[What is platform engineering?](https://platformengineering.org/blog/what-is-platform-engineering)**
+
+    **Gone are the days of running a single script to deploy a monolithic application consuming one relational database.** We now have transactional and reporting databases. We also have cache and message queue servers, containers and container orchestrators, identity and access management servers, PKI systems, and tls as well as mTLS certificate management for microservices, declarative tools to manage infrastructure through code. The platform engineer takes care of all these new things.
 
 ## Azure Resources
 
