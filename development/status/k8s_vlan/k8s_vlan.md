@@ -6,8 +6,6 @@ The following is in markdown it can be viewed better from <https://markdownlivep
 
 This VLAN is for the development of applications running in an On-Prem and Cloud based Kubernetes cluster. The On-Prem development and production K8s cluster would each have four network ports and reside on Dell R620 servers running Ubuntu Server 24.04 with SentinelOne installed. The Ubuntu laptop and desktop development systems would also reside on the Kubernetes VLAN network.
 
-
-
 ## Request
 
 A VLAN like the desktop VLAN 10.x.40.0 with these Firewall changes.
@@ -26,7 +24,7 @@ A VLAN like the desktop VLAN 10.x.40.0 with these Firewall changes.
 
 - Allow **[mTLS](https://www.cloudflare.com/learning/access-management/what-is-mutual-tls/#:~:text=Mutual%20TLS%20(mTLS)%20is%20a,other%20using%20the%20TLS%20protocol.)** access to On-Prem production K8s through **[Istio zero-trust service mesh gateway](https://istio.io/latest/about/service-mesh/#what-is-istio)**
 
-  This allows secure access from a browser or command line.
+    This allows secure access from a browser or command line.
 
 - Allow inbound/outbound TCP traffic on port 1433 to/from vending machines.
 
@@ -53,16 +51,16 @@ A VLAN like the desktop VLAN 10.x.40.0 with these Firewall changes.
 - Linus **[Platform](https://platformengineering.org/blog/what-is-platform-engineering)** and **[Site Reliability Engineering (SRE)](https://aws.amazon.com/what-is/sre/#:~:text=Site%20reliability%20engineering%20(SRE)%20teams%20collect%20critical%20information%20that%20reflects,application%20responds%20to%20a%20request.)**
 
   - Research and make recommendations to improve platform reliability.
+
   - Use MicroK8s on-prem cluster for research and testing.
-  - Prove **[security](https://www.infracloud.io/blogs/request-level-authentication-authorization-istio-keycloak/)** and reliability of **[Azure AKS](https://learn.microsoft.com/en-us/azure/aks/what-is-aks#:~:text=Azure%20Kubernetes%20Service%20(AKS)%20is,of%20that%20responsibility%20to%20Azure.)**.
 
-  - **[Istio Service Mesh SRE monitoring](https://sysdig.com/blog/monitor-istio/)**
+  - Prove **[security](https://www.infracloud.io/blogs/request-level-authentication-authorization-istio-keycloak/)**
 
-    ![isre](https://sysdig.com/wp-content/uploads/image8-6.png)
+and reliability of **[Azure AKS](https://learn.microsoft.com/en-us/azure/aks/what-is-aks#:~:text=Azure%20Kubernetes%20Service%20(AKS)%20is,of%20that%20responsibility%20to%20Azure.)**.
 
+- **[Istio Service Mesh SRE monitoring](https://sysdig.com/blog/monitor-istio/)**
 
-
-
+    ![isre](https://sysdig.com/wp-content/uploads/image8-6.png)
 
 ## Players
 
@@ -80,10 +78,3 @@ A VLAN like the desktop VLAN 10.x.40.0 with these Firewall changes.
 - Mike Percel
 - Vladimir Chevtchenko
 - Elden Maynard
-
-
-
-
-
-
-
