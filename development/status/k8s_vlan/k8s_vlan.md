@@ -51,14 +51,10 @@ A VLAN like the desktop VLAN 10.x.40.0 with these Firewall changes.
 - Linus **[Platform](https://platformengineering.org/blog/what-is-platform-engineering)** and **[Site Reliability Engineering (SRE)](https://aws.amazon.com/what-is/sre/#:~:text=Site%20reliability%20engineering%20(SRE)%20teams%20collect%20critical%20information%20that%20reflects,application%20responds%20to%20a%20request.)**
 
   - Research and make recommendations to improve platform reliability.
-
   - Use MicroK8s on-prem cluster for research and testing.
+  - Prove **[security](https://www.infracloud.io/blogs/request-level-authentication-authorization-istio-keycloak/)** and reliability of **[Azure AKS](https://learn.microsoft.com/en-us/azure/aks/what-is-aks#:~:text=Azure%20Kubernetes%20Service%20(AKS)%20is,of%20that%20responsibility%20to%20Azure.)**.
 
-  - Prove **[security](https://www.infracloud.io/blogs/request-level-authentication-authorization-istio-keycloak/)**
-
-and reliability of **[Azure AKS](https://learn.microsoft.com/en-us/azure/aks/what-is-aks#:~:text=Azure%20Kubernetes%20Service%20(AKS)%20is,of%20that%20responsibility%20to%20Azure.)**.
-
-- **[Istio Service Mesh SRE monitoring](https://sysdig.com/blog/monitor-istio/)**
+  - **[Istio Service Mesh SRE monitoring](https://sysdig.com/blog/monitor-istio/)**
 
     ![isre](https://sysdig.com/wp-content/uploads/image8-6.png)
 
