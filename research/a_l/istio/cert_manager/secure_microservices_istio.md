@@ -58,37 +58,102 @@ You need to have the following installed on your laptop:
 
 Skipped this step since I'm using AKS.
 
-Instead study **[Deploy cert-manager on Azure Kubernetes Service (AKS) and use Let's Encrypt to sign a certificate for an HTTPS website](getting_started_aks_lets_encrypt.md)**
-
 ## Install Istio Service Mesh using Istioctl
 
 Already done.
 
 ## Install cert-manager
 
+Study **[Deploy cert-manager on Azure Kubernetes Service (AKS) and use Let's Encrypt to sign a certificate for an HTTPS website](./deploy_cert_manager_aks.md)** to make sure there are not any differences in the way you install cert-manager on aks.
+
 cert-manager is used to request certificates from Let’s Encrypt. Certificates are issued and renewed automatically. DNS-01 challenge is used to verify the domain hosted in Route53.
 
-Helm is used to install and configure the cert-manager. Since the service account is created (sa-cert-manager) during the cluster creation, we will use the same and disable automatic service account creation. I DON'T KNOW ABOUT THIS sa-cert-manager service account.
+Helm is used to install and configure the cert-manager. Since the service account is created (sa-cert-manager) during the cluster creation, we will use the same and disable automatic service account creation. I DID NOT CREATE THIS SERVICE ACCOUNT sa-cert-manager service account.
 
 Step 5: Install cert-manager through Helm by running the following commands
 
 Note: This is different from the one in the **[getting started guide](./getting_started_aks_lets_encrypt.md)**. Probably should use the one in the getting started guide since it is newer and for aks.
 
+Old version from this article:
+
+**[security_context](https://kubernetes.io/docs/tasks/configure-pod-container/security-context/)**
+**[service account](https://kubernetes.io/docs/concepts/security/service-accounts/)**
+
 ```bash
 helm repo add jetstack https://charts.jetstack.io
 
-helm install cert-manager --namespace cert-manager \
---version v1.5.4  jetstack/cert-manager \
---set serviceAccount.create=false \
---set serviceAccount.name=sa-cert-manager \
---set prometheus.enabled=false \
---set webhook.timeoutSeconds=4  \
---set installCRDs=true \
---set securityContext.fsGroup=1001 \
---set securityContext.runAsUser=1001
+# THIS IS HOW THE TUTORIAL SAYS TO INSTALL CERT-MANAGER
+# helm install cert-manager --namespace cert-manager \
+# --version v1.5.4  jetstack/cert-manager \
+# --set serviceAccount.create=false \
+# --set serviceAccount.name=sa-cert-manager \
+# --set prometheus.enabled=false \
+# --set webhook.timeoutSeconds=4  \
+# --set installCRDs=true \
+# --set securityContext.fsGroup=1001 \
+# --set securityContext.runAsUser=1001
+
+# --set securityContext.fsGroup=1001 \
+# --set securityContext.runAsUser=1001
+
+# The fsGroup setting specifies a group ID for any volumes that a container mounts. 
+# This group ID allows the group to read and write to the volume. 
+# All processes of the container are also part of this supplementary group. 
+# This setting helps ensure that only authorized users have access to data. 
+
+# A service account is a type of non-human account that, in Kubernetes, provides a distinct identity in a Kubernetes cluster. Application Pods, system components, and entities inside and outside the cluster can use a specific ServiceAccount's credentials to identify as that ServiceAccount. This identity is useful in various situations, including authenticating to the API server or implementing identity-based security policies.
 ```
 
-## Step 6: Create a file called “cluster-issuer.yaml” with the following content. 
+Newer version from **[Deploy cert-manager on Azure Kubernetes Service (AKS) and use Let's Encrypt to sign a certificate for an HTTPS website](https://cert-manager.io/docs/tutorials/getting-started-aks-letsencrypt/)**:
+
+## **[Deploy cert-manager on Azure Kubernetes Service (AKS) and use Let's Encrypt to sign a certificate for an HTTPS website](https://cert-manager.io/docs/tutorials/getting-started-aks-letsencrypt/)**
+
+```bash
+helm repo add jetstack https://charts.jetstack.io --force-update
+helm install \
+cert-manager jetstack/cert-manager \
+--namespace cert-manager \
+--create-namespace \
+--version v1.16.2 \
+--set crds.enabled=true
+```
+
+## Fine tune install
+
+**[show all parameters](https://artifacthub.io/packages/helm/cert-manager/cert-manager)**
+
+installCRDs ~ bool
+Default value: false
+This option is equivalent to setting crds.enabled=true and crds.keep=true. Deprecated: use crds.enabled and crds.keep instead.
+
+crds.enabled ~ bool
+Default value:false
+This option decides if the CRDs should be installed as part of the Helm installation.
+
+namespace ~ string
+Default value:
+""
+This namespace allows you to define where the services are installed into. If not set then they use the namespace of the release. This is helpful when installing cert manager as a chart dependency (sub chart).
+
+```bash
+helm repo add jetstack https://charts.jetstack.io --force-update
+
+helm install \
+  cert-manager jetstack/cert-manager \
+  --namespace cert-manager \
+  --create-namespace \
+  --version v1.16.2 \
+  --set prometheus.enabled=false \
+  --set webhook.timeoutSeconds=4 \
+  --set crds.enabled=true
+
+```
+
+## Verify cert-manager
+
+Once you have deployed cert-manager, you can **[verify](https://cert-manager.io/v1.6-docs/installation/verify/)** the installation.
+
+## Step 6: Create a file called “cluster-issuer.yaml” with the following content
 
 Note: This is important because I have a route53 account.
 

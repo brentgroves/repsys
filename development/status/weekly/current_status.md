@@ -5,11 +5,17 @@
 
 ![np](https://cdn.prod.website-files.com/65a5be30bf4809bb3a2e8aff/65de6a24f3bc7cfdb5711e46_ethernet2.jpeg)
 
-- azure sql mi moved to azure sql db
-- vlan meeting
+## **[IS Projects](../is_projects/is_projects.md)**
 
-- **[Godaddy to Route53](https://medium.com/@rivera5656/migrating-a-domain-from-godaddy-to-aws-route-53-using-terraform-e12f3dec24bc)**
+## Next Steps
+
+- **[Secure your Microservices Ingress in Istio with Let’s Encrypt](../../../research/a_l/istio/cert_manager/secure_microservices_istio.md#install-cert-manager)**
+- **[Azure resources next steps](../azure_resources/next_steps.md)**
 - **[Kubernetes VLAN request](../k8s_vlan/k8s_vlan.md)**
+- **[Monitoring Istio on AKS with Prometheus and Grafana](https://hshahin.com/monitoring-istio-on-aks-with-prometheus-and-grafana/)**
+
+- Read **[Run Kubernetes in Azure the Cheap Way](https://trstringer.com/cheap-kubernetes-in-azure/)** for more cost saving tips.
+- **[Godaddy to Route53](https://medium.com/@rivera5656/migrating-a-domain-from-godaddy-to-aws-route-53-using-terraform-e12f3dec24bc)**
 - **[Busche Tool List and Azure SQL with firewall IP](../azure_resources/azure_toollist.md)**
 - Register Web App
 - **[Basic Go Web App](https://go.dev/doc/articles/wiki/)**
