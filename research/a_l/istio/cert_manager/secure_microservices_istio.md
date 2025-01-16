@@ -80,7 +80,7 @@ Old version from this article:
 **[service account](https://kubernetes.io/docs/concepts/security/service-accounts/)**
 
 ```bash
-helm repo add jetstack https://charts.jetstack.io
+# helm repo add jetstack https://charts.jetstack.io
 
 # THIS IS HOW THE TUTORIAL SAYS TO INSTALL CERT-MANAGER
 # helm install cert-manager --namespace cert-manager \

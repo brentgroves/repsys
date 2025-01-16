@@ -9,7 +9,8 @@
 
 ## Next Steps
 
-- Make Support Ticket
+- Can you please open a ServiceNow Config request for me to create a resource group in Azure for the same, and attached the approval with it, once I will get the config request, I will start working on it.
+
 - **[Secure your Microservices Ingress in Istio with Let’s Encrypt](../../../research/a_l/istio/cert_manager/secure_microservices_istio.md#install-cert-manager)**
 - **[Azure resources next steps](../azure_resources/next_steps.md)**
 - **[Kubernetes VLAN request](../k8s_vlan/k8s_vlan.md)**
