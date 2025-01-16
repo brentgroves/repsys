@@ -18,4 +18,4 @@
     File "/home/brent/src/odbc/odbc-dsn-plextest.py", line 12, in <module>
         cnxn = pyodbc.connect('DSN=PlexTest;UID='+username+';PWD='+ password)
     pyodbc.OperationalError: ('08S01', '[08S01] [DataDirect][ODBC OpenAccess SDK driver][OpenAccess SDK Client]TCP/IP, connection reset by peer (2310) (SQLDriverConnect)')
-    ```
+  

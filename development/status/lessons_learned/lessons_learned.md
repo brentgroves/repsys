@@ -14,6 +14,7 @@ To make some recommendations for the lessons learned meeting.
 - Aamir Ghaffar
 - Christian Trujillo
 - Brent Hall
+- Jonathan Lapsley, Corporate Technical Support
 
 ## Network Recommendations
 
