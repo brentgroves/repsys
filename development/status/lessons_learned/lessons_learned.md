@@ -14,7 +14,10 @@ To make some recommendations for the lessons learned meeting.
 - Aamir Ghaffar
 - Christian Trujillo
 - Brent Hall
+- Aaron Card
 - Jonathan Lapsley, Corporate Technical Support
+
+Linamar Intra Net user system
 
 ## Network Recommendations
 
