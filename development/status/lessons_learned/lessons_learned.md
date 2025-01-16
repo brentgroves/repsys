@@ -52,4 +52,4 @@ Division of labor to avoid bottlenecks.
 ### **[Azure Platform Engineer](https://platformengineering.org/blog/what-is-platform-engineering)**
 
 - Create and manage Azure resources as directed by Azure Architect.
-- Works with division departments cataloging division software.
+- Works with division departments cataloging software.
