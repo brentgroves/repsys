@@ -1,20 +1,40 @@
-# Next Steps
+# Azure Resources with Cost Savings
 
-- Meet with Aamir Ghaffar and rest of team to discuss how to proceed.
+The following is in markdown format it can be viewed better from <https://markdownlivepreview.com/> by copying and pasting the contents below.
 
-## to do
+Found an article describing a way to stop the cluster when not in use which will significantly save cost.
 
-- Need azure resource group such as repsys.
-- Brent G. given contributor rights to this group.
-- Create Azure SQL database.
-- Create Azure Kubernetes Service, AKS.
+## Players
 
-## Service Now
+- Adrian Wise
+- Kristian Smith
+- Aamir Ghaffar
+- Christian Trujillo
+- Brent Hall
+- Kevin Young
+- Jared Davis
+- Dan Martin
+- Heather Luttrell
 
-## requests
+## Status
 
-- create an azure resource group called repsys. 
-- add Brent Groves as a contributor to this group.
+The RITM0185614 configuration request has been approved by Adrian Wise. 
 
-The ticket has been created. Thank you, Aamir.
-RITM0185614 Created
+## **[Azure Cost Savings](https://trstringer.com/cheap-kubernetes-in-azure/)**
+
+### Stop your cluster
+
+AKS just recently introduced a new feature to **[stop and start a Kubernetes cluster](https://docs.microsoft.com/en-us/azure/aks/start-stop-cluster)**. Until we start running reports and we complete the the Tool Management and Tracker software, we can stop it often. 
+
+To stop the cluster, it is as easy as running:
+
+```bash
+$ az aks stop \
+    --resource-group <resource_group> \
+    --name <aks>
+```
+
+![stopped cluster cost](https://trstringer.com/images/aks-cheap-off.png)
+
+Our cluster may cost a little more but this stopped cluster only costs $4.05USD per week. That’s only $0.58USD per day!
+
