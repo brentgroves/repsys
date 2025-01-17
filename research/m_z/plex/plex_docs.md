@@ -1,4 +1,4 @@
-# **[Configure Plex ODBC With Identity Access Management](https://community.fuuz.com/space/FPT/62029965/Configure+Plex+ODBC+With+Identity+Access+Management)**
+# **[Plex ODBC docs](https://docs.plex.com/pmc/en-us/integration/odbc/odbc.htm)**
 
 **[Back to Research List](../../../research_list.md)**\
 **[Back to Current Status](../../../../development/status/weekly/current_status.md)**\
