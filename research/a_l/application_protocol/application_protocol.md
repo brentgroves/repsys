@@ -6,6 +6,7 @@
 
 ## references
 
+https://go.dev/doc/contribute
 - **[small tcp implementation](https://github.com/saminiir/level-ip)**
 - **[development of small tcp](https://github.com/saminiir/level-ip/blob/master/Documentation/development.md)**
 - **[Implementing TCP frome scratch](https://stace.dev/rc-05-tcp-in-rust/)**
