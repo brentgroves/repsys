@@ -6,6 +6,9 @@
 
 ## references
 
+- **[small tcp implementation](https://github.com/saminiir/level-ip)**
+- **[development of small tcp](https://github.com/saminiir/level-ip/blob/master/Documentation/development.md)**
+- **[Implementing TCP frome scratch](https://stace.dev/rc-05-tcp-in-rust/)**
 - **[illustrated-tls13 explains every byte of tls 1.3](https://tls13.xargs.org/)**
 - **[illustrated-tls13 code](https://github.com/syncsynchalt/illustrated-tls13)**
 - **[toy tls](https://jvns.ca/blog/2022/03/23/a-toy-version-of-tls/)**
