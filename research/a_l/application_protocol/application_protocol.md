@@ -5,7 +5,8 @@
 **[Back to Main](../../../../README.md)**
 
 ## references
-
+https://wiki.osdev.org/Go_Bare_Bones
+- **[Writing an OS in golang](https://totallygamerjet.hashnode.dev/writing-an-os-in-go-the-bootloader)**
 https://go.dev/doc/contribute
 - **[small tcp implementation](https://github.com/saminiir/level-ip)**
 - **[development of small tcp](https://github.com/saminiir/level-ip/blob/master/Documentation/development.md)**
