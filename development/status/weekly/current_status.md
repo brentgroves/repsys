@@ -9,11 +9,18 @@
 
 ## Next Steps
 
+- To enable **[Azure managed identity authentication for Kubernetes clusters with kubelogin](https://learn.microsoft.com/en-us/azure/aks/enable-authentication-microsoft-entra-id)** we need to create a **[Microsoft Entra group](https://learn.microsoft.com/en-us/entra/identity/role-based-access-control/groups-create-eligible?tabs=admin-center)** and add Brent Groves and Kevin Young as a member or owner of the group.
+
+- Add HOME IP to firewall rules.
+- Test Laptop that connects to Plex ODBC from home at work.
 - Make request to allow inbound/outbound connections to odbc.plex.com and test.odbc.plex.com on port 19995.
-- Verify access to Linamar tenant.
-- Connect to Linamar Azure tenant.
+- Verified access to Linamar tenant.
+- Create minimal Azure SQL DB from MI.
+- Imported repsys linamar database from last backup.
+- Point TB scripts to new database and test.
 - Price savings.
 
+- Continue research of Tun/Tap device in golang.
 - **[Secure your Microservices Ingress in Istio with Let’s Encrypt](../../../research/a_l/istio/cert_manager/secure_microservices_istio.md#install-cert-manager)**
 - **[Azure resources next steps](../azure_resources/next_steps.md)**
 - **[Kubernetes VLAN request](../k8s_vlan/k8s_vlan.md)**
