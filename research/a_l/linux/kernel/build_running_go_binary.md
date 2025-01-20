@@ -1,4 +1,4 @@
-# **[Linux Kernel](https://medium.com/dvt-engineering/how-to-write-your-first-linux-kernel-module-cf284408beeb)
+# **[Build a Linux kernel running only a Go binary](https://remy.io/blog/custom-built-kernel-running-go-binary/)
 
 **[Back to Research List](../../../../research/research_list.md)**\
 **[Back to Current Status](../../../../development/status/weekly/current_status.md)**\
