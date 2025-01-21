@@ -9,11 +9,13 @@
 
 ## Next Steps
 
+- **[How to add In-App notifications to any web app!](https://dev.to/novu/how-to-add-in-app-notifications-to-any-web-app-1b4n)**
+- **[DevOps Concepts: Pets vs Cattle](https://joachim8675309.medium.com/devops-concepts-pets-vs-cattle-2380b5aab313)**
+- Test run TB from Azure SQL db.
 - To enable **[Azure managed identity authentication for Kubernetes clusters with kubelogin](https://learn.microsoft.com/en-us/azure/aks/enable-authentication-microsoft-entra-id)** we need to create a **[Microsoft Entra group](https://learn.microsoft.com/en-us/entra/identity/role-based-access-control/groups-create-eligible?tabs=admin-center)** and add Brent Groves and Kevin Young as a member or owner of the group.
 
 - Add HOME IP to firewall rules.
-- Test Laptop that connects to Plex ODBC from home at work.
-- Make request to allow inbound/outbound connections to odbc.plex.com and test.odbc.plex.com on port 19995.
+- We will need a config request submitted with the **[firewall config form](https://linamarcorporation.sharepoint.com/:w:/r/sites/FITS/_layouts/15/Doc.aspx?sourcedoc=%7B4ECE7AB5-ABFD-4A82-9D68-3EFB22638688%7D&file=Firewall%20Config%20Request%20Form.docx&action=default&mobileredirect=true)** filled out. Make request to allow inbound/outbound connections to odbc.plex.com and test.odbc.plex.com on port 19995.
 - Verified access to Linamar tenant.
 - Create minimal Azure SQL DB from MI.
 - Imported repsys linamar database from last backup.

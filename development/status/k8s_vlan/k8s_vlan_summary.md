@@ -2,7 +2,24 @@
 
 The following is in markdown it can be viewed better from <https://markdownlivepreview.com/> by copying and pasting the contents below.
 
-## VLAN description
+## Players
+
+- Christian Trujillo
+- Brent Hall
+- Kevin Young
+- Hayley Rymer
+- Jared Davis
+- Kiran Ambati
+
+## Summary
+
+- Create one or two, two would be better for redundancy, VM with 32 GB of RAM running Ubuntu Server 24.04.
+- Hayley Rymer working with Kiran Ambati to configure network to make VM accessible from Albion.
+- Brent Groves would setup the Kubernetes Cluster.
+- Software to run on Kubernetes Cluster: repsys and tool management with tool tracker.
+- Use Windows Sub System 2 for development.
+
+## Initial Request
 
 This VLAN is for the development of applications running in an On-Prem and Cloud based Kubernetes cluster. The On-Prem development and production K8s cluster would each have four network ports and reside on Dell R620 servers running Ubuntu Server 24.04 with SentinelOne installed. The Ubuntu laptop and desktop development systems would also reside on the Kubernetes VLAN network.
 

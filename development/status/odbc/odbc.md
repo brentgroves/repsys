@@ -19,3 +19,4 @@
         cnxn = pyodbc.connect('DSN=PlexTest;UID='+username+';PWD='+ password)
     pyodbc.OperationalError: ('08S01', '[08S01] [DataDirect][ODBC OpenAccess SDK driver][OpenAccess SDK Client]TCP/IP, connection reset by peer (2310) (SQLDriverConnect)')
   
+- We will need a config request submitted with the **[firewall config form](https://linamarcorporation.sharepoint.com/:w:/r/sites/FITS/_layouts/15/Doc.aspx?sourcedoc=%7B4ECE7AB5-ABFD-4A82-9D68-3EFB22638688%7D&file=Firewall%20Config%20Request%20Form.docx&action=default&mobileredirect=true)** filled out. Make request to allow inbound/outbound connections to odbc.plex.com and test.odbc.plex.com on port 19995.
