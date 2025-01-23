@@ -4,7 +4,7 @@ The following is in markdown it can be viewed better from <https://markdownlivep
 
 ## request
 
-- **[Create a Microsoft Entra group called repsys](https://learn.microsoft.com/en-us/entra/fundamentals/groups-view-azure-portal#create-a-new-group)
+- **[Create a Microsoft Entra group called repsys](https://learn.microsoft.com/en-us/entra/fundamentals/groups-view-azure-portal#create-a-new-group)**
 - **[Add Brent Groves and Kevin Young to repsys group](https://learn.microsoft.com/en-us/entra/fundamentals/groups-view-azure-portal#add-a-group-member)**
 
 ## Reason

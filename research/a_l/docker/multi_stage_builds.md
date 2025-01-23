@@ -149,4 +149,31 @@ DOCKER_BUILDKIT=1 docker build --no-cache -f Dockerfile --target stage2 .
 
 On the other hand, building the same target without BuildKit results in all stages being processed:
 
+```bash
+ DOCKER_BUILDKIT=0 docker build --no-cache -f Dockerfile --target stage2 .
+Sending build context to Docker daemon  219.1kB
+Step 1/6 : FROM ubuntu AS base
+ ---> a7870fd478f4
+Step 2/6 : RUN echo "base"
+ ---> Running in e850d0e42eca
+base
+Removing intermediate container e850d0e42eca
+ ---> d9f69f23cac8
+Step 3/6 : FROM base AS stage1
+ ---> d9f69f23cac8
+Step 4/6 : RUN echo "stage1"
+ ---> Running in 758ba6c1a9a3
+stage1
+Removing intermediate container 758ba6c1a9a3
+ ---> 396baa55b8c3
+Step 5/6 : FROM base AS stage2
+ ---> d9f69f23cac8
+Step 6/6 : RUN echo "stage2"
+ ---> Running in bbc025b93175
+stage2
+Removing intermediate container bbc025b93175
+ ---> 09fc3770a9c4
+Successfully built 09fc3770a9c4
+```
+
 The legacy builder processes stage1, even if stage2 doesn't depend on it.

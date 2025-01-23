@@ -48,3 +48,14 @@ ENTRYPOINT ["dotnet", "Api.dll"]
 ## Dockerize the front-end component (SPA)
 
 A little bit more difficult, since Single Page Applications, like Angular, are mostly hosted as static content. This means some variables should be defined at build time, like an api-host for example. See this **[link](https://vsupalov.com/docker-build-pass-environment-variables/)** for more information on how to configure this with docker builds. Knowing these variables in advance imposes some challenges as we will see below.
+
+## Dockerize Sql Server
+
+Sql Server already has **[official docker images](https://docs.microsoft.com/en-us/sql/linux/quickstart-install-connect-docker?view=sql-server-2017)** that you can use. However, what we would like to do, is make sure that every time a new environment is setup, the database is pre-populated with a dataset of our choice. This would allow us for more efficient testing. To achieve this, we can extend the current (sql-server) docker image with backups, and package the result as a new docker image! More details on how to achieve this can be found in this gist. Your dockerfile will look something like this:
+
+```dockerfile
+FROM microsoft/mssql-server-linux 
+COPY . /usr/src/app
+ENTRYPOINT [ "/bin/bash", "/usr/src/app/docker-entrypoint.sh" ]
+CMD [ "/opt/mssql/bin/sqlservr", "--accept-eula" ]
+```
