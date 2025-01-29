@@ -4,29 +4,61 @@ The following is in markdown format it can be viewed better from <https://markdo
 
 ![cp](https://res.cloudinary.com/canonical/image/fetch/f_auto,q_auto,fl_sanitize,w_4096,h_1377/https://assets.ubuntu.com/v1/e55cc8c0-wide-server.png)
 
+## Research
+
+I have been researching the following:
+
+- How to add general purpose services such as **[mTLS](https://www.cloudflare.com/learning/access-management/what-is-mutual-tls/#:~:text=Mutual%20TLS%2C%20or%20mTLS%20for,have%20the%20correct%20private%20key.)**, **[service mesh](https://aws.amazon.com/what-is/service-mesh/#:~:text=A%20service%20mesh%20is%20a,with%20multiple%20service%20management%20systems.)**, **[authentication, and authorization](https://auth0.com/docs/get-started/auth0-overview#:~:text=Auth0%20is%20a%20flexible%2C%20drop,delivered%20by%20email%20or%20SMS.)**, **[email delivery](https://mailtrap.io/)**, **[notification system](https://novu.co/)**, and **[site reliability engineering monitoring](https://sysdig.com/blog/monitor-istio/)** to our Kubernetes platforms. 
+- How to setup an on-prem Kubernetes platform that meets the requirement of running within our Linamar network.
+- How to create Azure resources in the Linamar tenant.
+
 ## Projects
 
-- Automatic end-user requestable Excel from Plex ERP
-  - **[End-user request kicks off scripts to extract data from the Plex ERP, transforms it, and then loads the result into a database table in the data warehouse.](https://grpc.io/docs/what-is-grpc/introduction/)**
+- Automated Reporting System
+  - End-user request kicks off scripts to extract data from the Plex ERP, transforms it, and then loads the result into a database table in the data warehouse.
   - Produce Excel, archive result set, and email to end user.
+  - Used for reports requiring long running scripts or live data.
+  - Used to enable the creation of PowerBI dashboards for Plex ERP. 
+
+  Users: Anyone needing live or long running reports, Excel, or Power BI dashboards. 
+
+  Status: Recently, got approval for Azure resources needed for this project.
+
+  Timeline:
+
+  - Setup Azure Kubernetes Platform with general purpose services such as **[mTLS](https://www.cloudflare.com/learning/access-management/what-is-mutual-tls/#:~:text=Mutual%20TLS%2C%20or%20mTLS%20for,have%20the%20correct%20private%20key.)**, **[service mesh](https://aws.amazon.com/what-is/service-mesh/#:~:text=A%20service%20mesh%20is%20a,with%20multiple%20service%20management%20systems.)**, **[authentication, and authorization](https://auth0.com/docs/get-started/auth0-overview#:~:text=Auth0%20is%20a%20flexible%2C%20drop,delivered%20by%20email%20or%20SMS.)**, **[email delivery](https://mailtrap.io/)**, **[notification system](https://novu.co/)**, and **[site reliability engineering monitoring](https://sysdig.com/blog/monitor-istio/)**.
+    - Estimated completion: May
+    
+  - Create **[ETL scripts](https://www.sas.com/en_us/insights/data-management/what-is-etl.html#:~:text=ETL%20is%20a%20method%20of,and%20programmatic%20data%20movement%20methods.%20.)** and **[microservices](https://aws.amazon.com/microservices/#:~:text=Microservices%20are%20an%20architectural%20and,to%2Dmarket%20for%20new%20features.)** to automate report requests using the platform services discussed above. 
+    - Estimated completion: Sept
+
 - **[Tool Management](https://en.wikipedia.org/wiki/Tool_management)**
 
-  Move away managing tooling in Excel and the Busche Tool List to a more rubust and easy to use system.
+  Move away from managing CNC tooling in Excel and the Busche Tool List to a more rubust and easy to use system.
+    - Users: Albion MRP and Engineering
+    - Estimated completion: TBD
 - **[Tool Tracker](https://en.wikipedia.org/wiki/Manufacturing_execution_system)**
-  Automatically collect cnc,job, and start/end tool operation times for problematic tooling.
+
+  Automatically collect CNC, job, and start/end tool operation times for problematic tooling.
+  - Users: Albion Engineering and MRP
+  - Estimated completion: TBD
 - **INC0417507 - Excel VBA to Power BI**
 
   I suggest we migrate this VBA Excel program to a Web App, SQL database, and Power BI. The downside to this suggestion is that it would take some time. The upside is that the Web App can perform validation on the dates and other information before being saved to the database. Using VBA it is easy to create complex programs to solve business needs quickly, but it is difficult to make these programs robust.
+  - Estimated completion: TBD
+
 - Linus **[Platform](https://platformengineering.org/blog/what-is-platform-engineering)** and **[Site Reliability Engineering (SRE)](https://aws.amazon.com/what-is/sre/#:~:text=Site%20reliability%20engineering%20(SRE)%20teams%20collect%20critical%20information%20that%20reflects,application%20responds%20to%20a%20request.)**
   
   - Research and make recommendations to improve platform reliability.
   - Use MicroK8s on-prem cluster for research and testing.
-  - Prove **[security](https://www.infracloud.io/blogs/request-level-authentication-authorization-istio-keycloak/)**
- and reliability of **[Azure AKS](https://learn.microsoft.com/en-us/azure/aks/what-is-aks#:~:text=Azure%20Kubernetes%20Service%20(AKS)%20is,of%20that%20responsibility%20to%20Azure.)**.
-  
+  - Show **[security](https://www.infracloud.io/blogs/request-level-authentication-authorization-istio-keycloak/)**
+    and reliability of **[Azure AKS](https://learn.microsoft.com/en-us/azure/aks/what-is-aks#:~:text=Azure%20Kubernetes%20Service%20(AKS)%20is,of%20that%20responsibility%20to%20Azure.)**.
   - **[Istio Service Mesh SRE monitoring](https://sysdig.com/blog/monitor-istio/)**
 
     ![isre](https://sysdig.com/wp-content/uploads/image8-6.png)
+
+    - Users: Linus recommendation.
+    - Estimated completion: TBD
 
 ## Azure Resources
 
