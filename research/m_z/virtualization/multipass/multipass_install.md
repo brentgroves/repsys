@@ -30,6 +30,7 @@ To install Multipass, simply execute:
 ```bash
 sudo snap install multipass
 multipass 1.13.0 from Canonical✓ installed
+multipass 1.15.0 from Canonical✓ installed
 ```
 
 For architectures other than amd64, you’ll need the beta channel at the moment.
@@ -54,12 +55,18 @@ brent adm cdrom sudo dip plugdev lpadmin lxd sambashare docker
 
 ## **[Step 0: Change to LXD driver](https://jon.sprig.gs/blog/post/2800)**
 
+Did not have to do this on Ubuntu 24.04 server with multipass 1.15.0 from Canonical✓ installed
+
 Currently only the LXD driver supports the networks command on Linux.
 
 So, let’s make multipass on Ubuntu use LXD! (Be prepared for entering your password a few times!)
 
 ```bash
 multipass networks
+Name        Type       Description
+eno1        ethernet   Ethernet device
+eno2        ethernet   Ethernet device
+mpqemubr0   bridge     Network bridge
 
 networks failed: The networks feature is not implemented on this backend.
 ```
