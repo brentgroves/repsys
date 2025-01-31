@@ -1,5 +1,9 @@
 # Sunbeam
 
+**[Back to Research List](../../research_list.md)**\
+**[Back to Current Status](../../../development/status/weekly/current_status.md)**\
+**[Back to Main](../../../README.md)**
+
 June 13, Vancouver, OpenInfra Summit – Canonical today announced the extension of its commercial OpenStack offering to small-scale cloud environments with a new project Sunbeam. The project is 100% open source and is available free-of-charge. Early adopters can also opt-in for comprehensive security coverage and full commercial support under the Ubuntu Pro + Support subscriptions once they complete the deployment themselves. This enables organisations to modernise their small-scale, legacy IT estates and easily transition from proprietary solutions to OpenStack, without an expensive professional services engagement.
 
 “Historically, commercial OpenStack deployments always used to come through paid consulting engagements and no vendor was an exception here”, said Tytus Kurek, Product Manager at Canonical. “In line with our mission to amplify open source, we are committed to delivering a production-grade platform to the community that everyone could just deploy themselves. Sunbeam emerged to remove numerous barriers around the initial adoption of OpenStack and is just the first step towards an autonomous private cloud.”
