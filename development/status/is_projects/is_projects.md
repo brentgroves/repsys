@@ -14,6 +14,34 @@ I have been researching the following:
 
 ## Projects
 
+- **[MAAS Data Center](../../../research/m_z/maas/explanation/how_it_works.md)**
+
+  MAAS (Metal as a Service) is a cloud platform for managing bare metal servers and virtual machines.
+
+  It creates a single point of control for scalable automation, reconfiguration, and reliability, of networks, machines and OS images.
+
+  Data centres present complex operational challenges: uptime, reliability, security, energy efficiency, hardware management amongst others.
+
+  MAAS is designed to meet the needs of data centre operators and administrators, across the spectrum of industry sectors.
+
+  - config request
+    - allow list
+    - unrestricted access week of Feb 10
+  - R620 setup
+    - Ubuntu Server
+      - Port-Forward Router to MAAS 
+      - Multipass **[cloud-init](https://cloud-init.io/)** enabled hypervisor
+        - MAAS VM
+          - Port-Forward Router to K8s nodes
+          - Nested VM
+            - K8s nodes
+
+  Users: Anyone needing live or long running reports, Excel, or Power BI dashboards. 
+
+  Status: Recently, got approval for firewall allow list.
+
+  Timeline:
+
 - Automated Reporting System
   - End-user request kicks off scripts to extract data from the Plex ERP, transforms it, and then loads the result into a database table in the data warehouse.
   - Produce Excel, archive result set, and email to end user.
