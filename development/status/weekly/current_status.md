@@ -5,6 +5,7 @@
 
 ![np](https://cdn.prod.website-files.com/65a5be30bf4809bb3a2e8aff/65de6a24f3bc7cfdb5711e46_ethernet2.jpeg)
 
+
 ## **[MAAS On-Prem Data Center](../../../research/m_z/maas/explanation/how_it_works.md)**
 
 MAAS (Metal as a Service) is a cloud platform for managing bare metal servers and virtual machines.
@@ -15,6 +16,17 @@ Data centres present complex operational challenges: uptime, reliability, securi
 
 MAAS is designed to meet the needs of data centre operators and administrators, across the spectrum of industry sectors.
 
+- config request
+  - allow list
+  - unrestricted access week of Feb 10
+- R620 setup
+  - Ubuntu Server
+    - Port-Forward Router to MAAS 
+    - Multipass Cloud-Init enabled hypervisor
+      - MAAS VM
+        - Port-Forward Router to K8s nodes
+        - Nested VM
+          - K8s nodes
 ## **[IS Projects](../is_projects/is_projects.md)**
 
 ## Next Steps
