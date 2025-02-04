@@ -13,6 +13,8 @@
   - create K8s cluster
     - deploy Istio Service Mesh Gateway
 
+## TB this week
+
 ## **[MAAS Data Center](../../../research/m_z/maas/explanation/how_it_works.md)**
 
 MAAS (Metal as a Service) is a cloud platform for managing bare metal servers and virtual machines.

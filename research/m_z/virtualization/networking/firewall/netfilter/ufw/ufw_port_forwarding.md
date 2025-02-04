@@ -1,9 +1,9 @@
 # **[Set up a Port Forward Using UFW](https://www.baeldung.com/linux/ufw-port-forward)**
 
 
-**[Back to Research List](../../../../research_list.md)**\
-**[Back to Current Status](../../../../../development/status/weekly/current_status.md)**\
-**[Back to Main](../../../../../README.md)**
+**[Back to Research List](../../../../../research_list.md)**\
+**[Back to Current Status](../../../../../../development/status/weekly/current_status.md)**\
+**[Back to Main](../../../../../../README.md)**
 
 While we can enable various UFW firewall rules using commands, things are a bit different when setting up port forwarding. Nevertheless, the steps are straightforward.
 

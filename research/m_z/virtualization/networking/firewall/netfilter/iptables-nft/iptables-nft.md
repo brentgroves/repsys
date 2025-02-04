@@ -11,6 +11,16 @@ First of all, running legacy iptables and nftables rulesets in parallel is not a
 Mixing iptables-nft and nft on the other hand is not unproblematic, either. A good rule of thumb to avoid issues is to not touch the tables iptables-nft creates with nft. When parsing the ruleset, iptables-nft does some sanity checks on the chains and rules contained within the tables it claims ownership of. In case it finds something unexpected (e.g. additional base chains or rules with unsupported expressions), it aborts with an unspecific error message:
 
 ```bash
+sudo iptables-nft -L
+Chain INPUT (policy ACCEPT)
+target     prot opt source               destination         
+
+Chain FORWARD (policy ACCEPT)
+target     prot opt source               destination         
+
+Chain OUTPUT (policy ACCEPT)
+target     prot opt source               destination         
+
 # iptables-nft -L
 Chain INPUT (policy ACCEPT)
 target     prot opt source               destination         
