@@ -141,4 +141,6 @@ Now that MAAS is running, you need to log in and finalise the setup for MAAS by 
 
 From a browser on your computer, go to:
 
-http://<MAAS_IP>:5240/MAAS
+```bash
+# http://<MAAS_IP>:5240/MAAS
+http://ump1:5240/MAAS

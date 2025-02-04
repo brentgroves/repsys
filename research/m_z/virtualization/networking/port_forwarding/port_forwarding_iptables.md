@@ -29,6 +29,15 @@ iptables -t nat -A PREROUTING -i $IF -p tcp — dport $PORT_FROM -j DNAT — to 
 iptables -t nat -A POSTROUTING -p tcp -d $DEST — dport $PORT_TO -j MASQUERADE
 ```
 
+```bash
+export IF=eno1
+export PORT_FROM=5240
+export PORT_TO=5240
+export DEST=10.72.173.107
+iptables -t nat -A PREROUTING -i $IF -p tcp -- dport $PORT_FROM -j DNAT -- to $DEST:$PORT_TO
+iptables -t nat -A POSTROUTING -p tcp -d $DEST — dport $PORT_TO -j MASQUERADE
+```
+
 The man page for the commands is here :
 
 Ubuntu Manpage: **[iptables/ip6tables - administration tool for IPv4/IPv6 packet filtering and NAT](https://manpages.ubuntu.com/manpages/trusty/en/man8/iptables.8.html?source=post_page-----b94a8b47a8d9--------------------------------)**

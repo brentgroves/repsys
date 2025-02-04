@@ -32,6 +32,22 @@ Procedure 6.18. Forwarding incoming packets on a specific local port to a differ
 1. Create a table named nat with the ip address family:
 
 ```bash
+cat /etc/nftables.conf
+#!/usr/sbin/nft -f
+
+flush ruleset
+
+table inet filter {
+        chain input {
+                type filter hook input priority 0;
+        }
+        chain forward {
+                type filter hook forward priority 0;
+        }
+        chain output {
+                type filter hook output priority 0;
+        }
+}
 nft list ruleset
 # There is already a table named nat
 # nft add table ip nat
@@ -100,5 +116,8 @@ curl -L http://10.72.173.107:5240
 6. Test from remote host
 
 ```bash
+systemctl status ufw 
+curl -L http://192.168.1.65:5240
+
 curl -L http://192.168.1.65:5240
 ```
