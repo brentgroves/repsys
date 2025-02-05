@@ -17,6 +17,9 @@
 
 ## **[MAAS Data Center](../../../research/m_z/maas/explanation/how_it_works.md)**
 
+### Next 
+- setup port forwarding using lxc using en02. Don't enable nftables.
+
 MAAS (Metal as a Service) is a cloud platform for managing bare metal servers and virtual machines.
 
 It creates a single point of control for scalable automation, reconfiguration, and reliability, of networks, machines and OS images.
