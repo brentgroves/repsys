@@ -15,7 +15,9 @@
 
 ## TB this week
 
-## **[MAAS Data Center](../../../research/m_z/maas/explanation/how_it_works.md)**
+## **[Microstack cluster using MAAS as a machine provider](../../../research/m_z/virtualization/cloud/multi_node_maas_example/multi_node_with_maas.md)**
+
+This tutorial shows how to install a multi-node MicroStack cluster using MAAS as machine provider. It will deploy an OpenStack 2024.1 (Caracal) cloud.
 
 ### Next 
 - setup port forwarding using lxc using en02. Don't enable nftables.

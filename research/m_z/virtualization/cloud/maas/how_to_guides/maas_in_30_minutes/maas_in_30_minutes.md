@@ -47,11 +47,11 @@ When we’re finished, you’ll be able to log in to the MAAS server running ins
 
 You will need:
 
-Ubuntu 18.04 LTS or higher OR Windows with Hyper-V
+- Ubuntu 18.04 LTS or higher OR Windows with Hyper-V
 (Note: this tutorial has been tested with Ubuntu, but there are reports it works with Hyper-V on Windows. Read more about enabling Hyper-V here.)
 16 GB of RAM
-A quad core CPU with virtualisation support (Intel VT or AMD-V)
-Virtualisation support enabled in the BIOS
+- A quad core CPU with virtualisation support (Intel VT or AMD-V)
+- Virtualisation support enabled in the BIOS
 30 GB of free disk space
 
 The memory and disk space is required because we will later be launching nested VMs inside our new environment using MAAS and LXD.
@@ -66,13 +66,57 @@ In this tutorial, we’ll be entering quite a few commands in a terminal. Open a
 
 First up, let’s install Multipass:
 
-`sudo snap install multipass`
+```bash
+sudo snap install multipass
+
+## multipass install create a new network device mpqemubr0
+
+ip link
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN mode DEFAULT group default qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+2: eno1: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq state UP mode DEFAULT group default qlen 1000
+    link/ether 78:2b:cb:23:45:b0 brd ff:ff:ff:ff:ff:ff
+    altname enp1s0f0
+3: eno2: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq state UP mode DEFAULT group default qlen 1000
+    link/ether 78:2b:cb:23:45:b1 brd ff:ff:ff:ff:ff:ff
+    altname enp1s0f1
+4: mpqemubr0: <NO-CARRIER,BROADCAST,MULTICAST,UP> mtu 1500 qdisc noqueue state DOWN mode DEFAULT group default qlen 1000
+    link/ether 52:54:00:de:03:a8 brd ff:ff:ff:ff:ff:ff
+
+ip route list table main
+default via 192.168.1.1 dev eno1 proto static 
+10.195.222.0/24 dev mpqemubr0 proto kernel scope link src 10.195.222.1 linkdown 
+192.168.1.0/24 dev eno1 proto kernel scope link src 192.168.1.65 
+192.168.1.0/24 dev eno2 proto kernel scope link src 192.168.1.66 
+
+ip route list table local
+local 10.195.222.1 dev mpqemubr0 proto kernel scope host src 10.195.222.1 
+broadcast 10.195.222.255 dev mpqemubr0 proto kernel scope link src 10.195.222.1 linkdown 
+local 127.0.0.0/8 dev lo proto kernel scope host src 127.0.0.1 
+local 127.0.0.1 dev lo proto kernel scope host src 127.0.0.1 
+broadcast 127.255.255.255 dev lo proto kernel scope link src 127.0.0.1 
+local 192.168.1.65 dev eno1 proto kernel scope host src 192.168.1.65 
+local 192.168.1.66 dev eno2 proto kernel scope host src 192.168.1.66 
+broadcast 192.168.1.255 dev eno1 proto kernel scope link src 192.168.1.65 
+broadcast 192.168.1.255 dev eno2 proto kernel scope link src 192.168.1.66 
+```
 
 Check whether Multipass was installed and is functioning correctly by launching an instance, running the following commands:
 
 ```bash
 multipass launch --name foo
+
+# created a tap device for the mpqemubr0 bridge
+# 5: tap-85a8e535edf: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast master mpqemubr0 state UP group default qlen 1000
+#     link/ether 62:75:a3:8a:1a:53 brd ff:ff:ff:ff:ff:ff
+#     inet6 fe80::6075:a3ff:fe8a:1a53/64 scope link 
+#        valid_lft forever preferred_lft forever
+
 multipass exec foo -- lsb_release -a
+# The lsb_release command prints certain LSB (Linux Standard Base) and Distribution information. If no options are given, the -v option is the default.
+
+# An LSB module is a plugin module for the LSF scheduler and resource broker. The Linux Standard Base (LSB) is a core system that standardizes the software structure for Linux. 
+
 No LSB modules are available.
 Distributor ID: Ubuntu
 Description:    Ubuntu 24.04.1 LTS
@@ -98,6 +142,10 @@ INFO: /dev/kvm exists
 KVM acceleration can be used
 ```
 
+QEMU is primarily a Type-2 hypervisor. It runs on top of a host operating system and provides virtualization capabilities for various guest operating systems and architectures. However, it can also be used in combination with KVM (Kernel-based Virtual Machine) to function as a Type-1 hypervisor.
+
+LXD VMs are based on QEMU and KVM 
+
 Assuming your machine supports hardware virtualisation, we are ready to move on and launch MAAS.
 
 Note
@@ -119,14 +167,30 @@ Feel free to check the contents of the cloud-init config file before running thi
 wget -qO- https://raw.githubusercontent.com/canonical/maas-multipass/main/maas.yml \
  | multipass launch --name maas -c4 -m8GB -d32GB --cloud-init -
 
+# The pipe symbol at the end of a line in YAML signifies that any indented text that follows should be interpreted as a multi-line scalar value. See the YAML spec.
+
+# This creates another tap device on the mpqemubr0 bridge.
+
+# 6: tap-87be9fde67e: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast master mpqemubr0 state UP mode DEFAULT group default qlen 1000
+#     link/ether 82:72:18:71:e2:ee brd ff:ff:ff:ff:ff:ff
+
  launch failed: The following errors occurred:
 timed out waiting for initialization to complete
 
 # Ran list a little later and everything looks ok
 multipass list              
 Name                    State             IPv4             Image
-maas                    Running           10.72.173.107    Ubuntu 24.04 LTS
+maas                    Running           10.195.222.126   Ubuntu 24.04 LTS
                                           10.10.10.1
+
+# This IP address probably is tied to the new tap device which is in the mpqemubr0 bridge and probably uses 10.195.222.1/24 as a gateway. Once the packets get to 10.195.222.1 they can probably use the default route with NATing to get to the host's network
+ip a
+4: mpqemubr0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default qlen 1000
+    link/ether 52:54:00:de:03:a8 brd ff:ff:ff:ff:ff:ff
+    inet 10.195.222.1/24 brd 10.195.222.255 scope global mpqemubr0
+       valid_lft forever preferred_lft forever
+    inet6 fe80::5054:ff:fede:3a8/64 scope link 
+       valid_lft forever preferred_lft forever
 ```
 
 Here you can see two IP addresses. One belongs to the internal network (10.10.10.1) for MAAS and LXD guest VMs to communicate. You can use the other to connect to MAAS from your computer.
@@ -141,4 +205,82 @@ Now that MAAS is running, you need to log in and finalise the setup for MAAS by 
 
 From a browser on your computer, go to:
 
-http://<MAAS_IP>:5240/MAAS
+```bash
+# http://<MAAS_IP>:5240/MAAS
+http://ump1:5240/MAAS
+
+ls /etc/nftables.conf
+```
+
+## replace nftables.conf
+
+We don't want to flush any existing rules created by the multipass firewall code. We only want to add a prerouting table with port forwarding.
+
+
+```bash
+sudo vi /etc/nftables.conf
+# overwrite config file with the prnat.conf contents.
+```
+
+If you don't flush the nftables ruleset, any new rules you add will simply be appended to the existing rules, leading to a potential buildup of duplicate or conflicting rules, potentially causing unexpected network behavior as the firewall processes an increasingly complex set of rules; essentially, your firewall configuration could become cluttered and unpredictable. 
+
+## enable nftables
+
+You can enable the nftables service to ensure it starts automatically on boot:
+
+```bash
+sudo nft list ruleset
+sudo systemctl status nftables
+
+sudo systemctl start nftables
+sudo nft list ruleset
+# all the original ruleset configured by multipass firewall code
+...
+table inet prnat {
+	chain prerouting {
+		type nat hook prerouting priority dstnat; policy accept;
+		tcp dport 5240 dnat ip to 10.195.222.126
+	}
+}
+```
+
+## Enable packet forwarding:
+
+```bash
+sudo echo "net.ipv4.ip_forward=1" > /etc/sysctl.d/95-IPv4-forwarding.conf
+sudo sysctl -p /etc/sysctl.d/95-IPv4-forwarding.conf
+curl -L http://10.72.173.107:5240 
+```
+
+## test port-forwarding
+
+```bash
+ssh brent@10.195.222.126
+# from multipass host
+curl -L http://10.195.222.126:5240/MAAS
+multipass shell maas
+ping google.com
+exit
+
+# from dev system
+curl -L http://192.168.1.65:5240/MAAS
+curl -L http://192.168.1.65:5240/MAAS
+
+curl: (7) Failed to connect to 192.168.1.65 port 5240 after 0 ms: Connection refused
+
+sudo nft delete table inet prnat
+
+# test before enabling 
+# sudo systemctl enable nftables
+
+sudo nft -- add chain inet mycustominput input { type nat hook prerouting priority -100 \; \}
+
+sudo nft -- add chain inet mynat mycustominput { type filter hook input priority -100 \; \}
+
+type filter hook input priority 0;
+sudo nft add rule inet mynat mycustominput tcp dport 5240 accept
+nft add rule ip myowntable mycustominput tcp dport 5555 accept
+nft add rule ip filter INPUT tcp dport 4001 accept
+sudo nft add rule ip mynat postrouting ip daddr 10.72.173.107 masquerade
+
+```
