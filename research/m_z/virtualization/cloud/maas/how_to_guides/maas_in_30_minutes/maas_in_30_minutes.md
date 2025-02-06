@@ -69,7 +69,7 @@ First up, let’s install Multipass:
 ```bash
 sudo snap install multipass
 
-## multipass install create a new network device mpqemubr0
+## multipass install created a new network device mpqemubr0
 
 ip link
 1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN mode DEFAULT group default qlen 1000
@@ -83,12 +83,26 @@ ip link
 4: mpqemubr0: <NO-CARRIER,BROADCAST,MULTICAST,UP> mtu 1500 qdisc noqueue state DOWN mode DEFAULT group default qlen 1000
     link/ether 52:54:00:de:03:a8 brd ff:ff:ff:ff:ff:ff
 
+# This network device has an IP of 10.195.222.1/24
+
+ip a
+
+4: mpqemubr0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default qlen 1000
+    link/ether 52:54:00:ce:b7:e8 brd ff:ff:ff:ff:ff:ff
+    inet 10.195.222.1/24 brd 10.195.222.255 scope global mpqemubr0
+       valid_lft forever preferred_lft forever
+    inet6 fe80::5054:ff:fece:b7e8/64 scope link 
+       valid_lft forever preferred_lft forever
+
+# A new route to the 10.195.222.0/24 private network has been added to the mpqemubr0 network device.
+
 ip route list table main
 default via 192.168.1.1 dev eno1 proto static 
 10.195.222.0/24 dev mpqemubr0 proto kernel scope link src 10.195.222.1 linkdown 
 192.168.1.0/24 dev eno1 proto kernel scope link src 192.168.1.65 
 192.168.1.0/24 dev eno2 proto kernel scope link src 192.168.1.66 
 
+# Don't know what this local table is for.
 ip route list table local
 local 10.195.222.1 dev mpqemubr0 proto kernel scope host src 10.195.222.1 
 broadcast 10.195.222.255 dev mpqemubr0 proto kernel scope link src 10.195.222.1 linkdown 
@@ -264,14 +278,13 @@ exit
 
 # from dev system
 curl -L http://192.168.1.65:5240/MAAS
-curl -L http://192.168.1.65:5240/MAAS
-
 curl: (7) Failed to connect to 192.168.1.65 port 5240 after 0 ms: Connection refused
 
 sudo nft delete table inet prnat
 
 # test before enabling 
 # sudo systemctl enable nftables
+DOES NOT WORK WITH MULTIPASS IPTABLES-NFT SETUP
 
 sudo nft -- add chain inet mycustominput input { type nat hook prerouting priority -100 \; \}
 

@@ -23,6 +23,13 @@ I have been researching the following:
 
   MicroStack MAAS is a combination of MicroStack and MAAS (Metal as a Service) that allows for network traffic isolation and cloud deployment. MicroStack is an OpenStack distribution that's designed for small-scale cloud environments. MAAS is a tool that allows users to control pools of physical servers like virtual machines in the cloud. 
 
+  Tasks:
+  - **[Setup Virtual Private Switch and Router](https://maas.io/docs/maas-in-thirty-minutes)**
+  
+    Inside the VM, Multipass will use LXD and Linux configuration to build a virtual private switch and router, and provide a way to create what are called “nested VMs”, or virtual machines inside the virtual machine made by Multipass. These nested VMs will represent servers that MAAS can provision.
+
+  ![vps](https://assets.ubuntu.com/v1/6e132859-MAAS+tutorial+diagram-02.svg)
+  
   Timeline: Start setup 10 Feb when unrestricted internet access is scheduled.
 
 - Automated Reporting System
