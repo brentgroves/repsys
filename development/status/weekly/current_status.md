@@ -5,42 +5,15 @@
 
 ![np](https://cdn.prod.website-files.com/65a5be30bf4809bb3a2e8aff/65de6a24f3bc7cfdb5711e46_ethernet2.jpeg)
 
-## Azure Linamar Tenant
-- Azure SQL db
-  - change current TB scripts to point to Linamar Azure SQL db
+## Azure Solution for for Automated Reporting, Tool Management System, and Tool Tracker MES
+  - Test TB report scripts and Power BI report on Linamar Azure SQL DB.
 - Azure AKS
-  - create Microsoft Entra K8s Admin Group
+  - create Microsoft Entra K8s Admin Group (done)
   - create K8s cluster
     - deploy Istio Service Mesh Gateway
 
-## TB this week
+## **[Avilla Structures redundant on-prem MAAS, MicroStack, Structures MicroK8s Clusters for Automated Reporting, Tool Management System, and Tool Tracker MES](https://canonical.com/microstack/docs/multi-node-maas)** On-Prem Kubernetes Cluster
 
-## **[Microstack cluster using MAAS as a machine provider](../../../research/m_z/virtualization/cloud/multi_node_maas_example/multi_node_with_maas.md)**
-
-This tutorial shows how to install a multi-node MicroStack cluster using MAAS as machine provider. It will deploy an OpenStack 2024.1 (Caracal) cloud.
-
-### Next 
-- setup port forwarding using lxc using en02. Don't enable nftables.
-
-MAAS (Metal as a Service) is a cloud platform for managing bare metal servers and virtual machines.
-
-It creates a single point of control for scalable automation, reconfiguration, and reliability, of networks, machines and OS images.
-
-Data centres present complex operational challenges: uptime, reliability, security, energy efficiency, hardware management amongst others.
-
-MAAS is designed to meet the needs of data centre operators and administrators, across the spectrum of industry sectors.
-
-- config request
-  - allow list
-  - unrestricted access week of Feb 10
-- R620 setup
-  - Ubuntu Server
-    - Port-Forward Router to MAAS 
-    - Multipass Cloud-Init enabled hypervisor
-      - MAAS VM
-        - Port-Forward Router to K8s nodes
-        - Nested VM
-          - K8s nodes
           
 ## **[IS Projects](../is_projects/is_projects.md)**
 

@@ -4,11 +4,6 @@ The following is in markdown format it can be viewed better from <https://markdo
 
 ![cp](https://res.cloudinary.com/canonical/image/fetch/f_auto,q_auto,fl_sanitize,w_4096,h_1377/https://assets.ubuntu.com/v1/e55cc8c0-wide-server.png)
 
-## Proposed Project
-Mills River Production and Downtime tracking system
-
-Estimate 1 year development. Could run this from - **[Avilla Structures redundant on-prem MAAS, MicroStack, Structures MicroK8s Clusters for Automated Reporting, Tool Management System, and Tool Tracker MES](https://canonical.com/microstack/docs/multi-node-maas)** 
-
 ## Research
 
 I have been researching the following:
@@ -19,11 +14,27 @@ I have been researching the following:
 
 ## Projects
 
-- **[Avilla Structures redundant on-prem MAAS, MicroStack, Structures MicroK8s Clusters for Automated Reporting, Tool Management System, and Tool Tracker MES](https://canonical.com/microstack/docs/multi-node-maas)** 
+- **[MicroStack MAAS](https://canonical.com/microstack/docs/multi-node-maas)** On-Prem Kubernetes Cluster
 
-  MicroStack MAAS is a combination of MicroStack and MAAS (Metal as a Service) that allows for network traffic isolation and cloud deployment. MicroStack is an OpenStack distribution that's designed for small-scale cloud environments. MAAS is a tool that allows users to control pools of physical servers like virtual machines in the cloud. 
+MicroStack MAAS is a combination of MicroStack and MAAS (Metal as a Service) that allows for network traffic isolation and cloud deployment. MicroStack is an OpenStack distribution that's designed for small-scale cloud environments. MAAS is a tool that allows users to control pools of physical servers like virtual machines in the cloud. 
 
-  Timeline: Start setup 10 Feb when unrestricted internet access is scheduled.
+  - config request
+    - allow list
+    - unrestricted access week of Feb 10
+  - R620 setup
+    - Ubuntu Server
+      - Port-Forward Router to MAAS 
+      - Multipass **[cloud-init](https://cloud-init.io/)** enabled hypervisor
+        - MAAS VM
+          - Port-Forward Router to K8s nodes
+          - Nested VM
+            - K8s nodes
+
+  Users: Anyone needing live or long running reports, Excel, or Power BI dashboards. 
+
+  Status: Recently, got approval for firewall allow list.
+
+  Timeline:
 
 - Automated Reporting System
   - End-user request kicks off scripts to extract data from the Plex ERP, transforms it, and then loads the result into a database table in the data warehouse.
@@ -37,7 +48,6 @@ I have been researching the following:
 
   Timeline:
 
-  - Test TB report scripts and Power BI report on Linamar Azure SQL DB.
   - Setup Azure Kubernetes Platform with general purpose services such as **[mTLS](https://www.cloudflare.com/learning/access-management/what-is-mutual-tls/#:~:text=Mutual%20TLS%2C%20or%20mTLS%20for,have%20the%20correct%20private%20key.)**, **[service mesh](https://aws.amazon.com/what-is/service-mesh/#:~:text=A%20service%20mesh%20is%20a,with%20multiple%20service%20management%20systems.)**, **[authentication, and authorization](https://auth0.com/docs/get-started/auth0-overview#:~:text=Auth0%20is%20a%20flexible%2C%20drop,delivered%20by%20email%20or%20SMS.)**, **[email delivery](https://mailtrap.io/)**, **[notification system](https://novu.co/)**, and **[site reliability engineering monitoring](https://sysdig.com/blog/monitor-istio/)**.
     - Estimated completion: May
     
