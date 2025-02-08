@@ -87,32 +87,41 @@ ip link
 
 ip a
 
-4: mpqemubr0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default qlen 1000
-    link/ether 52:54:00:ce:b7:e8 brd ff:ff:ff:ff:ff:ff
-    inet 10.195.222.1/24 brd 10.195.222.255 scope global mpqemubr0
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
        valid_lft forever preferred_lft forever
-    inet6 fe80::5054:ff:fece:b7e8/64 scope link 
+    inet6 ::1/128 scope host noprefixroute 
+       valid_lft forever preferred_lft forever
+2: eno1: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq state UP group default qlen 1000
+    link/ether 78:2b:cb:23:45:b0 brd ff:ff:ff:ff:ff:ff
+    altname enp1s0f0
+    inet 192.168.1.65/24 brd 192.168.1.255 scope global eno1
+       valid_lft forever preferred_lft forever
+    inet6 2605:7b00:201:e540::727/128 scope global dynamic noprefixroute 
+       valid_lft 1752799sec preferred_lft 370400sec
+    inet6 fe80::7a2b:cbff:fe23:45b0/64 scope link 
+       valid_lft forever preferred_lft forever
+3: eno2: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq state UP group default qlen 1000
+    link/ether 78:2b:cb:23:45:b1 brd ff:ff:ff:ff:ff:ff
+    altname enp1s0f1
+    inet 10.188.220.1/24 brd 10.188.220.255 scope global eno2
+       valid_lft forever preferred_lft forever
+    inet6 fe80::7a2b:cbff:fe23:45b1/64 scope link 
+       valid_lft forever preferred_lft forever
+4: mpqemubr0: <NO-CARRIER,BROADCAST,MULTICAST,UP> mtu 1500 qdisc noqueue state DOWN group default qlen 1000
+    link/ether 52:54:00:86:c1:12 brd ff:ff:ff:ff:ff:ff
+    inet 10.69.110.1/24 brd 10.69.110.255 scope global mpqemubr0
        valid_lft forever preferred_lft forever
 
 # A new route to the 10.195.222.0/24 private network has been added to the mpqemubr0 network device.
 
 ip route list table main
 default via 192.168.1.1 dev eno1 proto static 
-10.195.222.0/24 dev mpqemubr0 proto kernel scope link src 10.195.222.1 linkdown 
+10.69.110.0/24 dev mpqemubr0 proto kernel scope link src 10.69.110.1 linkdown 
+10.188.220.0/24 dev eno2 proto kernel scope link src 10.188.220.1 
 192.168.1.0/24 dev eno1 proto kernel scope link src 192.168.1.65 
-192.168.1.0/24 dev eno2 proto kernel scope link src 192.168.1.66 
 
-# Don't know what this local table is for.
-ip route list table local
-local 10.195.222.1 dev mpqemubr0 proto kernel scope host src 10.195.222.1 
-broadcast 10.195.222.255 dev mpqemubr0 proto kernel scope link src 10.195.222.1 linkdown 
-local 127.0.0.0/8 dev lo proto kernel scope host src 127.0.0.1 
-local 127.0.0.1 dev lo proto kernel scope host src 127.0.0.1 
-broadcast 127.255.255.255 dev lo proto kernel scope link src 127.0.0.1 
-local 192.168.1.65 dev eno1 proto kernel scope host src 192.168.1.65 
-local 192.168.1.66 dev eno2 proto kernel scope host src 192.168.1.66 
-broadcast 192.168.1.255 dev eno1 proto kernel scope link src 192.168.1.65 
-broadcast 192.168.1.255 dev eno2 proto kernel scope link src 192.168.1.66 
 ```
 
 Check whether Multipass was installed and is functioning correctly by launching an instance, running the following commands:
@@ -194,16 +203,20 @@ timed out waiting for initialization to complete
 # Ran list a little later and everything looks ok
 multipass list              
 Name                    State             IPv4             Image
-maas                    Running           10.195.222.126   Ubuntu 24.04 LTS
+mp1                     Running           10.69.110.76     Ubuntu 24.04 LTS
                                           10.10.10.1
 
-# This IP address probably is tied to the new tap device which is in the mpqemubr0 bridge and probably uses 10.195.222.1/24 as a gateway. Once the packets get to 10.195.222.1 they can probably use the default route with NATing to get to the host's network
+# This IP address probably is tied to the new tap device which is in the mpqemubr0 bridge and probably uses 10.69.110.1/24 as a gateway. Once the packets get to 10.69.110.1 they can probably use the default route with NATing to get to the host's network
 ip a
 4: mpqemubr0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default qlen 1000
-    link/ether 52:54:00:de:03:a8 brd ff:ff:ff:ff:ff:ff
-    inet 10.195.222.1/24 brd 10.195.222.255 scope global mpqemubr0
+    link/ether 52:54:00:86:c1:12 brd ff:ff:ff:ff:ff:ff
+    inet 10.69.110.1/24 brd 10.69.110.255 scope global mpqemubr0
        valid_lft forever preferred_lft forever
-    inet6 fe80::5054:ff:fede:3a8/64 scope link 
+    inet6 fe80::5054:ff:fe86:c112/64 scope link 
+       valid_lft forever preferred_lft forever
+5: tap-5a7255a80b5: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast master mpqemubr0 state UP group default qlen 1000
+    link/ether d2:ca:af:53:59:e7 brd ff:ff:ff:ff:ff:ff
+    inet6 fe80::d0ca:afff:fe53:59e7/64 scope link 
        valid_lft forever preferred_lft forever
 ```
 

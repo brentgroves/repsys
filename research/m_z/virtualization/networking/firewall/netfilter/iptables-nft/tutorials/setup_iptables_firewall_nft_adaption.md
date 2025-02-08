@@ -28,29 +28,42 @@ First, you should be aware that iptables commands must be run with root privileg
 A good starting point is to list the current rules that are configured for iptables. You can do that with the -L flag:
 
 ```bash
+ssh brent@ump1
+sudo iptables -V
+iptables v1.8.10 (nf_tables)
 sudo iptables -L
-Output:
-Chain INPUT (policy ACCEPT)
-target     prot opt source               destination         
-
-Chain FORWARD (policy ACCEPT)
-target     prot opt source               destination         
-
-Chain OUTPUT (policy ACCEPT)
-target     prot opt source               destination
 ```
 
+## question
+
+does iptables link to iptables-nft in ubuntu 22.04
+
+Yes, on Ubuntu 22.04, when you use the "iptables" command, it is actually linked to "iptables-nft", 
 
 As you can see, we have our three default chains (INPUT,OUTPUT, and FORWARD). We also can see each chain’s default policy (each chain has ACCEPT as its default policy). We also see some column headers, but we don’t see any actual rules. This is because Ubuntu doesn’t ship with a default rule set.
 
 We can see the output in a format that reflects the commands necessary to enable each rule and policy by instead using the -S flag:
 
+
 ```bash
 sudo iptables -S
-Output:
+[sudo] password for brent: 
+# Warning: iptables-legacy tables present, use iptables-legacy to see them
 -P INPUT ACCEPT
 -P FORWARD ACCEPT
 -P OUTPUT ACCEPT
+-A INPUT -i mpqemubr0 -p tcp -m tcp --dport 53 -m comment --comment "generated for Multipass network mpqemubr0" -j ACCEPT
+-A INPUT -i mpqemubr0 -p udp -m udp --dport 53 -m comment --comment "generated for Multipass network mpqemubr0" -j ACCEPT
+-A INPUT -i mpqemubr0 -p udp -m udp --dport 67 -m comment --comment "generated for Multipass network mpqemubr0" -j ACCEPT
+-A FORWARD -i mpqemubr0 -o mpqemubr0 -m comment --comment "generated for Multipass network mpqemubr0" -j ACCEPT
+-A FORWARD -s 10.195.222.0/24 -i mpqemubr0 -m comment --comment "generated for Multipass network mpqemubr0" -j ACCEPT
+-A FORWARD -d 10.195.222.0/24 -o mpqemubr0 -m conntrack --ctstate RELATED,ESTABLISHED -m comment --comment "generated for Multipass network mpqemubr0" -j ACCEPT
+-A FORWARD -i mpqemubr0 -m comment --comment "generated for Multipass network mpqemubr0" -j REJECT --reject-with icmp-port-unreachable
+-A FORWARD -o mpqemubr0 -m comment --comment "generated for Multipass network mpqemubr0" -j REJECT --reject-with icmp-port-unreachable
+-A OUTPUT -o mpqemubr0 -p tcp -m tcp --sport 53 -m comment --comment "generated for Multipass network mpqemubr0" -j ACCEPT
+-A OUTPUT -o mpqemubr0 -p udp -m udp --sport 53 -m comment --comment "generated for Multipass network mpqemubr0" -j ACCEPT
+-A OUTPUT -o mpqemubr0 -p udp -m udp --sport 67 -m comment --comment "generated for Multipass network mpqemubr0" -j ACCEPT
+brent@ump1:~$ 
 ```
 
 To replicate the configuration, we’d just need to type sudo iptables followed by each of the lines in the output. (Depending on the configuration, it may actually slightly more complicated if we are connected remotely so that we don’t institute a default drop policy before the rules are in place to catch and allow our current connection.)
@@ -70,7 +83,6 @@ sudo iptables -F
 ```
 
 You can then change the default drop policy back to DROP after you’ve established rules that explicitly allow your connection. We’ll go over how to do that in a moment.
-
 
 ## Make your First Rule
 
