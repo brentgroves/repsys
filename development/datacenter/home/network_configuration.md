@@ -36,12 +36,12 @@ flowchart TB
     CP1[Port 1]<-->TP1[Port 1]
 
 
-    TP3[Port 3]<-->DOP1[Dell Optiplex 7040 - Development]
+    TP3[Port 3]<-->NI16[Network Interface - en01 - 192.168.1.60];
     TP4[Port 4]<-->NI11[Network Interface - en01 - 192.168.1.65];
 
-    DPCSP5[Port 5]<-->DPT1[Dell Precision T3600]
-    DPCSP3[Port 3]<-->DP2[Dell Precision T3610]
-    DPCSP1[Port 1]<-->DP3[Dell Precision T7810]
+    DPCSP5[Port 5]<-->NI13[Network Interface - en01 - 10.188.220.201];
+    DPCSP3[Port 3]<-->NI14[Network Interface - en01 - 10.188.220.202];
+    DPCSP1[Port 1]<-->NI15[Network Interface - en01 - 10.188.220.203];
 
     subgraph CLX[Calix Wi-Fi/Lan Router]
     CP1
@@ -54,9 +54,29 @@ flowchart TB
 
     end
 
+    subgraph DOP1[Dell Optiplex 7040 - Development]
+    NI16[Network Interface - en01 - 192.168.1.60];
+    end
+
+    subgraph DP3[Dell Precision T7810]
+    NI15[Network Interface - en01 - 10.188.220.203]<-->K8SN2[K8S node]
+    end
+    subgraph DP2[Dell Precision T3610]
+    NI14[Network Interface - en01 - 10.188.220.202]<-->K8SN3[K8S node];
+    end
+    subgraph DPT1[Dell Precision T3600]
+    NI13[Network Interface - en01 - 10.188.220.201]<-->K8SN4[K8S node];
+    end
+
     subgraph R410[Dell PowerEdge R410 - Rack Server]
-    NI11 <--> IPT[IPTABLES]
+    NI11 <--> |Port Forward - NAT| IPT[IPTABLES] 
+    IPT[IPTABLES]<-->|Port Forward - NAT| MAAS1[Automated Machine Provisioner - 10.188.220.204]
     NI12[Network Interface - en02 - 10.188.220.200];
+    NI12<-->|bridged VM| MAAS1[Automated Machine Provisioner - 10.188.220.204]
+    NI12<--> |bridged VM| K8SN1[K8S node - 10.188.220.205]
+    NI12<--> |bridged VM| NVM1[New VM - 10.188.220.206]
+
+
     end
 
     NI12[Network Interface - en02 - 10.188.220.200]<-->DPCSP11[Port11];
