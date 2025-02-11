@@ -14,6 +14,7 @@
 
 ## **[Avilla Structures redundant on-prem MAAS, MicroStack, Structures MicroK8s Clusters for Automated Reporting, Tool Management System, and Tool Tracker MES](https://canonical.com/microstack/docs/multi-node-maas)** On-Prem Kubernetes Cluster
 
+- making a docker base image that is able to connect to data sources. This is tricky. We can then use this base image in other specific docker images that need access to our data sources.
 - **[Avilla OnPrem K8s Gateway Network](../../datacenter/avilla/network_configuration.md)**
 - Noticed that Linar Network routes traffic by assigning the 10.*.*.254 address as the default route. These 254 addresses are located on the Fortigate switch which maintains all Firewall rulesets. Can add multiple network interfaces to host which is each assigned an address on a different vlan and use Linux local routing table to access both networks.
 - eno1 - vlan 10.188.220.0
