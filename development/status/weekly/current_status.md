@@ -14,6 +14,15 @@
 
 ## **[Avilla Structures redundant on-prem MAAS, MicroStack, Structures MicroK8s Clusters for Automated Reporting, Tool Management System, and Tool Tracker MES](https://canonical.com/microstack/docs/multi-node-maas)** On-Prem Kubernetes Cluster
 
+- **[Avilla OnPrem K8s Gateway Network](../../datacenter/avilla/network_configuration.md)**
+- Noticed that Linar Network routes traffic by assigning the 10.*.*.254 address as the default route. These 254 addresses are located on the Fortigate switch which maintains all Firewall rulesets. Can add multiple network interfaces to host which is each assigned an address on a different vlan and use Linux local routing table to access both networks.
+- eno1 - vlan 10.188.220.0
+- eno2 - vlan 10.188.70.0
+- en03 - private k8s network
+- vm adds tap device to mpqemubro bridge which mp has setup routing outgoing traffic using nat to change source address to 10.188.220.200 which has been given access to internet domains k8s needs for production. Only on config request needs completed for all vms. 
+- vm created on r620 use mpqemubr0 
+- everyone can access 10.188.70.0 and then use iptables to nat/port forward to the reporing system microservices.
+
           
 ## **[IS Projects](../is_projects/is_projects.md)**
 
