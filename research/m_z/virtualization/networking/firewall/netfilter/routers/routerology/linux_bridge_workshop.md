@@ -48,3 +48,5 @@ ip -br -c link ls
 # create subordinate to enp0s1
 ip link add link enp0s1 name vlan10 type vlan id 10
 ip link add link enp0s1 name vlan10 type vlan id 20
+# 13:43 into video
+```
