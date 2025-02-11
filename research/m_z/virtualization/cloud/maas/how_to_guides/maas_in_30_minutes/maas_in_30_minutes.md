@@ -116,6 +116,8 @@ ip a
 
 # A new route to the 10.195.222.0/24 private network has been added to the mpqemubr0 network device.
 
+ip route list table local
+
 ip route list table main
 default via 192.168.1.1 dev eno1 proto static 
 10.69.110.0/24 dev mpqemubr0 proto kernel scope link src 10.69.110.1 linkdown 
