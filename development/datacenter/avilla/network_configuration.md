@@ -20,11 +20,9 @@ flowchart TB
 
     Internet[Internet]<--> FG[Fortigate]
 
-    FG <--> |Accept/Drop| NI11[Network Interface - en01 - 10.188.220.200];
+    FG <--> |Accept/Drop| NI13[Network Interface - en03 - 10.188.50.200]
 
-    FG <--> |Accept/Drop| C1NI[Network Interface - en01 - 10.188.220.100];
-
-    C1NI <--> NI11
+    C1NI[Network Interface - en01 - 10.188.220.100] <--> NI11[Network Interface - en01 - 10.188.220.200];
 
     subgraph CNC1[Okuma CNC]
     subgraph GCODE1[RDX Job]
@@ -32,16 +30,17 @@ flowchart TB
     end
     end 
 
-    T1[Critical Tool]-->MOXA1
+    T1[Critical Tool]-->SP1[Serial Port]
 
     subgraph MOXA1[Moxa Serial Device Server]
-    C1NI
+    SP1[Serial Port]<-->C1NI
     end
 
     subgraph DPE1[Dell PowerEdge Ubuntu Servers]
-    NI11 <--> IPT[IPTABLES]
+    NI13[Network Interface - en03 - 10.188.50.200] <--> |port 80/443| IPT[IPTABLES];
 
-
+    NI11 <--> udp[udp client];
+    udp[udp client] <-->|port 3306| I1[Istio Service Mesh Gateway]
     IPT<-->|Port Forward - NAT| I1[Istio Service Mesh Gateway]
 
 
@@ -60,10 +59,12 @@ flowchart TB
     end
 
     subgraph K8SN1[K8S Production]
+    I1[Istio Service Mesh Gateway] <--> DB1[MySQL]
     I1[Istio Service Mesh Gateway] <--> R1[Report Requester]
     I1[Istio Service Mesh Gateway] <--> TM1[Tool Management]
     I1[Istio Service Mesh Gateway] <--> TT1[Tool Tracker]
 
+    DB1[MySQL]
     R1[Report Requester]
     TM1[Tool Management]
     TT1[Tool Tracker]
