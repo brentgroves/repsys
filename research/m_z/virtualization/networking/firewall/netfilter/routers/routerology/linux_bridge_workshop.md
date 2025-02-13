@@ -34,7 +34,26 @@ The following hooks represent these well-defined points in the networking stack:
 
 ## commands 
 
+vm: red box 
+- ip:192.168.128.101/24
+
+- namespace:10
+  -vlan10 - enp0s1 - br100
+- namespace:20
+  -vlan20 - enp0s1 - br100
+
+connect by sw bridge outside of vm:br100
+
+vm: blue box
+192.168.128/102/24
+- namespace:ns-x
+  - vlan10 - enp0s1 - br100
+  - vlan20 - enp0s1 - br100
+
+tcpdump on physical machine
+
 ```bash
+# ssh into redbox vm
 ip -br link ls
 enp0s1
 ip netns ls
@@ -43,10 +62,24 @@ sudo ip netns add ns-20
 ip -c netns ls
 lsmod | grep 802
 # it will load when you create the interfaces
-ip -br ls
 ip -br -c link ls
 # create subordinate to enp0s1
 ip link add link enp0s1 name vlan10 type vlan id 10
 ip link add link enp0s1 name vlan10 type vlan id 20
 # 13:43 into video
+ip -br -c link ls
+enp0s1
+vlan10@enp0s1
+vlan20@enp0s1
+lsmod | grep 802
+8021q
+ip link set dev vlan10 netns ns-10
+ip link set dev vlan20 netns ns-20
+ip -br -c link ls
+enp0s1
+
+# these are gone since we have put in different ns
+vlan10@enp0s1
+vlan20@enp0s1
+
 ```
