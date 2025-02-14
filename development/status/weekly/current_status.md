@@ -5,24 +5,7 @@
 
 ![np](https://cdn.prod.website-files.com/65a5be30bf4809bb3a2e8aff/65de6a24f3bc7cfdb5711e46_ethernet2.jpeg)
 
-Why do we need an IP address for a bridge?
-
-A bridge is a layer 2 network device. On physical bridges we only have an IP address for operation and maintenance. I'm a little bit confused why we need in KVM an IP address for the bridge. I understand that the VM's interface get's an IP address and that the physical interface attached to the bridge has no IP address. This ensures that the VM's Ip address is visible to the outside. In an server environment, I would only use static IP addressing for the VM's.
-
-Let's assume, I use static IP addressing for the VM's, than why do I need an IP address on the bridge?
-
-You do not need to have an IP configured for a bridge, the same way you do not need to have an IP configured for an ethernet device, on any machine (be it host/guest or whatever).
-
-However, if you have a device/bridge that has no IP address, you cannot expect it to be usable by the party that has it not properly configured (be it host or guest).
-
-So for example, if I have a KVM host with a bridge called "br_vm" which I assign to all KVM guests as their only interface (the guests will most likely call it "eth0"), and if br_vm is not configured at the host, you cannot expect the guests to be able to talk to the host through their eth0 interface.
-
-You ask why you need an IP for a bridge and the answer is you don't. However, if you want to know in which scenarios you would wish to have an IP for the bridge at the host, I can think of a few:
-
-You want your VMs to communicate to the host, even if for DHCP or DNS only;
-You may want to disable VM-to-VM traffic. If you share that bridge with many VMs, that is something worth considering;
-You may want to have a firewall at the host-level in addition to any firewalling you may have set-up for your VMs. Concentrating all firewall rules on the host can be wise if the policies, zones, etc for all your VMs are about the same. It is easier if all rules, IP addresses, policies, etc are kept in one place (although I would set-up basic firewall on each VM just in case);
-And, by the way, you can have dynamic IP addressing on your guest VMs, that has nothing to do with whether or not the host has an IP on the bridge (unless, of course, the host is the DHCP server for the network).
+https://www.youtube.com/@routerologyblog1111/videos
 
 
 ## Azure Solution for for Automated Reporting, Tool Management System, and Tool Tracker MES
@@ -33,6 +16,8 @@ And, by the way, you can have dynamic IP addressing on your guest VMs, that has 
     - deploy Istio Service Mesh Gateway
 
 ## **[Avilla Structures redundant on-prem MAAS, MicroStack, Structures MicroK8s Clusters for Automated Reporting, Tool Management System, and Tool Tracker MES](https://canonical.com/microstack/docs/multi-node-maas)** On-Prem Kubernetes Cluster
+
+After discussing the network requirements with Justin Langille, I am disconnecting the 2nd network interface, since it is against Linamar's network policies. Also, I have changed the Avilla Structures Kubernetes Cluster from the OT to Server vlan. For the requirement of connecting to the UDP serial device servers connected to CNC in the OT vlan I am creating a 2nd Kubernetes cluster on the OT vlan and can either insert records into a mysql database running in the 2nd cluster or insert them into our Azure SQL db for easier access by reporting software.
 
 - making a docker base image that is able to connect to data sources. This is tricky. We can then use this base image in other specific docker images that need access to our data sources.
 - **[Avilla OnPrem K8s Gateway Network](../../datacenter/avilla/network_configuration.md)**
