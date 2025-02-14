@@ -60,6 +60,7 @@ tools
 sudo su
 # -c is coloring
 # -br is brief
+# -d details
 ip -c -br link show 
 lo               UNKNOWN        00:00:00:00:00:00 <LOOPBACK,UP,LOWER_UP> 
 enp0s31f6        UP             f4:8e:38:b7:1e:fd <BROADCAST,MULTICAST,UP,LOWER_UP> 
@@ -69,6 +70,30 @@ docker0          DOWN           02:42:7f:e9:b2:91 <NO-CARRIER,BROADCAST,MULTICAS
 ip link add name br0 type bridge
 ip -c -br link show 
 ip -c link show # more details
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN mode DEFAULT group default qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+2: enp0s31f6: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc fq_codel state UP mode DEFAULT group default qlen 1000
+    link/ether f4:8e:38:b7:1e:fd brd ff:ff:ff:ff:ff:ff
+4: br-2c4c88ba5dfd: <NO-CARRIER,BROADCAST,MULTICAST,UP> mtu 1500 qdisc noqueue state DOWN mode DEFAULT group default 
+    link/ether 02:42:ff:bd:27:1c brd ff:ff:ff:ff:ff:ff
+5: docker0: <NO-CARRIER,BROADCAST,MULTICAST,UP> mtu 1500 qdisc noqueue state DOWN mode DEFAULT group default 
+    link/ether 02:42:7f:e9:b2:91 brd ff:ff:ff:ff:ff:ff
+6: br0: <BROADCAST,MULTICAST> mtu 1500 qdisc noop state DOWN mode DEFAULT group default qlen 1000
+    link/ether ba:ea:cb:63:00:4a brd ff:ff:ff:ff:ff:ff
+ip -c -d link show br0 # more details
+    link/ether ba:ea:cb:63:00:4a brd ff:ff:ff:ff:ff:ff
+root@moto:/home/brent/src/Reporting2/prod/volume/PipeLine# ip -c -d link show br0
+6: br0: <BROADCAST,MULTICAST> mtu 1500 qdisc noop state DOWN mode DEFAULT group default qlen 1000
+    link/ether ba:ea:cb:63:00:4a brd ff:ff:ff:ff:ff:ff promiscuity 0 minmtu 68 maxmtu 65535 
+    bridge forward_delay 1500 hello_time 200 max_age 2000 ageing_time 30000 stp_state 0 priority 32768 vlan_filtering 0 vlan_protocol 802.1Q bridge_id 8000.ba:ea:cb:63:0:4a designated_root 8000.ba:ea:cb:63:0:4a root_port 0 root_path_cost 0 topology_change 0 topology_change_detected 0 hello_timer    0.00 tcn_timer    0.00 topology_change_timer    0.00 gc_timer    0.00 vlan_default_pvid 1 vlan_stats_enabled 0 vlan_stats_per_port 0 group_fwd_mask 0 group_address 01:80:c2:00:00:00 mcast_snooping 1 mcast_router 1 mcast_query_use_ifaddr 0 mcast_querier 0 mcast_hash_elasticity 16 mcast_hash_max 4096 mcast_last_member_count 2 mcast_startup_query_count 2 mcast_last_member_interval 100 mcast_membership_interval 26000 mcast_querier_interval 25500 mcast_query_interval 12500 mcast_query_response_interval 1000 mcast_startup_query_interval 3124 mcast_stats_enabled 0 mcast_igmp_version 2 mcast_mld_version 1 nf_call_iptables 0 nf_call_ip6tables 0 nf_call_arptables 0 addrgenmode eui64 numtxqueues 1 numrxqueues 1 gso_max_size 65536 gso_max_segs 65535 
+
+stp_state 0 # spanning tree state     
+vlan_filtering 0 # important for vlan
+vlan_protocol 802.1Q # encapsulation protocol
+
+# create virtual ethernet interfaces because you can place them in a namespace.
+ip link add name vth1 type veth peer vth_1
+# time stopped 7:01
 ```
 
 
