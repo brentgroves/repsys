@@ -227,6 +227,11 @@ requirements when we launch the VM:
 # can't get manual mode in which you pass the hardware address to work
 # multipass launch --name test3 --network name=mybr,mode=manual,mac="7f:71:f0:b2:55:dd"
 
+multipass launch --network br0 --name k8sn1 --cpus 2 --memory 32G --disk 250G 
+
+multipass launch --network br0 --name repsys12-c1-n1 --cpus 2 --memory 16G --disk 100G 22.04
+
+
 multipass launch --network br0 --name repsys12-c1-n1 --cpus 2 --memory 16G --disk 100G 22.04
 
 # Add memory if going to run only sql server
@@ -263,6 +268,14 @@ test2                   Running           10.127.233.24    Ubuntu 24.04 LTS
 Use the ip utility to display the link status of Ethernet devices that are ports of a specific bridge:
 
 ```bash
+ssh brent@k8sgw1
+ip link show master br0
+7: eno2: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq master br0 state UP mode DEFAULT group default qlen 1000
+    link/ether b8:ca:3a:6a:35:99 brd ff:ff:ff:ff:ff:ff
+    altname enp1s0f1
+13: tap0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast master br0 state UNKNOWN mode DEFAULT group default qlen 1000
+    link/ether fe:15:a0:be:9a:b7 brd ff:ff:ff:ff:ff:ff
+
 ip link show master br2
 8: eno3: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq master br2 state UP mode DEFAULT group default qlen 1000
     link/ether b8:ca:3a:6a:37:1a brd ff:ff:ff:ff:ff:ff
@@ -287,6 +300,11 @@ See how multipass configured the network. Until I can figure out how to pass the
 Note: On repsys11-c2-n2 the 50-cloud-init.yaml file already had the correct mac address.
 
 ```bash
+multipass exec -n k8sn1 -- sudo networkctl -a status
+...
+Hardware Address: 52:54:00:68:cb:26
+52:54:00:45:fb:b6
+
 multipass exec -n repsys11-c2-n3 -- sudo networkctl -a status
 3: enp6s0                                                                    
                      Link File: /usr/lib/systemd/network/99-default.link
@@ -324,6 +342,11 @@ multipass exec -n repsys11-c2-n3 -- sudo networkctl -a status
 We now need to configure the manual network interface inside the instance. We can achieve that using Netplan. The following command plants the required Netplan configuration file in the instance:
 
 ```bash
+
+52:54:00:68:cb:26
+
+multipass exec -n k8sn1 -- sudo bash -c 'cat /etc/netplan/50-cloud-init.yaml'
+
 multipass exec -n repsys11-c2-n3 -- sudo bash -c 'cat /etc/netplan/50-cloud-init.yaml'
 # This file is generated from information provided by the datasource.  Changes
 # to it will not persist across an instance reboot.  To disable cloud-init's
@@ -345,7 +368,7 @@ network:
             optional: true
     version: 2
 
-
+HW Address: 52:54:00:ff:17:97
 # update netplan with hardware address
 # Make sure the mac address matches the extra0 macaddress
 
@@ -416,6 +439,10 @@ network:
     version: 2
 
 # if all looks good apply network changes
+multipass exec -n k8sn1 -- sudo netplan apply
+multipass exec -n k8sn1 -- sudo networkctl -a status
+
+
 multipass exec -n repsys11-c2-n3 -- sudo netplan apply
 WARNING:root:Cannot call Open vSwitch: ovsdb-server.service is not running.
 # check network interfaces with networkd cli
