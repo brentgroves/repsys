@@ -93,6 +93,69 @@ vlan_protocol 802.1Q # encapsulation protocol
 
 # create virtual ethernet interfaces because you can place them in a namespace.
 ip link add name vth1 type veth peer vth_1
+ip link add name vth2 type veth peer vth_2
+
+ip -br -c link show 
+lo               UNKNOWN        00:00:00:00:00:00 <LOOPBACK,UP,LOWER_UP> 
+enp0s31f6        UP             f4:8e:38:b7:1e:fd <BROADCAST,MULTICAST,UP,LOWER_UP> 
+br-2c4c88ba5dfd  DOWN           02:42:ff:bd:27:1c <NO-CARRIER,BROADCAST,MULTICAST,UP> 
+docker0          DOWN           02:42:7f:e9:b2:91 <NO-CARRIER,BROADCAST,MULTICAST,UP> 
+br0              DOWN           ba:ea:cb:63:00:4a <BROADCAST,MULTICAST> 
+# 2 virtual ethernet pairs
+vth_1@vth1       DOWN           72:45:86:8e:8d:6f <BROADCAST,MULTICAST,M-DOWN> 
+vth1@vth_1       DOWN           a2:66:1a:95:cb:36 <BROADCAST,MULTICAST,M-DOWN> 
+vth_2@vth2       DOWN           fe:69:e1:e6:1d:fd <BROADCAST,MULTICAST,M-DOWN> 
+vth2@vth_2       DOWN           c6:30:62:f3:90:da <BROADCAST,MULTICAST,M-DOWN> 
+ip netns ls
+ip netns add ns1
+ip netns add ns2
+ip netns ls
+ns2
+ns1
+ip link set vth_1 netns ns1
+ip -n ns1 link show
+1: lo: <LOOPBACK> mtu 65536 qdisc noop state DOWN mode DEFAULT group default qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+7: vth_1@if8: <BROADCAST,MULTICAST> mtu 1500 qdisc noop state DOWN mode DEFAULT group default qlen 1000
+    link/ether 72:45:86:8e:8d:6f brd ff:ff:ff:ff:ff:ff link-netnsid 0
+
+ip -n ns1 -c -br link show
+lo               DOWN           00:00:00:00:00:00 <LOOPBACK> 
+vth_1@if8        DOWN           72:45:86:8e:8d:6f <BROADCAST,MULTICAST> 
+
+ip -c -br link show 
+lo               UNKNOWN        00:00:00:00:00:00 <LOOPBACK,UP,LOWER_UP> 
+enp0s31f6        UP             f4:8e:38:b7:1e:fd <BROADCAST,MULTICAST,UP,LOWER_UP> 
+br-2c4c88ba5dfd  DOWN           02:42:ff:bd:27:1c <NO-CARRIER,BROADCAST,MULTICAST,UP> 
+docker0          DOWN           02:42:7f:e9:b2:91 <NO-CARRIER,BROADCAST,MULTICAST,UP> 
+br0              DOWN           ba:ea:cb:63:00:4a <BROADCAST,MULTICAST> 
+# Replaced
+# vth_1@vth1       DOWN           72:45:86:8e:8d:6f <BROADCAST,MULTICAST,M-DOWN> 
+# vth1@vth_1       DOWN           a2:66:1a:95:cb:36 <BROADCAST,MULTICAST,M-DOWN> 
+# with
+vth1@if7         DOWN           a2:66:1a:95:cb:36 <BROADCAST,MULTICAST> 
+vth_2@vth2       DOWN           fe:69:e1:e6:1d:fd <BROADCAST,MULTICAST,M-DOWN> 
+vth2@vth_2       DOWN           c6:30:62:f3:90:da <BROADCAST,MULTICAST,M-DOWN> 
+
+ip netns exec ns1 ip -br -c link show
+lo               DOWN           00:00:00:00:00:00 <LOOPBACK> 
+vth_1@if8        DOWN           72:45:86:8e:8d:6f <BROADCAST,MULTICAST> 
+
+ip -n ns1 link set dev vth_1 up
+ip netns exec ns1 ip -br -c link show
+lo               DOWN           00:00:00:00:00:00 <LOOPBACK> 
+vth_1@if8        LOWERLAYERDOWN 72:45:86:8e:8d:6f <NO-CARRIER,BROADCAST,MULTICAST,UP> 
+
+ip -n ns1 address add 192.168.1.50/24 dev vth_1
+
+ip netns exec ns1 ip -br -c link show
+lo               DOWN           00:00:00:00:00:00 <LOOPBACK> 
+# peer interface is down that is ok
+vth_1@if8        LOWERLAYERDOWN 72:45:86:8e:8d:6f <NO-CARRIER,BROADCAST,MULTICAST,UP> 
+
+ip -n ns2 link show
+1: lo: <LOOPBACK> mtu 65536 qdisc noop state DOWN mode DEFAULT group default qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
 # time stopped 7:01
 ```
 
