@@ -7,6 +7,10 @@
 
 https://www.youtube.com/@routerologyblog1111/videos
 
+## Research
+
+- **[Setting Up Virtual Machines with QEMU, KVM, and Virt-Manager on Debian/Ubuntu](https://linuxconfig.org/setting-up-virtual-machines-with-qemu-kvm-and-virt-manager-on-debian-ubuntu)**
+- **[Linux VLAN Filtering](https://www.youtube.com/watch?v=a8ghZoBZcE0&list=PLmZU6NElARbZtvrVbfz9rVpWRt5HyCeO7&index=3)**
 
 ## Azure Solution for for Automated Reporting, Tool Management System, and Tool Tracker MES
   - Test TB report scripts and Power BI report on Linamar Azure SQL DB.
