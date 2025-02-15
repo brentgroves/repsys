@@ -35,6 +35,8 @@ The following hooks represent these well-defined points in the networking stack:
 
 ## configuration 
 
+A "virtual ethernet peer" refers to the paired counterpart of a virtual Ethernet device (often called "veth") within a network, essentially creating a logical connection between two separate network namespaces, allowing them to communicate with each other as if they were directly connected by a physical Ethernet cable; each "veth" pair acts as a tunnel for data transfer between the two namespaces. 
+
 vth_2 is peer interface for vth2 - br0 - vth1's peer interface is vth_1
 
 default namespace:
@@ -156,7 +158,74 @@ vth_1@if8        LOWERLAYERDOWN 72:45:86:8e:8d:6f <NO-CARRIER,BROADCAST,MULTICAS
 ip -n ns2 link show
 1: lo: <LOOPBACK> mtu 65536 qdisc noop state DOWN mode DEFAULT group default qlen 1000
     link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+
+ip link set vth_2 netns ns2
+
+ip -n ns2 -c -br link show
+
+ip -n ns2 -c link show
+
+1: lo: <LOOPBACK> mtu 65536 qdisc noop state DOWN mode DEFAULT group default qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+9: vth_2@if10: <BROADCAST,MULTICAST> mtu 1500 qdisc noop state DOWN mode DEFAULT group default qlen 1000
+    link/ether fe:69:e1:e6:1d:fd brd ff:ff:ff:ff:ff:ff link-netnsid 0
+
+ip -n ns2 link set dev vth_2 up
+
+ip -n ns2 -c -br link show
+lo               DOWN           00:00:00:00:00:00 <LOOPBACK> 
+vth_2@if10       LOWERLAYERDOWN fe:69:e1:e6:1d:fd <NO-CARRIER,BROADCAST,MULTICAST,UP>
+
+ip -n ns2 address add 192.168.1.51/24 dev vth_2
+ip -n ns2 -c -br address show
+lo               DOWN           
+vth_2@if10       LOWERLAYERDOWN 192.168.1.51/24 
+
+ip -c -br link show type bridge
+br-2c4c88ba5dfd  DOWN           02:42:ff:bd:27:1c <NO-CARRIER,BROADCAST,MULTICAST,UP> 
+docker0          DOWN           02:42:7f:e9:b2:91 <NO-CARRIER,BROADCAST,MULTICAST,UP> 
+br0              DOWN           ba:ea:cb:63:00:4a <BROADCAST,MULTICAST> 
+ip link set dev vth1 master br0
+ip link set dev vth2 master br0
+ip link set dev vth1 up
+ip link set dev vth2 up
+ip -c -br link show
+lo               UNKNOWN        00:00:00:00:00:00 <LOOPBACK,UP,LOWER_UP> 
+enp0s31f6        UP             f4:8e:38:b7:1e:fd <BROADCAST,MULTICAST,UP,LOWER_UP> 
+br-2c4c88ba5dfd  DOWN           02:42:ff:bd:27:1c <NO-CARRIER,BROADCAST,MULTICAST,UP> 
+docker0          DOWN           02:42:7f:e9:b2:91 <NO-CARRIER,BROADCAST,MULTICAST,UP> 
+br0              DOWN           ba:ea:cb:63:00:4a <BROADCAST,MULTICAST> 
+vth1@if7         UP             a2:66:1a:95:cb:36 <BROADCAST,MULTICAST,UP,LOWER_UP> 
+vth2@if9         UP             c6:30:62:f3:90:da <BROADCAST,MULTICAST,UP,LOWER_UP>
+ip -c -br -n ns1 link show
+lo               DOWN           00:00:00:00:00:00 <LOOPBACK> 
+vth_1@if8        UP             72:45:86:8e:8d:6f <BROADCAST,MULTICAST,UP,LOWER_UP> 
+ip -c -br -n ns2 link show
+lo               DOWN           00:00:00:00:00:00 <LOOPBACK> 
+vth_2@if10       UP             fe:69:e1:e6:1d:fd <BROADCAST,MULTICAST,UP,LOWER_UP>
+ip link set br0 up
+ip -c -br link show
+lo               UNKNOWN        00:00:00:00:00:00 <LOOPBACK,UP,LOWER_UP> 
+enp0s31f6        UP             f4:8e:38:b7:1e:fd <BROADCAST,MULTICAST,UP,LOWER_UP> 
+br-2c4c88ba5dfd  DOWN           02:42:ff:bd:27:1c <NO-CARRIER,BROADCAST,MULTICAST,UP> 
+docker0          DOWN           02:42:7f:e9:b2:91 <NO-CARRIER,BROADCAST,MULTICAST,UP> 
+br0              UP             ba:ea:cb:63:00:4a <BROADCAST,MULTICAST,UP,LOWER_UP> 
+vth1@if7         UP             a2:66:1a:95:cb:36 <BROADCAST,MULTICAST,UP,LOWER_UP> 
+vth2@if9         UP             c6:30:62:f3:90:da <BROADCAST,MULTICAST,UP,LOWER_UP> 
+
+ip netns exec ns1 ping 192.168.1.51
+PING 192.168.1.51 (192.168.1.51) 56(84) bytes of data.
+64 bytes from 192.168.1.51: icmp_seq=1 ttl=64 time=0.126 ms
+64 bytes from 192.168.1.51: icmp_seq=2 ttl=64 time=0.031 ms
+
+ip netns exec ns2 ping 192.168.1.50
+PING 192.168.1.50 (192.168.1.50) 56(84) bytes of data.
+64 bytes from 192.168.1.50: icmp_seq=1 ttl=64 time=0.093 ms
+64 bytes from 192.168.1.50: icmp_seq=2 ttl=64 time=0.077 ms
+
 # time stopped 7:01
 ```
+
+A "virtual ethernet peer" refers to the paired counterpart of a virtual Ethernet device (often called "veth") within a network, essentially creating a logical connection between two separate network namespaces, allowing them to communicate with each other as if they were directly connected by a physical Ethernet cable; each "veth" pair acts as a tunnel for data transfer between the two namespaces. 
 
 

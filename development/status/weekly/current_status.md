@@ -17,7 +17,14 @@ https://www.youtube.com/@routerologyblog1111/videos
 
 ## **[Avilla Structures redundant on-prem MAAS, MicroStack, Structures MicroK8s Clusters for Automated Reporting, Tool Management System, and Tool Tracker MES](https://canonical.com/microstack/docs/multi-node-maas)** On-Prem Kubernetes Cluster
 
+### 2 Physical Network interfaces to different vlan's goes against Linamar policy.
 After discussing the network requirements with Justin Langille, I am disconnecting the 2nd network interface, since it is against Linamar's network policies. Also, I have changed the Avilla Structures Kubernetes Cluster from the OT to Server vlan. For the requirement of connecting to the UDP serial device servers connected to CNC in the OT vlan I am creating a 2nd Kubernetes cluster on the OT vlan and can either insert records into a mysql database running in the 2nd cluster or insert them into our Azure SQL db for easier access by reporting software.
+
+### 1 physical network interface configured to carry traffic from multiple vlans is allowed. 
+
+In this configuration vlan tagging must be done by the host or server.
+
+"Switch trunk mode" refers to a configuration on a network switch where a specific port can carry traffic from multiple VLANs (Virtual Local Area Networks) simultaneously, allowing data from different VLANs to be transmitted over a single physical link, essentially acting like a "trunk" to carry multiple data streams at once; this is in contrast to an access port which is dedicated to only one VLAN. 
 
 - making a docker base image that is able to connect to data sources. This is tricky. We can then use this base image in other specific docker images that need access to our data sources.
 - **[Avilla OnPrem K8s Gateway Network](../../datacenter/avilla/network_configuration.md)**
