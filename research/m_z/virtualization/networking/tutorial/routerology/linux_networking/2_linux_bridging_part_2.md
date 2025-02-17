@@ -177,7 +177,7 @@ vth2@if9         UP             c6:30:62:f3:90:da <BROADCAST,MULTICAST,UP,LOWER_
 bridge fdb show dynamic
 # nothing now but? after we ping from 1 namespace to the other we should see something here.
 # ping from ns1
-ip fdb show dynamic
+ping 192.168.1.51
 Object "fdb" is unknown, try "ip help".
 root@moto:/home/brent# bridge fdb show dynamic
 root@moto:/home/brent# bridge fdb show dynamic
