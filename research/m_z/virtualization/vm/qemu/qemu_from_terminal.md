@@ -92,3 +92,105 @@ Let’s suppose we want to create a virtual machine with the following character
 - High-resolution video card
 - Sound card
 - Mouse and keyboard
+
+The following command meets these requirements:
+
+```bash
+qemu-system-x86_64 \
+-enable-kvm                                                    \
+-m 4G                                                          \
+-smp 2                                                         \
+-hda myVirtualDisk.qcow2                                       \
+-boot d                                                        \
+-cdrom linuxmint-22.1-cinnamon-64bit.iso                       \
+-netdev user,id=net0,net=192.168.0.0/24,dhcpstart=192.168.0.9  \
+-device virtio-net-pci,netdev=net0                             \
+-vga qxl                                                       \
+-device AC97
+```
+
+Let’s look at the meaning of each option:
+
+-enable-kvm → KVM to boost performance
+-m 4G → 4GB RAM
+-smp 2 → 2CPUs
+-hda myVirtualDisk.qcow2 → our 20GB variable-size disk
+-boot d → boots the first virtual CD drive
+-cdrom linuxmint-21.1-cinnamon-64bit.iso → Linux Mint ISO
+-netdev user,id=net0,net=192.168.0.0/24,dhcpstart=192.168.0.9 → NAT with DHCP
+-device virtio-net-pci,netdev=net0 → network card
+-vga qxl → powerful graphics card
+-device AC97 → sound card
+Let’s verify that the virtual machine works as expected:
+
+![v](https://www.baeldung.com/wp-content/uploads/sites/2/2023/02/QEMU-Linux-Mint-21-Virtual-Machine.jpg)
+
+The guest booting is fast, and the host CPU load is negligible (8% after guest system boot, measured by top). We heard the default login sound. Using the Display module of Cinnamon Settings, we chose the same video resolution as the host, as shown in the screenshot above. After that, we pressed CTRL+ALT+F to switch the windowed guest view to full screen. GParted showed us the 20GB virtual disk, yet to be partitioned. From the terminal, we checked the NAT configuration with ifconfig, the amount of RAM with free, and the number of CPUs with nproc. Their outputs are in the screenshot and everything is as expected.
+
+In addition to the manual that details every possible command, we can consult more concise and easy-to-access documentation on the most common QEMU options.
+
+## Installation and Configuration of a Guest Operating System
+
+We followed the wizard’s standard steps for installation, including automatic partitioning. The following screenshot shows that Linux sees the QEMU’s virtual hard drive as if it were SCSI:
+
+![s](https://www.baeldung.com/wp-content/uploads/sites/2/2023/02/QEMU-Linux-Mint-Automatic-Partitioning.jpg)
+
+After installation, “myVirtualDisk.qcow2” became 11.2 GiB. In all subsequent starts, we can remove the -boot and -cdrom parameters. Alternatively, we can use the -boot menu=on parameter to choose which device to boot with.
+
+```bash
+qemu-system-x86_64 \
+-enable-kvm                                                    \
+-m 4G                                                          \
+-smp 2                                                         \
+-hda myVirtualDisk.qcow2                                       \
+-netdev user,id=net0,net=192.168.0.0/24,dhcpstart=192.168.0.9  \
+-device virtio-net-pci,netdev=net0                             \
+-vga qxl                                                       \
+-device AC97
+```
+
+## Pass-Through Access to a Host USB Stick
+
+Pass-through is a QEMU feature that allows a virtual machine to access physical hardware directly, bypassing the virtualization layer without any overhead or limitations. It’s helpful with devices such as graphics cards, network adapters, or storage devices. It can improve performance and provide access to device-specific features unavailable in a purely virtual environment. In the case of a USB flash drive, pass-through is a way to exchange files with the outside world.
+
+First, we need some information about the device:
+
+```bash
+lsusb -v
+[...]
+Bus 001 Device 002: ID 0930:6545 Toshiba Corp. Kingston DataTraveler [...] 4GB Stick
+Device Descriptor:
+[...]
+  idVendor           0x0930 Toshiba Corp.
+  idProduct          0x6545 Kingston DataTraveler
+[...]
+```
+
+The device file path is like /dev/bus/usb/XXX/YYY. According to the Linux kernel’s naming policies, XXX is the bus number (001 in our case), which usually doesn’t change. Instead, YYY is the device number (002 in our case), which changes every time the USB device gets unplugged and re-plugged. That said, let’s check the device file permissions:
+
+```bash
+ls -l /dev/bus/usb/001/002
+crw-rw-rw- 1 root root 189, 1 Feb  6 08:35 /dev/bus/usb/001/002
+```
+
+The user and group are root. This isn’t good for QEMU because the group must be kvm to allow the guest to access the device. So, let’s run the following two commands with root permissions to change permanently, via an udev rule, the group associated with this particular device:
+
+```bash
+ echo 'SUBSYSTEM=="usb", ATTR{idVendor}=="0930", ATTR{idProduct}=="6545", OWNER="root", GROUP="kvm", MODE="0666"' > /etc/udev/rules.d/99-usb-stick.rules
+# udevadm control --reload-rules && udevadm trigger
+```
+
+Let’s unplug and re-plug the USB stick. Let’s recheck the device file permissions and, if the group is still root, let’s reboot the host. Finally, let’s launch QEMU with the following three more parameters, in which we use the idVendor and idProduct previously provided by lsusb:
+
+```bash
+-device usb-ehci,id=ehci \
+-usb \
+-device usb-host,bus=ehci.0,vendorid=0x0930,productid=0x6545
+```
+
+In this way, we added an EHCI controller named ehci, which gives us a USB 2.0 bus named ehci.0. As a result, the device icon appears on the desktop:
+
+![u](https://www.baeldung.com/wp-content/uploads/sites/2/2023/02/Linux-Mint-21-USB-Stick-inside-QEMU-guest.jpg)
+
+With pass-through, however, while the guest uses the flash drive, it’ll be inaccessible to the host. That’s why sharing the same directory between host and guest requires a different solution, as we’ll see later.
+
