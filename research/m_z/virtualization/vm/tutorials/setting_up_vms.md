@@ -53,3 +53,54 @@ $ sudo adduser $USER libvirt
 $ sudo adduser $USER kvm
 ```
 
+Verify Installation: Check that the libvirt service is running with:
+`$ sudo systemctl status libvirtd`
+
+If it’s not running, start and enable it at boot with:
+
+```bash
+$ sudo systemctl start libvirtd
+$ sudo systemctl enable libvirtd
+```
+
+This step ensures that the libvirt daemon is active and set to start automatically on boot, which is necessary for managing virtual machines.
+
+
+## What is libvirt
+
+Libvirt is a virtualization API that manages virtual machines (VMs) and the resources of the host computer. It's accessible from a variety of programming languages, including C, Python, Perl, and Go. 
+
+## Launch Virt-Manager: 
+Open Virt-Manager either from your applications menu or by executing the following command in a terminal:
+
+`$ virt-manager`
+
+Virt-Manager provides a user-friendly graphical interface for creating, configuring, and managing virtual machines. It simplifies the process of VM management, making it accessible even to those new to virtualization.
+
+Create a New Virtual Machine: In Virt-Manager, click on the “Create a new virtual machine” button. Follow the wizard to select the installation method (ISO image, network installation, or importing existing disk), allocate resources (CPU, memory, disk space), and complete the setup by installing the operating system.
+
+## Using Your Virtual Machine: 
+
+Once the operating system installation is complete, you can start, stop, pause, and configure your virtual machine settings through Virt-Manager. Additionally, you can connect to the VM’s console to interact with it directly.
+
+![uvm](https://linuxconfig.org/wp-content/uploads/2024/02/02-setting-up-virtual-machines-with-qemu-kvm-and-virt-manager-on-debian-ubuntu.webp)
+
+## Advanced Tips and Tricks for Virtualization with QEMU, KVM, and Virt-Manager
+
+After setting up your virtualization environment with QEMU, KVM, and Virt-Manager, there are several advanced features and best practices you can employ to enhance your virtual machine management and performance. Here are some tips and tricks to help you get the most out of your virtualized setup.
+
+## Utilizing QEMU Guest Agent
+
+The QEMU Guest Agent facilitates improved communication between the host and the guest VMs, enabling functionalities such as file transfers, graceful shutdowns, and system information queries. To take advantage of these features, install the guest agent in your VMs:
+
+`$ sudo apt install qemu-guest-agent`
+
+Once installed, make sure the guest agent service is enabled and running within your VMs for enhanced performance and management capabilities.
+
+## Mastering Snapshots
+
+Snapshots are a powerful feature that allows you to save the state of a VM at any given point in time. This is incredibly useful for testing software or updates without risking your primary system state. To create a snapshot in Virt-Manager, select your VM, click on the “Snapshots” section, and then “Take Snapshot”. Always ensure you have enough disk space available before taking snapshots to avoid performance degradation.
+
+## Attaching USB Devices
+
+To attach USB devices directly to a VM, go to the VM’s hardware details in Virt-Manager, add a USB host device, and select the device you wish to attach. This is particularly useful for software testing on different operating systems or accessing data stored on external drives directly within your VM.
