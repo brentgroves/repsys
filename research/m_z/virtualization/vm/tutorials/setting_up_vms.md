@@ -44,4 +44,12 @@ Install QEMU, KVM, and Virt-Manager to set up your virtualization environment. T
 sudo apt install qemu-kvm libvirt-daemon-system libvirt-clients bridge-utils virt-manager
 ```
 
+This command installs all necessary packages, including QEMU for emulation, KVM for hardware acceleration, libvirt daemon for managing VMs, libvirt clients for command-line interaction, bridge-utils for network bridging, and Virt-Manager for graphical management.
+
+Add Your User to Necessary Groups: To manage virtual machines without root privileges, add your user to the ‘libvirt’ and ‘kvm’ groups by running:
+
+```bash
+$ sudo adduser $USER libvirt
+$ sudo adduser $USER kvm
+```
 
