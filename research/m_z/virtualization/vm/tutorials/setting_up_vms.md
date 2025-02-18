@@ -71,6 +71,7 @@ This step ensures that the libvirt daemon is active and set to start automatical
 Libvirt is a virtualization API that manages virtual machines (VMs) and the resources of the host computer. It's accessible from a variety of programming languages, including C, Python, Perl, and Go. 
 
 ## Launch Virt-Manager: 
+
 Open Virt-Manager either from your applications menu or by executing the following command in a terminal:
 
 `$ virt-manager`
