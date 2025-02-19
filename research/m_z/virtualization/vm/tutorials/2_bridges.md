@@ -8,6 +8,8 @@
 
 ## references
 
+https://www.youtube.com/watch?v=6435eNKpyYw
+- **[create a network on kvm](https://www.youtube.com/watch?v=Yl6KKRqtb9k)**
 - **[multiple network interfaces](https://fmount.me/2015/06/17/qemu-multiple-networks-using-tap-networking-interfaces/)**
 - **[wiki](https://wiki.qemu.org/Documentation/Networking)**
 - **[virtual machine manager](https://ubuntu.com/server/docs/virtual-machine-manager)**
