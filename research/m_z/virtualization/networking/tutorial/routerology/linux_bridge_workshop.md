@@ -53,6 +53,32 @@ vm: blue box
 tcpdump on physical machine
 
 ```bash
+# on host system create a bridge for vms to use
+ip link add name br100 type bridge
+ip -c -d link show br100
+vlan filtering is off
+# enable vlan filtering
+ip -d link show br100 | grep vlan_filterin
+ip link set br100 type bridge vlan_filtering 1
+ip -c -d link show br0
+# create 2 vm with this bridge interface
+
+bridge link show br100
+8: tapd957706b: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 master lxdbr0 state forwarding priority 32 cost 2 
+11: vth1@if10: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 master br0 state forwarding priority 32 cost 2 
+13: vth2@if12: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 master br0 state forwarding priority 32 cost 2 
+15: vth3@if14: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 master br0 state forwarding priority 32 cost 2 
+17: vth4@if16: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 master br0 state forwarding priority 32 cost 2 
+24: vnet5: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 master br100 state disabled priority 32 cost 2 
+25: vnet6: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 master br100 state disabled priority 32 cost 2 
+
+ip link set dev br100 up
+ ip -c -br link show 
+lo               UNKNOWN        00:00:00:00:00:00 <LOOPBACK,UP,LOWER_UP> 
+br100            UP             36:1d:1f:7e:46:33 <BROADCAST,MULTICAST,UP,LOWER_UP> 
+vnet7            UNKNOWN        fe:54:00:fc:6a:39 <BROADCAST,MULTICAST,UP,LOWER_UP> 
+vnet8            UNKNOWN        fe:54:00:0d:85:ba <BROADCAST,MULTICAST,UP,LOWER_UP> 
+
 # ssh into redbox vm
 ip -br link ls
 enp0s1
