@@ -148,7 +148,7 @@ ip netns exec ns1 ip -br -c link show
 lo               DOWN           00:00:00:00:00:00 <LOOPBACK> 
 vth_1@if8        LOWERLAYERDOWN 72:45:86:8e:8d:6f <NO-CARRIER,BROADCAST,MULTICAST,UP> 
 
-ip -n ns1 address add 192.168.1.50/24 dev vth_1
+ip -n ns1 address add 192.168.10.1/24 dev vth_1
 
 ip netns exec ns1 ip -br -c link show
 lo               DOWN           00:00:00:00:00:00 <LOOPBACK> 
@@ -176,7 +176,7 @@ ip -n ns2 -c -br link show
 lo               DOWN           00:00:00:00:00:00 <LOOPBACK> 
 vth_2@if10       LOWERLAYERDOWN fe:69:e1:e6:1d:fd <NO-CARRIER,BROADCAST,MULTICAST,UP>
 
-ip -n ns2 address add 192.168.1.51/24 dev vth_2
+ip -n ns2 address add 192.168.10.2/24 dev vth_2
 ip -n ns2 -c -br address show
 lo               DOWN           
 vth_2@if10       LOWERLAYERDOWN 192.168.1.51/24 
@@ -213,12 +213,12 @@ br0              UP             ba:ea:cb:63:00:4a <BROADCAST,MULTICAST,UP,LOWER_
 vth1@if7         UP             a2:66:1a:95:cb:36 <BROADCAST,MULTICAST,UP,LOWER_UP> 
 vth2@if9         UP             c6:30:62:f3:90:da <BROADCAST,MULTICAST,UP,LOWER_UP> 
 
-ip netns exec ns1 ping 192.168.1.51
+ip netns exec ns1 ping 192.168.10.2
 PING 192.168.1.51 (192.168.1.51) 56(84) bytes of data.
 64 bytes from 192.168.1.51: icmp_seq=1 ttl=64 time=0.126 ms
 64 bytes from 192.168.1.51: icmp_seq=2 ttl=64 time=0.031 ms
 
-ip netns exec ns2 ping 192.168.1.50
+ip netns exec ns2 ping 192.168.10.1
 PING 192.168.1.50 (192.168.1.50) 56(84) bytes of data.
 64 bytes from 192.168.1.50: icmp_seq=1 ttl=64 time=0.093 ms
 64 bytes from 192.168.1.50: icmp_seq=2 ttl=64 time=0.077 ms
