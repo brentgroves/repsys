@@ -7,6 +7,30 @@
 
 https://www.youtube.com/@routerologyblog1111/videos
 
+## Azure SQL database
+
+time: 1 week
+tasks:
+- transfer schema from Mobex tenant
+- test scripts on Linamar Azure tenant SQL database
+
+
+## K8s On-Prem and Cloud platform setup on-track
+
+time: 3 months
+due date: June
+- Avilla Structures K8s deployment
+- Azure K8s deployment
+Platform Services:
+- Service Mesh Gateway
+- App Notification
+- Email service
+
+## Automated Report System
+
+time: 3 months
+due date:
+
 ## Research
 
 - **[Setting Up Virtual Machines with QEMU, KVM, and Virt-Manager on Debian/Ubuntu](https://linuxconfig.org/setting-up-virtual-machines-with-qemu-kvm-and-virt-manager-on-debian-ubuntu)**
