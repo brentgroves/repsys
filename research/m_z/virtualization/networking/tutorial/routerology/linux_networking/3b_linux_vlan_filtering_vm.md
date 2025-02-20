@@ -57,46 +57,77 @@ The following hooks represent these well-defined points in the networking stack:
 
 ```bash
 sudo su
-ip -c -br link
-lo               UNKNOWN        00:00:00:00:00:00 <LOOPBACK,UP,LOWER_UP> 
-enxf8e43bed63bd  UP             f8:e4:3b:ed:63:bd <BROADCAST,MULTICAST,UP,LOWER_UP> 
-wlp114s0f0       UP             e0:8f:4c:51:6f:17 <BROADCAST,MULTICAST,UP,LOWER_UP> 
-lxdbr0           UP             00:16:3e:a6:6d:bf <BROADCAST,MULTICAST,UP,LOWER_UP> 
-tapbf580e7a      UP             8a:61:02:96:7d:55 <BROADCAST,MULTICAST,UP,LOWER_UP> 
-lxcbr0           DOWN           00:16:3e:00:00:00 <NO-CARRIER,BROADCAST,MULTICAST,UP> 
-enx803f5d090eb3  UP             80:3f:5d:09:0e:b3 <BROADCAST,MULTICAST,UP,LOWER_UP> 
-br0              UP             42:86:f0:20:a4:84 <BROADCAST,MULTICAST,UP,LOWER_UP> 
-vth1@if10        UP             12:d2:48:84:15:22 <BROADCAST,MULTICAST,UP,LOWER_UP> 
-vth2@if12        UP             22:e6:cc:13:6a:8f <BROADCAST,MULTICAST,UP,LOWER_UP> 
 
-ip link add name vth3 type veth peer vth_3
-ip link add name vth4 type veth peer vth_4
-ip -c -br link
+# show devices in bridge br0
+bridge link show 
+# If you have just completed 3_linux_vlan_tutorial then you should see 4 virtual ethernet interfaces in bridge.
 ...
-br0              UP             42:86:f0:20:a4:84 <BROADCAST,MULTICAST,UP,LOWER_UP> 
-vth1@if10        UP             12:d2:48:84:15:22 <BROADCAST,MULTICAST,UP,LOWER_UP> 
-vth2@if12        UP             22:e6:cc:13:6a:8f <BROADCAST,MULTICAST,UP,LOWER_UP> 
-vth_3@vth3       DOWN           fe:bc:30:9c:dd:64 <BROADCAST,MULTICAST,M-DOWN> 
-vth3@vth_3       DOWN           02:da:56:4b:ef:16 <BROADCAST,MULTICAST,M-DOWN> 
-vth_4@vth4       DOWN           26:25:dc:ec:90:fe <BROADCAST,MULTICAST,M-DOWN> 
-vth4@vth_4       DOWN           be:a2:50:57:b2:3c <BROADCAST,MULTICAST,M-DOWN> 
+vth(1-4)
 
-ip netns add ns3
-ip netns add ns4
+# To show the VLAN traffic state, enable VLAN statistics (added in kernel 4.7) as follows:
+ip link set br0 type bridge vlan_stats_enabled 1
 
-ip link set dev vth_3 netns ns3
-ip link set dev vth_4 netns ns4
+# create ubuntu 24.04 server vm from virt-manager called greenbox
+# select the br0 bridge device as the network.
+# don't give it an ip address yet
 
-ip -n ns3 link set dev vth_3 up
-ip -n ns3 address add 192.168.10.3/24 dev vth_3
-ip -n ns3 address add 192.168.10.4/24 dev vth_4
-ip -n ns4 link set dev vth_4 up
+# From host verify new virtual network interface has been added to br0
+bridge link show
 
-bridge link show br0
-ip link set dev vth3 master br0
-ip link set dev vth4 master br0
-ip link set dev vth3 up
-ip link set dev vth4 up
+# From greenbox
+ip link show
+lo
+enp1s0
+
+sudo su
+ip link add name brgb type bridge
+ip -c -j -p -d link show type bridge
+
+ip -c -j -p -d link show brgb | grep vlan
+
+# enable vlan filtering
+ip link set brgb type bridge vlan_filtering 1
+
+# To show the VLAN traffic state, enable VLAN statistics (added in kernel 4.7) as follows:
+
+ip link set brgb type bridge vlan_stats_enabled 1
+ip -c -j -p -d link show brgb | grep vlan
+
+# put the greenbox network interface in a bridge
+ip link set enp1s0 master brgb
+ip link set enp1s0 up
+ip link set brgb up
+ip -c -br -j -p d link show 
+bridge link show
+
+# create virtual interface
+ip link add name vthgb0 type veth peer vthgb_0
+ip -c -br -j -p link show type veth
+
+# create namespace
+ip netns add nsgb0
+ip link set dev vthgb_0 netns nsgb0
+
+ip -n nsgb0 link set dev vthgb_0 up
+ip -n nsgb0 address add 192.168.10.10/24 dev vthgb_0
+
+bridge link show brgb0
+ip link set dev vthgb0 master brgb
+ip link set dev vthgb0 up
+
+ip -c -br -j -p d link show 
+bridge link show
+
+# bridge vlan add dev veth2 vid 2 pvid untagged`
+# The pvid parameter causes untagged frames to be assigned to this VLAN at ingress (veth2 to bridge), and the untagged parameter causes the packet to be untagged on egress (bridge to veth2):
+bridge vlan add vid 10 dev vthgb pvid untagged
+bridge vlan add vid 10 dev enp1s0 pvid untagged
+bridge vlan del vid 1 dev brgb self 
+bridge vlan del vid 1 dev enp1s0
+
+# from host
+bridge vlan add vid 10 dev vnet10 pvid untagged
+bridge vlan del vid 1 dev vnet10
 
 ip netns exec ns1 ping 192.168.10.4
 
