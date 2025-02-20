@@ -60,6 +60,7 @@ vlan filtering is off
 # enable vlan filtering
 ip -d link show br100 | grep vlan_filterin
 ip link set br100 type bridge vlan_filtering 1
+ip link set dev br100 up
 ip -c -d link show br0
 # create 2 vm with this bridge interface
 
@@ -90,22 +91,28 @@ lsmod | grep 802
 # it will load when you create the interfaces
 ip -br -c link ls
 # create subordinate to enp0s1
-ip link add link enp0s1 name vlan10 type vlan id 10
-ip link add link enp0s1 name vlan10 type vlan id 20
+ip link add link enp1s0 name vlan10 type vlan id 10
+ip link add link enp1s0 name vlan20 type vlan id 20
 # 13:43 into video
 ip -br -c link ls
-enp0s1
-vlan10@enp0s1
-vlan20@enp0s1
 lsmod | grep 802
 8021q
 ip link set dev vlan10 netns ns-10
 ip link set dev vlan20 netns ns-20
+# from host
 ip -br -c link ls
-enp0s1
-
 # these are gone since we have put in different ns
 vlan10@enp0s1
 vlan20@enp0s1
+# from redbox
+ip -n ns-10 address add 10.0.0.10/24 dev vlan10
+ip -n ns-10 link set dev vlan10 up
+ip -n ns-10 -br -c address show
+ip netns exec ns-20 bash
+ip link ls
+ip link set dev vlan20 up
+ip address add 20.0.0.10/24 dev vlan20
+ip -br -c address show
+
 
 ```
