@@ -1,14 +1,16 @@
 # **[Linux Bridge Workshop](https://www.youtube.com/watch?v=Ga_mAaKpKdk)**
 
-
 **[Back to Research List](../../../../../../../research_list.md)**\
 **[Back to Current Status](../../../../../../../../development/status/weekly/current_status.md)**\
 **[Back to Main](../../../../../../../../README.md)**
 
 ## references
 
+- **[disable iptable for bridges](https://wiki.libvirt.org/Net.bridge.bridge-nf-call_and_sysctl.conf.html)**
 - **[Linux Networking](https://www.youtube.com/watch?v=oVu0O0UMBCc&list=PLmZU6NElARbZtvrVbfz9rVpWRt5HyCeO7)**
+
 ## netfilter subsystem hooks
+
 ![pf](https://people.netfilter.org/pablo/nf-hooks.png)
 
 The following hooks represent these well-defined points in the networking stack:
@@ -31,10 +33,10 @@ The following hooks represent these well-defined points in the networking stack:
 | security                      |            | ✓     | ✓       | ✓      |             |
 | nat (SNAT)                    |            | ✓     |         |        | ✓           |
 
+## commands
 
-## commands 
+vm: red box
 
-vm: red box 
 - ip:192.168.128.101/24
 
 - namespace:10
@@ -46,6 +48,7 @@ connect by sw bridge outside of vm:br100
 
 vm: blue box
 192.168.128/102/24
+
 - namespace:ns-x
   - vlan10 - enp0s1 - br100
   - vlan20 - enp0s1 - br100
