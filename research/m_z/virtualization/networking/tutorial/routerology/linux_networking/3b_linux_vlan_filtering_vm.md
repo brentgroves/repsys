@@ -91,9 +91,10 @@ ip -c -j -p -d link show brgb | grep vlan
 
 # enable vlan filtering
 ip link set brgb type bridge vlan_filtering 1
+# show vlan settings are enabled
+ip -c -j -p -d link show br0 | grep vlan
 
 # To show the VLAN traffic state, enable VLAN statistics (added in kernel 4.7) as follows:
-
 ip link set brgb type bridge vlan_stats_enabled 1
 ip -c -j -p -d link show brgb | grep vlan
 
@@ -110,8 +111,11 @@ ip -c -br -j -p link show type veth
 
 # create namespace
 ip netns add nsgb0
+ip netns ls
+# this allows netns nsgb0 to communicate with veth device vthgb0
 ip link set dev vthgb_0 netns nsgb0
 
+# add ip on the same subnet of the 4 other ips already created on the host in netns 1-4.
 ip -n nsgb0 link set dev vthgb_0 up
 ip -n nsgb0 address add 192.168.10.10/24 dev vthgb_0
 
@@ -124,6 +128,7 @@ bridge link show
 
 # bridge vlan add dev veth2 vid 2 pvid untagged`
 # The pvid parameter causes untagged frames to be assigned to this VLAN at ingress (veth2 to bridge), and the untagged parameter causes the packet to be untagged on egress (bridge to veth2):
+# set up the bridge for vlans. dont know if i need to do this or just setup the devices in the bridge.
 bridge vlan add vid 10 dev vthgb pvid untagged
 bridge vlan add vid 10 dev enp1s0 pvid untagged
 bridge vlan del vid 1 dev brgb self 
@@ -132,15 +137,23 @@ bridge vlan del vid 1 dev enp1s0
 # from host
 bridge vlan add vid 10 dev vnet10 pvid untagged
 bridge vlan del vid 1 dev vnet10
+# notice that br0 is not configured with a vid but all veth devices in the bridge are.
+bridge vlan show
 
-ip netns exec ns1 ping 192.168.10.4
+# from each namespace verify the peer network interface is not configured for vlan
+ip -c -br -j -p link show
+ip -c -br -j -p address show
+bridge vlan show
 
-# vlan filtering is not enabled
-ip -c -j -p -d link show br0 | grep vlan
+# from host
+# look at all the mac address and devices that have been determined dynamically.
+bridge fdb show dynamic
 
-9: br0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP mode DEFAULT group default qlen 1000
-    link/ether 42:86:f0:20:a4:84 brd ff:ff:ff:ff:ff:ff promiscuity 0  allmulti 0 minmtu 68 maxmtu 65535 
-    bridge forward_delay 1500 hello_time 200 max_age 2000 ageing_time 30000 stp_state 0 priority 32768 vlan_filtering 0 vlan_protocol 802.1Q bridge_id 8000.42:86:f0:20:a4:84 designated_root 8000.42:86:f0:20:a4:84 root_port 0 root_path_cost 0 topology_change 0 topology_change_detected 0 hello_timer    0.00 tcn_timer    0.00 topology_change_timer    0.00 gc_timer    0.00 vlan_default_pvid 1 vlan_stats_enabled 0 vlan_stats_per_port 0 group_fwd_mask 0 group_address 01:80:c2:00:00:00 mcast_snooping 1 no_linklocal_learn 0 mcast_vlan_snooping 0 mcast_router 1 mcast_query_use_ifaddr 0 mcast_querier 0 mcast_hash_elasticity 16 mcast_hash_max 4096 mcast_last_member_count 2 mcast_startup_query_count 2 mcast_last_member_interval 100 mcast_membership_interval 26000 mcast_querier_interval 25500 mcast_query_interval 12500 mcast_query_response_interval 1000 mcast_startup_query_interval 3125 mcast_stats_enabled 0 mcast_igmp_version 2 mcast_mld_version 1 nf_call_iptables 0 nf_call_ip6tables 0 nf_call_arptables 0 addrgenmode eui64 numtxqueues 1 numrxqueues 1 gso_max_size 65536 gso_max_segs 65535 tso_max_size 524280 tso_max_segs 65535 gro_max_size 65536 
+# from tmux with each pane set to different netns
+
+ping 192.168.10.2
+# Notice that after this 1 ping request the forwarding database knows about each veth device's mac address.
+bridge fdb show dynamic
 
 ip link set dev br0 type bridge help
 
@@ -159,7 +172,7 @@ ip link set dev br0 type bridge help
 
 
 bridge vlan add vid 10 dev vth1 pvid untagged
-# master is not necessary here
+# master is not necessary here since it is the default
 bridge vlan add vid 10 dev vth2 pvid untagged master
 
 bridge vlan show
@@ -177,10 +190,15 @@ vth3              1 PVID Egress Untagged
 vth4              1 PVID Egress Untagged
 
 # enable vlan filtering
+# although I did not give the host bridge a vid I still enabled vlan filtering
 ip -d link show br0 | grep vlan_filterin
 ip link set br0 type bridge vlan_filtering 1
 # vth1 can communicate with vth2 because they share a common vlan
 ip netns exec ns1 ping 192.168.10.4
+
+# we want to use vid 10 for vth1 and vth2 and vid 20 for vth3 and vth4 so delete vid 1 which I believe is given by default but I don't know when.
+
+# 802.1Q VLANs are defined by VLAN IDs (VIDs) and VLAN names. A unique number between 1 and 4094 that identifies a particular VLAN. VID 1 is reserved for the Default VLAN. Although VID 1 is reserved as the default vid when linamar configures each switch the delete vid 1 and configure each port with their default which is vid 5. 
 
 bridge vlan del vid 1 dev vth1
 bridge vlan del vid 1 dev vth2
@@ -188,9 +206,13 @@ bridge vlan del vid 1 dev vth3
 bridge vlan del vid 1 dev vth4
 
 # if you want to delete vid 1 from the bridge you must add the self keyword.
+# I deleted all vids from the host bridge and it still worked but i still have them in the vm bridge although I don't know if it is necessary.
+
 bridge vlan del vid 1 dev br0 self
 
 # tag on ingress untag on egress
+# I don't know exactly when the traffic is untagged and when I am sending traffic to an extreme switch configured in trunk mode I believe I need the tag left in the ethernet frame.
+
 bridge vlan add vid 10 dev vth4 pvid untagged
 
 bridge vlan show
@@ -202,8 +224,11 @@ lxdbr0            1 PVID Egress Untagged
 tapd957706b       1 PVID Egress Untagged
 vth1              10 PVID Egress Untagged
 vth2              10 PVID Egress Untagged
-vth4              10 PVID Egress Untagged
+# not done yet
+vth3              20 PVID Egress Untagged
+vth4              20 PVID Egress Untagged
 
+# since ns3 and ns4 have not been assigned a vid ns1 and ns2 cannot access them.
 ip netns exec ns1 ping 192.168.10.3
 # fails
 ip netns exec ns1 ping 192.168.10.4
@@ -220,10 +245,10 @@ bridge fdb show dynamic
 fe:bc:30:9c:dd:64 dev vth3 vlan 10 master br0 
 
 # change vid
-bridge vlan add vid 30 dev vth3 pvid untagged
 bridge vlan add vid 20 dev vth3 pvid untagged
 bridge vlan add vid 20 dev vth4 pvid untagged
-bridge vlan del vid 30 dev vth3
+bridge vlan del vid 1 dev vth3
+bridge vlan del vid 1 dev vth4
 
 bridge vlan show
 port              vlan-id  
@@ -242,7 +267,7 @@ ip netns exec ns1 ping 192.168.10.4
 # allowed
 ip netns exec ns3 ping 192.168.10.4
 
- bridge fdb show dynamic
+bridge fdb show dynamic
 00:16:3e:46:a8:a7 dev tapd957706b vlan 1 master lxdbr0 
 92:99:9b:e4:da:1a dev vth1 vlan 10 master br0 
 f6:69:7c:7a:9b:ea dev vth2 vlan 10 master br0 
@@ -253,20 +278,4 @@ bridge vlan help
 Usage: bridge vlan { add | del } vid VLAN_ID dev DEV [ tunnel_info id TUNNEL_ID ]
 [ pvid ] [ untagged ]
 [ self ] [ master ]
-# stopped at 10:41
 
-## original setup
-
-default
-- veth1
-- veth2
-- br0
-ns1
-- veth_1 peer to veth1
-- 192.168.1.50
-ns2
-- veth_2 peer to veth2
-- 192.168.1.51
-
-```bash
-```
