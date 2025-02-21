@@ -34,7 +34,7 @@ The following hooks represent these well-defined points in the networking stack:
 
 ## new setup
 
-- host
+- default
   - br0
     - vth1 -> vth_1
     - vth2 -> vth_2
@@ -52,9 +52,7 @@ The following hooks represent these well-defined points in the networking stack:
 - netns ns4
   - vlan 20
     - vth_4, 192.168.10.4/24
-- greenbox vm
-  - bggb
-
+- greenbox/ns
 
 ```bash
 sudo su
@@ -94,39 +92,32 @@ ip -c -j -p -d link show brgb | grep vlan
 # enable vlan filtering
 ip link set brgb type bridge vlan_filtering 1
 # show vlan settings are enabled
-ip -c -j -p -d link show brgb | grep vlan
+ip -c -j -p -d link show br0 | grep vlan
 
 # To show the VLAN traffic state, enable VLAN statistics (added in kernel 4.7) as follows:
 ip link set brgb type bridge vlan_stats_enabled 1
 ip -c -j -p -d link show brgb | grep vlan
 
 # put the greenbox network interface in a bridge
-# I believe this is needed because enp1s0 in connected to the host's br0 through this network interface.
 ip link set enp1s0 master brgb
 ip link set enp1s0 up
 ip link set brgb up
-ip -c -d -j -p d link show 
+ip -c -br -j -p d link show 
 bridge link show
 
 # create virtual interface
-# In practice I think we can not just rely on enp1s0 if we are going to be using multiple vlans from a vm.
 ip link add name vthgb0 type veth peer vthgb_0
 ip -c -br -j -p link show type veth
 
 # create namespace
-# Again this simulates 1 vm being able to use multiple vlan's. I guess this is similar to a real switch port configured in trunk mode. 
 ip netns add nsgb0
 ip netns ls
-# this allows netns nsgb0 peer device to communicate with the veth device vthgb0 which will be added to the vm bridge.
+# this allows netns nsgb0 to communicate with veth device vthgb0
 ip link set dev vthgb_0 netns nsgb0
 
 # add ip on the same subnet of the 4 other ips already created on the host in netns 1-4.
-# Since the ultimate goal is to communicate with any linamar vlan I may experiment with setting this to 10.0.0.0/8 but I don't know yet.
-
 ip -n nsgb0 link set dev vthgb_0 up
 ip -n nsgb0 address add 192.168.10.10/24 dev vthgb_0
-
-# show that the vm bridge now contains 2 network interfaces. 1 for communicating with the host's bridge and the other for communicating with the veth device we are going to use for vlan 10.
 
 bridge link show brgb0
 ip link set dev vthgb0 master brgb
@@ -138,15 +129,12 @@ bridge link show
 # bridge vlan add dev veth2 vid 2 pvid untagged`
 # The pvid parameter causes untagged frames to be assigned to this VLAN at ingress (veth2 to bridge), and the untagged parameter causes the packet to be untagged on egress (bridge to veth2):
 # set up the bridge for vlans. dont know if i need to do this or just setup the devices in the bridge.
-bridge vlan add vid 10 dev vthgb0 pvid untagged
+bridge vlan add vid 10 dev vthgb pvid untagged
 bridge vlan add vid 10 dev enp1s0 pvid untagged
-# it looks like I don't need to configure the bridge itself with vid10. This is probably a good thing so that multiple vlan packets can be routed through the bridge but I don't know for sure. The bridge is still configured for vlan_filtering although it is not assigned any vid.
 bridge vlan del vid 1 dev brgb self 
 bridge vlan del vid 1 dev enp1s0
-bridge vlan show
 
 # from host
-Make sure the network interface that hypervisor created in the bridge selected at creation is configured with a specific vlan.  Although won't this mean only 1 vlan can be routed to it.
 bridge vlan add vid 10 dev vnet10 pvid untagged
 bridge vlan del vid 1 dev vnet10
 # notice that br0 is not configured with a vid but all veth devices in the bridge are.
