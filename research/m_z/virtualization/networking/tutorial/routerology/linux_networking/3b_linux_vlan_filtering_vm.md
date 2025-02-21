@@ -1,15 +1,15 @@
 # **[Linux VLAN Filtering](https://www.youtube.com/watch?v=a8ghZoBZcE0&list=PLmZU6NElARbZtvrVbfz9rVpWRt5HyCeO7&index=3)**
 
-
 **[Back to Research List](../../../../../../research_list.md)**\
 **[Back to Current Status](../../../../../../../development/status/weekly/current_status.md)**\
 **[Back to Main](../../../../../../../README.md)**
 
 ## references
 
-
 - **[Linux Networking](https://www.youtube.com/@routerologyblog1111/playlists)**
+
 ## netfilter subsystem hooks
+
 ![pf](https://people.netfilter.org/pablo/nf-hooks.png)
 
 The following hooks represent these well-defined points in the networking stack:
@@ -32,7 +32,6 @@ The following hooks represent these well-defined points in the networking stack:
 | security                      |            | ✓     | ✓       | ✓      |             |
 | nat (SNAT)                    |            | ✓     |         |        | ✓           |
 
-
 ## new setup
 
 - default
@@ -53,14 +52,20 @@ The following hooks represent these well-defined points in the networking stack:
 - netns ns4
   - vlan 20
     - vth_4, 192.168.10.4/24
-
+- greenbox/ns
 
 ```bash
 sudo su
 
 # show devices in bridge br0
-bridge link show 
 # If you have just completed 3_linux_vlan_tutorial then you should see 4 virtual ethernet interfaces in bridge.
+
+bridge link show 
+11: vth1@if10: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 master br0 state forwarding priority 32 cost 2 
+13: vth2@if12: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 master br0 state forwarding priority 32 cost 2 
+15: vth3@if14: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 master br0 state forwarding priority 32 cost 2 
+17: vth4@if16: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 master br0 state forwarding priority 32 cost 2 
+
 ...
 vth(1-4)
 
@@ -71,7 +76,6 @@ ip link set br0 type bridge vlan_stats_enabled 1
 # select the br0 bridge device as the network.
 # don't give it an ip address yet
 
-# From host verify new virtual network interface has been added to br0
 bridge link show
 
 # From greenbox
