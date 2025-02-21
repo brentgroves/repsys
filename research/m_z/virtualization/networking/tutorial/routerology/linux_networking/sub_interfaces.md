@@ -1,4 +1,4 @@
-# **[Linux VLAN Filtering](https://www.youtube.com/watch?v=a8ghZoBZcE0&list=PLmZU6NElARbZtvrVbfz9rVpWRt5HyCeO7&index=3)**
+# **[Advance series to explain vlan sub-interfeces and much more](../../../vlan/fun_with_veth_devices/part4.md)**
 
 **[Back to Research List](../../../../../../research_list.md)**\
 **[Back to Current Status](../../../../../../../development/status/weekly/current_status.md)**\

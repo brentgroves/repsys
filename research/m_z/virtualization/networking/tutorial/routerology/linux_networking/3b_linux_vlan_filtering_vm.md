@@ -6,6 +6,8 @@
 
 ## references
 
+- **[Fun with veth-devices, Linux bridges and VLANs in unnamed Linux network namespaces – IV](https://linux-blog.anracom.com/2017/11/20/fun-with-veth-devices-linux-bridges-and-vlans-in-unnamed-linux-network-namespaces-iv/#:~:text=Both%20variants%20can%20also%20be,trunk%20interface%20a%20trunk%20port.)**
+- **[good vlan instruction](https://developers.redhat.com/blog/2018/10/22/introduction-to-linux-interfaces-for-virtual-networking#vlan)**
 - **[Linux Networking](https://www.youtube.com/@routerologyblog1111/playlists)**
 
 ## netfilter subsystem hooks
@@ -137,7 +139,11 @@ bridge link show
 
 # bridge vlan add dev veth2 vid 2 pvid untagged`
 # The pvid parameter causes untagged frames to be assigned to this VLAN at ingress (veth2 to bridge), and the untagged parameter causes the packet to be untagged on egress (bridge to veth2):
-# set up the bridge for vlans. dont know if i need to do this or just setup the devices in the bridge.
+# set up the bridge for vlans. dont know if i need to do this or just setup the devices in the bridge. This also limits the bridge to 1 vlan
+- **[good vlan instruction](https://developers.redhat.com/blog/2018/10/22/introduction-to-linux-interfaces-for-virtual-networking#vlan)**
+![multiple vlan over single device](https://developers.redhat.com/blog/wp-content/uploads/2018/10/vlan.png)**
+- **[Fun with veth-devices, Linux bridges and VLANs in unnamed Linux network namespaces – IV](https://linux-blog.anracom.com/2017/11/20/fun-with-veth-devices-linux-bridges-and-vlans-in-unnamed-linux-network-namespaces-iv/#:~:text=Both%20variants%20can%20also%20be,trunk%20interface%20a%20trunk%20port.)**
+
 bridge vlan add vid 10 dev vthgb0 pvid untagged
 bridge vlan add vid 10 dev enp1s0 pvid untagged
 # it looks like I don't need to configure the bridge itself with vid10. This is probably a good thing so that multiple vlan packets can be routed through the bridge but I don't know for sure. The bridge is still configured for vlan_filtering although it is not assigned any vid.
@@ -146,7 +152,7 @@ bridge vlan del vid 1 dev enp1s0
 bridge vlan show
 
 # from host
-Make sure the network interface that hypervisor created in the bridge selected at creation is configured with a specific vlan.  Although won't this mean only 1 vlan can be routed to it.
+# Make sure the network interface that hypervisor created in the bridge selected at creation is configured with a specific vlan.  Although won't this mean only 1 vlan can be routed to it.
 bridge vlan add vid 10 dev vnet10 pvid untagged
 bridge vlan del vid 1 dev vnet10
 # notice that br0 is not configured with a vid but all veth devices in the bridge are.
@@ -290,4 +296,56 @@ bridge vlan help
 Usage: bridge vlan { add | del } vid VLAN_ID dev DEV [ tunnel_info id TUNNEL_ID ]
 [ pvid ] [ untagged ]
 [ self ] [ master ]
+
+# switch to greenbox vm
+ip netns exec nsgb0 bash
+# see the mac address so you can check the host fdb later
+ip link show
+ip address show
+192.168.10.10
+# now try to access host namespace configured for ns10.
+ping 192.168.10.1
+# it works
+
+# from host verify vm namespace mac address is now show in fdb
+bridge fdb show dynamic
+# It is show with dev that the hypervisor added to this bridge.
+
+# from host namespaces ping vm namespace
+ping 192.168.10.11
+# works
+
+# from greenbox vm
+# test deleting the bridges vlan vid in expection of using vlan sub-interface to pass multiple vlan through the bridge in later experiment.
+it was already deleted.
+test deleting vid on the interface created by the hypervisor since we will need to pass all network traffic through this device to get to the host bridge.
+bridge vlan del vid 10 dev enp1s0
+# verify vid was deleted from interface to host
+bridge vlan show
+
+# from greenbox vm namespace
+ip netns exec nsgb0 bash
+ping 192.168.10.1
+# does not work
+
+# from host namespaces
+ping 192.168.10.10
+# does not work
+
+# re-add vid to device linked to host
+bridge vlan add vid 10 dev enp1s0 pvid untagged
+# verify vid was added to device linked to host
+bridge vlan show
+
+# from greenbox vm namespace
+ip netns exec nsgb0 bash
+ping 192.168.10.1
+# works
+
+# from host namespaces
+ping 192.168.10.10
+# works
+
+```
+
 
