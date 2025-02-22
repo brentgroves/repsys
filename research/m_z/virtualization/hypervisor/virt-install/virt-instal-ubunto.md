@@ -72,6 +72,22 @@ ip a s virbr0
        valid_lft forever preferred_lft forever
 ```
 
+We can set up br0 for direct IP assignment from our DHCP server on LAN or route IPv4/IPv6 address directly as follows:
+
+Find your Ethernet device name
+Type the following command and then note down Ethernet name:
+
+```bash
+sudo snap install network-manager  # version 1.2.2-31
+nmcli connection show --active
+NAME             UUID                                  TYPE      DEVICE          
+netplan-eno1     10838d80-caeb-349e-ba73-08ed16d4d666  ethernet  eno1            
+mpqemubr0        2f571f08-eec4-466d-be58-0d7a9c908f9e  bridge    mpqemubr0       
+netplan-eno2     80ab1970-e833-372e-8635-f330b7d9f1f0  ethernet  eno2            
+tap-5a7255a80b5  9ccf59d4-9cdd-4036-87c4-477ebd1ff95d  tun       tap-5a7255a80b5 
+virbr0           c8dbdc7b-5e61-4135-8d63-535f65d49eac  bridge    virbr0   
+```
+
 ## install
 
 ```bash
