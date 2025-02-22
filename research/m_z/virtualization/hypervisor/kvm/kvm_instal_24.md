@@ -42,7 +42,7 @@ egrep -c '(vmx|svm)' /proc/cpuinfo
 8
 ```
 
-## If the command returns a value of 0, your processor is not capable of running KVM. On the other hand, any other number means you can proceed with the installation.
+## If the command returns a value of 0, your processor is not capable of running KVM. On the other hand, any other number means you can proceed with the installation
 
 2. Next, check if your system can use KVM acceleration:
 
@@ -73,6 +73,7 @@ sudo apt install qemu-kvm libvirt-daemon-system libvirt-clients bridge-utils -y
 Wait until the system installs all the packages.
 
 ## Step 4: Authorize Users
+
 Only members of the libvirt and kvm user groups can run virtual machines. If you want specific users to run VMs, add them to those user groups. Follow the steps below:
 
 1. Add the user you want to run the virtual machines to the libvirt group:
