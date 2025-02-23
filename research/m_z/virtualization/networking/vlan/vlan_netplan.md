@@ -6,6 +6,9 @@
 
 ## references
 
+- **[very good explanation of network namespaces and bridging to host](https://yuminlee2.medium.com/linux-networking-network-namespaces-cb6b00ad6ba4)**
+- **[use python to run process from network namespace](https://medium.com/@minhaz217/network-namespace-setup-in-linux-using-python-1bc3d67c396)**
+- **[persistent network namespaces](https://manpages.ubuntu.com/manpages/focal/en/man1/unshare.1.html)**
 - **[extreme swtiches](https://emc.extremenetworks.com/content/oneview/docs/network/devices/docs/l_ov_cf_vlan.html#:~:text=Port%20VLAN%20ID's.-,VLAN%20ID%20(VID),(VIDs)%20and%20VLAN%20names.&text=A%20unique%20number%20between%201,reserved%20for%20the%20Default%20VLAN.)**
 
 802.1Q VLANs are defined by VLAN IDs (VIDs) and VLAN names. A unique number between 1 and 4094 that identifies a particular VLAN. VID 1 is reserved for the Default VLAN. Although VID 1 is reserved as the default vid when linamar configures each switch the delete vid 1 and configure each port with their default which is vid 5.
