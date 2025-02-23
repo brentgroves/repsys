@@ -6,6 +6,51 @@
 
 ## references
 
+<https://yakking.branchable.com/>
+o set up different network routes using different VLAN IDs, you need to configure a Layer 3 switch or router, assigning specific VLANs to different switch ports and then creating separate routing interfaces on the Layer 3 device for each VLAN, essentially creating distinct logical networks that can communicate with each other through the router/switch; this process usually involves creating "SVI" (Switch Virtual Interfaces) on the Layer 3 device, each tied to a specific VLAN ID and its corresponding IP subnet.
+
+- **[The answer](https://askubuntu.com/questions/992428/netplan-with-multiple-vlans-on-single-interface-help-needed)**
+
+```yaml
+The following works for me to define two vlans on one physical interface:
+
+network:
+    version: 2
+    ethernets:
+        ens3:
+            addresses: 
+                - 192.168.122.201/24
+            gateway4: 192.168.122.1
+            nameservers:
+                addresses: [192.168.122.1]
+        ens8: {}
+
+    vlans:
+        vlan.101:
+            id: 101
+            link: ens8
+            addresses: [192.168.101.1/24]
+        vlan.102:
+            id: 102
+            link: ens8
+            addresses: [192.168.102.1/24]
+```
+
+Notice, the vlan section is at the same level of indent as the ethernets key. Both are contained within network.
+
+ip link to show result:
+
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN mode DEFAULT group default qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+2: ens3: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc fq_codel state UP mode DEFAULT group default qlen 1000
+    link/ether 52:54:00:e4:bc:6f brd ff:ff:ff:ff:ff:ff
+3: ens8: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc fq_codel state UP mode DEFAULT group default qlen 1000
+    link/ether 52:54:00:7e:d5:19 brd ff:ff:ff:ff:ff:ff
+4: vlan.101@ens8: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP mode DEFAULT group default qlen 1000
+    link/ether 52:54:00:7e:d5:19 brd ff:ff:ff:ff:ff:ff
+5: vlan.102@ens8: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP mode DEFAULT group default qlen 1000
+    link/ether 52:54:00:7e:d5:19 brd ff:ff:ff:ff:ff:ff
+
 - **[very good explanation of network namespaces and bridging to host](https://yuminlee2.medium.com/linux-networking-network-namespaces-cb6b00ad6ba4)**
 - **[use python to run process from network namespace](https://medium.com/@minhaz217/network-namespace-setup-in-linux-using-python-1bc3d67c396)**
 - **[persistent network namespaces](https://manpages.ubuntu.com/manpages/focal/en/man1/unshare.1.html)**
