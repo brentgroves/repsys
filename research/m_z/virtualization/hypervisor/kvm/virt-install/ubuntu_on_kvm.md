@@ -85,6 +85,40 @@ Nmap scan report for 32HisenseRokuTV.home (192.168.1.223)
 Host is up (0.013s latency).
 Nmap done: 256 IP addresses (8 hosts up) scanned in 2.65 seconds
 
+https://computingforgeeks.com/install-kvm-virtualization-on-ubuntu-noble-numbat/
+
+sudo virt-install \
+--name ubuntu-jammy \
+--vcpus 2 \
+--ram 2048 \
+--os-variant ubuntu22.04 \
+--disk path=/var/lib/libvirt/images/ubuntu2204.qcow2,size=30 \
+--location /var/lib/libvirt/images/ubuntu-22.04-live-server-amd64.iso,kernel=casper/vmlinuz,initrd=casper/initrd \
+--console pty,target_type=serial \
+--graphics none \
+--extra-args 'console=ttyS0,115200n8' 
+
+sudo virt-install \
+--name ubuntu-jammy \
+--vcpus 2 \
+--ram 2048 \
+--os-variant ubuntu22.04 \
+--disk path=/var/lib/libvirt/images/ubuntu2404.qcow2,size=30 \
+--location /var/lib/libvirt/images/ubuntu-24.04.2-live-server-amd64.iso,kernel=casper/vmlinuz,initrd=casper/initrd \
+--console pty,target_type=serial \
+--graphics none \
+--extra-args 'console=ttyS0,115200n8' 
+
+virt-install --name centos8-2 --memory 10240 --vcpus=2 --location=/tmp/rhel-server-7.6-x86_64-dvd.iso --network bridge=nm-bridge --graphics=none --extra-args console=ttyS0 -v
+Using centos7.0 default --disk size=10
+
+
+virt-install --name centos8-2 --memory 10240 --vcpus=2 --os-type=Linux --os-variant=centos7.0 --location=/tmp/rhel-server-7.6-x86_64-dvd.iso  --network network=default --graphics=vnc -v
+Using centos7.0 default --disk size=10
+
+
+./virt-install --debug --virt-type kvm --name ubuntu-noble --memory 4000 --disk size=100,path=/home/omajid/virt/noble.qcow2,format=qcow2 --graphics spice --location http://archive.ubuntu.com/ubuntu/dists/noble/main/installer-amd64/ --os-variant ubuntunoble --noautoconsole --wait
+
 virt-install --name noble-template \
       --ram 16384 \
       --disk path=build/noble-seed.qcow2,format=qcow2,bus=virtio \
