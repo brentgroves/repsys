@@ -86,6 +86,7 @@ Host is up (0.013s latency).
 Nmap done: 256 IP addresses (8 hosts up) scanned in 2.65 seconds
 
 https://computingforgeeks.com/install-kvm-virtualization-on-ubuntu-noble-numbat/
+https://computingforgeeks.com/how-to-create-and-configure-bridge-networking-for-kvm-in-linux/
 
 sudo virt-install \
 --name ubuntu-jammy \
