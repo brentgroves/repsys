@@ -58,6 +58,13 @@ ip link add name br0 type bridge
 ip link set br0 up
 ip -c -br link show
 
+ip -c -br link show type bridge
+br-2c4c88ba5dfd  DOWN           02:42:ff:bd:27:1c <NO-CARRIER,BROADCAST,MULTICAST,UP> 
+docker0          DOWN           02:42:7f:e9:b2:91 <NO-CARRIER,BROADCAST,MULTICAST,UP> 
+br0              DOWN           ba:ea:cb:63:00:4a <BROADCAST,MULTICAST> 
+ip link set dev en01 master br0
+ip link set dev vth1 up
+
 nmap -sP 192.168.1.0/24
 Starting Nmap 7.95 ( https://nmap.org ) at 2025-02-22 17:19 EST
 Nmap scan report for router.home (192.168.1.1)
@@ -78,6 +85,27 @@ Nmap scan report for 32HisenseRokuTV.home (192.168.1.223)
 Host is up (0.013s latency).
 Nmap done: 256 IP addresses (8 hosts up) scanned in 2.65 seconds
 
+virt-install --name noble-template \
+      --ram 16384 \
+      --disk path=build/noble-seed.qcow2,format=qcow2,bus=virtio \
+      --vcpus 2 \
+      --os-variant ubuntu24.04 \
+      --graphics none \
+      --console pty,target_type=serial \
+      --location /var/lib/libvirt/images/ubuntu-24.04.2-live-server-amd64.iso,kernel=casper/vmlinuz,initrd=casper/initrd \
+      --network bridge=virbr0,model=virtio \
+      --extra-args 'console=ttyS0,115200n8 serial'
+
+virt-install --name noble-template \
+      --ram 16384 \
+       --disk size=20 \
+      --vcpus 2 \
+      --os-variant ubuntu24.04 \
+      --graphics none \
+      --console pty,target_type=serial \
+      --location /var/lib/libvirt/images/ubuntu-24.04.2-live-server-amd64.iso,kernel=casper/vmlinuz,initrd=casper/initrd \
+      --network bridge=virbr0,model=virtio \
+      --extra-args 'console=ttyS0,115200n8 serial'
 # did not find network
 sudo virt-install --name vm61 \
 --os-variant ubuntu24.04 \
@@ -90,8 +118,9 @@ sudo virt-install --name vm61 \
 --extra-args='console=ttyS0,115200n8 --- console=ttyS0,115200n8' \
 --debug
 
+
 # use the default network
-sudo virt-install --name vm61 \
+sudo virt-install --name vm66 \
 --os-variant ubuntu24.04 \
 --vcpus 1 \
 --memory 2048 \
