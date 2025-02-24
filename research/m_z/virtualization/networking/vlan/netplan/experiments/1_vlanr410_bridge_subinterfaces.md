@@ -193,6 +193,12 @@ ip netns add ns1
 ip netns add ns2
 ip netns add ns3
 ip netns add ns4
+# verify
+ip netns ls
+ns1 (id: 0)
+ns2 (id: 1)
+ns3 (id: 2)
+ns4 (id: 3)
 ```
 
 ## put peer devices in namespaces
@@ -260,11 +266,23 @@ bridge link show br0
 12: vth3@if11: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 master br0 state disabled priority 32 cost 2 
 14: vth4@if13: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 master br0 state disabled priority 32 cost 2 
 
-ip -n ns1 -c -br link show               DOWN           00:00:00:00:00:00 <LOOPBACK> 
+
+```
+
+## summary
+
+- 2 vlan sub interfaces linked to 1 physical interface
+- 1 bridge with pvid 1
+- 4 virtual network interfaces in bridge with peers in separate namespaces.
+
+```bash
+ip -n ns1 -c -br link show
+lo               DOWN           00:00:00:00:00:00 <LOOPBACK> 
 vth_1@if8        UP             ca:2f:9e:1a:e7:0a <BROADCAST,MULTICAST,UP,LOWER_UP> 
 ip -n ns1 -c -br a s 
 lo               DOWN           
 vth_1@if8        UP             192.168.10.3/24 fe80::c82f:9eff:fe1a:e70a/64 
+
 
 ip -n ns2 -c -br link show   
 lo               DOWN           00:00:00:00:00:00 <LOOPBACK> 
@@ -289,14 +307,90 @@ lo               DOWN
 vth_4@if14       UP             192.168.20.4/24 fe80::904b:ecff:fe5a:f558/64 
 netplan status --all
 
+
+bridge vlan show
+port              vlan-id  
+br0               1 PVID Egress Untagged
+vth1              1 PVID Egress Untagged
+vth2              1 PVID Egress Untagged
+vth3              1 PVID Egress Untagged
+vth4              1 PVID Egress Untagged
+
+ip -c -br link show
+lo               UNKNOWN        00:00:00:00:00:00 <LOOPBACK,UP,LOWER_UP> 
+eno1             UP             78:2b:cb:23:45:b0 <BROADCAST,MULTICAST,UP,LOWER_UP> 
+eno2             DOWN           78:2b:cb:23:45:b1 <BROADCAST,MULTICAST> 
+vlan10@eno1      UP             78:2b:cb:23:45:b0 <BROADCAST,MULTICAST,UP,LOWER_UP> 
+vlan20@eno1      UP             78:2b:cb:23:45:b0 <BROADCAST,MULTICAST,UP,LOWER_UP> 
+br0              UP             0a:d3:da:99:e8:ff <BROADCAST,MULTICAST,UP,LOWER_UP> 
+vth1@if7         UP             e2:42:34:b2:40:91 <BROADCAST,MULTICAST,UP,LOWER_UP> 
+vth2@if9         UP             ea:ae:fd:0a:e3:49 <BROADCAST,MULTICAST,UP,LOWER_UP> 
+vth3@if11        UP             a2:f4:6f:bc:1f:75 <BROADCAST,MULTICAST,UP,LOWER_UP> 
+vth4@if13        UP             b2:ce:65:5c:55:e4 <BROADCAST,MULTICAST,UP,LOWER_UP>
+
+ip -c -br address show
 ```
 
 ## can you ping 1 namespace from the other
 
 ```bash
 bridge fdb show dynamic
-ip netns exec ns1 ping 192.168.20.2
+ip netns exec ns1 ping 192.168.10.4
+# works
+ip netns exec ns2 ping 192.168.20.4
+# works
+```
 
+## Add vlan vid to virtual network interface peers
+
+```bash
+# change ns3 vlan peer interface to vid 10 ip 192.168.10.4/24
+# The pvid parameter causes untagged frames to be assigned to this VLAN at ingress (veth2 to bridge), and the untagged parameter causes the packet to be untagged on egress (bridge to veth2):
+bridge vlan add vid 10 dev vth3 pvid untagged
+bridge vlan del vid 1 dev vth3
+bridge vlan show
+port              vlan-id  
+br0               1 PVID Egress Untagged
+vth1              1 PVID Egress Untagged
+vth2              1 PVID Egress Untagged
+vth3              10 PVID Egress Untagged
+vth4              1 PVID Egress Untagged
+
+```
+
+## can you ping namespace 3 with vth3 set to pvid 10 from vth1 set to pvid 1
+
+```bash
+bridge fdb show dynamic
+ip netns exec ns1 ping 192.168.10.4
+# does not work
+ip netns exec ns2 ping 192.168.20.4
+# still works
+```
+
+## can we add vlan sub-interface to bridge
+
+```bash
+ip link set dev vlan10 master br0
+# does not work
+ip netns exec ns3 ping 192.168.10.2
+# reset the way it was
+ip link set dev vlan10 nomaster
+
+bridge vlan show
+port              vlan-id  
+vlan10            1 PVID Egress Untagged
+br0               1 PVID Egress Untagged
+vth1              1 PVID Egress Untagged
+vth2              1 PVID Egress Untagged
+vth3              10 PVID Egress Untagged
+vth4              1 PVID Egress Untagged
+
+ip link set dev vth1 up
+
+```
+
+## **[How can I get a VLAN interface in a Linux bridge?](https://superuser.com/questions/1833519/how-can-i-get-a-vlan-interface-in-a-linux-bridge)**
 
 ![How to use multiple addresses with multiple gateways](https://netplan.readthedocs.io/en/stable/examples/#how-to-use-multiple-addresses-on-a-single-interface)**
 
