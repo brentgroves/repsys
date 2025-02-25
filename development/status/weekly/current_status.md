@@ -5,31 +5,69 @@
 
 ![np](https://cdn.prod.website-files.com/65a5be30bf4809bb3a2e8aff/65de6a24f3bc7cfdb5711e46_ethernet2.jpeg)
 
-https://www.youtube.com/@routerologyblog1111/videos
+<https://www.youtube.com/@routerologyblog1111/videos>
+
+## Avilla Server Setup
+
+- VLAN trunk mode to comply with Linamar Network requirements.
+- Access to multiple VLAN from a single network interface.
+- Usually reserved for Extreme edge switches but also used by Fruitport HyperV
+- Only requires network config request for internet access.
+
+## IS Project Summary
+
+The following is in markdown format it can be viewed better from <https://markdownlivepreview.com/> by copying and pasting the contents below.
 
 ## Azure SQL database
 
-time: 1 week
-tasks:
-- transfer schema from Mobex tenant
+- transfer report system schema from Mobex tenant
 - test scripts on Linamar Azure tenant SQL database
 
+time: 1 month
+due date: June 2025
 
-## K8s On-Prem and Cloud platform setup on-track
+## Avilla Structures K8s On-Prem and Cloud platform setup
 
-time: 3 months
-due date: June
 - Avilla Structures K8s deployment
 - Azure K8s deployment
-Platform Services:
+
+Network Configuration and Platform Services:
+
 - Service Mesh Gateway
 - App Notification
 - Email service
 
+time: 3 months
+due date: June 2025
+
 ## Automated Report System
 
-time: 3 months
-due date:
+- Request kicks off scripts to extract data from the Plex ERP, transform it, and then load the result into a database table in the data warehouse.
+- Produce Excel, archive result set, and email to end user.
+- Used for reports requiring long-running scripts or live data.
+- Used to enable the creation of PowerBI dashboards for Plex ERP.
+
+  Users: Anyone needing live or long-running reports, Excel, or Power BI dashboards.
+  Status: Recently, approved for Azure resources needed for this project.
+
+  time: 3 months
+  due date: Nov 2025
+
+## Tool Management System
+
+  Move from managing CNC tooling in Excel and the Busche Tool List to a more robust and easy-to-use system.
+
+  Users: Albion MRP and Engineering
+
+  time: 6 months
+  due date: Jun 2026
+
+## Tool Tracker MES
+
+  Automatically collect CNC, job, and start/end tool operation times for problematic tooling.
+  Users: Albion Engineering and MRP
+  time: 6 months
+  due date: Jun 2027
 
 ## Research
 
@@ -37,7 +75,8 @@ due date:
 - **[Linux VLAN Filtering](https://www.youtube.com/watch?v=a8ghZoBZcE0&list=PLmZU6NElARbZtvrVbfz9rVpWRt5HyCeO7&index=3)**
 
 ## Azure Solution for for Automated Reporting, Tool Management System, and Tool Tracker MES
-  - Test TB report scripts and Power BI report on Linamar Azure SQL DB.
+
+- Test TB report scripts and Power BI report on Linamar Azure SQL DB.
 - Azure AKS
   - create Microsoft Entra K8s Admin Group (done)
   - create K8s cluster
@@ -45,14 +84,15 @@ due date:
 
 ## **[Avilla Structures redundant on-prem MAAS, MicroStack, Structures MicroK8s Clusters for Automated Reporting, Tool Management System, and Tool Tracker MES](https://canonical.com/microstack/docs/multi-node-maas)** On-Prem Kubernetes Cluster
 
-### 2 Physical Network interfaces to different vlan's goes against Linamar policy.
+### 2 Physical Network interfaces to different vlan's goes against Linamar policy
+
 After discussing the network requirements with Justin Langille, I am disconnecting the 2nd network interface, since it is against Linamar's network policies. Also, I have changed the Avilla Structures Kubernetes Cluster from the OT to Server vlan. For the requirement of connecting to the UDP serial device servers connected to CNC in the OT vlan I am creating a 2nd Kubernetes cluster on the OT vlan and can either insert records into a mysql database running in the 2nd cluster or insert them into our Azure SQL db for easier access by reporting software.
 
-### 1 physical network interface configured to carry traffic from multiple vlans is allowed. 
+### 1 physical network interface configured to carry traffic from multiple vlans is allowed
 
 In this configuration vlan tagging must be done by the host or server.
 
-"Switch trunk mode" refers to a configuration on a network switch where a specific port can carry traffic from multiple VLANs (Virtual Local Area Networks) simultaneously, allowing data from different VLANs to be transmitted over a single physical link, essentially acting like a "trunk" to carry multiple data streams at once; this is in contrast to an access port which is dedicated to only one VLAN. 
+"Switch trunk mode" refers to a configuration on a network switch where a specific port can carry traffic from multiple VLANs (Virtual Local Area Networks) simultaneously, allowing data from different VLANs to be transmitted over a single physical link, essentially acting like a "trunk" to carry multiple data streams at once; this is in contrast to an access port which is dedicated to only one VLAN.
 
 - making a docker base image that is able to connect to data sources. This is tricky. We can then use this base image in other specific docker images that need access to our data sources.
 - **[Avilla OnPrem K8s Gateway Network](../../datacenter/avilla/network_configuration.md)**
@@ -63,11 +103,10 @@ In this configuration vlan tagging must be done by the host or server.
   - access from other vlan
   - local router port forward to istio service mesh gateway.
 - en03 - private 10.1.10.x k8s network
-- vm adds tap device to mpqemubro bridge which mp has setup routing outgoing traffic using nat to change source address to 10.188.220.200 which has been given access to internet domains k8s needs for production. Only on config request needs completed for all vms. 
-- vm created on r620 use mpqemubr0 
+- vm adds tap device to mpqemubro bridge which mp has setup routing outgoing traffic using nat to change source address to 10.188.220.200 which has been given access to internet domains k8s needs for production. Only on config request needs completed for all vms.
+- vm created on r620 use mpqemubr0
 - everyone can access 10.188.70.0 and then use iptables to nat/port forward to the reporing system microservices.
 
-          
 ## **[IS Projects](../is_projects/is_projects.md)**
 
 ## Next Steps

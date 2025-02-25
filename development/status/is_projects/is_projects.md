@@ -20,7 +20,7 @@ I have been researching the following:
 
 Good Morning Christian and Kevin,
 
-This is a revised project summary and timeline for the Automated Report System, Tool Management System, and Tool Tracker MES IS projects I am working on.  If it meets the approval of Kevin Young I would like to add this timetable and summary, or a curtailed version, to the Structures IT Meeting document.
+This is a revised project summary and timeline for the Automated Report System, Tool Management System, and Tool Tracker MES IS projects I am working on.  If it meets the approval of Kevin Young I would like to add this timetable and summary, or a curtailed version, to the Structures IT Meeting document. Thank you.
 
 ## IS Project Summary
 
@@ -77,7 +77,7 @@ due date: June 2025
   time: 6 months
   due date: Jun 2027
 
-## Projects
+## Project Details
 
 - **[Avilla Structures redundant on-prem MAAS, MicroStack, Structures MicroK8s Clusters for Automated Reporting, Tool Management System, and Tool Tracker MES](https://canonical.com/microstack/docs/multi-node-maas)**
 
