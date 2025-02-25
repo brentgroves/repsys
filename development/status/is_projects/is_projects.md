@@ -5,23 +5,83 @@ The following is in markdown format it can be viewed better from <https://markdo
 ![cp](https://res.cloudinary.com/canonical/image/fetch/f_auto,q_auto,fl_sanitize,w_4096,h_1377/https://assets.ubuntu.com/v1/e55cc8c0-wide-server.png)
 
 ## Proposed Project
+
 Mills River Production and Downtime tracking system
 
-Estimate 1 year development. Could run this from - **[Avilla Structures redundant on-prem MAAS, MicroStack, Structures MicroK8s Clusters for Automated Reporting, Tool Management System, and Tool Tracker MES](https://canonical.com/microstack/docs/multi-node-maas)** 
+Estimate 1 year development. Could run this from - **[Avilla Structures redundant on-prem MAAS, MicroStack, Structures MicroK8s Clusters for Automated Reporting, Tool Management System, and Tool Tracker MES](https://canonical.com/microstack/docs/multi-node-maas)**
 
 ## Research
 
 I have been researching the following:
 
-- How to add general purpose services such as **[mTLS](https://www.cloudflare.com/learning/access-management/what-is-mutual-tls/#:~:text=Mutual%20TLS%2C%20or%20mTLS%20for,have%20the%20correct%20private%20key.)**, **[service mesh](https://aws.amazon.com/what-is/service-mesh/#:~:text=A%20service%20mesh%20is%20a,with%20multiple%20service%20management%20systems.)**, **[authentication, and authorization](https://auth0.com/docs/get-started/auth0-overview#:~:text=Auth0%20is%20a%20flexible%2C%20drop,delivered%20by%20email%20or%20SMS.)**, **[email delivery](https://mailtrap.io/)**, **[notification system](https://novu.co/)**, and **[site reliability engineering monitoring](https://sysdig.com/blog/monitor-istio/)** to our Kubernetes platforms. 
+- How to add general purpose services such as **[mTLS](https://www.cloudflare.com/learning/access-management/what-is-mutual-tls/#:~:text=Mutual%20TLS%2C%20or%20mTLS%20for,have%20the%20correct%20private%20key.)**, **[service mesh](https://aws.amazon.com/what-is/service-mesh/#:~:text=A%20service%20mesh%20is%20a,with%20multiple%20service%20management%20systems.)**, **[authentication, and authorization](https://auth0.com/docs/get-started/auth0-overview#:~:text=Auth0%20is%20a%20flexible%2C%20drop,delivered%20by%20email%20or%20SMS.)**, **[email delivery](https://mailtrap.io/)**, **[notification system](https://novu.co/)**, and **[site reliability engineering monitoring](https://sysdig.com/blog/monitor-istio/)** to our Kubernetes platforms.
 - How to setup an on-prem Kubernetes platform that meets the requirement of running within our Linamar network.
 - How to create Azure resources in the Linamar tenant.
 
+Good Morning Christian and Kevin,
+
+This is a revised project summary and timeline for the Automated Report System, Tool Management System, and Tool Tracker MES IS projects I am working on.  If it meets the approval of Kevin Young I would like to add this timetable and summary, or a curtailed version, to the Structures IT Meeting document.
+
+## IS Project Summary
+
+The following is in markdown format it can be viewed better from <https://markdownlivepreview.com/> by copying and pasting the contents below.
+
+## Azure SQL database
+
+- transfer report system schema from Mobex tenant
+- test scripts on Linamar Azure tenant SQL database
+
+time: 1 month
+due date: June 2025
+
+## Avilla Structures K8s On-Prem and Cloud platform setup
+
+- Avilla Structures K8s deployment
+- Azure K8s deployment
+
+Network Configuration and Platform Services:
+
+- Service Mesh Gateway
+- App Notification
+- Email service
+
+time: 3 months
+due date: June 2025
+
+## Automated Report System
+
+- Request kicks off scripts to extract data from the Plex ERP, transform it, and then load the result into a database table in the data warehouse.
+- Produce Excel, archive result set, and email to end user.
+- Used for reports requiring long-running scripts or live data.
+- Used to enable the creation of PowerBI dashboards for Plex ERP.
+
+  Users: Anyone needing live or long-running reports, Excel, or Power BI dashboards.
+  Status: Recently, approved for Azure resources needed for this project.
+
+  time: 3 months
+  due date: Nov 2025
+
+## Tool Management System
+
+  Move from managing CNC tooling in Excel and the Busche Tool List to a more robust and easy-to-use system.
+
+  Users: Albion MRP and Engineering
+
+  time: 6 months
+  due date: Jun 2026
+
+## Tool Tracker MES
+
+  Automatically collect CNC, job, and start/end tool operation times for problematic tooling.
+  Users: Albion Engineering and MRP
+  time: 6 months
+  due date: Jun 2027
+
 ## Projects
 
-- **[Avilla Structures redundant on-prem MAAS, MicroStack, Structures MicroK8s Clusters for Automated Reporting, Tool Management System, and Tool Tracker MES](https://canonical.com/microstack/docs/multi-node-maas)** 
+- **[Avilla Structures redundant on-prem MAAS, MicroStack, Structures MicroK8s Clusters for Automated Reporting, Tool Management System, and Tool Tracker MES](https://canonical.com/microstack/docs/multi-node-maas)**
 
-  MicroStack MAAS is a combination of MicroStack and MAAS (Metal as a Service) that allows for network traffic isolation and cloud deployment. MicroStack is an OpenStack distribution that's designed for small-scale cloud environments. MAAS is a tool that allows users to control pools of physical servers like virtual machines in the cloud. 
+  MicroStack MAAS is a combination of MicroStack and MAAS (Metal as a Service) that allows for network traffic isolation and cloud deployment. MicroStack is an OpenStack distribution that's designed for small-scale cloud environments. MAAS is a tool that allows users to control pools of physical servers like virtual machines in the cloud.
 
   Tasks:
   - **[Setup Virtual Private Switch and Router](https://maas.io/docs/maas-in-thirty-minutes)**
@@ -36,9 +96,9 @@ I have been researching the following:
   - End-user request kicks off scripts to extract data from the Plex ERP, transforms it, and then loads the result into a database table in the data warehouse.
   - Produce Excel, archive result set, and email to end user.
   - Used for reports requiring long running scripts or live data.
-  - Used to enable the creation of PowerBI dashboards for Plex ERP. 
+  - Used to enable the creation of PowerBI dashboards for Plex ERP.
 
-  Users: Anyone needing live or long running reports, Excel, or Power BI dashboards. 
+  Users: Anyone needing live or long running reports, Excel, or Power BI dashboards.
 
   Status: Recently, got approval for Azure resources needed for this project.
 
@@ -47,15 +107,15 @@ I have been researching the following:
   - Test TB report scripts and Power BI report on Linamar Azure SQL DB.
   - Setup Azure Kubernetes Platform with general purpose services such as **[mTLS](https://www.cloudflare.com/learning/access-management/what-is-mutual-tls/#:~:text=Mutual%20TLS%2C%20or%20mTLS%20for,have%20the%20correct%20private%20key.)**, **[service mesh](https://aws.amazon.com/what-is/service-mesh/#:~:text=A%20service%20mesh%20is%20a,with%20multiple%20service%20management%20systems.)**, **[authentication, and authorization](https://auth0.com/docs/get-started/auth0-overview#:~:text=Auth0%20is%20a%20flexible%2C%20drop,delivered%20by%20email%20or%20SMS.)**, **[email delivery](https://mailtrap.io/)**, **[notification system](https://novu.co/)**, and **[site reliability engineering monitoring](https://sysdig.com/blog/monitor-istio/)**.
     - Estimated completion: May
-    
-  - Create **[ETL scripts](https://www.sas.com/en_us/insights/data-management/what-is-etl.html#:~:text=ETL%20is%20a%20method%20of,and%20programmatic%20data%20movement%20methods.%20.)** and **[microservices](https://aws.amazon.com/microservices/#:~:text=Microservices%20are%20an%20architectural%20and,to%2Dmarket%20for%20new%20features.)** to automate report requests using the platform services discussed above. 
+
+  - Create **[ETL scripts](https://www.sas.com/en_us/insights/data-management/what-is-etl.html#:~:text=ETL%20is%20a%20method%20of,and%20programmatic%20data%20movement%20methods.%20.)** and **[microservices](https://aws.amazon.com/microservices/#:~:text=Microservices%20are%20an%20architectural%20and,to%2Dmarket%20for%20new%20features.)** to automate report requests using the platform services discussed above.
     - Estimated completion: Sept
 
 - **[Tool Management](https://en.wikipedia.org/wiki/Tool_management)**
 
   Move away from managing CNC tooling in Excel and the Busche Tool List to a more rubust and easy to use system.
-    - Users: Albion MRP and Engineering
-    - Estimated completion: TBD
+  - Users: Albion MRP and Engineering
+  - Estimated completion: TBD
 - **[Tool Tracker](https://en.wikipedia.org/wiki/Manufacturing_execution_system)**
 
   Automatically collect CNC, job, and start/end tool operation times for problematic tooling.
