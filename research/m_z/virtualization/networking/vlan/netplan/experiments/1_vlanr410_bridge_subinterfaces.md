@@ -390,7 +390,28 @@ ip link set dev vth1 up
 
 ```
 
+- **[protocols vlan](https://unix.stackexchange.com/questions/127245/in-which-vlan-am-i-in)**
+- **[identifying vlan packets using tcpdump](https://serverfault.com/questions/562325/identifying-vlan-packets-using-tcpdump)**
+- **[Capture VLAN tags by using tcpdump](https://access.redhat.com/solutions/2630851)**
+
 ## **[How can I get a VLAN interface in a Linux bridge?](https://superuser.com/questions/1833519/how-can-i-get-a-vlan-interface-in-a-linux-bridge)**
+
+I'm experimenting with Linux bridges and vlan filtering but I'm having a few problems.
+
+What I have is a VM with a trunk (tagged frames) that arrives on ens19. What I want to do is connect this port to a linux bridge and on this bridge have "virtual" interfaces which are labelled on the vlan I need with a complete TCP/IP stack behind it (that of the host).
+
+For my experiments I'm limiting myself to vlan 3 and 5 but the idea is that it should be easy to extend. The use won't seem huge because it could be replaced by sub-interfaces of ens19. But later on the interest that I will connect the ens19 port with a gretap interface to circulate several vlan on a tunnel.
+
+I've done tests with dummy and tap interfaces but it doesn't work given the nature of these interfaces, it seems to me. I tested with a br0.3 sub-interface but here my client receives the ARP reply but the PING never receives an ICMP reply ...
+
+ip link add name br0 type bridge vlan_filtering 1
+ip link set dev br0 up
+ip link add link br0 name br0.3 type vlan id 3
+ip link set dev ens19 master br0
+ip link set ens19 up
+ip link set dev br0 up
+ip link set dev br0.3 up
+ip addr add 10.3.0.106/22 dev br0.3
 
 ![How to use multiple addresses with multiple gateways](https://netplan.readthedocs.io/en/stable/examples/#how-to-use-multiple-addresses-on-a-single-interface)**
 
