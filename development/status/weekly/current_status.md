@@ -7,7 +7,7 @@
 
 <https://www.youtube.com/@routerologyblog1111/videos>
 
-## Avilla Server Setup
+## Avilla Structures K8s Server Setup
 
 - VLAN trunk mode to comply with Linamar Network requirements.
 - Access to multiple VLAN from a single network interface.
