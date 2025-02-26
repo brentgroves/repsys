@@ -1,8 +1,8 @@
-# **[How To Configure VLAN Tagging In Linux [A Step-by-Step Guide]](https://ostechnix.com/configure-vlan-tagging-in-linux/)**
+# **[identifying vlan packets using tcpdump](https://serverfault.com/questions/562325/identifying-vlan-packets-using-tcpdump)**
 
-**[Back to Research List](../../../../../../research_list.md)**\
-**[Back to Current Status](../../../../../../../development/status/weekly/current_status.md)**\
-**[Back to Main](../../../../../../../README.md)**
+**[Back to Research List](../../../../research_list.md)**\
+**[Back to Current Status](../../../../../development/status/weekly/current_status.md)**\
+**[Back to Main](../../../../../README.md)**
 
 - **[tcpdump with any interface](https://networkengineering.stackexchange.com/questions/1559/tcpdump-i-any-with-vlan)**
 - **[protocols vlan](https://unix.stackexchange.com/questions/127245/in-which-vlan-am-i-in)**
@@ -11,59 +11,40 @@
 
 ## **[How can I get a VLAN interface in a Linux bridge?](https://superuser.com/questions/1833519/how-can-i-get-a-vlan-interface-in-a-linux-bridge)**
 
-I'm experimenting with Linux bridges and vlan filtering but I'm having a few problems.
+## question
 
-What I have is a VM with a trunk (tagged frames) that arrives on ens19. What I want to do is connect this port to a linux bridge and on this bridge have "virtual" interfaces which are labelled on the vlan I need with a complete TCP/IP stack behind it (that of the host).
+I'm trying to figure out the vlan tagged packets that my host receives or sends to other hosts. I tried
 
-For my experiments I'm limiting myself to vlan 3 and 5 but the idea is that it should be easy to extend. The use won't seem huge because it could be replaced by sub-interfaces of ens19. But later on the interest that I will connect the ens19 port with a gretap interface to circulate several vlan on a tunnel.
+`tcpdump -i eth1 vlan 0x0070`
 
-I've done tests with dummy and tap interfaces but it doesn't work given the nature of these interfaces, it seems to me. I tested with a br0.3 sub-interface but here my client receives the ARP reply but the PING never receives an ICMP reply ...
+But it didnt work. Has anyone tried to view the vlan packets through tcpdump before? Couldn't find much help searching the web!
 
-ip link add name br0 type bridge vlan_filtering 1
-ip link set dev br0 up
-ip link add link br0 name br0.3 type vlan id 3
-ip link set dev ens19 master br0
-ip link set ens19 up
-ip link set dev br0 up
-ip link set dev br0.3 up
-ip addr add 10.3.0.106/22 dev br0.3
+## Answer 1
 
-![How to use multiple addresses with multiple gateways](https://netplan.readthedocs.io/en/stable/examples/#how-to-use-multiple-addresses-on-a-single-interface)**
+If your host is connected to an access port, the switch will likely strip the VLAN tag off before it reaches your host. As a result, running TCPDump on the host in question will never see the VLAN tags.
 
-![mvlan](https://ostechnix.com/wp-content/uploads/2023/11/Configure-VLAN-Tagging-using-Netplan-in-Linux-1024x555.png)
+You would need to setup a SPAN port and/or introduce a network tap into your network somewhere to grab traffic before the tags are dropped off the packets in order to see them in a network dump/trace.
 
-Environment
-Red Hat Enterprise Linux 5 (RHEL 5).
-Red Hat Enterprise Linux 6 (RHEL 6).
-Red Hat Enterprise Linux 7 (RHEL 7).
-tcpdump
+To be accurate, a switch does not strip VLAN tags off a frame before sending it out an access port, it only adds VLAN tagging to frames before it sends them out a trunk/tagged port (and they are removed once received by the switch on the other side)
 
-## Issue
-
-How to capture VLAN tags that are used by tcpdump?
-Server unable to ping the gateway which is on VLAN.
-
-## Resolution
-
-You can verify the incoming traffic to see if they have VLAN tags by using tcpdump with the -e  and vlan option.
-This will show the details of the VLAN header:
+## Answer 2
 
 ```bash
-# tcpdump -i bond0 -nn -e  vlan
+tcpdump -i eth1 -e vlan
 ```
 
-To capture the issue live.
+Output will be for instance:
 
 ```bash
-# tcpdump -i eno1 -nn -e  vlan -w /tmp/vlan.pcap
+16:02:26.693223 c4:c1:e2:4a:9a:06 (oui Unknown) > 00:e0:5c:8f:e0:c9 (oui Unknown), ethertype 802.1Q (0x8100), length 102: vlan 108, p 0, ethertype IPv4 (0x0800), 192.168.118.11 > 192.168.128.2: ICMP echo request, id 52, seq 2, length 64
+16:02:26.694811 c4:c1:e2:4a:9a:06 (oui Unknown) > 00:e0:5c:8f:e0:c9 (oui Unknown), ethertype 802.1Q (0x8100), length 102: vlan 108, p 0, ethertype IPv4 (0x0800), 192.168.118.11 > 192.168.128.2: ICMP echo request, id 53, seq 2, length 64
+16:02:26.696331 c4:c1:e2:4a:9a:06 (oui Unknown) > 00:e0:5c:8f:e0:c9 (oui Unknown), ethertype 802.1Q (0x8100), length 102: vlan 108, p 0, ethertype IPv4 (0x0800), 192.168.118.11 > 192.168.128.2: ICMP echo request, id 54, seq 2, length 64
 ```
 
-To write to the capture to a file.
+Note the vlan 108 in the middle of each line.
 
-## Root Cause
+The option -e will show the 8021.Q header.
 
-The reason why the host could ping the gateway was because the traffic seen on the host was tagged with the wrong VLAN ID. The host was not configured to use VLAN tagging so traffic was being ignored.
+The option vlan will only show packets containing a VLAN field, which can be specified, so in the exemple above it would be: vlan 108 (more info on this expression with man pcap-filter).
 
-## Diagnostic Steps
-
-Another check to run through via the packet capture is to check on the arp requests incoming, and see if the packets coming in are in the same subnet.
+Of course, each option can be used independently. If the exemple given in the question is not working, it would be theoretically because the interface is not receiving packets tagged with VLAN Id 0x70, and this should be checked with -e.
