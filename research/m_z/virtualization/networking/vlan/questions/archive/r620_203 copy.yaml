@@ -9,7 +9,7 @@ network:
     eno1:
       dhcp4: false
       addresses:
-      - 10.188.50.201/24    
+      - 10.188.50.203/24    
       routes:
       - to: default
         via: 10.188.50.254
@@ -22,4 +22,11 @@ network:
       id: 220
       link: eno1
       addresses:
-      - 10.188.220.201/24
+      - 10.188.220.203/24
+
+  bridges:
+    br0:
+      dhcp4: no
+      addresses:
+      - 10.188.50.200/24    
+      interfaces: [eno1]     

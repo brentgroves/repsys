@@ -25,6 +25,8 @@ Developers can use Multipass to prototype cloud deployments and to create fresh,
 
 ## **[Install Multipass](https://multipass.run/docs/installing-on-linux#heading--install-upgrade-uninstall)**
 
+The Ubuntu Snap Store is located on the domain snapcraft.io.
+
 To install Multipass, simply execute:
 
 ```bash

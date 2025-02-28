@@ -7,6 +7,7 @@
 - **[install](./multipass_install.md)**
 - **[remove instance](./remove_instance.md)**
 - **[setup multipass vm](./setup_multipass_vm.md)**
+- **[ssh into multipass vm](./ssh_into_mutipass_vms.md)**
 - **[blueprint](./blueprint.md)**
 - **[cloud-init](./cloud-init.md)**
 - **[instance](./instance.md)**
