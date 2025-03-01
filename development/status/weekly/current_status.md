@@ -11,6 +11,8 @@
 
 github.com
 
+I believe multipass was on server install iso and that is the only reason it could be installed.
+
 To access the Snap Store, you typically need a firewall rule that allows outbound connections to the following domains over HTTPS (port 443): "store.canonical.com" and "api.snapcraft.io"; this will enable your system to communicate with the Snap Store servers to download and install applications.
 
 Key points about the firewall rule:
