@@ -7,6 +7,23 @@
 
 <https://www.youtube.com/@routerologyblog1111/videos>
 
+## update config request for Avilla's "Kubernetes to untrust" policy
+
+github.com
+
+To access the Snap Store, you typically need a firewall rule that allows outbound connections to the following domains over HTTPS (port 443): "store.canonical.com" and "api.snapcraft.io"; this will enable your system to communicate with the Snap Store servers to download and install applications.
+
+Key points about the firewall rule:
+Protocol: TCP
+Port: 443
+Action: Allow
+Destination: "store.canonical.com" and "api.snapcraft.io"
+Important considerations:
+Network configuration:
+If your network uses a proxy, you might need to configure the Snap Store to use that proxy as well.
+Firewall management tool:
+Consult your firewall management tool's specific instructions for creating a new rule.
+
 ## Avilla Structures K8s Server Setup
 
 - VLAN trunk mode to comply with Linamar Network requirements.
