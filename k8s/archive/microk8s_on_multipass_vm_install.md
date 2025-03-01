@@ -34,37 +34,79 @@ Multipass is the fastest way to create a complete Ubuntu virtual machine on Linu
 
 ## **[Create a Bridge](./create_bridges_with_netplan.md)**
 
-Notes:
-
-- Don't add ip's or anything else to the physical network interfaces.
-- Add the IP addresses, routes, and nameservers to the bridge.
-
 ```yaml
+# This file is generated from information provided by the datasource.  Changes
+# to it will not persist across an instance reboot.  To disable cloud-init's
+# network configuration capabilities, write a file
+# /etc/cloud/cloud.cfg.d/99-disable-network-config.cfg with the following:
+# network: {config: disabled}
 network:
-  version: 2
-  ethernets:
-    eno1:
-      dhcp4: false
-      dhcp6: false
-  vlans:
-    vlan220:
-      id: 220
-      link: eno1
-      addresses:
-      - 10.188.220.203/24    
-  bridges:
-    br0:
-      dhcp4: false
-      dhcp6: false  
-      addresses:
-      - 10.188.50.203/24    
-      routes:
-      - to: default
-        via: 10.188.50.254
-      nameservers:
-        addresses:
-        - 10.225.50.203
-      interfaces: [eno1]
+    ethernets:
+        eno1:
+            addresses:
+            - 10.1.0.125/22
+            nameservers:
+                addresses:
+                - 10.1.2.69
+                - 10.1.2.70
+                - 172.20.0.39
+                search: [BUSCHE-CNC.COM]
+            routes:
+            -   to: default
+                via: 10.1.1.205
+        eno2:
+            dhcp4: no
+        eno3:
+            dhcp4: no
+        eno4:
+            dhcp4: no
+        enp66s0f0:
+            dhcp4: true
+        enp66s0f1:
+            dhcp4: true
+        enp66s0f2:
+            dhcp4: true
+        enp66s0f3:
+            dhcp4: true
+    bridges:
+        br0:
+            dhcp4: no
+            addresses:
+            - 10.1.0.126/22
+            nameservers:
+                addresses:
+                - 10.1.2.69
+                - 10.1.2.70
+                - 172.20.0.39
+                search: [BUSCHE-CNC.COM]
+            interfaces: [eno2]
+        br1:
+            dhcp4: no
+            addresses:
+            - 10.13.31.1/24
+        br2:
+            dhcp4: no
+            addresses:
+            - 10.1.0.127/22
+            nameservers:
+                addresses:
+                - 10.1.2.69
+                - 10.1.2.70
+                - 172.20.0.39
+                search: [BUSCHE-CNC.COM]
+            interfaces: [eno3]
+        br3:
+            dhcp4: no
+            addresses:
+            - 10.1.0.140/22
+            nameservers:
+                addresses:
+                - 10.1.2.69
+                - 10.1.2.70
+                - 172.20.0.39
+                search: [BUSCHE-CNC.COM]
+            interfaces: [eno4]
+    version: 2
 ```
 
 Show bridge details in a pretty JSON format (which is a good way to get bridge key-value pairs):
@@ -182,75 +224,273 @@ Usage: multipass launch [options] [[<remote:>]<image> | <url>]
                                         to mean "name=<name>".
 ```
 
-### Step 2: Launch an instance with a manual network
-
-You can also leave the MAC address unspecified (just --network name=localbr,mode=manual). If you do so, Multipass will generate a random MAC for you, but you will need to retrieve it in the next step.
+With multipass installed, you can now create a VM to run MicroK8s. At least 4 Gigabytes of RAM and 40G of storage is recommended – we can pass these
+requirements when we launch the VM:
 
 ```bash
+# can't get manual mode in which you pass the hardware address to work
+# multipass launch --name test3 --network name=mybr,mode=manual,mac="7f:71:f0:b2:55:dd"
 
-multipass launch --name test --network name=br0
 multipass launch --network br0 --name k8sn1 --cpus 2 --memory 32G --disk 250G 
+
+multipass launch --network br0 --name repsys12-c1-n1 --cpus 2 --memory 16G --disk 100G 22.04
+
+
+multipass launch --network br0 --name repsys12-c1-n1 --cpus 2 --memory 16G --disk 100G 22.04
+
+# Add memory if going to run only sql server
+multipass launch --network br0 --name microk8s-vm --memory 8G --disk 80G 22.04
+
+multipass launch --network br2 --name repsys11-c2-n1 --memory 16G --disk 80G 22.04
+
+multipass launch --network br2 --name repsys11-c2-n2 --cpus 2 --memory 16G --disk 80G 22.04
+
+multipass launch --network br2 --name repsys11-c2-n3 --cpus 2 --memory 16G --disk 80G 22.04
+
+multipass list
+Name                    State             IPv4             Image
+microk8s-vm             Running           10.127.233.200   Ubuntu 22.04 LTS
+                                          10.1.0.128
+                                          10.1.254.64
+repsys11-c2-n1          Running           10.127.233.66    Ubuntu 22.04 LTS
+                                          10.1.0.129
+                                          10.1.226.0
+repsys11-c2-n2          Running           10.127.233.252   Ubuntu 22.04 LTS
+                                          10.1.3.186
+repsys11-c2-n3          Running           10.127.233.169   Ubuntu 22.04 LTS
+                                          10.1.2.218
+
+microk8s-vm             Running           10.127.233.194   Ubuntu 24.04 LTS
+                                          10.1.2.143
+test1                   Running           10.127.233.173   Ubuntu 24.04 LTS
+                                          10.1.0.128
+test2                   Running           10.127.233.24    Ubuntu 24.04 LTS
+                                          10.13.31.201
 
 ```
 
-## Step 3: Configure the extra interface
+Use the ip utility to display the link status of Ethernet devices that are ports of a specific bridge:
 
-### retrieve the hardware address
+```bash
+ssh brent@k8sgw1
+ip link show master br0
+7: eno2: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq master br0 state UP mode DEFAULT group default qlen 1000
+    link/ether b8:ca:3a:6a:35:99 brd ff:ff:ff:ff:ff:ff
+    altname enp1s0f1
+13: tap0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast master br0 state UNKNOWN mode DEFAULT group default qlen 1000
+    link/ether fe:15:a0:be:9a:b7 brd ff:ff:ff:ff:ff:ff
+
+ip link show master br2
+8: eno3: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq master br2 state UP mode DEFAULT group default qlen 1000
+    link/ether b8:ca:3a:6a:37:1a brd ff:ff:ff:ff:ff:ff
+    altname enp1s0f2
+21: tap50844081: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq master br2 state UP mode DEFAULT group default qlen 1000
+    link/ether 7e:c8:dd:1b:2b:24 brd ff:ff:ff:ff:ff:ff
+
+ip link show master br0
+7: eno2: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq master br0 state UP mode DEFAULT group default qlen 1000
+    link/ether b8:ca:3a:6a:37:19 brd ff:ff:ff:ff:ff:ff
+    altname enp1s0f1
+14: tap34dcb760: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq master br0 state UP mode DEFAULT group default qlen 1000
+    link/ether 5a:8a:38:e5:66:f1 brd ff:ff:ff:ff:ff:ff
+18: tap38ceeb39: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq master br0 state UP mode DEFAULT group default qlen 1000
+    link/ether ce:80:f5:53:04:fb brd ff:ff:ff:ff:ff:ff
+
+```
+
+## retrieve the hardware address
 
 See how multipass configured the network. Until I can figure out how to pass the hardware address manaully during launch we will have to grab the one multipass or lxd creates.
 Note: On repsys11-c2-n2 the 50-cloud-init.yaml file already had the correct mac address.
 
 ```bash
-multipass exec -n test -- sudo cat /etc/netplan/50-cloud-init.yaml
+multipass exec -n k8sn1 -- sudo networkctl -a status
 ...
-macaddress: "52:54:00:ca:42:da"
+Hardware Address: 52:54:00:68:cb:26
+52:54:00:45:fb:b6
+
+multipass exec -n repsys11-c2-n3 -- sudo networkctl -a status
+3: enp6s0                                                                    
+                     Link File: /usr/lib/systemd/network/99-default.link
+                  Network File: /run/systemd/network/10-netplan-extra0.network
+                          Type: ether
+                         State: routable (configured)
+                  Online state: unknown
+                          Path: pci-0000:06:00.0
+                        Driver: virtio_net
+                        Vendor: Red Hat, Inc.
+                         Model: Virtio network device
+                    HW Address: 52:54:00:ff:17:97
+                           MTU: 1500 (min: 68, max: 65535)
+                         QDisc: mq
+  IPv6 Address Generation Mode: eui64
+          Queue Length (Tx/Rx): 2/2
+              Auto negotiation: no
+                         Speed: n/a
+                       Address: 10.1.2.142 (DHCP4 via 10.1.2.69)
+                                fe80::5054:ff:feff:1797
+                       Gateway: 10.1.1.205
+                           DNS: 10.1.2.69
+                                10.1.2.70
+                                172.20.0.39
+                Search Domains: BUSCHE-CNC.COM
+             Activation Policy: up
+           Required For Online: no
+               DHCP4 Client ID: IAID:0x24721ac8/DUID
+             DHCP6 Client DUID: DUID-EN/Vendor:0000ab1129b4197538261b490000
+
 ```
 
-### update netplan with hardware address
+## Step 3: Configure the extra interface
+
+We now need to configure the manual network interface inside the instance. We can achieve that using Netplan. The following command plants the required Netplan configuration file in the instance:
 
 ```bash
 
+52:54:00:68:cb:26
+
+multipass exec -n k8sn1 -- sudo bash -c 'cat /etc/netplan/50-cloud-init.yaml'
+
+multipass exec -n repsys11-c2-n3 -- sudo bash -c 'cat /etc/netplan/50-cloud-init.yaml'
+# This file is generated from information provided by the datasource.  Changes
+# to it will not persist across an instance reboot.  To disable cloud-init's
+# network configuration capabilities, write a file
+# /etc/cloud/cloud.cfg.d/99-disable-network-config.cfg with the following:
+# network: {config: disabled}
+network:
+    ethernets:
+        default:
+            dhcp4: true
+            match:
+                macaddress: 52:54:00:14:9d:7b
+        extra0:
+            dhcp4: true
+            dhcp4-overrides:
+                route-metric: 200
+            match:
+                macaddress: 52:54:00:ff:17:97
+            optional: true
+    version: 2
+
+HW Address: 52:54:00:ff:17:97
+# update netplan with hardware address
 # Make sure the mac address matches the extra0 macaddress
 
-multipass exec -n test -- sudo bash -c 'cat << EOF > /etc/netplan/50-cloud-init.yaml
+multipass exec -n repsys11-c2-n2 -- sudo bash -c 'cat << EOF > /etc/netplan/50-cloud-init.yaml
 network:
-  version: 2
-  ethernets:
-    default:
-      match:
-        macaddress: "52:54:00:e3:2e:3b"
-      dhcp-identifier: "mac"
-      dhcp4: true
-    extra0:
-      addresses:
-      - 10.188.50.204/24
-      nameservers:
-         addresses:
-         - 10.225.50.203
-         - 10.224.50.203
-      routes:
-      - to: 10.188.40.0/24
-        via: 10.188.50.254
-      match:
-        macaddress: "52:54:00:ca:42:da"
-      optional: true
+    ethernets:
+        default:
+            dhcp4: true
+            match:
+                macaddress: 52:54:00:32:ff:d1
+        extra0:
+            addresses:
+              - 10.1.0.142/22
+            nameservers:
+                addresses:
+                - 10.1.2.69
+                - 10.1.2.70
+                - 172.20.0.39
+                search: [BUSCHE-CNC.COM]
+            match:
+                macaddress: 52:54:00:24:71:0c
+            optional: true
+    version: 2
 EOF'
 
-# verify
+multipass exec -n repsys11-c2-n3 -- sudo bash -c 'cat << EOF > /etc/netplan/50-cloud-init.yaml
+network:
+    ethernets:
+        default:
+            dhcp4: true
+            match:
+                macaddress: 52:54:00:14:9d:7b
+        extra0:
+            addresses:
+              - 10.1.0.141/22
+            nameservers:
+                addresses:
+                - 10.1.2.69
+                - 10.1.2.70
+                - 172.20.0.39
+                search: [BUSCHE-CNC.COM]
+            match:
+                macaddress: 52:54:00:ff:17:97
+            optional: true
+    version: 2
+EOF'
 
-multipass exec -n test -- sudo cat /etc/netplan/50-cloud-init.yaml
+# verify yaml
+multipass exec -n repsys11-c2-n3 -- sudo bash -c 'cat /etc/netplan/50-cloud-init.yaml'
+network:
+    ethernets:
+        default:
+            dhcp4: true
+            match:
+                macaddress: 52:54:00:14:9d:7b
+        extra0:
+            addresses:
+              - 10.1.0.141/22
+            nameservers:
+                addresses:
+                - 10.1.2.69
+                - 10.1.2.70
+                - 172.20.0.39
+                search: [BUSCHE-CNC.COM]
+            match:
+                macaddress: 52:54:00:ff:17:97
+            optional: true
+    version: 2
 
-```
+# if all looks good apply network changes
+multipass exec -n k8sn1 -- sudo netplan apply
+multipass exec -n k8sn1 -- sudo networkctl -a status
 
-if all looks good apply network changes
 
-```bash
-multipass exec -n test -- sudo netplan apply
-multipass list
-Name                    State             IPv4             Image
-foo                     Running           10.130.245.158   Ubuntu 24.04 LTS
-test                    Running           10.130.245.2     Ubuntu 24.04 LTS
-                                          10.188.50.204
+multipass exec -n repsys11-c2-n3 -- sudo netplan apply
+WARNING:root:Cannot call Open vSwitch: ovsdb-server.service is not running.
+# check network interfaces with networkd cli
+multipass exec -n repsys11-c2-n3 -- sudo networkctl -a status
+# skip multipass default network interfaces
+...
+
+● 3: enp6s0                                                                    
+                     Link File: /usr/lib/systemd/network/99-default.link
+                  Network File: /run/systemd/network/10-netplan-extra0.network
+                          Type: ether
+                         State: routable (configured)
+                  Online state: unknown
+                          Path: pci-0000:06:00.0
+                        Driver: virtio_net
+                        Vendor: Red Hat, Inc.
+                         Model: Virtio network device
+                    HW Address: 52:54:00:ff:17:97
+                           MTU: 1500 (min: 68, max: 65535)
+                         QDisc: mq
+  IPv6 Address Generation Mode: eui64
+          Queue Length (Tx/Rx): 2/2
+              Auto negotiation: no
+                         Speed: n/a
+                       Address: 10.1.0.141
+                                fe80::5054:ff:feff:1797
+                           DNS: 10.1.2.69
+                                10.1.2.70
+                                172.20.0.39
+                Search Domains: BUSCHE-CNC.COM
+             Activation Policy: up
+           Required For Online: no
+             DHCP6 Client DUID: DUID-EN/Vendor:0000ab1129b4197538261b490000
+
+Aug 23 23:12:07 repsys11-c2-n3 systemd-networkd[635]: enp6s0: Link UP
+Aug 23 23:12:07 repsys11-c2-n3 systemd-networkd[635]: enp6s0: Gained carrier
+Aug 23 23:12:07 repsys11-c2-n3 systemd-networkd[635]: enp6s0: DHCPv4 address 10.1.2.142/22 via 10.1.1.205
+Aug 23 23:12:08 repsys11-c2-n3 systemd-networkd[635]: enp6s0: Gained IPv6LL
+Aug 26 22:41:13 repsys11-c2-n3 systemd-networkd[635]: enp6s0: Re-configuring with /run/systemd/network/10-netplan-extra0.network
+Aug 26 22:41:13 repsys11-c2-n3 systemd-networkd[635]: enp6s0: DHCP lease lost
+Aug 26 22:41:13 repsys11-c2-n3 systemd-networkd[635]: enp6s0: DHCPv6 lease lost
+Aug 26 22:41:13 repsys11-c2-n3 systemd-networkd[635]: enp6s0: Re-configuring with /run/systemd/network/10-netplan-extra0.network
+Aug 26 22:41:13 repsys11-c2-n3 systemd-networkd[635]: enp6s0: DHCPv6 lease lost
+
 ```
 
 ## Step 5: Confirm that it works
@@ -258,34 +498,56 @@ test                    Running           10.130.245.2     Ubuntu 24.04 LTS
 You can confirm that the new IP is present in the instance with Multipass:
 
 ```bash
-multipass info test
-Name:           test
+multipass info repsys11-c2-n3
+Name:           repsys11-c2-n3
 State:          Running
-Snapshots:      0
-IPv4:           10.130.245.2
-                10.188.50.204
-Release:        Ubuntu 24.04.2 LTS
-Image hash:     9856e7bdfc4e (Ubuntu 24.04 LTS)
-CPU(s):         1
-Load:           0.01 0.01 0.00
-Disk usage:     1.8GiB out of 4.8GiB
-Memory usage:   298.7MiB out of 955.8MiB
+IPv4:           10.127.233.169
+                10.1.0.141
+Release:        Ubuntu 22.04.4 LTS
+Image hash:     d8f4fd471ec4 (Ubuntu 22.04 LTS)
+CPU(s):         2
+Load:           0.03 0.01 0.00
+Disk usage:     2.1GiB out of 77.5GiB
+Memory usage:   251.3MiB out of 15.6GiB
 Mounts:         --
+
 ```
 
-The command above should show two IPs, the second of which is the one we just configured (10.13.31.13). You can use ping to confirm that it can be reached from the host:
+You can use ping to confirm that it can be reached from another host on lan:
 
 ```bash
-ping 10.188.50.204
+ping -c 1 -n 10.1.0.123
+
+ping -c 1 -n 10.1.0.129
+PING 10.1.0.129 (10.1.0.129) 56(84) bytes of data.
+64 bytes from 10.1.0.129: icmp_seq=1 ttl=64 time=1.31 ms
+
+--- 10.1.0.129 ping statistics ---
+1 packets transmitted, 1 received, 0% packet loss, time 0ms
+rtt min/avg/max/mdev = 1.309/1.309/1.309/0.000 ms
 ```
 
-Conversely, you can also ping from the instance to the host:
+Confirm VM can ping lan and wan
 
 ```bash
-multipass exec -n test -- ping 10.188.50.202
-# works
-multipass exec -n test -- ping 10.188.220.202
-# works
+multipass exec -n repsys12-c1-n2 -- ping -c 1 -n 10.1.0.113
+
+multipass exec -n repsys12-c1-n1 -- ping -c 1 -n 10.1.0.113
+PING 10.1.0.113 (10.1.0.113) 56(84) bytes of data.
+64 bytes from 10.1.0.113: icmp_seq=1 ttl=64 time=0.560 ms
+
+--- 10.1.0.113 ping statistics ---
+1 packets transmitted, 1 received, 0% packet loss, time 0ms
+rtt min/avg/max/mdev = 0.560/0.560/0.560/0.000 ms
+
+multipass exec -n repsys21-c1-n1 -- ping -c 1 -n google.com
+PING google.com (142.250.191.238) 56(84) bytes of data.
+64 bytes from 142.250.191.238: icmp_seq=1 ttl=57 time=9.04 ms
+
+--- google.com ping statistics ---
+1 packets transmitted, 1 received, 0% packet loss, time 0ms
+rtt min/avg/max/mdev = 9.039/9.039/9.039/0.000 ms
+
 ```
 
 ## **[Setup ssh to VMs](./ssh_into_mutipass_vms.md)**

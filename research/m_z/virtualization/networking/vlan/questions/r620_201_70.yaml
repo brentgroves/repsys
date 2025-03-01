@@ -8,26 +8,21 @@ network:
   ethernets:
     eno1:
       dhcp4: false
-      dhcp6: false
-  vlans:
-    vlan220:
-      id: 220
-      link: eno1
       addresses:
-      - 10.188.220.203/24    
-      routes:
-        - to: 10.188.73.0/24
-          via: 10.188.220.254      
-  bridges:
-    br0:
-      dhcp4: false
-      dhcp6: false  
-      addresses:
-      - 10.188.50.203/24    
+      - 10.188.50.201/24    
       routes:
       - to: default
         via: 10.188.50.254
       nameservers:
         addresses:
         - 10.225.50.203
-      interfaces: [eno1]  
+        - 10.224.50.203
+  vlans:
+    vlan220:
+      id: 220
+      link: eno1
+      addresses:
+      - 10.188.220.201/24
+      routes:
+        - to: 10.188.73.0/24
+          via: 10.188.220.254      

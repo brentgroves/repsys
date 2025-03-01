@@ -1,60 +1,324 @@
 # Linamar Network Questions
 
+## Can
+
+## Can we access 188.220 and 187.220
+
+Try adding an ip address for both subnets and a route to 10.187.40.0/24.
+
+It does not work. Can't get an ip on subnet 10.187.50.0/24 to work at all from the switch ports I am using. I assume I would need a firewall rule to get this to work.
+
+```bash
+# r620_201_187
+sudo netplan apply
+ip route
+default via 10.188.50.254 dev eno1 proto static 
+10.41.219.0/24 dev mpqemubr0 proto kernel scope link src 10.41.219.1 
+10.187.220.0/24 dev vlan220 proto kernel scope link src 10.187.220.201 
+10.188.50.0/24 dev eno1 proto kernel scope link src 10.188.50.201 
+
+ip a
+...
+6: eno1: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq state UP group default qlen 1000
+    link/ether b8:ca:3a:6a:35:98 brd ff:ff:ff:ff:ff:ff
+    altname enp1s0f0
+    inet 10.188.50.201/24 brd 10.188.50.255 scope global eno1
+       valid_lft forever preferred_lft forever
+    inet6 fe80::baca:3aff:fe6a:3598/64 scope link 
+       valid_lft forever preferred_lft forever
+...
+10: vlan220@eno1: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default qlen 1000
+    link/ether b8:ca:3a:6a:35:98 brd ff:ff:ff:ff:ff:ff
+    inet 10.187.220.201/24 brd 10.187.220.255 scope global vlan220
+       valid_lft forever preferred_lft forever
+    inet6 fe80::baca:3aff:fe6a:3598/64 scope link 
+       valid_lft forever preferred_lft forever
+```
+
+## Can we access 70 vlan
+
+Jared said we should be able to access it from 220.
+
+```bash
+# r620_201_70.yaml
+ip route
+default via 10.188.50.254 dev eno1 proto static 
+10.41.219.0/24 dev mpqemubr0 proto kernel scope link src 10.41.219.1 
+10.188.50.0/24 dev eno1 proto kernel scope link src 10.188.50.201 
+10.188.220.0/24 dev vlan220 proto kernel scope link src 10.188.220.201
+```
+
+There is no route to to 10.188.70.0/24 so the default route would be taken and that is via 10.188.50.254
+
+so we need a route to 10.188.70.0/24 via 10.188.220.254.  If the 220 gw has a route to 10.188.70.0/24 then it will work.
+
+```yaml
+      routes:
+      - to: 10.188.70.0/24
+        via: 10.188.220.254
+```
+
+### **[How to add route to vlan interface](https://s55ma.radioamater.si/2024/05/17/configuring-vlan-routing-with-netplan-policy-based-routing/)**
+
+```yaml
+network:
+  version: 2
+  ethernets:
+    eno1:
+      dhcp4: false
+      addresses:
+      - 10.188.50.201/24    
+      routes:
+      - to: default
+        via: 10.188.50.254
+      nameservers:
+        addresses:
+        - 10.225.50.203
+        - 10.224.50.203
+  vlans:
+    vlan220:
+      id: 220
+      link: eno1
+      addresses:
+      - 10.188.220.201/24
+      routes:
+        - to: 10.188.73.0/24
+          via: 10.188.220.254     
+```
+
+### Test it
+
+it works.
+
+```bash
+# 10.188.73.0/24 route was added
+
+ip route
+default via 10.188.50.254 dev eno1 proto static 
+10.41.219.0/24 dev mpqemubr0 proto kernel scope link src 10.41.219.1 
+10.188.50.0/24 dev eno1 proto kernel scope link src 10.188.50.201 
+10.188.73.0/24 via 10.188.220.254 dev vlan220 proto static 
+10.188.220.0/24 dev vlan220 proto kernel scope link src 10.188.220.201 
+
+ nmap -v -sn 10.188.73.0/24
+Starting Nmap 7.94SVN ( https://nmap.org ) at 2025-02-28 19:20 UTC
+Initiating Ping Scan at 19:20
+Scanning 256 hosts [2 ports/host]
+Completed Ping Scan at 19:20, 3.11s elapsed (256 total hosts)
+Initiating Parallel DNS resolution of 6 hosts. at 19:20
+Completed Parallel DNS resolution of 6 hosts. at 19:20, 0.05s elapsed
+...
+Nmap scan report for 10.188.73.11
+Host is up (0.0033s latency).
+Nmap scan report for 10.188.73.12
+Host is up (0.0047s latency).
+Nmap scan report for 10.188.73.13
+Host is up (0.0017s latency).
+Nmap scan report for 10.188.73.14
+Host is up (0.0016s latency).
+Nmap scan report for 10.188.73.15
+Host is up (0.014s latency).
+Nmap scan report for 10.188.73.16
+Host is up (0.00063s latency).
+...
+```
+
 ## Can we access both vlan from vm and give vm network reachable IP
 
-### multipass docs
+test with r620_203.yaml
 
-<https://canonical.com/multipass/docs/configure-static-ips>
+### multipass docs
 
 ### AI Overview
 
 Learn more
 To make a Multipass VM network accessible, you need to configure the network settings to use a "bridged" network mode, which essentially connects the VM directly to your host machine's physical network, allowing external access by using the VM's assigned IP address; this is typically done when launching the VM with the --network flag and specifying the desired network interface on your host machine.
 Key steps:
-Launch with bridged network: When creating a new Multipass VM, use the --network option with the name of your host network interface to enable bridged networking:
-Code
 
+Launch with bridged network: When creating a new Multipass VM, use the --network option with the name of your host network interface to enable bridged networking:
+
+```bash
     multipass launch --name myvm --network enp0s3  
+```
+
 Replace enp0s3 with the actual name of your network interface on your host machine.
 Check VM IP address: Once the VM is running, use multipass exec myvm ip addr show to find the assigned IP address.
 Access the VM: You can now access the VM from other devices on your network using its IP address.
 
-### problem
+### **[How to configure static IPs](https://canonical.com/multipass/docs/configure-static-ips)**
 
-<https://askubuntu.com/questions/1425752/how-to-bridge-local-lan-using-multipass>
+Step 1: Create a Bridge
 
-1
+Notes:
 
-Looking for some assistance in trying to get the network bridging to work (consistently/more than once) when creating VMs with Multipass. I have tried so many things with the documentation I've found, yet nothing seems to work, or have any level of consistency.
+- Don't add ip's or anything else to the physical network interfaces.
+- Add the IP addresses, routes, and nameservers to the bridge.
 
-My driver is lxd I am using network manager I initially used launch --network=en0, which is my physical ethernet adapter, and this worked the first time. I was prompted to create a bridge the first time I did this, and any VM I launched would show two IPs, one for the 10.x.x.x Multipass network and the other 192.168.1.x for my local LAN and everything was great.
+```yaml
+network:
+  version: 2
+  ethernets:
+    eno1:
+      dhcp4: false
+      dhcp6: false
+  vlans:
+    vlan220:
+      id: 220
+      link: eno1
+      addresses:
+      - 10.188.220.203/24    
+  bridges:
+    br0:
+      dhcp4: false
+      dhcp6: false  
+      addresses:
+      - 10.188.50.203/24    
+      routes:
+      - to: default
+        via: 10.188.50.254
+      nameservers:
+        addresses:
+        - 10.225.50.203
+      interfaces: [eno1]
+```
 
-After one reboot of my Ubuntu server, none of that works anymore and even when attempting to launch a VM with --network= I get a single 10.x.x.x address on the VM and is not accessible from my LAN.
+### Step 2: Launch an instance with a manual network
 
-From top r620, 10.188.50.203, apply r620_203.yaml netplan configuration with bridge.
-
-## Can Multipass VM access both 50 and 220
-
-Yes.
+You can also leave the MAC address unspecified (just --network name=localbr,mode=manual). If you do so, Multipass will generate a random MAC for you, but you will need to retrieve it in the next step.
 
 ```bash
-ssh brent@10.188.50.201
-multipass shell luminous-louvar
-sudo apt update
-ping 10.188.220.50
-PING 10.188.220.50 (10.188.220.50) 56(84) bytes of data.
-64 bytes from 10.188.220.50: icmp_seq=1 ttl=127 time=1.08 ms
-64 bytes from 10.188.220.50: icmp_seq=2 ttl=127 time=0.698 ms
 
-ping 10.188.50.79
-PING 10.188.50.79 (10.188.50.79) 56(84) bytes of data.
-64 bytes from 10.188.50.79: icmp_seq=1 ttl=127 time=1.08 ms
-64 bytes from 10.188.50.79: icmp_seq=2 ttl=127 time=0.690 ms
-exit
-
-ssh brent@10.41.219.209
+multipass launch --name test --network name=br0
+multipass launch --network br0 --name k8sn1 --cpus 2 --memory 32G --disk 250G 
 
 ```
+
+## Step 3: Configure the extra interface
+
+### retrieve the hardware address
+
+See how multipass configured the network. Until I can figure out how to pass the hardware address manaully during launch we will have to grab the one multipass or lxd creates.
+Note: On repsys11-c2-n2 the 50-cloud-init.yaml file already had the correct mac address.
+
+```bash
+multipass exec -n test -- sudo cat /etc/netplan/50-cloud-init.yaml
+...
+macaddress: "52:54:00:ca:42:da"
+```
+
+### update netplan with hardware address
+
+```bash
+
+# Make sure the mac address matches the extra0 macaddress
+
+multipass exec -n test -- sudo bash -c 'cat << EOF > /etc/netplan/50-cloud-init.yaml
+network:
+  version: 2
+  ethernets:
+    default:
+      match:
+        macaddress: "52:54:00:e3:2e:3b"
+      dhcp-identifier: "mac"
+      dhcp4: true
+    extra0:
+      addresses:
+      - 10.188.50.204/24
+      nameservers:
+         addresses:
+         - 10.225.50.203
+         - 10.224.50.203
+      routes:
+      - to: 10.188.40.0/24
+        via: 10.188.50.254
+      match:
+        macaddress: "52:54:00:ca:42:da"
+      optional: true
+EOF'
+
+# verify
+
+multipass exec -n test -- sudo cat /etc/netplan/50-cloud-init.yaml
+
+ip route
+default via 10.130.245.1 dev ens3 proto dhcp src 10.130.245.2 metric 100 
+10.130.245.0/24 dev ens3 proto kernel scope link src 10.130.245.2 metric 100 
+10.130.245.1 dev ens3 proto dhcp scope link src 10.130.245.2 metric 100 
+10.188.50.0/24 dev ens4 proto kernel scope link src 10.188.50.204 
+```
+
+if all looks good apply network changes
+
+```bash
+multipass exec -n test -- sudo netplan apply
+multipass list
+Name                    State             IPv4             Image
+foo                     Running           10.130.245.158   Ubuntu 24.04 LTS
+test                    Running           10.130.245.2     Ubuntu 24.04 LTS
+
+# was route to 10.188.40.0/24 added
+multipass shell test                                          10.188.50.204
+ip route
+default via 10.130.245.1 dev ens3 proto dhcp src 10.130.245.2 metric 100 
+10.130.245.0/24 dev ens3 proto kernel scope link src 10.130.245.2 metric 100 
+10.130.245.1 dev ens3 proto dhcp scope link src 10.130.245.2 metric 100 
+10.188.40.0/24 via 10.188.50.254 dev ens4 proto static 
+10.188.50.0/24 dev ens4 proto kernel scope link src 10.188.50.204 
+
+ping 10.188.40.230
+PING 10.188.40.230 (10.188.40.230) 56(84) bytes of data.
+64 bytes from 10.188.40.230: icmp_seq=1 ttl=63 time=2.96 ms
+64 bytes from 10.188.40.230: icmp_seq=2 ttl=63 time=1.91 ms
+^C
+--- 10.188.40.230 ping statistics ---
+2 packets transmitted, 2 received, 0% packet loss, time 1001ms
+rtt min/avg/max/mdev = 1.913/2.438/2.963/0.525 ms
+```
+
+## Step 5: Confirm that it works
+
+You can confirm that the new IP is present in the instance with Multipass:
+
+```bash
+multipass info test
+Name:           test
+State:          Running
+Snapshots:      0
+IPv4:           10.130.245.2
+                10.188.50.204
+Release:        Ubuntu 24.04.2 LTS
+Image hash:     9856e7bdfc4e (Ubuntu 24.04 LTS)
+CPU(s):         1
+Load:           0.01 0.01 0.00
+Disk usage:     1.8GiB out of 4.8GiB
+Memory usage:   298.7MiB out of 955.8MiB
+Mounts:         --
+```
+
+The command above should show two IPs, the second of which is the one we just configured (10.13.31.13). You can use ping to confirm that it can be reached from the host:
+
+```bash
+ping 10.188.50.204
+```
+
+Conversely, you can also ping from the instance to the host:
+
+```bash
+multipass exec -n test -- ping 10.188.50.202
+# works
+multipass exec -n test -- ping 10.188.220.202
+# works
+```
+
+## **[multipass ubuntu password set](https://askubuntu.com/questions/1230753/login-and-password-for-multipass-instance)**
+
+In multipass instance, set a password to ubuntu user. Needed to ftp from dev system. Multipass has transfer command but only works from the host.
+
+```bash
+sudo passwd ubuntu
+```
+
+## **[Setup ssh to VMs](./ssh_into_mutipass_vms.md)**
 
 ### how does multipass vm access the internet
 
@@ -96,71 +360,3 @@ ip a s
 ## How to collect data from moxa server
 
 configure a trunk port in albion for 50 and 70 vlans and make 50 the default for untagged traffic. Listen on 70 IP and send data to 10.188.50.202 or Azure SQL db.
-
-## Can I see 10.187.50.0/24 from Avilla
-
-change address of laptop to 10.187.220.230/24.
-No, if 10.187.220.51, can connect to 10.187.73.0/24, there must be a host route setup from Avilla to Albion.
-
-```bash
-ip route show table all
-...
-nmap -v -sn 10.187.220.0/24
-no hosts
-```
-
-## Are there any IP network routes from 10.188 to 10.187 or vise-versa?
-
-Yes. The following routes exist.
-
-10.187.40.0/24 to 10.188.40.0/24
-10.188.40.0/24 to 10.187.40.0/24
-
-```bash
-ssh brent@10.188.40.230
-nmap -v -sn 10.188.73.0/24
-no hosts
-If Mach2 is able to communicate with the honda vlan there my be a host route instead of network route.
-
-traceroute 10.187.40.123
-Note: no gateway entry.
-1 10.188.40.251 // Jared said this is a fortigate ip
-2 10.187.249.11 // Goes to the AOS transport circuit.
-3 10.187.40.123 // host
-
-AOS transport circuit
-10.x.10.11
-10.y.10.11
-
-traceroute 10.188.50.202
-1 10.188.40.251 // ?
-2 10.188.50.202
-
-ssh brent@10.187.40.123
-traceroute 10.188.50.202
-_gateway (10.187.40.254)
-10.188.249.1
-10.188.50.202
-```
-
-## Can I see honda vlan 70 from 220 address
-
-No. There is not a network route from 10.188.220.0/24 to 10.187.73.0/24
-
-Is the Avilla 73 vlan cofigured with access to the 220 vlan?
-Is this a routing rule that has been created on the Avilla FW 10.188.255.11?
-
-src: 10.188.220.230
-dest: 10.188.73.0/24
-result: did not work.
-
-maybe the route is a host only route such as:
-src: 10.188.220.50
-dst: 10.188.73.0/24
-
-## What Avilla VLAN has access to Albion Kobe VLAN
-
-Look at core IP router:
-
-to (Alvilla): 10.188.40.0/24
-via: 10.187.40.0/24
