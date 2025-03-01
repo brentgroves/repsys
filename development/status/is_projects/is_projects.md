@@ -22,64 +22,91 @@ configure a trunk port in albion for 50 and 70 vlans and make 50 the default for
 - How to setup an on-prem Kubernetes platform that meets the requirement of running within our Linamar network.
 - How to create Azure resources in the Linamar tenant.
 
-Good Morning Christian and Kevin,
+Good Morning, Team,
 
-This is a revised project summary and timeline for the Automated Report System, Tool Management System, and Tool Tracker MES IS projects I am working on.  If it meets the approval of Kevin Young I would like to add this timetable and summary, or a curtailed version, to the Structures IT Meeting document. Thank you.
+This is a revised project summary and timeline for the Automated Report System, Tool Management System, and Tool Tracker Focused **[Manufacturing Execution System](https://www.ibm.com/think/topics/mes-system)** that the Structures Information System team is working on. These projects are for Linamar Structures but are currently directed toward Southfield, Albion, Avilla, and possibly Mills River. If it meets the approval of Kevin Young and other team members, I would like to add this timetable and summary, or a curtailed version, to the Structures IT Team Meetings and the Albion/Avilla project status tracking systems. Thank you.
 
-## IS Project Summary
+Players:
 
-The following is in markdown format it can be viewed better from <https://markdownlivepreview.com/> by copying and pasting the contents below.
+- Pat Baxter, General Manager
+- Christian. Trujillo, IT Structures Manager
+- Kevin Young, Information Systems Manager
+- Jared Davis, IT Manager
+- Michael Percell, Manufacturing Engineering Manager
+- Dan Martin, Plant Controller Southfield
+- Jami Pyle, MP&L Manager
+- Nancy Swank, Material Planner
+- Hayley Rymer, IT Supervisor
 
-## Azure SQL database
+The following is in markdown format. It can be viewed better at <https://markdownlivepreview.com/>> by copying and pasting the contents below.
 
-- transfer report system schema from Mobex tenant
-- test scripts on Linamar Azure tenant SQL database
+## Structures Information System Project Summary
 
-time: 1 month
-due date: June 2025
+## 1. Avilla Structures **[Kubernetes](https://www.turing.com/blog/importance-of-kubernetes-for-devops)**, K8s, On-Prem and Cloud Platform Services
 
-## Avilla Structures K8s On-Prem and Cloud platform setup
+Set up the cloud-based and low-cost Avilla Structures on-prem virtual machines to provide basic platform services needed by Information Systems projects.
 
-- Avilla Structures K8s deployment
-- Azure K8s deployment
+### Platform Services
 
-Network Configuration and Platform Services:
+- **[Authentication and Authorization](https://auth0.com/blog/why-auth0-by-okta/)**
+- **[Zero-Trust Service Mesh Gateway](https://istio.io/latest/about/service-mesh/)**
+- **[Job Queue](https://www.ibm.com/think/topics/redis#:~:text=Redis%20(REmote%20DIctionary%20Server)%20is,speed%2C%20reliability%2C%20and%20performance.)**
+- **[Email service](https://mailtrap.io/email-sending/)**
+- **[SMS Notification Service](https://novu.co/)**
 
-- Service Mesh Gateway
-- App Notification
-- Email service
+### Platform Services Status
 
-time: 3 months
-due date: June 2025
+- Time: 3 months
+- Due date: July 2025
 
-## Automated Report System
+## 2. Automated Report System
 
-- Request kicks off scripts to extract data from the Plex ERP, transform it, and then load the result into a database table in the data warehouse.
-- Produce Excel, archive result set, and email to end user.
-- Used for reports requiring long-running scripts or live data.
-- Used to enable the creation of PowerBI dashboards for Plex ERP.
+Software system to automate the creation of live or long-running reports, Power BI dashboards, and Excel in the Plex ERP and extended service platforms.
 
-  Users: Anyone needing live or long-running reports, Excel, or Power BI dashboards.
-  Status: Recently, approved for Azure resources needed for this project.
+### Automated Report System Scope
 
-  time: 3 months
-  due date: Nov 2025
+User request kicks off scripts to extract data from the Plex ERP and extended services, transform the data, and then load the result into our data warehouse for event monitoring and reporting.
 
-## Tool Management System
+### Automated Report System Users
 
-  Move from managing CNC tooling in Excel and the Busche Tool List to a more robust and easy-to-use system.
+Anyone needing live or long-running Plex ERP or extended services reports, Excel, and Power BI dashboards.
 
-  Users: Albion MRP and Engineering
+### Automated Report System Status
 
-  time: 6 months
-  due date: Jun 2026
+Recently, approved for Azure resources needed for this project. Currently, configuring an Avilla On-Prem Kubernetes Cluster for on-site data collection and as a low-cost alternative for Structures Information System projects.
 
-## Tool Tracker MES
+- Time: 3 months
+- Due date: Nov 2025
 
-  Automatically collect CNC, job, and start/end tool operation times for problematic tooling.
-  Users: Albion Engineering and MRP
-  time: 6 months
-  due date: Jun 2027
+## 3. Tool Management System
+
+Move from managing CNC tooling in Excel and the Legacy Busche Tool List system to a modern, more robust, and easy-to-use platform.
+
+### Tool Management Users
+
+- Albion MRP and Engineering
+- Possibly Mills River
+
+### Tool Management Status
+
+- Time: 6 months
+- Due date: Jun 2026
+
+## 4. Tool Tracker Focused **[Manufacturing Execution System](https://www.ibm.com/think/topics/mes-system)**
+
+### Tool Tracker Scope
+
+Automatically collect and report on CNC, job, and start/end tool operation times for problematic tooling.
+
+### Tool Tracker Users
+
+- Albion Engineering and MRP
+- Possibly Mills River
+
+### Tool Tracker Status
+
+- Time: 6 months
+- Due date: November 2027
 
 ## Project Details
 

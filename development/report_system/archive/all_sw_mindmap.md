@@ -8,15 +8,13 @@
 mindmap
   root((Information Systems Platforms))
     Azure Tenent
-      Azure SQL Database
+      Authorization 
+      Azure SQL DB
       ::icon(fa fa-book)
-      Storage
-      Service Mesh Gateway
-        Kubernetes Cluster
-        Authentication and Authorization
+      Blob Storage
+      AKS
         Job Queue
-        Application and SMS Notification Service
-        Email Service
+        Service Mesh
     Plex ERP
       ::icon(fa fa-book)
       Soap Web Services
