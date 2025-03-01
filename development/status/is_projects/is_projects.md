@@ -4,24 +4,6 @@ The following is in markdown format it can be viewed better from <https://markdo
 
 ![cp](https://res.cloudinary.com/canonical/image/fetch/f_auto,q_auto,fl_sanitize,w_4096,h_1377/https://assets.ubuntu.com/v1/e55cc8c0-wide-server.png)
 
-## Proposed Project
-
-Mills River Production and Downtime tracking system
-
-Estimate 1 year development. Could run this from - **[Avilla Structures redundant on-prem MAAS, MicroStack, Structures MicroK8s Clusters for Automated Reporting, Tool Management System, and Tool Tracker MES](https://canonical.com/microstack/docs/multi-node-maas)**
-
-## Research
-
-I have been researching the following:
-
-- How to collect data from moxa server
-
-configure a trunk port in albion for 50 and 70 vlans and make 50 the default for untagged traffic. Listen on 70 IP and send data to 10.188.50.202 or Azure SQL db.
-
-- How to add general purpose services such as **[mTLS](https://www.cloudflare.com/learning/access-management/what-is-mutual-tls/#:~:text=Mutual%20TLS%2C%20or%20mTLS%20for,have%20the%20correct%20private%20key.)**, **[service mesh](https://aws.amazon.com/what-is/service-mesh/#:~:text=A%20service%20mesh%20is%20a,with%20multiple%20service%20management%20systems.)**, **[authentication, and authorization](https://auth0.com/docs/get-started/auth0-overview#:~:text=Auth0%20is%20a%20flexible%2C%20drop,delivered%20by%20email%20or%20SMS.)**, **[email delivery](https://mailtrap.io/)**, **[notification system](https://novu.co/)**, and **[site reliability engineering monitoring](https://sysdig.com/blog/monitor-istio/)** to our Kubernetes platforms.
-- How to setup an on-prem Kubernetes platform that meets the requirement of running within our Linamar network.
-- How to create Azure resources in the Linamar tenant.
-
 Good Morning, Team,
 
 This is a revised project summary and timeline for the Automated Report System, Tool Management System, and Tool Tracker Focused **[Manufacturing Execution System](https://www.ibm.com/think/topics/mes-system)** that the Structures Information System team is working on. These projects are for Linamar Structures but are currently directed toward Southfield, Albion, Avilla, and possibly Mills River. If it meets the approval of Kevin Young and other team members, I would like to add this timetable and summary, or a curtailed version, to the Structures IT Team Meetings and the Albion/Avilla project status tracking systems. Thank you.

@@ -5,56 +5,13 @@
 
 ![np](https://cdn.prod.website-files.com/65a5be30bf4809bb3a2e8aff/65de6a24f3bc7cfdb5711e46_ethernet2.jpeg)
 
-## Current Tasks
+<https://www.youtube.com/@routerologyblog1111/videos>
 
-Avilla Structures K8s Network Config
+## update config request for Avilla's "Kubernetes to untrust" policy
 
-Allows access to Server, OT, and Honda VLANs.
+github.com
 
-```yaml
-network:
-  version: 2
-  ethernets:
-    eno1:
-      dhcp4: false
-      dhcp6: false
-  vlans:
-    vlan220:
-      id: 220
-      link: eno1
-      addresses:
-      - 10.188.220.203/24    
-      routes:
-        - to: 10.188.73.0/24
-          via: 10.188.220.254      
-  bridges:
-    br0:
-      dhcp4: false
-      dhcp6: false  
-      addresses:
-      - 10.188.50.203/24    
-      routes:
-      - to: default
-        via: 10.188.50.254
-      nameservers:
-        addresses:
-        - 10.225.50.203
-      interfaces: [eno1]  
-
-```
-
-## Network config request
-
-Update Avilla Structures "Kubernetes to untrust" policy
-
-### Change IP range
-
-1. Change from 10.188.50.[200-203] to 10.188.50.[200-212]
-Reason: Create 1 backup and 1 development Kubernetes Cluster in addition to the production cluster.
-
-2. Snap Store access.
-
-Can't install/update the Ubuntu MicroK8s software without accessing the **[Canonical's Snap Store](https://microk8s.io/docs/getting-started)**.
+I believe multipass was on server install iso and that is the only reason it could be installed.
 
 To access the Snap Store, you typically need a firewall rule that allows outbound connections to the following domains over HTTPS (port 443): "store.canonical.com" and "api.snapcraft.io"; this will enable your system to communicate with the Snap Store servers to download and install applications.
 
