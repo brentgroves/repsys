@@ -1,8 +1,178 @@
 # Linamar Network Questions
 
-## Can
+## Can we access internet domains
+
+Issue: Can't install snaps
+
+AI results
+
+If you can't install Snap Store apps, the most likely reasons are: missing or outdated "snapd" package (the Snap daemon), incorrect system permissions, network issues preventing access to the Snap Store, or a problem with your specific Linux distribution's Snap integration; you should check if the "snapd" service is running properly, verify your internet connection, and if necessary, manually install or update "snapd" using your system's package manager.
+
+### Troubleshooting steps
+
+Check Snapd installation:
+Open a terminal and run snap --version. If it shows an error, you need to install "snapd" using your distribution's package manager.
+To update "snapd": sudo snap install snapd --classic
+
+```bash
+sudo systemctl status snapd
+# cant install snapstore apps
+snap --version
+snap    2.67
+snapd   2.67
+series  16
+ubuntu  24.04
+kernel  6.8.0-54-generic
+```
+
+## Verify system permissions
+
+Ensure you have sufficient user privileges to install snaps.
+
+If necessary, use sudo before the "snap" command.
+
+```bash
+sudo snap install curl
+Download snap "curl" (2283) from channel "stable"    
+# does not work
+
+which multipass
+/snap/bin/multipass
+```
+
+### Check network connectivity
+
+Make sure you have a stable internet connection to access the Snap Store.
+
+### Generate debug info
+
+One of the best ways to solve an issue is to understand when and where the error is encountered, and there are several levels of output that can be generated.
+
+The snap changes and snap tasks <change-id> commands, for example, output details about what changed during the last refresh:
+
+```bash
+snap changes
+snap changes
+ID   Status  Spawn               Ready               Summary
+5    Done    today at 17:21 UTC  today at 17:33 UTC  Auto-refresh snaps "core24", "multipass"
+6    Error   today at 20:11 UTC  today at 20:14 UTC  Install "htop" snap
+7    Error   today at 20:22 UTC  today at 20:24 UTC  Install "curl" snap
+```
+
+The snap daemon documents its operations to the system log. This can be retrieved and viewed with the following command:
+
+```bash
+sudo journalctl --no-pager -u snapd
+sudo journalctl --no-pager -u snapd
+Jan 27 23:36:19 k8shv1 systemd[1]: Starting snapd.service - Snap Daemon...
+Jan 27 23:36:20 k8shv1 snapd[1345]: overlord.go:271: Acquiring state lock file
+Jan 27 23:36:20 k8shv1 snapd[1345]: overlord.go:276: Acquired state lock file
+Jan 27 23:36:20 k8shv1 snapd[1345]: daemon.go:247: started snapd/2.63.1+24.04 (series 16; classic) ubuntu/24.04 (amd64) linux/6.8.0-41-generic.
+Jan 27 23:36:20 k8shv1 snapd[1345]: daemon.go:340: adjusting startup timeout by 30s (pessimistic estimate of 30s plus 5s per snap)
+Jan 27 23:36:20 k8shv1 snapd[1345]: backends.go:58: AppArmor status: apparmor is enabled and all features are available
+Jan 27 23:36:20 k8shv1 snapd[1345]: helpers.go:150: error trying to compare the snap system key: system-key missing on disk
+Jan 27 23:36:20 k8shv1 systemd[1]: Started snapd.service - Snap Daemon.
+Jan 27 23:36:52 k8shv1 snapd[1345]: stateengine.go:149: state ensure error: Get "https://api.snapcraft.io/api/v1/snaps/sections": dial tcp: lookup api.snapcraft.io on 127.0.0.53:53: server misbehaving
+Jan 27 23:36:55 k8shv1 snapd[1345]: daemon.go:519: gracefully waiting for running hooks
+Jan 27 23:36:55 k8shv1 snapd[1345]: daemon.go:521: done waiting for running hooks
+Jan 27 23:36:58 k8shv1 snapd[1345]: overlord.go:515: Released state lock file
+Jan 27 23:36:58 k8shv1 snapd[1345]: daemon stop requested to wait for socket activation
+Jan 27 23:36:58 k8shv1 systemd[1]: snapd.service: Deactivated successfully.
+-- Boot b9edfa6a9b5543068aa3cba4958b8d4e --
+Jan 27 23:53:03 k8shv1 systemd[1]: Starting snapd.service - Snap Daemon...
+Jan 27 23:53:03 k8shv1 snapd[1157]: overlord.go:271: Acquiring state lock file
+Jan 27 23:53:03 k8shv1 snapd[1157]: overlord.go:276: Acquired state lock file
+Jan 27 23:53:03 k8shv1 snapd[1157]: patch.go:64: Patching system state level 6 to sublevel 1...
+Jan 27 23:53:03 k8shv1 snapd[1157]: patch.go:64: Patching system state level 6 to sublevel 2...
+Jan 27 23:53:03 k8shv1 snapd[1157]: patch.go:64: Patching system state level 6 to sublevel 3...
+Jan 27 23:53:03 k8shv1 snapd[1157]: daemon.go:247: started snapd/2.63.1+24.04 (series 16; classic) ubuntu/24.04 (amd64) linux/6.8.0-41-generic.
+Jan 27 23:53:04 k8shv1 snapd[1157]: daemon.go:340: adjusting startup timeout by 30s (pessimistic estimate of 30s plus 5s per snap)
+Jan 27 23:53:04 k8shv1 snapd[1157]: backends.go:58: AppArmor status: apparmor is enabled and all features are available
+Jan 27 23:53:04 k8shv1 systemd[1]: Started snapd.service - Snap Daemon.
+Jan 27 23:53:48 k8shv1 snapd[1157]: stateengine.go:149: state ensure error: Get "https://api.snapcraft.io/api/v1/snaps/sections": net/http: request canceled while waiting for connection (Client.Timeout exceeded while awaiting headers)
+Jan 27 23:54:19 k8shv1 snapd[1157]: daemon.go:519: gracefully waiting for running hooks
+Jan 27 23:54:19 k8shv1 snapd[1157]: daemon.go:521: done waiting for running hooks
+Jan 27 23:54:22 k8shv1 snapd[1157]: overlord.go:515: Released state lock file
+Jan 27 23:54:22 k8shv1 snapd[1157]: daemon stop requested to wait for socket activation
+Jan 27 23:54:22 k8shv1 systemd[1]: snapd.service: Deactivated successfully.
+Feb 10 20:05:20 k8sgw1 systemd[1]: Starting snapd.service - Snap Daemon...
+Feb 10 20:05:20 k8sgw1 systemd[1]: snapd.service: Deactivated successfully.
+Feb 10 20:05:20 k8sgw1 systemd[1]: Stopped snapd.service - Snap Daemon.
+Feb 10 20:05:20 k8sgw1 systemd[1]: Starting snapd.service - Snap Daemon...
+Feb 10 20:05:20 k8sgw1 snapd[60415]: overlord.go:274: Acquiring state lock file
+Feb 10 20:05:20 k8sgw1 snapd[60415]: overlord.go:279: Acquired state lock file
+Feb 10 20:05:20 k8sgw1 snapd[60415]: patch.go:64: Patching system state level 6 to sublevel 1...
+Feb 10 20:05:20 k8sgw1 snapd[60415]: patch.go:64: Patching system state level 6 to sublevel 2...
+Feb 10 20:05:21 k8sgw1 snapd[60415]: patch.go:64: Patching system state level 6 to sublevel 3...
+Feb 10 20:05:21 k8sgw1 snapd[60415]: daemon.go:250: started snapd/2.66.1+24.04 (series 16; classic) ubuntu/24.04 (amd64) linux/6.8.0-41-generic.
+Feb 10 20:05:21 k8sgw1 snapd[60415]: daemon.go:353: adjusting startup timeout by 30s (pessimistic estimate of 30s plus 5s per snap)
+Feb 10 20:05:21 k8sgw1 snapd[60415]: backends.go:58: AppArmor status: apparmor is enabled and all features are available
+Feb 10 20:05:21 k8sgw1 snapd[60415]: helpers.go:160: error trying to compare the snap system key: system-key versions not comparable
+Feb 10 20:05:21 k8sgw1 systemd[1]: Started snapd.service - Snap Daemon.
+Feb 10 20:05:26 k8sgw1 snapd[60415]: daemon.go:548: gracefully waiting for running hooks
+Feb 10 20:05:26 k8sgw1 snapd[60415]: daemon.go:550: done waiting for running hooks
+Feb 10 20:05:29 k8sgw1 snapd[60415]: overlord.go:518: Released state lock file
+Feb 10 20:05:29 k8sgw1 snapd[60415]: daemon stop requested to wait for socket activation
+Feb 10 20:05:29 k8sgw1 systemd[1]: snapd.service: Deactivated successfully.
+Feb 10 20:07:16 k8sgw1 systemd[1]: Starting snapd.service - Snap Daemon...
+Feb 10 20:07:16 k8sgw1 snapd[71866]: overlord.go:274: Acquiring state lock file
+Feb 10 20:07:16 k8sgw1 snapd[71866]: overlord.go:279: Acquired state lock file
+Feb 10 20:07:16 k8sgw1 snapd[71866]: daemon.go:250: started snapd/2.66.1+24.04 (series 16; classic) ubuntu/24.04 (amd64) linux/6.8.0-41-generic.
+Feb 10 20:07:16 k8sgw1 snapd[71866]: daemon.go:353: adjusting startup timeout by 30s (pessimistic estimate of 30s plus 5s per snap)
+Feb 10 20:07:16 k8sgw1 snapd[71866]: backends.go:58: AppArmor status: apparmor is enabled and all features are available
+Feb 10 20:07:16 k8sgw1 systemd[1]: Started snapd.service - Snap Daemon.
+Feb 10 20:07:16 k8sgw1 snapd[71866]: api_snaps.go:468: Installing snap "multipass" revision unset
+Feb 10 20:07:16 k8sgw1 snapd[71866]: store_download.go:142: no host system xdelta3 available to use deltas
+Feb 10 20:07:22 k8sgw1 snapd[71866]: daemon.go:548: gracefully waiting for running hooks
+Feb 10 20:07:22 k8sgw1 snapd[71866]: daemon.go:550: done waiting for running hooks
+Feb 10 20:07:25 k8sgw1 snapd[71866]: overlord.go:518: Released state lock file
+Feb 10 20:07:25 k8sgw1 systemd[1]: snapd.service: Deactivated successfully.
+Feb 10 20:07:25 k8sgw1 systemd[1]: snapd.service: Scheduled restart job, restart counter is at 1.
+Feb 10 20:07:25 k8sgw1 systemd[1]: Starting snapd.service - Snap Daemon...
+```
+
+## GitHub builds have old account details
+
+If your Ubuntu One account details change after Build from GitHub has been configured, the new account details are not reflected in the packages built and published from GitHub.
+
+Due to the nature of the GitHub to Snapcraft authentication link, account details are retained for the lifetime of that link from the point of its creation. To force an update after changing your publisher details, you need to recreate that link as follows:
+
+For each snap that you control:
+Go to the Build tab (<https://snapcraft.io/><SNAP-NAME>/builds)
+Select “Disconnect repo”
+Sign out of snapcraft.io AND login.ubuntu.com
+For good measure, purge all cookies
+Sign back into snapcraft.io
+Confirm that your account name and other details are correct
+For each snap that you control:
+Go to the Build tab
+Select on the GitHub “Log in” button and reconnect to the appropriate GitHub repo
+
+### Test Policy Change
+
+1. Please change the range of this policy from 10.188.50.[200-203] to 10.188.50.[200-212]
+  Reason: To create 1 backup and 1 development Kubernetes Cluster in addition to the production cluster.
+
+2. Please grant Snap Store access.
+
+Can't install/update the Ubuntu MicroK8s software without accessing the **[Canonical's Snap Store](https://microk8s.io/docs/getting-started)**.
+
+To access the Snap Store, you typically need a firewall rule that allows outbound connections to the following domains over HTTPS (port 443): "store.canonical.com" and "api.snapcraft.io"; this will enable your system to communicate with the Snap Store servers to download and install applications.
+
+Key points about the firewall rule:
+
+- Protocol: TCP
+- Port: 80/443
+- Action: Allow
+- Destination: "store.canonical.com" and "api.snapcraft.io"
+
+```bash
+
+```
 
 ## Can we access 188.220 and 187.220
+
+The site FW does not allow traffic to pass across sub-nets unless a rule is added to a FW policy.
 
 Try adding an ip address for both subnets and a route to 10.187.40.0/24.
 
