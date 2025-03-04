@@ -3,6 +3,7 @@
 ## Can we access internet domains
 
 Issue: Can't install snaps
+Fix: Added more domains to trust using <https://snapcraft.io/docs/network-requirements>
 
 AI results
 

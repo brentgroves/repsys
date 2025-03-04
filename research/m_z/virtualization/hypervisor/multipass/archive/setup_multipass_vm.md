@@ -15,6 +15,44 @@ This process assumes you are using Ubuntu 24.04 server or OS that is using netwo
 
 ## Step 1: **[Goto create bridges with netplan](./create_bridges_with_netplan.md)**
 
+```bash
+networkctl
+IDX LINK        TYPE     OPERATIONAL SETUP      
+  1 lo          loopback carrier     unmanaged
+  2 enp66s0f0   ether    no-carrier  configuring
+  3 enp66s0f1   ether    no-carrier  configuring
+  4 enp66s0f2   ether    no-carrier  configuring
+  5 eno1        ether    routable    configured 
+  6 enp66s0f3   ether    no-carrier  configuring
+  7 eno2        ether    enslaved    configured 
+  8 eno3        ether    no-carrier  configuring
+  9 eno4        ether    no-carrier  configuring
+ 10 br0         bridge   routable    configured 
+ 11 br1         bridge   routable    configured 
+ 12 mpbr0       bridge   routable    unmanaged
+ 13 tap434bfb4d ether    enslaved    unmanaged
+ 14 tap34dcb760 ether    enslaved    unmanaged
+ 15 tap7a27ad4e ether    enslaved    unmanaged
+ 16 tapf48799c9 ether    enslaved    unmanaged
+ 17 tapfc3a97ec ether    enslaved    unmanaged
+ 18 tap38ceeb39 ether    enslaved    unmanaged
+
+```
+
+Use the ip utility to display the link status of Ethernet devices that are ports of a specific bridge:
+
+```bash
+ip link show master br0
+7: eno2: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq master br0 state UP mode DEFAULT group default qlen 1000
+    link/ether b8:ca:3a:6a:37:19 brd ff:ff:ff:ff:ff:ff
+    altname enp1s0f1
+14: tap34dcb760: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq master br0 state UP mode DEFAULT group default qlen 1000
+    link/ether 5a:8a:38:e5:66:f1 brd ff:ff:ff:ff:ff:ff
+18: tap38ceeb39: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq master br0 state UP mode DEFAULT group default qlen 1000
+    link/ether ce:80:f5:53:04:fb brd ff:ff:ff:ff:ff:ff
+
+```
+
 You can also run multipass networks to confirm the bridge is available for Multipass to connect to.
 
 ```bash
@@ -50,61 +88,6 @@ core22                                        20230717         Ubuntu Core 22
 23.10                       mantic            20240619         Ubuntu 23.10
 24.04                       noble,lts         20240622         Ubuntu 24.04 LTS
 ```
-
-## Decide how much ram and vcpu to use
-
-```bash
-lscpu
-Architecture:             x86_64
-  CPU op-mode(s):         32-bit, 64-bit
-  Address sizes:          46 bits physical, 48 bits virtual
-  Byte Order:             Little Endian
-CPU(s):                   32
-  On-line CPU(s) list:    0-31
-Vendor ID:                GenuineIntel
-  Model name:             Intel(R) Xeon(R) CPU E5-2650 0 @ 2.00GHz
-    CPU family:           6
-    Model:                45
-    Thread(s) per core:   2
-    Core(s) per socket:   8
-    Socket(s):            2
-    Stepping:             7
-    CPU(s) scaling MHz:   45%
-    CPU max MHz:          2800.0000
-    CPU min MHz:          1200.0000
-    BogoMIPS:             4000.10
-    Flags:                fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon peb
-                          s bts rep_good nopl xtopology nonstop_tsc cpuid aperfmperf pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 cx16 xtpr pdcm pcid dca sse4_1 sse4_2 x2apic popcnt tsc_deadl
-                          ine_timer aes xsave avx lahf_lm pti ssbd ibrs ibpb stibp tpr_shadow flexpriority ept vpid xsaveopt dtherm ida arat pln pts vnmi md_clear flush_l1d
-Virtualization features:  
-  Virtualization:         VT-x
-Caches (sum of all):      
-  L1d:                    512 KiB (16 instances)
-  L1i:                    512 KiB (16 instances)
-  L2:                     4 MiB (16 instances)
-  L3:                     40 MiB (2 instances)
-NUMA:                     
-  NUMA node(s):           2
-  NUMA node0 CPU(s):      0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30
-  NUMA node1 CPU(s):      1,3,5,7,9,11,13,15,17,19,21,23,25,27,29,31
-Vulnerabilities:          
-  Gather data sampling:   Not affected
-  Itlb multihit:          KVM: Mitigation: Split huge pages
-  L1tf:                   Mitigation; PTE Inversion; VMX conditional cache flushes, SMT vulnerable
-  Mds:                    Mitigation; Clear CPU buffers; SMT vulnerable
-  Meltdown:               Mitigation; PTI
-  Mmio stale data:        Unknown: No mitigations
-  Reg file data sampling: Not affected
-  Retbleed:               Not affected
-  Spec rstack overflow:   Not affected
-  Spec store bypass:      Mitigation; Speculative Store Bypass disabled via prctl
-  Spectre v1:             Mitigation; usercopy/swapgs barriers and __user pointer sanitization
-  Spectre v2:             Mitigation; Retpolines; IBPB conditional; IBRS_FW; STIBP conditional; RSB filling; PBRSB-eIBRS Not affected; BHI Not affected
-  Srbds:                  Not affected
-  Tsx async abort:        Not affected
-```
-
-## **[remove an instance](./remove_instance.md)**
 
 ## Launch VM with extra network interface
 

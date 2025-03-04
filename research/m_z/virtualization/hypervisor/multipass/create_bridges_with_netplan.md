@@ -39,84 +39,44 @@ sudo cp /etc/netplan/50-cloud-init.yaml .
 sudo vi /etc/netplan/50-cloud-init.yaml
 ```
 
-## Modify the configuration to assign a static IP to the bridge ‘br0‘
+## Configure network with netplan and a bridge
 
-I did not include renderer: networkd when I updated 50-cloud-init.yaml.
-
-```yaml
-network:
-  version: 2
-  renderer: networkd
-  ethernets:
-    enp1s0:
-      dhcp4: no
-    enp2s0f1:
-      dhcp4: no
-  bridges:
-    br0:
-      dhcp4: no
-      addresses: [192.168.122.100/24]
-      routes:
-        - to: 0.0.0.0/0
-          via: 192.168.122.1  # Adjust according to your network configuration
-      nameservers:
-        addresses: [8.8.8.8, 8.8.4.4]  # DNS servers
-      interfaces: [enp1s0, enp2s0f1]
-```
-
-The actual 50-cloud-init.yaml looked like this.
+This is the config file for our r620s which our connected to a trunk port with 2 vlan configured, vlan 50 being the default tag when no packet tag info is present.
 
 ```yaml
 # This file is generated from information provided by the datasource.  Changes
 # to it will not persist across an instance reboot.  To disable cloud-init's
 # network configuration capabilities, write a file
 # /etc/cloud/cloud.cfg.d/99-disable-network-config.cfg with the following:
-# network: {config: disabled}
+# network: {config: disabled
 network:
-    ethernets:
-        eno1:
-            addresses:
-            - 10.1.0.125/22
-            nameservers:
-                addresses:
-                - 10.1.2.69
-                - 10.1.2.70
-                - 172.20.0.39
-                search: [BUSCHE-CNC.COM]
-            routes:
-            -   to: default
-                via: 10.1.1.205
-        eno2:
-            dhcp4: no
-        eno3:
-            dhcp4: true
-        eno4:
-            dhcp4: true
-        enp66s0f0:
-            dhcp4: true
-        enp66s0f1:
-            dhcp4: true
-        enp66s0f2:
-            dhcp4: true
-        enp66s0f3:
-            dhcp4: true
-    bridges:
-        br0:
-            dhcp4: no
-            addresses:
-            - 10.1.0.126/22
-            nameservers:
-                addresses:
-                - 10.1.2.69
-                - 10.1.2.70
-                - 172.20.0.39
-                search: [BUSCHE-CNC.COM]
-            interfaces: [eno2]
-        br1:
-            dhcp4: no
-            addresses:
-            - 10.13.31.1/24
-    version: 2
+  version: 2
+  ethernets:
+    eno1:
+      dhcp4: false
+      dhcp6: false
+  vlans:
+    vlan220:
+      id: 220
+      link: eno1
+      addresses:
+      - 10.188.220.203/24    
+      routes:
+        - to: 10.188.73.0/24
+          via: 10.188.220.254      
+  bridges:
+    br0:
+      dhcp4: false
+      dhcp6: false  
+      addresses:
+      - 10.188.50.203/24    
+      routes:
+      - to: default
+        via: 10.188.50.254
+      nameservers:
+        addresses:
+        - 10.225.50.203
+      interfaces: [eno1]  
 ```
 
 Apply the Configuration Changes: Once you’ve edited the configuration file, apply the changes to update your network settings.
@@ -133,67 +93,52 @@ reboot
 
 ```bash
 ip route list table local
-local 10.1.0.125 dev eno1 proto kernel scope host src 10.1.0.125 
-local 10.1.0.126 dev br0 proto kernel scope host src 10.1.0.126 
-broadcast 10.1.3.255 dev br0 proto kernel scope link src 10.1.0.126 
-broadcast 10.1.3.255 dev eno1 proto kernel scope link src 10.1.0.125 
-local 10.13.31.1 dev br1 proto kernel scope host src 10.13.31.1 
-broadcast 10.13.31.255 dev br1 proto kernel scope link src 10.13.31.1 
-local 10.127.233.1 dev mpbr0 proto kernel scope host src 10.127.233.1 
-broadcast 10.127.233.255 dev mpbr0 proto kernel scope link src 10.127.233.1 
+local 10.130.245.1 dev mpqemubr0 proto kernel scope host src 10.130.245.1 
+broadcast 10.130.245.255 dev mpqemubr0 proto kernel scope link src 10.130.245.1 
+local 10.188.50.203 dev br0 proto kernel scope host src 10.188.50.203 
+broadcast 10.188.50.255 dev br0 proto kernel scope link src 10.188.50.203 
+local 10.188.220.203 dev vlan220 proto kernel scope host src 10.188.220.203 
+broadcast 10.188.220.255 dev vlan220 proto kernel scope link src 10.188.220.203 
 local 127.0.0.0/8 dev lo proto kernel scope host src 127.0.0.1 
 local 127.0.0.1 dev lo proto kernel scope host src 127.0.0.1 
 broadcast 127.255.255.255 dev lo proto kernel scope link src 127.0.0.1 
 
 # there should be only 1 default route
-ip route list table main
-default via 10.1.1.205 dev eno1 proto static 
-10.1.0.0/22 dev br0 proto kernel scope link src 10.1.0.126 
-10.1.0.0/22 dev eno1 proto kernel scope link src 10.1.0.125 
-10.13.31.0/24 dev br1 proto kernel scope link src 10.13.31.1 
-10.127.233.0/24 dev mpbr0 proto kernel scope link src 10.127.233.1
-
-# ip shows us our routes
+# ip route list table main
 ip route show
-default via 10.1.1.205 dev eno1 proto static 
-10.1.0.0/22 dev br0 proto kernel scope link src 10.1.0.126 
-10.1.0.0/22 dev eno1 proto kernel scope link src 10.1.0.125 
-10.13.31.0/24 dev br1 proto kernel scope link src 10.13.31.1 
-10.127.233.0/24 dev mpbr0 proto kernel scope link src 10.127.233.1 
+default via 10.188.50.254 dev br0 proto static 
+10.130.245.0/24 dev mpqemubr0 proto kernel scope link src 10.130.245.1 
+10.188.50.0/24 dev br0 proto kernel scope link src 10.188.50.203 
+10.188.73.0/24 via 10.188.220.254 dev vlan220 proto static 
+10.188.220.0/24 dev vlan220 proto kernel scope link src 10.188.220.203 
+
 
 # You can view your machines current arp/neighbor cache/table like so:
 ip neigh show
-10.1.0.162 dev eno2 lladdr 4c:91:7a:64:0f:7d STALE
-10.1.0.166 dev eno1 lladdr 4c:91:7a:63:c0:3a STALE
-10.1.1.205 dev eno1 lladdr 34:56:fe:77:58:bc STALE
+10.130.245.2 dev mpqemubr0 FAILED 
+10.130.245.158 dev mpqemubr0 lladdr 52:54:00:12:cb:af STALE 
+10.188.50.25 dev br0 lladdr 50:6b:8d:de:4f:7b STALE 
+10.188.220.251 dev vlan220 lladdr e4:db:ae:c2:29:0d STALE 
+10.188.50.254 dev br0 lladdr 00:00:5e:00:01:0a DELAY 
+10.188.220.50 dev vlan220 lladdr 50:6b:8d:b2:79:c0 STALE 
+10.188.220.254 dev vlan220 lladdr 00:00:5e:00:01:66 STALE 
+10.188.50.252 dev br0 lladdr e4:db:ae:c6:f9:0c STALE 
+10.188.50.251 dev br0 lladdr e4:db:ae:c2:29:0c STALE 
+10.188.220.252 dev vlan220 lladdr e4:db:ae:c6:f9:0d STALE 
+10.188.50.79 dev br0 lladdr 50:6b:8d:d3:fd:1f STALE 
 
 # view devices linked to bridge
 ip link show master br0
-7: eno2: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq master br0 state UP mode DEFAULT group default qlen 1000
-    link/ether b8:ca:3a:6a:37:19 brd ff:ff:ff:ff:ff:ff
-    altname enp1s0f1
-14: tap34dcb760: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq master br0 state UP mode DEFAULT group default qlen 1000
-    link/ether 5a:8a:38:e5:66:f1 brd ff:ff:ff:ff:ff:ff
-18: tap38ceeb39: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq master br0 state UP mode DEFAULT group default qlen 1000
-    link/ether ce:80:f5:53:04:fb brd ff:ff:ff:ff:ff:ff
+6: eno1: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq master br0 state UP mode DEFAULT group default qlen 1000
+    link/ether b8:ca:3a:6a:37:18 brd ff:ff:ff:ff:ff:ff
+    altname enp1s0f0
 
-ip link show master mpbr0
-13: tape518c5a7: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq master mpbr0 state UP mode DEFAULT group default qlen 1000
-    link/ether e6:53:77:50:74:f1 brd ff:ff:ff:ff:ff:ff
+# vlan filtering at the bridge seems unnecessary since vlan is configured outside of bridge.
+ip -j -p -d link show br0 | grep vlan
+                "vlan_filtering": 0,
+                "vlan_protocol": "802.1Q",
+                "vlan_default_pvid": 1,
+                "vlan_stats_enabled": 0,
+                "vlan_stats_per_port": 0,
+                "mcast_vlan_snooping": 0, 
 
-# show vm routing table
-multipass exec -n microk8s-vm -- ip route list table local
-local 10.1.0.129 dev enp6s0 proto kernel scope host src 10.1.0.129 
-broadcast 10.1.3.255 dev enp6s0 proto kernel scope link src 10.1.0.129 
-local 10.127.233.194 dev enp5s0 proto kernel scope host src 10.127.233.194 
-broadcast 10.127.233.255 dev enp5s0 proto kernel scope link src 10.127.233.194 
-local 127.0.0.0/8 dev lo proto kernel scope host src 127.0.0.1 
-local 127.0.0.1 dev lo proto kernel scope host src 127.0.0.1 
-broadcast 127.255.255.255 dev lo proto kernel scope link src 127.0.0.1 
-
-multipass exec -n microk8s-vm -- ip route list table main
-default via 10.127.233.1 dev enp5s0 proto dhcp src 10.127.233.194 metric 100 
-10.1.0.0/22 dev enp6s0 proto kernel scope link src 10.1.0.129 
-10.127.233.0/24 dev enp5s0 proto kernel scope link src 10.127.233.194 metric 100 
-10.127.233.1 dev enp5s0 proto dhcp scope link src 10.127.233.194 metric 100
-```

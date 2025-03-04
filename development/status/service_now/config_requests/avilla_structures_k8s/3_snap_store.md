@@ -13,6 +13,16 @@ Reason: To create 1 backup and 1 development Kubernetes Cluster in addition to t
 
 Can't install/update the Ubuntu MicroK8s software without accessing the **[Canonical's Snap Store](https://microk8s.io/docs/getting-started)**, which has the following **[network requirements](https://snapcraft.io/docs/network-requirements)**.
 
+## not required but blueprint access
+
+<https://codeload.github.com>
+
+```bash[2025-03-04T15:45:23.136] [error] [url downloader] Failed to get https://codeload.github.com/canonical/multipass-blueprints/zip/refs/heads/main: Error opening https://codeload.github.com/canonical/multipass-blueprints/zip/refs/heads/main
+[2025-03-04T15:45:23.137] [error] [blueprint provider] Error fetching Blueprints: failed to download from 'https://codeload.github.com/canonical/multipass-blueprints/zip/refs/heads/main': Error opening https://codeload.github.com/canonical/multipass-blueprints/zip/refs/heads/main
+[2025-03-04T15:45:33.136] [error] [url downloader] Failed to get https://codeload.github.com/canonical/multipass-blueprints/zip/refs/heads/main: Error opening https://codeload.github.com/canonical/multipass-blueprints/zip/refs/heads/main
+[2025-03-04T15:45:33.137] [error] [blueprint provider] Error fetching Blueprints: failed to download from 'https://codeload.github.com/canonical/multipass-blueprints/zip/refs/heads/main': Error opening https://codeload.github.com/canonical/multipass-blueprints/zip/refs/heads/main
+```
+
 ## API access
 
 api.snapcraft.io:443

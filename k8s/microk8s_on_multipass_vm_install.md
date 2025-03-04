@@ -1,9 +1,5 @@
 # **[Installing MicroK8s with multipass](https://microk8s.io/docs/install-multipass)**
 
-## Notes
-
-I tried not giving the bridge an IP address and this resulted in no route to 10.188.50.200 at all.
-
 **[Current Status](../../../../../development/status/weekly/current_status.md)**\
 **[Research List](../../../../research_list.md)**\
 **[Back Main](../../../../../README.md)**
@@ -28,59 +24,46 @@ sudo passwd ubuntu
 
 This process assumes you are using Ubuntu 24.04 server or OS that is using networkd or an OS which is setup with NetworkMangager but is completely integrated with Netplan 1.0 such as I think Ubuntu 24.04 desktop. It also assumes microk8s is installed on a Ubuntu 22.04 vm.
 
-## **[Install multipass](../research/m_z/virtualization/multipass/multipass_install.md)**
+## **[Install multipass](../research/m_z/virtualization/hypervisor/multipass/multipass_install.md)**
 
 Multipass is the fastest way to create a complete Ubuntu virtual machine on Linux, Windows or macOS, and it’s a great base for using MicroK8s.
 
-## **[Create a Bridge](./create_bridges_with_netplan.md)**
+## **[Create a Bridge with netplan for multipass](../research/m_z/virtualization/hypervisor/multipass/create_bridges_with_netplan.md)**
 
-Notes:
-
-- Don't add ip's or anything else to the physical network interfaces.
-- Add the IP addresses, routes, and nameservers to the bridge.
-
-```yaml
-network:
-  version: 2
-  ethernets:
-    eno1:
-      dhcp4: false
-      dhcp6: false
-  vlans:
-    vlan220:
-      id: 220
-      link: eno1
-      addresses:
-      - 10.188.220.203/24    
-  bridges:
-    br0:
-      dhcp4: false
-      dhcp6: false  
-      addresses:
-      - 10.188.50.203/24    
-      routes:
-      - to: default
-        via: 10.188.50.254
-      nameservers:
-        addresses:
-        - 10.225.50.203
-      interfaces: [eno1]
-```
-
-Show bridge details in a pretty JSON format (which is a good way to get bridge key-value pairs):
+You can also run multipass networks to confirm the bridge is available for Multipass to connect to.
 
 ```bash
-# ip -j -p -d link show br0
-ip -j -p -d link show br0
+multipass networks
+Name        Type       Description
+br0         bridge     Network bridge with eno2
+br1         bridge     Network bridge
+eno1        ethernet   Ethernet device
+eno2        ethernet   Ethernet device
+eno3        ethernet   Ethernet device
+eno4        ethernet   Ethernet device
+enp66s0f0   ethernet   Ethernet device
+enp66s0f1   ethernet   Ethernet device
+enp66s0f2   ethernet   Ethernet device
+enp66s0f3   ethernet   Ethernet device
+mpbr0       bridge     Network bridge for Multipass
 
-# show tap devices and master bridges
-bridge link show
-# bridge link show master br0
-7: eno2: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 master br0 state forwarding priority 32 cost 5 
-13: tap434bfb4d: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 master mpbr0 state forwarding priority 32 cost 2 
-14: tap34dcb760: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 master br0 state forwarding priority 32 cost 2 
-15: tap7a27ad4e: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 master mpbr0 state forwarding priority 32 cost 2 
-16: tapf48799c9: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 master br1 state forwarding priority 32 cost 2
+```
+
+## Create an instance with a specific image
+
+To find out what images are available, run:
+
+```bash
+multipass find
+Image                       Aliases           Version          Description
+core                        core16            20200818         Ubuntu Core 16
+core18                                        20211124         Ubuntu Core 18
+core20                                        20230119         Ubuntu Core 20
+core22                                        20230717         Ubuntu Core 22
+20.04                       focal             20240612         Ubuntu 20.04 LTS
+22.04                       jammy             20240626         Ubuntu 22.04 LTS
+23.10                       mantic            20240619         Ubuntu 23.10
+24.04                       noble,lts         20240622         Ubuntu 24.04 LTS
 ```
 
 ## Decide how much ram and vcpu to use
@@ -136,22 +119,7 @@ Vulnerabilities:
   Tsx async abort:        Not affected
 ```
 
-## Create an instance with a specific image
-
-To find out what images are available, run:
-
-```bash
-multipass find
-Image                       Aliases           Version          Description
-core                        core16            20200818         Ubuntu Core 16
-core18                                        20211124         Ubuntu Core 18
-core20                                        20230119         Ubuntu Core 20
-core22                                        20230717         Ubuntu Core 22
-20.04                       focal             20240612         Ubuntu 20.04 LTS
-22.04                       jammy             20240626         Ubuntu 22.04 LTS
-23.10                       mantic            20240619         Ubuntu 23.10
-24.04                       noble,lts         20240622         Ubuntu 24.04 LTS
-```
+## **[remove an instance](../research/m_z/virtualization/hypervisor/multipass/remove_instance.md)**
 
 ## Launch VM with extra network interface
 
@@ -188,8 +156,40 @@ You can also leave the MAC address unspecified (just --network name=localbr,mode
 
 ```bash
 
-multipass launch --name test --network name=br0
 multipass launch --network br0 --name k8sn1 --cpus 2 --memory 32G --disk 250G 
+
+multipass info k8sn1
+Name:           k8sn1
+State:          Running
+Snapshots:      0
+IPv4:           10.130.245.199
+Release:        Ubuntu 24.04.2 LTS
+Image hash:     a3aea891c930 (Ubuntu 24.04 LTS)
+CPU(s):         2
+Load:           0.03 0.16 0.09
+Disk usage:     1.8GiB out of 242.1GiB
+Memory usage:   586.7MiB out of 31.3GiB
+Mounts:         --
+```
+
+Verify access to host routes
+
+```bash
+ssh brent@10.188.50.203
+multipass shell k8sn1
+ip route
+default via 10.130.245.1 dev ens3 proto dhcp src 10.130.245.199 metric 100 
+10.130.245.0/24 dev ens3 proto kernel scope link src 10.130.245.199 metric 100 
+10.130.245.1 dev ens3 proto dhcp scope link src 10.130.245.199 metric 100 
+ping 10.188.50.79
+# works
+
+ping 10.188.220.50
+# works
+
+# FW rules
+curl https://api.snapcraft.io
+snapcraft.io store API service - Copyright 2018-2022 Canonical.
 
 ```
 
@@ -197,13 +197,27 @@ multipass launch --network br0 --name k8sn1 --cpus 2 --memory 32G --disk 250G
 
 ### retrieve the hardware address
 
-See how multipass configured the network. Until I can figure out how to pass the hardware address manaully during launch we will have to grab the one multipass or lxd creates.
+See how multipass configured the network. Until I can figure out how to pass the hardware address manaully during launch we will have to grab the one multipass creates.
 Note: On repsys11-c2-n2 the 50-cloud-init.yaml file already had the correct mac address.
 
 ```bash
-multipass exec -n test -- sudo cat /etc/netplan/50-cloud-init.yaml
-...
-macaddress: "52:54:00:ca:42:da"
+multipass exec -n k8sn1 -- sudo cat /etc/netplan/50-cloud-init.yaml
+network:
+  version: 2
+  ethernets:
+    default:
+      match:
+        macaddress: "52:54:00:f8:5d:11"
+      dhcp-identifier: "mac"
+      dhcp4: true
+    extra0:
+      match:
+        macaddress: "52:54:00:d7:34:55"
+      optional: true
+      dhcp-identifier: "mac"
+      dhcp4: true
+      dhcp4-overrides:
+        route-metric: 200
 ```
 
 ### update netplan with hardware address
@@ -212,18 +226,18 @@ macaddress: "52:54:00:ca:42:da"
 
 # Make sure the mac address matches the extra0 macaddress
 
-multipass exec -n test -- sudo bash -c 'cat << EOF > /etc/netplan/50-cloud-init.yaml
+multipass exec -n k8sn1 -- sudo bash -c 'cat << EOF > /etc/netplan/50-cloud-init.yaml
 network:
   version: 2
   ethernets:
     default:
       match:
-        macaddress: "52:54:00:e3:2e:3b"
+        macaddress: "52:54:00:f8:5d:11"
       dhcp-identifier: "mac"
       dhcp4: true
     extra0:
       addresses:
-      - 10.188.50.204/24
+      - 10.188.50.205/24
       nameservers:
          addresses:
          - 10.225.50.203
@@ -232,25 +246,54 @@ network:
       - to: 10.188.40.0/24
         via: 10.188.50.254
       match:
-        macaddress: "52:54:00:ca:42:da"
+        macaddress: "52:54:00:d7:34:55"
       optional: true
 EOF'
 
 # verify
 
-multipass exec -n test -- sudo cat /etc/netplan/50-cloud-init.yaml
+multipass exec -n k8sn1 -- sudo cat /etc/netplan/50-cloud-init.yaml
+network:
+  version: 2
+  ethernets:
+    default:
+      match:
+        macaddress: "52:54:00:f8:5d:11"
+      dhcp-identifier: "mac"
+      dhcp4: true
+    extra0:
+      addresses:
+      - 10.188.50.205/24
+      nameservers:
+         addresses:
+         - 10.225.50.203
+         - 10.224.50.203
+      routes:
+      - to: default
+        via: 10.188.50.254
+      match:
+        macaddress: "52:54:00:d7:34:55"
+      optional: true
 
 ```
 
 if all looks good apply network changes
 
 ```bash
-multipass exec -n test -- sudo netplan apply
-multipass list
-Name                    State             IPv4             Image
-foo                     Running           10.130.245.158   Ubuntu 24.04 LTS
-test                    Running           10.130.245.2     Ubuntu 24.04 LTS
-                                          10.188.50.204
+multipass exec -n k8sn1 -- sudo netplan apply
+multipass info k8sn1
+Name:           k8sn1
+State:          Running
+Snapshots:      0
+IPv4:           10.130.245.199
+                10.188.50.205
+Release:        Ubuntu 24.04.2 LTS
+Image hash:     a3aea891c930 (Ubuntu 24.04 LTS)
+CPU(s):         2
+Load:           0.00 0.00 0.00
+Disk usage:     1.8GiB out of 242.1GiB
+Memory usage:   563.9MiB out of 31.3GiB
+Mounts:                                           10.188.50.204
 ```
 
 ## Step 5: Confirm that it works
@@ -258,37 +301,49 @@ test                    Running           10.130.245.2     Ubuntu 24.04 LTS
 You can confirm that the new IP is present in the instance with Multipass:
 
 ```bash
-multipass info test
-Name:           test
+multipass info k8sn1
+Name:           k8sn1
 State:          Running
 Snapshots:      0
-IPv4:           10.130.245.2
-                10.188.50.204
+IPv4:           10.130.245.199
+                10.188.50.205
 Release:        Ubuntu 24.04.2 LTS
-Image hash:     9856e7bdfc4e (Ubuntu 24.04 LTS)
-CPU(s):         1
-Load:           0.01 0.01 0.00
-Disk usage:     1.8GiB out of 4.8GiB
-Memory usage:   298.7MiB out of 955.8MiB
+Image hash:     a3aea891c930 (Ubuntu 24.04 LTS)
+CPU(s):         2
+Load:           0.00 0.00 0.00
+Disk usage:     1.8GiB out of 242.1GiB
+Memory usage:   556.1MiB out of 31.3GiB
 Mounts:         --
 ```
 
 The command above should show two IPs, the second of which is the one we just configured (10.13.31.13). You can use ping to confirm that it can be reached from the host:
 
 ```bash
-ping 10.188.50.204
+# from netwwork machine
+ping 10.188.50.205
+# works
+
 ```
 
 Conversely, you can also ping from the instance to the host:
 
 ```bash
-multipass exec -n test -- ping 10.188.50.202
+multipass exec -n k8sn1 -- ping 10.188.50.202
 # works
-multipass exec -n test -- ping 10.188.220.202
+multipass exec -n k8sn1 -- ping 10.188.220.202
 # works
 ```
 
-## **[Setup ssh to VMs](./ssh_into_mutipass_vms.md)**
+Test snap
+
+```bash
+multipass shell k8sn1
+sudo snap install hello-world
+2025-03-04T17:24:56Z INFO Waiting for automatic snapd restart...
+hello-world 6.4 from Canonical✓ installed
+```
+
+## **[Setup ssh to VMs](../research/m_z/virtualization/hypervisor/multipass/ssh_into_mutipass_vms.md)**
 
 ## **[install microk8s](https://microk8s.io/docs/install-multipass)**
 
