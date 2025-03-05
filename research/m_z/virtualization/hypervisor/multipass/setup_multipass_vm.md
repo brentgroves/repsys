@@ -15,13 +15,14 @@ This process assumes you are using Ubuntu 24.04 server or OS that is using netwo
 
 ## Step 1: **[Goto create bridges with netplan](./create_bridges_with_netplan.md)**
 
+## Step 2: **[Install Multipass](./multipass_install.md)**
+
 You can also run multipass networks to confirm the bridge is available for Multipass to connect to.
 
 ```bash
 multipass networks
 Name        Type       Description
-br0         bridge     Network bridge with eno2
-br1         bridge     Network bridge
+br0         bridge     Network bridge with eno1
 eno1        ethernet   Ethernet device
 eno2        ethernet   Ethernet device
 eno3        ethernet   Ethernet device
@@ -30,7 +31,7 @@ enp66s0f0   ethernet   Ethernet device
 enp66s0f1   ethernet   Ethernet device
 enp66s0f2   ethernet   Ethernet device
 enp66s0f3   ethernet   Ethernet device
-mpbr0       bridge     Network bridge for Multipass
+mpqemubr0   bridge     Network bridge
 
 ```
 
@@ -115,38 +116,98 @@ $  multipass help launch
 Usage: multipass launch [options] [[<remote:>]<image> | <url>]
 ```
 
+## **[Notes launch command](https://multipass.run/docs/launch-command)**
+
 ```bash
-# can't get manual mode in which you pass the hardware address to work
-# multipass launch --name test3 --network name=mybr,mode=manual,mac="7f:71:f0:b2:55:dd"
-
-multipass launch --network br0 --name microk8s-vm --mem 4G --disk 40G 22.04
-# Add memory if going to run only sql server
-multipass launch --network br0 --name microk8s-vm --mem 8G --disk 40G
-
-multipass list
-Name                    State             IPv4             Image
-microk8s-vm             Running           10.127.233.194   Ubuntu 24.04 LTS
-                                          10.1.2.143
-test1                   Running           10.127.233.173   Ubuntu 24.04 LTS
-                                          10.1.0.128
-test2                   Running           10.127.233.24    Ubuntu 24.04 LTS
-                                          10.13.31.201
-
+--network <spec>                      Add a network interface to the
+                                        instance, where <spec> is in the
+                                        "key=value,key=value" format, with the
+                                        following keys available:
+                                         name: the network to connect to
+                                        (required), use the networks command for
+                                        a list of possible values, or use
+                                        'bridged' to use the interface
+                                        configured via `multipass set
+                                        local.bridged-network`.
+                                         mode: auto|manual (default: auto)
+                                         mac: hardware address (default:
+                                        random).
+                                        You can also use a shortcut of "<name>"
+                                        to mean "name=<name>".
 ```
 
-Use the ip utility to display the link status of Ethernet devices that are ports of a specific bridge:
+### Step 2: Launch an instance
+
+<!-- You can also leave the MAC address unspecified (just --network name=localbr,mode=manual). If you do so, Multipass will generate a random MAC for you, but you will need to retrieve it in the next step. -->
+
+```bash
+
+multipass launch --network br0 --name k8sn2 --cpus 2 --memory 32G --disk 250G 
+
+# errors need to add another config request
+
+[2025-03-05T20:29:05.138] [error] [url downloader] Failed to get https://codeload.github.com/canonical/multipass-blueprints/zip/refs/heads/main: Error opening https://codeload.github.com/canonical/multipass-blueprints/zip/refs/heads/main
+[2025-03-05T20:29:05.139] [error] [blueprint provider] Error fetching Blueprints: failed to download from 'https://codeload.github.com/canonical/multipass-blueprints/zip/refs/heads/main': Error opening https://codeload.github.com/canonical/multipass-blueprints/zip/refs/heads/main
+
+multipass info k8sn1
+Name:           k8sn1
+State:          Running
+Snapshots:      0
+IPv4:           10.130.245.199
+Release:        Ubuntu 24.04.2 LTS
+Image hash:     a3aea891c930 (Ubuntu 24.04 LTS)
+CPU(s):         2
+Load:           0.03 0.16 0.09
+Disk usage:     1.8GiB out of 242.1GiB
+Memory usage:   586.7MiB out of 31.3GiB
+Mounts:         --
+```
+
+Use the ip utility to display the link status of devices in br0:
 
 ```bash
 ip link show master br0
-7: eno2: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq master br0 state UP mode DEFAULT group default qlen 1000
-    link/ether b8:ca:3a:6a:37:19 brd ff:ff:ff:ff:ff:ff
-    altname enp1s0f1
-14: tap34dcb760: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq master br0 state UP mode DEFAULT group default qlen 1000
-    link/ether 5a:8a:38:e5:66:f1 brd ff:ff:ff:ff:ff:ff
-18: tap38ceeb39: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq master br0 state UP mode DEFAULT group default qlen 1000
-    link/ether ce:80:f5:53:04:fb brd ff:ff:ff:ff:ff:ff
-
+5: eno1: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq master br0 state UP mode DEFAULT group default qlen 1000
+    link/ether b8:ca:3a:6a:38:7c brd ff:ff:ff:ff:ff:ff
+    altname enp1s0f0
+14: tap0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc fq_codel master br0 state UNKNOWN mode DEFAULT group default qlen 1000
+    link/ether fe:21:f6:5e:ec:63 brd ff:ff:ff:ff:ff:ff
 ```
+
+Verify access to host routes
+
+```bash
+ssh brent@10.188.50.202
+multipass shell k8sn2
+ip route
+default via 10.97.219.1 dev ens3 proto dhcp src 10.97.219.230 metric 100 
+10.97.219.0/24 dev ens3 proto kernel scope link src 10.97.219.230 metric 100 
+10.97.219.1 dev ens3 proto dhcp scope link src 10.97.219.230 metric 100 
+
+# verify access to every network the host has access to
+ping 10.188.50.79
+# works
+
+ping 10.188.220.50
+# works
+
+ping 10.188.73.11
+# works
+
+ping 10.188.40.230
+# works
+
+ping 172.20.88.64
+# works
+
+# FW rules
+curl https://api.snapcraft.io
+snapcraft.io store API service - Copyright 2018-2022 Canonical.
+
+exit
+```
+
+## Step 3: Configure the extra interface
 
 ## retrieve the hardware address
 
@@ -154,189 +215,116 @@ See how multipass configured the network. Until I can figure out how to pass the
 
 ```bash
 
-multipass exec -n microk8s-vm -- sudo networkctl -a status
-# skip multipass default network interface
-...
-enp6s0
-                   Link File: /usr/lib/systemd/network/99-default.link
-                Network File: /run/systemd/network/10-netplan-extra0.network
-                       State: routable (configured)
-                Online state: online                                         
-                        Type: ether
-                        Path: pci-0000:06:00.0
-                      Driver: virtio_net
-                      Vendor: Red Hat, Inc.
-                       Model: Virtio 1.0 network device
-            Hardware Address: 52:54:00:6e:60:8a
-                         MTU: 1500 (min: 68, max: 65535)
-                       QDisc: mq
-IPv6 Address Generation Mode: eui64
-    Number of Queues (Tx/Rx): 2/2
-            Auto negotiation: no
-                     Address: 10.1.2.143 (DHCP4 via 10.1.2.69)
-                              fe80::5054:ff:fe6e:608a
-                     Gateway: 10.1.1.205
-                         DNS: 10.1.2.69
-                              10.1.2.70
-                              172.20.0.39
-              Search Domains: BUSCHE-CNC.COM
-           Activation Policy: up
-         Required For Online: yes
-             DHCP4 Client ID: IAID:0x24721ac8/DUID
-           DHCP6 Client DUID: DUID-EN/Vendor:0000ab11345612d63ead6a74
-
-Jun 25 22:43:01 microk8s-vm systemd-networkd[730]: enp6s0: Configuring with /run/systemd/network/10-netplan-extra0.network.
-Jun 25 22:43:01 microk8s-vm systemd-networkd[730]: enp6s0: Link UP
-Jun 25 22:43:01 microk8s-vm systemd-networkd[730]: enp6s0: Gained carrier
-Jun 25 22:43:01 microk8s-vm systemd-networkd[730]: enp6s0: DHCPv4 address 10.1.2.143/22, gateway 10.1.1.205 acquired from 10.1.2.69
-Jun 25 22:43:02 microk8s-vm systemd-networkd[730]: enp6s0: Gained IPv6LL
+multipass exec -n k8sn2 -- sudo cat /etc/netplan/50-cloud-init.yaml
+network:
+  version: 2
+  ethernets:
+    default:
+      match:
+        macaddress: "52:54:00:3c:6d:95"
+      dhcp-identifier: "mac"
+      dhcp4: true
+    extra0:
+      match:
+        macaddress: "52:54:00:27:91:55"
+      optional: true
+      dhcp-identifier: "mac"
+      dhcp4: true
+      dhcp4-overrides:
+        route-metric: 200
 ```
 
-## Step 3: Configure the extra interface
-
-We now need to configure the manual network interface inside the instance. We can achieve that using Netplan. The following command plants the required Netplan configuration file in the instance:
+### update netplan with hardware address
 
 ```bash
-multipass exec -n microk8s-vm -- sudo bash -c 'cat /etc/netplan/50-cloud-init.yaml'
-# This file is generated from information provided by the datasource.  Changes
-# to it will not persist across an instance reboot.  To disable cloud-init's
-# network configuration capabilities, write a file
-# /etc/cloud/cloud.cfg.d/99-disable-network-config.cfg with the following:
-# network: {config: disabled}
-network:
-    ethernets:
-        default:
-            dhcp4: true
-            match:
-                macaddress: 52:54:00:81:c3:3e
-        extra0:
-            dhcp4: true
-            dhcp4-overrides:
-                route-metric: 200
-            match:
-                macaddress: 52:54:00:6e:60:8a
-            optional: true
-    version: 2
 
-multipass exec -n microk8s-vm -- sudo bash -c 'cat << EOF > /etc/netplan/50-cloud-init.yaml
+# Make sure the mac address remains the same
+
+multipass exec -n k8sn2 -- sudo bash -c 'cat << EOF > /etc/netplan/50-cloud-init.yaml
 network:
-    ethernets:
-        default:
-            dhcp4: true
-            match:
-                macaddress: 52:54:00:81:c3:3e
-        extra0:
-            addresses:
-            - 10.1.0.129/22
-            nameservers:
-                addresses:
-                - 10.1.2.69
-                - 10.1.2.70
-                - 172.20.0.39
-                search: [BUSCHE-CNC.COM]
-            match:
-                macaddress: 52:54:00:6e:60:8a
-            optional: true
-    version: 2
+  version: 2
+  ethernets:
+    default:
+      match:
+        macaddress: "52:54:00:3c:6d:95"
+      dhcp-identifier: "mac"
+      dhcp4: true
+    extra0:
+      addresses:
+      - 10.188.50.213/24
+      nameservers:
+         addresses:
+         - 10.225.50.203
+         - 10.224.50.203
+      routes:
+      - to: default
+        via: 10.188.50.254
+      match:
+        macaddress: "52:54:00:27:91:55"
+      optional: true
 EOF'
 
 # verify yaml
 
-multipass exec -n microk8s-vm -- sudo bash -c 'cat /etc/netplan/50-cloud-init.yaml'
+multipass exec -n k8sn2 -- sudo cat /etc/netplan/50-cloud-init.yaml
+
 network:
-    ethernets:
-        default:
-            dhcp4: true
-            match:
-                macaddress: 52:54:00:81:c3:3e
-        extra0:
-            addresses:
-            - 10.1.0.129/22
-            nameservers:
-                addresses:
-                - 10.1.2.69
-                - 10.1.2.70
-                - 172.20.0.39
-                search: [BUSCHE-CNC.COM]
-            match:
-                macaddress: 52:54:00:6e:60:8a
-            optional: true
-    version: 2
-
-# if all looks good apply network changes
-multipass exec -n microk8s-vm -- sudo netplan apply
-
-# check network interfaces with networkd cli
-multipass exec -n microk8s-vm -- sudo networkctl -a status
-# skip multipass default network interfaces
-...
- 3: enp6s0
-                   Link File: /usr/lib/systemd/network/99-default.link
-                Network File: /run/systemd/network/10-netplan-extra0.network
-                       State: routable (configured)
-                Online state: online                                         
-                        Type: ether
-                        Path: pci-0000:06:00.0
-                      Driver: virtio_net
-                      Vendor: Red Hat, Inc.
-                       Model: Virtio 1.0 network device
-            Hardware Address: 52:54:00:6e:60:8a
-                         MTU: 1500 (min: 68, max: 65535)
-                       QDisc: mq
-IPv6 Address Generation Mode: eui64
-    Number of Queues (Tx/Rx): 2/2
-            Auto negotiation: no
-                     Address: 10.1.0.129
-                              fe80::5054:ff:fe6e:608a
-                         DNS: 10.1.2.69
-                              10.1.2.70
-                              172.20.0.39
-              Search Domains: BUSCHE-CNC.COM
-           Activation Policy: up
-         Required For Online: yes
-           DHCP6 Client DUID: DUID-EN/Vendor:0000ab11345612d63ead6a74
-
-Jun 25 22:43:01 microk8s-vm systemd-networkd[730]: enp6s0: Configuring with /run/systemd/network/10-netplan-extra0.network.
-Jun 25 22:43:01 microk8s-vm systemd-networkd[730]: enp6s0: Link UP
-Jun 25 22:43:01 microk8s-vm systemd-networkd[730]: enp6s0: Gained carrier
-Jun 25 22:43:01 microk8s-vm systemd-networkd[730]: enp6s0: DHCPv4 address 10.1.2.143/22, gateway 10.1.1.205 acquired from 10.1.2.69
-Jun 25 22:43:02 microk8s-vm systemd-networkd[730]: enp6s0: Gained IPv6LL
-Jun 26 20:12:11 microk8s-vm systemd-networkd[730]: enp6s0: Reconfiguring with /run/systemd/network/10-netplan-extra0.network.
-Jun 26 20:12:11 microk8s-vm systemd-networkd[730]: enp6s0: DHCP lease lost
-Jun 26 20:12:11 microk8s-vm systemd-networkd[730]: enp6s0: DHCPv6 lease lost
-Jun 26 20:12:11 microk8s-vm systemd-networkd[730]: enp6s0: Configuring with /run/systemd/network/10-netplan-extra0.network.
-Jun 26 20:12:11 microk8s-vm systemd-networkd[730]: enp6s0: DHCPv6 lease lost
-
+  version: 2
+  ethernets:
+    default:
+      match:
+        macaddress: "52:54:00:3c:6d:95"
+      dhcp-identifier: "mac"
+      dhcp4: true
+    extra0:
+      addresses:
+      - 10.188.50.213/24
+      nameservers:
+         addresses:
+         - 10.225.50.203
+         - 10.224.50.203
+      routes:
+      - to: default
+        via: 10.188.50.254
+      match:
+        macaddress: "52:54:00:27:91:55"
+      optional: true
 ```
 
-Step 5: Confirm that it works
+if all looks good apply network changes
+
+```bash
+multipass exec -n k8sn2 -- sudo netplan apply
+```
+
+## Step 5: Confirm that it works
+
 You can confirm that the new IP is present in the instance with Multipass:
 
 ```bash
-multipass info microk8s-vm
-Name:           microk8s-vm
+
+multipass info k8sn2
+Name:           k8sn2
 State:          Running
-IPv4:           10.127.233.194
-                10.1.0.129
-Release:        Ubuntu 24.04 LTS
-Image hash:     f06aa34c14c9 (Ubuntu 24.04 LTS)
-CPU(s):         1
-Load:           0.00 0.01 0.00
-Disk usage:     1.7GiB out of 38.7GiB
-Memory usage:   576.3MiB out of 7.7GiB
-Mounts:
+Snapshots:      0
+IPv4:           10.97.219.230
+                10.188.50.213
+Release:        Ubuntu 24.04.2 LTS
+Image hash:     a3aea891c930 (Ubuntu 24.04 LTS)
+CPU(s):         2
+Load:           0.00 0.00 0.00
+Disk usage:     1.9GiB out of 242.1GiB
+Memory usage:   583.0MiB out of 31.3GiB
+Mounts:         --
 ```
 
-You can use ping to confirm that it can be reached from another host on lan:
+The command above should show two IPs, the second of which is the one we just configured (10.188.50.213). You can use ping to confirm that it can be reached from the host:
 
 ```bash
-ping -c 1 -n 10.1.0.129
-PING 10.1.0.129 (10.1.0.129) 56(84) bytes of data.
-64 bytes from 10.1.0.129: icmp_seq=1 ttl=64 time=1.31 ms
+# from netwwork machine
+ping 10.188.50.213
+# works
 
---- 10.1.0.129 ping statistics ---
-1 packets transmitted, 1 received, 0% packet loss, time 0ms
-rtt min/avg/max/mdev = 1.309/1.309/1.309/0.000 ms
 ```
 
 Confirm VM can ping lan and wan

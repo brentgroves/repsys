@@ -33,7 +33,7 @@ ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGEboFZQ4rNwjTLk9XLreFQ65LHTaXayXIKR7Yg1pd42
 
 ```
 
-## connect
+## connect from client
 
 ```bash
 ssh ubuntu@10.188.50.205

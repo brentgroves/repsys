@@ -51,4 +51,6 @@ You’ve installed Multipass. Time to run your first commands! Use multipass ver
 
 ```bash
 sudo multipass launch
+or 
+multipass install hello-world
 ```

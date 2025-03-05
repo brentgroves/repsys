@@ -4,9 +4,13 @@
 **[Research List](../../research_list.md)**\
 **[Back Main](../../../README.md)**
 
+## Note: Setup network with netplan before installing multipass
+
+Multipass creates a bridge that it links to all vm and also setup routes that allow vm access to everything the host has access to.
+
+- **[setup multipass vm](./setup_multipass_vm.md)**
 - **[install](./multipass_install.md)**
 - **[remove instance](./remove_instance.md)**
-- **[setup multipass vm](./setup_multipass_vm.md)**
 - **[ssh into multipass vm](./ssh_into_mutipass_vms.md)**
 - **[blueprint](./blueprint.md)**
 - **[cloud-init](./cloud-init.md)**

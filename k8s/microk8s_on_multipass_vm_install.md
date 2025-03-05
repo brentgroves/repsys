@@ -4,39 +4,18 @@
 **[Research List](../../../../research_list.md)**\
 **[Back Main](../../../../../README.md)**
 
-## references
-
-- **[ssh into multipass vms](./ssh_into_mutipass_vms.md)**
-- **[multipass ubuntu password set](https://askubuntu.com/questions/1230753/login-and-password-for-multipass-instance)**
-- **[How to Bridge Two Network Interfaces in Linux Using Netplan](https://www.tecmint.com/netplan-bridge-network-interfaces/)**
-- **[bridge commands](https://developers.redhat.com/articles/2022/04/06/introduction-linux-bridging-commands-and-features#spanning_tree_protocol)**
-- **[Create an instance with multiple network interfaces](https://multipass.run/docs/create-an-instance#heading--create-an-instance-with-multiple-network-interfaces)**
-
-## **[multipass ubuntu password set](https://askubuntu.com/questions/1230753/login-and-password-for-multipass-instance)**
-
-In multipass instance, set a password to ubuntu user. Needed to ftp from dev system. Multipass has transfer command but only works from the host.
-
-```bash
-sudo passwd ubuntu
-```
-
-## Note
-
-This process assumes you are using Ubuntu 24.04 server or OS that is using networkd or an OS which is setup with NetworkMangager but is completely integrated with Netplan 1.0 such as I think Ubuntu 24.04 desktop. It also assumes microk8s is installed on a Ubuntu 22.04 vm.
-
-## **[Install multipass](../research/m_z/virtualization/hypervisor/multipass/multipass_install.md)**
-
 Multipass is the fastest way to create a complete Ubuntu virtual machine on Linux, Windows or macOS, and it’s a great base for using MicroK8s.
 
-## **[Create a Bridge with netplan for multipass](../research/m_z/virtualization/hypervisor/multipass/create_bridges_with_netplan.md)**
+## Step 1: **[Create a Bridge with netplan for multipass](../research/m_z/virtualization/hypervisor/multipass/create_bridges_with_netplan.md)**
+
+## Step 2: **[Install multipass](../research/m_z/virtualization/hypervisor/multipass/multipass_install.md)**
 
 You can also run multipass networks to confirm the bridge is available for Multipass to connect to.
 
 ```bash
 multipass networks
 Name        Type       Description
-br0         bridge     Network bridge with eno2
-br1         bridge     Network bridge
+br0         bridge     Network bridge with eno1
 eno1        ethernet   Ethernet device
 eno2        ethernet   Ethernet device
 eno3        ethernet   Ethernet device
@@ -45,7 +24,7 @@ enp66s0f0   ethernet   Ethernet device
 enp66s0f1   ethernet   Ethernet device
 enp66s0f2   ethernet   Ethernet device
 enp66s0f3   ethernet   Ethernet device
-mpbr0       bridge     Network bridge for Multipass
+mpqemubr0   bridge     Network bridge
 
 ```
 
@@ -150,15 +129,20 @@ Usage: multipass launch [options] [[<remote:>]<image> | <url>]
                                         to mean "name=<name>".
 ```
 
-### Step 2: Launch an instance with a manual network
+### Step 2: Launch an instance
 
-You can also leave the MAC address unspecified (just --network name=localbr,mode=manual). If you do so, Multipass will generate a random MAC for you, but you will need to retrieve it in the next step.
+<!-- You can also leave the MAC address unspecified (just --network name=localbr,mode=manual). If you do so, Multipass will generate a random MAC for you, but you will need to retrieve it in the next step. -->
 
 ```bash
 
-multipass launch --network br0 --name k8sn1 --cpus 2 --memory 32G --disk 250G 
+multipass launch --network br0 --name k8sn2 --cpus 2 --memory 32G --disk 250G 
 
-multipass info k8sn1
+# errors need to add another config request
+
+[2025-03-05T20:29:05.138] [error] [url downloader] Failed to get https://codeload.github.com/canonical/multipass-blueprints/zip/refs/heads/main: Error opening https://codeload.github.com/canonical/multipass-blueprints/zip/refs/heads/main
+[2025-03-05T20:29:05.139] [error] [blueprint provider] Error fetching Blueprints: failed to download from 'https://codeload.github.com/canonical/multipass-blueprints/zip/refs/heads/main': Error opening https://codeload.github.com/canonical/multipass-blueprints/zip/refs/heads/main
+
+multipass info k8sn2
 Name:           k8sn1
 State:          Running
 Snapshots:      0
@@ -172,19 +156,41 @@ Memory usage:   586.7MiB out of 31.3GiB
 Mounts:         --
 ```
 
+Use the ip utility to display the link status of devices in br0:
+
+```bash
+ip link show master br0
+5: eno1: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq master br0 state UP mode DEFAULT group default qlen 1000
+    link/ether b8:ca:3a:6a:38:7c brd ff:ff:ff:ff:ff:ff
+    altname enp1s0f0
+14: tap0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc fq_codel master br0 state UNKNOWN mode DEFAULT group default qlen 1000
+    link/ether fe:21:f6:5e:ec:63 brd ff:ff:ff:ff:ff:ff
+```
+
 Verify access to host routes
 
 ```bash
 ssh brent@10.188.50.203
-multipass shell k8sn1
+multipass shell k8sn2
 ip route
-default via 10.130.245.1 dev ens3 proto dhcp src 10.130.245.199 metric 100 
-10.130.245.0/24 dev ens3 proto kernel scope link src 10.130.245.199 metric 100 
-10.130.245.1 dev ens3 proto dhcp scope link src 10.130.245.199 metric 100 
+default via 10.97.219.1 dev ens3 proto dhcp src 10.97.219.230 metric 100 
+10.97.219.0/24 dev ens3 proto kernel scope link src 10.97.219.230 metric 100 
+10.97.219.1 dev ens3 proto dhcp scope link src 10.97.219.230 metric 100 
+
+# verify access to every network the host has access to
 ping 10.188.50.79
 # works
 
 ping 10.188.220.50
+# works
+
+ping 10.188.73.11
+# works
+
+ping 10.188.40.230
+# works
+
+ping 172.20.88.64
 # works
 
 # FW rules
@@ -224,7 +230,7 @@ network:
 
 ```bash
 
-# Make sure the mac address matches the extra0 macaddress
+# Make sure the mac address matches remains the same
 
 multipass exec -n k8sn1 -- sudo bash -c 'cat << EOF > /etc/netplan/50-cloud-init.yaml
 network:
@@ -232,38 +238,12 @@ network:
   ethernets:
     default:
       match:
-        macaddress: "52:54:00:f8:5d:11"
+        macaddress: "52:54:00:3c:6d:95"
       dhcp-identifier: "mac"
       dhcp4: true
     extra0:
       addresses:
-      - 10.188.50.205/24
-      nameservers:
-         addresses:
-         - 10.225.50.203
-         - 10.224.50.203
-      routes:
-      - to: 10.188.40.0/24
-        via: 10.188.50.254
-      match:
-        macaddress: "52:54:00:d7:34:55"
-      optional: true
-EOF'
-
-# verify
-
-multipass exec -n k8sn1 -- sudo cat /etc/netplan/50-cloud-init.yaml
-network:
-  version: 2
-  ethernets:
-    default:
-      match:
-        macaddress: "52:54:00:f8:5d:11"
-      dhcp-identifier: "mac"
-      dhcp4: true
-    extra0:
-      addresses:
-      - 10.188.50.205/24
+      - 10.188.50.213/24
       nameservers:
          addresses:
          - 10.225.50.203
@@ -272,7 +252,33 @@ network:
       - to: default
         via: 10.188.50.254
       match:
-        macaddress: "52:54:00:d7:34:55"
+        macaddress: "52:54:00:27:91:55"
+      optional: true
+EOF'
+
+# verify
+
+multipass exec -n k8sn2 -- sudo cat /etc/netplan/50-cloud-init.yaml
+network:
+  version: 2
+  ethernets:
+    default:
+      match:
+        macaddress: "52:54:00:3c:6d:95"
+      dhcp-identifier: "mac"
+      dhcp4: true
+    extra0:
+      addresses:
+      - 10.188.50.213/24
+      nameservers:
+         addresses:
+         - 10.225.50.203
+         - 10.224.50.203
+      routes:
+      - to: default
+        via: 10.188.50.254
+      match:
+        macaddress: "52:54:00:27:91:55"
       optional: true
 
 ```
@@ -280,20 +286,7 @@ network:
 if all looks good apply network changes
 
 ```bash
-multipass exec -n k8sn1 -- sudo netplan apply
-multipass info k8sn1
-Name:           k8sn1
-State:          Running
-Snapshots:      0
-IPv4:           10.130.245.199
-                10.188.50.205
-Release:        Ubuntu 24.04.2 LTS
-Image hash:     a3aea891c930 (Ubuntu 24.04 LTS)
-CPU(s):         2
-Load:           0.00 0.00 0.00
-Disk usage:     1.8GiB out of 242.1GiB
-Memory usage:   563.9MiB out of 31.3GiB
-Mounts:                                           10.188.50.204
+multipass exec -n k8sn2 -- sudo netplan apply
 ```
 
 ## Step 5: Confirm that it works
@@ -301,19 +294,19 @@ Mounts:                                           10.188.50.204
 You can confirm that the new IP is present in the instance with Multipass:
 
 ```bash
-multipass info k8sn1
-Name:           k8sn1
+multipass info k8sn2
+Name:           k8sn2
 State:          Running
 Snapshots:      0
-IPv4:           10.130.245.199
-                10.188.50.205
+IPv4:           10.97.219.230
+                10.188.50.213
 Release:        Ubuntu 24.04.2 LTS
 Image hash:     a3aea891c930 (Ubuntu 24.04 LTS)
 CPU(s):         2
 Load:           0.00 0.00 0.00
-Disk usage:     1.8GiB out of 242.1GiB
-Memory usage:   556.1MiB out of 31.3GiB
-Mounts:         --
+Disk usage:     1.9GiB out of 242.1GiB
+Memory usage:   583.0MiB out of 31.3GiB
+Mounts:         --      
 ```
 
 The command above should show two IPs, the second of which is the one we just configured (10.13.31.13). You can use ping to confirm that it can be reached from the host:
@@ -325,13 +318,15 @@ ping 10.188.50.205
 
 ```
 
-Conversely, you can also ping from the instance to the host:
+## show vm routing table
 
 ```bash
-multipass exec -n k8sn1 -- ping 10.188.50.202
-# works
-multipass exec -n k8sn1 -- ping 10.188.220.202
-# works
+multipass exec -n k8sn2 -- ip route 
+default via 10.188.50.254 dev ens4 proto static 
+default via 10.97.219.1 dev ens3 proto dhcp src 10.97.219.230 metric 100 
+10.97.219.0/24 dev ens3 proto kernel scope link src 10.97.219.230 metric 100 
+10.97.219.1 dev ens3 proto dhcp scope link src 10.97.219.230 metric 100 
+10.188.50.0/24 dev ens4 proto kernel scope link src 10.188.50.213 
 ```
 
 Test snap
@@ -341,6 +336,14 @@ multipass shell k8sn1
 sudo snap install hello-world
 2025-03-04T17:24:56Z INFO Waiting for automatic snapd restart...
 hello-world 6.4 from Canonical✓ installed
+```
+
+## **[multipass ubuntu password set](https://askubuntu.com/questions/1230753/login-and-password-for-multipass-instance)**
+
+In multipass instance, set a password to ubuntu user. Needed to ftp from dev system. Multipass has transfer command but only works from the host.
+
+```bash
+sudo passwd ubuntu
 ```
 
 ## **[Setup ssh to VMs](../research/m_z/virtualization/hypervisor/multipass/ssh_into_mutipass_vms.md)**
