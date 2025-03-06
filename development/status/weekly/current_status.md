@@ -7,6 +7,8 @@
 
 ## Current Tasks
 
+MRP is transitioning from MSC vending machines and are anxious about the tool management system.
+
 Avilla Structures K8s Network Config
 
 Allows access to Server, OT, and Honda VLANs.
