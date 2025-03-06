@@ -4,57 +4,9 @@
 **[Back to Current Status](../../../../development/status/weekly/current_status.md)**\
 **[Back to Main](../../../../README.md)**
 
-## references
+Multipass is the fastest way to create a complete Ubuntu virtual machine on Linux, Windows or macOS, and it’s a great base for using MicroK8s.
 
-- **[Create an instance with multiple network interfaces](https://multipass.run/docs/create-an-instance#heading--create-an-instance-with-multiple-network-interfaces)**
-- **[create bridges with netplan](./create_bridges_with_netplan.md)**
-
-## Note
-
-This process assumes you are using Ubuntu 24.04 server or OS that is using networkd or an OS which is setup with NetworkMangager but is completely integrated with Netplan 1.0 such as I think Ubuntu 24.04 desktop.
-
-## Step 1: **[Goto create bridges with netplan](./create_bridges_with_netplan.md)**
-
-## Step 1: show host routing table
-
-```bash
-ssh brent@10.188.50.202
-ip route 
-default via 10.188.50.254 dev br0 proto static 
-10.97.219.0/24 dev mpqemubr0 proto kernel scope link src 10.97.219.1 
-10.188.50.0/24 dev br0 proto kernel scope link src 10.188.50.202 
-10.188.73.0/24 via 10.188.220.254 dev br1 proto static 
-10.188.220.0/24 dev br1 proto kernel scope link src 10.188.220.202
-```
-
-## Step 1: Verify access to host routes
-
-```bash
-ssh brent@10.188.50.202
-multipass shell k8sn211
-ip route
-default via 10.97.219.1 dev ens3 proto dhcp src 10.97.219.230 metric 100 
-10.97.219.0/24 dev ens3 proto kernel scope link src 10.97.219.230 metric 100 
-10.97.219.1 dev ens3 proto dhcp scope link src 10.97.219.230 metric 100 
-
-# verify access to every network the host has access to
-ping 10.188.50.79
-# works
-ping 10.188.220.50
-# works
-ping 10.188.73.11
-# works
-ping 10.188.40.230
-# works
-ping 172.20.88.64
-# works
-
-# FW rules
-curl https://api.snapcraft.io
-snapcraft.io store API service - Copyright 2018-2022 Canonical.
-
-exit
-```
+## Step 1: **[Setup up host network](./setup_host_network.md)**
 
 ## Step 2: **[Install Multipass](./multipass_install.md)**
 
@@ -64,6 +16,7 @@ You can also run multipass networks to confirm the bridge is available for Multi
 multipass networks
 Name        Type       Description
 br0         bridge     Network bridge with eno1
+br1         bridge     Network bridge
 eno1        ethernet   Ethernet device
 eno2        ethernet   Ethernet device
 eno3        ethernet   Ethernet device
@@ -73,7 +26,6 @@ enp66s0f1   ethernet   Ethernet device
 enp66s0f2   ethernet   Ethernet device
 enp66s0f3   ethernet   Ethernet device
 mpqemubr0   bridge     Network bridge
-
 ```
 
 ## Step 3: Create an instance with a specific image
@@ -205,59 +157,27 @@ Memory usage:   625.7MiB out of 31.3GiB
 Mounts:         --
 ```
 
-Use the ip utility to display the link status of devices in br0:
+## Step 3: Use the ip utility to display the link status of devices in br0 and br1
 
 ```bash
+# Bridge 0
 ip link show master br0
 5: eno1: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq master br0 state UP mode DEFAULT group default qlen 1000
     link/ether b8:ca:3a:6a:38:7c brd ff:ff:ff:ff:ff:ff
     altname enp1s0f0
 14: tap0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc fq_codel master br0 state UNKNOWN mode DEFAULT group default qlen 1000
     link/ether fe:21:f6:5e:ec:63 brd ff:ff:ff:ff:ff:ff
-```
-
-## Step 3: Show vm host routing table
-
-```bash
-ssh brent@10.188.50.202
-multipass shell k8sn211
-default via 10.97.219.1 dev ens3 proto dhcp src 10.97.219.76 metric 100 
-10.97.219.0/24 dev ens3 proto kernel scope link src 10.97.219.76 metric 100 
-10.97.219.1 dev ens3 proto dhcp scope link src 10.97.219.76 metric 100 
-10.188.40.0/24 via 10.188.50.254 dev ens4 proto static 
-10.188.42.0/24 via 10.188.50.254 dev ens4 proto static 
-10.188.50.0/24 dev ens4 proto kernel scope link src 10.188.50.214 
-10.188.73.0/24 via 10.188.220.254 dev ens5 proto static 
-10.188.220.0/24 dev ens5 proto kernel scope link src 10.188.220.214 
-172.20.88.0/24 via 10.188.50.254 dev ens4 proto static
-```
-
-## Step 3: Verify access to all host routes from vm
-
-```bash
-ssh brent@10.188.50.202
-multipass shell k8sn211
-# verify access to every network the host has access to
-ping 10.188.50.79
-# works
-ping 10.188.220.50
-# works
-ping 10.188.73.11
-# works
-ping 10.188.40.230
-# works
-ping 172.20.88.64
-# works
-# FW rules
-curl https://api.snapcraft.io
-snapcraft.io store API service - Copyright 2018-2022 Canonical.
-
-exit
+# Bridge 1
+ip link show master br1
+10: vlan220@eno1: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue master br1 state UP mode DEFAULT group default qlen 1000
+    link/ether b8:ca:3a:6a:38:7c brd ff:ff:ff:ff:ff:ff
+18: tap1: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc fq_codel master br1 state UNKNOWN mode DEFAULT group default qlen 1000
+    link/ether fe:1a:e4:66:7b:3a brd ff:ff:ff:ff:ff:ff    
 ```
 
 ## Step 4: Configure the extra interfaces
 
-## retrieve the hardware address
+### retrieve the hardware address
 
 See how multipass configured the network. Until I can figure out how to pass the hardware address manaully during launch we will have to grab the one multipass or lxd creates.
 
@@ -290,7 +210,9 @@ network:
         route-metric: 200
 ```
 
-### Step 4: update netplan with hardware address
+### Step 4: update netplan with static IPs and routes
+
+**[netplan directory](./netplan/)**
 
 ```bash
 
@@ -321,6 +243,26 @@ network:
       - to: 10.188.40.0/24
         via: 10.188.50.254
       - to: 10.188.42.0/24
+        via: 10.188.50.254
+      - to: 10.184.40.0/24
+        via: 10.188.50.254
+      - to: 10.184.42.0/24
+        via: 10.188.50.254
+      - to: 10.181.40.0/24
+        via: 10.188.50.254
+      - to: 10.181.42.0/24
+        via: 10.188.50.254
+      - to: 10.185.40.0/24
+        via: 10.188.50.254
+      - to: 10.185.42.0/24
+        via: 10.188.50.254
+      - to: 10.187.40.0/24
+        via: 10.188.50.254
+      - to: 10.187.42.0/24
+        via: 10.188.50.254
+      - to: 10.189.40.0/24
+        via: 10.188.50.254
+      - to: 10.189.42.0/24
         via: 10.188.50.254
       - to: 172.20.88.0/24
         via: 10.188.50.254
@@ -416,95 +358,91 @@ Memory usage:   580.1MiB out of 31.3GiB
 Mounts:         --
 ```
 
-## Step 4: show host routing table
+## Step 5: Show vm routing table
 
 ```bash
 ssh brent@10.188.50.202
-ip route 
-default via 10.188.50.254 dev br0 proto static 
-10.97.219.0/24 dev mpqemubr0 proto kernel scope link src 10.97.219.1 
-10.188.50.0/24 dev br0 proto kernel scope link src 10.188.50.202 
-10.188.73.0/24 via 10.188.220.254 dev br1 proto static 
-10.188.220.0/24 dev br1 proto kernel scope link src 10.188.220.202
-```
-
-## Verify access to all IPs
-
-```bash
-# from 10.188.40.230 
-ping 10.188.50.202
-# from 10.188.220.230
-ping 10.188.220.202
-# works
-# from 10.188.40.230
-ping 10.188.50.214
-# works
-# from 10.188.220.230
-ping 10.188.220.214
-
-curl https://api.snapcraft.io
-snapcraft.io store API service - Copyright 2018-2022 Canonical.
-```
-
-## show vm routing table
-
-```bash
-multipass exec -n k8sn211 -- ip route 
+multipass shell k8sn211
+ip route
 default via 10.97.219.1 dev ens3 proto dhcp src 10.97.219.76 metric 100 
 10.97.219.0/24 dev ens3 proto kernel scope link src 10.97.219.76 metric 100 
 10.97.219.1 dev ens3 proto dhcp scope link src 10.97.219.76 metric 100 
+10.181.40.0/24 via 10.188.50.254 dev ens4 proto static 
+10.181.42.0/24 via 10.188.50.254 dev ens4 proto static 
+10.184.40.0/24 via 10.188.50.254 dev ens4 proto static 
+10.184.42.0/24 via 10.188.50.254 dev ens4 proto static 
+10.185.40.0/24 via 10.188.50.254 dev ens4 proto static 
+10.185.42.0/24 via 10.188.50.254 dev ens4 proto static 
+10.187.40.0/24 via 10.188.50.254 dev ens4 proto static 
+10.187.42.0/24 via 10.188.50.254 dev ens4 proto static 
 10.188.40.0/24 via 10.188.50.254 dev ens4 proto static 
 10.188.42.0/24 via 10.188.50.254 dev ens4 proto static 
 10.188.50.0/24 dev ens4 proto kernel scope link src 10.188.50.214 
 10.188.73.0/24 via 10.188.220.254 dev ens5 proto static 
 10.188.220.0/24 dev ens5 proto kernel scope link src 10.188.220.214 
+10.189.40.0/24 via 10.188.50.254 dev ens4 proto static 
+10.189.42.0/24 via 10.188.50.254 dev ens4 proto static 
 172.20.88.0/24 via 10.188.50.254 dev ens4 proto static 
 ```
 
-## verify access to every network the host has access to
+## Step 5: verify the VM can access routable networks
+
+```yaml
+frt: 10.184
+mus: 10.181
+sou: 10.185
+alb1: 10.187
+avi: 10.188
+alb2: 10.189
+```
 
 ```bash
+ssh brent@10.188.50.202
 multipass shell k8sn211
 ping 10.188.50.79
-# works
 ping 10.188.220.50
-# works
 ping 10.188.73.11
-# works
 ping 10.188.40.230
-# works
 ping 10.188.42.11
-# works
 ping 172.20.88.64
-# works
+ping 10.185.50.11
+ping 10.181.50.15
+ping 10.187.40.15
 # FW rules
 curl https://api.snapcraft.io
 snapcraft.io store API service - Copyright 2018-2022 Canonical.
-
-exit
-
-## Test snap
-
-```bash
-multipass shell k8sn211
+# Test snap
 sudo snap install hello-world
-# works
 ```
 
-## Add site networks
+## Step 5: Verify access from routable networks to the each host IP
 
-- frt 10.184
-- mus 10.181
-- sou: 10.185
-- alb1: 10.187
-- alb2: 10.189
-- avi: 10.188
-- llmmr: hailey: 10.100?
+```yaml
+frt: 10.184
+mus: 10.181
+sou: 10.185
+alb1: 10.187
+avi: 10.188
+alb2: 10.189
+```
 
-## **[multipass ubuntu password set](https://askubuntu.com/questions/1230753/login-and-password-for-multipass-instance)**
+### Step 5: Repeat for every network that has access to the VM
+
+```bash
+ssh brent@10.188.40.230
+ping 10.188.50.214
+ping 10.188.220.214
+```
+
+## Step 6: **[Enable ssh to VM](./ssh_into_mutipass_vms.md)**
+
+## Step 6: **[Set multipass ubuntu password](https://askubuntu.com/questions/1230753/login-and-password-for-multipass-instance)**
 
 In multipass instance, set a password to ubuntu user. Needed to ftp from dev system. Multipass has transfer command but only works from the host.
 
 ```bash
+ssh ubuntu@10.188.50.214
 sudo passwd ubuntu
 ```
+
+## Step 7: **[Install Ubuntu Server software](../../../../../linux/ubuntu24_04/server-install.md)**

@@ -1,11 +1,5 @@
 # **[How to Bridge Two Network Interfaces in Linux Using Netplan](https://www.tecmint.com/netplan-bridge-network-interfaces/)**
 
-## **[50-cloud-init](https://ubuntuforums.org/showthread.php?t=2492108)**
-
-## Brent's summary
-
-I updated /etc/netplan/50-cloud-init.yaml at it's changes persisted on reboot but if I start having network problems this is the first place I will check. I also only tested this on ubuntu 24.04.
-
 ## netplan
 
 Netplan is a utility for easily configuring networking on a Linux system, typically used in Ubuntu. It allows users to configure network interfaces through a simple YAML file.
@@ -59,24 +53,33 @@ network:
     vlan220:
       id: 220
       link: eno1
-      addresses:
-      - 10.188.220.203/24    
-      routes:
-        - to: 10.188.73.0/24
-          via: 10.188.220.254      
   bridges:
     br0:
       dhcp4: false
       dhcp6: false  
       addresses:
-      - 10.188.50.203/24    
+      - 10.188.50.202/24    
       routes:
       - to: default
         via: 10.188.50.254
       nameservers:
         addresses:
         - 10.225.50.203
-      interfaces: [eno1]  
+        - 10.224.50.203
+      interfaces: [eno1] 
+    br1:
+      interfaces: ["vlan220"]
+      dhcp4: false
+      dhcp6: false  
+      addresses:
+      - 10.188.220.202/24
+      nameservers:
+        addresses:
+        - 10.225.50.203
+        - 10.224.50.203
+      routes:
+        - to: 10.188.73.0/24
+          via: 10.188.220.254      
 ```
 
 Apply the Configuration Changes: Once you’ve edited the configuration file, apply the changes to update your network settings.

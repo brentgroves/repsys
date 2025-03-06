@@ -30,7 +30,6 @@ vi ~/.ssh/authorized_keys
 cat ~/.ssh/authorized_keys 
 ...
 ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGEboFZQ4rNwjTLk9XLreFQ65LHTaXayXIKR7Yg1pd42 brent.groves@gmail.com
-
 ```
 
 ## connect from client
