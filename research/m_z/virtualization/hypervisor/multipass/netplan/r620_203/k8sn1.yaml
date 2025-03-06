@@ -21,6 +21,7 @@ network:
       routes:
       - to: default
         via: 10.188.50.254
+        metric: 50
       match:
         macaddress: "52:54:00:d7:34:55"
       optional: true

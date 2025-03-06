@@ -15,6 +15,47 @@ This process assumes you are using Ubuntu 24.04 server or OS that is using netwo
 
 ## Step 1: **[Goto create bridges with netplan](./create_bridges_with_netplan.md)**
 
+## Step 1: show host routing table
+
+```bash
+ssh brent@10.188.50.202
+ip route 
+default via 10.188.50.254 dev br0 proto static 
+10.97.219.0/24 dev mpqemubr0 proto kernel scope link src 10.97.219.1 
+10.188.50.0/24 dev br0 proto kernel scope link src 10.188.50.202 
+10.188.73.0/24 via 10.188.220.254 dev br1 proto static 
+10.188.220.0/24 dev br1 proto kernel scope link src 10.188.220.202
+```
+
+## Step 1: Verify access to host routes
+
+```bash
+ssh brent@10.188.50.202
+multipass shell k8sn211
+ip route
+default via 10.97.219.1 dev ens3 proto dhcp src 10.97.219.230 metric 100 
+10.97.219.0/24 dev ens3 proto kernel scope link src 10.97.219.230 metric 100 
+10.97.219.1 dev ens3 proto dhcp scope link src 10.97.219.230 metric 100 
+
+# verify access to every network the host has access to
+ping 10.188.50.79
+# works
+ping 10.188.220.50
+# works
+ping 10.188.73.11
+# works
+ping 10.188.40.230
+# works
+ping 172.20.88.64
+# works
+
+# FW rules
+curl https://api.snapcraft.io
+snapcraft.io store API service - Copyright 2018-2022 Canonical.
+
+exit
+```
+
 ## Step 2: **[Install Multipass](./multipass_install.md)**
 
 You can also run multipass networks to confirm the bridge is available for Multipass to connect to.
@@ -35,7 +76,7 @@ mpqemubr0   bridge     Network bridge
 
 ```
 
-## Create an instance with a specific image
+## Step 3: Create an instance with a specific image
 
 To find out what images are available, run:
 
@@ -52,7 +93,7 @@ core22                                        20230717         Ubuntu Core 22
 24.04                       noble,lts         20240622         Ubuntu 24.04 LTS
 ```
 
-## Decide how much ram and vcpu to use
+## Step 3: Decide how much ram and vcpu to use
 
 ```bash
 lscpu
@@ -105,9 +146,9 @@ Vulnerabilities:
   Tsx async abort:        Not affected
 ```
 
-## **[remove an instance](./remove_instance.md)**
+## Step 3: **[remove an instance](./remove_instance.md)**
 
-## Launch VM with extra network interface
+## Step 3: Launch VM with extra network interfaces
 
 The full multipass help launch output explains the available options:
 
@@ -136,30 +177,31 @@ Usage: multipass launch [options] [[<remote:>]<image> | <url>]
                                         to mean "name=<name>".
 ```
 
-### Step 2: Launch an instance
+### Step 3: Launch an instance
 
 <!-- You can also leave the MAC address unspecified (just --network name=localbr,mode=manual). If you do so, Multipass will generate a random MAC for you, but you will need to retrieve it in the next step. -->
 
 ```bash
 
-multipass launch --network br0 --name k8sn2 --cpus 2 --memory 32G --disk 250G 
+# k8s211 machine 2, cluster 1, node 1
+multipass launch --network br0 --network br1 --name k8sn211 --cpus 2 --memory 32G --disk 250G 
 
 # errors need to add another config request
 
 [2025-03-05T20:29:05.138] [error] [url downloader] Failed to get https://codeload.github.com/canonical/multipass-blueprints/zip/refs/heads/main: Error opening https://codeload.github.com/canonical/multipass-blueprints/zip/refs/heads/main
 [2025-03-05T20:29:05.139] [error] [blueprint provider] Error fetching Blueprints: failed to download from 'https://codeload.github.com/canonical/multipass-blueprints/zip/refs/heads/main': Error opening https://codeload.github.com/canonical/multipass-blueprints/zip/refs/heads/main
 
-multipass info k8sn1
-Name:           k8sn1
+multipass info k8sn211
+Name:           k8sn211
 State:          Running
 Snapshots:      0
-IPv4:           10.130.245.199
+IPv4:           10.97.219.76
 Release:        Ubuntu 24.04.2 LTS
 Image hash:     a3aea891c930 (Ubuntu 24.04 LTS)
 CPU(s):         2
-Load:           0.03 0.16 0.09
-Disk usage:     1.8GiB out of 242.1GiB
-Memory usage:   586.7MiB out of 31.3GiB
+Load:           0.07 0.23 0.11
+Disk usage:     1.9GiB out of 242.1GiB
+Memory usage:   625.7MiB out of 31.3GiB
 Mounts:         --
 ```
 
@@ -174,32 +216,38 @@ ip link show master br0
     link/ether fe:21:f6:5e:ec:63 brd ff:ff:ff:ff:ff:ff
 ```
 
-Verify access to host routes
+## Step 3: Show vm host routing table
 
 ```bash
 ssh brent@10.188.50.202
-multipass shell k8sn2
-ip route
-default via 10.97.219.1 dev ens3 proto dhcp src 10.97.219.230 metric 100 
-10.97.219.0/24 dev ens3 proto kernel scope link src 10.97.219.230 metric 100 
-10.97.219.1 dev ens3 proto dhcp scope link src 10.97.219.230 metric 100 
+multipass shell k8sn211
+default via 10.97.219.1 dev ens3 proto dhcp src 10.97.219.76 metric 100 
+10.97.219.0/24 dev ens3 proto kernel scope link src 10.97.219.76 metric 100 
+10.97.219.1 dev ens3 proto dhcp scope link src 10.97.219.76 metric 100 
+10.188.40.0/24 via 10.188.50.254 dev ens4 proto static 
+10.188.42.0/24 via 10.188.50.254 dev ens4 proto static 
+10.188.50.0/24 dev ens4 proto kernel scope link src 10.188.50.214 
+10.188.73.0/24 via 10.188.220.254 dev ens5 proto static 
+10.188.220.0/24 dev ens5 proto kernel scope link src 10.188.220.214 
+172.20.88.0/24 via 10.188.50.254 dev ens4 proto static
+```
 
+## Step 3: Verify access to all host routes from vm
+
+```bash
+ssh brent@10.188.50.202
+multipass shell k8sn211
 # verify access to every network the host has access to
 ping 10.188.50.79
 # works
-
 ping 10.188.220.50
 # works
-
 ping 10.188.73.11
 # works
-
 ping 10.188.40.230
 # works
-
 ping 172.20.88.64
 # works
-
 # FW rules
 curl https://api.snapcraft.io
 snapcraft.io store API service - Copyright 2018-2022 Canonical.
@@ -207,7 +255,7 @@ snapcraft.io store API service - Copyright 2018-2022 Canonical.
 exit
 ```
 
-## Step 3: Configure the extra interface
+## Step 4: Configure the extra interfaces
 
 ## retrieve the hardware address
 
@@ -215,18 +263,26 @@ See how multipass configured the network. Until I can figure out how to pass the
 
 ```bash
 
-multipass exec -n k8sn2 -- sudo cat /etc/netplan/50-cloud-init.yaml
+multipass exec -n k8sn211 -- sudo cat /etc/netplan/50-cloud-init.yaml
 network:
   version: 2
   ethernets:
     default:
       match:
-        macaddress: "52:54:00:3c:6d:95"
+        macaddress: "52:54:00:4a:f4:2e"
       dhcp-identifier: "mac"
       dhcp4: true
     extra0:
       match:
-        macaddress: "52:54:00:27:91:55"
+        macaddress: "52:54:00:34:6f:ca"
+      optional: true
+      dhcp-identifier: "mac"
+      dhcp4: true
+      dhcp4-overrides:
+        route-metric: 200
+    extra1:
+      match:
+        macaddress: "52:54:00:46:3b:fd"
       optional: true
       dhcp-identifier: "mac"
       dhcp4: true
@@ -234,190 +290,216 @@ network:
         route-metric: 200
 ```
 
-### update netplan with hardware address
+### Step 4: update netplan with hardware address
 
 ```bash
 
 # Make sure the mac address remains the same
 
-multipass exec -n k8sn2 -- sudo bash -c 'cat << EOF > /etc/netplan/50-cloud-init.yaml
+multipass exec -n k8sn211 -- sudo bash -c 'cat << EOF > /etc/netplan/50-cloud-init.yaml
 network:
   version: 2
   ethernets:
     default:
       match:
-        macaddress: "52:54:00:3c:6d:95"
+        macaddress: "52:54:00:4a:f4:2e"
       dhcp-identifier: "mac"
       dhcp4: true
     extra0:
+      match:
+        macaddress: "52:54:00:34:6f:ca"
+      optional: true
+      dhcp4: false
+      dhcp6: false
       addresses:
-      - 10.188.50.213/24
+      - 10.188.50.214/24
       nameservers:
          addresses:
          - 10.225.50.203
          - 10.224.50.203
       routes:
-      - to: default
+      - to: 10.188.40.0/24
         via: 10.188.50.254
+      - to: 10.188.42.0/24
+        via: 10.188.50.254
+      - to: 172.20.88.0/24
+        via: 10.188.50.254
+    extra1:
       match:
-        macaddress: "52:54:00:27:91:55"
+        macaddress: "52:54:00:46:3b:fd"
       optional: true
+      dhcp4: false
+      dhcp6: false
+      addresses:
+      - 10.188.220.214/24
+      nameservers:
+         addresses:
+         - 10.225.50.203
+         - 10.224.50.203
+      routes:
+      - to: 10.188.73.0/24
+        via: 10.188.220.254
 EOF'
 
 # verify yaml
 
-multipass exec -n k8sn2 -- sudo cat /etc/netplan/50-cloud-init.yaml
-
+multipass exec -n k8sn211 -- sudo cat /etc/netplan/50-cloud-init.yaml
 network:
   version: 2
   ethernets:
     default:
       match:
-        macaddress: "52:54:00:3c:6d:95"
+        macaddress: "52:54:00:4a:f4:2e"
       dhcp-identifier: "mac"
       dhcp4: true
     extra0:
+      match:
+        macaddress: "52:54:00:34:6f:ca"
+      optional: true
+      dhcp4: false
+      dhcp6: false
       addresses:
-      - 10.188.50.213/24
+      - 10.188.50.214/24
       nameservers:
          addresses:
          - 10.225.50.203
          - 10.224.50.203
       routes:
-      - to: default
+      - to: 10.188.40.0/24
         via: 10.188.50.254
+      - to: 10.188.42.0/24
+        via: 10.188.50.254
+      - to: 172.20.88.0/24
+        via: 10.188.50.254
+    extra1:
       match:
-        macaddress: "52:54:00:27:91:55"
+        macaddress: "52:54:00:46:3b:fd"
       optional: true
+      dhcp4: false
+      dhcp6: false
+      addresses:
+      - 10.188.220.214/24
+      nameservers:
+         addresses:
+         - 10.225.50.203
+         - 10.224.50.203
+      routes:
+      - to: 10.188.73.0/24
+        via: 10.188.220.254
 ```
 
 if all looks good apply network changes
 
 ```bash
-multipass exec -n k8sn2 -- sudo netplan apply
+multipass exec -n k8sn211 -- sudo netplan apply
 ```
 
-## Step 5: Confirm that it works
+## Step 4: Confirm IPs have been added
 
 You can confirm that the new IP is present in the instance with Multipass:
 
 ```bash
 
-multipass info k8sn2
-Name:           k8sn2
+multipass info k8sn211
+Name:           k8sn211
 State:          Running
 Snapshots:      0
-IPv4:           10.97.219.230
-                10.188.50.213
+IPv4:           10.97.219.76
+                10.188.50.214
+                10.188.220.214
 Release:        Ubuntu 24.04.2 LTS
 Image hash:     a3aea891c930 (Ubuntu 24.04 LTS)
 CPU(s):         2
-Load:           0.00 0.00 0.00
+Load:           0.01 0.00 0.00
 Disk usage:     1.9GiB out of 242.1GiB
-Memory usage:   583.0MiB out of 31.3GiB
+Memory usage:   580.1MiB out of 31.3GiB
 Mounts:         --
 ```
 
-The command above should show two IPs, the second of which is the one we just configured (10.188.50.213). You can use ping to confirm that it can be reached from the host:
+## Step 4: show host routing table
 
 ```bash
-# from netwwork machine
-ping 10.188.50.213
+ssh brent@10.188.50.202
+ip route 
+default via 10.188.50.254 dev br0 proto static 
+10.97.219.0/24 dev mpqemubr0 proto kernel scope link src 10.97.219.1 
+10.188.50.0/24 dev br0 proto kernel scope link src 10.188.50.202 
+10.188.73.0/24 via 10.188.220.254 dev br1 proto static 
+10.188.220.0/24 dev br1 proto kernel scope link src 10.188.220.202
+```
+
+## Verify access to all IPs
+
+```bash
+# from 10.188.40.230 
+ping 10.188.50.202
+# from 10.188.220.230
+ping 10.188.220.202
 # works
+# from 10.188.40.230
+ping 10.188.50.214
+# works
+# from 10.188.220.230
+ping 10.188.220.214
 
+curl https://api.snapcraft.io
+snapcraft.io store API service - Copyright 2018-2022 Canonical.
 ```
 
-Confirm VM can ping lan and wan
+## show vm routing table
 
 ```bash
-multipass exec -n microk8s-vm -- ping -c 1 -n 10.1.0.113
-PING 10.1.0.113 (10.1.0.113) 56(84) bytes of data.
-64 bytes from 10.1.0.113: icmp_seq=1 ttl=64 time=0.560 ms
-
---- 10.1.0.113 ping statistics ---
-1 packets transmitted, 1 received, 0% packet loss, time 0ms
-rtt min/avg/max/mdev = 0.560/0.560/0.560/0.000 ms
-
-multipass exec -n microk8s-vm -- ping -c 1 -n google.com
-PING google.com (142.250.191.238) 56(84) bytes of data.
-64 bytes from 142.250.191.238: icmp_seq=1 ttl=57 time=9.04 ms
-
---- google.com ping statistics ---
-1 packets transmitted, 1 received, 0% packet loss, time 0ms
-rtt min/avg/max/mdev = 9.039/9.039/9.039/0.000 ms
-
+multipass exec -n k8sn211 -- ip route 
+default via 10.97.219.1 dev ens3 proto dhcp src 10.97.219.76 metric 100 
+10.97.219.0/24 dev ens3 proto kernel scope link src 10.97.219.76 metric 100 
+10.97.219.1 dev ens3 proto dhcp scope link src 10.97.219.76 metric 100 
+10.188.40.0/24 via 10.188.50.254 dev ens4 proto static 
+10.188.42.0/24 via 10.188.50.254 dev ens4 proto static 
+10.188.50.0/24 dev ens4 proto kernel scope link src 10.188.50.214 
+10.188.73.0/24 via 10.188.220.254 dev ens5 proto static 
+10.188.220.0/24 dev ens5 proto kernel scope link src 10.188.220.214 
+172.20.88.0/24 via 10.188.50.254 dev ens4 proto static 
 ```
 
-## Verify routing tables
-
-**[references iproute2 intro for ip commands](../networking/iproute2/introduction_to_iproute.md)**
+## verify access to every network the host has access to
 
 ```bash
-ip route list table local
-local 10.1.0.125 dev eno1 proto kernel scope host src 10.1.0.125 
-local 10.1.0.126 dev br0 proto kernel scope host src 10.1.0.126 
-broadcast 10.1.3.255 dev br0 proto kernel scope link src 10.1.0.126 
-broadcast 10.1.3.255 dev eno1 proto kernel scope link src 10.1.0.125 
-local 10.13.31.1 dev br1 proto kernel scope host src 10.13.31.1 
-broadcast 10.13.31.255 dev br1 proto kernel scope link src 10.13.31.1 
-local 10.127.233.1 dev mpbr0 proto kernel scope host src 10.127.233.1 
-broadcast 10.127.233.255 dev mpbr0 proto kernel scope link src 10.127.233.1 
-local 127.0.0.0/8 dev lo proto kernel scope host src 127.0.0.1 
-local 127.0.0.1 dev lo proto kernel scope host src 127.0.0.1 
-broadcast 127.255.255.255 dev lo proto kernel scope link src 127.0.0.1 
+multipass shell k8sn211
+ping 10.188.50.79
+# works
+ping 10.188.220.50
+# works
+ping 10.188.73.11
+# works
+ping 10.188.40.230
+# works
+ping 10.188.42.11
+# works
+ping 172.20.88.64
+# works
+# FW rules
+curl https://api.snapcraft.io
+snapcraft.io store API service - Copyright 2018-2022 Canonical.
 
-# there should be only 1 default route
-ip route list table main
-default via 10.1.1.205 dev eno1 proto static 
-10.1.0.0/22 dev br0 proto kernel scope link src 10.1.0.126 
-10.1.0.0/22 dev eno1 proto kernel scope link src 10.1.0.125 
-10.13.31.0/24 dev br1 proto kernel scope link src 10.13.31.1 
-10.127.233.0/24 dev mpbr0 proto kernel scope link src 10.127.233.1
+exit
 
-# ip shows us our routes
-ip route show
-default via 10.1.1.205 dev eno1 proto static 
-10.1.0.0/22 dev br0 proto kernel scope link src 10.1.0.126 
-10.1.0.0/22 dev eno1 proto kernel scope link src 10.1.0.125 
-10.13.31.0/24 dev br1 proto kernel scope link src 10.13.31.1 
-10.127.233.0/24 dev mpbr0 proto kernel scope link src 10.127.233.1 
+## Test snap
 
-# You can view your machines current arp/neighbor cache/table like so:
-ip neigh show
-10.1.0.162 dev eno2 lladdr 4c:91:7a:64:0f:7d STALE
-10.1.0.166 dev eno1 lladdr 4c:91:7a:63:c0:3a STALE
-10.1.1.205 dev eno1 lladdr 34:56:fe:77:58:bc STALE
-
-# view devices linked to bridge
-ip link show master br0
-7: eno2: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq master br0 state UP mode DEFAULT group default qlen 1000
-    link/ether b8:ca:3a:6a:37:19 brd ff:ff:ff:ff:ff:ff
-    altname enp1s0f1
-14: tap34dcb760: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq master br0 state UP mode DEFAULT group default qlen 1000
-    link/ether 5a:8a:38:e5:66:f1 brd ff:ff:ff:ff:ff:ff
-18: tap38ceeb39: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq master br0 state UP mode DEFAULT group default qlen 1000
-    link/ether ce:80:f5:53:04:fb brd ff:ff:ff:ff:ff:ff
-
-ip link show master mpbr0
-13: tape518c5a7: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq master mpbr0 state UP mode DEFAULT group default qlen 1000
-    link/ether e6:53:77:50:74:f1 brd ff:ff:ff:ff:ff:ff
-
-# show vm routing table
-multipass exec -n microk8s-vm -- ip route list table local
-local 10.1.0.129 dev enp6s0 proto kernel scope host src 10.1.0.129 
-broadcast 10.1.3.255 dev enp6s0 proto kernel scope link src 10.1.0.129 
-local 10.127.233.194 dev enp5s0 proto kernel scope host src 10.127.233.194 
-broadcast 10.127.233.255 dev enp5s0 proto kernel scope link src 10.127.233.194 
-local 127.0.0.0/8 dev lo proto kernel scope host src 127.0.0.1 
-local 127.0.0.1 dev lo proto kernel scope host src 127.0.0.1 
-broadcast 127.255.255.255 dev lo proto kernel scope link src 127.0.0.1 
-
-multipass exec -n microk8s-vm -- ip route list table main
-default via 10.127.233.1 dev enp5s0 proto dhcp src 10.127.233.194 metric 100 
-10.1.0.0/22 dev enp6s0 proto kernel scope link src 10.1.0.129 
-10.127.233.0/24 dev enp5s0 proto kernel scope link src 10.127.233.194 metric 100 
-10.127.233.1 dev enp5s0 proto dhcp scope link src 10.127.233.194 metric 100
+```bash
+multipass shell k8sn211
+sudo snap install hello-world
+# works
 ```
+
+## Add site networks
+
+- frt 10.184
+- mus 10.181
+- sou: 10.185
+- alb1: 10.187
+- alb2: 10.189
+- avi: 10.188
+- llmmr: hailey: 10.100?
 
 ## **[multipass ubuntu password set](https://askubuntu.com/questions/1230753/login-and-password-for-multipass-instance)**
 
