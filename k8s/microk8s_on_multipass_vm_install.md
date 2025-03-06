@@ -444,6 +444,8 @@ ssh ubuntu@10.188.50.214
 sudo passwd ubuntu
 ```
 
+## Step 7: **[Install Ubuntu Server software](../linux/ubuntu24_04/server-install.md)**
+
 ## **[install microk8s](https://microk8s.io/docs/install-multipass)**
 
 We can now find the static IP address which has been allocated. Running:
