@@ -2,6 +2,7 @@
 
 ## references
 
+- **[Best source Plex docs](https://docs.plex.com/pmc/en-us/integration/odbc/odbc.htm)**
 - **[plex drivers](https://www.revolutiongroup.com/wp-content/uploads/PSCC2102_UsingTodaysTechnologytoBetterServeYourPlex_TonyBrown.pdf)**
 - **[personal access codes](../../../../secrets/plex/user_info.md)**
 - **[dsn](../../../../odbc/odbc64.ini)**

@@ -1,13 +1,16 @@
 # **[Understanding Open vSwitch: Part 1](https://medium.com/@ozcankasal/understanding-open-vswitch-part-1-fd75e32794e4)**
 
-**[Back to Research List](../../../research_list.md)**\
-**[Back to Networking Menu](../networking_menu.md)**\
-**[Back to Current Status](../../../../development/status/weekly/current_status.md)**\
-**[Back to Main](../../../../README.md)**
+**[Back to Research List](../../../../research_list.md)**\
+**[Back to Current Status](../../../../../development/status/weekly/current_status.md)**\
+**[Back to Main](../../../../../README.md)**
 
 ## referenences
 
-<https://medium.com/@technbd/multi-hosts-container-networking-a-practical-guide-to-open-vswitch-vxlan-and-docker-overlay-70ec81432092>
+- **[Open VSwitch with KVM](https://docs.openvswitch.org/en/latest/howto/kvm/)**
+- **[Open VSwitch tutorial](https://medium.com/@ozcankasal/understanding-open-vswitch-part-1-fd75e32794e4)**
+- **[Open VSwitch and Windows](https://docs.openvswitch.org/en/latest/topics/windows/)**
+- **[open vswitch and ExtremeXOS](https://documentation.extremenetworks.com/exos_22.1/GUID-29B4C015-BDBC-4D79-8CEF-3BDA3D57E676.shtml)**
+- **[open vswitch and docker overlay](https://medium.com/@technbd/multi-hosts-container-networking-a-practical-guide-to-open-vswitch-vxlan-and-docker-overlay-70ec81432092)**
 
 ## Open vSwitch
 
