@@ -1,5 +1,7 @@
 # REQ0193020/RITM0193066
 
+This config request may not be need since I could connect to both the api.plexonline.com and testapi.plexonline.com endpoints.
+
 ## references
 
 - **[soap xml fw](https://www.itprotoday.com/it-security/soap-xml-firewalls)**
@@ -10,8 +12,6 @@
 We will be submitting an additional request for micro services running on our Structures Avilla Kubernetes cluster to have access to the Plex **[SOAP](https://www.techtarget.com/searchapparchitecture/definition/SOAP-Simple-Object-Access-Protocol)** server. Both the SOAP web service and an ODBC connection give access to the Plex database.  The difference being that Plex maintains the SQL queries of the SOAP web services which access the live database and we maintain the SQL queries in a snapshot of the database when connecting via ODBC.  
 
 Thank you,
-
-This config request may not be need since I could connect to both the api.plexonline.com and testapi.plexonline.com endpoints.
 
 ```bash
 # From system with access to Plex SOAP web services
