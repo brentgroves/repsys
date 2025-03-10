@@ -1,6 +1,6 @@
 # IS Team Projects
 
-The following is in markdown format it can be viewed better from <https://markdownlivepreview.com/> by copying and pasting the contents below.
+The following is in markdown format.  It can be viewed better from <https://markdownlivepreview.com/> by copying and pasting the contents below.
 
 ![cp](https://res.cloudinary.com/canonical/image/fetch/f_auto,q_auto,fl_sanitize,w_4096,h_1377/https://assets.ubuntu.com/v1/e55cc8c0-wide-server.png)
 
