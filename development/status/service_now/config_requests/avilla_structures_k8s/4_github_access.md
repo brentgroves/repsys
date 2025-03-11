@@ -1,5 +1,70 @@
 # RITM0193059
 
+### **[add certificate to trust store](https://fabianlee.org/2019/01/28/git-client-error-server-certificate-verification-failed/)**
+
+```bash
+git clone https://github.com/barnybug/cli53
+Cloning into 'cli53'...
+fatal: unable to access 'https://github.com/barnybug/cli53/': server certificate verification failed. CAfile: none CRLfile: none
+
+# this reverts back to the original /etc/ssl/certs/ca-certificates.crt
+# sudo update-ca-certificates
+
+openssl s_client -showcerts -servername github.com -connect github.com:443 </dev/null 2>/dev/null | sed -n -e '/BEGIN\ CERTIFICATE/,/END\ CERTIFICATE/ p'  > github-com.pem
+cat github-com.pem | sudo tee -a /etc/ssl/certs/ca-certificates.crt
+```
+
+### bypass ssl verification
+
+Not recommended
+
+```bash
+ssh brent@10.188.50.202
+git clone https://github.com/barnybug/cli53
+git clone https://github.com/w3schools-test/w3schools-test.github.io.git
+Cloning into 'w3schools-test.github.io'...
+fatal: unable to access 'https://github.com/w3schools-test/w3schools-test.github.io.git/': server certificate verification failed. CAfile: none CRLfile: none
+
+You can also disable SSL verification, (if the project does not require a high level of security other than login/password) by typing :
+
+sudo timedatectl set-timezone America/Indiana/Indianapolis
+sudo timedatectl
+               Local time: Mon 2025-03-10 18:35:50 EDT
+           Universal time: Mon 2025-03-10 22:35:50 UTC
+                 RTC time: Mon 2025-03-10 22:35:50
+                Time zone: America/Indiana/Indianapolis (EDT, -0400)
+System clock synchronized: no
+              NTP service: active
+          RTC in local TZ: no
+
+git config --global --get http.sslverify 
+
+
+git config --global http.sslverify false
+
+git config --global --unset http.sslverify 
+
+```
+
+## Test
+
+```bash
+ssh brent@10.188.50.202
+git clone https://github.com/barnybug/cli53
+git clone https://github.com/w3schools-test/w3schools-test.github.io.git
+Cloning into 'w3schools-test.github.io'...
+fatal: unable to access 'https://github.com/w3schools-test/w3schools-test.github.io.git/': server certificate verification failed. CAfile: none CRLfile: none
+
+You can also disable SSL verification, (if the project does not require a high level of security other than login/password) by typing :
+
+git config --global --get http.sslverify 
+
+
+git config --global http.sslverify false
+
+
+```
+
 Project: Avilla Structures Kubernetes Cluster
 
 Request: Please update the Avilla Structures "Kubernetes" policy.
