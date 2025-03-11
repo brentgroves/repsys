@@ -33,6 +33,8 @@ sudo reboot
 
 ```bash
 sudo snap install microk8s --classic --channel=1.28/stable
+sudo snap install microk8s --classic --channel=1.32/stable
+
 ```
 
 ## Join the microk8s group
@@ -92,4 +94,3 @@ microk8s kubectl get node -o wide
 ```bash
 microk8s enable rbac
 ```
-

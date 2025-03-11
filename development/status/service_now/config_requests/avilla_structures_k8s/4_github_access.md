@@ -1,6 +1,6 @@
 # RITM0193059
 
-### **[add certificate to trust store](https://fabianlee.org/2019/01/28/git-client-error-server-certificate-verification-failed/)**
+## **[add certificate to trust store](https://fabianlee.org/2019/01/28/git-client-error-server-certificate-verification-failed/)**
 
 ```bash
 git clone https://github.com/barnybug/cli53
