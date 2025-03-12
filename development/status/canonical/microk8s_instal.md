@@ -1,37 +1,53 @@
 # Microk8s install
 
-**[Report System Install](./report-system-install.md)**\
-**[Ubuntu 22.04 Desktop](../linux/ubuntu22-04/desktop-install.md)**\
-**[Ubuntu 22.04 Server](../linux/ubuntu22-04/server-install.md)**\
-**[Current Status](../development/status/weekly/current_status.md)**\
-**[Back to Main](../README.md)**
+Issue: MicroK8s will not run on Ubuntu 24.04 server with vlan.
 
-## References
+Netplan Config:
 
-<https://microk8s.io/#install-microk8s>
-<https://microk8s.io/docs/getting-started>
-<https://microk8s.io/docs/setting-snap-channel>
-<https://microk8s.io/docs/clustering>
-<https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/high-availability/>
-<https://microk8s.io/docs/high-availability>
-<https://kubernetes.io/docs/concepts/overview/components/>
-
-## Requirements
-
-MicroK8s runs in as little as 540MB of memory, but to accommodate workloads, we recommend a system with at least 20G of disk space and 4G of memory.
-
-## Remove Microk8s
-
-```bash
-snap info microk8s
-microk8s stop
-sudo snap remove microk8s --purge
-sudo reboot
+```yaml
+network:
+  version: 2
+  ethernets:
+    eno1:
+      dhcp4: false
+      dhcp6: false
+  vlans:
+    vlan220:
+      id: 220
+      link: eno1
+  bridges:
+    br0:
+      dhcp4: false
+      dhcp6: false  
+      addresses:
+      - 10.188.50.202/24    
+      routes:
+      - to: default
+        via: 10.188.50.254
+      nameservers:
+        addresses:
+        - 10.225.50.203
+        - 10.224.50.203
+      interfaces: [eno1] 
+    br1:
+      interfaces: ["vlan220"]
+      dhcp4: false
+      dhcp6: false  
+      addresses:
+      - 10.188.220.202/24
+      nameservers:
+        addresses:
+        - 10.225.50.203
+        - 10.224.50.203
+      routes:
+        - to: 10.188.73.0/24
+          via: 10.188.220.254      
 ```
 
 ## Install Microk8s snap
 
 ```bash
+sudo snap install microk8s --classic --channel=1.32/stable
 sudo snap install microk8s --classic --channel=1.32
 ```
 
@@ -57,6 +73,16 @@ sudo reboot
 <https://microk8s.io/docs/getting-started>
 
 ## **[issue](https://github.com/canonical/microk8s/issues/4361)**
+
+After installing MicroK8s
+
+## Install Microk8s snap
+
+```bash
+sudo snap install microk8s --classic --channel=1.28/stable
+sudo snap install microk8s --classic --channel=1.32/stable
+
+```
 
 ```bash
 cp: cannot stat '/var/snap/microk8s/7731/var/kubernetes/backend/localnode.yaml': No such file or directory
