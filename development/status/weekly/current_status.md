@@ -3,35 +3,28 @@
 **[All Status](../weekly/status_list.md)**\
 **[Back to Main](../../../README.md)**
 
-## K8s Architecture Deep Dive
+## Highest Priority
 
-### Advantages of Kubernetes open source platform
+Modify TB scripts to work on the Azure SQL db running on Linamar's tenant.
 
-K8s is a complex system that canonical has made easier to manage but when something goes wrong we need to know more about how it works. Since both canonicals MicroK8s and the upstream k8s version it manages are open source we can.
+## Certificate Management Team
 
-The lack of knowledge is why we are having troubles with Linus. The more we know how K8s works the better we will be able to keep it running.
+- Researched Fortigate Proxy pertaining to certificates with Justin L.
+- Discussing Mach2 user computer trust-store updates with Fruitport DST.
+- Creating Network config request to temporarily allow my laptop to access Fruitport's OT network for certificate testing.
 
+## K8s Support Team
+
+- MicroK8s install
+- Created MicroK8s VLAN github bug report.
+Compiled a resource list to help us troubleshoot Kubernetes issues.
+
+- K3s and K8s upstream github
 - **[Build and Debug MicroK8s](https://github.com/canonical/microk8s/blob/master/docs/build.md)**
-
 - **[Configure Services](https://microk8s.io/docs/configuring-services)**
-
 - **[Configuring CNI](https://microk8s.io/docs/change-cidr)**
-
 Given our complex network start learning this networking part of K8s.
-
 - **[Configuring Host Interfaces](https://microk8s.io/docs/configure-host-interfaces)**
-$3196.00 tax refunds
--1700.00 chad
-
---------
-
-```bash
- $1496.00
-+ 3300.00
-
----------
- $4796.00
-```
 
 ![np](https://cdn.prod.website-files.com/65a5be30bf4809bb3a2e8aff/65de6a24f3bc7cfdb5711e46_ethernet2.jpeg)
 
