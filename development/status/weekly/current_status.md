@@ -7,6 +7,8 @@
 
 K8s is a complex system that canonical has made easier to manage but when something goes wrong we need to know more about how it works. Since both canonicals MicroK8s and the upstream k8s version it manages are open source we can.
 
+The lack of knowledge is why we are having troubles with Linus. The more we know how K8s works the better we will be able to keep it running.
+
 - **[Build and Debug MicroK8s](https://github.com/canonical/microk8s/blob/master/docs/build.md)**
 
 - **[Configure Services](https://microk8s.io/docs/configuring-services)**
