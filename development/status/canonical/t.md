@@ -2,8 +2,7 @@ test
 sudo snap install microk8s --classic --channel=1.28/stable
 
 microk8s (1.28/stable) v1.28.15 from Canonical✓ installed
- ubuntu@k8sn211  ~  microk8s inspect
-
+microk8s inspect
 Inspecting system
 Inspecting Certificates
 Inspecting services
