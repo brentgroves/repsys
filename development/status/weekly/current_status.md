@@ -3,7 +3,9 @@
 **[All Status](../weekly/status_list.md)**\
 **[Back to Main](../../../README.md)**
 
-## Advantages of Kubernetes open source platform
+## K8s Architecture Deep Dive
+
+### Advantages of Kubernetes open source platform
 
 K8s is a complex system that canonical has made easier to manage but when something goes wrong we need to know more about how it works. Since both canonicals MicroK8s and the upstream k8s version it manages are open source we can.
 
