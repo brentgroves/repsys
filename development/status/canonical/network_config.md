@@ -3,7 +3,15 @@
 ## Test Process
 
 1. Add firewall rule
-2. restart microk8s
+2. microk8s start
+
+```bash
+ssh brent@10.188.50.201
+sudo cat /etc/netplan/50-cloud-init.yaml 
+ip a show eno1
+microk8s start
+
+```
 
 ## references
 
