@@ -1,32 +1,5 @@
 # MicroK8s Network Config Request
 
-## Test Process
-
-1. Add firewall rule
-2. microk8s start
-
-```bash
-ssh brent@10.188.50.201
-sudo cat /etc/netplan/50-cloud-init.yaml 
-ip a show eno1
-microk8s start
-```
-
-From another terminal
-
-```bash
-sudo tcpdump -i eno1 -n "ip 10.188.50.201 and port 80"
-tcpdump -ni eno1 tcp port 80
-```
-
-## references
-
-- **[services and ports](https://microk8s.io/docs/services-and-ports)**
-- **[Installing MicroK8s Offline or in an airgapped environment](https://microk8s.io/docs/install-offline)**
-- **[What is Squid Proxy](https://wiki.squid-cache.org/)**
-- **[config examples](https://wiki.squid-cache.org/ConfigExamples/)**
-- **[services and ports](https://microk8s.io/docs/services-and-ports)**
-
 ## core images required to bring up MicroK8s
 
 ```bash
@@ -51,6 +24,58 @@ registry.k8s.io/pause:3.10
 *mcr.microsoft.com
 *ghcr.io
 ```
+
+## development software
+
+```bash
+*nodejs.org
+*anaconda.com 
+
+## Domains Access
+
+```bash
+# container registries
+curl -vv telnet://docker.io:443
+curl -vv telnet://k8s.io:443
+curl -vv telnet://registry.k8s.io:443
+curl -vv telnet://test.odbc.plex.com:19995
+curl -vv telnet://quay.io:443
+curl -vv telnet://gcr.io:443
+curl -vv telnet://mcr.microsoft.com:443
+curl -vv telnet://ghcr.io:443
+# development software
+curl -vv telnet://nodejs.org:443
+curl -vv telnet://repo.anaconda.com:443
+
+sudo tcpdump -i any -nn dst host docker.io
+sudo tcpdump -i any -nn dst host k8s.io
+sudo tcpdump -i any -nn dst host registry.k8s.io
+sudo tcpdump -i any -nn dst host test.odbc.plex.com
+sudo tcpdump -i any -nn dst host gcr.io
+sudo tcpdump -i any -nn dst host mcr.microsoft.com
+sudo tcpdump -i any -nn dst host ghcr.io
+```
+
+## Test Process
+
+1. Add firewall rule
+2. microk8s start
+
+```bash
+ssh brent@10.188.50.201
+sudo cat /etc/netplan/50-cloud-init.yaml 
+ip a show eno1
+microk8s start
+
+```
+
+## references
+
+- **[services and ports](https://microk8s.io/docs/services-and-ports)**
+- **[Installing MicroK8s Offline or in an airgapped environment](https://microk8s.io/docs/install-offline)**
+- **[What is Squid Proxy](https://wiki.squid-cache.org/)**
+- **[config examples](https://wiki.squid-cache.org/ConfigExamples/)**
+- **[services and ports](https://microk8s.io/docs/services-and-ports)**
 
 Docker Hub (hub.docker.com), Quay (quay.io), Google Container Registry (gcr.io), Microsoft Container Registry (mcr.microsoft.com), and GitHub Container Registry (ghcr.io).
 
