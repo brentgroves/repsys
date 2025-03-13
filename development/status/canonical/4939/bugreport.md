@@ -1,5 +1,26 @@
 # **[Issue installing microk8s on network with multiple VLAN #4939](https://github.com/canonical/microk8s/issues/4939)**
 
+## Questions
+
+What internet sites does microk8s need to be able to access?
+
+AI Overview:
+
+MicroK8s needs internet access primarily to fetch the images used by its core components (like Calico, CoreDNS) and any images required for your workloads, potentially accessing registries like docker.io.
+
+Here's a more detailed breakdown:
+
+Fetching Images:
+
+MicroK8s needs to download container images from registries to run its core components and your applications.
+Upstream Registries:
+This means it needs access to public registries like docker.io or other registries where you store your container images.
+
+Networking Requirements
+Ensure machines have a default gateway and verify networking access between machines for the Kubernetes services.
+
+**[Microk8s doesn't start without internet access](https://askubuntu.com/questions/1270030/microk8s-doesnt-start-without-internet-access)**
+
 **[microk8s issues](https://github.com/canonical/microk8s/issues)**
 
 #### Summary
