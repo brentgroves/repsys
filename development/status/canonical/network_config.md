@@ -10,7 +10,13 @@ ssh brent@10.188.50.201
 sudo cat /etc/netplan/50-cloud-init.yaml 
 ip a show eno1
 microk8s start
+```
 
+From another terminal
+
+```bash
+sudo tcpdump -i eno1 -n "ip 10.188.50.201 and port 80"
+tcpdump -ni eno1 tcp port 80
 ```
 
 ## references
