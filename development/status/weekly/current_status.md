@@ -3,32 +3,22 @@
 **[All Status](../weekly/status_list.md)**\
 **[Back to Main](../../../README.md)**
 
-10.188.40.230 network config to 10.184.220.211
-
-10.240. wifi ot vlan
-10.184.220.211
-
-goal: root and intermediate in trust
-
-- 50 computers (no wyse server)
-- image: win10.1809
-
-1. go around and install it to all pcs.
-2. reimage automatically
-
 ## Highest Priority
 
 Modify TB scripts to work on the Azure SQL db running on Linamar's tenant.
 
 ## Certificate Management Team
 
-- Researched Fortigate Proxy pertaining to certificates with Justin L.
-- Discussing Mach2 user computer trust-store updates with Fruitport DST.
-- Creating Network config request to temporarily allow my laptop to access Fruitport's OT network for certificate testing.
+1. create server certificate for fruitport mach2 server
+2. install certificate chain on jboss server
+3. verify jboss is serving certificate chain
+4. Give intermediate and root CA certificate to Matt Irey and David Maitner.
+5. update thin clients one by one.
 
 ## K8s Support Team
 
 - MicroK8s install
+- Working with Justin L. to get needed internet access.
 - Created MicroK8s VLAN github bug report.
 Compiled a resource list to help us troubleshoot Kubernetes issues.
 

@@ -1,5 +1,12 @@
 # MicroK8s Network Config Request
 
+## references
+
+- **[Installing MicroK8s Offline or in an airgapped environment](https://microk8s.io/docs/install-offline)**
+- **[What is Squid Proxy](https://wiki.squid-cache.org/)**
+- **[config examples](https://wiki.squid-cache.org/ConfigExamples/)**
+- **[services and ports](https://microk8s.io/docs/services-and-ports)**
+
 ## core images required to bring up MicroK8s
 
 ```bash
@@ -41,6 +48,7 @@ curl -vv telnet://k8s.io:443
 curl -vv telnet://registry.k8s.io:443
 curl -vv telnet://test.odbc.plex.com:19995
 curl -vv telnet://quay.io:443
+## don't know why this don't work
 curl -vv telnet://gcr.io:443
 curl -vv telnet://mcr.microsoft.com:443
 curl -vv telnet://ghcr.io:443
