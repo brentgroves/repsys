@@ -1,3 +1,12 @@
+# detailed summary of calico-node pod issue
+
+## references
+
+**[Issue installing microk8s on network with multiple VLAN #4939](https://github.com/canonical/microk8s/issues/4939)**
+
+## describe pod
+
+```bash
 microk8s kubectl describe pod/calico-node-zs2sp -n kube-system
 Name:                 calico-node-zs2sp
 Namespace:            kube-system
@@ -183,7 +192,7 @@ Events:
 
   ```
 
-  ## Please add these domains
+## Add these domains to firewall whitelist
 
 1. prod-registry-k8s-io-us-east-2.s3.dualstack.us-east-2.amazonaws.com
 2. *amazonaws.com
