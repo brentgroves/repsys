@@ -13,6 +13,9 @@
 - Discussing Mach2 user computer trust-store updates with Fruitport DST.
 - Creating Network config request to temporarily allow my laptop to access Fruitport's OT network for certificate testing.
 
+sams ip: 10.224.232.1
+sam has access to all Mach2 servers.
+
 10.188.40.230 network config to 10.184.220.211
 
 10.240. wifi ot vlan
@@ -27,5 +30,7 @@ goal: root and intermediate in trust
 2. reimage automatically
 
 ## Steps
+
+-
 
 1. create server certificate for fruitport mach2 server
