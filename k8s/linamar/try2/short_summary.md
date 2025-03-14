@@ -25,3 +25,8 @@ Events:
   Warning  FailedCreatePodSandBox  2s (x5 over 6m34s)   kubelet  Failed to create pod sandbox: rpc error: code = DeadlineExceeded desc = failed to get sandbox image "registry.k8s.io/pause:3.10": failed to pull image "registry.k8s.io/pause:3.10": failed to pull and unpack image "registry.k8s.io/pause:3.10": failed to resolve reference "registry.k8s.io/pause:3.10": failed to do request: Head "<https://us-central1-docker.pkg.dev/v2/k8s-artifacts-prod/images/pause/manifests/3.10>": dial tcp 172.253.62.82:443: i/o timeout
 
 ```
+
+1. prod-registry-k8s-io-us-east-2.s3.dualstack.us-east-2.amazonaws.com
+2. *amazonaws.com
+3. us-central1-docker.pkg.dev
+4. *pkg.dev
