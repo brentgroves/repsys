@@ -7,7 +7,9 @@
 
 Modify TB scripts to work on the Azure SQL db running on Linamar's tenant.
 
-## Certificate Management Team
+## OT provisioning support
+
+## Certificate Management Support
 
 1. create server certificate for fruitport mach2 server
 2. install certificate chain on jboss server
@@ -15,7 +17,7 @@ Modify TB scripts to work on the Azure SQL db running on Linamar's tenant.
 4. Give intermediate and root CA certificate to Matt Irey and David Maitner.
 5. update thin clients one by one.
 
-## K8s Support Team
+## K8s Support
 
 - MicroK8s install
 - Working with Justin L. to get needed internet access.
