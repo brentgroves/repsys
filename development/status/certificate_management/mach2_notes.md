@@ -6,8 +6,19 @@
 
 ## players
 
-- Matt Irey, <mirey@linamar.com>
-- David Maitner
+Kristian Smith: Global Directory IT
+Adrian Wise: System Admin, Technical Services Manager.
+Christian. Trujillo, IT Structures Manager
+Aamir Ghaffar: IT Systems Architect
+Brent Hall, System Administrator Senior
+Kevin Young, Information Systems Manager
+Jared Davis, IT Manager
+Hayley Rymer, IT Supervisor
+Sam Jackson, Information System Developer
+Justin Langille, Network Technician
+Matt Irey, Desktop and System Support Technician
+David Maitner,  Desktop and System Support Technician
+Carl Stanglang, Desktop and System Support Technician
 
 - Researched Fortigate Proxy pertaining to certificates with Justin L.
 - Discussing Mach2 user computer trust-store updates with Fruitport DST.
