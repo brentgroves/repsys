@@ -1,35 +1,17 @@
-# Microk8s Linamar install try 3
+# Microk8s Linamar install try 4
 
 ## references
 
 - **[Installing MicroK8s Offline or in an airgapped environment](https://microk8s.io/docs/install-offline)**
 
-## Try 3
+## Try 4
 
-- Used r620_201 server
-- setup r620_201_basic.yaml network
-- remove microk8s
-- reboot
-- Added firewall rules
-- installed microk8s successfull
-  - microk8s inspect showed no issues
-  - microk8s status showed not running
-  - kubectl pods did not start in kubesystem ns did not check others.
-- removed microk8s
-- Added firewall rules
-  - AWS Calico container registries
-    - prod-registry-k8s-io-us-east-2.s3.dualstack.us-east-2.amazonaws.com
-    - *amazonaws.com
-    - us-central1-docker.pkg.dev
-    - *pkg.dev
-
-- microk8s start
-- microk8s status shows not running
-- purged microk8s and rebooted.
-- rebooted machine
-- installed microk8s
+- Used r620_202 server
+- setup r620_202.yaml network
+- **[setup multipass vm](setup_multipass_vm.md)**
 
 ```bash
+ssh ubuntu@10.188.50.214
 sudo snap install microk8s --classic --channel=1.32/stable
 [sudo] password for brent: 
 microk8s (1.32/stable) v1.32.2 from Canonical✓ installed
@@ -63,7 +45,7 @@ Inspecting dqlite
 cp: cannot stat '/var/snap/microk8s/7731/var/kubernetes/backend/localnode.yaml': No such file or directory
 
 Building the report tarball
-  Report tarball is at /var/snap/microk8s/7731/inspection-report-20250314_212615.tar.gz
+  Report tarball is at /var/snap/microk8s/7731/inspection-report-20250317_182852.tar.gz
 ```
 
 - check status
@@ -78,28 +60,14 @@ kube-public       Active   3m
 kube-system       Active   3m
 
 microk8s kubectl get pods -n kube-system
-NAME                                           READY   STATUS    RESTARTS   AGE
-pod/calico-kube-controllers-5947598c79-kdspq   1/1     Running   0          2m4s
-pod/calico-node-t82dn                          1/1     Running   0          2m4s
-pod/coredns-79b94494c7-twdrh                   1/1     Running   0          2m4s
+NAME                                       READY   STATUS    RESTARTS   AGE
+calico-kube-controllers-5947598c79-66kgs   1/1     Running   0          104s
+calico-node-6mspw                          1/1     Running   0          104s
+coredns-79b94494c7-827cn                   1/1     Running   0          104s
 
 microk8s kubectl get all
 NAME                 TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)   AGE
-service/kubernetes   ClusterIP   10.152.183.1   <none>        443/TCP   3m28s
-
-NAME               TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)                  AGE
-service/kube-dns   ClusterIP   10.152.183.10   <none>        53/UDP,53/TCP,9153/TCP   2m9s
-
-NAME                         DESIRED   CURRENT   READY   UP-TO-DATE   AVAILABLE   NODE SELECTOR            AGE
-daemonset.apps/calico-node   1         1         1       1            1           kubernetes.io/os=linux   2m10s
-
-NAME                                      READY   UP-TO-DATE   AVAILABLE   AGE
-deployment.apps/calico-kube-controllers   1/1     1            1           2m10s
-deployment.apps/coredns                   1/1     1            1           2m9s
-
-NAME                                                 DESIRED   CURRENT   READY   AGE
-replicaset.apps/calico-kube-controllers-5947598c79   1         1         1       2m4s
-replicaset.apps/coredns-79b94494c7                   1         1         1       2m4s
+service/kubernetes   ClusterIP   10.152.183.1   <none>        443/TCP   2m24s
 
 microk8s status
 microk8s is running
@@ -139,12 +107,12 @@ addons:
 
 ```bash
 microk8s kubectl get nodes
-NAME     STATUS   ROLES    AGE     VERSION
-k8sgw1   Ready    <none>   2d23h   v1.32.2
+NAME      STATUS   ROLES    AGE     VERSION
+k8sn211   Ready    <none>   3m46s   v1.32.2
 # …or to see the running services:
 microk8s kubectl get services
 NAME         TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)   AGE
-kubernetes   ClusterIP   10.152.183.1   <none>        443/TCP   2d23h
+kubernetes   ClusterIP   10.152.183.1   <none>        443/TCP   4m14s
 ```
 
 ## Deploy an app
@@ -201,20 +169,6 @@ addons:
     storage              # (core) Alias to hostpath-storage add-on, deprecated
 ```
 
-## Starting and Stopping MicroK8s
-
-MicroK8s will continue running until you decide to stop it. You can stop and start MicroK8s with these simple commands:
-
-```bash
-microk8s stop
-
-# … will stop MicroK8s and its services. You can start again any time by running:
-
-microk8s start
-
-# Note that if you leave MicroK8s running, it will automatically restart after a reboot. If you don’t want this to happen, simply remember to run microk8s stop before you power down.
-```
-
 ## **[create a debug pod](https://medium.com/@shambhand2020/create-the-various-debug-or-test-pod-inside-kubernetes-cluster-e4862c767b96)**
 
 ```bash
@@ -231,6 +185,93 @@ PING 10.188.50.202 (10.188.50.202): 56 data bytes
 If you don't see a command prompt, try pressing enter.
 / # exit
 pod "debug" deleted
+```
+
+## Step 5: verify the VM can access routable networks
+
+```yaml
+frt: 10.184
+mus: 10.181
+sou: 10.185
+alb1: 10.187
+avi: 10.188
+alb2: 10.189
+```
+
+```bash
+microk8s kubectl run -it --tty --rm debug --image=alpine --restart=Never -- sh
+ping 10.188.50.79
+ping 10.188.220.50
+ping 10.188.73.11
+ping 10.188.40.230
+ping 10.188.42.11 # did not work
+ping 172.20.88.64
+ping 10.185.50.11
+ping 10.181.50.15
+ping 10.187.40.15 # did not work
+# FW rules
+curl https://api.snapcraft.io
+snapcraft.io store API service - Copyright 2018-2022 Canonical.
+# Test snap
+sudo snap install hello-world
+```
+
+```bash
+# From system with access to Plex databases
+telnet test.odbc.plex.com 19995
+Trying 38.97.236.97...
+Connected to test.odbc.plex.com.
+Escape character is '^]'.
+# From Structures Avilla Kubernetes system.
+telnet test.odbc.plex.com 19995
+Trying 38.97.236.97...
+curl -vv telnet://nodejs.org:443
+curl -vv telnet://anaconda:443
+curl -vv telnet://go.dev:443
+curl -vv telnet://golang:443
+# OCI container registries
+curl -vv telnet://docker.io:443
+curl -vv telnet://k8s.io:443
+curl -vv telnet://registry.k8s.io:443
+curl -vv telnet://test.odbc.plex.com:19995
+curl -vv telnet://quay.io:443
+curl -vv telnet://gcr.io:443
+curl -vv telnet://mcr.microsoft.com:443
+curl -vv telnet://ghcr.io:443
+
+```
+
+## Step 5: Verify access from routable networks to the each host IP
+
+```yaml
+frt: 10.184
+mus: 10.181
+sou: 10.185
+alb1: 10.187
+avi: 10.188
+alb2: 10.189
+```
+
+### Step 5: Repeat for every network that has access to the VM
+
+```bash
+ssh brent@10.188.40.230
+ping 10.188.50.214
+ping 10.188.220.214
+```
+
+## Starting and Stopping MicroK8s
+
+MicroK8s will continue running until you decide to stop it. You can stop and start MicroK8s with these simple commands:
+
+```bash
+microk8s stop
+
+# … will stop MicroK8s and its services. You can start again any time by running:
+
+microk8s start
+
+# Note that if you leave MicroK8s running, it will automatically restart after a reboot. If you don’t want this to happen, simply remember to run microk8s stop before you power down.
 ```
 
 ## Network tests
