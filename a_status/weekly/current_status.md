@@ -14,7 +14,23 @@ The following is in markdown format. You can view it better at <https://markdown
 
 ## IS Support
 
-### K8s Support
+### Kubernetes, or K8s, Platform Services Support
+
+Manage th Platform Services common to all Microservices.
+
+- **[Authentication and Authorization](https://auth0.com/blog/why-auth0-by-okta/)**
+- **[Zero-Trust Service Mesh Gateway](https://istio.io/latest/about/service-mesh/)**
+- **[Job Queue](https://www.ibm.com/think/topics/redis#:~:text=Redis%20(REmote%20DIctionary%20Server)%20is,speed%2C%20reliability%2C%20and%20performance.)**
+- **[Email service](https://mailtrap.io/email-sending/)**
+- **[SMS Notification Service](https://novu.co/)**
+
+### K8s Platform Observability
+
+Learn everything we can so that we can identify and resolve issues quickly.
+
+Kubernetes is a great place to run software securely.  On the downside, it is also a complex system, so it is good to understand how it works to fix issues as best we can.
+
+### K8s Network config request
 
 Request: Please update all 3 PowerEdge R620s at our Avilla location with a **[DELL Mt09V Broadcom 57800S Quadport Sfp+ Rack Converged Network Daughter Card](https://www.ebay.com/itm/DELL-Mt09V-Broadcom-57800S-Quadport-Sfp-Rack-Converged-Network-Daughter-Card/303465861553?epid=1622568435&hash=item46a7f991b1:g:wlEAAOSw5eNeMc9-)** to support two 10GB SPF+ modules.  Then connect to the extreme core switches in a bond configuration to the Fortigate Firewall pair.  Then configure the bonded pair in trunk mode on VLANs 50 and 220.
 
@@ -73,6 +89,7 @@ recurrence: yearly
   Move from managing CNC tooling in Excel and the Busche Tool List to a more robust and easy-to-use system.
 
   Users: Albion MRP and Engineering
+  Hayley and someone else has an existing system.
 
   time: 6 months
   due date: Jun 2026

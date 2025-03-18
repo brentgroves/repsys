@@ -1,8 +1,16 @@
-# Kubernetes, or K8s, Support Team
+# Kubernetes, or K8s, Platform Services Support Team
 
 The following is in markdown format. You can view it better at <https://markdownlivepreview.com/>> by copying and pasting the contents below.
 
 ## Purpose of Team
+
+Manage th Platform Services common to all Microservices.
+
+- **[Authentication and Authorization](https://auth0.com/blog/why-auth0-by-okta/)**
+- **[Zero-Trust Service Mesh Gateway](https://istio.io/latest/about/service-mesh/)**
+- **[Job Queue](https://www.ibm.com/think/topics/redis#:~:text=Redis%20(REmote%20DIctionary%20Server)%20is,speed%2C%20reliability%2C%20and%20performance.)**
+- **[Email service](https://mailtrap.io/email-sending/)**
+- **[SMS Notification Service](https://novu.co/)**
 
 Learn everything we can to be ready when something goes wrong.
 
