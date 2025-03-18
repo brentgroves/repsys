@@ -10,8 +10,6 @@ Kubernetes is a great place to run software securely.  On the downside, it is al
 
 ## Players
 
-John Biel: Manager, Network
-Kiran Ambati: Network Architect
 Christian Smith: Global Directory IT
 Adrian Wise: System Admin, Technical Services Manager.
 Aamir Ghaffar: IT Systems Architect
