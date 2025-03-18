@@ -47,6 +47,11 @@ due date: June 2025
 3. verify jboss is serving certificate chain
 4. Give intermediate and root CA certificate to Matt Irey and David Maitner.
 5. update thin clients one by one.
+6. create server and client certificates for Structure Avilla Kubernetes Cluster.
+
+time: 1 month, initial setup
+due date: June 2025
+recurrence: yearly
 
 ## IS Projects
 
