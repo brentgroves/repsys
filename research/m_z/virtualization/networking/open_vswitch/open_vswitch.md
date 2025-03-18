@@ -1,7 +1,7 @@
 # **[Understanding Open vSwitch: Part 1](https://medium.com/@ozcankasal/understanding-open-vswitch-part-1-fd75e32794e4)**
 
 **[Back to Research List](../../../../research_list.md)**\
-**[Back to Current Status](../../../../../development/status/weekly/current_status.md)**\
+**[Back to Current Status](../../../../../a_status/weekly/current_status.md)**\
 **[Back to Main](../../../../../README.md)**
 
 ## referenences
@@ -14,13 +14,8 @@
 
 ## Open vSwitch
 
-Open vSwitch is a production quality, multilayer, software-based,
-Ethernet virtual switch. It is designed to enable massive network
-automation through programmatic extension, while still supporting
-standard management interfaces and protocols (e.g. NetFlow, IPFIX,
-sFlow, SPAN, RSPAN, CLI, LACP, 802.1ag). In addition, it is designed
-to support distribution across multiple physical servers similar to
-VMware's vNetwork distributed vswitch or Cisco's Nexus 1000V.
+Open vSwitch is a production quality, multilayer, software-based, Ethernet virtual switch. It is designed to enable massive network automation through programmatic extension, while still supporting standard management interfaces and protocols (e.g. NetFlow, IPFIX, sFlow, SPAN, RSPAN, CLI, LACP, 802.1ag). In addition, it is designed
+to support distribution across multiple physical servers similar to VMware's vNetwork distributed vswitch or Cisco's Nexus 1000V.
 
 Welcome to the first phase of our Open vSwitch (OVS) journey! This post takes a closer look at a single bridge handling two VLANs, both with a common VLAN tag.
 
@@ -50,10 +45,11 @@ The MAC address table is where the switch stores information about the other Eth
 
 OVS handles broadcast and multicast frames, ensuring they are forwarded only to the relevant ports, minimizing unnecessary network traffic.
 
+In networking, broadcast sends data to all devices on a network, while multicast sends data to specific groups of devices, offering a more efficient way to distribute information.
+
 ## Bridging and Bridging Domains
 
-OVS creates bridges that act as virtual switches connecting multiple ports.
-Each bridge represents a bridging domain, allowing devices connected to different ports to be part of the same logical network.
+OVS creates bridges that act as virtual switches connecting multiple ports. Each bridge represents a bridging domain, allowing devices connected to different ports to be part of the same logical network.
 
 ## VLAN Tagging
 
