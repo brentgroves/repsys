@@ -14,6 +14,12 @@ The following is in markdown format. You can view it better at <https://markdown
 
 ## IS Support
 
+### Dell PowerEdge Servers
+
+- Ubuntu 24.04 Server
+- **[Ubuntu MicroCloud](https://canonical.com/microcloud)**
+The whitepaper defines MicroClouds, a new class of infrastructure, as a composable and flexible solution to future-proof any edge computing deployment. It uses LXD, Ceph, and OVN to manage your bare metal server.
+
 ### Kubernetes, or K8s, Platform Services Support
 
 Manage th Platform Services common to all Microservices.
