@@ -178,16 +178,18 @@ It will exec into the pod with ssh. Next install curl with apk add curl and we a
 kubectl run -it --tty --rm debug --image=alpine --restart=Never -- sh
 microk8s kubectl run -it --tty --rm debug --image=alpine --restart=Never -- sh
 # If you don't see a command prompt, try pressing enter.
+```
 
-# ping 10.188.50.202
-PING 10.188.50.202 (10.188.50.202): 56 data bytes
-64 bytes from 10.188.50.202: seq=0 ttl=63 time=0.750 ms
-64 bytes from 10.188.50.202: seq=1 ttl=63 time=0.387 ms
-64 bytes from 10.188.50.202: seq=2 ttl=63 time=0.472 ms
-^C
-If you don't see a command prompt, try pressing enter.
-/ # exit
-pod "debug" deleted
+Next install curl with apk add curl and we are good to go. Similarly you can install the telnet with apk update && apk add busybox-extras, nslookup and dig with apk update && apk add bind-tools
+
+```bash
+apk add curl
+apk update && apk add busybox-extras
+apk update && apk add bind-tools
+```
+
+It will create a ephemeral pod, as soon as you are done with your debug or test pressing control + D will pods "debug" deleted
+
 ```
 
 ## Step 5: verify the VM can access routable networks
@@ -215,12 +217,9 @@ ping 10.187.40.15 # did not work
 # FW rules
 curl https://api.snapcraft.io
 snapcraft.io store API service - Copyright 2018-2022 Canonical.
-# Test snap
-sudo snap install hello-world
 ```
 
 ```bash
-apk add curl
 # From system with access to Plex databases
 telnet test.odbc.plex.com 19995
 Trying 38.97.236.97...

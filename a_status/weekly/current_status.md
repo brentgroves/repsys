@@ -7,6 +7,10 @@ The following is in markdown format. You can view it better at <https://markdown
 
 ![np](https://cdn.prod.website-files.com/65a5be30bf4809bb3a2e8aff/65de6a24f3bc7cfdb5711e46_ethernet2.jpeg)
 
+## Next
+
+- Ask Jared to review Dell PowerEdge Network Config request.
+
 ## Informational
 
 - MRP is transitioning from MSC vending machines and are anxious about the tool management system.

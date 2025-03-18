@@ -6,7 +6,7 @@ The following is in markdown format. You can view it better at <https://markdown
 
 Good Morning, Team,
 
-This is a revised project summary and timeline for the Automated Report System, Tool Management System, and Tool Tracker Focused **[Manufacturing Execution System](https://www.ibm.com/think/topics/mes-system)** that the Structures Information System team is working on. These projects are for Linamar Structures but are currently directed toward Southfield, Albion, Avilla, and possibly Mills River. If it meets the approval of Kevin Young and other team members, I would like to add this timetable and summary, or a curtailed version, to the Structures IT Team Meetings and the Albion/Avilla project status tracking systems. Thank you.
+This is a revised project summary and timeline for the Automated **[ETL](https://www.getdbt.com/blog/extract-transform-load)** Reporting System, Tool Management System, and Tool Tracker Focused **[Manufacturing Execution System](https://www.ibm.com/think/topics/mes-system)** that the Structures Information System team is working on. These projects are for Linamar Structures but are currently directed toward Southfield, Albion, Avilla, and possibly Mills River. If it meets the approval of Kevin Young and other team members, I would like to add this timetable and summary, or a curtailed version, to the Structures IT Team Meetings and the Albion/Avilla project status tracking systems. Thank you.
 
 Players:
 
