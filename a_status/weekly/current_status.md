@@ -10,10 +10,13 @@ The following is in markdown format. You can view it better at <https://markdown
 ## Informational
 
 - MRP is transitioning from MSC vending machines and are anxious about the tool management system.
+- We manually run scripts to update the data warehouse that Power BI reports use as its data source.  The automated report system could be used to to run the scripts automatically.
 
 ## IS Support
 
 ### K8s Support
+
+Request: Please update all 3 PowerEdge R620s at our Avilla location with a **[DELL Mt09V Broadcom 57800S Quadport Sfp+ Rack Converged Network Daughter Card](https://www.ebay.com/itm/DELL-Mt09V-Broadcom-57800S-Quadport-Sfp-Rack-Converged-Network-Daughter-Card/303465861553?epid=1622568435&hash=item46a7f991b1:g:wlEAAOSw5eNeMc9-)** to support two 10GB SPF+ modules.  Then connect to the extreme core switches in a bond configuration to the Fortigate Firewall pair.  Then configure the bonded pair in trunk mode on VLANs 50 and 220.
 
 - MicroK8s install internet access testing on r620_202.
 - MicroCloud install on r620_201,r620_203.

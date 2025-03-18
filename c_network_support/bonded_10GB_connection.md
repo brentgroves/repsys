@@ -15,6 +15,7 @@ Team:
 - John Biel: Manager, Network
 - Christian. Trujillo, IT Structures Manager
 - Kiran Ambati: Network Architect
+- Aamir Ghaffar: IT Systems Architect
 - Justin Langille, Network Technician
 - Jared Davis, IT Manager
 - Kevin Young, Information Systems Manager
