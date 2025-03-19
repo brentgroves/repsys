@@ -1,6 +1,6 @@
 # Tool Management System Team
 
-Hayley, please tell us about the tool management software your team has developed. Albion is transitioning to a new vending machine and currently has older tool lists in a legacy database and newer tool lists in Excel. The Structures Information Systems team has scheduled to update a legacy tool system but this will not be completed for some time. So we are looking for something in the meantime to help with the vending machine transition.
+Hayley, please tell us about the tool management software your team has developed. Albion is transitioning to a new vending machine and currently has older tool lists in a legacy database and newer tool lists in Excel. The Structures Information Systems team has scheduled to update a legacy tool system but this will not be completed for some time. So we are looking for existing software to help with the vending machine transition.
 
 Players:
 
@@ -14,7 +14,7 @@ Players:
 - Nancy Swank, Material Planner
 - Hayley Rymer, IT Supervisor
 
-## Legacy Tool Management System Scope
+## Tool Management System Scope
 
 - CNC engineers use it to manage job tooling.
 - Engineering managers use it to approve job tooling.

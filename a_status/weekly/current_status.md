@@ -12,6 +12,10 @@ Linux namespaces were created to provide process isolation by allowing processes
 
 Kubernetes was created to address the challenges of managing and orchestrating containerized applications, especially in large-scale, distributed environments, by automating deployment, scaling, and management, building upon Google's internal system Borg.
 
+## Next
+
+- Ask Jared to review Dell PowerEdge Network Config request.
+
 ## Informational
 
 - MRP is transitioning from MSC vending machines and are anxious about the tool management system.
