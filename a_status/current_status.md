@@ -69,6 +69,18 @@ Kubernetes observability is the process of gaining insight into the behavior and
 
 ### Research
 
+- **[LXD]()**
+- **[Ceph Storage]()**
+
+Ceph has become a de facto standard for open-source storage solutions. It provides interfaces for several storage types (block, file and object) within a single cluster, eliminating the need for multiple storage solutions. It is scalable and reliable, making it the perfect solution for any cloud.
+
+- **[OVN]()**
+
+OVN is a trusted open source software-defined networking solution. It provides virtual network abstractions, such as virtual L2 and L3 overlays, security groups, DHCP and other networking services. It was designed to support highly scalable and production-grade implementations.
+
+Open Virtual Network (OVN) builds upon Open vSwitch (OVS) to provide a higher-level abstraction for virtual networks, offering features like virtual L2 and L3 overlays and security groups, while OVS handles the underlying packet forwarding.
+
+- **[0pen vswitch]()**
 - **[K3s code](https://github.com/k3s-io/k3s)**
 - **[Visual Studio Code extion for k8s](https://marketplace.visualstudio.com/items?itemName=ms-kubernetes-tools.vscode-kubernetes-tools)**
 - **[Azure Kubernetes](https://learn.microsoft.com/en-us/azure/aks/)**
