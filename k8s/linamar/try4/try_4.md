@@ -190,8 +190,6 @@ apk update && apk add bind-tools
 
 It will create a ephemeral pod, as soon as you are done with your debug or test pressing control + D will pods "debug" deleted
 
-```
-
 ## Step 5: verify the VM can access routable networks
 
 ```yaml

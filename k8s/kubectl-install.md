@@ -1,10 +1,7 @@
 # **[Install kubectl](https://microk8s.io/docs/working-with-kubectl)**
 
-**[Report System Install](./report-system-install.md)**\
-**[Ubuntu 22.04 Desktop](../linux/ubuntu22-04/desktop-install.md)**\
-**[Ubuntu 22.04 Server](../linux/ubuntu22-04/server-install.md)**\
-**[Current Status](../development/status/weekly/current_status.md)**\
-**[Back to Main](../README.md)**
+**[Current Status](../a_status/current_status.md)**\
+**[Back to Menu](./menu.md)**
 
 Note: our dotfiles has an alias to microk8s kubectl set to kc so you can use this locallly.
 

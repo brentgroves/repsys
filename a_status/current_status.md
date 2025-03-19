@@ -4,6 +4,8 @@ The following is in markdown format. You can view it better at <https://markdown
 
 ![cp](https://res.cloudinary.com/canonical/image/fetch/f_auto,q_auto,fl_sanitize,w_4096,h_1377/https://assets.ubuntu.com/v1/e55cc8c0-wide-server.png)
 
+## **[Start Here](../k8s/menu.md)**
+
 ## AI Overview: **[Linux Namespaces](https://linux-blog.anracom.com/2017/10/30/fun-with-veth-devices-linux-bridges-and-vlans-in-unnamed-linux-network-namespaces-i/)**
 
 Linux namespaces were created to provide process isolation by allowing processes to have their own, separate view of system resources, enabling the creation of lightweight, self-contained environments, which forms the basis of containerization technologies like Docker.
@@ -11,8 +13,6 @@ Linux namespaces were created to provide process isolation by allowing processes
 ## AI Overview: **[Kubernetes](https://www.ibm.com/think/topics/kubernetes-history)**
 
 Kubernetes was created to address the challenges of managing and orchestrating containerized applications, especially in large-scale, distributed environments, by automating deployment, scaling, and management, building upon Google's internal system Borg.
-
-## Next
 
 ## Informational
 
@@ -69,6 +69,7 @@ Kubernetes observability is the process of gaining insight into the behavior and
 
 ### Research
 
+- **[Micro-Cloud](https://canonical.com/microcloud)**
 - **[LXD]()**
 - **[Ceph Storage]()**
 
@@ -80,7 +81,7 @@ OVN is a trusted open source software-defined networking solution. It provides v
 
 Open Virtual Network (OVN) builds upon Open vSwitch (OVS) to provide a higher-level abstraction for virtual networks, offering features like virtual L2 and L3 overlays and security groups, while OVS handles the underlying packet forwarding.
 
-- **[0pen vswitch]()**
+- **[0pen vswitch](https://medium.com/@ozcankasal/understanding-open-vswitch-part-1-fd75e32794e4)**
 - **[K3s code](https://github.com/k3s-io/k3s)**
 - **[Visual Studio Code extion for k8s](https://marketplace.visualstudio.com/items?itemName=ms-kubernetes-tools.vscode-kubernetes-tools)**
 - **[Azure Kubernetes](https://learn.microsoft.com/en-us/azure/aks/)**
