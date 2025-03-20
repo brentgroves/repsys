@@ -27,17 +27,34 @@ Purpose: Provide and Support Platform Services common to all K8s Microservices.
 
 A platform engineer designs, builds, and maintains the internal developer platform (IDP) that enables software engineering teams to have self-service capabilities, streamlining development processes and improving developer experience.
 
-### **[Certificate Management](./b_platform_engineering/certificate_management/cert_management_support.md)**
+### Structures Information System Certificate Management Support
 
-- Research the Fortigate Proxy and certificates with Justin Langille.
-- Discuss Mach2 user computer trust-store updates with Fruitport DST, Matt Irey, and David Maitner.
-- Create Network config request to temporarily allow my laptop to access Fruitport's OT network for certificate testing.
+#### For all sites Mach2 Server
 
-### Avilla Structures On-Prem **[Kubernetes](https://www.turing.com/blog/importance-of-kubernetes-for-devops)**, MicroK8s Cluster
+- create server certificate for each mach2 server
+- install certificate chain on jboss server
+- create Network config request to temporarily allow platform engineer access to Fruitport's OT network for certificate testing.
+- verify jboss is serving structures certificate chain
+- give intermediate and root CA certificate to DST to create a new image to deploy to each Wise thin client
+
+#### For Structures Avilla On-Prem Kubernetes Cluster
+
+- create server and client certificates using Structure's **[PKI](https://www.digicert.com/faq/trust-and-pki/why-is-pki-important-and-how-does-it-increase-trust#:~:text=Public%20Key%20Infrastructure%20(PKI)%20is,authentication%2C%20and%20data%20access%20control.)**.
+- configure Istio Gateway for **[mTLS](https://www.f5.com/labs/learning-center/what-is-mtls#:~:text=Mutual%20Transport%20Layer%20Security%20(mTLS)%20is%20a%20process%20that%20establishes,parties%20from%20imitating%20genuine%20apps.)** using server and client certificates.
+- create GPO to deploy structures certificate chain and client certificate to endusers laptops.
+
+### Azure Managed **[Kubernetes](https://www.turing.com/blog/importance-of-kubernetes-for-devops)**, AKS, Cluster
+
+- Automate Structures public kubernetes cluster certificate management process with the **[Automated Certificate Management Environment (ACME) protocol](https://www.keyfactor.com/blog/what-is-acme-protocol-and-how-does-it-work/)** and the **[Let's Encrypt](https://letsencrypt.org/#:~:text=Let's%20Encrypt%20is%20a%20Certificate,demonstrate%20control%20over%20the%20domain.)** certificate authority.
+
+- request public key to allow TXT records to be programatically inserted into Linamar mail server.
+- configure istio gateway for TLS termination using the Let's Encrypt and the ACME protocol.
+
+### Avilla Structures On-Prem **[Kubernetes](https://www.turing.com/blog/importance-of-kubernetes-for-devops)**, MicroK8s Cluster Configuration
 
 - **[Connect Dell PowerEdge servers](./b_platform_engineering/c_network_support/bonded_10GB_connection.md)** to extreme core switches with 10GB SPF+ modules in truck mode to VLANs 50 and 220.
 
-### Azure Managed **[Kubernetes](https://www.turing.com/blog/importance-of-kubernetes-for-devops)**, AKS, Cluster
+### Azure Managed **[Kubernetes](https://www.turing.com/blog/importance-of-kubernetes-for-devops)**, AKS, Cluster Configuration
 
 - create EntraId group
 
