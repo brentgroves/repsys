@@ -6,11 +6,6 @@ The following is in markdown format. You can view it better at <https://markdown
 
 ## **[Start Here](../k8s/menu.md)**
 
-## Informational
-
-- MRP is transitioning from MSC vending machines and are anxious about the tool management system.
-- We manually run scripts to update the data warehouse that Power BI reports use as its data source.  The automated report system could be used to to run the scripts automatically.
-
 ## AI Overview: **[Linux Namespaces](https://linux-blog.anracom.com/2017/10/30/fun-with-veth-devices-linux-bridges-and-vlans-in-unnamed-linux-network-namespaces-i/)**
 
 Linux namespaces were created to provide process isolation by allowing processes to have their own, separate view of system resources, enabling the creation of lightweight, self-contained environments, which forms the basis of containerization technologies like Docker.
@@ -19,29 +14,18 @@ Linux namespaces were created to provide process isolation by allowing processes
 
 Kubernetes was created to address the challenges of managing and orchestrating containerized applications, especially in large-scale, distributed environments, by automating deployment, scaling, and management, building upon Google's internal system Borg.
 
+## Informational
+
+- MRP is transitioning from MSC vending machines and are anxious about the tool management system.
+- We manually run scripts to update the data warehouse that Power BI reports use as its data source.  The automated report system could be used to to run the scripts automatically.
+
 ## Structures Information Systems, Kubernetes, or K8s, Platform Engineering Support
 
-Purpose: Provide and Support Platform Services common to all K8s Microservices.
+Purpose: Provide and Support Platform Services common to all Microservices.
 
 ### AI Overview: Platform Engineering
 
 A platform engineer designs, builds, and maintains the internal developer platform (IDP) that enables software engineering teams to have self-service capabilities, streamlining development processes and improving developer experience.
-
-### **[Certificate Management](./b_platform_engineering/certificate_management/cert_management_support.md)**
-
-- Research the Fortigate Proxy and certificates with Justin Langille.
-- Discuss Mach2 user computer trust-store updates with Fruitport DST, Matt Irey, and David Maitner.
-- Create Network config request to temporarily allow my laptop to access Fruitport's OT network for certificate testing.
-
-### Avilla Structures On-Prem **[Kubernetes](https://www.turing.com/blog/importance-of-kubernetes-for-devops)**, MicroK8s Cluster
-
-- **[Connect Dell PowerEdge servers](./b_platform_engineering/c_network_support/bonded_10GB_connection.md)** to extreme core switches with 10GB SPF+ modules in truck mode to VLANs 50 and 220.
-
-### Azure Managed **[Kubernetes](https://www.turing.com/blog/importance-of-kubernetes-for-devops)**, AKS, Cluster
-
-- create EntraId group
-
-### Setup Kubernetes Platform Services
 
 - **[Authentication and Authorization](https://auth0.com/blog/why-auth0-by-okta/)**
 - **[Zero-Trust Service Mesh Gateway](https://istio.io/latest/about/service-mesh/)**
@@ -49,37 +33,41 @@ A platform engineer designs, builds, and maintains the internal developer platfo
 - **[Email service](https://mailtrap.io/email-sending/)**
 - **[SMS Notification Service](https://novu.co/)**
 
+- Time: 3 months
+- Due date: July 2025
+
+### K8s Network configuration Tasks
+
+Purpose: Make K8s accessible and fast.
+Request: Please update all 3 PowerEdge R620s at our Avilla location with a **[DELL Mt09V Broadcom 57800S Quadport Sfp+ Rack Converged Network Daughter Card](https://www.ebay.com/itm/DELL-Mt09V-Broadcom-57800S-Quadport-Sfp-Rack-Converged-Network-Daughter-Card/303465861553?epid=1622568435&hash=item46a7f991b1:g:wlEAAOSw5eNeMc9-)** to support two 10GB SPF+ modules.  Then connect to the extreme core switches in a bond configuration to the Fortigate Firewall pair.  Then configure the bonded pair in trunk mode on VLANs 50 and 220.
+
+- MicroK8s install internet access testing on r620_202.
+- MicroCloud install on r620_201,r620_203.
+- Working with Justin L. to get needed internet access.
+- Created MicroK8s VLAN github bug report.
+Compiled a resource list to help us troubleshoot Kubernetes issues.
+
+- Time: Ongoing
+- Due date: NA
+
 ### Azure SQL database
 
 - Modify TB scripts to work on the Azure SQL db running on Linamar's tenant.
 - transfer report system schema from Mobex tenant
 - test scripts on Linamar Azure tenant SQL database
 
-### Kubernetes Trouble-Shooting
+time: 1 month
+due date: June 2025
+
+## Structures Information Systems, Kubernetes, or K8s, Platform Trouble-Shooting and Observability
 
 Purpose: Kubernetes is a great place to run software securely.  On the downside, it is also a complex system, so it is good to understand how it works to fix issues as best we can.
-
-- **[0pen vswitch](https://medium.com/@ozcankasal/understanding-open-vswitch-part-1-fd75e32794e4)**
-- **[K3s code](https://github.com/k3s-io/k3s)**
-- **[Visual Studio Code extion for k8s](https://marketplace.visualstudio.com/items?itemName=ms-kubernetes-tools.vscode-kubernetes-tools)**
-- **[Azure Kubernetes](https://learn.microsoft.com/en-us/azure/aks/)**
-- **[Build MicroK8s](https://github.com/canonical/microk8s/blob/master/docs/build.md)**
-- **[Configure Services](https://microk8s.io/docs/configuring-services)**
-- **[Configuring CNI](https://microk8s.io/docs/change-cidr)**
-Given our complex network, start learning this networking part of K8s.
-- **[Configuring Host Interfaces](https://microk8s.io/docs/configure-host-interfaces)**
-
-### Kubernetes Observability
 
 ## AI Overview: What Is Kubernetes Observability?
 
 Kubernetes observability is the process of gaining insight into the behavior and performance of applications running on Kubernetes, as well as the underlying infrastructure and components, in order to identify and resolve issues more effectively. It can help ensure the stability and performance of Kubernetes workloads, reduce downtime and outages, and improve efficiency.
 
-- Setup basic logging
-- Setup **[Prometheus system monitoring and alerting](https://prometheus.io/docs/introduction/overview/)**
-- Setup **[Grafana data visualization and monitoring platform](https://grafana.com/)**
-
-### Transition from Multipass to MicroCloud
+### Research
 
 - **[Micro-Cloud](https://canonical.com/microcloud)**
 - **[LXD]()**

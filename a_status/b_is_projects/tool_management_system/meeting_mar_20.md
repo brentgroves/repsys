@@ -10,11 +10,11 @@ The following is in markdown format. You can view it better at <https://markdown
 
 ## Agenda
 
-- Background: Brent Groves
+- Why update our tool management system: Brent Groves
 - Features in existing Tool Management System: Hayley, Rymer
 - Questions
 
-Players:
+## Team
 
 - Hayley Rymer, IT Supervisor
 - Pat Baxter, General Manager
@@ -24,6 +24,23 @@ Players:
 - Christian. Trujillo, IT Structures Manager
 - Kevin Young, Information Systems Manager
 - Jared Davis, IT Manager
+
+## Why update our Tool Management System
+
+- The Structures Tool Management System is tailored to our business.
+- It is easy to use and even after it was dropped several years ago we still need it.
+- It combines the data collected in ERP, Vending Machines, and Tool Lists for easy reporting.
+- It provides a way to communicate tooling requirements to each other.
+
+## Tool Management System Feature List
+
+- CNC engineers use it to manage job tooling.
+- Engineering managers use it to approve job tooling.
+- MRO personnel are notified by it of new tooling to stock.
+- ERP and Vending Machines integration with our automated **[ETL](https://www.getdbt.com/blog/extract-transform-load)** reporting system.
+- Since it is integrated with our vending machines and **[Plex ERP system](https://www.plex.com/products/enterprise-resource-planning)** we can report which tooling is needed to fulfill job orders.
+- Since it stores all data in a centralized data warehouse we can link it with data collected by our tool-focused **[MES](http://ibm.com/think/topics/mes-system#:~:text=The%20primary%20purpose%20of%20an,the%20status%20of%20production%20activities.)** system to track tooling issues in real-time.
+- It leverages platform services provided by the Structures Avilla Kubernetes Cluster such as **[Authentication and Authorization](https://auth0.com/blog/why-auth0-by-okta/)** and **[Email service](https://mailtrap.io/email-sending/)**.
 
 ## Background
 
@@ -39,13 +56,3 @@ Players:
 - **[Email service](https://mailtrap.io/email-sending/)**
 - **[SMS Notification Service](https://novu.co/)**
 - **Structures Report Automation System**
-
-## Tool Management System Feature List
-
-- CNC engineers use it to manage job tooling.
-- Engineering managers use it to approve job tooling.
-- MRO personnel are notified by it of new tooling to stock.
-- ERP and Vending Machines integration with our automated **[ETL](https://www.getdbt.com/blog/extract-transform-load)** reporting system.
-- Since it is integrated with our vending machines and **[Plex ERP system](https://www.plex.com/products/enterprise-resource-planning)** we can report which tooling is needed to fulfill job orders.
-- Since it stores all data in a centralized data warehouse we can link it with data collected by our tool-focused **[MES](http://ibm.com/think/topics/mes-system#:~:text=The%20primary%20purpose%20of%20an,the%20status%20of%20production%20activities.)** system to track tooling issues in real-time.
-- It leverages platform services provided by the Structures Avilla Kubernetes Cluster such as **[Authentication and Authorization](https://auth0.com/blog/why-auth0-by-okta/)** and **[Email service](https://mailtrap.io/email-sending/)**.
