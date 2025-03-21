@@ -6,8 +6,8 @@
 - **[Azure Setup (Ask for Access)](../../azure/mobexglobal.com/azure_setup.md)**
 - **[Install MicroK8s on multipass VM](./microk8s_on_multipass_vm_install.md)**
 - **[create a debug pod](./create_debug_pod.md)**
-START HERE
 - **[Kubectl](./kubectl-install.md)**
+START HERE
 - **[Helm](./helm-install.md)**
 - **[Host Path Storage](./host_path_storage/host_path_storage.md)**
 - **[K8s Credentials Secret](./credentials/credentials.md)**
