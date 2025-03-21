@@ -11,7 +11,7 @@ The following is in markdown format. You can view it better at <https://markdown
 
 Project: Avilla Structures Kubernetes Cluster
 
-Request: Please allow inbound access to ports 6443 and 16443 from 10.188.40.230 and 10.188.50.200-212.
+Request: Please allow inbound access to ports 6443 and 16443 from 10.188.40.230 and 10.188.50.200-230.
 
 Reason: For kubectl to function correctly, firewall access needs to be open for TCP traffic on ports 6443 and 16443 (Kubernetes API server) and potentially other ports depending on your cluster configuration.
 
@@ -36,7 +36,7 @@ Request: For kubectl to function correctly, firewall access needs to be open for
 - Action: Allow
 - source:
   - 10.188.40.230
-  - 10.188.50.200-212
+  - 10.188.50.200-230
 
 ## Details
 
