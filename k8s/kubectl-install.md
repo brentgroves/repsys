@@ -16,44 +16,17 @@ ssh brent@repsys11
 cd ~
 mkdir .kube
 cd .kube
-microk8s config > repsys11_home.yaml
-nvim rephub1.yaml
-```
+microk8s config > k8sn211.yaml
+nvim k8sn211.yaml
 
-## add contexts to reports3.yaml
-
-```yaml
-- context:
-    cluster: microk8s-cluster
-    namespace: mayastor
-    user: admin
-  name: mayastor
-- context:
-    cluster: microk8s-cluster
-    namespace: mysql
-    user: admin
-  name: mysql
-- context:
-    cluster: microk8s-cluster
-    namespace: mongo
-    user: admin
-  name: mongo
-- context:
-    cluster: microk8s-cluster
-    namespace: mosquitto
-    user: admin
-  name: mosquitto
-- context:
-    cluster: microk8s-cluster
-    namespace: test
-    user: admin
-  name: test
 ```
 
 ## test with scc
 
-scc.sh rephub1_home.yaml microk8s
+```bash
+scc.sh k8sn211.yaml microk8s
 kubectl get all
+```
 
 ## add to source control
 

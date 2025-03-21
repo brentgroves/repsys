@@ -1,5 +1,15 @@
 # Tool Management System Team
 
+## Notes
+
+- Nancy filling out a job sheet making sure to add the Plex supply item number into the database.
+- tool changes were entered into database
+- great UI
+- Mills River Tool Management: react.js/.net/sql
+- Rianto Koisaba, Mills River Controls Engineer - Backend .net/sql developer
+- Willie Brown, Mills River Engineering Supervisor - Worked with Hayley to make system.
+- Stephen Strzalkowski, Tooling Engineer Supervisor, Ben's counter-part wants to be included going forward.
+
 Hi Team,
 
 Hayley Rymer suggested having a meeting to tell us about the tool management software her team has developed.
@@ -24,6 +34,9 @@ The following is in markdown format. You can view it better at <https://markdown
 - Christian. Trujillo, IT Structures Manager
 - Kevin Young, Information Systems Manager
 - Jared Davis, IT Manager
+- Rianto Koisaba, Mills River Controls Engineer
+- Willie Brown, Mills River Engineering Supervisor
+- Stephen Strzalkowski, Tooling Engineer Supervisor
 
 ## Why update our Tool Management System
 
