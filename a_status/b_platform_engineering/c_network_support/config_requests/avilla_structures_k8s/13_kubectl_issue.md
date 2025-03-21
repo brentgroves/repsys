@@ -3,6 +3,10 @@
 Submitted : 2025-03-20 19:02:37
 Request Number : REQ0194961
 
+## Fix
+
+Anything from vlan 40 to 50 doesn’t go through the firewall at all it just gets routed directly. turn off the 220 address because if this is the source address the frame will go through the firewall.
+
 Hi Justin,
 
 Is inbound access to ports 6443 and 16443 blocked by the Fortigate Firewall? We use a program called kubectl to access the Kubernetes API from remote computers.  Kubectl passes a client key and certificate for authentication that the Firewall might also not like. Could you please help me?
