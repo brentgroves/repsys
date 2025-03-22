@@ -1,8 +1,8 @@
 # **[Glossary](https://docs.ceph.com/en/reef/glossary/#term-Ceph)**
 
-**[Back to Research List](../../../research_list.md)**\
-**[Back to Current Status](../../../../a_status/detailed_status.md)**\
-**[Back to Main](../../../../README.md)**
+**[Back to Research List](../../../../research_list.md)**\
+**[Back to Current Status](../../../../../a_status/detailed_status.md)**\
+**[Back to Main](../../../../../README.md)**
 
 ## Ceph
 

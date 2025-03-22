@@ -14,6 +14,7 @@ Noticed that only 2 of the 3 nodes has the "/var/snap/microk8s/common/default-st
 
 ```bash
 # is it already installed?
+microk8s status
 microk8s is running
 high-availability: no
   datastore master nodes: 127.0.0.1:19001

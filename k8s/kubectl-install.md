@@ -5,11 +5,11 @@
 
 Issue: Access to port 16443 is blocked if you go through the Fortigate proxy. Must generate a config request for remote computers needing access.
 
-Fix: Anything from vlan 40 to 50 doesn’t go through the firewall at all it just gets routed directly. turn off the 220 address because if this is the source address the frame will go through the firewall.
+Fix: Anything from vlan 40 to 50 doesn’t go through the firewall at all it just gets routed directly. If your on a system that has both a 50 and 220 VLAN address then turn off the 220 address because if this is the source address the frame will go through the firewall and be blocked.
 
 - microk8s on multipass vm generates a config file with a local network ip such as: <https://10.97.219.76:16443>.
 - this address is reachable from k8sgw2 which is the host running the VM.
-- but if you change the ip to <https://10.188.50.214:16443> you get an error and the vm is suspended.
+- if you change the ip to <https://10.188.50.214:16443> you may get an error if the request goes through the fortigate proxy which blocks such requests by default.
 
 ```bash
 kubectl get all 

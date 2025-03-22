@@ -7,10 +7,21 @@
 - **[Install MicroK8s on multipass VM](./microk8s_on_multipass_vm_install.md)**
 - **[create a debug pod](./create_debug_pod.md)**
 - **[Kubectl](./kubectl-install.md)**
-START HERE
 - **[Helm](./helm-install.md)**
 - **[Host Path Storage](./host_path_storage/host_path_storage.md)**
 - **[K8s Credentials Secret](./credentials/credentials.md)**
+
+## InnoDB require a primary key for all tables
+
+- Want to try InnoDB with repsys schema.
+- Must have a stateful set install first so we can have something to work with.
+- Do a backup and restore table by table only backup tables we use.
+- Add a primary key to all tables that don't have one.
+- Restore table backups into InnoDB.
+
+## START HERE
+
+- **[Temp MySQL Statefulset](./mysql-statefulset-install.md)**
 - **[MySQL InnoDB Operator](./mysql-operator-install.md)**
 - **[MySQL InnoDB Cluster](./mysql-innodb-cluster-install.md)**
 - **[Postgres Operator](./postgres-operator-install.md)**

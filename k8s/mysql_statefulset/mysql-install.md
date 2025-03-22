@@ -8,6 +8,8 @@
 ## remove mysql deployment
 
 ```bash
+pushd .
+cd ~/src/repsys/k8s/mysql_statefulset
 scc.sh repsys11c2n1.yaml microk8s
 kubectl delete svc mysql-svc
 kubectl delete statefulset mysql-ss
@@ -41,6 +43,9 @@ mysqldump -u root -p -h reports31 --port=30031 --column-statistics=0 --add-drop-
 StorageClass helps pods provision persistent volume claims on the node.
 
 ```bash
+pushd .
+cd ~/src/repsys/k8s/mysql_statefulset
+
 kubectl apply -f mysql-storage-class.yaml
 kubectl get storageclass
 ```
@@ -57,7 +62,7 @@ kubectl describe pv mysql-pv
 kubectl describe pvc mysql-pvc
 
 # deploy the stateful-set
-
+### START HERE
 cd  ~/src/repsys/k8s/mysql_statefulset
 kubectl apply -f stateful-set.yaml
 statefulset.apps/mysql-repsys11-c2-n1 created

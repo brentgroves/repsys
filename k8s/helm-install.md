@@ -1,7 +1,7 @@
 # Helm
 
-**[Report System Install](./report-system-install.md)**\
-**[Current Status](../development/status/weekly/current_status.md)**\
+**[K8s menu](./mend)**\
+**[Current Status](../a_status/detailed_status.md)**\
 **[Back to Main](../README.md)**
 
 ## References
@@ -20,3 +20,11 @@ echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/helm.
 sudo apt update
 sudo apt install helm
 ```
+
+GPG (GNU Privacy Guard) is a free, open-source implementation of the OpenPGP standard, used for encrypting and signing data and communications, offering secure communication and data integrity through public-private key cryptography.
+
+Recall that with textbook RSA, we choose two large primes p and q and let n = p *q. We then chose an e such that gcd(e, phi(n)) = 1, where phi(n) = (p-1)(q-1). The public key is (e, n). Now find d such that e* d ≡ 1 mod phi(n). The private key is (d, n).
+
+In the context of GnuPG (GPG), a .asc file represents an ASCII-armored signature or key, a plain text format used for storing and distributing digital signatures or public keys.
+
+Public Keys: It can also hold a public key, which is used to verify signatures and encrypt data.
