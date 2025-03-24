@@ -9,3 +9,4 @@
 ## Transition from Multipass hypervisor to MicroCloud Hyper-converged infrastructure (HCI)
 
 - Research Ceph storage **[CRUSH algorithm](../research/m_z/virtualization/storage/ceph/crush.md)** to optimize and trouble-shoot the MicroCloud HCI.
+- Research **[Namespaces and CGroups](../research/m_z/virtualization/networking/namespaces/namespaces_cgroups.md)**
