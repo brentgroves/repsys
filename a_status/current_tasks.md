@@ -7,10 +7,11 @@
 
 ## Structures Information Systems, Kubernetes, or K8s, Platform Engineering Support
 
+- deploying **[platform services](../k8s/mysql-statefulset-install.md)** to K8s cluster.
 - on-going certificate management for each mach2 server
   - Created certificate for the Avilla Mach2 server.
   - Translated Structures intermediate and root CA certificates from PEM to **[PCKS#12](https://en.wikipedia.org/wiki/PKCS_12#:~:text=In%20cryptography%2C%20PKCS%20%2312%20defines,Filename%20extension)** for Windows import.
-  - Created a server certificate for Fruitport Mach2 server
+  - Creating a server certificate for Fruitport Mach2 server
   - created certificate management schema containing serial numbers, expiration dates, and alt names.
   - Johnathon Lapsley will bring up our request to his team.
 
