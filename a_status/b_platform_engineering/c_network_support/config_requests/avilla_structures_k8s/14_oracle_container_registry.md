@@ -1,12 +1,15 @@
 # Oracle Container Registry Network Config Request
 
+Submitted : 2025-03-26 19:20:13
+Request Number : REQ0195821
+
 The following is in markdown format. You can view it better at <https://markdownlivepreview.com/>> by copying and pasting the contents below.
 
 Project: Avilla Structures Kubernetes Cluster
 
-Request: Please update the Avilla Structures "Kubernetes" policy to allow TCP access to the Oracle container registry which hols the **[Calico OCI image](https://docs.oracle.com/en-us/iaas/Content/ContEng/Tasks/contengsettingupcalico.htm)** needed to install **[MicroK8s](https://microk8s.io/docs/install-offline)** and the software it manages.
+Request: Please update the Avilla Structures "Kubernetes" policy to allow TCP access to the Oracle container registry which holds the **[MySQL Operator images](https://dev.mysql.com/doc/mysql-operator/en/)** needed to install **[MySQL InnoDB Cluster](https://dev.mysql.com/doc/refman/8.4/en/mysql-innodb-cluster-introduction.html)**.
 
-Reason: MicroK8s needs access to the AWS container registry so the it can install Calico OCI image which is part of its core services.
+Reason: MicroK8s needs access to the Oracle container registry so the it can install MySQL InnoDB image which is one of the data sources used in the Structures K8s Cluster.
 
 Affected Application: Automated Report System, Tool Management System, and Tool Tracker Focused **[Manufacturing Execution System](https://www.ibm.com/think/topics/mes-system)**
 
@@ -14,7 +17,7 @@ Business Justification: The Avilla Structures Kubernetes Cluster will be used to
 
 ## Requested Policy Change
 
-Request TCP access to the AWS container image registry which holds the Calico OCI image which is needed for MicroK8s networking support.
+Request TCP access to the Oracle container image registry which holds the MySQL InnoDB image which is needed for the Structures microservices.
 
 ## Key points about the firewall rule
 
