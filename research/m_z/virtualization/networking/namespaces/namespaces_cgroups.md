@@ -1,4 +1,4 @@
-# **[What Are Namespaces and cgroups, and How Do They Work?](https://blog.nginx.org/blog/what-are-namespaces-cgroups-how-do-they-work#:~:text=A%20control%20group%20(cgroup)%20is%20a%20Linux,so%20on)%20of%20a%20collection%20of%20processes.&text=Namespaces%20provide%20isolation%20of%20system%20resources%2C%20and,and%20enforcement%20of%20limits%20for%20those%20resources.)**
+# **[What Are Namespaces and cgroups, and How Do They Work?](https://blog.nginx.org/blog/what-are-namespaces-cgroups-how-do-they-work#:~:text=A%20control%20group%20(cgroup)%20is%20a%20Linux,so%20on)**
 
 **[Research List](../../../../research_list.md)**\
 **[Detailed Status](../../../../../a_status/detailed_status.md)**\
