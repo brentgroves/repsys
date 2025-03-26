@@ -18,7 +18,7 @@ spec:
         - key: kubernetes.io/hostname
           operator: In
           values:
-          - repsys11-c2-n1
+          - k8sn211
   persistentVolumeReclaimPolicy: Retain
   storageClassName: mysql-storageclass
   volumeMode: Filesystem

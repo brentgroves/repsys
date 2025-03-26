@@ -19,9 +19,10 @@
 - Add a primary key to all tables that don't have one.
 - Restore table backups into InnoDB.
 
+- **[Temp MySQL Statefulset](./mysql-statefulset-install.md)**
+
 ## START HERE
 
-- **[Temp MySQL Statefulset](./mysql-statefulset-install.md)**
 - **[MySQL InnoDB Operator](./mysql-operator-install.md)**
 - **[MySQL InnoDB Cluster](./mysql-innodb-cluster-install.md)**
 - **[Postgres Operator](./postgres-operator-install.md)**

@@ -81,6 +81,11 @@ deployment.apps/mysql-operator created
 # Verify that the operator is running by checking the deployment that is managing the operator inside the mysql-operator namespace, a configurable namespace defined by deploy-operator.yaml:
 
 ```bash
+kubectl get all -n mysql-operator
+
+NAME                                  READY   STATUS         RESTARTS   AGE
+pod/mysql-operator-7cbc8bd94d-jqzb6   0/1     ErrImagePull   0          45s
+
 kubectl get deployment mysql-operator --namespace mysql-operator
 NAME             READY   UP-TO-DATE   AVAILABLE   AGE
 mysql-operator   1/1     1            1           2m19s
