@@ -28,11 +28,12 @@ Key points about the firewall rule:
 
 ```bash
 # Alpine Linux package manager CDN
-curl -vv telnet://frt-mach2.linamar.com:443
-curl -vv telnet://frt-mach2:443
+curl -vv telnet://pd-frt-mach2-s1.linamar.com:443
+curl -vv telnet://pd-frt-mach2-s1:443
 
-sudo tcpdump -i any -nn dst host frt-mach2.linamar.com
-sudo tcpdump -i any -nn dst host frt-mach2
+sudo tcpdump -i any -nn dst host pd-frt-mach2-s1.linamar.com
+sudo tcpdump -i any -nn dst host pd-frt-mach2-s1
+
 ```
 
 John Biel
