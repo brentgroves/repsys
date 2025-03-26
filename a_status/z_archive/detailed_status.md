@@ -125,34 +125,63 @@ Given our complex network, start learning this networking part of K8s.
 
 ### Automated Report System
 
-- Move schema from Mobex Azure SQL MI to the Linamar Azure SQL DB.
-- Write scripts to compare Mobex Azure SQL result sets to Linamar Azure SQL DB result set.
-- Create a new set of **[ETL](https://www.getdbt.com/blog/extract-transform-load)** scripts that work on the Linamar Azure SQL DB.
-- Create a new set of **[ETL](https://www.getdbt.com/blog/extract-transform-load)** scripts that use two data sources for the Structures Avilla Kubernetes Cluster MySQL InnoDB Cluster and the Azure SQL DB.
-- Create the ETL script runner microservice.
+- We manually run scripts to update the data warehouse that Power BI reports use as its data source.  The automated report system could be used to to run the scripts automatically.
+
+- Request kicks off scripts to extract data from the Plex ERP, transform it, and then load the result into a database table in the data warehouse.
+- Produce Excel, archive result set, and email to end user.
+- Used for reports requiring long-running scripts or live data.
+- Used to enable the creation of PowerBI dashboards for Plex ERP.
+
+  Users: Anyone needing live or long-running reports, Excel, or Power BI dashboards.
+  Status: Recently, approved for Azure resources needed for this project.
+
+  time: 3 months
+  due date: Nov 2025
 
 ### Tool Management System
 
-- Add the Plex supply item number to the new vending machines.
-- Add tool list support.
-- Add Engineering manager approvals.
-- Add MRO personnel notifications of tooling change requests.
-- Work on ERP and Vending Machines integration with our automated **[ETL](https://www.getdbt.com/blog/extract-transform-load)** reporting system.
-- Create tooling reports based job orders in ERP.
+  Move from managing CNC tooling in Excel and the Busche Tool List to a more robust and easy-to-use system.
+
+  Users: Albion MRP and Engineering
+  Hayley and someone else has an existing system.
+
+- Albion is transitioning to a new vending machine and currently has older tool lists in a legacy database and newer tool lists in Excel.
+- The Structures Information Systems team is scheduled to update the Busche Reporter legacy tool management system. If an existing system is available we could use it and possibly add some additional features listed below.
+- We were planning to run it on the Structures Avilla Kubernetes Cluster so that we can use **[Kubernetes Observability features](https://www.cloudbolt.io/blog/kubernetes-observability#:~:text=Kubernetes%20observability%20is%20essential%20for,pinpoint%20issues%20when%20they%20arise.)**  and make available the following Platform services.
+
+## Tool Management System Feature List
+
+- CNC engineers use it to manage job tooling.
+- Engineering managers use it to approve job tooling.
+- MRO personnel are notified by it of new tooling to stock.
+- ERP and Vending Machines integration with our automated **[ETL](https://www.getdbt.com/blog/extract-transform-load)** reporting system.
+- Since it is integrated with our vending machines and **[Plex ERP system](https://www.plex.com/products/enterprise-resource-planning)** we can report which tooling is needed to fulfill job orders.
+- Since it stores all data in a centralized data warehouse we can link it with data collected by our tool-focused **[MES](http://ibm.com/think/topics/mes-system#:~:text=The%20primary%20purpose%20of%20an,the%20status%20of%20production%20activities.)** system to track tooling issues in real-time.
+- It leverages platform services provided by the Structures Avilla Kubernetes Cluster such as **[Authentication and Authorization](https://auth0.com/blog/why-auth0-by-okta/)** and **[Email service](https://mailtrap.io/email-sending/)**.
+
+  time: 6 months
+  due date: Jun 2026
 
 ### Tool Tracker MES
 
-- Add Tool Tracker DB schema to data sources.
-- Insert GCode changes into Okuma RDX line.  
-- Configure and connect Moxa Serial device server to RDX line.
-- Configure Kubernetes network to access Albion OT network.
+  Automatically collect CNC, job, and start/end tool operation times for problematic tooling.
+  Users: Albion Engineering and MRP
+  time: 6 months
+  due date: Jun 2027
 
 ## CNC tool adjustment app
+
+Purpose: To have an electronic alternate to color printer cmm reports.
+
+### Process
 
 - Send CMM output to database include CNC, feature, out of spec info.
 - Tool Setter subscribes to CNC CMM reports from mobile app.
 - Tool Setter updates the mobile app tool adjustments made.
 - Since all CMM report data and tool adjustments are recorded in a database they are easily viewable.
+
+### Feature Set
+
 - tablet app contains cmm report data.
 - tool setter updates app with offset made.
 
