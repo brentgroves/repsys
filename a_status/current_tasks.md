@@ -7,6 +7,7 @@
 
 ## Structures Information Systems, Kubernetes, or K8s, Platform Engineering Support
 
+- **[Import Client Certificates](https://www.digicert.com/kb/managing-client-certificates.htm)**
 - deploying **[platform services](../k8s/mysql-statefulset-install.md)** to K8s cluster.
 - import mysql backup to new server.
 - on-going certificate management for each mach2 server
