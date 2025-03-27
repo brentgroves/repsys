@@ -58,6 +58,7 @@ A platform engineer designs, builds, and maintains the internal developer platfo
 
 ### Setup Kubernetes Platform Services
 
+- **[Set up MySQL InnoDB Cluster](https://medium.com/@aaxsh/mysql-innodb-cluster-bdba9af61b79#:~:text=InnoDB%20Cluster%20is%20a%20high%20availability%20solution,Master%20Server%20to%20the%20MySQL%20Workers%20Servers.)**
 - **[Authentication and Authorization](https://auth0.com/blog/why-auth0-by-okta/)**
 - **[Zero-Trust Service Mesh Gateway](https://istio.io/latest/about/service-mesh/)**
 - **[Job Queue](https://www.ibm.com/think/topics/redis#:~:text=Redis%20(REmote%20DIctionary%20Server)%20is,speed%2C%20reliability%2C%20and%20performance.)**
