@@ -64,6 +64,7 @@ A platform engineer designs, builds, and maintains the internal developer platfo
 - **[Job Queue](https://www.ibm.com/think/topics/redis#:~:text=Redis%20(REmote%20DIctionary%20Server)%20is,speed%2C%20reliability%2C%20and%20performance.)**
 - **[Email service](https://mailtrap.io/email-sending/)**
 - **[SMS Notification Service](https://novu.co/)**
+- Verify and improve network performance between sites and the Avilla Structures K8s cluster.
 
 ### Azure SQL database
 

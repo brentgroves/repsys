@@ -1,9 +1,8 @@
 # **[How to Install KVM on Ubuntu](https://phoenixnap.com/kb/ubuntu-install-kvm)**
 
-**[Back to Research List](../../../research_list.md)**\
-**[Back to Networking Menu](../networking_menu.md)**\
-**[Back to Current Status](../../../../development/status/weekly/current_status.md)**\
-**[Back to Main](../../../../README.md)**
+**[Back to Research List](../../../../research_list.md)**\
+**[Back to Current Status](../../../../../a_status/current_tasks.md)**\
+**[Back to Main](../../../../../README.md)**
 
 KVM (Kernel-based Virtual Machine) is an open-source virtualization technology built into the Lin ux kernel. It operates within the Linux kernel and uses its capabilities to manage hardware resources directly, acting like a Type 1 hypervisor.
 

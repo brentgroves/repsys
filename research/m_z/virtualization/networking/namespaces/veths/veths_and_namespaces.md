@@ -22,13 +22,14 @@ Creating a network namespace and looking inside
 The first thing to try is just creating a network namespace, called netns1:
 
 ```bash
-sudo ip netns add netns1
+sudo su
+ip netns add netns1
 ```
 
 Now, you can "go into" the created namespace by using ip netns exec namespace-name, so we can run Bash there and then use ip a to see what network interfaces we have available:
 
 ```bash
-sudo ip netns exec netns1 /bin/bash
+ip netns exec netns1 /bin/bash
 ip a
 1: lo: <LOOPBACK> mtu 65536 qdisc noop state DOWN group default qlen 1000
     link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
@@ -175,11 +176,9 @@ root@giles-devweb1:~# ip a
 
 At this point we have a network interface outside the namespace, which is connected to an interface inside. However, in order to actually use them, we'll need to bring the interfaces up and set up routing. The first step is to bring the outside one up; we'll give it the IP address 192.168.0.1 on the 192.168.0.0/24 subnet (that is, the network covering all addresses from 192.168.0.0 to 192.168.0.255)
 
-## start here
-
 ```bash
-# ip addr add 192.168.0.1/24 dev veth0
-# ip link set dev veth0 up
+ip addr add 192.168.0.1/24 dev veth0
+ip link set dev veth0 up
 # ip a
 1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
     link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
@@ -197,4 +196,127 @@ At this point we have a network interface outside the namespace, which is connec
     link/ether 22:55:4e:34:ce:ba brd ff:ff:ff:ff:ff:ff link-netns netns1
     inet 192.168.0.1/24 scope global veth0
        valid_lft forever preferred_lft forever
+```
+
+So that's all looking good; it reports "no carrier" at the moment, of course, because there's nothing at the other end yet. Let's go into the namespace and sort that out by bringing it up on 192.168.0.2 on the same network:
+
+```bash
+ip netns exec netns1 /bin/bash
+ip addr add 192.168.0.2/24 dev veth1
+ip link set dev veth1 up
+ip a
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+    inet6 ::1/128 scope host
+       valid_lft forever preferred_lft forever
+5: veth1@if6: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default qlen 1000
+    link/ether ce:d5:74:80:65:08 brd ff:ff:ff:ff:ff:ff link-netnsid 0
+    inet 192.168.0.2/24 scope global veth1
+       valid_lft forever preferred_lft forever
+    inet6 fe80::ccd5:74ff:fe80:6508/64 scope link tentative
+       valid_lft forever preferred_lft forever
+```
+
+Now, let's try pinging from inside the namespace to the outside interface:
+
+```bash
+# ip netns exec netns1 /bin/bash
+# ping 192.168.0.1
+PING 192.168.0.1 (192.168.0.1) 56(84) bytes of data.
+64 bytes from 192.168.0.1: icmp_seq=1 ttl=64 time=0.069 ms
+64 bytes from 192.168.0.1: icmp_seq=2 ttl=64 time=0.042 ms
+^C
+--- 192.168.0.1 ping statistics ---
+2 packets transmitted, 2 received, 0% packet loss, time 1024ms
+rtt min/avg/max/mdev = 0.042/0.055/0.069/0.013 ms
+```
+
+And from outside to the inside:
+
+```bash
+# ping 192.168.0.2
+PING 192.168.0.2 (192.168.0.2) 56(84) bytes of data.
+64 bytes from 192.168.0.2: icmp_seq=1 ttl=64 time=0.039 ms
+64 bytes from 192.168.0.2: icmp_seq=2 ttl=64 time=0.043 ms
+^C
+--- 192.168.0.2 ping statistics ---
+2 packets transmitted, 2 received, 0% packet loss, time 1018ms
+rtt min/avg/max/mdev = 0.039/0.041/0.043/0.002 ms
+```
+
+Great!
+
+However, of course, it's still not routed -- from inside the interface, we still can't ping Google's DNS server:
+
+```bash
+ip netns exec netns1 /bin/bash
+ping 8.8.8.8
+ping: connect: Network is unreachable
+```
+
+Connecting the namespace to the outside world with NAT
+We need to somehow connect the network defined by our pair of virtual interfaces to the one that is accessed via our real hardware network interface, either by setting up bridging or NAT. I'm running this experiment on a machine on AWS, and I'm not sure how well that would work with bridging (my guess is, really badly), so let's go with NAT.
+
+First we tell the network stack inside the namespace to route everything via the machine at the other end of the connection defined by its internal veth1 IP address:
+
+```bash
+ip netns exec netns1 /bin/bash
+ip route add default via 192.168.0.1
+ping 8.8.8.8
+PING 8.8.8.8 (8.8.8.8) 56(84) bytes of data.
+^C
+--- 8.8.8.8 ping statistics ---
+3 packets transmitted, 0 received, 100% packet loss, time 2028ms
+```
+
+Note that the address we specify in the ip route add default command is the one for the end of the virtual interface pair that is outside the process namespace, which makes sense -- we're saying "this other machine is our router". The first time I tried this I put the address of the interface inside the namespace there, which obviously didn't work, as it was trying to send packets to itself for routing.
+
+So now the networking stack inside the namespace knows where to route stuff, which is why it no longer says "Network is unreachable", but of course there's nothing on the other side to send it onwards, so our ping packets are getting dropped on the floor. We need to use iptables to set up that side of things outside the namespace.
+
+The first step is to tell the host that it can route stuff:
+
+```bash
+cat /proc/sys/net/ipv4/ip_forward
+0
+# echo 1 > /proc/sys/net/ipv4/ip_forward
+# cat /proc/sys/net/ipv4/ip_forward
+1
+```
+
+Ubuntu's Approach:
+While Ubuntu has moved towards nftables as the default backend for firewalls, it still provides iptables and ufw (Uncomplicated Firewall) for compatibility reasons.
+
+Interoperability:
+Running legacy iptables and nftables rulesets in parallel is not recommended and can lead to problems.
+
+## **[The iptables rules appear in the nftables rule listing](../../firewall/netfilter/iptables-nft/iptables_vs_iptables-nft.md)**
+
+An interesting consequence of iptables-nft using nftables infrastructure is that the iptables ruleset appears in the nftables rule listing. Let's consider an example based on a simple rule:
+
+Now that we're forwarding packets, we want to make sure that we're not just forwarding them willy-nilly around the network. If we check the current rules in the FORWARD chain (in the default "filter" table):
+
+```bash
+update-alternatives --display iptables
+iptables - auto mode
+  link best version is /usr/sbin/iptables-nft
+  link currently points to /usr/sbin/iptables-nft
+  link iptables is /usr/sbin/iptables
+  slave iptables-restore is /usr/sbin/iptables-restore
+  slave iptables-save is /usr/sbin/iptables-save
+/usr/sbin/iptables-legacy - priority 10
+  slave iptables-restore: /usr/sbin/iptables-legacy-restore
+  slave iptables-save: /usr/sbin/iptables-legacy-save
+/usr/sbin/iptables-nft - priority 20
+  slave iptables-restore: /usr/sbin/iptables-nft-restore
+  slave iptables-save: /usr/sbin/iptables-nft-save
+
+iptables -L FORWARD
+Chain FORWARD (policy ACCEPT)
+target     prot opt source               destination
+
+iptables-nft -L FORWARD
+Chain FORWARD (policy ACCEPT)
+target     prot opt source               destination         
 ```

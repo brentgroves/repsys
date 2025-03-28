@@ -1,6 +1,5 @@
 # **[Using iptables-nft: a hybrid Linux firewall](https://developers.redhat.com/blog/2020/08/18/iptables-the-two-variants-and-their-relationship-with-nftables)**
 
-
 **[Back to Research List](../../../../research_list.md)**\
 **[Back to Current Status](../../../../../development/status/weekly/current_status.md)**\
 **[Back to Main](../../../../../README.md)**
@@ -51,8 +50,10 @@ You can also identify iptables-nft by checking whether the iptables binary is a 
 root@rhel-8 # ls -al /usr/sbin/iptables
 lrwxrwxrwx. 1 root root 17 Mar 17 10:22 /usr/sbin/iptables -> xtables-nft-multi
 # from ubuntu desktop
- ls -al /usr/sbin/iptables
-lrwxrwxrwx 1 root root 26 Oct 12  2020 /usr/sbin/iptables -> /etc/alternatives/iptables
+ls -al /usr/sbin/iptables
+lrwxrwxrwx 1 root root 26 Apr  8  2024 /usr/sbin/iptables -> /etc/alternatives/iptables
+ brent@isdev  ~/src/pki  ls -al /etc/alternatives/iptables
+lrwxrwxrwx 1 root root 22 Aug 27  2024 /etc/alternatives/iptables -> /usr/sbin/iptables-nft
 ```
 
 ## Using iptables-nft
