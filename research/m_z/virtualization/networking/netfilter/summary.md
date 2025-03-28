@@ -6,6 +6,7 @@
 
 ## My Summary
 
+- hypervisors and docker use iptables for NATting.
 - iptables-nft are used by default
 - docker, libvirt, and multipass all add rules
 - if you want to add more rules it's ok but you can't blindly save and restore the ruleset using common tools.
