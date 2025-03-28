@@ -1,8 +1,7 @@
 # **[How the Iptables Firewall Works](https://www.digitalocean.com/community/tutorials/how-the-iptables-firewall-works)**
 
-
 **[Back to Research List](../../../../../../research_list.md)**\
-**[Back to Current Status](../../../../../../../development/status/weekly/current_status.md)**\
+**[Back to Current Status](../../../../../../../a_status/current_tasks.md)**\
 **[Back to Main](../../../../../../../README.md)**
 
 Setting up a firewall is an essential step to take in securing any modern operating system. Most Linux distributions ship with a few different firewall tools that you can use to configure a firewall. In this guide, we’ll be covering the iptables firewall.
@@ -39,4 +38,14 @@ Note: Nftables, a successor to Iptables, integrates handling of IPv4 and IPv6 mo
 
 The regular iptables command is used to manipulate the table containing rules that govern IPv4 traffic. For IPv6 traffic, a companion command called ip6tables is used. Any rules that you set with iptables will only affect packets using IPv4 addressing, but the syntax between these commands is the same. The iptables command will make the rules that apply to IPv4 traffic, and the ip6tables command will make the rules that apply to IPv6 traffic. Don’t forget to use the IPv6 addresses of your server to craft the ip6tables rules.
 
+## Things to Keep in Mind
 
+Now that you know how iptables directs packets that come through its interface – direct the packet to the appropriate chain, check it against each rule until one matches, issue the default policy of the chain if no match is found – you can begin to create rules.
+
+First, you need to make sure that you have rules to keep current connections active if you implement a default drop policy. This is especially important if you are connected to your server through SSH. If you accidentally implement a rule or policy that drops your current connection, you may need to log into your server using a browser-based recovery console.
+
+Another thing to keep in mind is that the order of the rules in each chain matter. A packet must not come across a more general rule that it matches if it is meant to match a more specific rule.
+
+Because of this, rules near the top of a chain should have a higher level of specificity than rules at the bottom. You should match specific cases first, and then provide more general rules to match broader patterns. If a packet falls through the entire chain (if it doesn’t match any rules), it will follow the most general rule, i.e., the default policy.
+
+For this reason, a chain’s default policy strongly dictates the types of rules that will be included in the chain. A chain with the default policy of ACCEPT will contain rules that explicitly drop packets. A chain that defaults to DROP will contain exceptions for packets that should be specifically accepted.

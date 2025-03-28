@@ -295,8 +295,6 @@ Running legacy iptables and nftables rulesets in parallel is not recommended and
 
 An interesting consequence of iptables-nft using nftables infrastructure is that the iptables ruleset appears in the nftables rule listing. Let's consider an example based on a simple rule:
 
-Now that we're forwarding packets, we want to make sure that we're not just forwarding them willy-nilly around the network. If we check the current rules in the FORWARD chain (in the default "filter" table):
-
 ```bash
 update-alternatives --display iptables
 iptables - auto mode
@@ -319,4 +317,78 @@ target     prot opt source               destination
 iptables-nft -L FORWARD
 Chain FORWARD (policy ACCEPT)
 target     prot opt source               destination         
+```
+
+Now that we're forwarding packets, we want to make sure that we're not just forwarding them willy-nilly around the network. If we check the current rules in the FORWARD chain (in the default "filter" table):
+
+I have installed libvirt on this machine so it has modified the ruleset already.
+
+```bash
+oot@isdev:/home/brent/src/pki# iptables -L FORWARD
+Chain FORWARD (policy ACCEPT)
+target     prot opt source               destination         
+LIBVIRT_FWX  all  --  anywhere             anywhere            
+LIBVIRT_FWI  all  --  anywhere             anywhere            
+LIBVIRT_FWO  all  --  anywhere             anywhere   
+```
+
+We see that the default is ACCEPT, so we'll change that to DROP:
+
+```bash
+# iptables -P FORWARD DROP
+# iptables -L FORWARD
+Chain FORWARD (policy DROP)
+target     prot opt source               destination
+#
+```
+
+OK, now we want to make some changes to the nat iptable so that we have routing. Let's see what we have first:
+
+```bash
+iptables -t nat -L
+Chain PREROUTING (policy ACCEPT)
+target     prot opt source               destination
+DOCKER     all  --  anywhere             anywhere             ADDRTYPE match dst-type LOCAL
+
+Chain INPUT (policy ACCEPT)
+target     prot opt source               destination
+
+Chain OUTPUT (policy ACCEPT)
+target     prot opt source               destination
+DOCKER     all  --  anywhere            !localhost/8          ADDRTYPE match dst-type LOCAL
+
+Chain POSTROUTING (policy ACCEPT)
+target     prot opt source               destination
+MASQUERADE  all  --  ip-172-17-0-0.ec2.internal/16  anywhere
+
+Chain DOCKER (2 references)
+target     prot opt source               destination
+RETURN     all  --  anywhere             anywhere
+#
+```
+
+## on my system with libvirt
+
+```bash
+iptables -t nat -L
+Chain PREROUTING (policy ACCEPT)
+target     prot opt source               destination         
+
+Chain INPUT (policy ACCEPT)
+target     prot opt source               destination         
+
+Chain OUTPUT (policy ACCEPT)
+target     prot opt source               destination         
+
+Chain POSTROUTING (policy ACCEPT)
+target     prot opt source               destination         
+LIBVIRT_PRT  all  --  anywhere             anywhere            
+
+Chain LIBVIRT_PRT (1 references)
+target     prot opt source               destination         
+RETURN     all  --  192.168.122.0/24     base-address.mcast.net/24 
+RETURN     all  --  192.168.122.0/24     255.255.255.255     
+MASQUERADE  tcp  --  192.168.122.0/24    !192.168.122.0/24     masq ports: 1024-65535
+MASQUERADE  udp  --  192.168.122.0/24    !192.168.122.0/24     masq ports: 1024-65535
+MASQUERADE  all  --  192.168.122.0/24    !192.168.122.0/24 
 ```
