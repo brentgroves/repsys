@@ -102,7 +102,9 @@ traceroute to google.com (142.250.191.110), 64 hops max
 # From system with access to Plex databases
 curl -vv telnet://test.odbc.plex.com:19995
 curl -vv telnet://odbc.plex.com:19995
-curl -vv telnet://git@github.com:brentgroves/repsys.git
+curl -vv telnet://mgsqlmi.public.48d444e7f69b.database.windows.net:3342
+curl -vv telnet://repsys1.database.windows.net:1433
+
 # github pull ssh
 cd ~/src/mobexsql
 git pull
