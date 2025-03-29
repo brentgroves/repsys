@@ -33,7 +33,19 @@ Request TCP port 1433 access to the Structures **[Azure SQL DB](https://learn.mi
 ```bash
 # OCI container registries
 curl -vv telnet://repsys1.database.windows.net:1433
-curl -vv telnet://repsys.database.windows.net:443
+
+* Host repsys1.database.windows.net:1433 was resolved.
+* IPv6: (none)
+* IPv4: 20.40.228.130
+*   Trying 20.40.228.130:1433...
+* Connected to repsys1.database.windows.net (20.40.228.130) port 1433
+
+curl -vv telnet://mgsqlmi.public.48d444e7f69b.database.windows.net:3342
+* Host mgsqlmi.public.48d444e7f69b.database.windows.net:3342 was resolved.
+* IPv6: (none)
+* IPv4: 104.45.144.170
+*   Trying 104.45.144.170:3342...
+* Connected to mgsqlmi.public.48d444e7f69b.database.windows.net (104.45.144.170) port 3342
 
 sudo tcpdump -i any -nn dst host repsys1.database.windows.net
 sudo tcpdump -i any -nn dst host repsys.database.windows.net
