@@ -359,6 +359,8 @@ Mounts:         --
 
 ## Step 5: Show vm routing table
 
+Note: There must be a route to each destination network.
+
 ```bash
 ssh brent@10.188.50.202
 multipass shell k8sn211
