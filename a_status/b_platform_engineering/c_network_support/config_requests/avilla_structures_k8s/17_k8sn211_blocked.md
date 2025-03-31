@@ -1,10 +1,6 @@
 # K8sn211 is blocked by corporate firewall Network Config Request
 
-Hi Justin,
-thank you
-
-Issue: The K8sn211 VM, 10.188.50.214, is not accessible from other sites such as Fruitport and Southfield, but the machine the VM is running on 10.188.50.202 is accessible from other sites. Do you have any idea as to what would be block 10.188.50.214.
-
+Issue: The K8sn211 VM, 10.188.50.214, is not accessible from other sites such as Fruitport and Southfield, but the machine the VM is running on 10.188.50.202 is accessible from other sites.
 Notes:
 from: PD-SOU-VFS1
 tracert 10.188.50.214
@@ -18,7 +14,7 @@ Tracing route to 10.188.50.214 over a maximum of 30 hops
 
 Fortigate deny policy id: 124
 
-Thoughts: k8sn211 uses an IP outside of the range 200-212 requested by all network config requests. Try creating a vm using IP address 10.188.50.211.
+Thoughts: add 10.185.50.0/24 route to 10.188.50.214 netplan.
 
 The following is in markdown format. You can view it better at <https://markdownlivepreview.com/>> by copying and pasting the contents below.
 
