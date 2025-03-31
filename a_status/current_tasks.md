@@ -2,6 +2,8 @@
 
 ## Structures Information Systems, Kubernetes, or K8s, Platform Engineering Support
 
+- K8s admin - ramarao guttikonda
+- Structures K8s bandwidth is limited by VPN connection.
 - - Verify and improve network performance between sites and the Avilla Structures K8s cluster.
   - setup iperf on Southfield VM and k8sn211
   - ping to 10.185.250.1 is 19.6 ms
