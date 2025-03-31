@@ -162,8 +162,8 @@ Now, from outside, we see this:
 veth1 has disappeared (and veth0 is now @if5, which is interesting -- not sure why, though it seems to make some kind of sense given that veth1 is now inside another namespace). But anyway, inside, we can see our moved interface:
 
 ```bash
-root@giles-devweb1:~# ip netns exec netns1 /bin/bash
-root@giles-devweb1:~# ip a
+ip netns exec netns1 /bin/bash
+ip a
 1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
     link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
     inet 127.0.0.1/8 scope host lo
@@ -223,7 +223,7 @@ Now, let's try pinging from inside the namespace to the outside interface:
 
 ```bash
 # ip netns exec netns1 /bin/bash
-# ping 192.168.0.1
+ping 192.168.0.1
 PING 192.168.0.1 (192.168.0.1) 56(84) bytes of data.
 64 bytes from 192.168.0.1: icmp_seq=1 ttl=64 time=0.069 ms
 64 bytes from 192.168.0.1: icmp_seq=2 ttl=64 time=0.042 ms
@@ -264,6 +264,8 @@ First we tell the network stack inside the namespace to route everything via the
 ```bash
 ip netns exec netns1 /bin/bash
 ip route add default via 192.168.0.1
+default via 192.168.0.1 dev veth1 
+192.168.0.0/24 dev veth1 proto kernel scope link src 192.168.0.2 
 ping 8.8.8.8
 PING 8.8.8.8 (8.8.8.8) 56(84) bytes of data.
 ^C
@@ -286,7 +288,7 @@ cat /proc/sys/net/ipv4/ip_forward
 ```
 
 Ubuntu's Approach:
-While Ubuntu has moved towards nftables as the default backend for firewalls, it still provides iptables and ufw (Uncomplicated Firewall) for compatibility reasons.
+While Ubuntu has moved towards nftables as the default backend for firewalls, it still provides iptables and ufw (Uncomplicated Firewall) for compatibility reasons. In Ubuntu 24.04 desktop iptables-nft is used by libvirt and microk8s.
 
 Interoperability:
 Running legacy iptables and nftables rulesets in parallel is not recommended and can lead to problems.
@@ -367,6 +369,8 @@ RETURN     all  --  anywhere             anywhere
 #
 ```
 
+I have Docker installed on the machine already, and it's got some of its own NAT-based routing configured there. I don't think there's any harm in leaving that there; it's on a different subnet to the one I chose for my own stuff.
+
 ## on my system with libvirt
 
 ```bash
@@ -391,4 +395,13 @@ RETURN     all  --  192.168.122.0/24     255.255.255.255
 MASQUERADE  tcp  --  192.168.122.0/24    !192.168.122.0/24     masq ports: 1024-65535
 MASQUERADE  udp  --  192.168.122.0/24    !192.168.122.0/24     masq ports: 1024-65535
 MASQUERADE  all  --  192.168.122.0/24    !192.168.122.0/24 
+```
+
+So, firstly, we'll enable masquerading from the 192.168.0.* network onto our main ethernet interface ens5:
+
+```bash
+iptables -t nat -A POSTROUTING -s 192.168.0.0/255.255.255.0 -o ens5 -j MASQUERADE
+# My computer
+iptables -t nat -A POSTROUTING -s 192.168.0.0/255.255.255.0 -o enx803f5d090eb3 -j MASQUERADE
+
 ```

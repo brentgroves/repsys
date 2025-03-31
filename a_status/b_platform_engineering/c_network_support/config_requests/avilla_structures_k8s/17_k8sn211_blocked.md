@@ -1,5 +1,7 @@
 # K8sn211 is blocked by corporate firewall Network Config Request
 
+Not an Issue: I just forgot to add a return route to 10.185.50.0/24 on the VMs extra interface.
+
 Issue: The K8sn211 VM, 10.188.50.214, is not accessible from other sites such as Fruitport and Southfield, but the machine the VM is running on 10.188.50.202 is accessible from other sites.
 Notes:
 from: PD-SOU-VFS1
