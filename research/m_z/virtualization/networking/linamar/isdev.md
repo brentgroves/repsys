@@ -49,6 +49,8 @@ nmcli connection show
 # For Github using https port 443
 # nmcli connection modify connection_name ipv4.routes "ip[/prefix] [next_hop] [metric] [attribute=value] [attribute=value] ..."
 nmcli connection modify "Wired connection 1" ipv4.routes "140.82.112.0/24 10.188.50.254 100"
+nmcli connection modify "Wired connection 1" +ipv4.routes "140.82.113.0/24 10.188.50.254 100"
+
 ## to delete the route add minus before ipv4.routes
 nmcli connection modify "Wired connection 1" -ipv4.routes "140.82.112.0/24"
 # Changes are not activiated until you bring the connection up again
@@ -57,6 +59,8 @@ nmcli connection up "Wired connection 1"
 # For Github using SSH port 22
 ## First delete the Github Https port 443 route by adding the minus before ipv4.routes
 nmcli connection modify "Wired connection 1" -ipv4.routes "140.82.112.0/24"
+
+
 ## This is not necessary if Linamar-Wifi has the lowest default route metric.
 nmcli connection modify "Linamar-Wifi" ipv4.routes "140.82.112.0/24 172.25.189.254 100"
 
