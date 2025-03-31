@@ -48,7 +48,7 @@ nmcli connection show
 
 # For Github using https port 443
 # nmcli connection modify connection_name ipv4.routes "ip[/prefix] [next_hop] [metric] [attribute=value] [attribute=value] ..."
-nmcli connection modify "Wired connection 1" ipv4.routes "140.82.112.0/24 10.188.50.254 100"
+nmcli connection modify "Wired connection 1" +ipv4.routes "140.82.112.0/24 10.188.50.254 100"
 nmcli connection modify "Wired connection 1" +ipv4.routes "140.82.113.0/24 10.188.50.254 100"
 
 ## to delete the route add minus before ipv4.routes
