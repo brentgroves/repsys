@@ -222,7 +222,7 @@ ip a
 Now, let's try pinging from inside the namespace to the outside interface:
 
 ```bash
-# ip netns exec netns1 /bin/bash
+ip netns exec netns1 /bin/bash
 ping 192.168.0.1
 PING 192.168.0.1 (192.168.0.1) 56(84) bytes of data.
 64 bytes from 192.168.0.1: icmp_seq=1 ttl=64 time=0.069 ms
@@ -279,19 +279,26 @@ So now the networking stack inside the namespace knows where to route stuff, whi
 
 The first step is to tell the host that it can route stuff:
 
+To enable packet routing on a Linux system, you need to configure the kernel to forward packets destined for other networks. This typically involves enabling IP forwarding and setting up routing tables with appropriate routes.
+
+Temporarily Enable IP Forwarding:
+
 ```bash
 cat /proc/sys/net/ipv4/ip_forward
 0
 # echo 1 > /proc/sys/net/ipv4/ip_forward
 # cat /proc/sys/net/ipv4/ip_forward
 1
+
+sudo sysctl -w net.ipv4.ip_forward=1 (temporarily enables forwarding)
 ```
 
-Ubuntu's Approach:
-While Ubuntu has moved towards nftables as the default backend for firewalls, it still provides iptables and ufw (Uncomplicated Firewall) for compatibility reasons. In Ubuntu 24.04 desktop iptables-nft is used by libvirt and microk8s.
+## AI Overview: how to sysctl to make routing permanent
 
-Interoperability:
-Running legacy iptables and nftables rulesets in parallel is not recommended and can lead to problems.
+Make it persistent (recommended):
+
+Edit the /etc/sysctl.conf file and add or modify the line net.ipv4.ip_forward=1
+Apply the changes with sudo sysctl -p
 
 ## **[The iptables rules appear in the nftables rule listing](../../firewall/netfilter/iptables-nft/iptables_vs_iptables-nft.md)**
 
@@ -337,7 +344,8 @@ LIBVIRT_FWO  all  --  anywhere             anywhere
 We see that the default is ACCEPT, so we'll change that to DROP:
 
 ```bash
-# iptables -P FORWARD DROP
+iptables -P FORWARD DROP
+# iptables -P FORWARD ACCEPT
 # iptables -L FORWARD
 Chain FORWARD (policy DROP)
 target     prot opt source               destination
@@ -399,9 +407,133 @@ MASQUERADE  all  --  192.168.122.0/24    !192.168.122.0/24
 
 So, firstly, we'll enable masquerading from the 192.168.0.* network onto our main ethernet interface ens5:
 
+In iptables, masquerading, a form of SNAT (Source Network Address Translation), allows multiple internal network devices to share a single external IP address, effectively hiding their private IPs behind the router's public IP.
+
 ```bash
+ip a
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+    inet6 ::1/128 scope host noprefixroute 
+       valid_lft forever preferred_lft forever
+2: enxf8e43bed63bd: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc fq_codel state UP group default qlen 1000
+    link/ether f8:e4:3b:ed:63:bd brd ff:ff:ff:ff:ff:ff
+4: wlp114s0f0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default qlen 1000
+    link/ether e0:8f:4c:51:6f:17 brd ff:ff:ff:ff:ff:ff
+    inet 172.25.188.34/23 brd 172.25.189.255 scope global dynamic noprefixroute wlp114s0f0
+       valid_lft 13742sec preferred_lft 13742sec
+    inet6 fe80::17a5:ad3b:4171:8dc0/64 scope link noprefixroute 
+       valid_lft forever preferred_lft forever
+       
 iptables -t nat -A POSTROUTING -s 192.168.0.0/255.255.255.0 -o ens5 -j MASQUERADE
+
+-t nat: Specifies the NAT table. 
+-A POSTROUTING: Appends a rule to the POSTROUTING chain. 
+-o eth0: Specifies the outgoing interface (e.g., eth0). 
+-j MASQUERADE: Sets the target to MASQUERADE. 
+
 # My computer
+ip a
+# for wireless
+iptables -t nat -A POSTROUTING -s 192.168.0.0/255.255.255.0 -o wlp114s0f0 -j MASQUERADE
+
+# for wired
 iptables -t nat -A POSTROUTING -s 192.168.0.0/255.255.255.0 -o enx803f5d090eb3 -j MASQUERADE
 
+# verify
+list rules by specification
+sudo iptables -t nat -S
+# Warning: iptables-legacy tables present, use iptables-legacy to see them
+-P PREROUTING ACCEPT
+-P INPUT ACCEPT
+-P OUTPUT ACCEPT
+-P POSTROUTING ACCEPT
+-N LIBVIRT_PRT
+-A POSTROUTING -j LIBVIRT_PRT
+-A POSTROUTING -s 192.168.0.0/24 -o wlp114s0f0 -j MASQUERADE
+-A POSTROUTING -s 192.168.0.0/24 -o wlp114s0f0 -j MASQUERADE
+-A LIBVIRT_PRT -s 192.168.122.0/24 -d 224.0.0.0/24 -j RETURN
+-A LIBVIRT_PRT -s 192.168.122.0/24 -d 255.255.255.255/32 -j RETURN
+-A LIBVIRT_PRT -s 192.168.122.0/24 ! -d 192.168.122.0/24 -p tcp -j MASQUERADE --to-ports 1024-65535
+-A LIBVIRT_PRT -s 192.168.122.0/24 ! -d 192.168.122.0/24 -p udp -j MASQUERADE --to-ports 1024-65535
+-A LIBVIRT_PRT -s 192.168.122.0/24 ! -d 192.168.122.0/24 -j MASQUERADE
 ```
+
+Now we'll say that we'll forward stuff that comes in on interface x can be forwarded to our veth0 interface, which you'll remember is the end of the virtual network pair that is outside the namespace:
+
+```bash
+# for wireless
+iptables -A FORWARD -i wlp114s0f0 -o veth0 -j ACCEPT
+
+# for wired
+iptables -A FORWARD -i enx803f5d090eb3 -o veth0 -j ACCEPT
+
+# verify
+
+sudo iptables -S
+# Warning: iptables-legacy tables present, use iptables-legacy to see them
+-P INPUT ACCEPT
+-P FORWARD DROP
+-P OUTPUT ACCEPT
+-N LIBVIRT_FWI
+-N LIBVIRT_FWO
+-N LIBVIRT_FWX
+-N LIBVIRT_INP
+-N LIBVIRT_OUT
+-A INPUT -j LIBVIRT_INP
+-A FORWARD -j LIBVIRT_FWX
+-A FORWARD -j LIBVIRT_FWI
+-A FORWARD -j LIBVIRT_FWO
+-A FORWARD -s 10.1.0.0/16 -m comment --comment "generated for MicroK8s pods" -j ACCEPT
+-A FORWARD -d 10.1.0.0/16 -m comment --comment "generated for MicroK8s pods" -j ACCEPT
+-A FORWARD -i wlp114s0f0 -o veth0 -j ACCEPT
+```
+
+...and then the routing in the other direction:
+
+```bash
+iptables -A FORWARD -o ens5 -i veth0 -j ACCEPT
+
+# for wireless
+iptables -A FORWARD -o wlp114s0f0 -i veth0 -j ACCEPT
+
+# for wired
+iptables -A FORWARD -o enx803f5d090eb3 -i veth0 -j ACCEPT
+
+# verify
+sudo iptables -S
+# Warning: iptables-legacy tables present, use iptables-legacy to see them
+-P INPUT ACCEPT
+-P FORWARD DROP
+-P OUTPUT ACCEPT
+-N LIBVIRT_FWI
+-N LIBVIRT_FWO
+-N LIBVIRT_FWX
+-N LIBVIRT_INP
+-N LIBVIRT_OUT
+-A INPUT -j LIBVIRT_INP
+-A FORWARD -j LIBVIRT_FWX
+-A FORWARD -j LIBVIRT_FWI
+-A FORWARD -j LIBVIRT_FWO
+-A FORWARD -s 10.1.0.0/16 -m comment --comment "generated for MicroK8s pods" -j ACCEPT
+-A FORWARD -d 10.1.0.0/16 -m comment --comment "generated for MicroK8s pods" -j ACCEPT
+-A FORWARD -i wlp114s0f0 -o veth0 -j ACCEPT
+-A FORWARD -i veth0 -o wlp114s0f0 -j ACCEPT
+```
+
+Now, let's see what happens if we try to ping from inside the namespace
+
+```bash
+ip netns exec netns1 /bin/bash
+ping 8.8.8.8
+PING 8.8.8.8 (8.8.8.8) 56(84) bytes of data.
+64 bytes from 8.8.8.8: icmp_seq=1 ttl=112 time=0.604 ms
+64 bytes from 8.8.8.8: icmp_seq=2 ttl=112 time=0.609 ms
+^C
+--- 8.8.8.8 ping statistics ---
+2 packets transmitted, 2 received, 0% packet loss, time 1003ms
+rtt min/avg/max/mdev = 0.604/0.606/0.609/0.002 ms
+```
+
+w00t!
