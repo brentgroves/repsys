@@ -2,6 +2,7 @@
 
 ## Structures Information Systems, Kubernetes, or K8s, Platform Engineering Support
 
+- Replace Managed with Extreme switch.
 - Ramarao Guttikonda: K8s admin
 - Structures K8s bandwidth is limited by VPN connection, but we do have 10G SFP+ network card and spf+ module for r620s.
 - - Verify and improve network performance between sites and the Avilla Structures K8s cluster.
