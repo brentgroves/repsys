@@ -51,9 +51,9 @@ sudo cloud-provider-kind
 
 In this install we are using using kubectl not helm.
 
-## install k8s credentials secret
+## install k8s **[credentials secret](https://dev.mysql.com/doc/mysql-operator/en/mysql-operator-innodbcluster-simple-kubectl.html)**
 
-The secret should have been installed previously **[secret install](../../k8s/secrets/install_credentials_secret.md)**
+**[secret install](../../k8s/secrets/install_credentials_secret.md)** into the innodb namespace
 
 ## **[Configure a new MySQL InnoDB Cluster](https://dev.mysql.com/doc/mysql-operator/en/mysql-operator-innodbcluster-common.html)**
 

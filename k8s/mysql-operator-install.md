@@ -4,6 +4,35 @@
 **[Current Status](../development/status/weekly/current_status.md)**\
 **[Back to Main](../README.md)**
 
+## **[Issue](https://github.com/canonical/microk8s/issues/4864)**
+
+**[microk8s refresh certs](https://www.davidpuplava.com/coding-craft/kubernetes-refresh-certs-with-microk8s-cluster)**
+
+```bash
+kubectl get all --namespace mysql-operator                            
+NAME                                  READY   STATUS             RESTARTS        AGE
+pod/mysql-operator-7cbc8bd94d-v2n9k   0/1     CrashLoopBackOff   8 (3m10s ago)   27m
+
+kubectl logs mysql-operator-7cbc8bd94d-v2n9k --namespace=mysql-operator
+[2025-04-01 22:22:07,482] kopf._core.reactor.o [ERROR   ] Request attempt #8/9 failed; will retry: GET <https://10.152.183.1:443/apis> -> ClientConnectorCertificateError(ConnectionKey(host='10.152.183.1', port=443, is_ssl=True, ssl=True, proxy=None, proxy_auth=None, proxy_headers_hash=None), SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: CA cert does not include key usage extension (_ssl.c:1020)'))
+```
+
+Temp Resolve: In case anyone else hits this, I resolved it by creating and installing a CA:
+
+```bash
+mkdir cadir
+openssl genrsa -out cadir/ca.key 2048
+openssl req -x509 -new -nodes -key ca.key -sha256 -days 360 -out cadir/ca.crt -addext "keyUsage=critical,digitalSignature,keyCertSign"
+microk8s.refresh-certs cadir
+```
+
+kubectl describe pod/mysql-operator-7cbc8bd94d-v2n9k -n mysql-operator
+...
+  Normal   Scheduled  7m45s                  default-scheduler  Successfully assigned mysql-operator/mysql-operator-7cbc8bd94d-v2n9k to k8sn211
+  Warning  Unhealthy  7m43s (x2 over 7m44s)  kubelet            Readiness probe failed: cat: /tmp/mysql-operator-ready: No such file or directory
+  Warning  Unhealthy  5m49s                  kubelet            Readiness probe errored: rpc error: code = Unknown desc = failed to exec in container: container is in CONTAINER_EXITED state
+  Warning  BackOff    4m23s (x5 over 5m49s)  kubelet            Back-off restarting failed container mysql-operator in pod mysql-operator-7cbc8bd94d-v2n9k_mysql-operator(139bb71b-9c59-4174-af8e-135d5caabd07)
+
 ## references
 
 <https://dev.mysql.com/doc/mysql-operator/en/>
