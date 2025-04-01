@@ -2,6 +2,7 @@
 
 ## Structures Information Systems, Kubernetes, or K8s, Platform Engineering Support
 
+- Ask for Windows VM with 10.188.50.211 IP for PowerBI reports.
 - Generate new **[ca.crt](../k8s/certificates/issue_microk8s_key_usage.md#start_here)** for Microk8s with keyUsage defined.
 - Ramarao Guttikonda: K8s admin
 - Structures K8s bandwidth is limited by VPN connection, but we do have 10G SFP+ network card and spf+ module for r620s.
