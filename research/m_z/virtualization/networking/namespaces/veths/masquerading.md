@@ -36,6 +36,10 @@ iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE.
 
 ```
 
+## **[6.1.1. Differences Between SNAT and Masquerading](http://linux-ip.net/html/snat-intro.html)**
+
+Though SNAT and masquerading perform the same fundamental function, mapping one address space into another one, the details differ slighly. Most noticeably, masquerading chooses the source IP address for the outbound packet from the IP bound to the interface through which the packet will exit.
+
 Difference from SNAT:
 While both SNAT and masquerade are forms of NAT, masquerade is a special case of SNAT that is used when the external IP address is not known or changes dynamically. SNAT requires you to specify the external IP address, while masquerade uses the IP address of the interface.
 

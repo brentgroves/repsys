@@ -469,6 +469,8 @@ iptables -A FORWARD -i wlp114s0f0 -o veth0 -j ACCEPT
 # for wired
 iptables -A FORWARD -i enx803f5d090eb3 -o veth0 -j ACCEPT
 
+# advanced https://www.digitalocean.com/community/tutorials/how-to-forward-ports-through-a-linux-gateway-with-iptables
+iptables -A FORWARD -i enx803f5d090eb3 -o veth0 -p tcp --syn --dport 80 -m conntrack --ctstate NEW -j ACCEPT
 # verify
 
 sudo iptables -S
@@ -503,6 +505,7 @@ iptables -A FORWARD -o enx803f5d090eb3 -i veth0 -j ACCEPT
 
 # verify
 sudo iptables -S
+# In iptables, the -S option instructs the command to display the current firewall ruleset in a verbose, human-readable format, showing the rules as they were originally entered
 # Warning: iptables-legacy tables present, use iptables-legacy to see them
 -P INPUT ACCEPT
 -P FORWARD DROP
@@ -537,3 +540,32 @@ rtt min/avg/max/mdev = 0.604/0.606/0.609/0.002 ms
 ```
 
 w00t!
+
+## Running a server with port-forwarding
+
+Right, now we have a network namespace where we can operate as a network client -- processes running inside it can access the external Internet.
+
+However, we don't have things working the other way around; we cannot run a server inside the namespace and access it from outside. For that, we need to configure port-forwarding. I'm not perfectly clear in my own mind exactly how this all works; take my explanations below with a cellar of salt...
+
+We use the **["Destination NAT"](http://linux-ip.net/html/nat-dnat.html)** chain in iptables:
+
+```bash
+iptables -t nat -A PREROUTING -p tcp -i ens5 --dport 6000 -j DNAT --to-destination 192.168.0.2:8080
+
+# for wireless
+iptables -t nat -A PREROUTING -p tcp -i wlp114s0f0 --dport 6000 -j DNAT --to-destination 192.168.0.2:8080
+
+# for wired
+iptables -t nat -A PREROUTING -p tcp -i enx803f5d090eb3 --dport 6000 -j DNAT --to-destination 192.168.0.2:8080
+
+```
+
+Or, in other words, if something comes in for port 6000 then we should sent it on to port 8080 on the interface at 192.168.0.2 (which is the end of the virtual interface pair that is inside the namespace).
+
+Next, we say that we're happy to forward stuff back and forth over new, established and related (not sure what that last one is) connections to the IP of our namespaced interface:
+
+```bash
+iptables -A FORWARD -p tcp -d 192.168.0.2 --dport 8080 -m state --state NEW,ESTABLISHED,RELATED -j ACCEPT
+```
+
+## start here
