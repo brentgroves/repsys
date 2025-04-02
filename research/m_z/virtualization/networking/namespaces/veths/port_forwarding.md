@@ -115,3 +115,15 @@ sudo iptables -t nat -A PREROUTING -i eth0 -p tcp --dport 80 -j DNAT --to-destin
 sudo iptables -t nat -A PREROUTING -i eth0 -p tcp --dport 80 -j DNAT --to-destination 10.0.0.1:8080
 
 ```
+
+This process takes care of half of the picture. The packet should get routed correctly to your web server. However, right now, the packet will still have the client’s original address as the source address. The server will attempt to send the reply directly to that address, which will make it impossible to establish a legitimate TCP connection.
+
+On DigitalOcean, packets leaving a Droplet with a different source address will actually be dropped by the hypervisor, so your packets at this stage will never even make it to the web server (which will be fixed by implementing SNAT momentarily). This is an anti-spoofing measure put in place to prevent attacks where large amounts of data are requested to be sent to a victim’s computer by `faking the source address` in the request. To learn more, read this response in our community.
+
+To configure proper routing, you also need to modify the packet’s source address as it leaves the firewall en route to the web server. You need to modify the source address to your firewall server’s private IP address (10.0.0.2 in the following example). The reply will then be sent back to the firewall, which can then forward it back to the client as expected.
+
+To enable this functionality, add a rule to the POSTROUTING chain of the nat table, which is evaluated right before packets are sent out on the network. You’ll match the packets destined for your web server by IP address and port:
+
+```bash
+sudo iptables -t nat -A POSTROUTING -o eth1 -p tcp --dport 80 -d 10.0.0.1 -j SNAT --to-source 10.0.0.2
+```
