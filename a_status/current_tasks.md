@@ -1,5 +1,10 @@
 # Current Tasks
 
+## Informational
+
+- Are we switching to Oracle for vacation days?
+- Ask about only 1 tab.
+
 ## Automated Report System
 
 - Ask about new Plex UI and REST web services.
