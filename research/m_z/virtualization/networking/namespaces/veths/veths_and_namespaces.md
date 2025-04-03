@@ -569,3 +569,10 @@ iptables -A FORWARD -p tcp -d 192.168.0.2 --dport 8080 -m state --state NEW,ESTA
 ```
 
 ## start here
+
+```bash
+lxc info | grep firewall
+- network_firewall_filtering
+- firewall_driver
+  firewall: nftables
+```

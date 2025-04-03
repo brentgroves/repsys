@@ -1,16 +1,20 @@
 # Current Tasks
 
-## Informational
+## Questions
 
+- Can we get Wyse Image Provision set up for Fruitport.
+cloud.plex.com
+- account_nos_gets, account_nos_picker_get
+web_service_account from Sam or
 - Are we switching to Oracle for vacation days?
 - Ask about only 1 tab.
-
-## Automated Report System
-
 - Ask about new Plex UI and REST web services.
   - Get REST account.
   - Get Access to Plex UI.
 - Find new web services for accounts.
+
+## Automated Report System
+
 - Move schema from Mobex Azure SQL MI to the Linamar Azure SQL DB.
 - Write scripts to compare Mobex Azure SQL result sets to Linamar Azure SQL DB result set.
 
