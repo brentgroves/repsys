@@ -1,5 +1,14 @@
 # Current Tasks
 
+## Automated Report System
+
+- Ask about new Plex UI and REST web services.
+  - Get REST account.
+  - Get Access to Plex UI.
+- Find new web services for accounts.
+- Move schema from Mobex Azure SQL MI to the Linamar Azure SQL DB.
+- Write scripts to compare Mobex Azure SQL result sets to Linamar Azure SQL DB result set.
+
 ## Structures Information Systems, Kubernetes, or K8s, Platform Engineering Support
 
 - Ask for Windows VM with 10.188.50.211 IP for PowerBI reports.
