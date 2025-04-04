@@ -20,7 +20,7 @@
 - moto: port 3
 - Dell 3548 switch: port 5
 
-## Dell 3548 switch
+## Dell 3548 switch (Gateway/Firewall)
 
 - Dell R440: port 7
 - Trendnet: port 11
@@ -36,15 +36,19 @@
 
 - k8sgw1
 - 192.168.1.65
+- 192.168.2.1
 
 ## Dell 7810
 
 - repsys11
+  - 192.168.2.81
 
 ## Dell T3610
 
 - repsys12
+  - 192.168.2.82
 
 ## Dell T3600
 
 - repsys13
+  - 192.168.2.83
