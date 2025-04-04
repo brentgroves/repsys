@@ -20,6 +20,7 @@ web_service_account from Sam or
 
 ## Structures Information Systems, Kubernetes, or K8s, Platform Engineering Support
 
+- Added VLAN ID 1220 to port 29,28,31 this VLAN should be bound to 10.187.220.0/24.
 - Ask for Windows VM with 10.188.50.211 IP for PowerBI reports.
 - Generate new **[ca.crt](../k8s/certificates/issue_microk8s_key_usage.md#start_here)** for Microk8s with keyUsage defined.
 - Ramarao Guttikonda: K8s admin
