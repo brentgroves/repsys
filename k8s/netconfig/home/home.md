@@ -18,12 +18,16 @@
 
 - ligtel router: port 1
 - moto: port 3
-- Dell 3548 switch: port 5
 
-## Dell 3548 switch (Gateway/Firewall)
+## Dell R440 (Gateway/Firewall)
+
+- k8sgw1
+- 192.168.1.65
+- 192.168.2.1
+
+## Dell 3548 switch
 
 - Dell R440: port 7
-- Trendnet: port 11
 - Dell 7810: port 1
 - Dell T3610: port 3
 - Dell T3600: port 5
@@ -31,12 +35,8 @@
 ## moto
 
 - moto - 192.168.1.60
-
-## Dell R440
-
-- k8sgw1
-- 192.168.1.65
-- 192.168.2.1
+- Trendnet: eno1
+- Dell 3548 switch: en02
 
 ## Dell 7810
 
