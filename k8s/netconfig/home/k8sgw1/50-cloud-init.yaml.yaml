@@ -4,6 +4,7 @@ network:
   ethernets:
     eno1:
       dhcp4: no
+      dhcp6: no
       addresses:
         - "192.168.1.65/24"
       routes:
@@ -12,16 +13,17 @@ network:
       nameservers:
         addresses:
           - 192.168.1.1
+          - 1.1.1.1
           - 8.8.8.8
           - 8.8.4.4
-  vlans:
-    vlan10:
-      id: 10
-      link: eno1
+    eno2:
+      dhcp4: no
+      dhcp6: no
       addresses:
-        - "192.168.10.2/24"
-    vlan20:
-      id: 20
-      link: eno1
-      addresses:
-        - "192.168.20.2/24"
+        - "192.168.2.1/24"
+      nameservers:
+        addresses:
+          - 192.168.1.1
+          - 1.1.1.1
+          - 8.8.8.8
+          - 8.8.4.4
