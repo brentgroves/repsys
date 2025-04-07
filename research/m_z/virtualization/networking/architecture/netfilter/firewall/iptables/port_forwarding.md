@@ -120,10 +120,21 @@ This process takes care of half of the picture. The packet should get routed cor
 
 On DigitalOcean, packets leaving a Droplet with a different source address will actually be dropped by the hypervisor, so your packets at this stage will never even make it to the web server (which will be fixed by implementing SNAT momentarily). This is an anti-spoofing measure put in place to prevent attacks where large amounts of data are requested to be sent to a victim’s computer by `faking the source address` in the request. To learn more, read this response in our community.
 
-To configure proper routing, you also need to modify the packet’s source address as it leaves the firewall en route to the web server. You need to modify the source address to your firewall server’s private IP address (10.0.0.2 in the following example). The reply will then be sent back to the firewall, which can then forward it back to the client as expected.
+To configure proper routing, you also need to **modify the packet’s source address as it leaves the firewall en route to the web server**. You need to modify the source address to your firewall server’s **private IP address (10.0.0.2 in the following example)**. The reply will then be sent back to the firewall, which can then forward it back to the client as expected.
 
 To enable this functionality, add a rule to the POSTROUTING chain of the nat table, which is evaluated right before packets are sent out on the network. You’ll match the packets destined for your web server by IP address and port:
 
 ```bash
 sudo iptables -t nat -A POSTROUTING -o eth1 -p tcp --dport 80 -d 10.0.0.1 -j SNAT --to-source 10.0.0.2
+```
+
+If you use masquerading instead of snat then
+
+```bash
+iptables -t nat -A POSTROUTING -s 192.168.0.0/255.255.255.0 -o ens5 -j MASQUERADE
+
+# -t nat: Specifies the NAT table. 
+# -A POSTROUTING: Appends a rule to the POSTROUTING chain. 
+# -o eth0: Specifies the outgoing interface (e.g., eth0). 
+# -j MASQUERADE: Sets the target to MASQUERADE. 
 ```

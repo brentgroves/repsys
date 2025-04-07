@@ -4,11 +4,10 @@
 
 - Can we get Wyse Image Provision set up for Fruitport.
 cloud.plex.com
-- account_nos_gets, account_nos_picker_get
-web_service_account from Sam or
+- Can we use these Web Service to get all accounts dynamically, account_nos_gets, account_nos_picker_get
 - Ask about new Plex UI and REST web services.
-  - Get REST account.
-  - Get Access to Plex UI.
+  - Ask web_service_account from Sam or Kevin
+  - What is URL to Plex UX.
 
 ## Automated Report System
 

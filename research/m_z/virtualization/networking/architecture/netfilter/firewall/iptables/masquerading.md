@@ -8,6 +8,8 @@
 
 In iptables, masquerading, a form of SNAT (Source Network Address Translation), allows multiple internal network devices to share a single external IP address, effectively hiding their private IPs behind the router's public IP.
 
+Note: We could use masquerading if our host has multiple networks with multiple IPs. So we could configure one natter with VLan 50's IP and another natter with VLan 220's IP.
+
 Here's a more detailed explanation:
 What it does:
 Masquerading translates the source IP addresses of packets originating from a private network to the public IP address of the router's external interface.

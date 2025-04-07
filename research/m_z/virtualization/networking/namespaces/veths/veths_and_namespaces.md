@@ -333,15 +333,34 @@ Now that we're forwarding packets, we want to make sure that we're not just forw
 I have installed libvirt on this machine so it has modified the ruleset already.
 
 ```bash
+# Only MicroK8s is using the legacy tables. It is only making rules for its RFC 1918 network.
+iptables-legacy -L FORWARD
+Chain FORWARD (policy ACCEPT)
+target     prot opt source               destination         
+ACCEPT     all  --  10.1.0.0/16          anywhere             /* generated for MicroK8s pods */
+ACCEPT     all  --  anywhere             10.1.0.0/16          /* generated for MicroK8s pods */
+
 oot@isdev:/home/brent/src/pki# iptables -L FORWARD
 Chain FORWARD (policy ACCEPT)
 target     prot opt source               destination         
 LIBVIRT_FWX  all  --  anywhere             anywhere            
 LIBVIRT_FWI  all  --  anywhere             anywhere            
 LIBVIRT_FWO  all  --  anywhere             anywhere   
+
+# Each chain is a list of rules which can match a set of packets. Each rule specifies what to do with a packet that matches. This is called a `target', which may be a jump to a user-defined chain in the same table.
+
+# LIBVIRT_FWX target:
+# This target is specifically used by libvirt, a virtualization management library, to mark packets that are being routed through a libvirt-managed network bridge. 
+
+# Functionality:
+# It allows traffic forwarded through the bridge created by libvirt.
+# It enables DHCP, DNS, TFTP, and SSH traffic to the host machine.
+# This is implemented via either iptables or nftables rules, depending on firewalld's backend.
+
 ```
 
 We see that the default is ACCEPT, so we'll change that to DROP:
+<!-- This may interfere with any specific rules in libvirts custom chain. -->
 
 ```bash
 iptables -P FORWARD DROP
@@ -380,6 +399,8 @@ RETURN     all  --  anywhere             anywhere
 I have Docker installed on the machine already, and it's got some of its own NAT-based routing configured there. I don't think there's any harm in leaving that there; it's on a different subnet to the one I chose for my own stuff.
 
 ## on my system with libvirt
+
+Notice that POSTROUTING LIBVIRT_PRT target jumps to LIBVIRT_PRT custom chain rules.
 
 ```bash
 iptables -t nat -L
@@ -443,6 +464,9 @@ iptables -t nat -A POSTROUTING -s 192.168.0.0/255.255.255.0 -o enx803f5d090eb3 -
 
 # verify
 list rules by specification
+# Purpose: The -S option is used to show the current iptables rules in a format that is easy to read and understand, and that can be used to recreate the rules if needed.
+# iptables-legacy -t nat -S only microk8s uses these older tables.
+
 sudo iptables -t nat -S
 # Warning: iptables-legacy tables present, use iptables-legacy to see them
 -P PREROUTING ACCEPT
@@ -566,6 +590,70 @@ Next, we say that we're happy to forward stuff back and forth over new, establis
 
 ```bash
 iptables -A FORWARD -p tcp -d 192.168.0.2 --dport 8080 -m state --state NEW,ESTABLISHED,RELATED -j ACCEPT
+
+# My wireless network
+iptables -t nat -S
+-P INPUT ACCEPT
+-P FORWARD DROP
+-P OUTPUT ACCEPT
+...
+-A FORWARD -i wlp114s0f0 -o veth0 -j ACCEPT
+-A FORWARD -i veth0 -o wlp114s0f0 -j ACCEPT
+-A FORWARD -d 192.168.0.2/32 -p tcp -m tcp --dport 8080 -m state --state NEW,RELATED,ESTABLISHED -j ACCEPT
+
+# My wireless network
+iptables -t nat -S
+-P PREROUTING ACCEPT
+-P INPUT ACCEPT
+-P OUTPUT ACCEPT
+-P POSTROUTING ACCEPT
+...
+-A PREROUTING -i wlp114s0f0 -p tcp -m tcp --dport 6000 -j DNAT --to-destination 192.168.0.2:8080
+...
+-A POSTROUTING -s 192.168.0.0/24 -o wlp114s0f0 -j MASQUERADE
+-A POSTROUTING -s 192.168.0.0/24 -o wlp114s0f0 -j MASQUERADE
+
+```
+
+## **[Port Forwarding example](../../architecture/netfilter/firewall/iptables/port_forwarding.md)**
+
+This is much more exact for port forwarding conntrack connection states.
+
+## run server
+
+So, with that set up, we should be able to run a server inside the namespace on port 8080. Using this Python code in the file server.py
+
+```python
+from flask import Flask
+
+app = Flask(__name__)
+
+@app.route('/')
+def hello_world():
+    return 'Hello from Flask!\n'
+
+if __name__ == "__main__":
+    app.run(host='0.0.0.0', port=8080)
+```
+
+```bash
+pushd .
+cd ~/src/repsys/volumes/python/tutorials/veths_and_namespaces.md
+sudo ip netns exec netns1 /bin/bash
+python3
+Python 3.12.3 (main, Feb  4 2025, 14:48:35) [GCC 13.3.0] on linux
+
+python server.py
+...then we run it:
+
+# ip netns exec netns1 /bin/bash
+# python3.7 server.py
+ * Serving Flask app "server" (lazy loading)
+ * Environment: production
+   WARNING: This is a development server. Do not use it in a production deployment.
+   Use a production WSGI server instead.
+ * Debug mode: off
+ * Running on http://0.0.0.0:8080/ (Press CTRL+C to quit)
 ```
 
 ## start here

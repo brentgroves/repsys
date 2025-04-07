@@ -6,6 +6,36 @@
 
 ## **[command syntax](https://www.linode.com/docs/guides/what-is-iptables/)**
 
+POSTROUTING LIBVIRT_PRT target jumps to LIBVIRT_PRT custom chain rules.
+
+```bash
+iptables -t nat -L
+# Warning: iptables-legacy tables present, use iptables-legacy to see them
+Chain PREROUTING (policy ACCEPT)
+target     prot opt source               destination         
+DNAT       tcp  --  anywhere             anywhere             tcp dpt:x11 to:192.168.0.2:8080
+
+Chain INPUT (policy ACCEPT)
+target     prot opt source               destination         
+
+Chain OUTPUT (policy ACCEPT)
+target     prot opt source               destination         
+
+Chain POSTROUTING (policy ACCEPT)
+target     prot opt source               destination         
+LIBVIRT_PRT  all  --  anywhere             anywhere            
+MASQUERADE  all  --  192.168.0.0/24       anywhere            
+MASQUERADE  all  --  192.168.0.0/24       anywhere            
+
+Chain LIBVIRT_PRT (1 references)
+target     prot opt source               destination         
+RETURN     all  --  192.168.122.0/24     base-address.mcast.net/24 
+RETURN     all  --  192.168.122.0/24     255.255.255.255     
+MASQUERADE  tcp  --  192.168.122.0/24    !192.168.122.0/24     masq ports: 1024-65535
+MASQUERADE  udp  --  192.168.122.0/24    !192.168.122.0/24     masq ports: 1024-65535
+MASQUERADE  all  --  192.168.122.0/24    !192.168.122.0/24  
+```
+
 ## How to create iptables firewall using custom chains
 
 Create an iptables firewall using custom chains that will be used to control incoming and outgoing traffic.
