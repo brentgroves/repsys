@@ -9,7 +9,12 @@ cloud.plex.com
   - Ask web_service_account from Sam or Kevin
   - What is URL to Plex UX.
 
-## Automated Report System
+## Automated Certificate Management System
+
+- certificate schema
+- add records for current certificates
+
+## Automated ETL and Report System
 
 - Move schema from Mobex Azure SQL MI to the Linamar Azure SQL DB.
 - Write scripts to compare Mobex Azure SQL result sets to Linamar Azure SQL DB result set.
