@@ -38,6 +38,12 @@ and for the Structures Avilla Kubernetes Cluster
 
 ## Structures Information Systems, Kubernetes, K8s, Application Development and Support
 
+### Automated Certificate Management System
+
+- certificate schema
+- report certificate status
+- API to create certificates
+
 ### Automated ETL Report System
 
 - Move schema from Mobex Azure SQL MI to the Linamar Azure SQL DB.

@@ -125,6 +125,12 @@ Given our complex network, start learning this networking part of K8s.
 
 ## IS Projects
 
+### Automated Certificate Management System
+
+- certificate schema
+- report certificate status
+- API to create certificates
+
 ### Automated Report System
 
 - Move schema from Mobex Azure SQL MI to the Linamar Azure SQL DB.
