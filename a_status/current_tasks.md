@@ -38,6 +38,7 @@ and for the Structures Avilla Kubernetes Cluster
 ## Transition from Multipass hypervisor to MicroCloud Hyper-converged infrastructure (HCI)
 
 - Research **[Bind9 for RFC 1918 network](../research/m_z/virtualization/networking/dns/dns_server.md)**
+- Research **[natting with nftables](https://wiki.nftables.org/wiki-nftables/index.php/Performing_Network_Address_Translation_(NAT))**
 - Research **[nftables natter](https://wiki.nftables.org/wiki-nftables/index.php/Performing_Network_Address_Translation_(NAT))**
 - Research Ceph storage **[Dynamic Cluster Management](../research/m_z/virtualization/storage/ceph/architecture.md#dynamic-cluster-management)** to optimize and trouble-shoot the MicroCloud HCI.
 - Research **[Namespaces and CGroups](../research/m_z/virtualization/networking/namespaces/namespaces_cgroups.md)**
