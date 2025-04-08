@@ -16,6 +16,7 @@ cloud.plex.com
 
 ## Automated ETL and Report System
 
+- Setup "uv" on development system. **["uv" is a fast, all-in-one Python package and project manager, designed as a drop-in replacement for tools like pip, pip-tools, pipx, poetry, pyenv, and virtualenv, written in Rust.](https://astral.sh/blog/uv#:~:text=Charlie%20Marsh,shared%20vision%20for%20Python%20packaging.)**
 - Move schema from Mobex Azure SQL MI to the Linamar Azure SQL DB.
 - Write scripts to compare Mobex Azure SQL result sets to Linamar Azure SQL DB result set.
 
