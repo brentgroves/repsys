@@ -2,6 +2,7 @@
 
 ## Questions
 
+- Muscle Shoals thin client certificates.
 - Can we get Wyse Image Provision set up for Fruitport.
 cloud.plex.com
 - Can we use these Web Service to get all accounts dynamically, account_nos_gets, account_nos_picker_get
