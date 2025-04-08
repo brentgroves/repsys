@@ -37,6 +37,8 @@ and for the Structures Avilla Kubernetes Cluster
 
 ## Transition from Multipass hypervisor to MicroCloud Hyper-converged infrastructure (HCI)
 
+- Research **["uv" is a fast, all-in-one Python package and project manager, designed as a drop-in replacement for tools like pip, pip-tools, pipx, poetry, pyenv, and virtualenv, written in Rust.](https://astral.sh/blog/uv#:~:text=Charlie%20Marsh,shared%20vision%20for%20Python%20packaging.)**
+
 - Research **[Bind9 for RFC 1918 network](../research/m_z/virtualization/networking/dns/dns_server.md)**
 - Research **[natting with nftables](https://wiki.nftables.org/wiki-nftables/index.php/Performing_Network_Address_Translation_(NAT))**
 - Research **[nftables natter](https://wiki.nftables.org/wiki-nftables/index.php/Performing_Network_Address_Translation_(NAT))**
