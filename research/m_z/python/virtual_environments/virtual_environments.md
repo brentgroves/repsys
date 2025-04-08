@@ -25,6 +25,99 @@ See also **[Python Packaging User Guide](https://packaging.python.org/guides/ins
 
 This module does not work or is not available on **[WebAssembly](https://webassembly.org/)** platforms wasm32-emscripten and wasm32-wasi. See WebAssembly platforms for more information.
 
+## Creating virtual environments
+
+Virtual environments are created by executing the venv module:
+
+`python -m venv /path/to/new/virtual/environment`
+
+This creates the target directory (including parent directories as needed) and places a pyvenv.cfg file in it with a home key pointing to the Python installation from which the command was run. It also creates a bin (or Scripts on Windows) subdirectory containing a copy or symlink of the Python executable (as appropriate for the platform or arguments used at environment creation time). It also creates a lib/pythonX.Y/site-packages subdirectory (on Windows, this is Libsite-packages). If an existing directory is specified, it will be re-used.
+
+Changed in version 3.5: The use of venv is now recommended for creating virtual environments.
+
+Deprecated since version 3.6, removed in version 3.8: pyvenv was the recommended tool for creating virtual environments for Python 3.3 and 3.4, and replaced in 3.5 by executing venv directly.
+
+On Windows, invoke the venv command as follows:
+
+python -m venv C:\path\to\new\virtual\environment
+The command, if run with -h, will show the available options:
+
+usage: venv [-h] [--system-site-packages] [--symlinks | --copies] [--clear]
+            [--upgrade] [--without-pip] [--prompt PROMPT] [--upgrade-deps]
+            [--without-scm-ignore-files]
+            ENV_DIR [ENV_DIR ...]
+
+Creates virtual Python environments in one or more target directories.
+
+positional arguments:
+  ENV_DIR               A directory to create the environment in.
+
+options:
+  -h, --help            show this help message and exit
+  --system-site-packages
+                        Give the virtual environment access to the system
+                        site-packages dir.
+  --symlinks            Try to use symlinks rather than copies, when
+                        symlinks are not the default for the platform.
+  --copies              Try to use copies rather than symlinks, even when
+                        symlinks are the default for the platform.
+  --clear               Delete the contents of the environment directory
+                        if it already exists, before environment creation.
+  --upgrade             Upgrade the environment directory to use this
+                        version of Python, assuming Python has been
+                        upgraded in-place.
+  --without-pip         Skips installing or upgrading pip in the virtual
+                        environment (pip is bootstrapped by default)
+  --prompt PROMPT       Provides an alternative prompt prefix for this
+                        environment.
+  --upgrade-deps        Upgrade core dependencies (pip) to the latest
+                        version in PyPI
+  --without-scm-ignore-files
+                        Skips adding SCM ignore files to the environment
+                        directory (Git is supported by default).
+
+Once an environment has been created, you may wish to activate it, e.g. by
+sourcing an activate script in its bin directory.
+Changed in version 3.4: Installs pip by default, added the --without-pip and --copies options.
+
+Changed in version 3.4: In earlier versions, if the target directory already existed, an error was raised, unless the --clear or --upgrade option was provided.
+
+Changed in version 3.9: Add --upgrade-deps option to upgrade pip + setuptools to the latest on PyPI.
+
+Changed in version 3.12: setuptools is no longer a core venv dependency.
+
+Changed in version 3.13: Added the --without-scm-ignore-files option.
+
+Changed in version 3.13: venv now creates a .gitignore file for Git by default.
+
+## How venvs work
+
+When a Python interpreter is running from a virtual environment, sys.prefix and sys.exec_prefix point to the directories of the virtual environment, whereas sys.base_prefix and sys.base_exec_prefix point to those of the base Python used to create the environment. It is sufficient to check sys.prefix != sys.base_prefix to determine if the current interpreter is running from a virtual environment.
+
+A virtual environment may be “activated” using a script in its binary directory (bin on POSIX; Scripts on Windows). This will prepend that directory to your PATH, so that running python will invoke the environment’s Python interpreter and you can run installed scripts without having to use their full path. The invocation of the activation script is platform-specific (<venv> must be replaced by the path to the directory containing the virtual environment):
+
+| Platform | Shell      | Command to activate virtual environment |
+|----------|------------|-----------------------------------------|
+| POSIX    | bash/zsh   | $ source <venv>/bin/activate            |
+|          | fish       | $ source <venv>/bin/activate.fish       |
+|          | csh/tcsh   | $ source <venv>/bin/activate.csh        |
+|          | pwsh       | $ <venv>/bin/Activate.ps1               |
+| Windows  | cmd.exe    | C:\> <venv>\Scripts\activate.bat        |
+|          | PowerShell | PS C:\> <venv>\Scripts\Activate.ps1     |
+
+You don’t specifically need to activate a virtual environment, as you can just specify the full path to that environment’s Python interpreter when invoking Python. Furthermore, all scripts installed in the environment should be runnable without activating it.
+
+In order to achieve this, scripts installed into virtual environments have a “shebang” line which points to the environment’s Python interpreter, #!/<path-to-venv>/bin/python. This means that the script will run with that interpreter regardless of the value of PATH. On Windows, “shebang” line processing is supported if you have the Python Launcher for Windows installed. Thus, double-clicking an installed script in a Windows Explorer window should run it with the correct interpreter without the environment needing to be activated or on the PATH.
+
+When a virtual environment has been activated, the VIRTUAL_ENV environment variable is set to the path of the environment. Since explicitly activating a virtual environment is not required to use it, VIRTUAL_ENV cannot be relied upon to determine whether a virtual environment is being used.
+
+Warning Because scripts installed in environments should not expect the environment to be activated, their shebang lines contain the absolute paths to their environment’s interpreters. Because of this, environments are inherently non-portable, in the general case. You should always have a simple means of recreating an environment (for example, if you have a requirements file requirements.txt, you can invoke pip install -r requirements.txt using the environment’s pip to install all of the packages needed by the environment). If for any reason you need to move the environment to a new location, you should recreate it at the desired location and delete the one at the old location. If you move an environment because you moved a parent directory of it, you should recreate the environment in its new location. Otherwise, software installed into the environment may not work as expected.
+
+You can deactivate a virtual environment by typing deactivate in your shell. The exact mechanism is platform-specific and is an internal implementation detail (typically, a script or shell function will be used).
+
+API
+The high-level method described above makes use of a simple API which provides mechanisms for third-party virtual environment creators to customize environment creation according to their needs, the EnvBuilder class.
+
 ## Notes on availability
 
 An “Availability: Unix” note means that this function is commonly found on Unix systems. It does not make any claims about its existence on a specific operating system.
