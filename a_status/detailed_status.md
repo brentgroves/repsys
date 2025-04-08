@@ -164,5 +164,6 @@ Given our complex network, start learning this networking part of K8s.
 - tablet app contains cmm report data.
 - tool setter updates app with offset made.
 
-time: 6 months
-due date: unknown
+## PiWeb Research
+
+- Research usages of zeiss piweb and **[statistical process control](https://asq.org/quality-resources/statistical-process-control?srsltid=AfmBOopPwaYtgJNzIb_z2cVgiVBWtzgSygpJiKP-H197XVOC0Opo7C2X)**. We have Mills River license available.
