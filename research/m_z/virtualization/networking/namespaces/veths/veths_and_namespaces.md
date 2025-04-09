@@ -615,6 +615,8 @@ iptables -t nat -S
 
 ```
 
+## Add DNS to network namespace
+
 ## **[Port Forwarding example](../../architecture/netfilter/firewall/iptables/port_forwarding.md)**
 
 This is much more exact for port forwarding conntrack connection states.
@@ -640,10 +642,10 @@ if __name__ == "__main__":
 pushd .
 cd ~/src/repsys/volumes/python/tutorials/veths_and_namespaces.md
 sudo ip netns exec netns1 /bin/bash
-python3
-Python 3.12.3 (main, Feb  4 2025, 14:48:35) [GCC 13.3.0] on linux
-
-python server.py
+uv init
+Initialized project `veths-and-namespaces-md`
+uv add flask
+uv run server.py
 ...then we run it:
 
 # ip netns exec netns1 /bin/bash
@@ -655,6 +657,16 @@ python server.py
  * Debug mode: off
  * Running on http://0.0.0.0:8080/ (Press CTRL+C to quit)
 ```
+
+...and from a completely separate machine on the same network as the one where we're running the server, we curl it using the machine's external IP address, on port 6000:
+
+```bash
+curl http://172.25.188.34:6000/
+Hello from Flask!
+
+```
+
+$
 
 ## start here
 
