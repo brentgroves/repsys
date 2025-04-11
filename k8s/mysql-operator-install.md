@@ -17,14 +17,7 @@ kubectl logs mysql-operator-7cbc8bd94d-v2n9k --namespace=mysql-operator
 [2025-04-01 22:22:07,482] kopf._core.reactor.o [ERROR   ] Request attempt #8/9 failed; will retry: GET <https://10.152.183.1:443/apis> -> ClientConnectorCertificateError(ConnectionKey(host='10.152.183.1', port=443, is_ssl=True, ssl=True, proxy=None, proxy_auth=None, proxy_headers_hash=None), SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: CA cert does not include key usage extension (_ssl.c:1020)'))
 ```
 
-Temp Resolve: In case anyone else hits this, I resolved it by creating and installing a CA:
-
-```bash
-mkdir cadir
-openssl genrsa -out cadir/ca.key 2048
-openssl req -x509 -new -nodes -key ca.key -sha256 -days 360 -out cadir/ca.crt -addext "keyUsage=critical,digitalSignature,keyCertSign"
-microk8s.refresh-certs cadir
-```
+## **[replace default ca root certificate with our own. if needed only.](./issues/certificates.md)**
 
 kubectl describe pod/mysql-operator-7cbc8bd94d-v2n9k -n mysql-operator
 ...

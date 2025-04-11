@@ -10,6 +10,7 @@
 ## Questions
 
 - Ask for Plex web service account from Sam or Kevin
+- Does any location besides Indiana have vending machines?
 
 ## PowerBI reports for PLC KepServerEx log events
 
