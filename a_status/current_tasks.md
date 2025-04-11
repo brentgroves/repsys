@@ -5,6 +5,7 @@
 - Help adding intermediate and root CA certificates to Wyse Image for Fruitport.
 - Muscle Shoals thin client certificates.
 - Use cloud.plex.com to locate new accounts for TB web services such as account_nos_gets and account_nos_picker_get.
+- Work with Jared to add R620s to core switches using 10GB SPF+ module.  This will give us better access to locations VLANs.
 
 ## Questions
 
