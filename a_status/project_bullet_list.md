@@ -74,3 +74,11 @@ and for the Structures Avilla Kubernetes Cluster
 ## PiWeb Research
 
 - Research usages of zeiss piweb and **[statistical process control](https://asq.org/quality-resources/statistical-process-control?srsltid=AfmBOopPwaYtgJNzIb_z2cVgiVBWtzgSygpJiKP-H197XVOC0Opo7C2X)**. We have Mills River license available.
+
+## PowerBI reports for PLC KepServerEx log events
+
+- Control Engineer adds boolean PLC tag to use as trigger for log event.
+- Configure redundant data sources for KepServerEx log events.
+- Add PLC tags to log events and map PLC data types to SQL data types.
+- Create ETL scripts to copy KepServerEX log events to data warehouse.
+- Create PowerBI reports for log events.

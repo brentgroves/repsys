@@ -50,7 +50,7 @@ A platform engineer designs, builds, and maintains the internal developer platfo
 
 ### Avilla Structures On-Prem **[Kubernetes](https://www.turing.com/blog/importance-of-kubernetes-for-devops)**, MicroK8s Cluster Configuration
 
-- **[Connect Dell PowerEdge servers](./b_platform_engineering/c_network_support/bonded_10GB_connection.md)** to extreme core switches with 10GB SPF+ modules in truck mode to VLANs 50 and 220.
+- **[Connect Dell PowerEdge servers](./b_platform_engineering/c_network_support/bonded_10GB_connection.md)** to extreme core switches with 10GB SPF+ modules in truck mode to VLANs 50, 220, 1220.
 
 ### Azure Managed **[Kubernetes](https://www.turing.com/blog/importance-of-kubernetes-for-devops)**, AKS, Cluster Configuration
 
@@ -120,9 +120,6 @@ Open Virtual Network (OVN) builds upon Open vSwitch (OVS) to provide a higher-le
 Given our complex network, start learning this networking part of K8s.
 - **[Configuring Host Interfaces](https://microk8s.io/docs/configure-host-interfaces)**
 
-- Time: Ongoing
-- Due date: NA
-
 ## IS Projects
 
 ### Automated Certificate Management System
@@ -167,3 +164,11 @@ Given our complex network, start learning this networking part of K8s.
 ## PiWeb Research
 
 - Research usages of zeiss piweb and **[statistical process control](https://asq.org/quality-resources/statistical-process-control?srsltid=AfmBOopPwaYtgJNzIb_z2cVgiVBWtzgSygpJiKP-H197XVOC0Opo7C2X)**. We have Mills River license available.
+
+## PowerBI reports for PLC KepServerEx log events
+
+- Control Engineer adds boolean PLC tag to use as trigger for log event.
+- Configure redundant data sources for KepServerEx log events.
+- Add PLC tags to log events and map PLC data types to SQL data types.
+- Create ETL scripts to copy KepServerEX log events to data warehouse.
+- Create PowerBI reports for log events.

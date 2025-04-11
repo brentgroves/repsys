@@ -1,14 +1,22 @@
 # Current Tasks
 
+## Next
+
+- Help adding intermediate and root CA certificates to Wyse Image for Fruitport.
+- Muscle Shoals thin client certificates.
+- Use cloud.plex.com to locate new accounts for TB web services such as account_nos_gets and account_nos_picker_get.
+
 ## Questions
 
-- Muscle Shoals thin client certificates.
-- Can we get Wyse Image Provision set up for Fruitport.
-cloud.plex.com
-- Can we use these Web Service to get all accounts dynamically, account_nos_gets, account_nos_picker_get
-- Ask about new Plex UI and REST web services.
-  - Ask web_service_account from Sam or Kevin
-  - What is URL to Plex UX.
+- Ask for Plex web service account from Sam or Kevin
+
+## PowerBI reports for PLC KepServerEx log events
+
+- Control Engineer adds boolean PLC tag to use as trigger for log event.
+- Configure redundant data sources for KepServerEx log events.
+- Add PLC tags to log events and map PLC data types to SQL data types.
+- Create ETL scripts to copy KepServerEX log events to data warehouse.
+- Create PowerBI reports for log events.
 
 ## Automated Certificate Management System
 
