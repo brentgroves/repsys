@@ -4,6 +4,57 @@
 **[Current Status](../development/status/weekly/current_status.md)**\
 **[Back to Main](../README.md)**
 
+## from web site
+
+```bash
+kubectl create secret generic mypwds \
+        --from-literal=rootUser=root \
+        --from-literal=rootHost=% \
+        --from-literal=rootPassword="sakila"
+
+kubectl apply -f mycluster.yaml
+innodbcluster.mysql.oracle.com/mycluster created
+Output looks similar to this:
+
+NAME          STATUS    ONLINE   INSTANCES   ROUTERS   AGE
+mycluster     PENDING   0        3           1         10s
+Until reaching ONLINE status:
+
+
+NAME        STATUS   ONLINE   INSTANCES   ROUTERS   AGE
+mycluster   ONLINE   3        3           1         2m6s
+
+ kubectl get all                  
+NAME                                    READY   STATUS    RESTARTS   AGE
+pod/mycluster-0                         2/2     Running   0          3m47s
+pod/mycluster-1                         2/2     Running   0          3m47s
+pod/mycluster-2                         2/2     Running   0          3m47s
+pod/mycluster-router-5758d5b8c9-8xvdz   1/1     Running   0          72s
+pod/mysql-0                             1/1     Running   4          16d
+pod/nginx-5869d7778c-9qpbk              1/1     Running   5          25d
+
+kubectl get innodbcluster --watch
+kubectl get innodbcluster        
+NAME        STATUS   ONLINE   INSTANCES   ROUTERS   AGE
+mycluster   ONLINE   3        3           1         4m44s
+
+```
+
+To demonstrate, this example connects with MySQL Shell to show the host name:
+
+```bash
+kubectl run --rm -it myshell --image=container-registry.oracle.com/mysql/community-operator -- mysqlsh root@mycluster --sql
+If you don't see a command prompt, try pressing enter.
+******
+
+MySQL mycluster SQL> SELECT @@hostname;
+
++-------------+
+| @@hostname  |
++-------------+
+| mycluster-0 |
++-------------+
+
 ## Azure Issue
 
 Could not get the MySQL Operator to install a MySQL InnoDB cluster on Azure.

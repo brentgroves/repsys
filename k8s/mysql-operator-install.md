@@ -105,6 +105,19 @@ deployment.apps/mysql-operator created
 ```bash
 kubectl get all -n mysql-operator
 
+NAME             READY   UP-TO-DATE   AVAILABLE   AGE
+mysql-operator   1/1     1            1           30s
+
+kubectl get all --namespace mysql-operator                      
+NAME                                  READY   STATUS    RESTARTS   AGE
+pod/mysql-operator-7cbc8bd94d-x4tl2   1/1     Running   0          88s
+
+NAME                             READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/mysql-operator   1/1     1            1           88s
+
+NAME                                        DESIRED   CURRENT   READY   AGE
+replicaset.apps/mysql-operator-7cbc8bd94d   1         1         1       88s
+
 NAME                                  READY   STATUS         RESTARTS   AGE
 pod/mysql-operator-7cbc8bd94d-jqzb6   0/1     ErrImagePull   0          45s
 
