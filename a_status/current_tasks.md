@@ -12,6 +12,10 @@
 - Ask for Plex web service account from Sam or Kevin
 - Does any location besides Indiana have vending machines?
 
+## Information
+
+**[google-ai-overview-api](https://serpapi.com)**
+
 ## PowerBI reports for PLC KepServerEx log events
 
 - Control Engineer adds boolean PLC tag to use as trigger for log event.
