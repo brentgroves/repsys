@@ -4,7 +4,7 @@ The following is in markdown format. You can view it better at <https://markdown
 
 Good morning, team.
 
-The Structures Information System department has developed a **[PKI](https://cpl.thalesgroup.com/faq/public-key-infrastructure-pki/what-public-key-infrastructure-pki)**, and we use it to create certificates for non-internet software services. It produces **[server and client certificates](https://www.digicert.com/faq/public-trust-and-certificates/whats-the-difference-between-client-certificates-vs-server-certificates)** that are validated with the **[Sectigo Certificate Linter](https://crt.sh/lintcert)**. It was used to manage certificates for Structures Kubernetes gateway as well as the **[Plex Mach2 MES system](https://www.googleadservices.com/pagead/aclk?sa=L&ai=DChcSEwiF7ZqNyY6MAxV4SH8AHWw3JTEYABAEGgJvYQ&co=1&ase=2&gclid=Cj0KCQjw7dm-BhCoARIsALFk4v-dutdN-7g1SRjPBhuveGaV-3VXAZFAL8RHlucNKm1Yx1_EiIM4Y5oaAh7FEALw_wcB&ohost=www.google.com&cid=CAESV-D2WnmAe32FcPmaqCNPXo6fHvlNK7AWnQBIohrU_YRSs-MhpkxEEUgNek2gJj6KIT5TJh9mW01StqHeFIeIMCdsDEfmg8tOkFn3YvQ4M0odgQOLXdHR2g&sig=AOD64_1TTrMAdnGEJwQp2jCupfdt9xN2ow&q&nis=4&adurl&ved=2ahUKEwiwsZaNyY6MAxVE4ckDHaxMET8Q0Qx6BAgOEAE)**.
+The Structures Information System department has developed a **[PKI](https://cpl.thalesgroup.com/faq/public-key-infrastructure-pki/what-public-key-infrastructure-pki)**, and we use it to create certificates for non-internet software services. It produces **[server and client certificates](https://www.digicert.com/faq/public-trust-and-certificates/whats-the-difference-between-client-certificates-vs-server-certificates)** that are validated with the **[Sectigo Certificate Linter](https://crt.sh/lintcert)**. It is used to manage certificates for Structures Kubernetes gateway as well as the **[Plex Mach2 MES system](https://www.googleadservices.com/pagead/aclk?sa=L&ai=DChcSEwiF7ZqNyY6MAxV4SH8AHWw3JTEYABAEGgJvYQ&co=1&ase=2&gclid=Cj0KCQjw7dm-BhCoARIsALFk4v-dutdN-7g1SRjPBhuveGaV-3VXAZFAL8RHlucNKm1Yx1_EiIM4Y5oaAh7FEALw_wcB&ohost=www.google.com&cid=CAESV-D2WnmAe32FcPmaqCNPXo6fHvlNK7AWnQBIohrU_YRSs-MhpkxEEUgNek2gJj6KIT5TJh9mW01StqHeFIeIMCdsDEfmg8tOkFn3YvQ4M0odgQOLXdHR2g&sig=AOD64_1TTrMAdnGEJwQp2jCupfdt9xN2ow&q&nis=4&adurl&ved=2ahUKEwiwsZaNyY6MAxVE4ckDHaxMET8Q0Qx6BAgOEAE)**.
 
 ## Goal
 
@@ -20,7 +20,19 @@ An organization should implement a Public Key Infrastructure (PKI) to establish 
 - Discussed Mach2 user computer trust-store updates with Fruitport DST, Matt Irey, and David Maitner.
 - Creating Network config request to temporarily allow my laptop to access Fruitport's OT network for certificate testing.
 
-## players
+## local team
+
+Christian. Trujillo, IT Structures Manager
+Brent Hall, System Administrator Senior
+Kevin Young, Information Systems Manager
+Jared Davis, IT Manager
+Hayley Rymer, IT Supervisor
+Sam Jackson, Information Systems Developer
+Matt Irey, Desktop and System Support Technician
+David Maitner,  Desktop and System Support Technician
+Carl Stanglang, Desktop and System Support Technician
+
+## Corporate team
 
 Kristian Smith: Global Directory IT
 Adrian Wise: System Admin, Technical Services Manager.
