@@ -7,7 +7,9 @@
 ## Get started with an RStudio® instance
 
 ```bash
-docker run --rm -ti -e PASSWORD=yourpassword -p 8787:8787 rocker/rstudio
+docker run --rm -p 8787:8787 -e PASSWORD=YOURNEWPASSWORD rocker/verse
+
+# docker run --rm -ti -e PASSWORD=yourpassword -p 8787:8787 rocker/rstudio
 
 ```
 
