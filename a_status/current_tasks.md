@@ -15,6 +15,8 @@
 ## Information
 
 **[Docker not working in Ubuntu 24.04](https://askubuntu.com/questions/1511725/ubuntu-24-04-docker-desktop-is-not-starting)**
+<https://www.cherryservers.com/blog/install-docker-ubuntu>
+
 **[google-ai-overview-api](https://serpapi.com)**
 
 ## PowerBI reports for PLC KepServerEx log events
