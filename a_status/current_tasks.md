@@ -2,6 +2,7 @@
 
 ## Next
 
+- **[Access VLAN 1220](../research/m_z/virtualization/networking/linamar/isdev/vlan1220/try1.md)** to check Albion Mach2 certificate chain.
 - Help adding intermediate and root CA certificates to Wyse Image for Fruitport.
 - Muscle Shoals thin client certificates.
 - Use cloud.plex.com to locate new accounts for TB web services such as account_nos_gets and account_nos_picker_get.
