@@ -83,7 +83,7 @@ sudo apt-get install openvswitch-switch
 Now we can confirm that open vswitch is up and running with the following command:
 
 ```bash
-> sudo ovs-vsctl show
+sudo ovs-vsctl show
 
 2754d6a1-4c15-4a41-bb9e-185bd0cf18a1
     Bridge br-int
@@ -96,6 +96,7 @@ Now we can confirm that open vswitch is up and running with the following comman
 ```
 
 Here we see that OVS has already added a default bridge which is used for internal network of OVS.
+**Note: My installation did not add a default bridge.**
 
 Also we can list the network interfaces to see that ovs has created two interface, “br-int” and “ovs-system”.
 
@@ -117,8 +118,8 @@ Create an OVS bridge:
 We use the following commands to create an ovs bridge (br0), confirm it and the related network interface (br0).
 
 ```bash
-> sudo ovs-vsctl add-br br0
-> sudo ovs-vsctl show
+sudo ovs-vsctl add-br br0
+sudo ovs-vsctl show
 
 ozcan@lenovo:~$ sudo ovs-vsctl show
 2754d6a1-4c15-4a41-bb9e-185bd0cf18a1
@@ -135,26 +136,31 @@ ozcan@lenovo:~$ sudo ovs-vsctl show
     ovs_version: "2.17.7"
 
 > ip link show
-
-4: ovs-system: <BROADCAST,MULTICAST> mtu 1500 qdisc noop state DOWN mode DEFAULT group default qlen 1000
-    link/ether 7a:77:b8:37:bb:e9 brd ff:ff:ff:ff:ff:ff
-8: br-int: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UNKNOWN mode DEFAULT group default qlen 1000
-    link/ether 96:bd:cc:37:a8:b8 brd ff:ff:ff:ff:ff:ff
-20: br0: <BROADCAST,MULTICAST> mtu 1500 qdisc noqueue state DOWN mode DEFAULT group default qlen 1000
-    link/ether 5a:a4:45:af:da:49 brd ff:ff:ff:ff:ff:ff
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN mode DEFAULT group default qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+2: eno1: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc fq_codel state UP mode DEFAULT group default qlen 1000
+    link/ether 98:90:96:b8:00:1c brd ff:ff:ff:ff:ff:ff
+    altname enp0s25
+3: ovs-system: <BROADCAST,MULTICAST> mtu 1500 qdisc noop state DOWN mode DEFAULT group default qlen 1000
+    link/ether b6:40:e3:2a:93:28 brd ff:ff:ff:ff:ff:ff
+4: br0: <BROADCAST,MULTICAST> mtu 1500 qdisc noop state DOWN mode DEFAULT group default qlen 1000
+    link/ether 16:d5:61:24:58:41 brd ff:ff:ff:ff:ff:ff
 ```
+
+![il](https://miro.medium.com/v2/resize:fit:720/format:webp/1*ILxzaEXy-LzqXqHxsXoGlg.png)
 
 Now we need two OVS switch port to represent our physical networks. Use the following commands to create ports and add VLAN tags. Here we give “tag=10” to both ports so that the hosts in these interfaces can communicate with default settings.
 
 ```bash
-> sudo ovs-vsctl add-port br0 eth1 tag=10 -- set interface eth1 type=internal
-> sudo ovs-vsctl add-port br0 eth2 tag=10 -- set interface eth2 type=internal
+sudo ovs-vsctl add-port br0 eth1 tag=10 -- set interface eth1 type=internal
+sudo ovs-vsctl add-port br0 eth2 tag=10 -- set interface eth2 type=internal
 ```
 
 Now if we list the OVS components again, we see the details of the ports we created, and we can list the network interfaces to see that two new interfaces have been created. You should set the new interfaces as up (see the commands below).
+mdf 
 
 ```bash
-> sudo ovs-vsctl show
+sudo ovs-vsctl show
 2754d6a1-4c15-4a41-bb9e-185bd0cf18a1
     Bridge br0
         Port br0
@@ -176,21 +182,25 @@ Now if we list the OVS components again, we see the details of the ports we crea
                 type: internal
     ovs_version: "2.17.7"
 
-> sudo ip link set dev eth1 up
-> sudo ip link set dev eth2 up
+sudo ip link set dev eth1 up
+sudo ip link set dev eth2 up
 
-> ip link show
+tcpdump -i bond0 -nn -e  vlan
 
-4: ovs-system: <BROADCAST,MULTICAST> mtu 1500 qdisc noop state DOWN mode DEFAULT group default qlen 1000
-    link/ether 7a:77:b8:37:bb:e9 brd ff:ff:ff:ff:ff:ff
-8: br-int: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UNKNOWN mode DEFAULT group default qlen 1000
-    link/ether 96:bd:cc:37:a8:b8 brd ff:ff:ff:ff:ff:ff
-20: br0: <BROADCAST,MULTICAST> mtu 1500 qdisc noqueue state DOWN mode DEFAULT group default qlen 1000
-    link/ether 5a:a4:45:af:da:49 brd ff:ff:ff:ff:ff:ff
-23: eth1: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UNKNOWN mode DEFAULT group default qlen 1000
-    link/ether ea:4c:ca:87:95:49 brd ff:ff:ff:ff:ff:ff
-24: eth2: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UNKNOWN mode DEFAULT group default qlen 1000
-    link/ether 32:67:7a:63:0d:8e brd ff:ff:ff:ff:ff:ff
+ip link show
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN mode DEFAULT group default qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+2: eno1: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc fq_codel state UP mode DEFAULT group default qlen 1000
+    link/ether 98:90:96:b8:00:1c brd ff:ff:ff:ff:ff:ff
+    altname enp0s25
+3: ovs-system: <BROADCAST,MULTICAST> mtu 1500 qdisc noop state DOWN mode DEFAULT group default qlen 1000
+    link/ether b6:40:e3:2a:93:28 brd ff:ff:ff:ff:ff:ff
+4: br0: <BROADCAST,MULTICAST> mtu 1500 qdisc noop state DOWN mode DEFAULT group default qlen 1000
+    link/ether 16:d5:61:24:58:41 brd ff:ff:ff:ff:ff:ff
+5: eth1: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UNKNOWN mode DEFAULT group default qlen 1000
+    link/ether 42:c1:70:97:fe:11 brd ff:ff:ff:ff:ff:ff
+6: eth2: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UNKNOWN mode DEFAULT group default qlen 1000
+    link/ether 36:ba:fd:a3:be:8c brd ff:ff:ff:ff:ff:ff
 ```
 
 Now create two virtual machines on Virtualbox. To establish two virtual machines on VirtualBox, employ an Ubuntu Server image for their instantiation. In the network settings, opt for the “Bridged Adapter” configuration and select “Paravirtualized Network (virtio-net)” as the Adapter Type. This specific adapter type, namely virtio-net, facilitates the utilization of advanced features such as VLAN tagging. The selection of “Bridged Adapter” ensures that the virtual machines are connected directly to the host’s physical network, allowing them to operate as individual entities within the broader network infrastructure. This configuration enhances network flexibility and supports the implementation of VLANs for improved network segmentation and management.
