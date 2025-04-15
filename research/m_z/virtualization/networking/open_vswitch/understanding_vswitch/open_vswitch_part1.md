@@ -259,7 +259,7 @@ Virtual LANs (VLANs) are a networking technology that enables the segmentation o
 
 ![vlt](https://miro.medium.com/v2/resize:fit:640/format:webp/0*h4T42eLjeMImt7Kx.jpg)
 
-In our case, when a package is received by the OVS bridge, it adds a VLAN tag to the package and forwards to the router, and when router forwards to package to the OVS bridge again, it strips that tag and forward package to the destination port. That’s why this tag is not visible on our VLANs “eth1” and “eth2”. We can confirm that using wireshark.
+In our case, when a package is received by the OVS bridge, it adds a VLAN tag to the package and forwards to the router, and when router forwards to package to the OVS bridge again, it strips that tag and forward package to the destination port. That’s why this tag is not visible on our VLANs “eth1” and “eth2”. We can confirm that using wireshark or `tcpdump -i eth1 -nn -e  vlan`.
 
 First let’s start a web server on vm2 using python3.
 
