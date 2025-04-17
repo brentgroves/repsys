@@ -30,6 +30,7 @@ exit
 iptables -P FORWARD DROP
 iptables -L FORWARD
 
+
 # for wireless
 iptables -t nat -A POSTROUTING -s 192.168.0.0/255.255.255.0 -o wlp114s0f0 -j MASQUERADE
 sudo iptables -t nat -S
@@ -37,8 +38,7 @@ sudo iptables -t nat -S
 # for wireless
 iptables -A FORWARD -i wlp114s0f0 -o veth0 -j ACCEPT
 sudo iptables -S
-# for wireless
-iptables -A FORWARD -o wlp114s0f0 -i veth0 -j ACCEPT
+
 sudo iptables -t nat -S
 # for wireless
 iptables -t nat -A PREROUTING -p tcp -i wlp114s0f0 --dport 6000 -j DNAT --to-destination 192.168.0.2:8080

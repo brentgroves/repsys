@@ -6,6 +6,11 @@
 
 **[Main](../../../../../../README.md)**
 
+## reference
+
+- **[try](https://github.com/rootless-containers/slirp4netns)**
+- **[port forwarding into namespaces](https://serverfault.com/questions/1151515/unshare-and-port-forwarding-into-namespace/1151525)**
+
 Linux has some amazing kernel features to enable containerization. Tools like Docker are built on top of them, and at PythonAnywhere we have built our own virtualization system using them.
 
 One part of these systems that I've not spent much time poking into is network namespaces. Namespaces are a general abstraction that allows you to separate out system resources; for example, if a process is in a mount namespace, then it has its own set of mounted disks that is separate from those seen by the other processes on a machine -- or if it's in a process namespace, then it has its own cordoned-off set of processes visible to it (so, say, ps auxwf will just show the ones in its namespace).
@@ -231,6 +236,9 @@ Now, let's try pinging from inside the namespace to the outside interface:
 
 ```bash
 ip netns exec netns1 /bin/bash
+# from other terminal
+tcpdump -i veth0
+
 ping 192.168.0.1
 PING 192.168.0.1 (192.168.0.1) 56(84) bytes of data.
 64 bytes from 192.168.0.1: icmp_seq=1 ttl=64 time=0.069 ms
@@ -244,6 +252,11 @@ rtt min/avg/max/mdev = 0.042/0.055/0.069/0.013 ms
 And from outside to the inside:
 
 ```bash
+# from namespace
+# veth1 did not see the ping until after I pressed ctrl-c to terminate
+tcpdump -i veth1
+
+# from host
 # ping 192.168.0.2
 PING 192.168.0.2 (192.168.0.2) 56(84) bytes of data.
 64 bytes from 192.168.0.2: icmp_seq=1 ttl=64 time=0.039 ms
@@ -252,6 +265,15 @@ PING 192.168.0.2 (192.168.0.2) 56(84) bytes of data.
 --- 192.168.0.2 ping statistics ---
 2 packets transmitted, 2 received, 0% packet loss, time 1018ms
 rtt min/avg/max/mdev = 0.039/0.041/0.043/0.002 ms
+
+# veth1 did not see the ping until after I pressed ctrl-c to terminate
+# tcpdump -i veth1 # started before ping 
+^C16:13:26.139562 IP 192.168.0.1 > 192.168.0.2: ICMP echo request, id 58644, seq 1, length 64
+16:13:26.139583 IP 192.168.0.2 > 192.168.0.1: ICMP echo reply, id 58644, seq 1, length 64
+16:13:27.173388 IP 192.168.0.1 > 192.168.0.2: ICMP echo request, id 58644, seq 2, length 64
+16:13:27.173409 IP 192.168.0.2 > 192.168.0.1: ICMP echo reply, id 58644, seq 2, length 64
+16:13:28.196396 IP 192.168.0.1 > 192.168.0.2: ICMP echo request, id 58644, seq 3, length 64
+
 ```
 
 Great!
@@ -470,6 +492,8 @@ Parameter Description
 
 # My computer
 ip a
+
+
 # for wireless
 iptables -t nat -A POSTROUTING -s 192.168.0.0/255.255.255.0 -o wlp114s0f0 -j MASQUERADE
 
@@ -496,6 +520,14 @@ sudo iptables -t nat -S
 -A LIBVIRT_PRT -s 192.168.122.0/24 ! -d 192.168.122.0/24 -p tcp -j MASQUERADE --to-ports 1024-65535
 -A LIBVIRT_PRT -s 192.168.122.0/24 ! -d 192.168.122.0/24 -p udp -j MASQUERADE --to-ports 1024-65535
 -A LIBVIRT_PRT -s 192.168.122.0/24 ! -d 192.168.122.0/24 -j MASQUERADE
+
+# from host
+tcpdump src host 172.25.188.34
+16:26:07.080466 IP isdev > dns.google: ICMP echo request, id 2745, seq 48, length 64
+16:26:08.082401 IP isdev > dns.google: ICMP echo request, id 2745, seq 49, length 64
+
+# from netns1
+ping 8.8.8.8
 ```
 
 Now we'll say that we'll forward stuff that comes in on interface x can be forwarded to our veth0 interface, which you'll remember is the end of the virtual network pair that is outside the namespace:
@@ -528,6 +560,18 @@ sudo iptables -S
 -A FORWARD -s 10.1.0.0/16 -m comment --comment "generated for MicroK8s pods" -j ACCEPT
 -A FORWARD -d 10.1.0.0/16 -m comment --comment "generated for MicroK8s pods" -j ACCEPT
 -A FORWARD -i wlp114s0f0 -o veth0 -j ACCEPT
+
+
+# from host
+# I caught this after all rules were made
+tcpdump -i veth0
+tcpdump: verbose output suppressed, use -v[v]... for full protocol decode
+listening on veth0, link-type EN10MB (Ethernet), snapshot length 262144 bytes
+16:32:43.803216 IP 192.168.0.2 > dns.google: ICMP echo request, id 9061, seq 1, length 64
+16:32:43.817485 IP dns.google > 192.168.0.2: ICMP echo reply, id 9061, seq 1, length 64
+
+# from netns1
+ping 8.8.8.8
 ```
 
 ...and then the routing in the other direction:
@@ -561,6 +605,18 @@ sudo iptables -S
 -A FORWARD -d 10.1.0.0/16 -m comment --comment "generated for MicroK8s pods" -j ACCEPT
 -A FORWARD -i wlp114s0f0 -o veth0 -j ACCEPT
 -A FORWARD -i veth0 -o wlp114s0f0 -j ACCEPT
+
+# from host
+# I caught this after all rules were made
+tcpdump -i veth0
+tcpdump: verbose output suppressed, use -v[v]... for full protocol decode
+listening on veth0, link-type EN10MB (Ethernet), snapshot length 262144 bytes
+16:32:43.803216 IP 192.168.0.2 > dns.google: ICMP echo request, id 9061, seq 1, length 64
+16:32:43.817485 IP dns.google > 192.168.0.2: ICMP echo reply, id 9061, seq 1, length 64
+
+# from netns1
+ping 8.8.8.8
+
 ```
 
 Now, let's see what happens if we try to ping from inside the namespace
@@ -599,6 +655,25 @@ iptables -t nat -A PREROUTING -p tcp -i enx803f5d090eb3 --dport 6000 -j DNAT --t
 ```
 
 Or, in other words, if something comes in for port 6000 then we should sent it on to port 8080 on the interface at 192.168.0.2 (which is the end of the virtual interface pair that is inside the namespace).
+
+```bash
+# This was before flask was running in netns1
+# from host
+# I caught this after all rules were made
+tcpdump src port 6000
+tcpdump: verbose output suppressed, use -v[v]... for full protocol decode
+listening on veth0, link-type EN10MB (Ethernet), snapshot length 262144 bytes
+16:32:43.803216 IP 192.168.0.2 > dns.google: ICMP echo request, id 9061, seq 1, length 64
+16:32:43.817485 IP dns.google > 192.168.0.2: ICMP echo reply, id 9061, seq 1, length 64
+
+# from another host terminal
+curl -vv telnet://172.25.188.34:6000
+* connect to 172.25.188.34 port 6000 from 172.25.188.34 port 41388 failed: Connection refused
+* Failed to connect to 172.25.188.34 port 6000 after 0 ms: Couldn't connect to server
+* Closing connection
+curl: (7) Failed to connect to 172.25.188.34 port 6000 after 0 ms: Couldn't connect to server
+
+```
 
 Next, we say that we're happy to forward stuff back and forth over new, established and related (not sure what that last one is) connections to the IP of our namespaced interface:
 
@@ -654,7 +729,7 @@ if __name__ == "__main__":
 
 ```bash
 pushd .
-cd ~/src/repsys/volumes/python/tutorials/veths_and_namespaces.md
+cd ~/src/repsys/volumes/python/tutorials/veths_and_namespaces
 sudo ip netns exec netns1 /bin/bash
 uv init
 Initialized project `veths-and-namespaces-md`
@@ -680,9 +755,25 @@ Hello from Flask!
 
 ```
 
+```bash
+# from host
+# I caught this after all rules were made
+tcpdump src port 6000
+
+# from another host terminal
+curl -vv telnet://172.25.188.34:6000
+* connect to 172.25.188.34 port 6000 from 172.25.188.34 port 41388 failed: Connection refused
+* Failed to connect to 172.25.188.34 port 6000 after 0 ms: Couldn't connect to server
+* Closing connection
+curl: (7) Failed to connect to 172.25.188.34 port 6000 after 0 ms: Couldn't connect to server
+
+```
+
 ## start here
 
 Use tcpdump to watch traffic on WiFi interface and veth1 interface.
+
+os-net-config
 
 ```bash
 lxc info | grep firewall
