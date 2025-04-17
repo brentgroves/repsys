@@ -13,13 +13,13 @@
 
 - Ask for Plex web service account from Sam or Kevin
 - Does any location besides Indiana have vending machines?
+- Jared Ikenberry, new Fruitport Intelliplex
+
+## Reports
+
+- Sales department asked https://www.lightspeedhq.com/blog/inventory-days-on-hand/ how many days of inventory do we need to meet next two week requirements?
 
 ## Information
-
-**[Docker not working in Ubuntu 24.04](https://askubuntu.com/questions/1511725/ubuntu-24-04-docker-desktop-is-not-starting)**
-<https://www.cherryservers.com/blog/install-docker-ubuntu>
-docker run --rm -p 8787:8787 -e PASSWORD=YOURNEWPASSWORD rocker/verse
-docker: Error response from daemon: failed to set up container networking: driver failed programming external connectivity on endpoint vigorous_davinci (fa3eae4db63decdccb596d66ceda448606650e595016cbe7eed6c507bf324a85): failed to bind host port for 0.0.0.0:8787:172.17.0.2:8787/tcp: address already in use
 
 Run 'docker run --help' for more information
 
