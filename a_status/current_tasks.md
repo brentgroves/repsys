@@ -16,9 +16,9 @@
 - Does any location besides Indiana have vending machines?
 - Jared Ikenberry, new Fruitport Intelliplex
 
-## Reports
+## **[Reports](./a_data_analysis/is_data_analysis.md)**
 
-- Sales department asked <https://www.lightspeedhq.com/blog/inventory-days-on-hand/> how many days of inventory do we need to meet next two week requirements?
+- Sales department asked for **[days on hand](./a_data_analysis/days_on_hand/days_on_hand.md)** reports?
 
 ## Information
 

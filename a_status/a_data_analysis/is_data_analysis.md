@@ -8,7 +8,6 @@ The following is in markdown format and can be viewed by copying and pasting the
 
 - Set raw material reorder points based on sales short-term projections.
 - Set tooling reorder points based on sales short-term projections.
-- Set raw material reorder points based on sales short-term projections.
 - Set finished goods totals based on sales short-term projections.
 - Calculate the Mean Time To Repair. It is the average downtime.
 - Calculate the Mean Time Between Failures. It is the average uptime.
