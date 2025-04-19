@@ -1,13 +1,19 @@
-# Project Bullet List
+# IS Project Bullet List
 
 Hi Christian and Kevin,
 
-This is a revised bullet list of Information Systems projects containing a certificate management system. It is suitable for our Bi-Weekly meeting. I will send a more detailed summary later.
+This is a revised bullet list with newly added data analysis projects. It is suitable for our Bi-Weekly meeting. I will send a more detailed summary later.
 
 Thank you.
 
-The following is in markdown format. You can view it better at <https://markdownlivepreview.com/> by copying and pasting the contents below.
+The following is in markdown format and can be viewed by copying and pasting the contents below in an online markdown viewer such as at <https://markdownlivepreview.com/> .
 
+- Set raw material reorder points based on sales short-term projections.
+- Set tooling reorder points based on sales short-term projections.
+- Set raw material reorder points based on sales short-term projections.
+- Set finished goods totals based on sales short-term projections.
+- Calculate the Mean Time To Repair. It is the average downtime.
+- Calculate the Mean Time Between Failures. It is the average uptime.
 - Ongoing certificate management for each Mach2 MES system
 and for the Structures Avilla Kubernetes Cluster
 - Connect Structures Avilla Dell PowerEdge servers to extreme core switches with 10GB SPF+ modules in truck mode to VLANs 50 and 220.
