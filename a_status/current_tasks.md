@@ -2,7 +2,7 @@
 
 ## Next
 
-
+- **[go build system](https://www.codingexplorations.com/blog/mastering-gos-build-system-efficiency-through-caching-and-advanced-commands)**
 - **[Port Forwarding using IPTables](https://www.digitalocean.com/community/tutorials/how-to-forward-ports-through-a-linux-gateway-with-iptables)**
 - **[Access VLAN 1220](../research/m_z/virtualization/networking/linamar/avilla/isdev/vlan1220/edge/try2.md)** to check Albion Mach2 certificate chain.
 - Help adding intermediate and root CA certificates to Wyse Image for Fruitport.
@@ -18,7 +18,7 @@
 
 ## Reports
 
-- Sales department asked https://www.lightspeedhq.com/blog/inventory-days-on-hand/ how many days of inventory do we need to meet next two week requirements?
+- Sales department asked <https://www.lightspeedhq.com/blog/inventory-days-on-hand/> how many days of inventory do we need to meet next two week requirements?
 
 ## Information
 
