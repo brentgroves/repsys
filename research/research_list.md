@@ -3,6 +3,9 @@
 **[Current Status](../development/status/weekly/current_status.md)**\
 **[Back Main](../README.md)**
 
+- **[go build system](https://www.codingexplorations.com/blog/mastering-gos-build-system-efficiency-through-caching-and-advanced-commands)**
+- **[Port Forwarding using IPTables](https://www.digitalocean.com/community/tutorials/how-to-forward-ports-through-a-linux-gateway-with-iptables)**
+- **[google-ai-overview-api](https://serpapi.com)**
 - **[Canonical](./a_l/canonical/all_canonical.md)**\
 A list of the products offered by Canonical.
 

@@ -1,54 +1,35 @@
 # Current Tasks
 
-## Next
+## Misc
 
-- **[go build system](https://www.codingexplorations.com/blog/mastering-gos-build-system-efficiency-through-caching-and-advanced-commands)**
-- **[Port Forwarding using IPTables](https://www.digitalocean.com/community/tutorials/how-to-forward-ports-through-a-linux-gateway-with-iptables)**
-- **[Access VLAN 1220](../research/m_z/virtualization/networking/linamar/avilla/isdev/vlan1220/edge/try2.md)** to check Albion Mach2 certificate chain.
-- Help adding intermediate and root CA certificates to Wyse Image for Fruitport.
+- Migrate from MSC to new vending machines.
 - Muscle Shoals thin client certificates.
 - Use cloud.plex.com to locate new accounts for TB web services such as account_nos_gets and account_nos_picker_get.
-- Work with Jared to add R620s to core switches using 10GB SPF+ module.  This will give us better access to locations VLANs.
 
 ## Questions
 
 - Ask for Plex web service account from Sam or Kevin
 - Does any location besides Indiana have vending machines?
-- Jared Ikenberry, new Fruitport Intelliplex
 
-## **[Reports](./a_data_analysis/is_data_analysis.md)**
+## **[Research](../research/research_list.md)**
 
-- Sales department asked for **[days on hand](./a_data_analysis/days_on_hand/days_on_hand.md)** reports?
+## **[Data Analysis](./a_data_analysis/is_data_analysis.md)**
 
-## Information
+## **[Automated Certificate Management System](./a_certificate_management/certificate_management_status.md)**
 
-Run 'docker run --help' for more information
-
-**[google-ai-overview-api](https://serpapi.com)**
-
-## PowerBI reports for PLC KepServerEx log events
-
-- Control Engineer adds boolean PLC tag to use as trigger for log event.
-- Configure redundant data sources for KepServerEx log events.
-- Add PLC tags to log events and map PLC data types to SQL data types.
-- Create ETL scripts to copy KepServerEX log events to data warehouse.
-- Create PowerBI reports for log events.
-
-## Automated Certificate Management System
-
-- certificate schema
-- add records for current certificates
+- Add Nancy Swank and Jamie Pyle computers to PKI GPO.
 
 ## Automated ETL and Report System
 
-- Setup "uv" on development system. **["uv" is a fast, all-in-one Python package and project manager, designed as a drop-in replacement for tools like pip, pip-tools, pipx, poetry, pyenv, and virtualenv, written in Rust.](https://astral.sh/blog/uv#:~:text=Charlie%20Marsh,shared%20vision%20for%20Python%20packaging.)**
-- Move schema from Mobex Azure SQL MI to the Linamar Azure SQL DB.
+- Python base data source docker image.
+- Move schema and ETL scripts from Mobex Azure SQL MI to the Linamar Azure SQL DB and Avilla K8s servers.
 - Write scripts to compare Mobex Azure SQL result sets to Linamar Azure SQL DB result set.
+- Use cloud.plex.com to locate new accounts for TB web services such as account_nos_gets and account_nos_picker_get.
 
 ## Structures Information Systems, Kubernetes, or K8s, Platform Engineering Support
 
 - Jared made config request to move Dell R620s to core server using link aggregation and 10 GP SPF+ modules.
-- Added VLAN ID 1220 to port 29,28,31 this VLAN should be bound to 10.187.220.0/24.
+- **[Access VLAN 1220](../research/m_z/virtualization/networking/linamar/avilla/isdev/vlan1220/edge/try2.md)** to check Albion Mach2 certificate chain.
 - Ask for Windows VM with 10.188.50.211 IP for PowerBI reports.
 - Generate new **[ca.crt](../k8s/certificates/issue_microk8s_key_usage.md#start_here)** for Microk8s with keyUsage defined.
 - Ramarao Guttikonda: K8s admin
