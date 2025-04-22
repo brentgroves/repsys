@@ -286,11 +286,16 @@ Temporarily Enable IP Forwarding:
 ```bash
 cat /proc/sys/net/ipv4/ip_forward
 0
-# echo 1 > /proc/sys/net/ipv4/ip_forward
-# cat /proc/sys/net/ipv4/ip_forward
+
+# (temporarily enables forwarding)
+echo 1 > /proc/sys/net/ipv4/ip_forward
+# or
+sudo sysctl -w net.ipv4.ip_forward=1 
+
+# verify
+cat /proc/sys/net/ipv4/ip_forward
 1
 
-sudo sysctl -w net.ipv4.ip_forward=1 (temporarily enables forwarding)
 ```
 
 ## AI Overview: how to sysctl to make routing permanent
@@ -299,6 +304,11 @@ Make it persistent (recommended):
 
 Edit the /etc/sysctl.conf file and add or modify the line net.ipv4.ip_forward=1
 Apply the changes with sudo sysctl -p
+
+```bash
+sudo sed -i 's/^#net.ipv4.ip_forward=1/net.ipv4.ip_forward=1/' /etc/sysctl.conf
+sudo sysctl -p
+```
 
 ## **[The iptables rules appear in the nftables rule listing](../../firewall/netfilter/iptables-nft/iptables_vs_iptables-nft.md)**
 
@@ -375,16 +385,34 @@ OK, now we want to make some changes to the nat iptable so that we have routing.
 
 ```bash
 iptables -t nat -L
+
+# The iptables NAT PREROUTING chain is an iptables chain that processes incoming packets before any routing decisions are made. It's primarily used for "Destination Network Address Translation (DNAT)", where the destination IP address or port of a packet is modified before it's sent to its intended recipient. 
+
 Chain PREROUTING (policy ACCEPT)
 target     prot opt source               destination
 DOCKER     all  --  anywhere             anywhere             ADDRTYPE match dst-type LOCAL
 
+# In iptables, the nat INPUT chain is part of the nat table and is specifically used for Network Address Translation (NAT) on incoming packets destined for the local machine. It processes packets after PREROUTING but before the filtering decision in the INPUT chain of the filter table. 
+
+# INPUT Chain:
+# Within the nat table, the INPUT chain focuses on NAT actions for packets directed to the local machine. This means it can modify the source IP address (SNAT) of outgoing packets related to incoming connections. 
+
+# Processing Order:
+# Incoming packets first enter the PREROUTING chain in the nat table (for Destination NAT or DNAT). Then, they flow to the INPUT chain in the nat table (for Source NAT or SNAT). Finally, if the packet is still destined for the local system, it enters the INPUT chain in the filter table. 
+
 Chain INPUT (policy ACCEPT)
 target     prot opt source               destination
+
+# In iptables, the nat table's OUTPUT chain applies Network Address Translation (NAT) rules to packets generated locally by the system before they are routed out. This chain allows for altering the source IP address or port of outgoing packets, primarily used for scenarios like Source NAT (SNAT) where the local IP address is masked by the router's public IP. 
+
+# Locally Generated Packets:
+# The OUTPUT chain specifically targets packets originating from applications running on the local machine. 
 
 Chain OUTPUT (policy ACCEPT)
 target     prot opt source               destination
 DOCKER     all  --  anywhere            !localhost/8          ADDRTYPE match dst-type LOCAL
+
+# nat: This table is consulted when a packet that creates a new connection is encountered. It consists of three built-ins: PREROUTING (for altering packets as soon as they come in), OUTPUT (for altering locally-generated packets before routing), and POSTROUTING (for altering packets as they are about to go out)
 
 Chain POSTROUTING (policy ACCEPT)
 target     prot opt source               destination
@@ -398,39 +426,12 @@ RETURN     all  --  anywhere             anywhere
 
 I have Docker installed on the machine already, and it's got some of its own NAT-based routing configured there. I don't think there's any harm in leaving that there; it's on a different subnet to the one I chose for my own stuff.
 
-## on my system with libvirt
-
-Notice that POSTROUTING LIBVIRT_PRT target jumps to LIBVIRT_PRT custom chain rules.
-
-```bash
-iptables -t nat -L
-Chain PREROUTING (policy ACCEPT)
-target     prot opt source               destination         
-
-Chain INPUT (policy ACCEPT)
-target     prot opt source               destination         
-
-Chain OUTPUT (policy ACCEPT)
-target     prot opt source               destination         
-
-Chain POSTROUTING (policy ACCEPT)
-target     prot opt source               destination         
-LIBVIRT_PRT  all  --  anywhere             anywhere            
-
-Chain LIBVIRT_PRT (1 references)
-target     prot opt source               destination         
-RETURN     all  --  192.168.122.0/24     base-address.mcast.net/24 
-RETURN     all  --  192.168.122.0/24     255.255.255.255     
-MASQUERADE  tcp  --  192.168.122.0/24    !192.168.122.0/24     masq ports: 1024-65535
-MASQUERADE  udp  --  192.168.122.0/24    !192.168.122.0/24     masq ports: 1024-65535
-MASQUERADE  all  --  192.168.122.0/24    !192.168.122.0/24 
-```
-
 So, firstly, we'll enable masquerading from the 192.168.0.* network onto our main ethernet interface ens5:
 
 In iptables, masquerading, a form of SNAT (Source Network Address Translation), allows multiple internal network devices to share a single external IP address, effectively hiding their private IPs behind the router's public IP.
 
 ```bash
+# from isdev at albion office on vlan 40 through enx803f5d090eb3
 ip a
 1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
     link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
@@ -438,15 +439,21 @@ ip a
        valid_lft forever preferred_lft forever
     inet6 ::1/128 scope host noprefixroute 
        valid_lft forever preferred_lft forever
-2: enxf8e43bed63bd: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc fq_codel state UP group default qlen 1000
-    link/ether f8:e4:3b:ed:63:bd brd ff:ff:ff:ff:ff:ff
-4: wlp114s0f0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default qlen 1000
+3: wlp114s0f0: <NO-CARRIER,BROADCAST,MULTICAST,UP> mtu 1500 qdisc noqueue state DOWN group default qlen 1000
     link/ether e0:8f:4c:51:6f:17 brd ff:ff:ff:ff:ff:ff
-    inet 172.25.188.34/23 brd 172.25.189.255 scope global dynamic noprefixroute wlp114s0f0
-       valid_lft 13742sec preferred_lft 13742sec
-    inet6 fe80::17a5:ad3b:4171:8dc0/64 scope link noprefixroute 
+4: enxa0cec85afc3c: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc fq_codel state UP group default qlen 1000
+    link/ether a0:ce:c8:5a:fc:3c brd ff:ff:ff:ff:ff:ff
+5: enx803f5d090eb3: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc fq_codel state UP group default qlen 1000
+    link/ether 80:3f:5d:09:0e:b3 brd ff:ff:ff:ff:ff:ff
+    inet 10.187.40.200/24 brd 10.187.40.255 scope global noprefixroute enx803f5d090eb3
        valid_lft forever preferred_lft forever
-       
+7: veth0@if6: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default qlen 1000
+    link/ether f2:53:43:1c:78:a8 brd ff:ff:ff:ff:ff:ff link-netns netns1
+    inet 192.168.0.1/24 scope global veth0
+       valid_lft forever preferred_lft forever
+    inet6 fe80::f053:43ff:fe1c:78a8/64 scope link 
+       valid_lft forever preferred_lft forever
+
 iptables -t nat -A POSTROUTING -s 192.168.0.0/255.255.255.0 -o ens5 -j MASQUERADE
 
 -t nat: Specifies the NAT table. 

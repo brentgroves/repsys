@@ -2,6 +2,16 @@
 
 Connected to 12-port extreme switch.
 
+## GW and Name Servers
+
+```yaml
+gw: 10.187.x.254
+nameservers:
+    - 10.225.50.203
+    - 10.224.50.203
+
+```
+
 ```yaml
 adapter: 1
     link: enxa0cec85afc3c
@@ -19,15 +29,16 @@ adapter: 2
     
 adapter: 3
     link: enx808f5d090eb3
-    ip: dhcp
+    ip: 10.187.40.200
+    subnet: 10.187.40.0/24
     vlan: 40
     ext-port: 2
-```    
+```
 
 ## VLan 70
 
-There is no dhcp server.
-- 
+There is no dhcp server
+-
 
 ## Try 1
 

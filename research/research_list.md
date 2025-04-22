@@ -3,35 +3,29 @@
 **[Current Status](../development/status/weekly/current_status.md)**\
 **[Back Main](../README.md)**
 
-- Research **["uv" is a fast, all-in-one Python package and project manager, designed as a drop-in replacement for tools like pip, pip-tools, pipx, poetry, pyenv, and virtualenv, written in Rust.](https://astral.sh/blog/uv#:~:text=Charlie%20Marsh,shared%20vision%20for%20Python%20packaging.)**
-
+- **[Port Forwarding using IPTables](https://www.digitalocean.com/community/tutorials/how-to-forward-ports-through-a-linux-gateway-with-iptables)**
+- **[go build system](https://www.codingexplorations.com/blog/mastering-gos-build-system-efficiency-through-caching-and-advanced-commands)**
+- Research **[Namespace Natting](../research/m_z/virtualization/networking/namespaces/veths/veths_and_namespaces.md#start-here)**
+- **[Understanding Open vSwitch: Part 1](https://medium.com/@ozcankasal/understanding-open-vswitch-part-1-fd75e32794e4)**
+- **[Docker Multi-stage builds](./a_l/docker/multi_stage_builds.md)**\
 - Research **[Bind9 for RFC 1918 network](../research/m_z/virtualization/networking/dns/dns_server.md)**
-- Research **[natting with nftables](https://wiki.nftables.org/wiki-nftables/index.php/Performing_Network_Address_Translation_(NAT))**
-- Research **[nftables natter](https://wiki.nftables.org/wiki-nftables/index.php/Performing_Network_Address_Translation_(NAT))**
 - Research Ceph storage **[Dynamic Cluster Management](../research/m_z/virtualization/storage/ceph/architecture.md#dynamic-cluster-management)** to optimize and trouble-shoot the MicroCloud HCI.
 - Research **[Namespaces and CGroups](../research/m_z/virtualization/networking/namespaces/namespaces_cgroups.md)**
-- Research **[Namespace Natting](../research/m_z/virtualization/networking/namespaces/veths/veths_and_namespaces.md#start-here)**
 - Research **[Building a Linux container by hand using namespaces](../research/m_z/virtualization/networking/namespaces/building_containers/part1.md)**
 - Research **[Linux Namespaces in Go](https://songrgg.github.io/programming/linux-namespace-part01-uts-pid/)**
-- Research **[Writing a KVM hypervisor VMM in Python](../research/m_z/virtualization/hypervisor/kvm/writing_a_kvm_hypervisor_in_python/)**
 
-- **[go build system](https://www.codingexplorations.com/blog/mastering-gos-build-system-efficiency-through-caching-and-advanced-commands)**
-- **[Port Forwarding using IPTables](https://www.digitalocean.com/community/tutorials/how-to-forward-ports-through-a-linux-gateway-with-iptables)**
+## archive
+
+- Research **[Writing a KVM hypervisor VMM in Python](../research/m_z/virtualization/hypervisor/kvm/writing_a_kvm_hypervisor_in_python/)**
 - **[google-ai-overview-api](https://serpapi.com)**
 - **[Canonical](./a_l/canonical/all_canonical.md)**\
 A list of the products offered by Canonical.
-
 - **[Cloud-init](./m_z/multipass/cloud-init.md)**\
 The standard for customising cloud instances
 Cloud images are operating system templates and every instance starts out as an identical clone of every other instance. It is the user data that gives every cloud instance its personality and cloud-init is the tool that applies user data to your instances automatically.
-
 - **[Continuous Integration and Continuous Delivery(CI/CD)](./a_l/continuous_integration_and_delivery/continuous_integration_and_delivery.md)**\
   Semaphore lets you test and deploys code at the push of a button with hosted continuous integration and delivery.\
   After you push code to GitHub, it quickly runs your tests on a platform with first-class Docker support and 100+ tools preinstalled.
-
-- **[Docker Multi-stage builds](./a_l/docker/multi_stage_builds.md)**\
-  With multi-stage builds, you use multiple FROM statements in your Dockerfile. Each FROM instruction can use a different base, and each of them begins a new stage of the build. You can selectively copy artifacts from one stage to another, leaving behind everything you don't want in the final image.
-
 - **[Github Runners](./a_l/github/runners.md)**\
   Runners are the machines that execute jobs in a GitHub Actions workflow. For example, a runner can clone your repository locally, install testing software, and then run commands that evaluate your code.
 

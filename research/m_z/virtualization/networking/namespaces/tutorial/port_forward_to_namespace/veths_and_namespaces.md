@@ -21,7 +21,7 @@ This provides certain advantages when it comes to security, but one that I thoug
 
 To put that in more concrete terms: my goal was to be able to start up two Flask servers on the same machine, both bound to port 8080 inside their own namespace. I wanted to be able to access one of them from outside by hitting port 6000 on the machine, and the other by hitting port 6001.
 
-## cleanup
+## **[cleanup](./delete_rules.md)**
 
 ```bash
 ip link delete veth0 type veth peer name veth1
@@ -316,11 +316,16 @@ Temporarily Enable IP Forwarding:
 ```bash
 cat /proc/sys/net/ipv4/ip_forward
 0
-# echo 1 > /proc/sys/net/ipv4/ip_forward
-# cat /proc/sys/net/ipv4/ip_forward
+
+# (temporarily enables forwarding)
+echo 1 > /proc/sys/net/ipv4/ip_forward
+# or
+sudo sysctl -w net.ipv4.ip_forward=1 
+
+# verify
+cat /proc/sys/net/ipv4/ip_forward
 1
 
-sudo sysctl -w net.ipv4.ip_forward=1 (temporarily enables forwarding)
 ```
 
 ## AI Overview: how to sysctl to make routing permanent
@@ -330,11 +335,36 @@ Make it persistent (recommended):
 Edit the /etc/sysctl.conf file and add or modify the line net.ipv4.ip_forward=1
 Apply the changes with sudo sysctl -p
 
-## **[The iptables rules appear in the nftables rule listing](../../firewall/netfilter/iptables-nft/iptables_vs_iptables-nft.md)**
+```bash
+sudo sed -i 's/^#net.ipv4.ip_forward=1/net.ipv4.ip_forward=1/' /etc/sysctl.conf
+sudo sysctl -p
+```
 
-An interesting consequence of iptables-nft using nftables infrastructure is that the iptables ruleset appears in the nftables rule listing. Let's consider an example based on a simple rule:
+Then run the same command, but replace the -p flag with--system:
 
 ```bash
+sudo sysctl --system
+. . .
+* Applying /usr/lib/sysctl.d/50-pid-max.conf ...
+kernel.pid_max = 4194304
+* Applying /etc/sysctl.d/99-cloudimg-ipv6.conf ...
+net.ipv6.conf.all.use_tempaddr = 0
+net.ipv6.conf.default.use_tempaddr = 0
+* Applying /etc/sysctl.d/99-sysctl.conf ...
+net.ipv4.ip_forward = 1
+* Applying /usr/lib/sysctl.d/protect-links.conf ...
+fs.protected_fifos = 1
+fs.protected_hardlinks = 1
+fs.protected_regular = 2
+fs.protected_symlinks = 1
+* Applying /etc/sysctl.conf ...
+net.ipv4.ip_forward = 1
+```
+
+## we are using iptables-nft
+
+```bash
+# iptables is actually iptables-nft
 update-alternatives --display iptables
 iptables - auto mode
   link best version is /usr/sbin/iptables-nft
@@ -349,50 +379,24 @@ iptables - auto mode
   slave iptables-restore: /usr/sbin/iptables-nft-restore
   slave iptables-save: /usr/sbin/iptables-nft-save
 
-iptables -L FORWARD
-Chain FORWARD (policy ACCEPT)
-target     prot opt source               destination
-
-iptables-nft -L FORWARD
-Chain FORWARD (policy ACCEPT)
-target     prot opt source               destination         
 ```
 
 Now that we're forwarding packets, we want to make sure that we're not just forwarding them willy-nilly around the network. If we check the current rules in the FORWARD chain (in the default "filter" table):
 
-I have installed libvirt on this machine so it has modified the ruleset already.
-
 ```bash
-# Only MicroK8s is using the legacy tables. It is only making rules for its RFC 1918 network.
-iptables-legacy -L FORWARD
-Chain FORWARD (policy ACCEPT)
-target     prot opt source               destination         
-ACCEPT     all  --  10.1.0.0/16          anywhere             /* generated for MicroK8s pods */
-ACCEPT     all  --  anywhere             10.1.0.0/16          /* generated for MicroK8s pods */
-
 oot@isdev:/home/brent/src/pki# iptables -L FORWARD
 Chain FORWARD (policy ACCEPT)
 target     prot opt source               destination         
-LIBVIRT_FWX  all  --  anywhere             anywhere            
-LIBVIRT_FWI  all  --  anywhere             anywhere            
-LIBVIRT_FWO  all  --  anywhere             anywhere   
 
 # Each chain is a list of rules which can match a set of packets. Each rule specifies what to do with a packet that matches. This is called a `target', which may be a jump to a user-defined chain in the same table.
-
-# LIBVIRT_FWX target:
-# This target is specifically used by libvirt, a virtualization management library, to mark packets that are being routed through a libvirt-managed network bridge. 
-
-# Functionality:
-# It allows traffic forwarded through the bridge created by libvirt.
-# It enables DHCP, DNS, TFTP, and SSH traffic to the host machine.
-# This is implemented via either iptables or nftables rules, depending on firewalld's backend.
 
 ```
 
 We see that the default is ACCEPT, so we'll change that to DROP:
-<!-- This may interfere with any specific rules in libvirts custom chain. -->
 
+<!-- I left it as accept for this experiment. -->
 ```bash
+
 iptables -P FORWARD DROP
 # iptables -P FORWARD ACCEPT
 # iptables -L FORWARD
@@ -404,35 +408,7 @@ target     prot opt source               destination
 OK, now we want to make some changes to the nat iptable so that we have routing. Let's see what we have first:
 
 ```bash
-iptables -t nat -L
-Chain PREROUTING (policy ACCEPT)
-target     prot opt source               destination
-DOCKER     all  --  anywhere             anywhere             ADDRTYPE match dst-type LOCAL
-
-Chain INPUT (policy ACCEPT)
-target     prot opt source               destination
-
-Chain OUTPUT (policy ACCEPT)
-target     prot opt source               destination
-DOCKER     all  --  anywhere            !localhost/8          ADDRTYPE match dst-type LOCAL
-
-Chain POSTROUTING (policy ACCEPT)
-target     prot opt source               destination
-MASQUERADE  all  --  ip-172-17-0-0.ec2.internal/16  anywhere
-
-Chain DOCKER (2 references)
-target     prot opt source               destination
-RETURN     all  --  anywhere             anywhere
-#
-```
-
-I have Docker installed on the machine already, and it's got some of its own NAT-based routing configured there. I don't think there's any harm in leaving that there; it's on a different subnet to the one I chose for my own stuff.
-
-## on my system with libvirt
-
-Notice that POSTROUTING LIBVIRT_PRT target jumps to LIBVIRT_PRT custom chain rules.
-
-```bash
+# From isdev in Albion using vlan 40
 iptables -t nat -L
 Chain PREROUTING (policy ACCEPT)
 target     prot opt source               destination         
@@ -444,23 +420,15 @@ Chain OUTPUT (policy ACCEPT)
 target     prot opt source               destination         
 
 Chain POSTROUTING (policy ACCEPT)
-target     prot opt source               destination         
-LIBVIRT_PRT  all  --  anywhere             anywhere            
-
-Chain LIBVIRT_PRT (1 references)
-target     prot opt source               destination         
-RETURN     all  --  192.168.122.0/24     base-address.mcast.net/24 
-RETURN     all  --  192.168.122.0/24     255.255.255.255     
-MASQUERADE  tcp  --  192.168.122.0/24    !192.168.122.0/24     masq ports: 1024-65535
-MASQUERADE  udp  --  192.168.122.0/24    !192.168.122.0/24     masq ports: 1024-65535
-MASQUERADE  all  --  192.168.122.0/24    !192.168.122.0/24 
+target     prot opt source               destination
 ```
 
 So, firstly, we'll enable masquerading from the 192.168.0.* network onto our main ethernet interface ens5:
 
-In iptables, masquerading, a form of SNAT (Source Network Address Translation), allows multiple internal network devices to share a single external IP address, effectively hiding their private IPs behind the router's public IP.
+In iptables, **[masquerading](../masquerading/masquerading.md)**, a form of SNAT (Source Network Address Translation), allows multiple internal network devices to share a single external IP address, effectively hiding their private IPs behind the router's public IP.
 
 ```bash
+# from isdev at albion office on vlan 40 through enx803f5d090eb3
 ip a
 1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
     link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
@@ -468,16 +436,25 @@ ip a
        valid_lft forever preferred_lft forever
     inet6 ::1/128 scope host noprefixroute 
        valid_lft forever preferred_lft forever
-2: enxf8e43bed63bd: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc fq_codel state UP group default qlen 1000
-    link/ether f8:e4:3b:ed:63:bd brd ff:ff:ff:ff:ff:ff
-4: wlp114s0f0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default qlen 1000
+3: wlp114s0f0: <NO-CARRIER,BROADCAST,MULTICAST,UP> mtu 1500 qdisc noqueue state DOWN group default qlen 1000
     link/ether e0:8f:4c:51:6f:17 brd ff:ff:ff:ff:ff:ff
-    inet 172.25.188.34/23 brd 172.25.189.255 scope global dynamic noprefixroute wlp114s0f0
-       valid_lft 13742sec preferred_lft 13742sec
-    inet6 fe80::17a5:ad3b:4171:8dc0/64 scope link noprefixroute 
+4: enxa0cec85afc3c: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc fq_codel state UP group default qlen 1000
+    link/ether a0:ce:c8:5a:fc:3c brd ff:ff:ff:ff:ff:ff
+5: enx803f5d090eb3: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc fq_codel state UP group default qlen 1000
+    link/ether 80:3f:5d:09:0e:b3 brd ff:ff:ff:ff:ff:ff
+    inet 10.187.40.200/24 brd 10.187.40.255 scope global noprefixroute enx803f5d090eb3
        valid_lft forever preferred_lft forever
-       
-iptables -t nat -A POSTROUTING -s 192.168.0.0/255.255.255.0 -o ens5 -j MASQUERADE
+7: veth0@if6: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default qlen 1000
+    link/ether f2:53:43:1c:78:a8 brd ff:ff:ff:ff:ff:ff link-netns netns1
+    inet 192.168.0.1/24 scope global veth0
+       valid_lft forever preferred_lft forever
+    inet6 fe80::f053:43ff:fe1c:78a8/64 scope link 
+       valid_lft forever preferred_lft forever
+
+# nat: This table is consulted when a packet that creates a new connection is encountered. It consists of three built-ins: PREROUTING (for altering packets as soon as they come in), OUTPUT (for altering locally-generated packets before routing), and POSTROUTING (for altering packets as they are about to go out).
+
+# for wired
+iptables -t nat -A POSTROUTING -s 192.168.0.0/24 -o enx803f5d090eb3 -j MASQUERADE
 
 -t nat: Specifies the NAT table. 
 -A POSTROUTING: Appends a rule to the POSTROUTING chain. 
@@ -490,229 +467,133 @@ Parameter Description
 -d, --destination An address, hostname, network name, etc.
 -j, --jump Specifies the target of the rule; i.e. what to do if the packet matches.
 
-# My computer
-ip a
+iptables -t nat -L
+Chain PREROUTING (policy ACCEPT)
+target     prot opt source               destination         
 
+Chain INPUT (policy ACCEPT)
+target     prot opt source               destination         
 
-# for wireless
-iptables -t nat -A POSTROUTING -s 192.168.0.0/255.255.255.0 -o wlp114s0f0 -j MASQUERADE
+Chain OUTPUT (policy ACCEPT)
+target     prot opt source               destination         
 
-# for wired
-iptables -t nat -A POSTROUTING -s 192.168.0.0/255.255.255.0 -o enx803f5d090eb3 -j MASQUERADE
+Chain POSTROUTING (policy ACCEPT)
+target     prot opt source               destination         
+MASQUERADE  all  --  192.168.0.0/24       anywhere     
 
 # verify
-list rules by specification
+# list rules by specification
 # Purpose: The -S option is used to show the current iptables rules in a format that is easy to read and understand, and that can be used to recreate the rules if needed.
 # iptables-legacy -t nat -S only microk8s uses these older tables.
 
 sudo iptables -t nat -S
-# Warning: iptables-legacy tables present, use iptables-legacy to see them
 -P PREROUTING ACCEPT
 -P INPUT ACCEPT
 -P OUTPUT ACCEPT
 -P POSTROUTING ACCEPT
--N LIBVIRT_PRT
--A POSTROUTING -j LIBVIRT_PRT
--A POSTROUTING -s 192.168.0.0/24 -o wlp114s0f0 -j MASQUERADE
--A POSTROUTING -s 192.168.0.0/24 -o wlp114s0f0 -j MASQUERADE
--A LIBVIRT_PRT -s 192.168.122.0/24 -d 224.0.0.0/24 -j RETURN
--A LIBVIRT_PRT -s 192.168.122.0/24 -d 255.255.255.255/32 -j RETURN
--A LIBVIRT_PRT -s 192.168.122.0/24 ! -d 192.168.122.0/24 -p tcp -j MASQUERADE --to-ports 1024-65535
--A LIBVIRT_PRT -s 192.168.122.0/24 ! -d 192.168.122.0/24 -p udp -j MASQUERADE --to-ports 1024-65535
--A LIBVIRT_PRT -s 192.168.122.0/24 ! -d 192.168.122.0/24 -j MASQUERADE
+-A POSTROUTING -s 192.168.0.0/24 -o enx803f5d090eb3 -j MASQUERADE
 
 # from host
-tcpdump src host 172.25.188.34
-16:26:07.080466 IP isdev > dns.google: ICMP echo request, id 2745, seq 48, length 64
-16:26:08.082401 IP isdev > dns.google: ICMP echo request, id 2745, seq 49, length 64
+# https://manpages.ubuntu.com/manpages/jammy/en/man8/tcpdump.8.html
+
+# Masquerading is working
+sudo tcpdump -i enx803f5d090eb3 'dst 8.8.8.8 and src 10.187.40.200'
+
+# This produces no output
+sudo tcpdump -i enx803f5d090eb3 'dst 8.8.8.8 and src 192.168.0.2'
+
 
 # from netns1
-ping 8.8.8.8
-```
-
-Now we'll say that we'll forward stuff that comes in on interface x can be forwarded to our veth0 interface, which you'll remember is the end of the virtual network pair that is outside the namespace:
-
-```bash
-# for wireless
-iptables -A FORWARD -i wlp114s0f0 -o veth0 -j ACCEPT
-
-# for wired
-iptables -A FORWARD -i enx803f5d090eb3 -o veth0 -j ACCEPT
-
-# advanced https://www.digitalocean.com/community/tutorials/how-to-forward-ports-through-a-linux-gateway-with-iptables
-iptables -A FORWARD -i enx803f5d090eb3 -o veth0 -p tcp --syn --dport 80 -m conntrack --ctstate NEW -j ACCEPT
-# verify
-
-sudo iptables -S
-# Warning: iptables-legacy tables present, use iptables-legacy to see them
--P INPUT ACCEPT
--P FORWARD DROP
--P OUTPUT ACCEPT
--N LIBVIRT_FWI
--N LIBVIRT_FWO
--N LIBVIRT_FWX
--N LIBVIRT_INP
--N LIBVIRT_OUT
--A INPUT -j LIBVIRT_INP
--A FORWARD -j LIBVIRT_FWX
--A FORWARD -j LIBVIRT_FWI
--A FORWARD -j LIBVIRT_FWO
--A FORWARD -s 10.1.0.0/16 -m comment --comment "generated for MicroK8s pods" -j ACCEPT
--A FORWARD -d 10.1.0.0/16 -m comment --comment "generated for MicroK8s pods" -j ACCEPT
--A FORWARD -i wlp114s0f0 -o veth0 -j ACCEPT
-
-
-# from host
-# I caught this after all rules were made
-tcpdump -i veth0
-tcpdump: verbose output suppressed, use -v[v]... for full protocol decode
-listening on veth0, link-type EN10MB (Ethernet), snapshot length 262144 bytes
-16:32:43.803216 IP 192.168.0.2 > dns.google: ICMP echo request, id 9061, seq 1, length 64
-16:32:43.817485 IP dns.google > 192.168.0.2: ICMP echo reply, id 9061, seq 1, length 64
-
-# from netns1
-ping 8.8.8.8
-```
-
-...and then the routing in the other direction:
-
-```bash
-iptables -A FORWARD -o ens5 -i veth0 -j ACCEPT
-
-# for wireless
-iptables -A FORWARD -o wlp114s0f0 -i veth0 -j ACCEPT
-
-# for wired
-iptables -A FORWARD -o enx803f5d090eb3 -i veth0 -j ACCEPT
-
-# verify
-sudo iptables -S
-# In iptables, the -S option instructs the command to display the current firewall ruleset in a verbose, human-readable format, showing the rules as they were originally entered
-# Warning: iptables-legacy tables present, use iptables-legacy to see them
--P INPUT ACCEPT
--P FORWARD DROP
--P OUTPUT ACCEPT
--N LIBVIRT_FWI
--N LIBVIRT_FWO
--N LIBVIRT_FWX
--N LIBVIRT_INP
--N LIBVIRT_OUT
--A INPUT -j LIBVIRT_INP
--A FORWARD -j LIBVIRT_FWX
--A FORWARD -j LIBVIRT_FWI
--A FORWARD -j LIBVIRT_FWO
--A FORWARD -s 10.1.0.0/16 -m comment --comment "generated for MicroK8s pods" -j ACCEPT
--A FORWARD -d 10.1.0.0/16 -m comment --comment "generated for MicroK8s pods" -j ACCEPT
--A FORWARD -i wlp114s0f0 -o veth0 -j ACCEPT
--A FORWARD -i veth0 -o wlp114s0f0 -j ACCEPT
-
-# from host
-# I caught this after all rules were made
-tcpdump -i veth0
-tcpdump: verbose output suppressed, use -v[v]... for full protocol decode
-listening on veth0, link-type EN10MB (Ethernet), snapshot length 262144 bytes
-16:32:43.803216 IP 192.168.0.2 > dns.google: ICMP echo request, id 9061, seq 1, length 64
-16:32:43.817485 IP dns.google > 192.168.0.2: ICMP echo reply, id 9061, seq 1, length 64
-
-# from netns1
-ping 8.8.8.8
-
-```
-
-Now, let's see what happens if we try to ping from inside the namespace
-
-```bash
 ip netns exec netns1 /bin/bash
 ping 8.8.8.8
-PING 8.8.8.8 (8.8.8.8) 56(84) bytes of data.
-64 bytes from 8.8.8.8: icmp_seq=1 ttl=112 time=0.604 ms
-64 bytes from 8.8.8.8: icmp_seq=2 ttl=112 time=0.609 ms
-^C
---- 8.8.8.8 ping statistics ---
-2 packets transmitted, 2 received, 0% packet loss, time 1003ms
-rtt min/avg/max/mdev = 0.604/0.606/0.609/0.002 ms
 ```
 
-w00t!
+In the FORWARD chain, you’ll accept new connections destined for port 8080 that are coming from your public interface and traveling to your virtual network interface. New connections are identified by the conntrack extension and will specifically be represented by a TCP SYN packet as in the following:
+
+```bash
+# advanced https://www.digitalocean.com/community/tutorials/how-to-forward-ports-through-a-linux-gateway-with-iptables
+iptables -A FORWARD -i enx803f5d090eb3 -o veth0 -p tcp --syn --dport 8080 -m conntrack --ctstate NEW -j ACCEPT
+# verify
+
+sudo iptables -S
+-P INPUT ACCEPT
+-P FORWARD ACCEPT
+-P OUTPUT ACCEPT
+-A FORWARD -i enx803f5d090eb3 -o veth0 -p tcp -m tcp --dport 8080 --tcp-flags FIN,SYN,RST,ACK SYN -m conntrack --ctstate NEW -j ACCEPT
+```
+
+This will let the first packet, meant to establish a connection, through the firewall. You’ll also need to allow any subsequent traffic in both directions that results from that connection. To allow ESTABLISHED and RELATED traffic between your public and private interfaces, run the following commands. First for your public interface:
+
+```bash
+sudo iptables -A FORWARD -i enx803f5d090eb3 -o veth0 -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
+
+sudo iptables -S
+-P INPUT ACCEPT
+-P FORWARD ACCEPT
+-P OUTPUT ACCEPT
+-A FORWARD -i enx803f5d090eb3 -o veth0 -p tcp -m tcp --dport 8080 --tcp-flags FIN,SYN,RST,ACK SYN -m conntrack --ctstate NEW -j ACCEPT
+-A FORWARD -i enx803f5d090eb3 -o veth0 -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
+```
+
+Then for your virtual network interface:
+
+```bash
+sudo iptables -A FORWARD -i veth0 -o enx803f5d090eb3 -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
+
+sudo iptables -S
+-P INPUT ACCEPT
+-P FORWARD ACCEPT
+-P OUTPUT ACCEPT
+-A FORWARD -i enx803f5d090eb3 -o veth0 -p tcp -m tcp --dport 8080 --tcp-flags FIN,SYN,RST,ACK SYN -m conntrack --ctstate NEW -j ACCEPT
+-A FORWARD -i enx803f5d090eb3 -o veth0 -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
+-A FORWARD -i veth0 -o enx803f5d090eb3 -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
+```
+
+Double check that your policy on the FORWARD chain is set to DROP:
+
+Note: I did not make drop the default.
+
+`sudo iptables -P FORWARD DROP`
+
+At this point, you’ve allowed certain traffic between your public and private interfaces to proceed through your firewall. However, you haven’t configured the rules that will actually tell iptables how to translate and direct the traffic.
+
+## Adding the NAT Rules to Direct Packets Correctly
+
+Next, you will add the rules that will tell iptables how to route your traffic. You need to perform two separate operations in order for iptables to correctly alter the packets so that clients can communicate with the web server.
+
+The first operation, called DNAT, will take place in the PREROUTING chain of the nat table. DNAT is an operation that alters a packet’s destination address in order to enable it to correctly route as it passes between networks. The clients on the public network will be connecting to your firewall server and will have no knowledge of your private network topology. Therefore, you need to alter the destination address of each packet so that when it is sent out on your private network, it knows how to correctly reach your web server.
+
+Since you’re only configuring port forwarding and not performing NAT on every packet that hits your firewall, you’ll want to match port 80 on your rule. You will match packets aimed at port 80 to your web server’s private IP address (10.0.0.1 in the following example):
+
+```bash
+# sudo iptables -t nat -A PREROUTING -i eth0 -p tcp --dport 80 -j DNAT --to-destination 10.0.0.1
+
+sudo iptables -t nat -A PREROUTING -i enx803f5d090eb3 -p tcp --dport 8080 -j DNAT --to-destination 192.168.0.2
+
+sudo iptables -t nat -A PREROUTING -i enx803f5d090eb3 -p tcp --dport 6000 -j DNAT --to-destination 192.168.0.2:8080
+
+iptables -t nat -S
+-P PREROUTING ACCEPT
+-P INPUT ACCEPT
+-P OUTPUT ACCEPT
+-P POSTROUTING ACCEPT
+-A PREROUTING -i enx803f5d090eb3 -p tcp -m tcp --dport 8080 -j DNAT --to-destination 192.168.0.2
+-A PREROUTING -i enx803f5d090eb3 -p tcp -m tcp --dport 6000 -j DNAT --to-destination 192.168.0.2:8080
+-A POSTROUTING -s 192.168.0.0/24 -o enx803f5d090eb3 -j MASQUERADE
+
+# iptables -t nat -L POSTROUTING --line-numbers
+# iptables -t nat -D POSTROUTING 1
+
+```
 
 ## Running a server with port-forwarding
 
-Right, now we have a network namespace where we can operate as a network client -- processes running inside it can access the external Internet.
-
-However, we don't have things working the other way around; we cannot run a server inside the namespace and access it from outside. For that, we need to configure port-forwarding. I'm not perfectly clear in my own mind exactly how this all works; take my explanations below with a cellar of salt...
-
-We use the **["Destination NAT"](http://linux-ip.net/html/nat-dnat.html)** chain in iptables:
-
-```bash
-iptables -t nat -A PREROUTING -p tcp -i ens5 --dport 6000 -j DNAT --to-destination 192.168.0.2:8080
-
-# for wireless
-iptables -t nat -A PREROUTING -p tcp -i wlp114s0f0 --dport 6000 -j DNAT --to-destination 192.168.0.2:8080
-
-# for wired
-iptables -t nat -A PREROUTING -p tcp -i enx803f5d090eb3 --dport 6000 -j DNAT --to-destination 192.168.0.2:8080
-
-```
-
-Or, in other words, if something comes in for port 6000 then we should sent it on to port 8080 on the interface at 192.168.0.2 (which is the end of the virtual interface pair that is inside the namespace).
-
-```bash
-# This was before flask was running in netns1
-# from host
-# I caught this after all rules were made
-tcpdump src port 6000
-tcpdump: verbose output suppressed, use -v[v]... for full protocol decode
-listening on veth0, link-type EN10MB (Ethernet), snapshot length 262144 bytes
-16:32:43.803216 IP 192.168.0.2 > dns.google: ICMP echo request, id 9061, seq 1, length 64
-16:32:43.817485 IP dns.google > 192.168.0.2: ICMP echo reply, id 9061, seq 1, length 64
-
-# from another host terminal
-curl -vv telnet://172.25.188.34:6000
-* connect to 172.25.188.34 port 6000 from 172.25.188.34 port 41388 failed: Connection refused
-* Failed to connect to 172.25.188.34 port 6000 after 0 ms: Couldn't connect to server
-* Closing connection
-curl: (7) Failed to connect to 172.25.188.34 port 6000 after 0 ms: Couldn't connect to server
-
-```
-
-Next, we say that we're happy to forward stuff back and forth over new, established and related (not sure what that last one is) connections to the IP of our namespaced interface:
-
-```bash
-iptables -A FORWARD -p tcp -d 192.168.0.2 --dport 8080 -m state --state NEW,ESTABLISHED,RELATED -j ACCEPT
-
-# My wireless network
-iptables -t nat -S
--P INPUT ACCEPT
--P FORWARD DROP
--P OUTPUT ACCEPT
-...
--A FORWARD -i wlp114s0f0 -o veth0 -j ACCEPT
--A FORWARD -i veth0 -o wlp114s0f0 -j ACCEPT
--A FORWARD -d 192.168.0.2/32 -p tcp -m tcp --dport 8080 -m state --state NEW,RELATED,ESTABLISHED -j ACCEPT
-
-# My wireless network
-iptables -t nat -S
--P PREROUTING ACCEPT
--P INPUT ACCEPT
--P OUTPUT ACCEPT
--P POSTROUTING ACCEPT
-...
--A PREROUTING -i wlp114s0f0 -p tcp -m tcp --dport 6000 -j DNAT --to-destination 192.168.0.2:8080
-...
--A POSTROUTING -s 192.168.0.0/24 -o wlp114s0f0 -j MASQUERADE
--A POSTROUTING -s 192.168.0.0/24 -o wlp114s0f0 -j MASQUERADE
-
-```
-
-## Add DNS to network namespace
-
-## **[Port Forwarding example](../../architecture/netfilter/firewall/iptables/port_forwarding.md)**
-
-This is much more exact for port forwarding conntrack connection states.
-
-## run server
-
 So, with that set up, we should be able to run a server inside the namespace on port 8080. Using this Python code in the file server.py
+
+```bash
+ps -ef | grep python
+kill pid
+```
 
 ```python
 from flask import Flask
@@ -727,18 +608,28 @@ if __name__ == "__main__":
     app.run(host='0.0.0.0', port=8080)
 ```
 
+From another terminal start tcpdump
+
 ```bash
-pushd .
+sudo tcpdump -i enx803f5d090eb3 'dst 10.187.40.200 and src 10.187.40.123'
+```
+
+Start the server.
+
+```bash
+# namespace has no dns so add dependancies in default namespace
 cd ~/src/repsys/volumes/python/tutorials/veths_and_namespaces
-sudo ip netns exec netns1 /bin/bash
 uv init
 Initialized project `veths-and-namespaces-md`
 uv add flask
 uv run server.py
 ...then we run it:
 
-# ip netns exec netns1 /bin/bash
-# python3.7 server.py
+# now run from namespace
+sudo su
+ip netns exec netns1 /bin/bash
+uv run server.py
+
  * Serving Flask app "server" (lazy loading)
  * Environment: production
    WARNING: This is a development server. Do not use it in a production deployment.
@@ -747,37 +638,67 @@ uv run server.py
  * Running on http://0.0.0.0:8080/ (Press CTRL+C to quit)
 ```
 
-...and from a completely separate machine on the same network as the one where we're running the server, we curl it using the machine's external IP address, on port 6000:
+...and from a completely separate machine on the same network as the one where we're running the server, we curl it using the machine's external IP address, on port 8080:
 
 ```bash
-curl http://172.25.188.34:6000/
+curl http://10.187.40.200:8080/
+Hello from Flask!
+
+curl http://10.187.40.200:6000/
 Hello from Flask!
 
 ```
 
+## Running a second server in a separate namespace
+
+Now we can set up the second server in its own namespace. Leaving the existing Flask running in the session where we started it just now, we can run through all of the steps above at speed in another:
+
 ```bash
-# from host
-# I caught this after all rules were made
-tcpdump src port 6000
+ip netns add netns2
+ip link add veth2 type veth peer name veth3
+ip link set veth3 netns netns2
+ip addr add 192.168.1.1/24 dev veth2
+ip link set dev veth2 up
 
-# from another host terminal
-curl -vv telnet://172.25.188.34:6000
-* connect to 172.25.188.34 port 6000 from 172.25.188.34 port 41388 failed: Connection refused
-* Failed to connect to 172.25.188.34 port 6000 after 0 ms: Couldn't connect to server
-* Closing connection
-curl: (7) Failed to connect to 172.25.188.34 port 6000 after 0 ms: Couldn't connect to server
+iptables -t nat -A POSTROUTING -s 192.168.1.0/24 -o enx803f5d090eb3 -j MASQUERADE
 
+iptables -S
+
+iptables -A FORWARD -i enx803f5d090eb3 -o veth2 -p tcp --syn --dport 8080 -m conntrack --ctstate NEW -j ACCEPT
+iptables -A FORWARD -i enx803f5d090eb3 -o veth2 -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
+iptables -A FORWARD -i veth2 -o enx803f5d090eb3 -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
+
+iptables -t nat -S
+sudo iptables -t nat -A PREROUTING -i enx803f5d090eb3 -p tcp --dport 8081 -j DNAT --to-destination 192.168.1.2:8080
+
+ip netns exec netns2 /bin/bash
+ip link set dev lo up
+ip addr add 192.168.1.2/24 dev veth3
+ip link set dev veth3 up
+ip route add default via 192.168.1.1
+
+cd ~/src/repsys/volumes/python/tutorials/veths_and_namespaces
+
+# now run from namespace
+sudo su
+ip netns exec netns2 /bin/bash
+uv run server.py
+
+ * Serving Flask app "server" (lazy loading)
+ * Environment: production
+   WARNING: This is a development server. Do not use it in a production deployment.
+   Use a production WSGI server instead.
+ * Debug mode: off
+ * Running on http://0.0.0.0:8080/ (Press CTRL+C to quit)
 ```
 
-## start here
+# python3.7 server2.py
 
-Use tcpdump to watch traffic on WiFi interface and veth1 interface.
+- Serving Flask app "server2" (lazy loading)
+- Environment: production
+   WARNING: This is a development server. Do not use it in a production deployment.
+   Use a production WSGI server instead.
+- Debug mode: off
+- Running on <http://0.0.0.0:8080/> (Press CTRL+C to quit)
 
-os-net-config
-
-```bash
-lxc info | grep firewall
-- network_firewall_filtering
-- firewall_driver
-  firewall: nftables
 ```

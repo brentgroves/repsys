@@ -1,5 +1,17 @@
 # isdev
 
+## GW and Name Servers
+
+```yaml
+gw: 10.188.50.254
+nameservers:
+    - 10.225.50.203
+    - 10.224.50.203
+
+```
+
+## Network Interfaces
+
 ```yaml
 adapter: 1
     mac: A0:CE:C8:5A:FC:3C
