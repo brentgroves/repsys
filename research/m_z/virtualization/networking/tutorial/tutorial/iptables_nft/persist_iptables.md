@@ -27,20 +27,41 @@ You must type the following command as root user either using the sudo command o
 Debian and Ubuntu Linux user type:
 
 ```bash
+update-alternatives --list iptables
+/usr/sbin/iptables-legacy
+/usr/sbin/iptables-nft
+
+update-alternatives --display iptables   
+iptables - auto mode
+  link best version is /usr/sbin/iptables-nft
+  link currently points to /usr/sbin/iptables-nft
+  link iptables is /usr/sbin/iptables
+  slave iptables-restore is /usr/sbin/iptables-restore
+  slave iptables-save is /usr/sbin/iptables-save
+/usr/sbin/iptables-legacy - priority 10
+  slave iptables-restore: /usr/sbin/iptables-legacy-restore
+  slave iptables-save: /usr/sbin/iptables-legacy-save
+/usr/sbin/iptables-nft - priority 20
+  slave iptables-restore: /usr/sbin/iptables-nft-restore
+  slave iptables-save: /usr/sbin/iptables-nft-save
+
+update-alternatives --config iptables     
+There are 2 choices for the alternative iptables (providing /usr/sbin/iptables).
+
+  Selection    Path                       Priority   Status
+------------------------------------------------------------
+* 0            /usr/sbin/iptables-nft      20        auto mode
+  1            /usr/sbin/iptables-legacy   10        manual mode
+  2            /usr/sbin/iptables-nft      20        manual mode
+  
 cd /etc
 fzf
 iptables
 
 ls -alh alternatives/iptables-save
 lrwxrwxrwx 1 root root 27 Feb 15 03:12 alternatives/iptables-save -> /usr/sbin/iptables-nft-save
-# if necessary create iptables directory
-sudo mkdir /etc/iptables
-touch /etc/iptables/rules.v4 
-touch /etc/iptables/rules.v6
-
 sudo su
-sudo iptables-save > /etc/iptables/rules.v4
-
+iptables-save > /etc/iptables/rules.v4
 ## IPv6 ##
 ip6tables-save > /etc/iptables/rules.v6
 ```
