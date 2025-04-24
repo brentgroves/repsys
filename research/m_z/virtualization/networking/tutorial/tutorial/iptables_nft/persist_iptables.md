@@ -33,8 +33,14 @@ iptables
 
 ls -alh alternatives/iptables-save
 lrwxrwxrwx 1 root root 27 Feb 15 03:12 alternatives/iptables-save -> /usr/sbin/iptables-nft-save
+# if necessary create iptables directory
+sudo mkdir /etc/iptables
+touch /etc/iptables/rules.v4 
+touch /etc/iptables/rules.v6
+
 sudo su
-iptables-save > /etc/iptables/rules.v4
+sudo iptables-save > /etc/iptables/rules.v4
+
 ## IPv6 ##
 ip6tables-save > /etc/iptables/rules.v6
 ```
