@@ -1,5 +1,7 @@
 # Current Tasks
 
+**[persist_iptables of veths and namespaces tutorial to research21](../research/m_z/virtualization/networking/tutorial/iptables_nft/persist_iptables.md)
+
 ## Misc
 
 - Migrate from MSC to new vending machines.
