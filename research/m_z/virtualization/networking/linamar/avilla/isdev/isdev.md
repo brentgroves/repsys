@@ -38,7 +38,7 @@ adapter: 1
     mac: A0:CE:C8:5A:FC:3C
     vlan: 40
     link: enxa0cec85afc3c
-    ip: 10.188.40.212
+    ip: dhcp
     subnet: 
       - 10.188.40.0/24
       - 255.255.255.0

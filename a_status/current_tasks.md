@@ -8,6 +8,7 @@
 
 ## Questions
 
+- Can setup HyperV Ubuntu 24.04 server VM in 50 and 1220 VLans on core server. To access Albion subnets from R620s using port forwarding.
 - Ask for Plex web service account from Sam or Kevin
 - Does any location besides Indiana have vending machines?
 
