@@ -1,7 +1,9 @@
-# reports-alb
+# research21
 
 ```yaml
-hostname: reports-alb
-ip: 10.187.40.123
-ext-port: 1
+system: "Dell Precision T5600"
+ram: 32GB
+hostname: research21
+adapter: on-board
+
 ```
