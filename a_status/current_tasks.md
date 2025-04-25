@@ -4,6 +4,7 @@
 
 ## Misc
 
+- Making Linux act as a the system act as a router
 - Migrate from MSC to new vending machines.
 - Muscle Shoals thin client certificates.
 - Use cloud.plex.com to locate new accounts for TB web services such as account_nos_gets and account_nos_picker_get.
