@@ -1,10 +1,11 @@
 # Current Tasks
 
-**[persist_iptables of veths and namespaces tutorial to research21](../research/m_z/virtualization/networking/tutorial/iptables_nft/persist_iptables.md)
+- **[Use Linux Routing Features for Certificate Management verifications](../research/m_z/virtualization/networking/firewalls/iptables_nft/port_forwarding/research21_to_mach2/research21_to_mach2.md)**
+- Make GoLang and Python dev container to create base docker image for ETL scripts.
+- ETL API and CLI
 
 ## Misc
 
-- Making Linux act as a the system act as a router
 - Migrate from MSC to new vending machines.
 - Muscle Shoals thin client certificates.
 - Use cloud.plex.com to locate new accounts for TB web services such as account_nos_gets and account_nos_picker_get.

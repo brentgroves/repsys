@@ -1,5 +1,9 @@
 # **[How to save iptables firewall rules permanently on Linux](https://www.cyberciti.biz/faq/how-to-save-iptables-firewall-rules-permanently-on-linux/)**
 
+## note
+
+Many apps update iptables so I will try to avoid using iptables-save and instead recreate my rules only. Example is recreate_rules.sh
+
 Iam using Debian / Ubuntu Linux server. How do I save iptables rules permanently on Linux using the CLI added using the **[iptables command](https://www.cyberciti.biz/tips/linux-iptables-examples.html)**? How can I store iptables IPv4 and IPv6 rules permanently on the Debian Linux cloud server?
 
 Linux system administrator and developers use iptables and ip6tables commands to set up, maintain, and inspect the firewall tables of IPv4 and IPv6 packet filter rules in the Linux kernel. Any modification made using these commands is lost when you reboot the Linux server. Hence, we need to store those rules across reboot permanently. This page examples how to save iptables firewall rules permanently either on Ubuntu or Debian Linux server.

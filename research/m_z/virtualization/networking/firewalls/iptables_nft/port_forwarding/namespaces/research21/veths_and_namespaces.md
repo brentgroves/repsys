@@ -21,13 +21,10 @@ This provides certain advantages when it comes to security, but one that I thoug
 
 To put that in more concrete terms: my goal was to be able to start up two Flask servers on the same machine, both bound to port 8080 inside their own namespace. I wanted to be able to access one of them from outside by hitting port 6000 on the machine, and the other by hitting port 6001.
 
-## **[cleanup](./delete_rules.md)**
+## cleanup
 
-```bash
-ip link delete veth0 type veth peer name veth1
-ip link delete veth1 type veth peer name veth1
-
-```
+- **[delete rules](./delete_rules.md)**
+- **[delete namespace](./delete_namespace.md)**
 
 Here is a run through how I got that working; it's a lightly-edited set of my "lab notes".
 
