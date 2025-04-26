@@ -1,6 +1,9 @@
 # Current Tasks
 
-- **[Use Linux Routing Features for Certificate Management verifications](../research/m_z/virtualization/networking/firewalls/iptables_nft/port_forwarding/research21_to_mach2/research21_to_mach2.md)**
+- **[Use Linux Networking Features for Certificate Management verifications](../research/m_z/virtualization/networking/firewalls/iptables_nft/port_forwarding/research21_to_k8sgw2/research21_to_k8sgw2.md#start-here)**
+
+  **[IPtable's nat table](../research/m_z/virtualization/networking/firewalls/iptables_nft/iptables_process_flow.md)** is used to implement network address translation rules. As packets enter the network stack, rules in this table will determine whether and how to modify the packet’s source or destination addresses in order to impact the way that the packet and any response traffic are routed. This is often used to route packets to networks when direct access is not possible.
+
 - Make GoLang and Python dev container to create base docker image for ETL scripts.
 - ETL API and CLI
 
