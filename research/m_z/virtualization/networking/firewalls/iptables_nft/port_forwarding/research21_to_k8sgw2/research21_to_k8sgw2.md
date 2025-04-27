@@ -1,4 +1,4 @@
-# Port Forwarding from research21 to k8sgw2
+# **[Port Forwarding from research21 to k8sgw2](https://unix.stackexchange.com/questions/76300/iptables-port-to-another-ip-port-from-the-inside)**
 
 ## cleanup
 
@@ -7,9 +7,49 @@
 
 ## Plan
 
-Use **[Port forward using iptables](../port_forward_using_iptables.md)** as an example to port forward traffic from 10.187.40.123 to 10.187.220.50.
+Attempting to help facilitate this question I put this diagram together. Please feel free to update if it's incorrect or misrepresenting what you're looking for.
 
-1. verify we can connect to 10.188.50.202.
+```text
+                                 iptables
+                                     |                   .---------------.
+    .-,(  ),-.                       v               port 80             |
+ .-(          )-.        port 8080________               |               |
+(    internet    )------------>[_...**...°]------------->|      NAS      |
+ '-(          ).-'     10.32.25.2    ^   10.32.25.1      |               |
+     '-.( ).-'                       |                   |               |
+                                     |                   '---------------'
+                                     |
+                                     |
+                                   __  _
+                                  [**]|=|
+                                  /::/|_|
+```
+
+## answer
+
+I finally found how-to. First, I had to add -i eth1 to my "outside" rule (eth1 is my WAN connection). I also needed to add two others rules. Here in the end what I came with :
+
+iptables -t nat -A PREROUTING -i eth1 -p tcp --dport 8080 -j DNAT --to 10.32.25.2:80
+iptables -t nat -A PREROUTING -p tcp --dport 8080 -j DNAT --to 10.32.25.2:80
+iptables -t nat -A POSTROUTING -p tcp -d 10.32.25.2 --dport 80 -j MASQUERADE
+Share
+Improve this answer
+Follow
+answered May 19, 2013 at 2:13
+David Bélanger's user avatar
+David Bélanger
+37311 gold badge22 silver badges1010 bronze badges
+3
+The second rule is not necessary, as the first rule already contains that... –
+machineaddict
+ CommentedAug 28, 2014 at 9:20
+1
+The first rule restricts the preroute only if it's arriving on interface eth1. The second rule is more general as it applies to all interfaces. Beware loops! –
+tudor -Reinstate Monica-
+ CommentedMay 1, 2015 at 5:05
+This will work as shown IF the FORWARD table is set to ACCEPT by default. If you have a default DROP FORWARD section, you need to add a rule to allow packets to flow; something like iptables -A FORWARD -p tcp --dport 8080 -j ACCEPT. –
+berto
+ CommentedJul 18, 2022 at 15:41
 
 ## we are using iptables-nft
 
@@ -105,8 +145,8 @@ target     prot opt source               destination
 We see that the default is ACCEPT, so we'll change that to DROP:
 
 <!-- I left it as accept for this experiment. -->
-```bash
 
+```bash
 iptables -P FORWARD DROP
 # iptables -P FORWARD ACCEPT
 # iptables -L FORWARD
@@ -133,7 +173,7 @@ Chain POSTROUTING (policy ACCEPT)
 target     prot opt source               destination
 ```
 
-## enable masquerading
+## enable masquerading for Avilla subnet 10.188.50.0/24
 
 So, firstly, we'll enable masquerading from the 10.188.50.0/24 network onto our main ethernet interface enp0s25:
 
@@ -158,9 +198,7 @@ ip a
 # nat: This table is consulted when a packet that creates a new connection is encountered. It consists of three built-ins: PREROUTING (for altering packets as soon as they come in), OUTPUT (for altering locally-generated packets before routing), and POSTROUTING (for altering packets as they are about to go out).
 ```
 
-## start here
-
-The idea is to apply the same rules as we did to forward packets to namespaces to forward packets to a web service on a different host.
+The idea is to apply the same rules as we did to forward packets to namespaces to forward packets to a web service on a different host. We are doing this backwards starting with the postrouting rule.
 
 ```bash
 iptables -t nat -A POSTROUTING -s 10.188.50.0/24 -o enp0s25 -j MASQUERADE
@@ -184,9 +222,8 @@ target     prot opt source               destination
 
 Chain POSTROUTING (policy ACCEPT)
 target     prot opt source               destination         
-MASQUERADE  all  --  192.168.0.0/24       anywhere     
+MASQUERADE  all  --  10.188.50.0/24       anywhere     
 
-# verify
 # list rules by specification
 # Purpose: The -S option is used to show the current iptables rules in a format that is easy to read and understand, and that can be used to recreate the rules if needed.
 # iptables-legacy -t nat -S only microk8s uses these older tables.
@@ -196,17 +233,45 @@ sudo iptables -t nat -S
 -P INPUT ACCEPT
 -P OUTPUT ACCEPT
 -P POSTROUTING ACCEPT
--A POSTROUTING -s 192.168.0.0/24 -o enp0s25 -j MASQUERADE
+-A POSTROUTING -s 10.188.50.0/24 -o enp0s25 -j MASQUERADE
 
+```
 
-# from default namespace
-sudo tcpdump -i enp0s25 'dst 8.8.8.8 and src 10.187.40.123'
+In the FORWARD chain, you’ll accept new connections destined for port 8080 that are coming from Albion's VLAN 40 to Avilla VLAN 50. New connections are identified by the conntrack extension and will specifically be represented by a TCP SYN packet as in the following:
 
-# This produces no output because src has been changed from 192.168.0.2 to 10.187.40.123
-sudo tcpdump -i enp0s25 'dst 8.8.8.8 and src 192.168.0.2'
+```bash
+# advanced https://www.digitalocean.com/community/tutorials/how-to-forward-ports-through-a-linux-gateway-with-iptables
+iptables -t nat -A PREROUTING -i eth1 -p tcp --dport 8080 -j DNAT --to 10.32.25.2:80
+iptables -t nat -A PREROUTING -p tcp --dport 8080 -j DNAT --to 10.32.25.2:80
+iptables -t nat -A POSTROUTING -p tcp -d 10.32.25.2 --dport 80 -j MASQUERADE
 
+iptables -A FORWARD -i enp0s25 -o 10.188.50.202 -p tcp --syn --dport 8080 -m conntrack --ctstate NEW -j ACCEPT
+# verify
 
-# from netns1
-ip netns exec netns1 /bin/bash
-ping 8.8.8.8
+sudo iptables -S
+-P INPUT ACCEPT
+-P FORWARD ACCEPT
+-P OUTPUT ACCEPT
+-A FORWARD -i enp0s25 -o 10.188.50.202 -p tcp -m tcp --dport 8080 --tcp-flags FIN,SYN,RST,ACK SYN -m conntrack --ctstate NEW -j ACCEPT
+# notice -m was changed from conntrack to tcp
+```
+
+This will let the first packet, meant to establish a connection, through the firewall. You’ll also need to allow any subsequent traffic in both directions that results from that connection. To allow ESTABLISHED and RELATED traffic between your public and private interfaces, run the following commands. First for your public interface:
+
+```bash
+sudo iptables -A FORWARD -i enp0s25 -o 10.188.50.202 -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
+
+# -t nat: Specifies the NAT table. 
+# -A POSTROUTING: Appends a rule to the POSTROUTING chain. 
+# -o eth0: Specifies the outgoing interface (e.g., eth0). 
+# -j MASQUERADE: Sets the target to MASQUERADE. 
+# -m is for matching module name and not string. By using a particular module you get certain options to match. See the cpu module example above. With the -m tcp the module tcp is loaded. The tcp module allows certain options: --dport, --sport, --tcp-flags, --syn, --tcp-option to use in iptables rules
+
+sudo iptables -S
+-P INPUT ACCEPT
+-P FORWARD ACCEPT
+-P OUTPUT ACCEPT
+-A FORWARD -i enp0s25 -o 10.188.50.202 -p tcp -m tcp --dport 8080 --tcp-flags FIN,SYN,RST,ACK SYN -m conntrack --ctstate NEW -j ACCEPT
+-A FORWARD -i enp0s25 -o 10.188.50.202 -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
+-A FORWARD -i enp0s25 -o 10.188.50.202 -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
 ```

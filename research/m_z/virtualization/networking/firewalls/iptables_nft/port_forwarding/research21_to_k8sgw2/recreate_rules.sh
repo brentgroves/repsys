@@ -20,8 +20,8 @@ fi
 # -m is for matching module name and not string. By using a particular module you get 
 # certain options to match. See the cpu module example above. With the -m tcp the module tcp is loaded. The tcp module allows certain options: --dport, --sport, --tcp-flags, --syn, --tcp-option to use in iptables rules
 
-iptables -t nat -D POSTROUTING -s 192.168.0.0/24 -o enp0s25 -j MASQUERADE > /dev/null 2>&1
-iptables -t nat -A POSTROUTING -s 192.168.0.0/24 -o enp0s25 -j MASQUERADE
+iptables -t nat -D POSTROUTING -s 10.188.50.0/24 -o enp0s25 -j MASQUERADE > /dev/null 2>&1
+iptables -t nat -A POSTROUTING -s 10.188.50.0/24 -o enp0s25 -j MASQUERADE
 
 iptables -D FORWARD -i enp0s25 -o veth0 -p tcp -m tcp --dport 8080 --tcp-flags FIN,SYN,RST,ACK SYN -m conntrack --ctstate NEW -j ACCEPT > /dev/null 2>&1
 iptables -A FORWARD -i enp0s25 -o veth0 -p tcp --syn --dport 8080 -m conntrack --ctstate NEW -j ACCEPT
