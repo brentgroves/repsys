@@ -38,7 +38,7 @@ I did not do this method.
 
 ```bash
 Command 'uv' not found, but can be installed with:
-sudo snap install astral-uv
+sudo snap install astral-uv --classic
 ```
 
 Install uv with our standalone installers or your package manager of choice.

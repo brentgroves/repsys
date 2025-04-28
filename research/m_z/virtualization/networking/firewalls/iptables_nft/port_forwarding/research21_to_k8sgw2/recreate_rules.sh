@@ -20,6 +20,32 @@ fi
 # -m is for matching module name and not string. By using a particular module you get 
 # certain options to match. See the cpu module example above. With the -m tcp the module tcp is loaded. The tcp module allows certain options: --dport, --sport, --tcp-flags, --syn, --tcp-option to use in iptables rules
 
+# iptables -t nat -S
+# allow inbound and outbound forwarding
+iptables -D FORWARD -d 10.188.50.202/32 -p tcp -m tcp --dport 8080 -j ACCEPT
+iptables -A FORWARD -p tcp -d 10.188.50.202 --dport 8080 -j ACCEPT
+
+
+-A FORWARD -s 10.188.50.202/32 -p tcp -m tcp --sport 8080 -j ACCEPT
+
+iptables -t nat -D PREROUTING -i enp0s25 -p tcp -m tcp --dport 8080 -j DNAT --to-destination 10.188.50.202:8080
+iptables -t nat -A PREROUTING -p tcp -i enp0s25 --dport 8080 -j DNAT --to-destination 10.188.50.202:8080
+
+# iptables -t nat -S
+iptables -D FORWARD -d 10.188.50.202/32 -p tcp -m tcp --dport 8080 -j ACCEPT
+iptables -A FORWARD -p tcp -d 10.188.50.202 --dport 8080 -j ACCEPT
+
+# iptables -t nat -S
+iptables -t nat -D POSTROUTING -s 10.188.50.202/32 -j SNAT --to-source 10.187.40.123
+iptables -t nat -D POSTROUTING -j MASQUERADE
+iptables -t nat -A POSTROUTING -j MASQUERADE
+
+## delete below
+iptables -t nat -D PREROUTING -i enp0s25 -p tcp -m tcp --dport 8080 -j DNAT --to-destination 10.188.50.202
+iptables -t nat -A PREROUTING -i enp0s25 -p tcp --dport 8080 -j DNAT --to 10.188.50.202
+
+
+
 iptables -t nat -D POSTROUTING -s 10.188.50.0/24 -o enp0s25 -j MASQUERADE > /dev/null 2>&1
 iptables -t nat -A POSTROUTING -s 10.188.50.0/24 -o enp0s25 -j MASQUERADE
 

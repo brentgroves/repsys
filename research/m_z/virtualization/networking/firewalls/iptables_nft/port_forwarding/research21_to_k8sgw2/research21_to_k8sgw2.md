@@ -1,9 +1,128 @@
-# **[Port Forwarding from research21 to k8sgw2](https://unix.stackexchange.com/questions/76300/iptables-port-to-another-ip-port-from-the-inside)**
+# **[Setting Up Port Forwarding Using iptables](https://contabo.com/blog/linux-port-forwarding-with-iptables/)**
+
+This is a basic example of forwarding packets from one IP to another using a single network interface.
+
+## references
+
+- **[Stack](https://unix.stackexchange.com/questions/76300/iptables-port-to-another-ip-port-from-the-inside)**
 
 ## cleanup
 
 - **[delete rules](./delete_rules.md)**
 - **[delete namespace](./delete_namespace.md)**
+
+To forward a port, you must understand and manipulate the PREROUTING chain of the nat table. Here is a straightforward example to forward traffic from port 8080 on research21's IP, 10.187.40.123 to port 8080 on a remote machine with IP 10.188.50.202:
+
+```bash
+sudo su
+
+# before rule changes
+iptables -t nat -S
+-P PREROUTING ACCEPT
+-P INPUT ACCEPT
+-P OUTPUT ACCEPT
+-P POSTROUTING ACCEPT
+
+# iptables -t nat -A PREROUTING -p tcp --dport 8080 -j DNAT --to-destination 10.188.50.202:8080
+iptables -t nat -A PREROUTING -p tcp -s 10.187.40.123 --dport 8080 -j DNAT --to-destination 10.188.50.202:8080
+
+# after prerouting
+iptables -t nat -S
+-P PREROUTING ACCEPT
+-P INPUT ACCEPT
+-P OUTPUT ACCEPT
+-P POSTROUTING ACCEPT
+-A PREROUTING -s 10.187.40.123/32 -p tcp -m tcp --dport 8080 -j DNAT --to-destination 10.188.50.202:8080
+
+# iptables -t nat -A PREROUTING -s 192.168.1.10 -j DNAT --to-destination 192.168.1.20
+# iptables -t nat -A PREROUTING -i enp0s25 -p tcp --dport 8080 -j DNAT --to 10.188.50.202
+
+# after prerouting
+iptables -t nat -S
+-P PREROUTING ACCEPT
+-P INPUT ACCEPT
+-P OUTPUT ACCEPT
+-P POSTROUTING ACCEPT
+-A PREROUTING -p tcp -m tcp --dport 8080 -j DNAT --to-destination 10.188.50.202:8080
+```
+
+Next, ensure the iptables FORWARD chain allows the forwarded traffic:
+
+```bash
+sudo su
+iptables -S
+-P INPUT ACCEPT
+-P FORWARD ACCEPT
+-P OUTPUT ACCEPT
+
+iptables -A FORWARD -p tcp -d 10.188.50.202 --dport 8080 -j ACCEPT
+
+# verify rule was added. If we change the default FORWARD rule to DROP we can still forward packets to 10.188.50.202/32.
+
+iptables -S
+-P INPUT ACCEPT
+-P FORWARD ACCEPT
+-P OUTPUT ACCEPT
+-A FORWARD -d 10.188.50.202/32 -p tcp -m tcp --dport 8080 -j ACCEPT
+```
+
+## SNAT Rule (Optional)
+
+SNAT Rule (Optional): If you need to redirect outgoing traffic from the new IP address back to the original IP, you can use a SNAT (Source Network Address Translation) rule in the POSTROUTING chain:
+
+```bash
+# iptables -t nat -A POSTROUTING -s <new_ip> -j SNAT --to-source <original_ip>
+iptables -t nat -A POSTROUTING -s 10.188.50.202 -j SNAT --to-source 10.187.40.123
+
+iptables -t nat -S
+-P PREROUTING ACCEPT
+-P INPUT ACCEPT
+-P OUTPUT ACCEPT
+-P POSTROUTING ACCEPT
+-A PREROUTING -s 10.187.40.123/32 -p tcp -m tcp --dport 8080 -j DNAT --to-destination 10.188.50.202:8080
+-A POSTROUTING -s 10.188.50.202/32 -j SNAT --to-source 10.187.40.123
+
+```
+
+- Replace <new_ip> with the IP address you want to redirect traffic from.
+- Replace <original_ip> with the IP address you want the outgoing traffic to appear to be from.
+
+```bash
+# iptables -t nat -A  PREROUTING -d 8.8.8.8 -j DNAT --to-destination 192.168.0.10
+iptables -t nat -A PREROUTING -p tcp -d 10.187.40.123 --dport 8080 -j DNAT --to-destination 10.188.50.202:8080
+# iptables -t nat -A POSTROUTING -s 192.168.0.10 -j SNAT --to-source 8.8.8.8
+iptables -t nat -A POSTROUTING -s 10.188.50.202 -j SNAT --to-source 10.187.40.123
+
+```
+
+Finally, apply a masquerade rule to allow proper routing of the responses:
+
+```bash
+sudo su
+
+# before masquerade rule is applied
+iptables -t nat -S
+-P PREROUTING ACCEPT
+-P INPUT ACCEPT
+-P OUTPUT ACCEPT
+-P POSTROUTING ACCEPT
+-A PREROUTING -p tcp -m tcp --dport 8080 -j DNAT --to-destination 10.188.50.202:8080
+
+iptables -t nat -A POSTROUTING -j MASQUERADE
+# iptables -t nat -A POSTROUTING -s 10.188.50.0/24 -j MASQUERADE
+
+# after masquerade rule is applied
+iptables -t nat -S
+-P PREROUTING ACCEPT
+-P INPUT ACCEPT
+-P OUTPUT ACCEPT
+-P POSTROUTING ACCEPT
+-A PREROUTING -p tcp -m tcp --dport 8080 -j DNAT --to-destination 10.188.50.202:8080
+-A POSTROUTING -j MASQUERADE
+
+# iptables -t nat -D POSTROUTING -s 10.188.50.0/24 -o enp0s25 -j MASQUERADE > /dev/null 2>&1
+
+```
 
 ## Plan
 
@@ -29,21 +148,30 @@ Attempting to help facilitate this question I put this diagram together. Please 
 
 I finally found how-to. First, I had to add -i eth1 to my "outside" rule (eth1 is my WAN connection). I also needed to add two others rules. Here in the end what I came with :
 
-iptables -t nat -A PREROUTING -i eth1 -p tcp --dport 8080 -j DNAT --to 10.32.25.2:80
-iptables -t nat -A PREROUTING -p tcp --dport 8080 -j DNAT --to 10.32.25.2:80
+```bash
+# before rule changes
+iptables -t nat -S
+-P PREROUTING ACCEPT
+-P INPUT ACCEPT
+-P OUTPUT ACCEPT
+-P POSTROUTING ACCEPT
+
+iptables -t nat -A PREROUTING -i enp0s25 -p tcp --dport 8080 -j DNAT --to 10.188.50.202
+
+# after prerouting
+iptables -t nat -S
+-P PREROUTING ACCEPT
+-P INPUT ACCEPT
+-P OUTPUT ACCEPT
+-P POSTROUTING ACCEPT
+-A PREROUTING -i enp0s25 -p tcp -m tcp --dport 8080 -j DNAT --to-destination 10.188.50.202
+
+# iptables -t nat -A PREROUTING -p tcp --dport 8080 -j DNAT --to 10.32.25.2:80
 iptables -t nat -A POSTROUTING -p tcp -d 10.32.25.2 --dport 80 -j MASQUERADE
-Share
-Improve this answer
-Follow
-answered May 19, 2013 at 2:13
-David Bélanger's user avatar
-David Bélanger
-37311 gold badge22 silver badges1010 bronze badges
-3
-The second rule is not necessary, as the first rule already contains that... –
-machineaddict
- CommentedAug 28, 2014 at 9:20
-1
+
+
+```
+
 The first rule restricts the preroute only if it's arriving on interface eth1. The second rule is more general as it applies to all interfaces. Beware loops! –
 tudor -Reinstate Monica-
  CommentedMay 1, 2015 at 5:05
@@ -72,7 +200,9 @@ sudo tcpdump -i enp0s25 'dst 8.8.8.8 and src 10.187.40.123'
 
 ```
 
-## enable packet routing
+## enable port forwarding
+
+I don't know if you need this for NATting on the same interface.
 
 To enable packet routing on a Linux system, you need to configure the kernel to forward packets destined for other networks. This typically involves enabling IP forwarding and setting up routing tables with appropriate routes
 
@@ -127,19 +257,6 @@ fs.protected_regular = 2
 fs.protected_symlinks = 1
 * Applying /etc/sysctl.conf ...
 net.ipv4.ip_forward = 1
-```
-
-## Make default FORWARD rule DROP
-
-Now that we're forwarding packets, we want to make sure that we're not just forwarding them willy-nilly around the network. If we check the current rules in the FORWARD chain (in the default "filter" table):
-
-```bash
-oot@isdev:/home/brent/src/pki# iptables -L FORWARD
-Chain FORWARD (policy ACCEPT)
-target     prot opt source               destination         
-
-# Each chain is a list of rules which can match a set of packets. Each rule specifies what to do with a packet that matches. This is called a `target', which may be a jump to a user-defined chain in the same table.
-
 ```
 
 We see that the default is ACCEPT, so we'll change that to DROP:
