@@ -1,4 +1,4 @@
-# **[Linux Gateway using iptables](https://superuser.com/questions/1242284/use-iptables-nat-to-redirect-gateway-for-lan-pcs)**
+# **[Linux Gateway using iptables](https://superuser.com/questions/1286555/iptables-port-forwarding-with-internal-snat#:~:text=1%20Answer,%2D%2Dto%2Dsource%20192.168.2.5)**
 
 **[Back to Research List](../../../../../../research_list.md)**\
 **[Back to Current Tasks](../../../../../../../a_status/current_tasks.md)**\
@@ -41,6 +41,7 @@ In networking, a **packet** is the basic unit of data transmitted over a network
 
 ```bash
 # Gateway = 1.2.3.4/192.168.2.5, internal server = 192.168.2.10
+sudo su
 iptables -S
 -P INPUT ACCEPT
 -P FORWARD ACCEPT
@@ -62,13 +63,15 @@ iptables -S
 # iptables -t nat -S
 # route packets arriving at external IP/port to LAN machine
 # iptables -A PREROUTING -t nat -p tcp -d 1.2.3.4 --dport 12345 -j DNAT --to-destination 192.168.2.10:54321
-iptables -A PREROUTING -t nat -p tcp -d 10.187.40.123 --dport 8080 -j DNAT --to-destination 10.188.50.202:8080
+# iptables -A PREROUTING -t nat -p tcp -d 1.2.3.4 --dport 12345 -j DNAT --to-destination 192.168.2.10:54321
+
+iptables -t nat -A PREROUTING -p tcp -d 10.187.40.123 --dport 8080 -j DNAT --to-destination 10.188.50.202:8080
 
 # Gateway = 1.2.3.4/192.168.2.5, internal server = 192.168.2.10
 # rewrite packets going to LAN machine (identified by address/port)
 # to originate from gateway's internal address
 # iptables -A POSTROUTING -t nat -p tcp -d 192.168.2.10 --dport 54321 -j SNAT --to-source 192.168.2.5
-iptables -A POSTROUTING -t nat -p tcp -d 10.188.50.202 --dport 8080 -j SNAT --to-source 10.187.40.123
+iptables -t nat -A POSTROUTING -p tcp -d 10.188.50.202 --dport 8080 -j SNAT --to-source 10.187.40.123
 
 iptables -t nat -S
 -P PREROUTING ACCEPT
@@ -77,7 +80,6 @@ iptables -t nat -S
 -P POSTROUTING ACCEPT
 -A PREROUTING -d 10.187.40.123/32 -p tcp -m tcp --dport 8080 -j DNAT --to-destination 10.188.50.202:8080
 -A POSTROUTING -d 10.188.50.202/32 -p tcp -m tcp --dport 8080 -j SNAT --to-source 10.187.40.123
-
 ```
 
 ## request and response flow
@@ -88,6 +90,22 @@ iptables -t nat -S
 4. gateway keeps track of network request's original source IP for reversal of response.
 5. Service host completes request and responds to the gateway's IP.
 6. gateway recognizes the response as being from the client machine and changes the destination from the gateway's IP to the client's IP.
+
+## more general request and response flow
+
+1. client requests ExternalIP:Port
+2. gateway changes destination to InternalIP:Port
+3. gateway changes source from client's IP to gateway's ip ExternalIP.
+4. Linux NetFilter keeps track of the natted network request's original source IP for reversal of the response.
+5. Netsocket service completes request on InternalIP:Port and responds to the gateway's IP which was changed in step #3.
+6. Linux NetFilter recognizes the response as being natted and changes the destination from the gateway's IP to the client's IP.
+
+- allow forwarding *to* destination ip:port
+- allow forwarding *from* destination ip:port
+- nat packets identified by arrival at external IP / port to have
+*destination* internal ip:port
+- nat packets identified by arrival at internal IP / port to have
+*source* internal network IP of gateway machine
 
 ## Running a server with port-forwarding
 

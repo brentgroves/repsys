@@ -1,5 +1,23 @@
 # **[New Branch](https://git-scm.com/book/en/v2/Git-Branching-Basic-Branching-and-Merging)**
 
+## Default branch
+
+**[branch info](https://graphite.dev/guides/git-branch-not-showing-all-branches)**
+
+To see local branch names, open your terminal and run `git branch`
+To see all remote branch names, run `git branch -r`
+To see all local and remote branches, run `git branch -a`
+
+```bash
+# what is it? https://stackoverflow.com/questions/71535128/what-exactly-is-the-default-git-branch
+# git var GIT_DEFAULT_BRANCH
+# it default to master but github uses main as default 
+# switch default from master to main when working with github
+
+git config --global init.defaultBranch main
+
+```
+
 ## Basic Branching and Merging
 
 Let’s go through a simple example of branching and merging with a workflow that you might use in the real world. You’ll follow these steps:

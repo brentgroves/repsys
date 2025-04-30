@@ -5,6 +5,23 @@
 **[Curent Tasks](../../../../../a_status/current_tasks.md)**\
 **[Back to Main](../../../../../README.md)**
 
+## Change default git branch
+
+**[branch info](https://graphite.dev/guides/git-branch-not-showing-all-branches)**
+
+To see local branch names, open your terminal and run `git branch`
+To see all remote branch names, run `git branch -r`
+To see all local and remote branches, run `git branch -a`
+
+```bash
+# what is it? https://stackoverflow.com/questions/71535128/what-exactly-is-the-default-git-branch
+# git var GIT_DEFAULT_BRANCH
+# it default to master but github uses main as default 
+# switch default from master to main when working with github
+
+git config --global init.defaultBranch main
+```
+
 ## AI Overview: create github project using uv python
 
 ## **[Learn more](https://blog.devops.dev/ci-cd-with-github-actions-vs-jenkins-a-detailed-comparison-8c8ceded0205#:~:text=Continuous%20Integration%20(CI)%20is%20the%20practice%20of,repository%2C%20followed%20by%20automated%20builds%20and%20tests.)**
@@ -24,7 +41,7 @@ Initialize a new uv project:
 
 ## Add dependencies
 
-- To add project dependencies, use the uv add command. For example, to add requests and pandas, run uv add requests pandas.
+- To add project dependencies, use the uv add command. For example, to add requests and pandas, run `uv add requests pandas`.
 - uv automatically updates the pyproject.toml file with the added dependencies.
 
 ## Run your code
@@ -36,6 +53,21 @@ Initialize a new uv project:
 
 - Go to the GitHub website and create a new repository with the same name as your project.
 - Do not initialize the repository with a README, license, or .gitignore file, as uv has already created these.
+
+## Change default git branch from master to main
+
+To see local branch names, open your terminal and run `git branch`
+To see all remote branch names, run `git branch -r`
+To see all local and remote branches, run `git branch -a`
+
+```bash
+# what is it? https://stackoverflow.com/questions/71535128/what-exactly-is-the-default-git-branch
+# git var GIT_DEFAULT_BRANCH
+# it default to master but github uses main as default 
+# switch default from master to main when working with github
+
+git config --global init.defaultBranch main
+```
 
 ## Push your project to GitHub
 
@@ -51,8 +83,14 @@ git remote add origin https://github.com:brentgroves/veths_and_namespaces.git
 # change it
 git remote set-url origin https://github.com:brentgroves/veths_and_namespaces.git
 git remote -v
-git branch -M main
+# running git branch lists no branches but zsh shows local branch is main
 git add -A
+git commit -m "updated source code"
+git push origin main
+# running git branch -a showw both local main and origin main branches now
+git branch -a
+main
+remotes/origin/main
 ```
 
 - Commit your changes: `git add .` followed by `git commit -m "Initial commit"`.

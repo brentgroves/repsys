@@ -1,4 +1,4 @@
-# **[Linux Gateway using iptables](https://superuser.com/questions/1242284/use-iptables-nat-to-redirect-gateway-for-lan-pcs)**
+# **[Linux Gateway using iptables](https://superuser.com/questions/1286555/iptables-port-forwarding-with-internal-snat#:~:text=1%20Answer,%2D%2Dto%2Dsource%20192.168.2.5)**
 
 **[Back to Research List](../../../../../../research_list.md)**\
 **[Back to Current Tasks](../../../../../../../a_status/current_tasks.md)**\
