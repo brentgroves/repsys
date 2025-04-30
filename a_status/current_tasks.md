@@ -4,7 +4,7 @@
 
   **[IPtable's nat table](../research/m_z/virtualization/networking/firewalls/iptables_nft/iptables_process_flow.md)** is used to implement network address translation rules. As packets enter the network stack, rules in this table will determine whether and how to modify the packet’s source or destination addresses in order to impact the way that the packet and any response traffic are routed. This is often used to route packets to networks when direct access is not possible.
 
-  Make IPtable rules permanent without disrupting other programs such as KVM, docker, and MicroK8s which also add there own rules.
+  Make **[IPtable rules permanent](https://www.tutorialspoint.com/run-a-script-on-startup-in-linux#:~:text=Make%20the%20script%20file%20executable,scriptname%20defaults%22%20in%20the%20terminal.)** without disrupting other programs such as KVM, docker, and MicroK8s which also add there own rules.
 
 - Make GoLang and Python dev container to create base docker image for ETL scripts.
 - ETL API and CLI
