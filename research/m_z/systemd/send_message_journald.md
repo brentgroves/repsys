@@ -4,6 +4,8 @@
 **[Research List](../../research_list.md)**\
 **[Back Main](../../../README.md)**
 
+**[logging tutorial](https://sematext.com/blog/journald-logging-tutorial/)**
+
 ## 138
 
 systemd-cat is the equivalent to logger:
