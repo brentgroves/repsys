@@ -1,0 +1,11 @@
+[Unit]
+Description=Iptables firewall rules
+After=network.target
+
+[Install]
+WantedBy=multi-user.target
+
+[Service]
+Type=oneshot
+ExecStart=/etc/myiptables/recreate_rules.sh
+ExecStop=/etc/myiptables/delete_rules.sh
