@@ -48,7 +48,8 @@ $ ls -l /var/log/journal/fd8cf26e06e411e4a9d004010897bd01/
 
 With systemd journal, there is no option or reason for a traditional syslog utility like logrotate. Systemd-journald can be configured to grow its files up to a percentage of the size of the volume it’s hosted in. The daemon would then automatically delete old journal entries to keep the size below that threshold. Again, as we will see later, there are multiple options for controlling journal size.
 
-Journald Configuration
+## Journald Configuration
+
 The main configuration file for systemd-journald is /etc/systemd/journald.conf. However, other packages can create their configuration files which can be under any of these directories with a .conf extension:
 
 - /etc/systemd/journald.conf.d/*.conf

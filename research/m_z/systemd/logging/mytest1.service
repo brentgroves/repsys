@@ -1,0 +1,9 @@
+[Unit]
+Description=My test service
+
+[Install]
+WantedBy=multi-user.target
+
+[Service]
+Type=oneshot
+ExecStart=/etc/mytests/mytest1.sh
