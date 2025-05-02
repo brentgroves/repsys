@@ -21,7 +21,7 @@
 # while read -r REPLY; do printf >&4 '<3>%s\n' "$REPLY"; done
 # ./while_loop.sh 4>&1
 
-cat test.txt >(while read -r REPLY; do printf >&4 '<3>%s\n' "$REPLY"; done)
+cat test.txt >(while read -r REPLY; do printf >&4 '<3>%s\n' "$REPLY"; done) 
 
 # The logging levels are defined in sd-daemon(3):
 
