@@ -14,7 +14,7 @@
 
 } 2>&1 | systemd-cat -t my-script
 
-The logging levels are defined in sd-daemon(3):
+# The logging levels are defined in sd-daemon(3):
 
 #define SD_EMERG   "<0>"  /* system is unusable */
 #define SD_ALERT   "<1>"  /* action must be taken immediately */
