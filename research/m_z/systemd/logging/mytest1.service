@@ -6,4 +6,4 @@ WantedBy=multi-user.target
 
 [Service]
 Type=oneshot
-ExecStart=/etc/mytests/mytest1.sh
+ExecStart=/etc/mytests/bash_to_journald.sh
