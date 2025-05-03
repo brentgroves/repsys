@@ -5,9 +5,15 @@
 - **[SystemD service unit file with journal logging](../research/m_z/systemd/logging/mytest1.md)**
 
   Once we had the ability to connect from the Avilla Structures K8s Cluster to the Albion Mach2 server through the Albion Ubuntu desktop we needed a way to ensure iptable rules survived a reboot.  For this we used a SystemD service oneshot unit file. We also researched SystemD's socket activation feature which listens for client socket connections and starts a service handler dynamically.  This will help running services which are only needed occasionally from the Ubuntu desktop which has limited resources.
+- SystemD vs Kubernetes
+  - SystemD is better at starting programs.
+  - Kubernetes is better at keeping them running.
 
 - Make GoLang and Python dev container to create base docker image for ETL scripts.
 - ETL API and CLI
+- Compare K8s mail service options.
+  - Postfix with public key security and Amazon programmatic DNS txt record creation.
+  - Mailtrap service.
 
 ## Misc
 
