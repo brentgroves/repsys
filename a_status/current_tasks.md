@@ -1,10 +1,10 @@
 # Current Tasks
 
-- **[Use Linux Networking Features for Certificate Management verifications](../research/m_z/virtualization/networking/firewalls/iptables_nft/port_forwarding/research21_to_k8sgw2/research21_to_k8sgw2.md**
+- Access all of the Mach2 servers and clients as well as the K8s clients which use the Structures PKI certificate management system.
 
-  **[IPtable's nat table](../research/m_z/virtualization/networking/firewalls/iptables_nft/iptables_process_flow.md)** is used to implement network address translation rules. As packets enter the network stack, rules in this table will determine whether and how to modify the packet’s source or destination addresses in order to impact the way that the packet and any response traffic are routed. This is often used to route packets to networks when direct access is not possible.
+- SystemD
 
-  Make **[IPtable rules permanent](https://www.tutorialspoint.com/run-a-script-on-startup-in-linux#:~:text=Make%20the%20script%20file%20executable,scriptname%20defaults%22%20in%20the%20terminal.)** without disrupting other programs such as KVM, docker, and MicroK8s which also add there own rules.
+  Once we had the ability to connect from the Avilla Structures K8s Cluster to the Albion Mach2 server through the Albion Ubuntu desktop we needed a way to ensure iptable rules survived a reboot.  For this we used a SystemD service oneshot unit file. We also researched SystemD's socket activation feature which listens for client socket connections and starts a service handler dynamically.  This will help running services which are only needed occasionally from the Ubuntu desktop which has limited resources.
 
 - Make GoLang and Python dev container to create base docker image for ETL scripts.
 - ETL API and CLI
