@@ -2,7 +2,7 @@
 
 - Access all of the Mach2 servers and clients as well as the K8s clients which use the Structures PKI certificate management system.
 
-- SystemD
+- **[SystemD service unit file with journal logging](../research/m_z/systemd/logging/mytest1.md)**
 
   Once we had the ability to connect from the Avilla Structures K8s Cluster to the Albion Mach2 server through the Albion Ubuntu desktop we needed a way to ensure iptable rules survived a reboot.  For this we used a SystemD service oneshot unit file. We also researched SystemD's socket activation feature which listens for client socket connections and starts a service handler dynamically.  This will help running services which are only needed occasionally from the Ubuntu desktop which has limited resources.
 
