@@ -33,3 +33,11 @@ echo "SUCCESS" > "$1"
 # SUCCESS
 # cat /tmp/out
 # l-wx------ 1 brent brent 64 May  3 15:37 /proc/self/fd/12 -> pipe:[1960887]
+
+# So using strace on substituted process revealed that tail and head were getting a SIGHUP from the kernel before they had a chance to write. A simple workaround is to add nohup to the substitution:
+
+# rm -f log; exec ./script.sh >(nohup tail >log)
+
+# I think I understand why this fails with exec. IIUC, >(tail >log) creates a child process of the current bash process. However when using exec, it now becomes a child process of script.sh. When script.sh exits, the kernel sends SIGHUP to all child processes.
+
+# Still not sure why this used to work, perhaps in newer kernel versions it is faster/more aggressive about sending its SIGHUPs.
