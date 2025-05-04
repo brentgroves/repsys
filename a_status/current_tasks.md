@@ -15,6 +15,8 @@
   - Postfix with public key security and Amazon programmatic DNS txt record creation.
   - Mailtrap service.
 
+- **[file descriptors](https://copyconstruct.medium.com/bash-redirection-fun-with-descriptors-e799ec5a3c16)**
+
 ## Misc
 
 - Migrate from MSC to new vending machines.
