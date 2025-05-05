@@ -38,3 +38,9 @@ See the python install documentation for more details.
 uv will use existing Python installations if present on your system. There is no configuration necessary for this behavior: uv will use the system Python if it satisfies the requirements of the command invocation. See the Python discovery documentation for details.
 
 To force uv to use the system Python, provide the --no-managed-python flag. See the Python version preference documentation for more details.
+
+## Viewing Python installations
+
+To view available and installed Python versions:
+
+`uv python list`

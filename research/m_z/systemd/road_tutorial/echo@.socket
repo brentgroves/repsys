@@ -1,0 +1,7 @@
+# <echo@.service>
+[Unit]
+Description=Echo server service
+
+[Service]
+ExecStart=/path/to/socketthing.py
+StandardInput=socket
