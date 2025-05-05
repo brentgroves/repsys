@@ -10,29 +10,29 @@ The following is in markdown format. You can view it better at <https://markdown
 
 ## Task
 
-Access all of the Mach2 servers and clients as well as the K8s clients which use the Structures PKI certificate management system.
+The task is to access all of the Mach2 servers and clients and the K8s microservice clients, which use the Structures PKI certificate management system.
 
 ## Reason
 
-To programmatically check server certificate expiration dates and verify client certificates and the Structures intermediate and root certificates have been installed in all client trust stores.
+To programmatically check server certificate expiration dates and verify that client,  intermediate, and root certificates have been installed in all client trust stores.
 
 ## First Attempts
 
-We could not access the Albion Mach2 server from the Avilla Structures Kubernetes Cluster.  This was probably due to the K8s Cluster being on an edge and not a core switch which is configured for both the Albion and Avilla subnets.
+We could not access the Albion Mach2 server from the Avilla Structures Kubernetes Cluster.  This was probably due to the K8s Cluster not being on the core switch configured to serve the Albion and Avilla subnets.
 
 ## Linux Port Forwarding
 
-After putting in a network config request we were able to gain access to the Albion Mach2 server from an Albion Ubuntu desktop.  We then used the builtin Linux network packet system and standard iptable rules to forward a TCP socket connection to and from the Albion Mach2 server.
+After the network configuration was complete, we were able to access the Albion Mach2 server from an Albion Ubuntu desktop.  We then used the built-in Linux network packet system and standard iptables rules to forward a TCP socket connection to and from the Albion Mach2 server.
 
 ## SystemD
 
-Once we had the ability to connect from the Avilla Structures K8s Cluster to the Albion Mach2 server through the Albion Ubuntu desktop we needed a way to ensure iptable rules survived a reboot.  For this we used a SystemD service oneshot unit file. We also researched SystemD's socket activation feature which listens for client socket connections and starts a service handler dynamically.  This will help running services which are only needed occasionally from the Ubuntu desktop which has limited resources.
+Once we could connect from the Avilla Structures K8s Cluster to the Albion Mach2 server through the Albion Ubuntu desktop, we needed a way to ensure iptables rules survived a reboot.  For this, we used a SystemD service oneshot unit file. We also researched SystemD's socket activation feature, which listens for client socket connections and starts a service handler as needed.  This will help run services from the Ubuntu desktop, which is not intended to be a server.
 
 ## Purpose
 
-Ongoing certificate management for each Mach2 MES system and the Structures Avilla Kubernetes Cluster
+Ongoing certificate management for each Mach2 MES system and the Structures Avilla Kubernetes Cluster and their clients.
 
-## team
+## Team
 
 Christian. Trujillo, IT Structures Manager
 Brent Hall, System Administrator Senior
