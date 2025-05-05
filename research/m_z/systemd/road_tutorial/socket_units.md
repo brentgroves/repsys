@@ -135,7 +135,7 @@ The service “Type" is “simple", which is already the default, so there is no
 
 The socketthing.py script is just three lines long:
 
-```bash
+```python
 # !/usr/bin/python
 import sys
 sys.stdout.write(sys.stdin.readline().strip().upper() + 'rn')
@@ -145,14 +145,64 @@ What this does is read a line of text in from STDIN, which, as you saw, comes in
 
 Start the socket unit with:
 
-`sudo systemctl start echo.socket`
+```bash
+mkdir -p ~/.config/systemd/user/
+
+# show you cant start socket activation unit like this
+# create socket activation unit
+code ~/.config/systemd/user/echo.socket
+# create service for socket
+code ~/.config/systemd/user/echo@.service
+
+systemd --user start echo.socket
+# excess arguments
+
+
+# Start be moving your service out to where the system services live, The directory youa re looking for is /etc/systemd/system/:
+
+sudo mv ./echo.* /etc/systemd/system/
+ls /etc/systemd/system/ech*            
+/etc/systemd/system/echo@.service  /etc/systemd/system/echo.socket
+
+# If you were to try and run the service now, it would have to be with superuser privileges:
+
+sudo systemctl start echo.socket
+# But, what’s more, if you check your service’s status with
+sudo systemctl status echo.socket
+● echo.socket - Echo server
+     Loaded: loaded (/etc/systemd/system/echo.socket; disabled; preset: enabled)
+     Active: active (listening) since Mon 2025-05-05 17:49:52 EDT; 11s ago
+     Listen: [::]:4444 (Stream)
+   Accepted: 0; Connected: 0;
+      Tasks: 0 (limit: 38302)
+     Memory: 8.0K (peak: 256.0K)
+        CPU: 926us
+     CGroup: /system.slice/echo.socket
+
+May 05 17:49:52 research21 systemd[1]: Listening on echo.socket - Echo server.
+
+
+
+And stop it with
+
+sudo systemctl stop echo.socket
+
+sudo systemctl start echo.service
+
+# To run the example, save the above script as logging-test.sh, run with systemd-run as a temporary unit, then query the full properties of every log record. If you do not see the info level message, check if journald.conf limits the logging level stored in the journal to a higher value.
+
+systemd-run --user --wait ./mytest1.sh
+journalctl -t mytest1.sh
+$ journalctl -t mytest1.sh -o json-pretty
+```
 
 And echo.socket will automatically call <echo@.service> (which in turn runs socketthing.py) each time someone tries to push a string to the server through port 4444.
 
 To do that, on the sending computer, you can use a program like socat:
 
 ```bash
-$ socat - TCP:server_IP_address:4444
+# $ socat - TCP:server_IP_address:4444
+socat - TCP:localhost:4444
 hello computer
 HELLO COMPUTER
 ```
