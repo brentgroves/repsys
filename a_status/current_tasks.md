@@ -1,5 +1,6 @@
 # Current Tasks
 
+- Had issue accessing our Albion Mach2 server from our Avilla K8s Cluster so as a temp fix I setup port forwarding with DNAT/SNATing from an Albion Ubuntu on the desktop VLAN.
 - Python uv from systemd unit file example
 - Run scripts from Linamar Azure SQL tennant.
 - Access all of the Mach2 servers and clients as well as the K8s clients which use the Structures PKI certificate management system.
