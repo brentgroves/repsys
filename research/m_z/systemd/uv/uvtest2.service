@@ -1,0 +1,14 @@
+[Unit]
+Description=Run Python script with uv
+After=network.target
+
+[Service]
+Environment=PATH=/home/brent/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+WorkingDirectory=/etc/mytests/
+ExecStart=/usr/bin/env uv run uvtest2.py
+User=brent
+Group=brent
+# Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target

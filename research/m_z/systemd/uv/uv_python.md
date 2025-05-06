@@ -26,6 +26,6 @@ This takes advantage of **[in-script toml-ish metadata](https://packaging.python
 
 If you dump the above into a file and chmod a+x it, then as long as uv is on your system you can reconstruct the deps and run the script independently of what your other scripts have needed in the meantime. There’s a built-in command uv init --script myscript.py that works, but doesn’t include the #! (shebang) line so you’ll want to add that.
 
-If you’d like to upgrade from a one-shot script to a command you’ll regularly use (and rename from mytool.py to mytool) the shebang needs to be updated to #!/usr/bin/env uv run --script --quiet. If you don’t include the --script flag it will recusively execute forever until you interrupt it.
+If you’d like to upgrade from a one-shot script to a command you’ll regularly use (and rename from mytool.py to mytool) the shebang needs to be updated to #!/usr/bin/env uv run --script --quiet. If you don’t include the --script flag it will recusively **[execute forever](https://github.com/astral-sh/uv/issues/6360)** until you interrupt it.
 
 See the **[uv scripting docs](https://docs.astral.sh/uv/guides/scripts/#running-a-script-with-dependencies)** for more details on how scripting and dependencies work. There’s also uvx, which lets you run existing tools the same way. I was teaching some basic Python in **[Marimo](https://marimo.io/)** and it’s easy to spin up a new notebook with dependencies like:
