@@ -67,3 +67,26 @@ May 06 17:33:14 research21 systemd[1]: uvtest1.service: Deactivated successfully
 ## test 2
 
 START HERE
+
+```bash
+# from 1st terminal
+journalctl -f
+
+# from 2nd terminal
+cp uvtest2.py /etc/mytests/test2
+cp uvtest2.service /etc/systemd/system/
+sudo systemctl start uvtest1
+# journalctl terminal
+```
+
+## temporary environments
+
+Where does flask get installed?
+
+```bash
+# Environment=PATH=/home/brent/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+# WorkingDirectory=/etc/mytests/test2
+
+ls $HOME/.cache/uv/environments-v2
+ls /etc/mytests/test2
+```
