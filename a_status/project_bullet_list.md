@@ -17,12 +17,16 @@ The following is in markdown format and can be viewed by copying and pasting the
 - Ongoing certificate management for each Mach2 MES system
 and for the Structures Avilla Kubernetes Cluster
 - Connect Structures Avilla Dell PowerEdge servers to extreme core switches with 10GB SPF+ modules in truck mode to VLANs 50 and 220.
+- Connect to Mach2 MES servers after all sites.
 - Set up and administer a MySQL InnoDB Cluster
 - Set up the Authentication and Authorization K8s platform service
 - Configure Zero-Trust Service Mesh Gateway in K8s
 - Set up Job Queue system in K8s
-- Develop Email microservice in K8s
-- Develop SMS Notification microservice in K8s
+- Set up Mailtrap free-tier mail service.
+- Set up Postfix mail server with public key security and Amazon Route53 programmatic DNS txt record creation.
+- Develop Email microservice in K8s using Azure, Mailtrap, and/or Postfix mail service/server.
+- Set up Novu in-app, push, email, SMS, and chat notification services.
+- Develop SMS Notification microservice in K8s using Novu.
 - Migrate Mobex Azure SQL MI to Linamar's Azure SQL DB.
 - Document the Kubernetes troubleshooting process
 - Set up Prometheus system monitoring and alerting in K8s.
