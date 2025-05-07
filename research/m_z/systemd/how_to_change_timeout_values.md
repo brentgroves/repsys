@@ -4,7 +4,7 @@
 **[Research List](../../research_list.md)**\
 **[Back Main](../../../README.md)**
 
-91
+<https://stackoverflow.com/questions/77991982/monitoring-for-failure-and-quickly-restarting-systemd-service>
 
 In the company I am working now there is a legacy service and its init script is using old SysvInit, but is running over systemd (CentOS 7).
 
