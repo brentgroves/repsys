@@ -42,6 +42,9 @@ In this example:
 journalctl -f
 
 # from 2nd terminal
+pushd .
+cd ~/src/repsys/research/m_z/systemd/uv
+
 cp uvtest1.py /etc/mytests/
 cp uvtest1.service /etc/systemd/system/
 sudo systemctl start uvtest1
@@ -66,21 +69,75 @@ May 06 17:33:14 research21 systemd[1]: uvtest1.service: Deactivated successfully
 
 ## test 2
 
-START HERE
-
 ```bash
 # from 1st terminal
-journalctl -f
+# after starting service
+journalctl -u uvtest2.service 
+May 07 12:26:16 research21 systemd[1]: Started uvtest2.service - Run Python script with uv.
+May 07 12:26:16 research21 env[566307]: Installed 7 packages in 12ms
+May 07 12:26:17 research21 env[566400]:  * Serving Flask app 'uvtest2'
+May 07 12:26:17 research21 env[566400]:  * Debug mode: off
+May 07 12:26:17 research21 env[566400]: WARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.
+May 07 12:26:17 research21 env[566400]:  * Running on all addresses (0.0.0.0)
+May 07 12:26:17 research21 env[566400]:  * Running on http://127.0.0.1:8080
+May 07 12:26:17 research21 env[566400]:  * Running on http://10.187.40.123:8080
+May 07 12:26:17 research21 env[566400]: Press CTRL+C to quit
+May 07 12:27:56 research21 env[566400]: 127.0.0.1 - - [07/May/2025 12:27:56] "GET / HTTP/1.1" 200 -
 
 # from 2nd terminal
+pushd .
+cd ~/src/repsys/research/m_z/systemd/uv
 cp uvtest2.py /etc/mytests/test2/
 cp uvtest2.service /etc/systemd/system/
 sudo systemctl start uvtest2
-May 07 12:16:42 research21 systemd[1]: Started uvtest2.service - Run Python script with uv.
-May 07 12:16:42 research21 (env)[563608]: uvtest2.service: Changing to the requested working directory failed: Not a directory
-May 07 12:16:42 research21 systemd[1]: uvtest2.service: Main process exited, code=exited, status=200/CHDIR
-May 07 12:16:42 research21 systemd[1]: uvtest2.service: Failed with result 'exit-code'.
+# check status
+sudo systemctl status uvtest2
+● uvtest2.service - Run Python script with uv
+     Loaded: loaded (/etc/systemd/system/uvtest2.service; disabled; preset: enabled)
+     Active: active (running) since Wed 2025-05-07 12:26:16 EDT; 19min ago
+   Main PID: 566307 (uv)
+      Tasks: 7 (limit: 38302)
+     Memory: 37.3M (peak: 38.4M)
+        CPU: 1.170s
+     CGroup: /system.slice/uvtest2.service
+             ├─566307 uv run uvtest2.py
+             └─566400 /home/brent/.cache/uv/environments-v2/uvtest2-919d75032003516f/bin/python uvtest2.py
 
+May 07 12:26:16 research21 systemd[1]: Started uvtest2.service - Run Python script with uv.
+May 07 12:26:16 research21 env[566307]: Installed 7 packages in 12ms
+May 07 12:26:17 research21 env[566400]:  * Serving Flask app 'uvtest2'
+May 07 12:26:17 research21 env[566400]:  * Debug mode: off
+May 07 12:26:17 research21 env[566400]: WARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.
+May 07 12:26:17 research21 env[566400]:  * Running on all addresses (0.0.0.0)
+May 07 12:26:17 research21 env[566400]:  * Running on http://127.0.0.1:8080
+May 07 12:26:17 research21 env[566400]:  * Running on http://10.187.40.123:8080
+May 07 12:26:17 research21 env[566400]: Press CTRL+C to quit
+May 07 12:27:56 research21 env[566400]: 127.0.0.1 - - [07/May/2025 12:27:56] "GET / HTTP/1.1" 200 -
+
+# stop service
+sudo systemctl stop uvtest2
+
+# check status
+sudo systemctl status uvtest2
+
+× uvtest2.service - Run Python script with uv
+     Loaded: loaded (/etc/systemd/system/uvtest2.service; disabled; preset: enabled)
+     Active: failed (Result: exit-code) since Wed 2025-05-07 12:47:12 EDT; 15s ago
+   Duration: 20min 56.391s
+    Process: 566307 ExecStart=/usr/bin/env uv run uvtest2.py (code=exited, status=143)
+   Main PID: 566307 (code=exited, status=143)
+        CPU: 1.188s
+
+May 07 12:26:17 research21 env[566400]:  * Running on all addresses (0.0.0.0)
+May 07 12:26:17 research21 env[566400]:  * Running on http://127.0.0.1:8080
+May 07 12:26:17 research21 env[566400]:  * Running on http://10.187.40.123:8080
+May 07 12:26:17 research21 env[566400]: Press CTRL+C to quit
+May 07 12:27:56 research21 env[566400]: 127.0.0.1 - - [07/May/2025 12:27:56] "GET / HTTP/1.1" 200 -
+May 07 12:47:12 research21 systemd[1]: Stopping uvtest2.service - Run Python script with uv...
+May 07 12:47:12 research21 systemd[1]: uvtest2.service: Main process exited, code=exited, status=143/n/a
+May 07 12:47:12 research21 systemd[1]: uvtest2.service: Failed with result 'exit-code'.
+May 07 12:47:12 research21 systemd[1]: Stopped uvtest2.service - Run Python script with uv.
+May 07 12:47:12 research21 systemd[1]: uvtest2.service: Consumed 1.188s CPU time, 38.4M memory peak, 0B memory swap peak.
 ```
 
 ## temporary environments
@@ -117,4 +174,6 @@ drwxrwxrwx 3 root  root  4.0K May  7 12:21 ..
 
 To see messages logged by any systemd unit, use the -u switch. The command below will show all messages logged by the Nginx web server. You can use the --since and --until switches here to pinpoint web server errors occurring within a time window.
 
-`$ journalctl -u nginx.service`
+```bash
+journalctl -u uvtest2.service
+```

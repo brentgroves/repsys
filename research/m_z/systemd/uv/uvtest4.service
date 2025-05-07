@@ -1,0 +1,23 @@
+[Unit]
+Description=Run test4 Python script with uv
+After=network.target
+
+[Service]
+Environment=PATH=/home/brent/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+WorkingDirectory=/etc/mytests/test4
+ExecStart=/usr/bin/env uv run uvtest4.py
+User=brent
+Group=brent
+KillMode=control-group
+KillSignal=SIGTERM
+TimeoutStopSec=300
+# Systemd Service Configuration:
+# Ensure your systemd service file is configured correctly. 
+# The default KillMode=control-group and KillSignal=SIGTERM 
+# are usually sufficient. You can adjust TimeoutStopSec if 
+# your cleanup process takes longer than the default 90 seconds.
+
+# Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target

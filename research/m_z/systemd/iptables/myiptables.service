@@ -2,9 +2,13 @@
 Description=Iptables firewall rules
 After=network.target
 
+[Service]
+Type=oneshot
+WorkingDirectory=/path/to/your/project
+ExecStart=/etc/myiptables/recreate_rules.sh
+User=your_user
+Group=your_group
+
 [Install]
 WantedBy=multi-user.target
 
-[Service]
-Type=oneshot
-ExecStart=/etc/myiptables/recreate_rules.sh

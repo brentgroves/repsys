@@ -1,5 +1,6 @@
 # Current Tasks
 
+- SystemD socket activation unit listens for connection and then start a one-shot unit. The one-shot unit runs many tasks consequatively such as those in an ETL pipeline. Test it on TB.
 - Had issue accessing our Albion Mach2 server from our Avilla K8s Cluster so as a temp fix I setup port forwarding with DNAT/SNATting from an Albion Ubuntu on the desktop VLAN. Will work with Jared to get Albion's 1220 VLan accessable from Avilla K8s which will have our certificate management services.
 - Python uv from systemd unit file example
 - Run scripts from Linamar Azure SQL tennant.

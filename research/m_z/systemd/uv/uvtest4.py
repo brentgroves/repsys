@@ -1,0 +1,33 @@
+#!/usr/bin/env -S uv run --script
+# /// script
+# requires-python = ">=3.12"
+# dependencies = [
+#     "flask",
+# ]
+# ///
+# -S, --split-string=S process and split S into separate arguments; used to pass multiple arguments on shebang lines
+import signal
+import sys
+import logging
+from flask import Flask
+app = Flask(__name__)
+
+logging.basicConfig(level=logging.INFO,format='%(asctime)s - %(levelname)s - %(message)s')
+
+def handle_sigterm(signum, frame):
+    logging.info("Received SIGTERM, shutting down gracefully...")
+    # Perform cleanup tasks here (e.g., closing files, releasing resources)
+    logging.info("Cleanup complete, exiting.")
+    # test warning
+    logging.warning("This is a warning message.")
+    logging.critical("This is a critical error")
+    sys.exit(0)
+
+signal.signal(signal.SIGTERM, handle_sigterm)
+
+@app.route('/')
+def hello_world():
+    return 'Hello from Flask!\n'
+
+if __name__ == "__main__":
+    app.run(host='0.0.0.0', port=8080)
