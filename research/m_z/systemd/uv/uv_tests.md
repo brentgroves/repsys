@@ -73,10 +73,14 @@ START HERE
 journalctl -f
 
 # from 2nd terminal
-cp uvtest2.py /etc/mytests/test2
+cp uvtest2.py /etc/mytests/test2/
 cp uvtest2.service /etc/systemd/system/
-sudo systemctl start uvtest1
-# journalctl terminal
+sudo systemctl start uvtest2
+May 07 12:16:42 research21 systemd[1]: Started uvtest2.service - Run Python script with uv.
+May 07 12:16:42 research21 (env)[563608]: uvtest2.service: Changing to the requested working directory failed: Not a directory
+May 07 12:16:42 research21 systemd[1]: uvtest2.service: Main process exited, code=exited, status=200/CHDIR
+May 07 12:16:42 research21 systemd[1]: uvtest2.service: Failed with result 'exit-code'.
+
 ```
 
 ## temporary environments
@@ -88,5 +92,29 @@ Where does flask get installed?
 # WorkingDirectory=/etc/mytests/test2
 
 ls $HOME/.cache/uv/environments-v2
-ls /etc/mytests/test2
+
+server-3827603ed46bafa8  socketthing-7d6b171392dc7764  uvtest2-919d75032003516f
+
+# answer: it created the environment the user of the service unit's local cache. it first created a directory and the installed all the dependancies in it.
+ls $HOME/.cache/uv/environments-v2/uvtest2-919d75032003516f 
+
+bin  CACHEDIR.TAG  lib  lib64  pyvenv.cfg
+
+ls $HOME/.cache/uv/environments-v2/uvtest2-919d75032003516f/bin
+
+activate  activate.bat  activate.csh  activate.fish  activate.nu  activate.ps1  activate_this.py  deactivate.bat  flask  pydoc.bat  python  python3  python3.13
+
+# didn't put anything in scripts working directory.
+ls -ahl /etc/mytests/test2
+
+total 12K
+drwxrwxr-x 2 brent brent 4.0K May  7 12:26 .
+drwxrwxrwx 3 root  root  4.0K May  7 12:21 ..
+-rwxrwxr-x 1 brent brent  302 May  7 12:26 uvtest2.py
 ```
+
+## By Unit
+
+To see messages logged by any systemd unit, use the -u switch. The command below will show all messages logged by the Nginx web server. You can use the --since and --until switches here to pinpoint web server errors occurring within a time window.
+
+`$ journalctl -u nginx.service`
