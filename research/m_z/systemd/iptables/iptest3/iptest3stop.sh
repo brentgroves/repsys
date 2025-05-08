@@ -16,9 +16,18 @@
 # cat <&6 |             # call cat, with its standard input connected to
 #                       # what is currently fd 6, i.e., /tmp/bar
 # https://copyconstruct.medium.com/bash-redirection-fun-with-descriptors-e799ec5a3c16
-exec 2>&1 4>stoplog 
+exec 2>&1 4>>log  
 
-printf "Goodbye, world!\n" >&4
+# In shell-scripting, backticks are deprecated. They have been for a while. They're not deprecated in the sense that they're going to be removed any time soon. They're deprecated in the sense that the newer syntax has advantages over the old back-tick syntax and that the newer syntax should be preferred. Back-ticks are only really kept in bash for backwards compatibility with older, pre-existing scripts. But the current POSIX standard strongly recommends using the newer $() substitution syntax.
+# https://www.linux.org/threads/backtick-usage.47910/
+# The main advantage of using the newer syntax is that it's much easier to create nested substitutions.
+# e.g.
+# Bash:
+# someVar=$(/path/to/script -infile "$(ls -1tr 202312[0-9][0-9]*.txt | tail -n 1)" -print0)
+
+now=$(date)
+printf "Stopping iptest3 service using iptest3stop.sh at %s\n" "$now" >&4
+
 # The logging levels are defined in sd-daemon(3):
 
 #define SD_EMERG   "<0>"  /* system is unusable */
@@ -67,6 +76,9 @@ iptables -t nat -D PREROUTING -d 10.187.40.123/32 -p tcp -m tcp --dport 8080 -j 
 # to originate from gateway's internal address
 iptables -t nat -D POSTROUTING -d 10.188.50.202/32 -p tcp -m tcp --dport 8080 -j SNAT --to-source 10.187.40.123
 # iptables -t nat -A POSTROUTING -p tcp -d 10.188.50.202 --dport 8080 -j SNAT --to-source 10.187.40.123
+
+now=$(date)
+printf "Successfully Stopped iptest3 service using iptest3stop.sh at %s\n" "$now" >&4
 
 # # Close FD
 exec 4>&- 
