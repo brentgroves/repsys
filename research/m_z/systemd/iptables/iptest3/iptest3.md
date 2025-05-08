@@ -1,4 +1,4 @@
-# SystemD iptables test2
+# SystemD iptables test3
 
 ```bash
 [Unit]
@@ -26,21 +26,21 @@ In this example:
 - Restart: Configures the service to restart on failure.
 - WantedBy: Specifies that the service should be enabled for multi-user targets.
 
-## iptest2
+## iptest3
 
 ```bash
 # from 1st terminal
-journalctl -u iptest2.service -f 
+journalctl -u iptest3.service -f 
 # or if there were issues starting service
 journalctl -f 
 
 # from 2nd terminal
 pushd .
 cd ~/src/repsys/research/m_z/systemd/iptables
-mkdir -p /etc/mytests/iptest2/
-cp iptest2*.sh /etc/mytests/iptest2/
-sudo cp iptest2.service /etc/systemd/system/
-sudo systemctl start iptest2
+mkdir -p /etc/mytests/iptest3/
+cp iptest3*.sh /etc/mytests/iptest3/
+sudo cp iptest3.service /etc/systemd/system/
+sudo systemctl start iptest3
 
 # from 1st terminal
 journalctl -u iptest2.service -f 
