@@ -26,7 +26,7 @@ exec 2>&1 4>>log
 # someVar=$(/path/to/script -infile "$(ls -1tr 202312[0-9][0-9]*.txt | tail -n 1)" -print0)
 
 now=$(date)
-printf "Stopping albmach2 service using albmach2stop.sh at %s\n" "$now" >&4
+printf "Stopping albmach2s2 service using albmach2s2stop.sh at %s\n" "$now" >&4
 
 # The logging levels are defined in sd-daemon(3):
 
@@ -73,7 +73,7 @@ iptables -t nat -D PREROUTING -d 10.187.40.123/32 -p tcp -m tcp --dport 443 -j D
 iptables -t nat -D POSTROUTING -d 10.187.220.51/32 -p tcp -m tcp --dport 443 -j SNAT --to-source 10.187.40.123
 
 now=$(date)
-printf "Successfully Stopped iptest3 service using iptest3stop.sh at %s\n" "$now" >&4
+printf "Successfully Stopped albmach2s2 service using albmach2s2stop.sh at %s\n" "$now" >&4
 
 # # Close FD
 exec 4>&- 

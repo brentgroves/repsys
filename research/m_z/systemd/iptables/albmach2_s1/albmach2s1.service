@@ -1,13 +1,13 @@
 [Unit]
-Description=Iptables firewall rules test3
+Description=Iptables firewall rules for PD-ALB-MACH2-S1.linamar.com (10.187.220.51)
 After=network.target
 
 [Service]
 Type=oneshot
 Environment=PATH=/home/brent/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
-WorkingDirectory=/etc/myscripts/albmach2
-ExecStart=/etc/myscripts/albmach2/albmach2start.sh
-ExecStop=/etc/myscripts/albmach2/albmach2stop.sh
+WorkingDirectory=/etc/myscripts/albmach2s1
+ExecStart=/etc/myscripts/albmach2/albmach2s1start.sh
+ExecStop=/etc/myscripts/albmach2/albmach2s1stop.sh
 # https://unix.stackexchange.com/questions/694357/how-to-invoke-iptables-from-systemd-unit-file
 CapabilityBoundingSet=CAP_SETGID CAP_SETUID CAP_SYS_RESOURCE CAP_NET_ADMIN CAP_NET_RAW
 # User=brent

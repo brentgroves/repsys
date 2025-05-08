@@ -26,7 +26,7 @@ exec 2>&1 4>>log
 # someVar=$(/path/to/script -infile "$(ls -1tr 202312[0-9][0-9]*.txt | tail -n 1)" -print0)
 
 now=$(date)
-printf "Starting Albion Mach2 service using albmach2start.sh at %s\n" "$now" >&4
+printf "Starting Albion Mach2 S1 service using albmach2s1start.sh at %s\n" "$now" >&4
 
 # The logging levels are defined in sd-daemon(3):
 
@@ -79,7 +79,7 @@ iptables -t nat -D POSTROUTING -d 10.187.220.51/32 -p tcp -m tcp --dport 443 -j 
 iptables -t nat -A POSTROUTING -p tcp -d 10.187.220.51 --dport 443 -j SNAT --to-source 10.187.40.123
 
 now=$(date)
-printf "Successfully started albmach2 service using albmach2start.sh at %s\n" "$now" >&4
+printf "Successfully started albmach2s1 service using albmach2start.sh at %s\n" "$now" >&4
 
 # # Close FD
 exec 4>&-
