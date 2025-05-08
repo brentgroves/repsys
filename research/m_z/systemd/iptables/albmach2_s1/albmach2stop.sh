@@ -26,7 +26,7 @@ exec 2>&1 4>>log
 # someVar=$(/path/to/script -infile "$(ls -1tr 202312[0-9][0-9]*.txt | tail -n 1)" -print0)
 
 now=$(date)
-printf "Stopping iptest3 service using iptest3stop.sh at %s\n" "$now" >&4
+printf "Stopping albmach2 service using albmach2stop.sh at %s\n" "$now" >&4
 
 # The logging levels are defined in sd-daemon(3):
 
@@ -61,21 +61,16 @@ printf "<5>Ending the stop script...\n"
 
 # iptables -t nat -S
 # allow inbound and outbound forwarding
-iptables -D FORWARD -d 10.188.50.202/32 -p tcp -m tcp --dport 8080 -j ACCEPT
-# iptables -A FORWARD -p tcp -d 10.188.50.202 --dport 8080 -j ACCEPT
-
-iptables -D FORWARD -s 10.188.50.202/32 -p tcp -m tcp --sport 8080 -j ACCEPT
-# iptables -A FORWARD -p tcp -s 10.188.50.202 --sport 8080 -j ACCEPT
+iptables -D FORWARD -d 10.187.220.51/32 -p tcp -m tcp --dport 443 -j ACCEPT
+iptables -D FORWARD -s 10.187.220.51/32 -p tcp -m tcp --sport 443 -j ACCEPT
 
 # iptables -t nat -S
 # route packets arriving at external IP/port to LAN machine
-iptables -t nat -D PREROUTING -d 10.187.40.123/32 -p tcp -m tcp --dport 8080 -j DNAT --to-destination 10.188.50.202:8080
-# iptables -t nat -A PREROUTING  -p tcp -d 10.187.40.123 --dport 8080 -j DNAT --to-destination 10.188.50.202:8080
+iptables -t nat -D PREROUTING -d 10.187.40.123/32 -p tcp -m tcp --dport 443 -j DNAT --to-destination 10.187.220.51:443
 
 # rewrite packets going to LAN machine (identified by address/port)
 # to originate from gateway's internal address
-iptables -t nat -D POSTROUTING -d 10.188.50.202/32 -p tcp -m tcp --dport 8080 -j SNAT --to-source 10.187.40.123
-# iptables -t nat -A POSTROUTING -p tcp -d 10.188.50.202 --dport 8080 -j SNAT --to-source 10.187.40.123
+iptables -t nat -D POSTROUTING -d 10.187.220.51/32 -p tcp -m tcp --dport 443 -j SNAT --to-source 10.187.40.123
 
 now=$(date)
 printf "Successfully Stopped iptest3 service using iptest3stop.sh at %s\n" "$now" >&4

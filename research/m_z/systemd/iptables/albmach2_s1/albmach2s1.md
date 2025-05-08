@@ -1,4 +1,6 @@
-# SystemD iptables test3
+# SystemD iptables Albion Mach2 Port Forwarding
+
+`PD-ALB-MACH2-S1.linamar.com (10.187.220.51)`
 
 ```bash
 [Unit]
@@ -26,27 +28,47 @@ In this example:
 - Restart: Configures the service to restart on failure.
 - WantedBy: Specifies that the service should be enabled for multi-user targets.
 
-## iptest3
+## Albion Mach2 port forwarding
+
+## accessible from firewall machine test
+
+Verify key-pd-alb-mach2-ca-chain-bundle.cert.pem with pd-alb-mach2-s1.pem's private key.
+
+Verify key-pd-alb-mach2-ca-chain-bundle.cert.pem with the pd-alb-mach2-s1.linamar.com.cert.pem server certificate.
+
+Verify key-pd-alb-mach2-ca-chain-bundle.cert.pem with the intermediate.cert.pem.
+
+Verify key-pd-alb-mach2-ca-chain-bundle.cert.pem with the ca.root.pem.
+
+```bash
+# openssl s_client -showcerts -connect 10.188.220.50:443 -servername reports11 -CApath /etc/ssl/certs -
+openssl s_client -showcerts -connect 10.187.220.51:443
+
+# Verify this certificate chain with key-pd-alb-mach2-ca-chain-bundle.cert.pem.
+
+```
+
+## deploy service
 
 ```bash
 # from 1st terminal
-journalctl -u iptest3.service -f 
+journalctl -u albmach2.service -f 
 # or if there were issues starting service
 journalctl -f 
 
 # from 2nd terminal
 pushd .
-cd ~/src/repsys/research/m_z/systemd/iptables/iptest3
-mkdir -p /etc/mytests/iptest3/
-cp iptest3*.sh /etc/mytests/iptest3/
-ls /etc/mytests/iptest3/
-sudo cp iptest3.service /etc/systemd/system/
+cd ~/src/repsys/research/m_z/systemd/iptables/albmach2
+mkdir -p /etc/myscripts/albmach2/
+cp albmach2*.sh /etc/myscripts/albmach2/
+ls /etc/myscripts/albmach2/
+sudo cp albmach2.service /etc/systemd/system/
 # sudo systemctl daemon-reload
-sudo systemctl start iptest3
+sudo systemctl start albmach2
 
 
 # from 1st terminal
-journalctl -u iptest3.service -f 
+journalctl -u albmach2.service -f 
 May 08 15:36:56 research21 systemd[1]: Starting iptest3.service - Iptables firewall rules test3...
 May 08 15:36:56 research21 iptest3start.sh[660672]: Starting the start script...
 May 08 15:36:56 research21 iptest3start.sh[660672]: start log level 1

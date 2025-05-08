@@ -5,9 +5,9 @@ After=network.target
 [Service]
 Type=oneshot
 Environment=PATH=/home/brent/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
-WorkingDirectory=/etc/mytests/iptest3
-ExecStart=/etc/mytests/iptest3/iptest3start.sh
-ExecStop=/etc/mytests/iptest3/iptest3stop.sh
+WorkingDirectory=/etc/myscripts/albmach2
+ExecStart=/etc/myscripts/albmach2/albmach2start.sh
+ExecStop=/etc/myscripts/albmach2/albmach2stop.sh
 # https://unix.stackexchange.com/questions/694357/how-to-invoke-iptables-from-systemd-unit-file
 CapabilityBoundingSet=CAP_SETGID CAP_SETUID CAP_SYS_RESOURCE CAP_NET_ADMIN CAP_NET_RAW
 # User=brent
