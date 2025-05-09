@@ -243,4 +243,38 @@ Created symlink /etc/systemd/system/multi-user.target.wants/albmach2s2.service â
 
 ```bash
 sudo reboot now
+
+# after reboot
+# verify rules were added
+sudo iptables -S                
+[sudo] password for brent: 
+-P INPUT ACCEPT
+-P FORWARD ACCEPT
+-P OUTPUT ACCEPT
+-A FORWARD -d 10.187.220.52/32 -p tcp -m tcp --dport 443 -j ACCEPT
+-A FORWARD -s 10.187.220.52/32 -p tcp -m tcp --sport 443 -j ACCEPT
+
+sudo iptables -t nat -S
+-P PREROUTING ACCEPT
+-P INPUT ACCEPT
+-P OUTPUT ACCEPT
+-P POSTROUTING ACCEPT
+-A PREROUTING -d 10.187.40.123/32 -p tcp -m tcp --dport 443 -j DNAT --to-destination 10.187.220.52:443
+-A POSTROUTING -d 10.187.220.52/32 -p tcp -m tcp --dport 443 -j SNAT --to-source 10.187.40.123
+
+# test access from kwsgw2
+ssh brent@10.188.50.202
+openssl s_client -showcerts -connect 10.187.40.123:443
+CONNECTED(00000003)
+Can't use SSL_get_servername
+depth=2 C = US, ST = Indiana, L = Albion, O = Mobex Global, CN = Root CA
+verify error:num=19:self-signed certificate in certificate chain
+verify return:1
+depth=2 C = US, ST = Indiana, L = Albion, O = Mobex Global, CN = Root CA
+verify return:1
+depth=1 C = US, ST = Indiana, O = Mobex Global, CN = Intermediate CA
+verify return:1
+depth=0 C = US
+verify return:1
+
 ```
