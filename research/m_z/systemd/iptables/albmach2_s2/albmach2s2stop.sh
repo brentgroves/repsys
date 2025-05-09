@@ -61,16 +61,16 @@ printf "<5>Ending the stop script...\n"
 
 # iptables -t nat -S
 # allow inbound and outbound forwarding
-iptables -D FORWARD -d 10.187.220.51/32 -p tcp -m tcp --dport 443 -j ACCEPT
-iptables -D FORWARD -s 10.187.220.51/32 -p tcp -m tcp --sport 443 -j ACCEPT
+iptables -D FORWARD -d 10.187.220.52/32 -p tcp -m tcp --dport 443 -j ACCEPT
+iptables -D FORWARD -s 10.187.220.52/32 -p tcp -m tcp --sport 443 -j ACCEPT
 
 # iptables -t nat -S
 # route packets arriving at external IP/port to LAN machine
-iptables -t nat -D PREROUTING -d 10.187.40.123/32 -p tcp -m tcp --dport 443 -j DNAT --to-destination 10.187.220.51:443
+iptables -t nat -D PREROUTING -d 10.187.40.123/32 -p tcp -m tcp --dport 443 -j DNAT --to-destination 10.187.220.52:443
 
 # rewrite packets going to LAN machine (identified by address/port)
 # to originate from gateway's internal address
-iptables -t nat -D POSTROUTING -d 10.187.220.51/32 -p tcp -m tcp --dport 443 -j SNAT --to-source 10.187.40.123
+iptables -t nat -D POSTROUTING -d 10.187.220.52/32 -p tcp -m tcp --dport 443 -j SNAT --to-source 10.187.40.123
 
 now=$(date)
 printf "Successfully Stopped albmach2s2 service using albmach2s2stop.sh at %s\n" "$now" >&4

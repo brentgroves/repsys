@@ -28,6 +28,17 @@ In this example:
 
 ## iptest3
 
+Tried to run as iptables commands as User=brent but it did not work even with CAP_NET_RAW set.
+
+```bash
+# <https://unix.stackexchange.com/questions/694357/how-to-invoke-iptables-from-systemd-unit-file>
+
+CapabilityBoundingSet=CAP_SETGID CAP_SETUID CAP_SYS_RESOURCE CAP_NET_ADMIN CAP_NET_RAW
+
+# User=brent
+# Group=brent
+```
+
 ```bash
 # from 1st terminal
 journalctl -u iptest3.service -f 
