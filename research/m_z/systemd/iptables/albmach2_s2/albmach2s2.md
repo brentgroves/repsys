@@ -193,10 +193,10 @@ verify return:1
 ```bash
 
 # stop service
-sudo systemctl stop iptest3
+sudo systemctl stop albmach2s2
 
 # check status
-systemctl status iptest3.service
+systemctl status albmach2s2.service
 
 May 08 15:36:56 research21 systemd[1]: Finished iptest3.service - Iptables firewall rules test3.
 May 08 15:39:00 research21 systemd[1]: Stopping iptest3.service - Iptables firewall rules test3...
@@ -210,12 +210,13 @@ May 08 15:39:00 research21 systemd[1]: iptest3.service: Deactivated successfully
 May 08 15:39:00 research21 systemd[1]: Stopped iptest3.service - Iptables firewall rules test3.
 
 ## look at log file
-cat /etc/mytests/iptest3/log       
+cat /etc/myscripts/albmach2s2/log       
 
-Starting iptest3 service using iptest3start.sh at Thu May  8 03:36:56 PM EDT 2025
-Successfully started iptest3 service using iptest3start.sh at Thu May  8 03:36:56 PM EDT 2025
-Stopping iptest3 service using iptest3stop.sh at Thu May  8 03:39:00 PM EDT 2025
-Successfully Stopped iptest3 service using iptest3stop.sh at Thu May  8 03:39:00 PM EDT 2025
+
+Starting Albion Mach2 S2 service using albmach2s2start.sh at Fri May  9 03:58:57 PM EDT 2025
+Successfully started albmach2 S2 service using albmach2s2start.sh at Fri May  9 03:58:57 PM EDT 2025
+Stopping albmach2s2 service using albmach2s2stop.sh at Fri May  9 05:42:32 PM EDT 2025
+Successfully Stopped albmach2s2 service using albmach2s2stop.sh at Fri May  9 05:42:32 PM EDT 2025
 
 # verify rules were deleted
 sudo iptables -S                
@@ -228,4 +229,18 @@ sudo iptables -t nat -S
 -P INPUT ACCEPT
 -P OUTPUT ACCEPT
 -P POSTROUTING ACCEPT
+```
+
+## enable service
+
+```bash
+sudo systemctl enable albmach2s2
+[sudo] password for brent:
+Created symlink /etc/systemd/system/multi-user.target.wants/albmach2s2.service → /etc/systemd/system/albmach2s2.service.
+```
+
+## verify service running after reboot
+
+```bash
+sudo reboot now
 ```
