@@ -1,23 +1,29 @@
 # Current Tasks
 
-- SystemD socket activation unit listens for connection and then start a one-shot unit. The one-shot unit runs many tasks consequatively such as those in an ETL pipeline. Test it on TB.
-- Had issue accessing our Albion Mach2 server from our Avilla K8s Cluster so as a temp fix I setup port forwarding with DNAT/SNATting from an Albion Ubuntu on the desktop VLAN. Will work with Jared to get Albion's 1220 VLan accessable from Avilla K8s which will have our certificate management services.
+- SystemD socket activation unit listens for connection and then start a one-shot unit. The one-shot unit runs many tasks consequatively such as those in an ETL pipeline. Test it on Linamar Azure SQL TB.
+- Suggested Mach2 Linux GW on server VLAN using Netfilter port forwarding and Natting features. mTLS option requires proxy.
 - Python uv from systemd unit file example
 - Run scripts from Linamar Azure SQL tennant.
 - Access all of the Mach2 servers and clients as well as the K8s clients which use the Structures PKI certificate management system.
 
 - **[SystemD service unit file with journal logging](../research/m_z/systemd/logging/mytest1.md)**
 
-  Once we had the ability to connect from the Avilla Structures K8s Cluster to the Albion Mach2 server through the Albion Ubuntu desktop we needed a way to ensure iptable rules survived a reboot.  For this we used a SystemD service oneshot unit file. We also researched SystemD's socket activation feature which listens for client socket connections and starts a service handler dynamically.  This will help running services which are only needed occasionally from the Ubuntu desktop which has limited resources.
 - SystemD vs Kubernetes
-  - SystemD is better at starting programs.
-  - Kubernetes is better at keeping them running.
-
+  - SystemD is better at starting programs after other programs.
+  - Kubernetes uses yaml SystemD used TOML.
+  - Kubernetes manages scalability of services.
+  
 - Make GoLang and Python dev container to create base docker image for ETL scripts.
 - ETL API and CLI
-- Compare K8s mail service options.
+- Compare mail service options.
+  You might wonder, “Why go through the effort when third-party services exist?” The answer lies in control. Self-hosting lets you tailor spam filters, encrypt communications your way, and ensure compliance with regional data laws.
+
   - Postfix with public key security and Amazon programmatic DNS txt record creation.
   - Mailtrap service.
+
+## info
+
+- Yes, Linus Torvalds, the creator and leader of the Linux kernel project, has approved the use of Rust in the kernel. While it wasn't an immediate shift to exclusively using Rust, Rust's integration into the kernel began with a pull request approved by Torvalds in October 2022. Rust is now being used for specific areas like device drivers and some kernel infrastructure.
 
 - **[file descriptors](https://copyconstruct.medium.com/bash-redirection-fun-with-descriptors-e799ec5a3c16)**
 

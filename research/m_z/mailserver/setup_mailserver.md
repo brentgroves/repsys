@@ -1,3 +1,0 @@
-# **[Linux Mail Server Setup and Configuration](https://contabo.com/blog/linux-mail-server-setup-and-configuration/)**
-
-Imagine having complete control over your email communications – no more relying on third-party services that limit customization or compromise privacy. Setting up your own Linux mail server puts you in the driver’s seat, offering unparalleled flexibility and security. Whether you’re managing a business that demands airtight data control or a developer looking to experiment with custom configurations, this guide walks you through every step to setup mail server solutions that work for you.
