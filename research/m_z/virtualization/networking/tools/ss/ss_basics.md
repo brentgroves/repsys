@@ -4,6 +4,10 @@
 **[Back to Current Tasks](../../../../../../a_status/current_tasks.md)**\
 **[Back to Main](../../../../../../README.md)**
 
+## reference
+
+- **[ss](vhttps://www.cyberciti.biz/tips/linux-investigate-sockets-network-connections.html)**
+
 ![f](https://media.beehiiv.com/cdn-cgi/image/fit=scale-down,format=auto,onerror=redirect,quality=80/uploads/asset/file/9ba5ca1d-95a9-487c-833c-c91fb8cdfc49/ip-header-2021-1024x505.png)
 
 The ss (socket statistics) tool is a CLI command used to show network statistics. The ss command is a simpler and faster version of the now obsolete netstat command. Together with the ip command, ss is essential for gathering network information and troubleshooting network issues.
