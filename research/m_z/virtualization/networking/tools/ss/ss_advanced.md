@@ -50,3 +50,61 @@ ss -o state established '( dport = :smtp or sport = :smtp )'
 
 Display All Established HTTP Connections
 ss -o state established '( dport = :http or sport = :http )'
+
+## How Do I Filter Sockets Using TCP States?
+
+The syntax is as follows:
+
+## tcp ipv4 ##
+
+ss -4 state FILTER-NAME-HERE
+
+## tcp ipv6 ##
+
+ss -6 state FILTER-NAME-HERE
+Where FILTER-NAME-HERE can be any one of the following,
+
+established
+syn-sent
+syn-recv
+fin-wait-1
+fin-wait-2
+time-wait
+closed
+close-wait
+last-ack
+listen
+closing
+all : All of the above states
+connected : All the states except for listen and closed
+synchronized : All the connected states except for syn-sent
+bucket : Show states, which are maintained as minisockets, i.e. time-wait and syn-recv.
+big : Opposite to bucket state.
+ss command examples
+Type the following command to see closing sockets:
+ss -4 state closing
+
+## How Do I Matches Remote Address And Port Numbers?
+
+Use the following syntax:
+ss dst ADDRESS_PATTERN
+
+## Show all ports connected from remote 192.168.1.5 ##
+
+ss dst 192.168.1.5
+
+## show all ports connected from remote 192.168.1.5:http port ##
+
+ss dst 192.168.1.5:http
+ss dst 192.168.1.5:smtp
+ss dst 192.168.1.5:443
+
+Find out connection made by remote 123.1.2.100:http to our local virtual servers:
+ss dst 123.1.2.100:http
+
+Sample outputs:
+
+State      Recv-Q Send-Q                                             Local Address:Port                                                 Peer Address:Port
+ESTAB      0      0                                                 75.126.153.206:http                                               123.1.2.100:35710
+ESTAB      0      0                                                 75.126.153.206:http                                               123.1.2.100:35758
+How Do I Matches Local Address And Port Numbers Using the ss command?
