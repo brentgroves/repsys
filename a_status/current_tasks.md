@@ -2,19 +2,13 @@
 
 - SystemD socket activation unit listens for connection and then start a one-shot unit. The one-shot unit runs many tasks consequatively such as those in an ETL pipeline. Test it on Linamar Azure SQL TB.
 - Suggested Mach2 Linux GW on server VLAN using Netfilter port forwarding and Natting features. mTLS option requires proxy.
-- Python uv from systemd unit file example
 - Run scripts from Linamar Azure SQL tennant.
-- Access all of the Mach2 servers and clients as well as the K8s clients which use the Structures PKI certificate management system.
-
-- **[SystemD service unit file with journal logging](../research/m_z/systemd/logging/mytest1.md)**
-
 - SystemD vs Kubernetes
   - SystemD is better at starting programs after other programs.
   - Kubernetes uses yaml SystemD used TOML.
   - Kubernetes manages scalability of services.
   
 - Make GoLang and Python dev container to create base docker image for ETL scripts.
-- ETL API and CLI
 - Compare mail service options.
   You might wonder, “Why go through the effort when third-party services exist?” The answer lies in control. Self-hosting lets you tailor spam filters, encrypt communications your way, and ensure compliance with regional data laws.
 
