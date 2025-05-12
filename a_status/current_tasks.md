@@ -2,6 +2,8 @@
 
 - SystemD socket activation unit listens for connection and then start a one-shot unit. The one-shot unit runs many tasks consequatively such as those in an ETL pipeline. Test it on Linamar Azure SQL TB.
 - Suggested Mach2 Linux GW on server VLAN using Netfilter port forwarding and Natting features. mTLS option requires proxy.
+- The **[socat](https://www.baeldung.com/linux/socat-command)** utility is a relay for bidirectional data transfers between two independent data channels. Socat is useful for connecting applications inside separate boxes. Imagine we have Box A and Box B, and inside Box A, there’s a database server application running. Furthermore, Box A is closed to the public, but Box B is open. Our network will allow a connection from Box B to Box A.
+
 - Run scripts from Linamar Azure SQL tennant.
 - SystemD vs Kubernetes
   - SystemD is better at starting programs after other programs.
