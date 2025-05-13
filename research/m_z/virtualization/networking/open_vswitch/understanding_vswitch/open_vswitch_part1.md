@@ -6,6 +6,7 @@
 
 ## referenences
 
+- **[This author series](https://medium.com/@ozcankasal)**
 - **[Open VSwitch with KVM](https://docs.openvswitch.org/en/latest/howto/kvm/)**
 - **[Open VSwitch tutorial](https://medium.com/@ozcankasal/understanding-open-vswitch-part-1-fd75e32794e4)**
 - **[Open VSwitch and Windows](https://docs.openvswitch.org/en/latest/topics/windows/)**
@@ -71,7 +72,58 @@ Fabric Network: A fabric network is a logical group of devices managed as a sing
 
 Underlay and Overlay: The fabric consists of an underlay (physical layer with switches and routers) and an overlay (virtualized layer for transporting user data).
 
+Yes, OVS (Open vSwitch) is commonly used as part of a network fabric in data centers and cloud environments. OVS acts as a virtual switch, providing the switching and routing functionality within a network fabric, especially in Software-Defined Networking (SDN) setups.
+
 ## Lab Setup
+
+## install **[ubuntu servers](https://www.youtube.com/watch?app=desktop&v=ElNalqvVaPw&t=153)**
+
+While installing ubuntu choose bridge network and the physical network adapter. This will allow you to install python.
+
+Make sure you select ssh so you can login from your dev system while you are installing stuff.
+
+```bash
+# Don't think you need to install guest additions.
+sudo mkdir -p /media/cdrom
+sudo mount /dev/cdrom /media/cdrom
+sudo apt install -y dkms build-essential linux-headers-generic linux-headers-$(uname -r)
+sudo /media/cdrom/VBoxLinuxAdditions.run
+
+# disable cloud.init
+
+# To disable cloud-init, create the empty file /etc/cloud/cloud-init.disabled
+touch /etc/cloud/cloud-init.disabled 
+ssh brent@172.24.188.72
+
+# install python uv and create
+mkdir -p ~/src
+cd ~/src/
+uv init my-flask-app
+uv add flask
+touch app.py
+vi app.py
+```
+
+```python
+from flask import Flask
+
+app = Flask(__name__)
+
+@app.route("/")
+def hello():
+  return "Hello, World from Flask and uv!"
+
+if __name__ == "__main__":
+  app.run(host="0.0.0.0")
+```
+
+run app
+
+```bash
+uv run app.py
+```
+
+> python3 -m http.server --bind 192.168.1.20 8443
 
 In this tutorial we will be using an Ubuntu host with Virtualbox installed. First of all, we need to install the necessary packages to use open vswitch.
 
@@ -96,6 +148,7 @@ sudo ovs-vsctl show
 ```
 
 Here we see that OVS has already added a default bridge which is used for internal network of OVS.
+
 **Note: My installation did not add a default bridge.**
 
 Also we can list the network interfaces to see that ovs has created two interface, “br-int” and “ovs-system”.
@@ -116,6 +169,8 @@ Now we will create the components to explore ovs capabilities.
 Create an OVS bridge:
 
 We use the following commands to create an ovs bridge (br0), confirm it and the related network interface (br0).
+
+On my installation the internal bridge, br-int, was never created.
 
 ```bash
 sudo ovs-vsctl add-br br0
@@ -151,13 +206,18 @@ ozcan@lenovo:~$ sudo ovs-vsctl show
 
 Now we need two OVS switch port to represent our physical networks. Use the following commands to create ports and add VLAN tags. Here we give “tag=10” to both ports so that the hosts in these interfaces can communicate with default settings.
 
+In Open vSwitch (OVS), a port is essentially a connection point or an interface that allows a bridge to interact with other network elements, including physical network interfaces, VMs, or other bridges. Think of it as a way for traffic to enter or leave the bridge.
+Here's a more detailed explanation:
+
+In Open vSwitch (OVS), an "internal port" is a port that exists within the OVS bridge itself, not a physical interface connected to the bridge.
+
 ```bash
 sudo ovs-vsctl add-port br0 eth1 tag=10 -- set interface eth1 type=internal
 sudo ovs-vsctl add-port br0 eth2 tag=10 -- set interface eth2 type=internal
 ```
 
 Now if we list the OVS components again, we see the details of the ports we created, and we can list the network interfaces to see that two new interfaces have been created. You should set the new interfaces as up (see the commands below).
-mdf 
+mdf
 
 ```bash
 sudo ovs-vsctl show
@@ -244,6 +304,8 @@ In the absence of an Open vSwitch (OVS) setup, default virtual machine communica
 
 The command sudo ovs-appctl fdb/show br0 reveals details, including MAC addresses and associated ports, aiding in the identification of VMs.
 
+ovs-appctl is a command-line utility in Open vSwitch (OVS) that allows you to send commands to and receive responses from running OVS daemons. It's used for managing and querying OVS daemons, including ovs-vswitchd and ovs-controller
+
 ```bash
 sudo ovs-appctl fdb/show br0
  port  VLAN  MAC                Age
@@ -264,13 +326,39 @@ In our case, when a package is received by the OVS bridge, it adds a VLAN tag to
 First let’s start a web server on vm2 using python3.
 
 ```bash
-> python3 -m http.server --bind 192.168.1.20 8443
+# install python uv and create
+mkdir -p ~/src
+cd ~/src/
+uv init my-flask-app
+cd ~/src/my-flask-app
+uv add flask
+touch app.py
+vi app.py
+```
+
+```python
+from flask import Flask
+
+app = Flask(__name__)
+
+@app.route("/")
+def hello():
+  return "Hello, World from Flask and uv!"
+
+if __name__ == "__main__":
+  app.run(host="0.0.0.0")
+```
+
+run app
+
+```bash
+uv run app.py
 ```
 
 Now we can send a request to vm2 from vm1 using curl command and start watching the traffic using wireshark.
 
 ```bash
-curl --interface enp0s3 -vkL http://192.168.1.20 8443
+curl http://192.168.1.10 5000
 ```
 
 As you can see in the screenshot below, the ethernet frame does not have a 802.1Q field.

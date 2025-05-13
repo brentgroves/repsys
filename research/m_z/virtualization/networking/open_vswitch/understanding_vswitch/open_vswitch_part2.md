@@ -1,5 +1,18 @@
 # **[Understanding Open vSwitch: Part 2](https://medium.com/@ozcankasal/understanding-open-vswitch-part-2-372594d92e78)**
 
+**[Back to Research List](../../../../research_list.md)**\
+**[Back to Current Status](../../../../../a_status/weekly/current_status.md)**\
+**[Back to Main](../../../../../README.md)**
+
+## referenences
+
+- **[This author series](https://medium.com/@ozcankasal)**
+- **[Open VSwitch with KVM](https://docs.openvswitch.org/en/latest/howto/kvm/)**
+- **[Open VSwitch tutorial](https://medium.com/@ozcankasal/understanding-open-vswitch-part-1-fd75e32794e4)**
+- **[Open VSwitch and Windows](https://docs.openvswitch.org/en/latest/topics/windows/)**
+- **[open vswitch and ExtremeXOS](https://documentation.extremenetworks.com/exos_22.1/GUID-29B4C015-BDBC-4D79-8CEF-3BDA3D57E676.shtml)**
+- **[open vswitch and docker overlay](https://medium.com/@technbd/multi-hosts-container-networking-a-practical-guide-to-open-vswitch-vxlan-and-docker-overlay-70ec81432092)**
+
 Welcome back to the second part of our Open vSwitch (OVS) exploration journey! In Part 1, we delved into the intricacies of configuring a single bridge handling two VLANs, both tagged with a common VLAN ID. Our network setup involved two virtual machines, “test1” and “test2,” connected to OVS ports “eth1” and “eth2,” respectively. The initial VLAN configuration allowed seamless communication between the VMs, demonstrating the efficiency of OVS in managing VLAN-tagged traffic. However, as we venture into Part 2, we encounter a challenge: a modification in the VLAN tag of “eth2” from 10 to 20. This seemingly straightforward alteration disrupts the previously established connectivity, prompting us to unravel the underlying concepts of OVS flows and understand how these changes impact the network dynamics.
 
 Now we know that when “eth1” and “eth2” have a commo VLAN ID tag, ovs bridge “br0” knows how to handle the traffic between “eth1” and “eth2”.
