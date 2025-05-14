@@ -15,15 +15,17 @@
 
 Welcome back to the second part of our Open vSwitch (OVS) exploration journey! In Part 1, we delved into the intricacies of configuring a single bridge handling two VLANs, both tagged with a common VLAN ID. Our network setup involved two virtual machines, “test1” and “test2,” connected to OVS ports “eth1” and “eth2,” respectively. The initial VLAN configuration allowed seamless communication between the VMs, demonstrating the efficiency of OVS in managing VLAN-tagged traffic. However, as we venture into Part 2, we encounter a challenge: a modification in the VLAN tag of “eth2” from 10 to 20. This seemingly straightforward alteration disrupts the previously established connectivity, prompting us to unravel the underlying concepts of OVS flows and understand how these changes impact the network dynamics.
 
-Now we know that when “eth1” and “eth2” have a commo VLAN ID tag, ovs bridge “br0” knows how to handle the traffic between “eth1” and “eth2”.
+Now we know that when “eth1” and “eth2” have a common VLAN ID tag, ovs bridge “br0” knows how to handle the traffic between “eth1” and “eth2”.
 
 ![svl](https://miro.medium.com/v2/resize:fit:720/format:webp/1*v52jt-ShSg268k6eEb0_7w.png)
 
 For the second part of the journey, we simply change the VLAN tag of “eth2” from “10” to “20”. To do this, use the command below and check the result.
 
 ```bash
-> sudo ovs-vsctl set Port eth2 tag=20
-> sudo ovs-vsctl show
+# sudo ovs-vsctl set Port eth2 tag=10
+sudo ovs-vsctl set Port eth2 tag=20
+# ovs-vsctl connects to an ovsdb-server process that maintains an Open vSwitch configuration database.
+sudo ovs-vsctl show
 
 2754d6a1-4c15-4a41-bb9e-185bd0cf18a1
     Bridge br0
@@ -50,13 +52,41 @@ For the second part of the journey, we simply change the VLAN tag of “eth2” 
 As in the first blog post, run a web server on vm “test2”.
 
 ```bash
-> python3 -m http.server --bind 192.168.1.20 8443
+# install python uv and create
+
+mkdir -p ~/src
+cd ~/src/
+uv init my-flask-app
+cd my-flask-app
+uv add flask
+touch app.py
+vi app.py
+
+```
+
+```python
+from flask import Flask
+
+app = Flask(__name__)
+
+@app.route("/")
+def hello():
+  return "Hello, World from Flask and uv!"
+
+if __name__ == "__main__":
+  app.run(host="0.0.0.0")
+```
+
+run app
+
+```bash
+uv run app.py
 ```
 
 Check the connection using “curl” command and confirm that there is no access between virtual machines.
 
 ```bash
-> curl --interface enp0s3 -vkL http://192.168.1.20:8443
+> curl http://192.168.1.20:5000
 *   Trying 192.168.1.20:8443...
 * connect to 192.168.1.20 port 8443 after 18383 ms: No route to host
 * Closing connection 0
@@ -144,8 +174,8 @@ While this default flow doesn’t explicitly drop packets, it doesn’t include 
 To fix our connection problem let’s add two flow rules to provide bidirectional permission between ports “eth1” and “eth2”.
 
 ```bash
-> sudo ovs-ofctl add-flow br0 "in_port=eth1,actions=output:eth2"
-> sudo ovs-ofctl add-flow br0 "in_port=eth2,actions=output:eth1"
+sudo ovs-ofctl add-flow br0 "in_port=eth1,actions=output:eth2"
+sudo ovs-ofctl add-flow br0 "in_port=eth2,actions=output:eth1"
 > sudo ovs-ofctl dump-flows br0
 
  cookie=0x0, duration=18.800s, table=0, n_packets=8, n_bytes=569, in_port=eth1 actions=output:eth2
@@ -165,16 +195,16 @@ The capabilities of the OpenFlow protocol exceeds the scope of this post, but le
 First we delete the current flow rules
 
 ```bash
-> sudo ovs-ofctl del-flows br0 "in_port=eth1"
-> sudo ovs-ofctl del-flows br0 "in_port=eth1"
-> sudo ovs-ofctl dump-flows br0
- cookie=0x0, duration=128225.574s, table=0, n_packets=1018, n_bytes=130083, priority=0 actions=NORMAL
+sudo ovs-ofctl del-flows br0 "in_port=eth1"
+sudo ovs-ofctl del-flows br0 "in_port=eth2"
+sudo ovs-ofctl dump-flows br0
+cookie=0x0, duration=128225.574s, table=0, n_packets=1018, n_bytes=130083, priority=0 actions=NORMAL
  ```
 
 Now try “curl” connection again.
 
 ```bash
-> curl --interface enp0s3 -vkL http://192.168.1.20:8443
+curl http://192.168.1.20:5000
 *   Trying 192.168.1.20:8443...
 * connect to 192.168.1.20 port 8443 after 3062 ms: No route to host
 * Closing connection 0
@@ -185,12 +215,16 @@ As we see from the output, TCP connection is not successful.
 
 When a device on a local network wants to discover the MAC (Media Access Control) address corresponding to a specific IP address, it sends an ARP request. ARP requests are typically encapsulated within IPv4 frames. The ARP packet itself contains the details of the IP address for which the MAC address is being sought. The Ethernet frame has an EtherType field that indicates the type of the payload. In the case of ARP, the EtherType is usually set to 0x0806. But since it is encapsulated in an IPv4 frame we also need to allow EtherType 0x0800 as well, but restrict to nw_proto=1 to mention ICMP protocol in IPv4 frame. So use the following commands.
 
+In OpenFlow and Open vSwitch, "nw_proto" refers to the protocol identifier for the network layer (Layer 3) of a packet, specifically the IP protocol type for IPv4 packets or the IPv6 protocol field. It's used in flow matching to filter and route packets based on the network protocol, such as TCP, UDP, or ICMP.
+
+**[ovs fields](https://www.openvswitch.org/support/dist-docs/ovs-fields.7.txt)**
+
 ```bash
-> sudo ovs-ofctl add-flow br0 "in_port=eth1,dl_type=0x0806,actions=output:eth2"
-> sudo ovs-ofctl add-flow br0 "in_port=eth1,dl_type=0x0800,nw_proto=1,actions=output:eth2"
-> sudo ovs-ofctl add-flow br0 "in_port=eth2,dl_type=0x0806,actions=output:eth1"
-> sudo ovs-ofctl add-flow br0 "in_port=eth2,dl_type=0x0800,nw_proto=1,actions=output:eth1"
-> sudo ovs-ofctl dump-flows br0
+sudo ovs-ofctl add-flow br0 "in_port=eth1,dl_type=0x0806,actions=output:eth2"
+sudo ovs-ofctl add-flow br0 "in_port=eth1,dl_type=0x0800,nw_proto=1,actions=output:eth2"
+sudo ovs-ofctl add-flow br0 "in_port=eth2,dl_type=0x0806,actions=output:eth1"
+sudo ovs-ofctl add-flow br0 "in_port=eth2,dl_type=0x0800,nw_proto=1,actions=output:eth1"
+sudo ovs-ofctl dump-flows br0
  cookie=0x0, duration=72.739s, table=0, n_packets=2, n_bytes=84, arp,in_port=eth1 actions=output:eth2
  cookie=0x0, duration=64.355s, table=0, n_packets=2, n_bytes=84, arp,in_port=eth2 actions=output:eth1
  cookie=0x0, duration=44.252s, table=0, n_packets=2, n_bytes=196, icmp,in_port=eth1 actions=output:eth2
@@ -204,19 +238,42 @@ In the context of networking, "fabric attached assignments" refers to the proces
 
 Now try to ping again and confirm that you can send ping requests to both virtual machines. And try to send an http request with curl and see that it is blocked.
 
-Let’s add new flow rules to allow TCP traffic to destination port 8443.
+Let’s add new flow rules to allow TCP traffic to destination port 5000.
+
+**[syntax](https://www.openvswitch.org/support/dist-docs/ovs-ofctl.8.html)
+
+- dl_type: layer 2 data link
+- nw_type: layer 3 network
+- nw_proto=6 // what?
 
 ```bash
-> sudo ovs-ofctl add-flow br0 "in_port=eth1,dl_type=0x0800,nw_proto=6,tp_dst=8443,actions=output:eth2"
-> sudo ovs-ofctl add-flow br0 "in_port=eth2,dl_type=0x0800,nw_proto=6,tp_src=8443,actions=output:eth1"
+
+sudo ovs-ofctl add-flow br0 "in_port=eth1,dl_type=0x0800,nw_proto=6,tp_dst=5000,actions=output:eth2"
+sudo ovs-ofctl add-flow br0 "in_port=eth2,dl_type=0x0800,nw_proto=6,tp_src=5000,actions=output:eth1"
+# this deletion removed everything from br0 except the default
+# sudo ovs-ofctl del-flows br0 "tp_src=8443"
+
+sudo ovs-ofctl dump-flows br0 
 ```
+
+Here we added a rule for eth1 -> eth2 traffic using “nw_proto=6, tp_dst=8443” and a rule for eth2 -> eth1 traffic using “nw_proto=6, tp_src=8443”. Now use curl to test the connection and see that you can successfully get a response. (Do not forget to run python server on test2).
+
+Congratulations! You have successfully configured your initial OpenFlow rules in Open vSwitch to manage network traffic between VLANs. By specifying flows that allow ARP, IPv4, and TCP traffic in both directions between “eth1” and “eth2,” you have created a foundation for controlling communication within your virtual network. These rules enable the exchange of essential networking protocols and pave the way for more advanced configurations based on your specific requirements.
+
+Cheers to your exploration of network virtualization and software-defined networking with Open vSwitch!
+
+Resources
+<https://ovs.readthedocs.io/en/latest/faq/openflow.html>
+<http://www.openvswitch.org//support/dist-docs/ovs-ofctl.8.html>
+<https://www.iana.org/assignments/protocol-numbers/protocol-numbers.xhtml>
+<https://randomsecurity.dev/posts/openvswitch-cheat-sheet/>
 
 - **[OpenFlow Matching](http://rlenglet.github.io/openfaucet/match.html#:~:text=If%20the%20L3%20protocol%20is,openfaucet%20import%20ofmatch%20ip_addr%20=%20socket.)**
 
 In the context of OpenFlow and network configuration, nw_proto refers to the IP protocol type (e.g., TCP, UDP, ICMP) when matching packets based on the network layer protocol. It's a decimal number between 0 and 255 used to identify the protocol.
 
 - IP Protocol Type:
-When dl_type (the Ethernet type) is set to 0x0800 (IPv4), nw_proto specifies the IP protocol type, such as 6 for TCP, 17 for UDP, or 1 for ICMP.
+When dl_type (the Ethernet type) is set to 0x0800 (IPv4), nw_proto specifies the IP protocol type, such as **6 for TCP**, 17 for UDP, or 1 for ICMP.
 
 Here we added a rule for eth1 -> eth2 traffic using “nw_proto=6, tp_dst=8443” and a rule for eth2 -> eth1 traffic using “nw_proto=6, tp_src=8443”. Now use curl to test the connection and see that you can successfully get a response. (Do not forget to run python server on test2).
 

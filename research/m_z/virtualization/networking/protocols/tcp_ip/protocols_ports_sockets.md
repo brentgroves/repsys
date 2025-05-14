@@ -1,7 +1,7 @@
 # **[Protocols, Ports, and Sockets](https://web.deu.edu.tr/doc/oreily/networking/tcpip/ch02_07.htm#:~:text=The%20protocol%20number%20is%20a,defined%20in%20%2Fetc%2Fprotocols.)**
 
 **[Back to Research List](../../../../../research_list.md)**\
-**[Back to Current Status](../../../../../../development/status/weekly/current_status.md)**\
+**[Back to Current Status](../../../../../../a_status/current_tasks.md)**\
 **[Back to Main](../../../../../../README.md)**
 
 Once data is routed through the network and delivered to a specific host, it must be delivered to the correct user or process. As the data moves up or down the TCP/IP layers, a mechanism is needed to deliver it to the correct protocols in each layer. The system must be able to combine data from many applications into a few transport protocols, and from the transport protocols into the Internet Protocol. Combining many sources of data into a single data stream is called multiplexing.
