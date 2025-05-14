@@ -22,7 +22,8 @@ exit
 
 ```bash
 # From development system
-pushd ~/src/rypsys/k8s/kubectl/all-config-files
+pushd .
+cd ~/src/k8s/all-config-files
 lftp brent@reports11
 get /home/brent/.kube/reports1.yaml
 exit

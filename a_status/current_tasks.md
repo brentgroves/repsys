@@ -1,5 +1,10 @@
 # Current Tasks
 
+- Create InnoDB scripts
+  - make Reporting4 from Reporting which has the mysql and azure sql scripts.
+  - Install InnoDB on K8s
+  - Create InnoDB Schema from Mysql schema
+  - populate InnoDB database with records from Mysql.
 - SystemD socket activation unit listens for connection and then start a one-shot unit. The one-shot unit runs many tasks consequatively such as those in an ETL pipeline. Test it on Linamar Azure SQL TB.
 - Suggested Mach2 Linux GW on server VLAN using Netfilter port forwarding and Natting features. mTLS option requires proxy.
 - Run TB script from **[Linamar Azure SQL DB](./b_platform_engineering/database/azuresqldb/run_tb_from_azure_sql_db.md)** tennant.
