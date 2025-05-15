@@ -1,5 +1,14 @@
 # Network Notes
 
+## misc
+
+```yaml
+gw: 10.xxx.yyy.254
+ns:
+  - 10.225.50.203
+  - 10.224.50.203
+```
+
 ## Fabric
 
 Each switch needs these vlans configured.
@@ -56,4 +65,22 @@ port: 25
   destination: laptop
   vlans:
     - 1220-untagged
+```
+
+## top r620
+
+```yaml
+ip: 10.188.50.203
+```
+
+## middle r620
+
+```yaml
+ip: 10.188.50.202
+```
+
+## bottom r620
+
+```yaml
+ip: 10.188.50.201
 ```
