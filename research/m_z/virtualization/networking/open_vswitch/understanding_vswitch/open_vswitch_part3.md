@@ -15,6 +15,51 @@
 - **[open vswitch and ExtremeXOS](https://documentation.extremenetworks.com/exos_22.1/GUID-29B4C015-BDBC-4D79-8CEF-3BDA3D57E676.shtml)**
 - **[open vswitch and docker overlay](https://medium.com/@technbd/multi-hosts-container-networking-a-practical-guide-to-open-vswitch-vxlan-and-docker-overlay-70ec81432092)**
 
+## undue network modifications
+
+```bash
+ip a
+...
+4: br0: <BROADCAST,MULTICAST> mtu 1500 qdisc noop state DOWN group default qlen 1000
+    link/ether 16:d5:61:24:58:41 brd ff:ff:ff:ff:ff:ff
+5: eth2: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UNKNOWN group default qlen 1000
+    link/ether 36:ba:fd:a3:be:8c brd ff:ff:ff:ff:ff:ff
+    inet6 fe80::34ba:fdff:fea3:be8c/64 scope link 
+       valid_lft forever preferred_lft forever
+6: eth1: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UNKNOWN group default qlen 1000
+    link/ether 42:c1:70:97:fe:11 brd ff:ff:ff:ff:ff:ff
+    inet6 fe80::40c1:70ff:fe97:fe11/64 scope link 
+       valid_lft forever preferred_lft forever
+
+# sudo ovs-vsctl add-br br0
+sudo ovs-vsctl del-br br0
+
+# notice eth1 and eth2 links were deleted also
+ip a                     
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+    inet6 ::1/128 scope host noprefixroute 
+       valid_lft forever preferred_lft forever
+2: eno1: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc fq_codel state UP group default qlen 1000
+    link/ether 98:90:96:b8:00:1c brd ff:ff:ff:ff:ff:ff
+    altname enp0s25
+    inet 10.188.40.125/24 brd 10.188.40.255 scope global noprefixroute eno1
+       valid_lft forever preferred_lft forever
+
+sudo ovs-vsctl show
+e6f7b63d-5c04-4d4c-91ae-3476179d5956
+    ovs_version: "3.3.0"
+
+## delete flow rules
+
+sudo ovs-ofctl del-flows br0 "in_port=eth1"
+sudo ovs-ofctl del-flows br0 "in_port=eth2"
+sudo ovs-ofctl dump-flows br0
+cookie=0x0, duration=128225.574s, table=0, n_packets=1018, n_bytes=130083, priority=0 actions=NORMAL
+ ```
+
 In the first part of our Open vSwitch series, we covered the basics, setting up a simple switch with one bridge and two ports sharing a common VLAN tag. In Part 2, we explored OpenFlow rules with a single bridge and two ports, each having different VLAN tags.
 
 Now, in Part 3, we’re taking it a step further. We’ll look into a network setup with two bridges, each having one port with the same VLAN tag. This means extending a VLAN across two bridges at L2 level. To make this work, we’ll introduce patch ports between the bridges, explaining how they enable smooth communication and VLAN extension in this more complex setup.

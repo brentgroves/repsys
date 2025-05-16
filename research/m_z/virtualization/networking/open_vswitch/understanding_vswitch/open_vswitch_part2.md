@@ -50,6 +50,12 @@ sudo ovs-vsctl show
 e6f7b63d-5c04-4d4c-91ae-3476179d5956
     ovs_version: "3.3.0"
 
+## delete flow rules
+
+sudo ovs-ofctl del-flows br0 "in_port=eth1"
+sudo ovs-ofctl del-flows br0 "in_port=eth2"
+sudo ovs-ofctl dump-flows br0
+cookie=0x0, duration=128225.574s, table=0, n_packets=1018, n_bytes=130083, priority=0 actions=NORMAL
 ```
 
 Welcome back to the second part of our Open vSwitch (OVS) exploration journey! In Part 1, we delved into the intricacies of configuring a single bridge handling two VLANs, both tagged with a common VLAN ID. Our network setup involved two virtual machines, “test1” and “test2,” connected to OVS ports “eth1” and “eth2,” respectively. The initial VLAN configuration allowed seamless communication between the VMs, demonstrating the efficiency of OVS in managing VLAN-tagged traffic. However, as we venture into Part 2, we encounter a challenge: a modification in the VLAN tag of “eth2” from 10 to 20. This seemingly straightforward alteration disrupts the previously established connectivity, prompting us to unravel the underlying concepts of OVS flows and understand how these changes impact the network dynamics.
