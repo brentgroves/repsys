@@ -6,6 +6,7 @@
 
 ## referenences
 
+- **[OVN on Ubuntu](https://documentation.ubuntu.com/lxd/stable-5.0/howto/network_ovn_setup/)**
 - **[Open Virtual Network](https://discuss.linuxcontainers.org/t/ovn-high-availability-cluster-tutorial/11033)**
 - **[This author series](https://medium.com/@ozcankasal)**
 - **[Open VSwitch with KVM](https://docs.openvswitch.org/en/latest/howto/kvm/)**
