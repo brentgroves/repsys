@@ -13,6 +13,45 @@
 - **[open vswitch and ExtremeXOS](https://documentation.extremenetworks.com/exos_22.1/GUID-29B4C015-BDBC-4D79-8CEF-3BDA3D57E676.shtml)**
 - **[open vswitch and docker overlay](https://medium.com/@technbd/multi-hosts-container-networking-a-practical-guide-to-open-vswitch-vxlan-and-docker-overlay-70ec81432092)**
 
+## undue network modifications
+
+```bash
+ip a
+...
+4: br0: <BROADCAST,MULTICAST> mtu 1500 qdisc noop state DOWN group default qlen 1000
+    link/ether 16:d5:61:24:58:41 brd ff:ff:ff:ff:ff:ff
+5: eth2: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UNKNOWN group default qlen 1000
+    link/ether 36:ba:fd:a3:be:8c brd ff:ff:ff:ff:ff:ff
+    inet6 fe80::34ba:fdff:fea3:be8c/64 scope link 
+       valid_lft forever preferred_lft forever
+6: eth1: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UNKNOWN group default qlen 1000
+    link/ether 42:c1:70:97:fe:11 brd ff:ff:ff:ff:ff:ff
+    inet6 fe80::40c1:70ff:fe97:fe11/64 scope link 
+       valid_lft forever preferred_lft forever
+
+# sudo ovs-vsctl add-br br0
+sudo ovs-vsctl del-br br0
+
+# notice eth1 and eth2 links were deleted also
+ip a                     
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+    inet6 ::1/128 scope host noprefixroute 
+       valid_lft forever preferred_lft forever
+2: eno1: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc fq_codel state UP group default qlen 1000
+    link/ether 98:90:96:b8:00:1c brd ff:ff:ff:ff:ff:ff
+    altname enp0s25
+    inet 10.188.40.125/24 brd 10.188.40.255 scope global noprefixroute eno1
+       valid_lft forever preferred_lft forever
+
+sudo ovs-vsctl show
+e6f7b63d-5c04-4d4c-91ae-3476179d5956
+    ovs_version: "3.3.0"
+
+```
+
 Welcome back to the second part of our Open vSwitch (OVS) exploration journey! In Part 1, we delved into the intricacies of configuring a single bridge handling two VLANs, both tagged with a common VLAN ID. Our network setup involved two virtual machines, “test1” and “test2,” connected to OVS ports “eth1” and “eth2,” respectively. The initial VLAN configuration allowed seamless communication between the VMs, demonstrating the efficiency of OVS in managing VLAN-tagged traffic. However, as we venture into Part 2, we encounter a challenge: a modification in the VLAN tag of “eth2” from 10 to 20. This seemingly straightforward alteration disrupts the previously established connectivity, prompting us to unravel the underlying concepts of OVS flows and understand how these changes impact the network dynamics.
 
 Now we know that when “eth1” and “eth2” have a common VLAN ID tag, ovs bridge “br0” knows how to handle the traffic between “eth1” and “eth2”.

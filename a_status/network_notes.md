@@ -33,6 +33,18 @@ port: 9
   destination: bottom edge
 ```
 
+## Albion office 12 port switch
+
+```yaml
+ip: 10.187.10.111
+```
+
+## Albion office 48 port switch
+
+```yaml
+ip: 10.187.10.21
+```
+
 ## top edge
 
 ```yaml

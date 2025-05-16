@@ -32,6 +32,8 @@ A layered network model diagram is shown in Figure 1. It consists of 3 layers:
 - management layer,
 - data layer.
 
+![f1](https://exatel.pl/app/uploads/sites/3/2020/10/Rys.1-Warstwowy-model-sieci-1_k-eng.jpg)**
+
 The data layer implements packet processing and forwards them between network devices. The control layer is responsible for determining traffic flow rules applied within the data layer. The management layer implements configuration functionalities, failure detection and repair, status and resource load monitoring, as well as control access to network elements. It should be noted that all components executing the functionalities of both the data and control layers are subject to management.
 
 ## SDN network reference model
