@@ -1,8 +1,8 @@
 # **[Linux - ARP and how to tcpdump ARP](https://www.lixu.ca/2014/10/linux-arp-and-how-to-tcpdump-arp.html)**
 
-**[Back to Research List](../../../../../../research_list.md)**\
-**[Back to Current Status](../../../../../../../development/status/weekly/current_status.md)**\
-**[Back to Main](../../../../../../../README.md)**
+**[Back to Research List](../../../../../research_list.md)**\
+**[Back to Current Status](../../../../../../a_status/current_tasks.md)**\
+**[Back to Main](../../../../../../README.md)**
 
 TCP/IP suite operates at transport and network layer, when it goes down to data link layer such as an Ethernet or a token ring, you need to know the hardware address (48-bit address, for example, 1C:6F:65:4F:54:6B). When an Ethernet frame is sent from one host to another, it is the 48-bit ethernet address that determines for which interface the frame is destined. Device drivers never look at the destination IP in the IP datagram.
 
