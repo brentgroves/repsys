@@ -90,7 +90,7 @@ Automatically collect and report on CNC, job, and start/end tool operation times
 - Time: 6 months
 - Due date: November 2027
 
-## CNC tool adjustment app
+## 5. CNC tool adjustment app
 
 Purpose: To have an electronic alternate to color printer cmm reports.
 

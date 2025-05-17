@@ -1,23 +1,19 @@
-# IS Team Projects
-
-The following is in markdown format. You can view it better at <https://markdownlivepreview.com/>> by copying and pasting the contents below.
-
-![cp](https://res.cloudinary.com/canonical/image/fetch/f_auto,q_auto,fl_sanitize,w_4096,h_1377/https://assets.ubuntu.com/v1/e55cc8c0-wide-server.png)
+# Structures Information System Projects
 
 Good Morning, Team,
 
-This is a task list for the Structures Information System's tooling reporter project. It also contains list of other tooling projects to be completed. At this time the only cost is from the cloud database which is $50 per month.
+This is a task list for the Structures Information System's tooling reporter project. It also contains a list of other IS projects to be completed. Currently, the only cost is from the cloud database, which is $50 per month.
 
 ## tasks
 
-- Move job tooling from MSC to new Vending Machine.
+- Move job tooling from MSC to the new Vending Machine.
   - Nancy is doing this.
 - Move legacy tooling to our cloud database.
-- Move tooling in Excel to cloud database.
-- Point Busche Reporter to cloud database.
+- Move tooling in Excel to the cloud database.
+- Point Busche Reporter to the cloud database.
 - Excel template for new job tooling.
 - Web app to enter new job tooling.
-- Phase 2: Add additional tool management features found in the legacy Busche Tool List system.
+- Phase 2: Add additional tool management features in the legacy Busche Tool List system.
 
 Players:
 
@@ -26,14 +22,24 @@ Players:
 - Kevin Young, Information Systems Manager
 - Jared Davis, IT Manager
 - Michael Percell, Manufacturing Engineering Manager
-- Dan Martin, Plant Controller Southfield
+- Ron James, Quality Manager
+- Dan Martin, Plant Controller, Southfield
 - Jami Pyle, MP&L Manager
 - Nancy Swank, Material Planner
 - Hayley Rymer, IT Supervisor
+- Stephen Strzalkowski, Tooling Engineer Supervisor
 
-The following is in markdown format. It can be viewed better at <https://markdownlivepreview.com/>> by copying and pasting the contents below.
+The following is in markdown format. You can view it better at <https://markdownlivepreview.com/> by copying and pasting the contents below.
 
 ## Structures Information System Project Summary
+
+## 1. Avilla Structures **[Kubernetes](https://www.turing.com/blog/importance-of-kubernetes-for-devops)**, K8s, On-Prem and Cloud Platform Services
+
+Set up the cloud-based and low-cost Avilla Structures on-prem virtual machines to provide basic platform services needed by Information Systems projects.
+
+## 2. Automated Report System
+
+Software system to automate the creation of live or long-running reports, Power BI dashboards, and Excel in the Plex ERP and extended service platforms.
 
 ## 3. Tool Management System
 
@@ -55,9 +61,9 @@ Move from managing CNC tooling in Excel and the Legacy Busche Tool List system t
 
 Automatically collect and report on CNC, job, and start/end tool operation times for problematic tooling.
 
-## CNC tool adjustment app
+## 5. CNC tool adjustment app
 
-Purpose: To have an electronic alternate to color printer cmm reports.
+Purpose: To have an electronic alternative to a color printer, cmm reports, and records of tool setter adjustments.
 
 ## Azure resources
 
