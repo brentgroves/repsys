@@ -33,8 +33,8 @@ and for the Structures Avilla Kubernetes Cluster
 - Set up a Grafana data visualization and monitoring platform in K8s
 - Transition from Multipass hypervisor to MicroCloud Hyper-converged infrastructure (HCI)
 - Develop the Automated ETL and Report System.
-- Develop an Integrated Tool Management System
-- Develop a Tool Tracking module for the tool management system
+- Develop an Integrated Tool Management System.
+- Develop a Tool Tracking module for the tool management system.
 - Develop the CNC tool adjustment module of the tool management system.
 - Develop an Automated Certificate Management System to create certificates and report certificate status for Mach2 MES servers and the Structures Kubernetes Cluster.
 
@@ -58,8 +58,12 @@ and for the Structures Avilla Kubernetes Cluster
 
 ### Tool Management System
 
-- Add the Plex supply item number to the new vending machines.
-- Add tool list support.
+- Move job tooling from MSC to the new Vending Machine.
+- Move legacy tooling to our cloud database.
+- Move tooling in Excel to the cloud database.
+- Point Busche Reporter to the cloud database.
+- Excel template for new job tooling.
+- Web app to enter new job tooling.
 - Add Engineering manager approvals.
 - Add MRO personnel notifications of tooling change requests.
 - Work on ERP and Vending Machines integration with our automated **[ETL](https://www.getdbt.com/blog/extract-transform-load)** reporting system.
