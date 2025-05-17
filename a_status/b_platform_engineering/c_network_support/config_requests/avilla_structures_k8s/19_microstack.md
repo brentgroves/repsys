@@ -1,8 +1,11 @@
 # MicroStack Request
 
+Submitted : 2025-05-17 18:24:36
+Request Number : REQ0203411
+
 The following is in markdown format. You can view it better at <https://markdownlivepreview.com/>> by copying and pasting the contents below.
 
-Issue: In order for **[MicroStack](https://canonical.com/microstack/docs)** to work as intended it must have access to the following **[domains](https://discourse.ubuntu.com/t/proxy-acl-access/43948)**.
+Issue: For **[MicroStack](https://canonical.com/microstack/docs)** to work as intended it must have access to the following **[domains](https://discourse.ubuntu.com/t/proxy-acl-access/43948)**.
 
 Project: Avilla Structures Kubernetes Cluster
 
@@ -16,7 +19,7 @@ Business Justification: The Avilla Structures Kubernetes Cluster will be used to
 
 ## Requested Policy Change
 
-Request TCP access to the **[ACL list](https://discourse.ubuntu.com/t/proxy-acl-access/43948)** MicroStack needs in order to run.
+Request TCP access to the **[ACL list](https://discourse.ubuntu.com/t/proxy-acl-access/43948)** MicroStack needs to run.
 
 ## Key points about the firewall rule
 
