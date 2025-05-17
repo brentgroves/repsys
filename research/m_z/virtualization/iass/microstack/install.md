@@ -168,9 +168,16 @@ Now configure the deployed cloud using the configure command:
 
 ```bash
 sunbeam configure --openrc demo-openrc
+Error: Deployment not bootstrapped or bootstrap process has not completed succesfully. Please run `sunbeam cluster bootstrap`
 172.24.188.57/23
 gw:172.24.189.254
 8.8.8.8 8.8.4.4
+```
+
+I reran bootstap. It looked like it was close to working the first time. This time I exited all other programs first.
+
+```bash
+sunbeam cluster bootstrap --accept-defaults
 ```
 
 The --openrc option specifies a regular user (non-admin) cloud init file (demo-openrc here).
