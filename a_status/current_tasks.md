@@ -22,7 +22,9 @@
 
 ## info
 
-- Yes, Linus Torvalds, the creator and leader of the Linux kernel project, has approved the use of Rust in the kernel. While it wasn't an immediate shift to exclusively using Rust, Rust's integration into the kernel began with a pull request approved by Torvalds in October 2022. Rust is now being used for specific areas like device drivers and some kernel infrastructure.
+- Does Nutanix use OpenStack?
+
+Yes, Nutanix integrates with OpenStack. Nutanix provides drivers for core OpenStack services like Nova, Cinder, Glance, and Neutron, allowing users to easily connect their Nutanix infrastructure to OpenStack. This integration enables organizations to leverage the benefits of both platforms, including Nutanix's hyperconverged infrastructure and OpenStack's cloud management capabilities?
 
 - **[file descriptors](https://copyconstruct.medium.com/bash-redirection-fun-with-descriptors-e799ec5a3c16)**
 
