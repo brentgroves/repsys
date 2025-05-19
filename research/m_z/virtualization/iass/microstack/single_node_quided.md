@@ -269,14 +269,70 @@ Any remote hosts intending to connect to VMs on this node (remote access in firs
 
 Verify the cloud by launching a VM called ‘test’ based on the ‘ubuntu’ image (Ubuntu 22.04 LTS). The launch command is used:
 
+```bash
 sunbeam launch ubuntu --name test
+# Launching an OpenStack instance ... 
+# Access the instance by running the following command:
+ssh -i /home/brent/snap/openstack/727/sunbeam ubuntu@172.16.2.76
+
+# this is the private key
+less /home/brent/snap/openstack/727/sunbeam
+
+```
+
+Connect to the VM over SSH. If remote VM access has been enabled, you will need the private SSH key given in the above output from the launching node. Copy it to the connecting host. Note that the VM will not be ready instantaneously; waiting time is mostly determined by the cloud’s available resources.
+
 Actual output research21:
 
 ```bash
-Launching an OpenStack instance ... 
-Access the instance by running the following command:
-`ssh -i /home/brent/snap/openstack/727/sunbeam ubuntu@172.16.2.76`
+# Launching an OpenStack instance ... 
+# Access the instance by running the following command:
+ssh -i /home/brent/snap/openstack/727/sunbeam ubuntu@172.16.2.76
+
+# The authenticity of host '172.16.2.76 (172.16.2.76)' can't be established.
+# ED25519 key fingerprint is SHA256:J1LeAOAsCgzh/LLXeqrRqxl+A7smLolIrF+WodI8LiQ.
+# This key is not known by any other names.
+# Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
+# Warning: Permanently added '172.16.2.76' (ED25519) to the list of known hosts.
+Welcome to Ubuntu 24.04.2 LTS (GNU/Linux 6.8.0-60-generic x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/pro
+
+ System information as of Mon May 19 18:50:57 UTC 2025
+
+  System load:  0.16              Processes:             93
+  Usage of /:   55.5% of 2.84GB   Users logged in:       0
+  Memory usage: 37%               IPv4 address for ens3: 192.168.0.211
+  Swap usage:   0%
+
+Expanded Security Maintenance for Applications is not enabled.
+
+0 updates can be applied immediately.
+
+Enable ESM Apps to receive additional future security updates.
+See https://ubuntu.com/esm or run: sudo pro status
+
+
+
+The programs included with the Ubuntu system are free software;
+the exact distribution terms for each program are described in the
+individual files in /usr/share/doc/*/copyright.
+
+Ubuntu comes with ABSOLUTELY NO WARRANTY, to the extent permitted by
+applicable law.
+
+To run a command as administrator (user "root"), use "sudo <command>".
+See "man sudo_root" for details.
 
 ```
+
+## Related how-tos
+
+Now that OpenStack is set up, be sure to check out the following howto guides:
+
+- **[Accessing the OpenStack dashboard](https://canonical.com/microstack/docs/dashboard)**
+- **[Using the OpenStack CLI](https://canonical.com/microstack/docs/cli)**
 
 <https://discourse.ubuntu.com/t/single-node-guide/35765>
