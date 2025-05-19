@@ -174,36 +174,48 @@ Now configure the deployed cloud using the configure command:
 
 ```bash
 sunbeam configure --openrc demo-openrc
-Error: Deployment not bootstrapped or bootstrap process has not completed succesfully. Please run `sunbeam cluster bootstrap`
+# VMs will be accessible only from the local host or only from remote hosts. For remote, you must specify the network interface dedicated to VM access traffic. The intended remote hosts 
+# must have connectivity to this interface.
+
 172.24.188.57/23
 gw:172.24.189.254
 8.8.8.8 8.8.4.4
 ```
 
-I reran bootstap. It looked like it was close to working the first time. This time I exited all other programs first.
-
-```bash
-sunbeam cluster bootstrap --accept-defaults
-```
-
 The --openrc option specifies a regular user (non-admin) cloud init file (demo-openrc here).
 
-A series of questions will now be asked. Below is a sample output of an entire interactive session. The values in square brackets, when present, provide acceptable values. A value in parentheses is the default value. Here we use the values given earlier:
+A series of questions will now be asked. Below is the output of an entire interactive session on research21. The values in square brackets, when present, provide acceptable values. A value in parentheses is the default value. Here we use the values given earlier:
 
-Local or remote access to VMs [local/remote] (local): remote
-External network (172.16.2.0/24):
-External network’s gateway (172.16.2.1):
-Populate OpenStack cloud with demo user, default images, flavors etc [y/n] (y):
-Username to use for access to OpenStack (demo):
-Password to use for access to OpenStack (mt********):
-Project network (192.168.0.0/24):
-Enable ping and SSH access to instances? [y/n] (y):
-External network’s allocation range (172.16.2.2-172.16.2.254):
-External network’s type [flat/vlan] (flat):
-Writing openrc to demo-openrc ... done
-External network’s interface [eno1/eno2] (eno1): eno2
+```bash
+sunbeam configure --openrc demo-openrc    
 
-Any remote hosts intending to connect to VMs on this node (remote access in first question) must have connectivity with the interface selected for external traffic (last question above).
+VMs will be accessible only from the local host or only from remote hosts. For remote, you must specify the network interface dedicated to VM access traffic. The intended remote hosts 
+must have connectivity to this interface.
+Local or remote access to VMs [local/remote] (local): 
+Network from which the instances will be remotely accessed (outside OpenStack). Takes the form of a CIDR block.
+External network - arbitrary but must not be in use (172.16.2.0/24): 
+VMs intended to be accessed from remote hosts will be assigned dedicated addresses from a portion of the physical network (outside OpenStack). Takes the form of an IP range.
+External network's allocation range (172.16.2.2-172.16.2.254): 
+Type of network to use for external access.
+External network's type  [flat/vlan] (flat): 
+If enabled, demonstration resources will be created on the cloud.
+Populate OpenStack cloud with demo user, default images, flavors etc [y/n] (y): 
+Username for the demonstration user.
+Username to use for access to OpenStack (demo): 
+Password for the demonstration user.
+Password to use for access to OpenStack (8u********): 
+Network range for the private network for the demonstration user's project. Typically an unroutable network (RFC 1918).
+Project network (192.168.0.0/24): 
+A list of DNS server IP addresses (comma separated) that should be used for external DNS resolution from cloud instances. If not specified, the system's default nameservers will be 
+used.
+Project network's nameservers (10.92.6.1 8.8.4.4 8.8.8.8): 
+If enabled, security groups will be created with rules to allow ICMP and SSH access to instances.
+Enable ping and SSH access to instances? [y/n] (y): 
+⠴ Generating openrc for cloud admin usage ... Writing openrc to demo-openrc ... done
+The cloud has been configured for sample usage.
+You can start using the OpenStack client or access the OpenStack dashboard at http://172.16.1.204:80/openstack-horizon
+
+```
 
 ## Launch a VM
 
@@ -211,6 +223,15 @@ Verify the cloud by launching a VM called ‘test’ based on the ‘ubuntu’ i
 
 ```bash
 sunbeam launch ubuntu --name test
+```
+
+Sample output:
+
+```bash
+Launching an OpenStack instance ... 
+Access the instance by running the following command:
+`ssh -i /home/brent/snap/openstack/727/sunbeam ubuntu@172.16.2.76`
+
 ```
 
 <https://discourse.ubuntu.com/t/single-node-guide/35765>
