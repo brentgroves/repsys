@@ -19,8 +19,10 @@ a minimum of 16 GiB of free memory
 
 Caution: Any change in IP address of the local host will be detrimental to the deployment. A virtual host will generally have a more stable address.
 
-Deploy the cloud
-Install the openstack snap
+## Deploy the cloud
+
+## Install the openstack snap
+
 Duration: 5 minutes
 Depending on internet connection speed to required resources may be shorter or longer.
 
@@ -29,6 +31,8 @@ Begin by installing the openstack snap:
 ```bash
 sudo snap install openstack
 ```
+
+## Prepare the machine
 
 Sunbeam can generate a script to ensure that the machine has all of the required dependencies installed and is configured correctly for use in OpenStack - you can review this script using:
 
@@ -146,7 +150,9 @@ Juju bootstrap complete, you can now bootstrap sunbeam!
 Deploy the OpenStack cloud using the cluster bootstrap command:
 
 ```bash
-sunbeam cluster bootstrap
+# sunbeam cluster bootstrap
+sunbeam cluster bootstrap --accept-defaults
+
 ```
 
 You will first be prompted whether or not to enable network proxy usage. If ‘Yes’, several sub-questions will be asked.
@@ -162,7 +168,7 @@ When prompted, enter the CIDR and the address range for the control plane networ
 Management network (172.16.1.0/24):
 OpenStack APIs IP ranges (172.16.1.201-172.16.1.240): 172.16.1.201-172.16.1.220
 
-## Configure the cloud
+## Configure the cloud and obtain credentials
 
 Now configure the deployed cloud using the configure command:
 
