@@ -1,5 +1,6 @@
 # Current Tasks
 
+- Providing support to Fruitport for running ETL scripts for Power BI.
 - Create InnoDB scripts
   - make Reporting4 from Reporting which has the mysql and azure sql scripts.
   - Install InnoDB on K8s
