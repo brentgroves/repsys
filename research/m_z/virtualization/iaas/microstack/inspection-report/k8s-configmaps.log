@@ -1,0 +1,7 @@
+NAME                                                   DATA   AGE
+cilium-config                                          132    3d21h
+ck-dns-coredns                                         1      3d21h
+extension-apiserver-authentication                     6      3d21h
+k8sd-config                                            3      3d21h
+kube-apiserver-legacy-service-account-token-tracking   1      3d21h
+kube-root-ca.crt                                       1      3d21h

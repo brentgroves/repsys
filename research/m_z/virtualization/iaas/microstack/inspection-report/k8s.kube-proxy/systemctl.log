@@ -1,0 +1,20 @@
+● snap.k8s.kube-proxy.service - Service for snap application k8s.kube-proxy
+     Loaded: loaded (/etc/systemd/system/snap.k8s.kube-proxy.service; enabled; preset: enabled)
+     Active: active (running) since Fri 2025-05-16 19:33:11 EDT; 3 days ago
+   Main PID: 36626 (kube-proxy)
+      Tasks: 9 (limit: 38302)
+     Memory: 22.0M (peak: 23.9M)
+        CPU: 2min 15.303s
+     CGroup: /system.slice/snap.k8s.kube-proxy.service
+             └─36626 /snap/k8s/2500/bin/kube-proxy --cluster-cidr=10.1.0.0/16 --healthz-bind-address=127.0.0.1:10256 --kubeconfig=/etc/kubernetes/proxy.conf --profiling=false
+
+May 16 19:33:23 research21 k8s.kube-proxy[36626]: I0516 19:33:23.191653   36626 server.go:499] "Golang settings" GOGC="" GOMAXPROCS="" GOTRACEBACK="crash"
+May 16 19:33:23 research21 k8s.kube-proxy[36626]: I0516 19:33:23.201348   36626 config.go:199] "Starting service config controller"
+May 16 19:33:23 research21 k8s.kube-proxy[36626]: I0516 19:33:23.206519   36626 shared_informer.go:313] Waiting for caches to sync for service config
+May 16 19:33:23 research21 k8s.kube-proxy[36626]: I0516 19:33:23.202391   36626 config.go:105] "Starting endpoint slice config controller"
+May 16 19:33:23 research21 k8s.kube-proxy[36626]: I0516 19:33:23.206931   36626 shared_informer.go:313] Waiting for caches to sync for endpoint slice config
+May 16 19:33:23 research21 k8s.kube-proxy[36626]: I0516 19:33:23.202950   36626 config.go:329] "Starting node config controller"
+May 16 19:33:23 research21 k8s.kube-proxy[36626]: I0516 19:33:23.206978   36626 shared_informer.go:313] Waiting for caches to sync for node config
+May 16 19:33:23 research21 k8s.kube-proxy[36626]: I0516 19:33:23.307375   36626 shared_informer.go:320] Caches are synced for node config
+May 16 19:33:23 research21 k8s.kube-proxy[36626]: I0516 19:33:23.307407   36626 shared_informer.go:320] Caches are synced for service config
+May 16 19:33:23 research21 k8s.kube-proxy[36626]: I0516 19:33:23.307432   36626 shared_informer.go:320] Caches are synced for endpoint slice config

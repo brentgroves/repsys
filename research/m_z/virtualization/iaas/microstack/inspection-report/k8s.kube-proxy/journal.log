@@ -1,0 +1,35 @@
+May 16 19:33:11 research21 systemd[1]: Started snap.k8s.kube-proxy.service - Service for snap application k8s.kube-proxy.
+May 16 19:33:12 research21 k8s.kube-proxy[36655]: The connection to the server 127.0.0.1:6443 was refused - did you specify the right host or port?
+May 16 19:33:12 research21 k8s.kube-proxy[36626]: Waiting for kube-apiserver to start
+May 16 19:33:15 research21 k8s.kube-proxy[37219]: The connection to the server 127.0.0.1:6443 was refused - did you specify the right host or port?
+May 16 19:33:15 research21 k8s.kube-proxy[36626]: Waiting for kube-apiserver to start
+May 16 19:33:18 research21 k8s.kube-proxy[37289]: Error from server (Forbidden): forbidden: User "system:node:research21" cannot get path "/readyz"
+May 16 19:33:18 research21 k8s.kube-proxy[36626]: Waiting for kube-apiserver to start
+May 16 19:33:21 research21 k8s.kube-proxy[36626]: Kernel module nf_conntrack was already loaded before kube-proxy startup.
+May 16 19:33:21 research21 k8s.kube-proxy[36626]: + ulimit -c unlimited
+May 16 19:33:21 research21 k8s.kube-proxy[36626]: + export GOTRACEBACK=crash
+May 16 19:33:21 research21 k8s.kube-proxy[36626]: + GOTRACEBACK=crash
+May 16 19:33:21 research21 k8s.kube-proxy[36626]: + [[ -f /var/snap/k8s/common/args/kube-proxy-env ]]
+May 16 19:33:21 research21 k8s.kube-proxy[36626]: + exec /snap/k8s/2500/bin/kube-proxy --cluster-cidr=10.1.0.0/16 --healthz-bind-address=127.0.0.1:10256 --kubeconfig=/etc/kubernetes/proxy.conf --profiling=false
+May 16 19:33:21 research21 k8s.kube-proxy[36626]: I0516 19:33:21.989269   36626 server_linux.go:66] "Using iptables proxy"
+May 16 19:33:22 research21 k8s.kube-proxy[36626]: E0516 19:33:22.127142   36626 server.go:687] "Failed to retrieve node info" err="nodes \"research21\" not found"
+May 16 19:33:23 research21 k8s.kube-proxy[36626]: I0516 19:33:23.137711   36626 server.go:698] "Successfully retrieved node IP(s)" IPs=["172.24.188.57"]
+May 16 19:33:23 research21 k8s.kube-proxy[36626]: I0516 19:33:23.151532   36626 conntrack.go:121] "Set sysctl" entry="net/netfilter/nf_conntrack_max" value=131072
+May 16 19:33:23 research21 k8s.kube-proxy[36626]: I0516 19:33:23.151650   36626 conntrack.go:60] "Setting nf_conntrack_max" nfConntrackMax=131072
+May 16 19:33:23 research21 k8s.kube-proxy[36626]: I0516 19:33:23.151822   36626 conntrack.go:121] "Set sysctl" entry="net/netfilter/nf_conntrack_tcp_timeout_established" value=86400
+May 16 19:33:23 research21 k8s.kube-proxy[36626]: I0516 19:33:23.151964   36626 conntrack.go:121] "Set sysctl" entry="net/netfilter/nf_conntrack_tcp_timeout_close_wait" value=3600
+May 16 19:33:23 research21 k8s.kube-proxy[36626]: E0516 19:33:23.152050   36626 server.go:234] "Kube-proxy configuration may be incomplete or incorrect" err="nodePortAddresses is unset; NodePort connections will be accepted on all local IPs. Consider using `--nodeport-addresses primary`"
+May 16 19:33:23 research21 k8s.kube-proxy[36626]: I0516 19:33:23.169582   36626 server.go:243] "kube-proxy running in dual-stack mode" primary ipFamily="IPv4"
+May 16 19:33:23 research21 k8s.kube-proxy[36626]: I0516 19:33:23.169674   36626 server_linux.go:170] "Using iptables Proxier"
+May 16 19:33:23 research21 k8s.kube-proxy[36626]: I0516 19:33:23.179343   36626 proxier.go:255] "Setting route_localnet=1 to allow node-ports on localhost; to change this either disable iptables.localhostNodePorts (--iptables-localhost-nodeports) or set nodePortAddresses (--nodeport-addresses) to filter loopback addresses" ipFamily="IPv4"
+May 16 19:33:23 research21 k8s.kube-proxy[36626]: I0516 19:33:23.191611   36626 server.go:497] "Version info" version="v1.32.2"
+May 16 19:33:23 research21 k8s.kube-proxy[36626]: I0516 19:33:23.191653   36626 server.go:499] "Golang settings" GOGC="" GOMAXPROCS="" GOTRACEBACK="crash"
+May 16 19:33:23 research21 k8s.kube-proxy[36626]: I0516 19:33:23.201348   36626 config.go:199] "Starting service config controller"
+May 16 19:33:23 research21 k8s.kube-proxy[36626]: I0516 19:33:23.206519   36626 shared_informer.go:313] Waiting for caches to sync for service config
+May 16 19:33:23 research21 k8s.kube-proxy[36626]: I0516 19:33:23.202391   36626 config.go:105] "Starting endpoint slice config controller"
+May 16 19:33:23 research21 k8s.kube-proxy[36626]: I0516 19:33:23.206931   36626 shared_informer.go:313] Waiting for caches to sync for endpoint slice config
+May 16 19:33:23 research21 k8s.kube-proxy[36626]: I0516 19:33:23.202950   36626 config.go:329] "Starting node config controller"
+May 16 19:33:23 research21 k8s.kube-proxy[36626]: I0516 19:33:23.206978   36626 shared_informer.go:313] Waiting for caches to sync for node config
+May 16 19:33:23 research21 k8s.kube-proxy[36626]: I0516 19:33:23.307375   36626 shared_informer.go:320] Caches are synced for node config
+May 16 19:33:23 research21 k8s.kube-proxy[36626]: I0516 19:33:23.307407   36626 shared_informer.go:320] Caches are synced for service config
+May 16 19:33:23 research21 k8s.kube-proxy[36626]: I0516 19:33:23.307432   36626 shared_informer.go:320] Caches are synced for endpoint slice config

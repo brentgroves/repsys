@@ -1,0 +1,10 @@
+cluster status:           ready
+control plane nodes:      172.24.188.57:6400 (voter)
+high availability:        no
+datastore:                k8s-dqlite
+network:                  enabled
+dns:                      enabled at 10.152.183.178
+ingress:                  disabled
+load-balancer:            enabled, L2 mode
+local-storage:            enabled at /var/snap/k8s/common/rawfile-storage
+gateway                   disabled

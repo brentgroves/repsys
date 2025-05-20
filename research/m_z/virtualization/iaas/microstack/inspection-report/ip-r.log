@@ -1,0 +1,7 @@
+default via 172.24.189.254 dev enp0s25 proto dhcp src 172.24.188.57 metric 100 
+10.1.0.0/24 via 10.1.0.56 dev cilium_host proto kernel src 10.1.0.56 
+10.1.0.56 dev cilium_host proto kernel scope link 
+10.20.20.0/24 dev br-ex proto kernel scope link src 10.20.20.1 
+10.159.97.0/24 dev sunbeambr0 proto kernel scope link src 10.159.97.1 
+172.16.2.0/24 dev br-ex proto kernel scope link src 172.16.2.1 
+172.24.188.0/23 dev enp0s25 proto kernel scope link src 172.24.188.57 metric 100 

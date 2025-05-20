@@ -1,0 +1,20 @@
+● snap.k8s.k8s-dqlite.service - Service for snap application k8s.k8s-dqlite
+     Loaded: loaded (/etc/systemd/system/snap.k8s.k8s-dqlite.service; enabled; preset: enabled)
+     Active: active (running) since Fri 2025-05-16 19:33:06 EDT; 3 days ago
+   Main PID: 35913 (k8s-dqlite)
+      Tasks: 19 (limit: 38302)
+     Memory: 410.4M (peak: 509.6M)
+        CPU: 5h 55min 52.850s
+     CGroup: /system.slice/snap.k8s.k8s-dqlite.service
+             └─35913 /snap/k8s/2500/bin/k8s-dqlite --listen=unix:///var/snap/k8s/common/var/lib/k8s-dqlite/k8s-dqlite.sock --storage-dir=/var/snap/k8s/common/var/lib/k8s-dqlite
+
+May 16 19:33:07 research21 k8s.k8s-dqlite[35913]: time="2025-05-16T19:33:07-04:00" level=info msg="Configure dqlite failure domain" failure-domain=0
+May 16 19:33:07 research21 k8s.k8s-dqlite[35913]: time="2025-05-16T19:33:07-04:00" level=info msg="Disable TLS ClientSessionCache"
+May 16 19:33:07 research21 k8s.k8s-dqlite[35913]: time="2025-05-16T19:33:07-04:00" level=info msg="Enable TLS" min_tls_version=tls12
+May 16 19:33:07 research21 k8s.k8s-dqlite[35913]: time="2025-05-16T19:33:07-04:00" level=info msg="Started dqlite" address="172.24.188.57:9000" id=3297041220608546238
+May 16 19:33:07 research21 k8s.k8s-dqlite[35913]: time="2025-05-16T19:33:07-04:00" level=info msg="New kine for dqlite"
+May 16 19:33:07 research21 k8s.k8s-dqlite[35913]: time="2025-05-16T19:33:07-04:00" level=info msg="DriverName is dqlite-1."
+May 16 19:33:07 research21 k8s.k8s-dqlite[35913]: time="2025-05-16T19:33:07-04:00" level=info msg="Configuring database connection pooling: maxIdleConns=5, maxOpenConns=5, connMaxLifetime=1m0s, connMaxIdleTime=0s "
+May 16 19:33:07 research21 k8s.k8s-dqlite[35913]: time="2025-05-16T19:33:07-04:00" level=info msg="Kine listening on unix:///var/snap/k8s/common/var/lib/k8s-dqlite/k8s-dqlite.sock"
+May 16 19:33:07 research21 k8s.k8s-dqlite[35913]: time="2025-05-16T19:33:07-04:00" level=info msg="Started kine" address="unix:///var/snap/k8s/common/var/lib/k8s-dqlite/k8s-dqlite.sock" database="dqlite://k8s?driver-name=dqlite-1&watch-query-timeout=20s"
+May 16 19:33:07 research21 k8s.k8s-dqlite[35913]: time="2025-05-16T19:33:07-04:00" level=info msg="Enable periodic check for available disk size" dir=/var/snap/k8s/common/var/lib/k8s-dqlite interval=5s

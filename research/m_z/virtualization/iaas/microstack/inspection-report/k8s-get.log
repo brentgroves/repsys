@@ -1,0 +1,31 @@
+network:
+  enabled: true
+dns:
+  enabled: true
+  cluster-domain: cluster.local
+  service-ip: 10.152.183.178
+  upstream-nameservers:
+  - /etc/resolv.conf
+ingress:
+  enabled: false
+  default-tls-secret: ""
+  enable-proxy-protocol: false
+load-balancer:
+  enabled: true
+  cidrs:
+  - 172.16.1.201-172.16.1.240
+  l2-mode: true
+  l2-interfaces: []
+  bgp-mode: false
+  bgp-local-asn: 64512
+  bgp-peer-address: ""
+  bgp-peer-asn: 0
+  bgp-peer-port: 179
+local-storage:
+  enabled: true
+  local-path: /var/snap/k8s/common/rawfile-storage
+  reclaim-policy: Delete
+  default: true
+gateway:
+  enabled: false
+

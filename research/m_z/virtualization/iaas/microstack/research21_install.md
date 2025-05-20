@@ -234,4 +234,13 @@ Access the instance by running the following command:
 
 ```
 
+Connect to the VM over SSH. If remote VM access has been enabled, you will need the private SSH key given in the above output from the launching node. Copy it to the connecting host. Note that the VM will not be ready instantaneously; waiting time is mostly determined by the cloud’s available resources.
+
+## Related how-tos
+
+Now that OpenStack is set up, be sure to check out the following howto guides:
+
+- **[Accessing the OpenStack dashboard](https://canonical.com/microstack/docs/dashboard)**
+- **[Using the OpenStack CLI](https://canonical.com/microstack/docs/cli)**
+
 <https://discourse.ubuntu.com/t/single-node-guide/35765>

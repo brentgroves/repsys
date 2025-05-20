@@ -1,0 +1,20 @@
+● snap.k8s.kube-controller-manager.service - Service for snap application k8s.kube-controller-manager
+     Loaded: loaded (/etc/systemd/system/snap.k8s.kube-controller-manager.service; enabled; preset: enabled)
+     Active: active (running) since Fri 2025-05-16 19:33:10 EDT; 3 days ago
+   Main PID: 36331 (kube-controller)
+      Tasks: 8 (limit: 38302)
+     Memory: 70.2M (peak: 82.0M)
+        CPU: 1h 8min 5.328s
+     CGroup: /system.slice/snap.k8s.kube-controller-manager.service
+             └─36331 /snap/k8s/2500/bin/kube-controller-manager --authentication-kubeconfig=/etc/kubernetes/controller.conf --authorization-kubeconfig=/etc/kubernetes/controller.conf --cluster-signing-cert-file=/etc/kubernetes/pki/ca.crt --cluster-signing-key-file=/etc/kubernetes/pki/ca.key --kubeconfig=/etc/kubernetes/controller.conf --leader-elect-lease-duration=30s --leader-elect-renew-deadline=15s --profiling=false --root-ca-file=/etc/kubernetes/pki/ca.crt --service-account-private-key-file=/etc/kubernetes/pki/serviceaccount.key --terminated-pod-gc-threshold=12500 --tls-min-version=VersionTLS12 --use-service-account-credentials=true
+
+May 18 06:32:32 research21 k8s.kube-controller-manager[36331]: I0518 06:32:32.191842   36331 replica_set.go:679] "Finished syncing" logger="replicaset-controller" kind="ReplicaSet" key="kube-system/cilium-operator-6978488575" duration="67.169µs"
+May 18 06:32:32 research21 k8s.kube-controller-manager[36331]: I0518 06:32:32.191947   36331 replica_set.go:679] "Finished syncing" logger="replicaset-controller" kind="ReplicaSet" key="kube-system/cilium-operator-6f799b7b4" duration="55.388µs"
+May 18 06:32:32 research21 k8s.kube-controller-manager[36331]: I0518 06:32:32.192523   36331 replica_set.go:679] "Finished syncing" logger="replicaset-controller" kind="ReplicaSet" key="controller-sunbeam-controller/modeloperator-856d6cf4bf" duration="51.739µs"
+May 19 17:31:33 research21 k8s.kube-controller-manager[36331]: I0519 17:31:33.662347   36331 replica_set.go:679] "Finished syncing" logger="replicaset-controller" kind="ReplicaSet" key="metallb-system/metallb-controller-86cb6b5b76" duration="160.264µs"
+May 19 17:31:33 research21 k8s.kube-controller-manager[36331]: I0519 17:31:33.662537   36331 replica_set.go:679] "Finished syncing" logger="replicaset-controller" kind="ReplicaSet" key="kube-system/coredns-56d5ddcf86" duration="87.853µs"
+May 19 17:31:33 research21 k8s.kube-controller-manager[36331]: I0519 17:31:33.662641   36331 replica_set.go:679] "Finished syncing" logger="replicaset-controller" kind="ReplicaSet" key="kube-system/cilium-operator-6978488575" duration="51.653µs"
+May 19 17:31:33 research21 k8s.kube-controller-manager[36331]: I0519 17:31:33.662723   36331 replica_set.go:679] "Finished syncing" logger="replicaset-controller" kind="ReplicaSet" key="kube-system/cilium-operator-6f799b7b4" duration="53.016µs"
+May 19 17:31:33 research21 k8s.kube-controller-manager[36331]: I0519 17:31:33.663849   36331 replica_set.go:679] "Finished syncing" logger="replicaset-controller" kind="ReplicaSet" key="controller-sunbeam-controller/modeloperator-856d6cf4bf" duration="49.383µs"
+May 19 17:31:33 research21 k8s.kube-controller-manager[36331]: I0519 17:31:33.663945   36331 replica_set.go:679] "Finished syncing" logger="replicaset-controller" kind="ReplicaSet" key="kube-system/metrics-server-8694c96fb7" duration="51.77µs"
+May 19 17:31:33 research21 k8s.kube-controller-manager[36331]: I0519 17:31:33.664004   36331 replica_set.go:679] "Finished syncing" logger="replicaset-controller" kind="ReplicaSet" key="openstack/modeloperator-6cbd5bbd86" duration="142.626µs"

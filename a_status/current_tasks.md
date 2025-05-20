@@ -25,6 +25,7 @@
 
 ## info
 
+- OpenStack uses JuJu.
 - Does Nutanix use OpenStack?
 
 Yes, Nutanix integrates with OpenStack. Nutanix provides drivers for core OpenStack services like Nova, Cinder, Glance, and Neutron, allowing users to easily connect their Nutanix infrastructure to OpenStack. This integration enables organizations to leverage the benefits of both platforms, including Nutanix's hyperconverged infrastructure and OpenStack's cloud management capabilities?

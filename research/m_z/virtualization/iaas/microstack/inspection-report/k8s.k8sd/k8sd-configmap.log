@@ -1,0 +1,12 @@
+apiVersion: v1
+data:
+  cluster-dns: 10.152.183.178
+  cluster-domain: cluster.local
+  k8sd-mac: edYqLQZfW125EKiHiBEHrsK1GnQ+Wxg6VxQ4Wzy+Ox5hqrDI5zY7yJ9NHWcGNrnLpGseSvBDZopWU88lHx01t/0g9jSvEsH1Kas+y09QUBZgaFXjAKnYCJWIKjm40NFYn7UraYHup7QTJx6aB2zt0Xq5vu6YTU4cIkLzBEjzH/Uspill/tbfm+09PyJTM39mepk3j8OLT6aFcW/qz1HHd8ChrekIojduGN93a6MPWB7OQPJqGIYt7oo1yoUEhZdnvCyn0t5s774H6wvrBq/t20y+ipSWxdU6rV/54wcwF+hE9AurwZDkgSh27+LxQSP+Oghs/Ivan1uzKaxIjCS2cA==
+kind: ConfigMap
+metadata:
+  creationTimestamp: "2025-05-16T23:33:21Z"
+  name: k8sd-config
+  namespace: kube-system
+  resourceVersion: "223"
+  uid: 0c06971b-0d1c-447a-996a-306345a299c9

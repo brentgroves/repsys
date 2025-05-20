@@ -1,0 +1,20 @@
+● snap.k8s.k8sd.service - Service for snap application k8s.k8sd
+     Loaded: loaded (/etc/systemd/system/snap.k8s.k8sd.service; enabled; preset: enabled)
+     Active: active (running) since Fri 2025-05-16 19:32:48 EDT; 3 days ago
+   Main PID: 35160 (k8sd)
+      Tasks: 21 (limit: 38302)
+     Memory: 203.3M (peak: 212.2M)
+        CPU: 1h 8min 2.129s
+     CGroup: /system.slice/snap.k8s.k8sd.service
+             └─35160 /snap/k8s/2500/bin/k8sd --state-dir=/var/snap/k8s/common/var/lib/k8sd/state
+
+May 20 09:51:28 research21 k8s.k8sd[35160]: E0520 09:51:28.907830   35160 controllers/node_configuration.go:64] "Failed to watch configmap" err="watch closed" logger="k8sd" controller="node-configuration" name="k8sd-config" namespace="kube-system"
+May 20 10:46:54 research21 k8s.k8sd[35160]: E0520 10:46:54.684221   35160 controllers/node_configuration.go:64] "Failed to watch configmap" err="watch closed" logger="k8sd" controller="node-configuration" name="k8sd-config" namespace="kube-system"
+May 20 11:20:11 research21 k8s.k8sd[35160]: E0520 11:20:11.904580   35160 controllers/node_configuration.go:64] "Failed to watch configmap" err="watch closed" logger="k8sd" controller="node-configuration" name="k8sd-config" namespace="kube-system"
+May 20 12:01:49 research21 k8s.k8sd[35160]: E0520 12:01:49.829068   35160 controllers/node_configuration.go:64] "Failed to watch configmap" err="watch closed" logger="k8sd" controller="node-configuration" name="k8sd-config" namespace="kube-system"
+May 20 12:40:16 research21 k8s.k8sd[35160]: E0520 12:40:16.591417   35160 controllers/node_configuration.go:64] "Failed to watch configmap" err="watch closed" logger="k8sd" controller="node-configuration" name="k8sd-config" namespace="kube-system"
+May 20 13:17:06 research21 k8s.k8sd[35160]: E0520 13:17:06.518415   35160 controllers/node_configuration.go:64] "Failed to watch configmap" err="watch closed" logger="k8sd" controller="node-configuration" name="k8sd-config" namespace="kube-system"
+May 20 14:10:47 research21 k8s.k8sd[35160]: E0520 14:10:47.617448   35160 controllers/node_configuration.go:64] "Failed to watch configmap" err="watch closed" logger="k8sd" controller="node-configuration" name="k8sd-config" namespace="kube-system"
+May 20 15:03:07 research21 k8s.k8sd[35160]: E0520 15:03:07.870889   35160 controllers/node_configuration.go:64] "Failed to watch configmap" err="watch closed" logger="k8sd" controller="node-configuration" name="k8sd-config" namespace="kube-system"
+May 20 15:57:59 research21 k8s.k8sd[35160]: E0520 15:57:59.014659   35160 controllers/node_configuration.go:64] "Failed to watch configmap" err="watch closed" logger="k8sd" controller="node-configuration" name="k8sd-config" namespace="kube-system"
+May 20 16:37:25 research21 k8s.k8sd[35160]: E0520 16:37:25.170095   35160 controllers/node_configuration.go:64] "Failed to watch configmap" err="watch closed" logger="k8sd" controller="node-configuration" name="k8sd-config" namespace="kube-system"

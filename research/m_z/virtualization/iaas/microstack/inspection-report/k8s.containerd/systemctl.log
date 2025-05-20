@@ -1,0 +1,56 @@
+● snap.k8s.containerd.service - Service for snap application k8s.containerd
+     Loaded: loaded (/etc/systemd/system/snap.k8s.containerd.service; enabled; preset: enabled)
+    Drop-In: /etc/systemd/system/snap.k8s.containerd.service.d
+             └─containerd-defaults.conf, http-proxy.conf
+     Active: active (running) since Fri 2025-05-16 19:33:09 EDT; 3 days ago
+   Main PID: 36097 (containerd)
+      Tasks: 550
+     Memory: 2.7G (peak: 13.1G)
+        CPU: 9h 24min 39.757s
+     CGroup: /system.slice/snap.k8s.containerd.service
+             ├─36097 /snap/k8s/2500/bin/containerd --address=/run/containerd/containerd.sock --config=/etc/containerd/config.toml --root=/var/lib/containerd --state=/run/containerd
+             ├─43017 /snap/k8s/2500/bin/containerd-shim-runc-v2 -namespace k8s.io -id 73340c8bc3e50231b4f9d68a3c434708c6b972da61ffbfa29b85fcf99670d8a0 -address /run/containerd/containerd.sock
+             ├─43332 /snap/k8s/2500/bin/containerd-shim-runc-v2 -namespace k8s.io -id bf18b36c17196a56ea8b99c59caa22d9c6da77a10b2798f08c5e02e9c2200725 -address /run/containerd/containerd.sock
+             ├─44744 /snap/k8s/2500/bin/containerd-shim-runc-v2 -namespace k8s.io -id 20800e54511449e46ddb138e4c334806383f3bee68592baf7b6bd48a2cb84a29 -address /run/containerd/containerd.sock
+             ├─45031 /snap/k8s/2500/bin/containerd-shim-runc-v2 -namespace k8s.io -id 3de76bcb280d4fddb6c67d49c42fea80fb510266541f9d2a45cfa9fa2496bc21 -address /run/containerd/containerd.sock
+             ├─45049 /snap/k8s/2500/bin/containerd-shim-runc-v2 -namespace k8s.io -id 905036c25ead8fd8d8061ba4fc23ec4f9a0881578138739d9aa8683eeb24989a -address /run/containerd/containerd.sock
+             ├─45075 /snap/k8s/2500/bin/containerd-shim-runc-v2 -namespace k8s.io -id c734d8f2524c61ba6eeff3002e11618d5aff534ad9278919e6bec73eb3d3a5dd -address /run/containerd/containerd.sock
+             ├─45144 /snap/k8s/2500/bin/containerd-shim-runc-v2 -namespace k8s.io -id 5d0a47da3f60314eb9d2d1554870f2fe8c4ec1d75deb1f246be3d3d56770a44a -address /run/containerd/containerd.sock
+             ├─46171 /snap/k8s/2500/bin/containerd-shim-runc-v2 -namespace k8s.io -id d1776f21c952f005d49ca37728693f12f1f8def6bf5112eb5cbc944539e04c57 -address /run/containerd/containerd.sock
+             ├─47308 /snap/k8s/2500/bin/containerd-shim-runc-v2 -namespace k8s.io -id 20e51a04e4ac416bc753ee2d6deef3c818d1b32a99b94b5e164dbc52e1e4bd68 -address /run/containerd/containerd.sock
+             ├─48583 /snap/k8s/2500/bin/containerd-shim-runc-v2 -namespace k8s.io -id cea70f5f5d6abbfbe394b4e30c7ec7421773743ac9604e7eaa6abf7b738bc329 -address /run/containerd/containerd.sock
+             ├─52455 /snap/k8s/2500/bin/containerd-shim-runc-v2 -namespace k8s.io -id 885f44c1f12932f073528be6f2305f569802647f8a148016bfb718c7fff4c954 -address /run/containerd/containerd.sock
+             ├─52881 /snap/k8s/2500/bin/containerd-shim-runc-v2 -namespace k8s.io -id 2fd80b566f29cec21cd726eaab789529e78ad5d6add321bfd46e04a827926e02 -address /run/containerd/containerd.sock
+             ├─53193 /snap/k8s/2500/bin/containerd-shim-runc-v2 -namespace k8s.io -id 01baab015394f063cbb4f5614d6b9a999c097aeadcd74146e296d6e3ab929bf8 -address /run/containerd/containerd.sock
+             ├─53475 /snap/k8s/2500/bin/containerd-shim-runc-v2 -namespace k8s.io -id 1f1219d99feb476db59bcd2fb3ff3a7d901ca1d9e8eaa450868a0662a454f40a -address /run/containerd/containerd.sock
+             ├─54115 /snap/k8s/2500/bin/containerd-shim-runc-v2 -namespace k8s.io -id 147f9a110389e1baa444957ebc3aac74f2c022304c8ff54c8303792015342825 -address /run/containerd/containerd.sock
+             ├─54383 /snap/k8s/2500/bin/containerd-shim-runc-v2 -namespace k8s.io -id 4ee93c9afe20443c7c7a3f4e39802c14041532615de879c17e4c3140457cf53e -address /run/containerd/containerd.sock
+             ├─54788 /snap/k8s/2500/bin/containerd-shim-runc-v2 -namespace k8s.io -id 5f95dcf1eda955294c05e70845e9c92654d97069740f9bda05715910b222c08d -address /run/containerd/containerd.sock
+             ├─55051 /snap/k8s/2500/bin/containerd-shim-runc-v2 -namespace k8s.io -id a32f3c38a1fe6e06ae8e47bb51eebbd437e3c9b9fc0e5fc541742eab5e96f573 -address /run/containerd/containerd.sock
+             ├─59787 /snap/k8s/2500/bin/containerd-shim-runc-v2 -namespace k8s.io -id a3400cfaf9db5145d6586531ed4b08dec08a70b2529629f27143d9f624fccce4 -address /run/containerd/containerd.sock
+             ├─60149 /snap/k8s/2500/bin/containerd-shim-runc-v2 -namespace k8s.io -id a4cf6c9b9a9935e3014ad3415f32dd5c83282296ad1576652a11018f7745e31e -address /run/containerd/containerd.sock
+             ├─60765 /snap/k8s/2500/bin/containerd-shim-runc-v2 -namespace k8s.io -id 2d7f0e01498193ae55c81fb52d8a7e64b550a2d61513a7247e76d6b474156d8b -address /run/containerd/containerd.sock
+             ├─61208 /snap/k8s/2500/bin/containerd-shim-runc-v2 -namespace k8s.io -id c3ce9b7bba5dba8e23247d9bd2343813cd468c97434f7fd177d4a92203252591 -address /run/containerd/containerd.sock
+             ├─62644 /snap/k8s/2500/bin/containerd-shim-runc-v2 -namespace k8s.io -id 5421430abdedf265fe0a7147b9464dd7d9126fcc017e85a532be14a21a139429 -address /run/containerd/containerd.sock
+             ├─63722 /snap/k8s/2500/bin/containerd-shim-runc-v2 -namespace k8s.io -id 20a108e18861d6591906dfb50c9a837645face6ea7713c7804d5d538ad2be428 -address /run/containerd/containerd.sock
+             ├─63754 /snap/k8s/2500/bin/containerd-shim-runc-v2 -namespace k8s.io -id b3cd5efd2448999b13b0f8e3e28f7bf6815d2d8ae45f9016a58e5922e7d5f6cd -address /run/containerd/containerd.sock
+             ├─63879 /snap/k8s/2500/bin/containerd-shim-runc-v2 -namespace k8s.io -id 08e70b136586805efcda98a1d224eb86727d68e46aa58666ea618cd3dda558ce -address /run/containerd/containerd.sock
+             ├─64716 /snap/k8s/2500/bin/containerd-shim-runc-v2 -namespace k8s.io -id eb9aa39ecaf30399d71210f506aec137c64cda1a39615b2ed14ff7a22ae2cd7e -address /run/containerd/containerd.sock
+             ├─65362 /snap/k8s/2500/bin/containerd-shim-runc-v2 -namespace k8s.io -id 6924f336fc1cddb2c11f29f23bd06258480c5b6aff6a86565ef5d09321862ad4 -address /run/containerd/containerd.sock
+             ├─65902 /snap/k8s/2500/bin/containerd-shim-runc-v2 -namespace k8s.io -id b3641f24e5bf41fbea358e4ba274a53907970a99ba1d140a6a18050b9a18a352 -address /run/containerd/containerd.sock
+             ├─66744 /snap/k8s/2500/bin/containerd-shim-runc-v2 -namespace k8s.io -id 80325f6e83b40192e60116c67d7c9e833bc9a44789c40a5428cefb7f554096f8 -address /run/containerd/containerd.sock
+             ├─66825 /snap/k8s/2500/bin/containerd-shim-runc-v2 -namespace k8s.io -id 382325185a49f284e06152707b766e939198f81ee0f4df7b2d249dd602e57865 -address /run/containerd/containerd.sock
+             ├─68318 /snap/k8s/2500/bin/containerd-shim-runc-v2 -namespace k8s.io -id ac342f4b6832f02c2e15baa6d02104947a555fc2ba1d656d5d29717b8de1cf90 -address /run/containerd/containerd.sock
+             ├─68793 /snap/k8s/2500/bin/containerd-shim-runc-v2 -namespace k8s.io -id a2c1acae2482e31326012dd01ee609a9353fa623555d556e6afc2dbdc6464da9 -address /run/containerd/containerd.sock
+             └─69468 /snap/k8s/2500/bin/containerd-shim-runc-v2 -namespace k8s.io -id 40aa67eec86cacd0d6ff89ad330b252037810698ca74194b0e1ace34a8b11d30 -address /run/containerd/containerd.sock
+
+May 20 08:43:19 research21 k8s.containerd[36097]: time="2025-05-20T08:43:19.760525427-04:00" level=error msg="Failed to get usage for snapshot \"4baabed14a9d551f52845eb684d84560f0149b785bc3ad48c34534783efbac41\"" error="lstat /var/lib/containerd/io.containerd.snapshotter.v1.overlayfs/snapshots/186/fs/var/log/mysql/archive_audit/audit.log-20250520_1243: no such file or directory"
+May 20 09:15:19 research21 k8s.containerd[36097]: time="2025-05-20T09:15:19.584519678-04:00" level=error msg="Failed to get usage for snapshot \"4baabed14a9d551f52845eb684d84560f0149b785bc3ad48c34534783efbac41\"" error="lstat /var/lib/containerd/io.containerd.snapshotter.v1.overlayfs/snapshots/186/fs/var/log/mysql/audit.log: no such file or directory"
+May 20 09:42:29 research21 k8s.containerd[36097]: time="2025-05-20T09:42:29.628118107-04:00" level=error msg="Failed to get usage for snapshot \"4baabed14a9d551f52845eb684d84560f0149b785bc3ad48c34534783efbac41\"" error="lstat /var/lib/containerd/io.containerd.snapshotter.v1.overlayfs/snapshots/186/fs/var/log/mysql/error.log: no such file or directory"
+May 20 10:23:19 research21 k8s.containerd[36097]: time="2025-05-20T10:23:19.853759558-04:00" level=error msg="Failed to get usage for snapshot \"4baabed14a9d551f52845eb684d84560f0149b785bc3ad48c34534783efbac41\"" error="lstat /var/lib/containerd/io.containerd.snapshotter.v1.overlayfs/snapshots/186/fs/var/log/mysql/archive_error/error.log-20250520_1423: no such file or directory"
+May 20 10:40:19 research21 k8s.containerd[36097]: time="2025-05-20T10:40:19.661024390-04:00" level=error msg="Failed to get usage for snapshot \"4baabed14a9d551f52845eb684d84560f0149b785bc3ad48c34534783efbac41\"" error="lstat /var/lib/containerd/io.containerd.snapshotter.v1.overlayfs/snapshots/186/fs/var/log/mysql/audit.log: no such file or directory"
+May 20 11:28:29 research21 k8s.containerd[36097]: time="2025-05-20T11:28:29.666399083-04:00" level=error msg="Failed to get usage for snapshot \"4baabed14a9d551f52845eb684d84560f0149b785bc3ad48c34534783efbac41\"" error="lstat /var/lib/containerd/io.containerd.snapshotter.v1.overlayfs/snapshots/186/fs/var/log/mysql/audit.log: no such file or directory"
+May 20 11:50:19 research21 k8s.containerd[36097]: time="2025-05-20T11:50:19.593160777-04:00" level=error msg="Failed to get usage for snapshot \"4baabed14a9d551f52845eb684d84560f0149b785bc3ad48c34534783efbac41\"" error="lstat /var/lib/containerd/io.containerd.snapshotter.v1.overlayfs/snapshots/186/fs/var/log/mysql/archive_audit/audit.log-20250520_1550: no such file or directory"
+May 20 13:47:09 research21 k8s.containerd[36097]: time="2025-05-20T13:47:09.574191958-04:00" level=error msg="Failed to get usage for snapshot \"4baabed14a9d551f52845eb684d84560f0149b785bc3ad48c34534783efbac41\"" error="lstat /var/lib/containerd/io.containerd.snapshotter.v1.overlayfs/snapshots/186/fs/var/log/mysql/error.log: no such file or directory"
+May 20 16:25:50 research21 k8s.containerd[36097]: time="2025-05-20T16:25:50.221106737-04:00" level=error msg="Failed to get usage for snapshot \"4baabed14a9d551f52845eb684d84560f0149b785bc3ad48c34534783efbac41\"" error="lstat /var/lib/containerd/io.containerd.snapshotter.v1.overlayfs/snapshots/186/fs/var/log/mysql/error.log: no such file or directory"
+May 20 16:59:49 research21 k8s.containerd[36097]: time="2025-05-20T16:59:49.524278108-04:00" level=error msg="Failed to get usage for snapshot \"4baabed14a9d551f52845eb684d84560f0149b785bc3ad48c34534783efbac41\"" error="lstat /var/lib/containerd/io.containerd.snapshotter.v1.overlayfs/snapshots/186/fs/var/log/mysql/archive_audit/audit.log-20250517_1513.gz: no such file or directory"
