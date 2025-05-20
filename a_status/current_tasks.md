@@ -1,6 +1,6 @@
 # Current Tasks
 
-- Providing support to Jared in Fruitport for running ETL scripts for Power BI. His scripts will be automated by the ETL report system.
+- Providing support to Jared EikenBerry in Fruitport for running ETL scripts for Power BI. His scripts will be automated by the ETL report system.
 - Jared EikenBerry Admin privileges.
 
 - Create InnoDB scripts
