@@ -1,5 +1,7 @@
 # Current Tasks
 
+- Python uv ODBC test. Don't know the ODBC state of the laptop before I started. I know 32-bit libraries had not been installed because ./rcshell reported unknown file but I could have just removed them after the last install.
+
 - Providing support to Jared EikenBerry in Fruitport for running ETL scripts for Power BI. His scripts will be automated by the ETL report system.
 - Jared EikenBerry Admin privileges.
 
@@ -25,6 +27,7 @@
 
 ## info
 
+- All the knowledge of programmers who made the software in the lifecycle API.
 - OpenStack uses JuJu.
 - Does Nutanix use OpenStack?
 
