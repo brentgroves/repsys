@@ -50,6 +50,7 @@ Aleksandar Gavrilov, IT Administrator, Skopje
 
 ## info
 
+- was able to access plex without config request from desktop server vlan.
 - All the knowledge of programmers who made the software in the lifecycle API.
 - OpenStack uses JuJu.
 - Does Nutanix use OpenStack?
