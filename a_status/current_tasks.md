@@ -1,5 +1,25 @@
 # Current Tasks
 
+Team:
+
+Team:
+
+Christian. Trujillo, IT Structures Manager
+Brent Hall, System Administrator Senior
+Kevin Young, Information Systems Manager
+Jared Davis, IT Manager
+Hayley Rymer, IT Supervisor, Mills River
+Mitch Harper, Desktop and Systems Support Technician, Mills River
+Thomas.Creal, Desktop and Systems Support Technician, Mills River
+Matthew Bump, Muscle Shoals, Engineering Supervisor II / IT
+Carlos Morales, IT Administrator, Muscle Shoals
+Sam Jackson, Information Systems Developer, Southfield
+Matt Irey, Desktop and System Support Technician, Fruitport
+David Maitner,  Desktop and System Support Technician, Fruitport
+Carl Stangland, Desktop and System Support Technician, Indiana
+Lucas Tuma, IT Administrator, Strakonice
+Aleksandar Gavrilov, IT Administrator, Skopje
+
 - Python uv ODBC test. Don't know the ODBC state of the laptop before I started. I know 32-bit libraries had not been installed because ./rcshell reported unknown file but I could have just removed them after the last install. Create a Python self-installing file with pyodbc in the top dependancies section.
 
 - Providing support to Jared EikenBerry in Fruitport for running ETL scripts for Power BI. His scripts will be automated by the ETL report system.

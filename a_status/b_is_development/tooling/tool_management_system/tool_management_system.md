@@ -15,7 +15,7 @@ This is a task list for the Structures Information System's tooling reporter pro
 - Web app to enter new job tooling.
 - Phase 2: Add additional tool management features in the legacy Busche Tool List system.
 
-Players:
+Team:
 
 - Pat Baxter, General Manager
 - Christian. Trujillo, IT Structures Manager

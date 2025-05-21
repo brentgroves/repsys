@@ -4,6 +4,26 @@ Hi Team,
 
 This is a short description of 2 Software-defined infastructure platforms. The Structures Information System team is testing MicroStack. The Nutanix cluster is being tested by IT.
 
+Team:
+
+Christian. Trujillo, IT Structures Manager
+Brent Hall, System Administrator Senior
+Kevin Young, Information Systems Manager
+Jared Davis, IT Manager
+Hayley Rymer, IT Supervisor, Mills River
+Mitch Harper, Desktop and Systems Support Technician, Mills River
+Thomas.Creal, Desktop and Systems Support Technician, Mills River
+Matthew Bump, Muscle Shoals, Engineering Supervisor II / IT
+Carlos Morales, IT Administrator, Muscle Shoals
+Sam Jackson, Information Systems Developer, Southfield
+Matt Irey, Desktop and System Support Technician, Fruitport
+David Maitner,  Desktop and System Support Technician, Fruitport
+Carl Stangland, Desktop and System Support Technician, Indiana
+Lucas Tuma, IT Administrator, Strakonice
+Aleksandar Gavrilov, IT Administrator, Skopje
+
+The following is in markdown format. You can view it better at <https://markdownlivepreview.com/> by copying and pasting the contents below.
+
 ## IAAS / Software Defined Infastructure
 
 There are many categories of virtualization software. There is a least 6 but 3 of which are: Hypervisor, Software Defined Network (SDN), and storage. These providers unify these services and provide one api or user interface to manage them.
