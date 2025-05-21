@@ -4,9 +4,13 @@ Hi Team,
 
 This is a short description of 2 Software-defined infastructure platforms. The Structures Information System team is testing MicroStack. The Nutanix cluster is being tested by IT.
 
-## Software Defined Infastructure
+## IAAS / Software Defined Infastructure
 
-There are many categories of virtualization software. There is a least 6 but 3 of which are: Hypervisor, Software Defined Network (SDN), and storage. These providers unify these services.
+There are many categories of virtualization software. There is a least 6 but 3 of which are: Hypervisor, Software Defined Network (SDN), and storage. These providers unify these services and provide one api or user interface to manage them.
+
+## Downside
+
+Each of these software are very configurable and feature rich.  When you unify them you loose some of the configuration options of each one. For example, with Open Virtual Switch, OVS, you can create any SDN you could possibly desire, but when you manage OVS through a higher level API or user interface you are limited to the basic features of OVS.
 
 ## **[Nutanix](https://www.nutanix.com/what-we-do#:~:text=Our%20software%2Ddefined%20infrastructure%20brings,secure%2C%20resilient%2C%20and%20adaptive.)**
 
@@ -23,6 +27,7 @@ Notes:
 
 - Comes with physically enclosed servers.
 - The hardware and software have been tested together thoroughly.
+- Nutanix makes drivers for OpenStack so you can combine and unify both.
 - Good support.
 ...
 
