@@ -1,4 +1,4 @@
-# **[Micro-Cloud HCI](https://canonical.com/microcloud)**
+# **[Micro-Cloud](https://canonical.com/microcloud)**
 
 **[Edge vs Cloud](https://enterprisersproject.com/article/2019/7/edge-computing-explained-plain-english#:~:text=Edge%20computing%20is%20the%20science,%2DCloud%20Portability%20for%20Dummies.%20%5D)**
 
