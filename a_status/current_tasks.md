@@ -2,8 +2,6 @@
 
 Team:
 
-Team:
-
 Christian. Trujillo, IT Structures Manager
 Brent Hall, System Administrator Senior
 Kevin Young, Information Systems Manager
@@ -20,6 +18,11 @@ Carl Stangland, Desktop and System Support Technician, Indiana
 Lucas Tuma, IT Administrator, Strakonice
 Aleksandar Gavrilov, IT Administrator, Skopje
 
+- Help access APIs from Plex
+<https://plex.my.site.com/community/s/question/0D52T00005b6l1YSAQ/calling-a-plex-http-api-from-powerbi-pure-mquery>
+<https://plex.my.site.com/community/s/question/0D52T00005wznVcSAI/how-to-integrate-plex-with-power-bi>
+
+- EntraID access to Azure SQL db for Sam.
 - Python uv ODBC test. Don't know the ODBC state of the laptop before I started. I know 32-bit libraries had not been installed because ./rcshell reported unknown file but I could have just removed them after the last install. Create a Python self-installing file with pyodbc in the top dependancies section.
 
 - Providing support to Jared EikenBerry in Fruitport for running ETL scripts for Power BI. His scripts will be automated by the ETL report system.
