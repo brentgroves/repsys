@@ -1,5 +1,13 @@
 # **[Micro-Cloud HCI](https://canonical.com/microcloud)**
 
+**[Edge vs Cloud](https://enterprisersproject.com/article/2019/7/edge-computing-explained-plain-english#:~:text=Edge%20computing%20is%20the%20science,%2DCloud%20Portability%20for%20Dummies.%20%5D)**
+
+“Put simply, edge computing is data analysis that takes place on a device in real-time,” says Nima Negahban, CTO of Kinetica. “Edge computing is about processing data locally, and cloud computing is about processing data in a data center or public cloud.”
+
+**[What is a MicroCloud](https://canonical.com/microcloud)**
+
+A MicroCloud is a lightweight, open-source cloud solution designed for edge computing and small-scale private clouds. It's essentially a cluster of machines that are automatically configured to function as a cloud environment. MicroCloud simplifies the process of deploying and managing a cloud, making it accessible for smaller deployments and use cases where a traditional cloud might be overkill.
+
 Hyper-converged infrastructure (HCI) is a software-defined IT infrastructure that virtualizes all of the elements of conventional "hardware-defined" systems. HCI includes, at a minimum, virtualized computing (a hypervisor), software-defined storage, and virtualized networking (software-defined networking).[1][2] HCI typically runs on commercial off-the-shelf (COTS) servers.
 
 ## What is the size of a MicroCloud?
