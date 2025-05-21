@@ -25,6 +25,7 @@ Uses:
 
 Notes:
 
+- Hyper-converged infrastructure (HCI) is a software-defined IT infrastructure that virtualizes all of the elements of conventional "hardware-defined" systems.
 - Comes with physically enclosed servers.
 - The hardware and software have been tested together thoroughly.
 - Nutanix makes drivers for OpenStack so you can combine and unify both.
