@@ -1,6 +1,10 @@
-# **[Single-node quickstart](https://canonical.com/microstack/docs/single-node-guided)**
+# **[Single-node guided](https://canonical.com/microstack/docs/single-node-guided)**
 
 ## **[egress requirements](https://discourse.ubuntu.com/t/manage-a-proxied-environment/43946)**
+
+## Notes
+
+The openstack-hypervisor is not installed in Canonical howto docs, but we can still create virtual machines. My guess is Canonical does not use nova but qemu.
 
 This tutorial shows how to install OpenStack (based on project Sunbeam). It will deploy an OpenStack 2024.1 (Caracal) cloud.
 

@@ -1,5 +1,9 @@
 # **[Inspecting the cluster](https://canonical.com/microstack/docs/inspect)**
 
+**[Back to Research List](../../../../research_list.md)**\
+**[Back to Current Tasks](../../../../../a_status/current_tasks.md)**\
+**[Back to Main](../../../../../README.md)**
+
 ## Overview
 
 MicroStack aims to remove the need for an operator to know all of the technical detail about how to deploy an OpenStack cloud; however when something does go wrong it’s important to be able to inspect the various components in order to discover the nature of the problem.
@@ -43,6 +47,8 @@ controller/0*  active    idle   10.1.0.75  37017/TCP
 This should work from any node in the deployment
 
 This model contains the application deployments for the K8S (control role), MicroCeph (storage role) and OpenStack Hypervisor (compute role) components of MicroStack.
+
+In Juju, a machine charm can be assigned one of two roles: principal or subordinate. Principal charms are deployed on their own machine (unit), while subordinate charms are deployed on the same machine (unit) as the principal charm they are attached to.
 
 Depending on the roles assigned to individual machines, a unit of each of the applications should be present in the model.
 
@@ -252,3 +258,82 @@ A Juju unit will always have a charm container running the Juju agent responsibl
 ```bash
 sudo k8s kubectl logs --namespace openstack --container charm <pod_name>
 ```
+
+Information: The charm container logs are also available through juju debug-log -m openstack, and will be present in the sunbeam inspection report.
+
+To fetch the payload logs, use:
+
+`sudo k8s kubectl logs --namespace openstack --container <container_name> <pod_name>`
+
+## MicroCeph
+
+If nodes are deployed with the storage role enabled, MicroCeph will be deployed as part of the cluster.
+
+The status of MicroCeph can be checked using:
+
+`sudo microceph status`
+and the status of the Ceph cluster can be displayed using:
+
+`sudo ceph -s`
+
+## Sunbeam MicroCluster
+
+Sunbeam MicroCluster provides some basic cluster coordination and state sharing services as part of MicroStack. The status of the nodes participating in the Sunbeam MicroCluster can be queried using the following command:
+
+```bash
+sunbeam cluster list
+                  openstack-machines                   
+┏━━━━━━━━━━━━━┳━━━━━━━━━┳━━━━━━━━━┳━━━━━━━━━┳━━━━━━━━━┓
+┃ Node        ┃ Machine ┃ Compute ┃ Control ┃ Storage ┃
+┡━━━━━━━━━━━━━╇━━━━━━━━━╇━━━━━━━━━╇━━━━━━━━━╇━━━━━━━━━┩
+│ 10.159.97.1 │ running │ active  │ active  │         │
+└─────────────┴─────────┴─────────┴─────────┴─────────┘
+```
+
+The MicroCluster library makes use of dqlite which provides a raft based sqlite compatible database for shared state across the Sunbeam cluster.
+
+The state of the local daemon managing the nodes participation in the cluster can also be checked and the log output captured if need be:
+
+```bash
+sudo systemctl status snap.openstack.clusterd.service
+● snap.openstack.clusterd.service - Service for snap application openstack.clusterd
+     Loaded: loaded (/etc/systemd/system/snap.openstack.clusterd.service; enabled; preset: enabled)
+     Active: active (running) since Fri 2025-05-16 19:09:49 EDT; 4 days ago
+   Main PID: 16755 (sunbeamd)
+      Tasks: 18 (limit: 38302)
+     Memory: 166.6M (peak: 167.7M)
+        CPU: 49min 48.592s
+     CGroup: /system.slice/snap.openstack.clusterd.service
+             └─16755 sunbeamd --state-dir /var/snap/openstack/common/state --socket-group snap_daemon --verbose
+sudo journalctl -xe -u snap.openstack.clusterd.service
+```
+
+## Terraform plans
+
+Sunbeam makes extensive use of Terraform to deploy OpenStack. In some rare cases a Terraform plan can stay locked making it impossible to re-run commands on the bootstrap node or add new nodes to the deployment.
+
+To list the current lock state of all Terraform plans:
+
+```bash
+sunbeam plans list
+
+┏━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━┓
+┃ Plan                 ┃ Locked ┃
+┡━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━┩
+│ microceph-plan       │        │
+│ k8s-plan             │        │
+│ hypervisor-plan      │        │
+│ demo-setup           │        │
+│ sunbeam-machine-plan │        │
+│ openstack-plan       │        │
+│ cinder-volume-plan   │        │
+└──────────────────────┴────────┘
+```
+
+To unlock a specific Terraform plan:
+
+`sunbeam plans unlock <plan-name>`
+
+This command may prompt you to confirm unlocking depending on how recent the lock timestamp is.
+
+Caution: Ensure that there are no administrative operations underway in the deployment when unlocking a Terraform plan. Otherwise, the deployment’s integrity can be compromised.
