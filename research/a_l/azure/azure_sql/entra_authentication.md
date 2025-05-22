@@ -108,7 +108,17 @@ az sql server ad-admin list --server $SERVER --resource-group "$RESOURCE_GROUP" 
 
 az sql server ad-admin create --display-name "Brent Groves" --object-id "175774d2-02a8-459c-9570-8ad0ec49ea7c" --resource-group "$RESOURCE_GROUP" --name $SERVER
 
+# check
+
+az sql server ad-admin list --server $SERVER --resource-group "$RESOURCE_GROUP"  --debug
+
 ```
+
+## Assign Microsoft Graph permissions
+
+SQL Managed Instance needs permissions to read Microsoft Entra ID for scenarios like authorizing users who connect through security group membership and new user creation. For Microsoft Entra authentication to work, you need to assign the managed instance identity to the Directory Readers role. You can do this using the Azure portal or PowerShell.
+
+For some operations, Azure SQL Database and Azure Synapse Analytics also require permissions to query Microsoft Graph, explained in Microsoft Graph permissions. Azure SQL Database and Azure Synapse Analytics support fine-grained Graph permissions for these scenarios, whereas SQL Managed Instance requires the Directory Readers role. Fine-grained permissions and their assignment are described in detail in enable service principals to create Microsoft Entra users.
 
 ## Azure Portal
 
