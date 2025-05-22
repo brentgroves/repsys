@@ -30,7 +30,7 @@ Aleksandar Gavrilov, IT Administrator, Skopje
 
 - Create InnoDB scripts
   - make Reporting4 from Reporting which has the mysql and azure sql scripts.
-  - Install InnoDB on K8s
+  - Install IAzure Data Studio officially retires on February 28, 2026. You should migrate to Visual Studio Code. This change aims to consolidate SQL development tools and provide a more robust and feature-rich environment for the developer community.nnoDB on K8s
   - Create InnoDB Schema from Mysql schema
   - populate InnoDB database with records from Mysql.
 - SystemD socket activation unit listens for connection and then start a one-shot unit. The one-shot unit runs many tasks consequatively such as those in an ETL pipeline. Test it on Linamar Azure SQL TB.
@@ -50,6 +50,7 @@ Aleksandar Gavrilov, IT Administrator, Skopje
 
 ## info
 
+- Azure Data Studio officially retires on February 28, 2026. You should migrate to Visual Studio Code. This change aims to consolidate SQL development tools and provide a more robust and feature-rich environment for the developer community.
 - was able to access plex without config request from desktop server vlan.
 - All the knowledge of programmers who made the software in the lifecycle API.
 - OpenStack uses JuJu.
