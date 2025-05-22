@@ -37,13 +37,78 @@ The Microsoft Entra admin can also be configured when the Azure SQL resource is 
 
 ## Azure SQL Database and Azure Synapse Analytics
 
-Setting the Microsoft Entra admin enables Microsoft Entra authentication for your logical server for Azure SQL Database and Azure Synapse Analytics. You can set a Microsoft Entra admin for your server by using the Azure portal, PowerShell, Azure CLI, or REST APIs.
-
+Setting the Microsoft Entra admin enables Microsoft Entra authentication for your **[logical server](https://learn.microsoft.com/en-us/azure/azure-sql/database/logical-servers?view=azuresql)** for Azure SQL Database and Azure Synapse Analytics. You can set a Microsoft Entra admin for your server by using the Azure portal, PowerShell, Azure CLI, or REST APIs.
 In the Azure portal, you can find the logical server name
 
 - In the server name field on the Overview page of Azure SQL Database.
 - In the server name field on the Overview page of your standalone dedicated SQL pool in Azure Synapse Analytics.
 - In the relevant SQL endpoint on the Overview page of your Azure Synapse Analytics workspace.
+
+## Azure CLI
+
+You can set a Microsoft Entra admin for Azure SQL Database and Azure Synapse Analytics with the following Azure CLI commands:
+
+```bash
+az sql server list
+
+az sql server list --output json --query '[].{administratorLogin:administratorLogin,fullyQualifiedDomainName:fullyQualifiedDomainName,location:location,id:id,name:name,version:version}'
+
+```
+
+ Note
+
+The Microsoft Entra admin is stored in the server's master database as a user (database principal). Since database principal names must be unique, the display name of the admin can't be the same as the name of any user in the server's master database. If a user with the name already exists, the Microsoft Entra admin setup fails and rolls back, indicating that the name is already in use.
+
+## Is there already a server admin?
+
+```bash
+# az sql server ad-admin list [--ids]
+#                             [--resource-group]
+#                             [--server]
+#                             [--subscription]
+
+az sql server ad-admin list --server $SERVER --resource-group "$RESOURCE_GROUP"  --debug
+```
+
+## Create Microsoft Entra admin
+
+```bash
+# az sql server ad-admin create --display-name
+#                               --object-id
+#                               --resource-group
+#                               --server
+
+# --display-name -u
+# Display name of the Azure AD administrator user or group.
+
+# --object-id -i
+# The unique ID of the Azure AD administrator.
+
+# --resource-group -g
+# Name of resource group. You can configure the default group using az configure --defaults group=<name>.
+
+# --server --server-name -s
+# Name of the Azure SQL Server. You can configure the default using az configure --defaults sql-server=<name>.
+
+# az ad user show --id "175774d2-02a8-459c-9570-8ad0ec49ea7c"
+# {
+#   "@odata.context": "https://graph.microsoft.com/v1.0/$metadata#users/$entity",
+#   "businessPhones": [],
+#   "displayName": "Brent Groves",
+#   "givenName": "Brent",
+#   "id": "175774d2-02a8-459c-9570-8ad0ec49ea7c",
+#   "jobTitle": "IS Administrator",
+#   "mail": "Brent.Groves@Linamar.com",
+#   "mobilePhone": null,
+#   "officeLocation": "Linamar",
+#   "preferredLanguage": null,
+#   "surname": "Groves",
+#   "userPrincipalName": "bGroves@linamar.com"
+# }
+
+az sql server ad-admin create --display-name "Brent Groves" --object-id "175774d2-02a8-459c-9570-8ad0ec49ea7c" --resource-group "$RESOURCE_GROUP" --name $SERVER
+
+```
 
 ## Azure Portal
 

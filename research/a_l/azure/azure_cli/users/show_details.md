@@ -7,6 +7,8 @@ Show details for a Azure Active Directory user.
 # list users with global admin role
 az rest --method get --url "https://graph.microsoft.com/v1.0/roleManagement/directory/roleAssignments" --query "value[?contains(roleDefinitionId,'62e90394-69f5-4237-9190-012177145e10')].{id:id,PrincipalId:principalId,RoleDefinitionId:roleDefinitionId}"
 
+az ad user show --id bGroves@linamar.com
+
 az ad user show --id "9e3c912d-303c-4088-9c22-bfc2bdbc8430"
 {
   "@odata.context": "https://graph.microsoft.com/v1.0/$metadata#users/$entity",
