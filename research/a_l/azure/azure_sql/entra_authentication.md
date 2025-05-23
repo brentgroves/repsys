@@ -49,6 +49,8 @@ In the Azure portal, you can find the logical server name
 You can set a Microsoft Entra admin for Azure SQL Database and Azure Synapse Analytics with the following Azure CLI commands:
 
 ```bash
+pushd .
+cd ~/src/azure/linamar.com/sqldb
 az sql server list
 
 az sql server list --output json --query '[].{administratorLogin:administratorLogin,fullyQualifiedDomainName:fullyQualifiedDomainName,location:location,id:id,name:name,version:version}'
@@ -106,7 +108,26 @@ az sql server ad-admin list --server $SERVER --resource-group "$RESOURCE_GROUP" 
 #   "userPrincipalName": "bGroves@linamar.com"
 # }
 
-az sql server ad-admin create --display-name "Brent Groves" --object-id "175774d2-02a8-459c-9570-8ad0ec49ea7c" --resource-group "$RESOURCE_GROUP" --name $SERVER
+# az sql server ad-admin create --display-name
+#                               --object-id
+#                               --resource-group
+#                               --server
+
+# https://docs.microsoft.com/en-US/cli/azure/sql/server/ad-admin#az_sql_server_ad_admin_create
+
+az sql server ad-admin create --display-name "Brent Groves" --object-id "175774d2-02a8-459c-9570-8ad0ec49ea7c" --resource-group "$RESOURCE_GROUP" --server $SERVER
+
+{
+  "administratorType": "ActiveDirectory",
+  "azureAdOnlyAuthentication": null,
+  "id": "/subscriptions/6fdb2836-d884-43d9-806d-78e653dbe236/resourceGroups/Structures-SP-repsys-CC-RG/providers/Microsoft.Sql/servers/repsys1/administrators/ActiveDirectory",
+  "login": "Brent Groves",
+  "name": "ActiveDirectory",
+  "resourceGroup": "Structures-SP-repsys-CC-RG",
+  "sid": "175774d2-02a8-459c-9570-8ad0ec49ea7c",
+  "tenantId": "ceadc058-fad7-4b6b-830b-00ac739654f0",
+  "type": "Microsoft.Sql/servers"
+}
 
 # check
 
