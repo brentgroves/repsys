@@ -1,5 +1,13 @@
 # **[Quickstart: Use Azure Data Studio to connect and query Azure SQL Database](https://learn.microsoft.com/en-us/azure-data-studio/quickstart-sql-database)**
 
+## keyring
+
+```bash
+# start passwords and keys program first.
+# got errors if used gnome-keyring store
+azuredatastudio --password-store="basic"
+```
+
 ## Prerequisites
 
 Connect to your Azure SQL Database server
