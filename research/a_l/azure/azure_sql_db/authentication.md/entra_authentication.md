@@ -135,11 +135,34 @@ az sql server ad-admin list --server $SERVER --resource-group "$RESOURCE_GROUP" 
 
 ```
 
-## Assign Microsoft Graph permissions
+## Create Microsoft Entra principals in SQL
 
-SQL Managed Instance needs permissions to read Microsoft Entra ID for scenarios like authorizing users who connect through security group membership and new user creation. For Microsoft Entra authentication to work, you need to assign the managed instance identity to the Directory Readers role. You can do this using the Azure portal or PowerShell.
+To connect to a database in SQL Database or Azure Synapse Analytics with Microsoft Entra authentication, a principal has to be configured on the database for that identity with at least the CONNECT permission.
 
-For some operations, Azure SQL Database and Azure Synapse Analytics also require permissions to query Microsoft Graph, explained in Microsoft Graph permissions. Azure SQL Database and Azure Synapse Analytics support fine-grained Graph permissions for these scenarios, whereas SQL Managed Instance requires the Directory Readers role. Fine-grained permissions and their assignment are described in detail in enable service principals to create Microsoft Entra users.
+## Database user permissions
+
+When a database user is created, it receives the CONNECT permission to the database by default. A database user also inherits permissions in two circumstances:
+
+- If the user is a member of a Microsoft Entra group that's also assigned permissions on the server.
+- If the user is created from a login, it inherits the server-assigned permissions of the login applicable on the database.
+
+Managing permissions for server and database principals works the same regardless of the type of principal (Microsoft Entra ID, SQL authentication, etc.). We recommend granting permissions to database roles instead of directly granting permissions to users. Then users can be added to roles with appropriate permissions. This simplifies long-term permissions management and reduces the likelihood of an identity retaining access past when is appropriate.
+
+For more information, see:
+
+- **[Database engine permissions and examples](https://learn.microsoft.com/en-us/sql/relational-databases/security/permissions-database-engine)**
+- **[Blog: Database Engine permission basics](https://techcommunity.microsoft.com/t5/sql-server-blog/database-engine-permission-basics/ba-p/383905)**
+- **[Managing special databases roles and logins in Azure SQL Database](https://learn.microsoft.com/en-us/azure/azure-sql/database/logins-create-manage?view=azuresql)**
+
+## Contained database users
+
+A contained database user is a type of SQL user that isn't connected to a login in the master database. To create a Microsoft Entra contained database user, connect to the database with a Microsoft Entra identity that has at least the ALTER ANY USER permission. The following T-SQL example creates a database principal Microsoft_Entra_principal_name from Microsoft Entra ID.
+
+`CREATE USER [<Microsoft_Entra_principal_name>] FROM EXTERNAL PROVIDER;`
+
+To create a contained database user for a Microsoft Entra group, enter the display name of the group:
+
+`CREATE USER [ICU Nurses] FROM EXTERNAL PROVIDER;`
 
 ## Azure Portal
 

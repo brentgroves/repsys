@@ -1,5 +1,7 @@
 # **[Connect to Azure SQL resource with Microsoft Entra authentication](https://learn.microsoft.com/en-us/azure/azure-sql/database/authentication-microsoft-entra-connect-to-azure-sql?view=azuresql)**
 
+<!-- https://learn.microsoft.com/en-us/azure/azure-sql/database/authentication-aad-configure?view=azuresql&tabs=azure-cli -->
+
 This article shows you how to use Microsoft Entra authentication to connect to Azure SQL Database, Azure SQL Managed Instance, and Azure Synapse Analytics.
 
 ## Prerequisites
