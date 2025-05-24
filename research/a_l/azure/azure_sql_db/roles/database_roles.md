@@ -74,7 +74,7 @@ ALTER ROLE Sales ADD MEMBER Barry;
 ALTER ROLE Sales DROP MEMBER Barry;  
 
 -- To add and remove users to a database role, use the ADD MEMBER and DROP MEMBER options of the ALTER ROLE statement.
-ALTER ROLE db_owner ADD MEMBER Barry;  
+ALTER ROLE db_owner ADD MEMBER [sJackson@linamar.com];  
 
 ```bash
 db_owner
