@@ -68,7 +68,33 @@ For more CLI commands, see az sql server.
 
 The Microsoft Entra admin is stored in the server's master database as a user (database principal). Since database principal names must be unique, the display name of the admin can't be the same as the name of any user in the server's master database. If a user with the name already exists, the Microsoft Entra admin setup fails and rolls back, indicating that the name is already in use.
 
-## Assign Microsoft Graph permissions
+```bash
+pushd .
+cd ~/src/azure/linamar.com/sqldb
+source set_vars.sh
+az login
+# is there already an Entra admin
+az sql server ad-admin list --server $SERVER --resource-group "$RESOURCE_GROUP"
+[
+  {
+    "administratorType": "ActiveDirectory",
+    "azureAdOnlyAuthentication": null,
+    "id": "/subscriptions/6fdb2836-d884-43d9-806d-78e653dbe236/resourceGroups/Structures-SP-repsys-CC-RG/providers/Microsoft.Sql/servers/repsys1/administrators/ActiveDirectory",
+    "login": "Brent Groves",
+    "name": "ActiveDirectory",
+    "resourceGroup": "Structures-SP-repsys-CC-RG",
+    "sid": "175774d2-02a8-459c-9570-8ad0ec49ea7c",
+    "tenantId": "ceadc058-fad7-4b6b-830b-00ac739654f0",
+    "type": "Microsoft.Sql/servers"
+  }
+]
+# id is sid in az sql server ad-admin list
+
+# to create a entra admin 
+az sql server ad-admin create --display-name "Brent Groves" --object-id "175774d2-02a8-459c-9570-8ad0ec49ea7c" --resource-group "$RESOURCE_GROUP" --server $SERVER
+```
+
+## Assign Microsoft Graph permissions for Managed Instance Only
 
 SQL Managed Instance needs permissions to read Microsoft Entra ID for scenarios like authorizing users who connect through security group membership and new user creation. For Microsoft Entra authentication to work, you need to assign the managed instance identity to the Directory Readers role. You can do this using the Azure portal or PowerShell.
 
@@ -84,8 +110,9 @@ To connect to a database in SQL Database or Azure Synapse Analytics with Microso
 
 When a database user is created, it receives the CONNECT permission to the database by default. A database user also inherits permissions in two circumstances:
 
-If the user is a member of a Microsoft Entra group that's also assigned permissions on the server.
-If the user is created from a login, it inherits the server-assigned permissions of the login applicable on the database.
+- If the user is a member of a Microsoft Entra group that's also assigned permissions on the server.
+- If the user is created from a login, it inherits the server-assigned permissions of the login applicable on the database.
+
 Managing permissions for server and database principals works the same regardless of the type of principal (Microsoft Entra ID, SQL authentication, etc.). We recommend granting permissions to database roles instead of directly granting permissions to users. Then users can be added to roles with appropriate permissions. This simplifies long-term permissions management and reduces the likelihood of an identity retaining access past when is appropriate.
 
 For more information, see:
@@ -94,7 +121,7 @@ For more information, see:
 - **[Blog: Database Engine permission basics](https://techcommunity.microsoft.com/t5/sql-server-blog/database-engine-permission-basics/ba-p/383905)**
 - **[Managing special databases roles and logins in Azure SQL Database](https://learn.microsoft.com/en-us/azure/azure-sql/database/logins-create-manage?view=azuresql)**
 
-## Contained database users
+## **[Contained database users](https://learn.microsoft.com/en-us/azure/azure-sql/database/authentication-aad-configure?view=azuresql&tabs=azure-portal#contained-database-users)**
 
 A contained database user is a type of SQL user that isn't connected to a login in the master database. To create a Microsoft Entra contained database user, connect to the database with a Microsoft Entra identity that has at least the ALTER ANY USER permission. The following T-SQL example creates a database principal Microsoft_Entra_principal_name from Microsoft Entra ID.
 
@@ -116,6 +143,25 @@ CREATE USER [appName] FROM EXTERNAL PROVIDER;
 
 To create a contained database user for a Microsoft Entra user, enter the user principal name of the identity:
 
+```bash
+az ad user list --display-name "Brent Groves"
+# id is sid in az sql server ad-admin list
+"id": "175774d2-02a8-459c-9570-8ad0ec49ea7c",
+"userPrincipalName": "bGroves@linamar.com"
+az ad user list --display-name "Sam Jackson"
+"userPrincipalName": "sJackson@linamar.com"
+"id": "81164f77-0753-46ed-88d3-2589f6c8dbf9"
+az ad user list --display-name "Kevin Young"
+"userPrincipalName": "keyoung@linamar.com"
+"id": "8b3b77de-f636-4f14-924a-691517bacea9"
+az ad user list --display-name "Brad D. Cook"
+"id": "16818af3-5b9d-4ba4-9640-3b94edfb11cf"
+"userPrincipalName": "brcook@linamar.com"
+az ad user list --display-name "Jared Eikenberry"
+"id": "19090977-9acc-4cd1-9a36-edfeeded35ed"
+"userPrincipalName": "jeikenberry@linamar.com"
+```
+
 ```sql
-CREATE USER [adrian@contoso.com] FROM EXTERNAL PROVIDER;
+CREATE USER [sJackson@linamar.com] FROM EXTERNAL PROVIDER;
 ```
