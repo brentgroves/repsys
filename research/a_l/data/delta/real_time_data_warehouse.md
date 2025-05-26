@@ -1,0 +1,5 @@
+# **[Real-time data warehousing with Apache Spark and Delta Lake](https://www.sigmoid.com/blogs/near-real-time-finance-data-warehousing-using-apache-spark-and-delta-lake/)**
+
+![i1](https://www.sigmoid.com/wp-content/uploads/2020/08/Real-Time-Data-Warehousing-with-Apache-Spark-and-Delta-Lake-banner-opt-1.jpg)
+
+Financial institutions globally deal with massive data volumes that call for large-scale data warehouses and effective processing of **[real-time](https://www.sigmoid.com/blogs/automate-data-ingestion/)** transactions. In this blog, we shall discuss the current challenges in these areas and also understand how **[Delta lakes](https://www.sigmoid.com/blogs/near-real-time-finance-data-warehousing-using-apache-spark-and-delta-lake/)** go a long way in overcoming some common hurdles. We would be exploring **[Apache Spark](https://www.sigmoid.com/blogs/optimize-nested-queries-using-apache-spark/)** architecture for **[data warehouse](https://www.sigmoid.com/etl-and-data-pipeline/)** which comes under the purview of data engineering.
