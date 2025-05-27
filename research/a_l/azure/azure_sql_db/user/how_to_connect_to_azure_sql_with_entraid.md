@@ -27,3 +27,11 @@ Authentication method: AAD & SQL
 SQL admin: repsys1
 AAD admin: Brent Groves
 ```
+
+3. Grant database access:
+.
+You'll need to create a database user in your Azure SQL database that is mapped to your Microsoft Entra ID user.
+
+4. Connect using Microsoft Entra credentials:
+.
+When connecting to your database, you'll use your Microsoft Entra ID credentials (username and password).
