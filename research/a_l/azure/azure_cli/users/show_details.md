@@ -8,7 +8,8 @@ Show details for a Azure Active Directory user.
 az rest --method get --url "https://graph.microsoft.com/v1.0/roleManagement/directory/roleAssignments" --query "value[?contains(roleDefinitionId,'62e90394-69f5-4237-9190-012177145e10')].{id:id,PrincipalId:principalId,RoleDefinitionId:roleDefinitionId}"
 
 az ad user show --id bGroves@linamar.com
-
+81164F77-0753-46ED-88D3-2589F6C8DBF9
+81164f77-0753-46ed-88d3-2589f6c8dbf9
 az ad user show --id "9e3c912d-303c-4088-9c22-bfc2bdbc8430"
 {
   "@odata.context": "https://graph.microsoft.com/v1.0/$metadata#users/$entity",
