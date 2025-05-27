@@ -28,6 +28,10 @@ Aleksandar Gavrilov, IT Administrator, Skopje
 - **[Real-time data warehousing with Apache Spark and Delta Lake](https://www.sigmoid.com/blogs/near-real-time-finance-data-warehousing-using-apache-spark-and-delta-lake/)**
   - Reporting values over time
 
+1. collect data periodically
+2. Make quantity used set by calculating difference between consecutive values of periodic data.
+3. Make quantity used change per period set by calculating difference between consecutive quantity used values.
+
 In data analysis, "direction fields" (also called slope fields) are a visual representation of the solutions to a differential equation. They help understand the behavior of the equation by showing the direction (slope) of the solutions at various points on a graph.
 
 <https://stackoverflow.com/questions/9084761/how-to-calculate-the-slope-in-sql>
