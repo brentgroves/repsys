@@ -28,6 +28,46 @@ Aleksandar Gavrilov, IT Administrator, Skopje
 - **[Real-time data warehousing with Apache Spark and Delta Lake](https://www.sigmoid.com/blogs/near-real-time-finance-data-warehousing-using-apache-spark-and-delta-lake/)**
   - Reporting values over time
 
+In data analysis, "direction fields" (also called slope fields) are a visual representation of the solutions to a differential equation. They help understand the behavior of the equation by showing the direction (slope) of the solutions at various points on a graph.
+
+<https://stackoverflow.com/questions/9084761/how-to-calculate-the-slope-in-sql>
+
+```sql
+SELECT
+    Scores.Date, Scores.Keyword, Scores.Score,
+    (N * Sum_XY - Sum_X * Sum_Y)/(N * Sum_X2 - Sum_X * Sum_X) AS Slope
+FROM Scores
+INNER JOIN (
+    SELECT
+        Keyword,
+        COUNT(*) AS N,
+        SUM(CAST(Date as float)) AS Sum_X,
+        SUM(CAST(Date as float) * CAST(Date as float)) AS Sum_X2,
+        SUM(Score) AS Sum_Y,
+        SUM(CAST(Date as float) * Score) AS Sum_XY
+    FROM Scores
+    GROUP BY Keyword
+) G ON G.Keyword = Scores.Keyword;
+It uses Simple Linear Regression to calculate the slope.
+
+Result:
+
+Date         Keyword        Score         Slope
+2012-01-22   water bottle   0,010885442   0,000334784345222076
+2012-01-23   water bottle   0,011203949   0,000334784345222076
+2012-01-24   water bottle   0,008460835   0,000334784345222076
+2012-01-25   water bottle   0,010363991   0,000334784345222076
+2012-01-26   water bottle   0,011800716   0,000334784345222076
+2012-01-27   water bottle   0,012948411   0,000334784345222076
+2012-01-28   water bottle   0,012732459   0,000334784345222076
+2012-01-29   water bottle   0,011682568   0,000334784345222076
+Every database system seems to have a different approach to converting dates to numbers:
+
+MySQL: TO_SECONDS(date) or TO_DAYS(date)
+Oracle: TO_NUMBER(TO_CHAR(date, 'J')) or date - TO_DATE('1','yyyy')
+MS SQL Server: CAST(date AS float) (or equivalent CONVERT)
+```
+
 - EntraID access to Azure SQL db for Sam.
 - Python uv ODBC test. Don't know the ODBC state of the laptop before I started. I know 32-bit libraries had not been installed because ./rcshell reported unknown file but I could have just removed them after the last install. Create a Python self-installing file with pyodbc in the top dependancies section.
 
