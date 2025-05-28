@@ -4,6 +4,8 @@
 **[Back to Current Status](../../../../../../../a_status/current_tasks.md)**\
 **[Back to Main](../../../../../../../README.md)**
 
+sudo tcpdump -i eth0 -n -s 0 -w odbc_capture.pcap "tcp port 1434"
+
 There are tcpdump filters for HTTP GET & HTTP POST (or for both plus message body):
 
 Run man tcpdump | less -Ip examples to see some examples

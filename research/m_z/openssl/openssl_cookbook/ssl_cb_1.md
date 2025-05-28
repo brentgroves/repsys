@@ -1,7 +1,7 @@
 # **[openssl cookbook](https://www.feistyduck.com/library/openssl-cookbook/online/openssl-command-line/determine-version-and-configuration.html)**
 
 **[Back to Research List](../../../research_list.md)**\
-**[Back to Current Status](../../../../development/status/weekly/current_status.md)**\
+**[Back to Current Tasks](../../../../a_status/current_tasks.md)**\
 **[Back to Main](../../../../README.md)**
 
 The definitive guide to using the OpenSSL command line for configuration and testing. Topics covered in this book include key and certificate management, server configuration, a step by step guide to creating a private CA, and testing of online services. Written by Ivan Ristić.
