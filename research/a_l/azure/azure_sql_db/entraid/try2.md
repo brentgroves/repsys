@@ -1,5 +1,11 @@
 # **[Microsoft Entra authentication for Azure SQL](https://learn.microsoft.com/en-us/azure/azure-sql/database/authentication-aad-overview?view=azuresql)**
 
+```bash
+azuredatastudio --password-store="basic"
+# or
+code --password-store="basic"
+```
+
 <!-- https://learn.microsoft.com/en-us/azure/azure-sql/database/authentication-aad-overview?view=azuresql#login-based-users -->
 ```sql
 -- delete contained db user
