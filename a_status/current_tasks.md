@@ -24,8 +24,6 @@ Did you find a place to upload and run PowerBI reports?
 
 - odbc
 
-52.228.81.[150-255]
-
 ```bash
 openssl version -a
 OpenSSL 3.0.2 15 Mar 2022 (Library: OpenSSL 3.0.2 15 Mar 2022)
