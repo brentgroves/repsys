@@ -48,6 +48,24 @@ NOTES¶
 Some compiled versions of OpenSSL may not include all the ciphers listed here because some ciphers were excluded at compile time.
 
 EXAMPLES¶
+
+listing of single cipher-suite:
+
+```bash
+openssl ciphers -s -v 'ADH-AES128-SHA'
+TLS_AES_256_GCM_SHA384         TLSv1.3 Kx=any      Au=any   Enc=AESGCM(256)            Mac=AEAD
+TLS_CHACHA20_POLY1305_SHA256   TLSv1.3 Kx=any      Au=any   Enc=CHACHA20/POLY1305(256) Mac=AEAD
+TLS_AES_128_GCM_SHA256         TLSv1.3 Kx=any      Au=any   Enc=AESGCM(128)            Mac=AEAD
+```
+
+```bash
+openssl ciphers -s -v 'ADH-AES128-SHA:@SECLEVEL=0'
+TLS_AES_256_GCM_SHA384         TLSv1.3 Kx=any      Au=any   Enc=AESGCM(256)            Mac=AEAD
+TLS_CHACHA20_POLY1305_SHA256   TLSv1.3 Kx=any      Au=any   Enc=CHACHA20/POLY1305(256) Mac=AEAD
+TLS_AES_128_GCM_SHA256         TLSv1.3 Kx=any      Au=any   Enc=AESGCM(128)            Mac=AEAD
+ADH-AES128-SHA                 SSLv3   Kx=DH       Au=None  Enc=AES(128)               Mac=SHA1
+```
+
 Verbose listing of all OpenSSL ciphers including NULL ciphers:
 
 `openssl ciphers -v 'ALL:eNULL'`
