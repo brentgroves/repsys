@@ -18,10 +18,6 @@ Carl Stangland, Desktop and System Support Technician, Indiana
 Lucas Tuma, IT Administrator, Strakonice
 Aleksandar Gavrilov, IT Administrator, Skopje
 
-## question
-
-Did you find a place to upload and run PowerBI reports?
-
 - odbc
 
 ```bash
