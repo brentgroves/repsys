@@ -45,6 +45,7 @@ SSL-Session:
 ## conda ssl
 
 ```bash
+ls ~/anaconda3/envs/reports
 odbcinst -j                                  
 unixODBC 2.3.10
 DRIVERS............: /etc/odbcinst.ini
