@@ -416,4 +416,6 @@ openssl s_client -cipher 'ALL:@SECLEVEL=0' -tls1_2 -connect odbc.plex.com:19995
 # works
 openssl s_client -cipher 'ALL:@SECLEVEL=0' -connect odbc.plex.com:19995
 
+openssl s_client -cipher 'ALL:@SECLEVEL=0' -connect odbc.plex.com:19995
+
 ```
