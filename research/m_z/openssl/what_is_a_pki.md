@@ -1,15 +1,11 @@
-# **[What Is OpenSSL? How Does OpenSSL Work?](https://www.ssldragon.com/blog/what-is-openssl/)**
+# **[What is PKI? A Public Key Infrastructure Definitive Guide](https://www.keyfactor.com/education-center/what-is-pki/)**
 
-Proper SSL implementation is crucial to a website’s security and success. And, with so many web owners learning about SSL for the first time, it’s essential to equip them with all the necessary tools and utilities. One such tool is OpenSSL. So, what is OpenSSL, and why is it so important?
+Public key infrastructure (PKI) governs the issuance of digital certificates to protect sensitive data, provide unique digital identities for users, devices and applications and secure end-to-end communications.
 
-The following guide covers every aspect of this useful utility, including how to use OpenSSL and the various OpenSSL commands for easy and efficient SSL management.
+## What is PKI?
 
-OpenSSL is an open-source software library and command-line tool used to implement SSL and TLS protocols for secure communications. It provides cryptographic functions, such as generating keys and certificates, encrypting data, and verifying certificates, making it essential for internet security and server management.
+Today, organizations rely on PKI to manage security through encryption. Specifically, the most common form of encryption used today involves a public key, which anyone can use to encrypt a message, and a private key (also known as a secret key), which only one person should be able to use to decrypt those messages. These keys can be used by people, devices, and applications.
 
-## What Is OpenSSL Used For?
+PKI security first emerged in the 1990s to help govern encryption keys through the issuance and management of digital certificates. These PKI certificates verify the owner of a private key and the authenticity of that relationship going forward to help maintain security. The certificates are akin to a driver’s license or passport for the digital world.
 
-OpenSSL is an open-source command-line tool used to generate CSRs and private keys, install SSL files, merge and convert certificates into different SSL formats, verify certificate details, and troubleshoot issues. It plays a vital role in managing and securing SSL/TLS implementations.
-
-To install an SSL certificate on your website, you must follow a few mandatory steps, which are the same for any server or email client. OpenSSL is especially handy when you don’t have a web control panel or want to streamline the whole process.
-
-Since not all servers provide web user interfaces for SSL management, on some platforms OpenSSL is the only solution to import and configure your certificate.
+Common examples of PKI security today are SSL certificates on websites so that site visitors know they’re sending information to the intended recipient, digital signatures, and authentication for Internet of Things devices.
