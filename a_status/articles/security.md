@@ -2,11 +2,31 @@
 
 Hi Team,
 
-## SSL/TSL References
+We have tools to identify SSL/TLS vulnerabilities in databases and web sites. If you have a database or web site you would like checked please ask.
 
-- **[Cipher suites](https://www.ssldragon.com/blog/cipher-suites/)** contain a key exchange, encryption, message authentication code, and pseudorandom function.
-- **[Security Levels](https://www.feistyduck.com/library/openssl-cookbook/online/openssl-command-line/understanding-security-levels.html)** are used to catagorize each cypher suites.
-- The reason to use **[TLS 1.3 instead of TLS 1.3](https://www.a10networks.com/glossary/key-differences-between-tls-1-2-and-tls-1-3/#:~:text=As%20with%20SSL%2C%20TLS%20relies,%E2%80%9D%20(0%2DRTT).)** is that it is faster, supports simpler and stronger cipher suites.
+What we can check for:
+
+- types of authentication supported
+- SSL/TLS versions enabled
+- server name in SAN extension field
+- certificate signer in system trust store
+- valid certificate key usage and expiration dates
+
+Hear is what we found about the Structures Azure SQL database, repsys1.database.windows.com.
+
+- MFA authentication support
+- TLS 1.3 enabled
+- server name in SAN the extension field
+- certificate signer in system trust store
+- certificate not expired
+
+What we can aim for:
+
+- TLS 1.3 enabled and used
+- MFA authentication support
+- valid signer key usage
+- no expired certificates
+- optional mTLS support for web sites
 
 Team:
 
@@ -25,10 +45,10 @@ Carl Stangland, Desktop and System Support Technician, Indiana
 Lucas Tuma, IT Administrator, Strakonice
 Aleksandar Gavrilov, IT Administrator, Skopje
 
-## referencs
+## SSL/TSL References
 
-- **[databricks](https://learn.microsoft.com/en-us/azure/databricks/sql/)**
-
-- **[Delta Tables](https://www.reddit.com/r/dataengineering/comments/uu09mj/what_is_a_delta_table/)**
-
-- **[SQL database in Microsoft Fabric (Preview)](https://learn.microsoft.com/en-us/fabric/database/sql/overview)**
+- **[Cipher suites](https://www.ssldragon.com/blog/cipher-suites/)** contain a key exchange, encryption, message authentication code, and pseudorandom function.
+- **[Security Levels](https://www.feistyduck.com/library/openssl-cookbook/online/openssl-command-line/understanding-security-levels.html)** are used to catagorize each cypher suites.
+- The reason to use **[TLS 1.3 instead of TLS 1.3](https://www.a10networks.com/glossary/key-differences-between-tls-1-2-and-tls-1-3/#:~:text=As%20with%20SSL%2C%20TLS%20relies,%E2%80%9D%20(0%2DRTT).)** is that it is faster, supports simpler and stronger cipher suites.
+- The main tool used to implement Structures **[Public Key Infrastructure, PKI,](https://www.keyfactor.com/education-center/what-is-pki/)**  is **[OpenSSL](https://www.ssldragon.com/blog/what-is-openssl/)**
+- **[SSL/TLS Analysis & Attacks](https://hackmd.io/@secureitmania/HJQIwoA9n)**
