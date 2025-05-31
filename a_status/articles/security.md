@@ -2,17 +2,11 @@
 
 Hi Team,
 
-The delta table concept is useful for reports that are impossible to write using the static data in a database.
+## SSL/TSL References
 
-- A database keeps track of your inventory, but how do we report on how many items we had last week?
-
-Delta Tables record all the changes made to your data, so you can see what your data looked like at any point in the past.
-
-- With delta tables, we can report on today's inventory versus last month's.
-
-We can report on inventory changes in time by running ETL scripts to put daily counts in the data warehouse, but the delta table was made for this task.
-
-The automated ETL system is essential to populating delta tables. We can use it to collect data we want to analyze changes in. We will not find an exact equation for predicting, but we can find direction fields and solution curves.
+- **[Cipher suites](https://www.ssldragon.com/blog/cipher-suites/)** contain a key exchange, encryption, message authentication code, and pseudorandom function.
+- **[Security Levels](https://www.feistyduck.com/library/openssl-cookbook/online/openssl-command-line/understanding-security-levels.html)** are used to catagorize each cypher suites.
+- The reason to use **[TLS 1.3 instead of TLS 1.3](https://www.a10networks.com/glossary/key-differences-between-tls-1-2-and-tls-1-3/#:~:text=As%20with%20SSL%2C%20TLS%20relies,%E2%80%9D%20(0%2DRTT).)** is that it is faster, supports simpler and stronger cipher suites.
 
 Team:
 

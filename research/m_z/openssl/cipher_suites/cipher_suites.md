@@ -1,4 +1,4 @@
-# **[What Is a Cipher Suite?](https://www.ssldragon.com/blog/cipher-suites/)**
+# **[What is a Cipher Suite?](https://www.ssldragon.com/blog/cipher-suites/)**
 
 **[Back to Research List](../../../research_list.md)**\
 **[Back to Current Tasks](../../../../a_status/current_tasks.md)**\
