@@ -1,32 +1,32 @@
-# Delta Tables
+# Database and website security
 
 Hi Team,
 
-We have tools to identify SSL/TLS vulnerabilities in databases and web sites. If you have a database or web site you would like checked please ask.
+We have tools to identify SSL/TLS vulnerabilities in our databases and websites. If you have a database or website you would like checked, please ask.
 
 What we can check for:
 
-- types of authentication supported
+- Types of authentication supported
 - SSL/TLS versions enabled
-- server name in SAN extension field
-- certificate signer in system trust store
-- valid certificate key usage and expiration dates
+- Server name in the SAN extension field
+- Certificate signer in system trust store
+- Valid certificate key usage and expiration dates
 
-Hear is what we found about the Structures Azure SQL database, repsys1.database.windows.com.
+I'm sharing what we found about the Structures Azure SQL database, repsys1.database.windows.com.
 
 - MFA authentication support
 - TLS 1.3 enabled
-- server name in SAN the extension field
-- certificate signer in system trust store
-- certificate not expired
+- server name in SAN, the extension field
+- Certificate signer in system trust store
+- Certificate not expired
 
 What we can aim for:
 
 - TLS 1.3 enabled and used
 - MFA authentication support
-- valid signer key usage
-- no expired certificates
-- optional mTLS support for web sites
+- Valid signer key usage
+- No expired certificates
+- Optional mTLS support for websites
 
 Team:
 
@@ -44,6 +44,8 @@ David Maitner,  Desktop and System Support Technician, Fruitport
 Carl Stangland, Desktop and System Support Technician, Indiana
 Lucas Tuma, IT Administrator, Strakonice
 Aleksandar Gavrilov, IT Administrator, Skopje
+
+The following is in markdown format. You can view it better at <https://markdownlivepreview.com/> by copying and pasting the contents below.
 
 ## SSL/TSL References
 
