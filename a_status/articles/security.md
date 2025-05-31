@@ -11,6 +11,7 @@ What we can check for:
 - Server name in the SAN extension field
 - Certificate signer in system trust store
 - Valid certificate key usage and expiration dates
+- Server-side firewall ruleset IP range restrictions
 
 I'm sharing what we found about the Structures Azure SQL database, repsys1.database.windows.com.
 
@@ -19,6 +20,7 @@ I'm sharing what we found about the Structures Azure SQL database, repsys1.datab
 - server name in SAN, the extension field
 - Certificate signer in system trust store
 - Certificate not expired
+- Only certain IP address allowed to connect
 
 What we can aim for:
 
@@ -27,6 +29,7 @@ What we can aim for:
 - Valid signer key usage
 - No expired certificates
 - Optional mTLS support for websites
+- Server-side IP range restrictions
 
 Team:
 
