@@ -15,7 +15,7 @@ This process ensures that there are a number of options available to control the
 For the latter use case, use the version tool to determine the location of the default configuration file:
 
 ```bash
-$ openssl version -d
+openssl version -d
 OPENSSLDIR: "/usr/lib/ssl"
 ```
 
