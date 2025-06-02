@@ -10,9 +10,11 @@
 
 ### status
 
-- moving from Azure SQL Manage Instance to Azure SQL database.
-  - save money and easy manage.
-- pointing scripts to Azure SQL database
-- validating Azure SQL database
+Status,
+
+- Moving from Azure SQL Managed Instance to Azure SQL database.
+  - Save money and easily manage.
+- Pointing scripts to Azure SQL database
+- Validating Azure SQL database
 
 Still working on it.
