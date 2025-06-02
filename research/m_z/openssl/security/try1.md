@@ -26,4 +26,8 @@ openssl s_client -cipher 'ALL:@SECLEVEL=0' -connect odbc.plex.com:19995
 # this works now
 openssl s_client -connect odbc.plex.com:19995
 
+pushd .
+cd ~/src/odbc/install/ubuntu_2404/plex_driver/test/self_installing/
+
+
 ```
