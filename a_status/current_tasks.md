@@ -19,6 +19,16 @@ Lucas Tuma, IT Administrator, Strakonice
 Aleksandar Gavrilov, IT Administrator, Skopje
 
 - odbc
+<https://docs.progress.com/bundle/datadirect-microsoft-sql-server-odbc-80/page/Sample-default-odbc.ini-file.html>
+
+```bash
+ValidateServerCertificate=1
+```
+
+<https://docs.progress.com/bundle/datadirect-microsoft-sql-server-odbc-80/page/OpenSSLConfigFile.html>
+file:///home/brent/src/plex/oaodbc8a/odbchelp/index.html#page/oaodbcclienthelp%2Fssl-cipher-suites.html%23ww1318431
+file:///home/brent/src/plex/oaodbc8a/odbchelp/oaodbcclienthelp.html
+<https://docs.progress.com/bundle/datadirect-openaccess/page/topics/cref/setting-up-a-sample-on-linux-2funix.html>
 
 ```bash
 openssl version -a
