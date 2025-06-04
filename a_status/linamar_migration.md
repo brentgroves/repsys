@@ -1,4 +1,4 @@
-# Linamar Migration
+# Mobex Azure SQL MI to Linamar Azure SQL database migration
 
 - Created backup of Linamar's Azure SQL MI and imported into an OnPrem SQL Server database. Then created a backup of the OnPrem database and imported into the Azure SQL database. Direct importing of backup is not supported from Azure SQL MI to Azure SQL database. Done.
 - connect to Plex using OpenAccess datadirect ODBC driver from 2nd system running newer version of Ubuntu and OpenSSL which does not support the preferred TLS 1.2 cipher suite that the DataDirect driver uses by default. Done.
