@@ -1,13 +1,19 @@
 # Mobex Azure SQL MI to Linamar Azure SQL database migration
 
-- Created backup of Linamar's Azure SQL MI and imported into an OnPrem SQL Server database. Then created a backup of the OnPrem database and imported into the Azure SQL database. Direct importing of backup is not supported from Azure SQL MI to Azure SQL database. Done.
-- connect to Plex using OpenAccess datadirect ODBC driver from 2nd system running newer version of Ubuntu and OpenSSL which does not support the preferred TLS 1.2 cipher suite that the DataDirect driver uses by default. Done.
-- create linamar Azure SQL database DSN. Done.
-- run Southfield's Trial Balance ETL scripts pointing to Mobex Azure SQL MI as usual.
-- run Southfield's Trial Balance ETL scripts pointing to Linamar Azure SQL database.
-- compare rowcounts and a few values of all 5 work tables in Mobex Azure SQL MI to the same tables in Linamar's Azure SQL database.
-- Import the Mobex Azure SQL MI Trial Balance result into Linamar's Azure SQL database and compare result set using SQL.
-- Run Southfield's Trial Balance Power BI report pointing to Linamar's Azure SQL database result set, export Excel for last 13 periods, and send to Dan Martin for verification.
+## summary
+
+1 of 8 scripts and work tables validated.
+
+## details
+
+1. I created a backup of Linamar's Azure SQL MI and imported it into an on-prem SQL Server database. Then, I created a backup of the OnPrem database and imported it into the Azure SQL database. Direct importing of backups from Azure SQL MI to Azure SQL database is not supported. Done.
+2. Connect to Plex using the OpenAccess data direct ODBC driver from the second system running a newer version of Ubuntu and OpenSSL, which does not support the preferred TLS 1.2 cipher suite that the DataDirect driver uses by default. Done.
+3. Create Linamar Azure SQL database DSN. Done.
+4. Run Southfield's Trial Balance ETL scripts pointing to Mobex Azure SQL MI as usual.
+5. Run Southfield's Trial Balance ETL scripts pointing to the Linamar Azure SQL database.
+6. Compare row counts and a few values of all 5 work tables in Mobex Azure SQL MI to the same tables in Linamar's Azure SQL database.
+7. Import the Mobex Azure SQL MI Trial Balance result into Linamar's Azure SQL database and compare the result set using SQL.
+8. Run Southfield's Trial Balance Power BI report pointing to Linamar's Azure SQL database result set, export Excel for the last 13 periods, and send to Dan Martin for verification.
 
 ## update lastpass for mi
 
