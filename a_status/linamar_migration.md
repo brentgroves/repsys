@@ -2,11 +2,14 @@
 
 ## summary
 
-1 of 8 scripts and work tables validated.
+The Microsoft ODBC driver works for Azure SQL database.
+The Plex DataDirect OpenAccess ODBC driver gives a segmentation fault every time. The driver was written in C, and Python is written in C, so I'm not surprised since the Plex ODBC driver has not been updated in a long time, while the Python ODBC modules have. We catch the error and continue the pipeline.
+
+3 of 8 scripts and work tables validated.
 
 ## details
 
-1. I created a backup of Linamar's Azure SQL MI and imported it into an on-prem SQL Server database. Then, I created a backup of the OnPrem database and imported it into the Azure SQL database. Direct importing of backups from Azure SQL MI to Azure SQL database is not supported. Done.
+1. Created a backup of Linamar's Azure SQL MI and imported it into an on-prem SQL Server database. Then, created a backup of the OnPrem database and imported it into the Azure SQL database. Importing of backups from Azure SQL MI to Azure SQL database is not supported. Done.
 2. Connect to Plex using the OpenAccess data direct ODBC driver from the second system running a newer version of Ubuntu and OpenSSL, which does not support the preferred TLS 1.2 cipher suite that the DataDirect driver uses by default. Done.
 3. Create Linamar Azure SQL database DSN. Done.
 4. Run Southfield's Trial Balance ETL scripts pointing to Mobex Azure SQL MI as usual.
