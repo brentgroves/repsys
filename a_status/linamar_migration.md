@@ -2,12 +2,28 @@
 
 ## summary
 
-The Microsoft ODBC driver works for Azure SQL database.
-The Plex DataDirect OpenAccess ODBC driver gives a segmentation fault every time. The driver was written in C, and Python is written in C, so I'm not surprised since the Plex ODBC driver has not been updated in a long time, while the Python ODBC modules have. We catch the error and continue the pipeline.
+4 of 8 scripts and work tables validated.
 
-3 of 8 scripts and work tables validated.
+## Azure SQL database changes made
 
-## details
+We need an anchor period from which to start calculating running totals. This anchor period must contain account totals from the year's beginning or the first Plex period at Southfield.
+
+- The Azure SQL database was created from a Linux SQL server backup of an Azure SQL MI backup. The last TB script set ran on the Azure SQL MI before the backup was run on 202501.
+- accounting_account_year_category_type match.
+- accounting_account  match
+- accounting_period both match
+- accounting_period_ranges match
+- The last good anchor period is 202311
+- add 3 accounts to 202401
+- add 13 accounts to 202404
+- add 6 accounts on 202405
+When we run the 13-period TB from 202406 to 202506
+- We will use 202405 as the anchor period.
+- 202405 will have the same number of accounts.
+
+-
+
+## process
 
 1. Created a backup of Linamar's Azure SQL MI and imported it into an on-prem SQL Server database. Then, created a backup of the OnPrem database and imported it into the Azure SQL database. Importing of backups from Azure SQL MI to Azure SQL database is not supported. Done.
 2. Connect to Plex using the OpenAccess data direct ODBC driver from the second system running a newer version of Ubuntu and OpenSSL, which does not support the preferred TLS 1.2 cipher suite that the DataDirect driver uses by default. Done.
