@@ -1,4 +1,10 @@
-# **[Install Canonical OpenStack using the manual bare metal provider](https://canonical-openstack.readthedocs-hosted.com/en/latest/how-to/install/install-canonical-openstack-using-the-manual-bare-metal-provider/)**
+# # **[Install Canonical OpenStack using the manual bare metal provider](https://canonical-openstack.readthedocs-hosted.com/en/latest/how-to/install/install-canonical-openstack-using-the-manual-bare-metal-provider/)**
+
+**[Back to Research List](../../../../../research_list.md)**\
+**[Back to Current Tasks](../../../../../../`a_status/current_tasks.md)**\
+**[Back to Main](../../../../../../README.md)**
+
+This how-to guide provides all necessary information to install Canonical OpenStack with Sunbeam using **[Canonical MAAS](https://maas.io/)**.
 
 ## references
 
