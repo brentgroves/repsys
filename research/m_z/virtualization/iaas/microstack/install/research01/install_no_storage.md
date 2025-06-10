@@ -105,49 +105,33 @@ Note that proxy settings can also be supplied by using a manifest (see **[Deploy
 
 When prompted, enter the CIDR and the address range for the control plane networking. Here we use the values given earlier:
 
-## did not work
-
 ```bash
-Management network (192.168.1.0/24):
-OpenStack APIs IP ranges (192.168.1.201-192.168.1.220): 192.168.1.201-192.168.1.220
-```
+# try 1
+sunbeam cluster bootstrap
+Management network should be available on every node of the deployment. It is used for communication between the nodes of the deployment. Requires CIDR format, can be a comma-separated list.
+Management network (192.168.1.0/24): 172.16.1.0/24
+This will configure the proxy settings for the deployment. Resources will be fetched from the internet via the proxy.
+Use proxy to access external network resources? [y/n] (n): 
 
-## error
-
-An unexpected error has occurred. Please see <https://canonical-openstack.readthedocs-hosted.com/en/latest/how-to/troubleshooting/inspecting-the-cluster/> for troubleshooting information.
-Error: ['multiple subnets matching "192.168.1.0/24"']
-
-## try 2
-
-I removed all software and rebooted machine.
-did not remove lxc/lxd and  network links:
- 4: sunbeambr0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default qlen 1000
-    link/ether 00:16:3e:f0:54:af brd ff:ff:ff:ff:ff:ff
-    inet 10.167.240.1/24 scope global sunbeambr0
-       valid_lft forever preferred_lft forever
-6: veth635e2f26@if5: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue master sunbeambr0 state UP group default qlen 1000
-    link/ether 8a:b1:ed:a2:4a:00 brd ff:ff:ff:ff:ff:ff link-netnsid 0
-
-```bash
-Management network (172.16.1.0/24):
 An unexpected error has occurred. Please see https://canonical-openstack.readthedocs-hosted.com/en/latest/how-to/troubleshooting/inspecting-the-cluster/ for troubleshooting information.
 Error: No local IP address found for CIDR 172.16.1.0/24
 
-OpenStack APIs IP ranges (172.16.1.201-172.16.1.240): 172.16.1.201-172.16.1.220
+# try 2
+sunbeam cluster bootstrap
+# Management network should be available on every node of the deployment. It is used for communication between the nodes of the deployment. Requires CIDR format, can be a comma-separated list.
+Management network (192.168.1.0/24): 
+# This will configure the proxy settings for the deployment. Resources will be fetched from the internet via the proxy.
+Use proxy to access external network resources? [y/n] (n): 
+# This will configure number of databases, single for entire cluster or multiple databases with one per openstack service.
+Enter database topology: single/multi (cannot be changed later) (single): 
+# A region is general division of OpenStack services. It cannot be changed once set.
+Enter a region name (cannot be changed later) (RegionOne): 
+# OpenStack services are exposed via virtual IP addresses. This range should contain at least ten addresses and must not overlap with external network CIDR. To access APIs from a remote host, the range must
+# reside within the subnet that the primary network interface is on.
+# On multi-node deployments, the range must be addressable from all nodes in the deployment.
+OpenStack APIs IP ranges (172.16.1.201-172.16.1.240): 
+# Node has been bootstrapped with roles: control, compute
 
-
-```
-
-Management network (192.168.2.0/24):
-OpenStack APIs IP ranges (192.168.2.201-192.168.2.220): 192.168.2.201-192.168.2.220
-
-## control plane
-
-```yaml
-CIDR: 192.168.1.0/24
-Gateway: 192.168.1.1
-Address range: 192.168.1.201-192.168.1.220
-Interface name on machine: eno1
 ```
 
 ## Configure the cloud
@@ -158,12 +142,21 @@ Now configure the deployed cloud using the configure command:
 sunbeam configure --openrc demo-openrc
 ```
 
-## External networking (VM)
+The --openrc option specifies a regular user (non-admin) cloud init file (demo-openrc here).
 
-```yaml
-# Network component Value
-CIDR: 192.168.1.0/24
-Gateway: 192.168.1.1
-Address range: 192.168.1.101-192.168.1.200
-Interface name on machine: eno2
+A series of questions will now be asked. Below is a sample output of an entire interactive session. The values in square brackets, when present, provide acceptable values. A value in parentheses is the default value. Here we use the values given earlier:
+
+```bash
+Local or remote access to VMs [local/remote] (local): remote
+External network (172.16.2.0/24):
+External network’s gateway (172.16.2.1):
+Populate OpenStack cloud with demo user, default images, flavors etc [y/n] (y):
+Username to use for access to OpenStack (demo):
+Password to use for access to OpenStack (mt********):
+Project network (192.168.0.0/24):
+Enable ping and SSH access to instances? [y/n] (y):
+External network’s allocation range (172.16.2.2-172.16.2.254):
+External network’s type [flat/vlan] (flat):
+Writing openrc to demo-openrc ... done
+External network’s interface [eno1/eno2] (eno1): eno2
 ```

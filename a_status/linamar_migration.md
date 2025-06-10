@@ -2,13 +2,20 @@
 
 ## summary
 
-4 of 8 scripts and work tables validated.
+5 of 8 scripts and work tables validated. Found several missing procedures in the Azure SQL database that I recreated for our Azure SQL MI.
 
 ## Azure SQL database changes made
 
-We need an anchor period from which to start calculating running totals. This anchor period must contain account totals from the year's beginning or the first Plex period at Southfield.
+We need an anchor period from which to start calculating running totals. This anchor period must contain account totals from either the beginning of the year or all the way back to the first Plex period at Southfield.
 
-- The Azure SQL database was created from a Linux SQL server backup of an Azure SQL MI backup. The last TB script set ran on the Azure SQL MI before the backup was run on 202501.
+The Azure SQL database was created from a Linux SQL server backup of an Azure SQL MI backup. The last 13-period TB script set ran on the Azure SQL MI before the backup was run in 202501 for 202312 to 202412.
+
+|id   |pcn    |start_period|end_period|start_open_period|end_open_period|no_update|
+|-----|-------|------------|----------|-----------------|---------------|---------|
+|1,739|123,681|202401      |202410    |202411           |202,501        |0        |
+
+When we run the 13-period TB script set now, it will delete the accounting_balance records from 202406 to 202504 and repopulate these records with the current Plex account balances.
+
 - accounting_account_year_category_type match.
 - accounting_account  match
 - accounting_period both match
