@@ -240,11 +240,25 @@ Now configure the deployed cloud using the configure command:
 
 ```bash
 sunbeam configure --openrc demo-openrc
+sunbeam configure --openrc demo-openrc
+An unexpected error has occurred. Please see https://canonical-openstack.readthedocs-hosted.com/en/latest/how-to/troubleshooting/inspecting-the-cluster/ for troubleshooting information.
+Error: [Errno 1] Operation not permitted
+
 ```
 
 The --openrc option specifies a regular user (non-admin) cloud init file (demo-openrc here).
 
 A series of questions will now be asked. Below is a sample output of an entire interactive session. The values in square brackets, when present, provide acceptable values. A value in parentheses is the default value. Here we use the values given earlier:
+
+| Local or remote access to VMs                       | If ‘local’ is selected then VMs will only be accessible from the local host, whereas if ‘remote’ is selected then VMs will only be accessible from remote hosts.  For the remote case, you will subsequently be asked to specify what network interface to dedicate to VM access traffic. The intended remote hosts must have connectivity to this interface.                                                                                                                                |
+|-----------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| External network - arbitrary but must not be in use | Question will appear for local access only.  CIDR of network for assigning addresses to VMs intended to be accessed from the local host. It is arbitrary but should not conflict with another network known to the host.                                                                                                                                                                                                                                                                     |
+| External network                                    | Question will appear for remote access only.  CIDR of network for assigning addresses to VMs intended to be accessed from remote hosts. It represents a portion of the physical network (outside of the OpenStack installation) whose IP addresses are dedicated for this purpose.  Caution: If you opted to access OpenStack APIs externally in the bootstrap step and you opted to access OpenStack VMs externally in the current configure step, ensure that these ranges do not overlap. |
+| External network’s gateway                          | Question will appear for remote access only.  IP address of existing default gateway for external network.                                                                                                                                                                                                                                                                                                                                                                                   |
+| External network’s allocation range                 | VMs intended to be accessed from remote hosts will be assigned dedicated addresses from a portion of the physical network (outside OpenStack). Takes the form of an IP range.                                                                                                                                                                                                                                                                                                                |
+| External network’s type                             | Network type for access to external network - ‘flat’ (untagged) or ‘vlan’ (tagged).                                                                                                                                                                                                                                                                                                                                                                                                          |
+| External network’s segmentation id                  | Question will appear for VLAN network type only.  VLAN ID to use for the external network.                                                                                                                                                                                                                                                                                                                                                                                                   |
+| External network’s interface                        | Question will appear for remote access only.  The network interface used for external access to VMs. The interface should be connected to an appropriate physical network. Detected unconfigured (free) interfaces will be listed as acceptable values. However, an interface not appearing in the list can still be entered.  Remote hosts intending to access VMs must be able to contact this interface.                                                                                  |                                                |
 
 ## local host access only
 
@@ -275,6 +289,40 @@ Enable ping and SSH access to instances? [y/n] (y):
 The cloud has been configured for sample usage.
 You can start using the OpenStack client or access the OpenStack dashboard at <http://172.16.1.204:80/openstack-horizon>
 ```
+
+## error
+
+```bash
+Error: Error opening file for Image: Error downloading image from "http://cloud-images.ubuntu.com/noble/current/noble-server-cloudimg-amd64.img": Get "http://cloud-images.ubuntu.com/noble/current/noble-server-cloudimg-amd64.img": OpenStack connection error, retries exhausted. Aborting. Last error was: dial tcp: lookup cloud-images.ubuntu.com on 127.0.0.53:53: read udp 127.0.0.1:45102->127.0.0.53:53: i/o timeout
+
+  with openstack_images_image_v2.ubuntu,
+  on main.tf line 57, in resource "openstack_images_image_v2" "ubuntu":
+  57: resource "openstack_images_image_v2" "ubuntu" {
+
+
+Error configuring cloud
+Traceback (most recent call last):
+  File "/snap/openstack/727/lib/python3.12/site-packages/sunbeam/core/terraform.py", line 207, in apply
+    process = subprocess.run(
+              ^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/subprocess.py", line 571, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['/snap/openstack/727/bin/terraform', 'apply', '-auto-approve', '-no-color']' returned non-zero exit status 1.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/snap/openstack/727/lib/python3.12/site-packages/sunbeam/commands/configure.py", line 539, in run
+    self.tfhelper.apply()
+  File "/snap/openstack/727/lib/python3.12/site-packages/sunbeam/core/terraform.py", line 225, in apply
+    raise TerraformException(str(e))
+sunbeam.core.terraform.TerraformException: Command '['/snap/openstack/727/bin/terraform', 'apply', '-auto-approve', '-no-color']' returned non-zero exit status 1.
+Error: Command '['/snap/openstack/727/bin/terraform', 'apply', '-auto-approve', '-no-color']' returned non-zero exit status 1.
+```
+
+sudo service systemd-resolved.service status
+sudo service systemd-networkd status
+sudo service systemd-networkd restart
 
 ## remote host access
 
