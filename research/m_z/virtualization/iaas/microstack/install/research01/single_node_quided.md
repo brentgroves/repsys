@@ -280,98 +280,15 @@ A series of questions will now be asked. Below is a sample output of an entire i
 | External network’s segmentation id                  | Question will appear for VLAN network type only.  VLAN ID to use for the external network.                                                                                                                                                                                                                                                                                                                                                                                                   |
 | External network’s interface                        | Question will appear for remote access only.  The network interface used for external access to VMs. The interface should be connected to an appropriate physical network. Detected unconfigured (free) interfaces will be listed as acceptable values. However, an interface not appearing in the list can still be entered.  Remote hosts intending to access VMs must be able to contact this interface.                                                                                  |                                                |
 
-## local host access only
-
-```bash
-# VMs will be accessible only from the local host or only from remote hosts. For remote, you must specify the network interface dedicated to VM access traffic. The intended remote hosts
-# must have connectivity to this interface.
-Local or remote access to VMs [local/remote] (local):
-Network from which the instances will be remotely accessed (outside OpenStack). Takes the form of a CIDR block.
-External network - arbitrary but must not be in use (172.16.2.0/24):
-VMs intended to be accessed from remote hosts will be assigned dedicated addresses from a portion of the physical network (outside OpenStack). Takes the form of an IP range.
-External network's allocation range (172.16.2.2-172.16.2.254):
-Type of network to use for external access.
-External network's type  [flat/vlan] (flat):
-If enabled, demonstration resources will be created on the cloud.
-Populate OpenStack cloud with demo user, default images, flavors etc [y/n] (y):
-Username for the demonstration user.
-Username to use for access to OpenStack (demo):
-Password for the demonstration user.
-Password to use for access to OpenStack (8u********):
-Network range for the private network for the demonstration user's project. Typically an unroutable network (RFC 1918).
-Project network (192.168.0.0/24):
-A list of DNS server IP addresses (comma separated) that should be used for external DNS resolution from cloud instances. If not specified, the system's default nameservers will be
-used.
-Project network's nameservers (10.92.6.1 8.8.4.4 8.8.8.8):
-If enabled, security groups will be created with rules to allow ICMP and SSH access to instances.
-Enable ping and SSH access to instances? [y/n] (y):
-⠴ Generating openrc for cloud admin usage ... Writing openrc to demo-openrc ... done
-The cloud has been configured for sample usage.
-You can start using the OpenStack client or access the OpenStack dashboard at <http://172.16.1.204:80/openstack-horizon>
-```
-
-## error
-
-```bash
-Error: Error opening file for Image: Error downloading image from "http://cloud-images.ubuntu.com/noble/current/noble-server-cloudimg-amd64.img": Get "http://cloud-images.ubuntu.com/noble/current/noble-server-cloudimg-amd64.img": OpenStack connection error, retries exhausted. Aborting. Last error was: dial tcp: lookup cloud-images.ubuntu.com on 127.0.0.53:53: read udp 127.0.0.1:45102->127.0.0.53:53: i/o timeout
-
-  with openstack_images_image_v2.ubuntu,
-  on main.tf line 57, in resource "openstack_images_image_v2" "ubuntu":
-  57: resource "openstack_images_image_v2" "ubuntu" {
-
-
-Error configuring cloud
-Traceback (most recent call last):
-  File "/snap/openstack/727/lib/python3.12/site-packages/sunbeam/core/terraform.py", line 207, in apply
-    process = subprocess.run(
-              ^^^^^^^^^^^^^^^
-  File "/usr/lib/python3.12/subprocess.py", line 571, in run
-    raise CalledProcessError(retcode, process.args,
-subprocess.CalledProcessError: Command '['/snap/openstack/727/bin/terraform', 'apply', '-auto-approve', '-no-color']' returned non-zero exit status 1.
-
-During handling of the above exception, another exception occurred:
-
-Traceback (most recent call last):
-  File "/snap/openstack/727/lib/python3.12/site-packages/sunbeam/commands/configure.py", line 539, in run
-    self.tfhelper.apply()
-  File "/snap/openstack/727/lib/python3.12/site-packages/sunbeam/core/terraform.py", line 225, in apply
-    raise TerraformException(str(e))
-sunbeam.core.terraform.TerraformException: Command '['/snap/openstack/727/bin/terraform', 'apply', '-auto-approve', '-no-color']' returned non-zero exit status 1.
-Error: Command '['/snap/openstack/727/bin/terraform', 'apply', '-auto-approve', '-no-color']' returned non-zero exit status 1.
-```
-
-sudo service systemd-resolved.service status
-sudo service systemd-networkd status
-sudo service systemd-networkd restart
-
-## remote host access
-
-```bash
-Local or remote access to VMs [local/remote] (local): remote
-External network (172.16.2.0/24):
-External network’s gateway (172.16.2.1):
-Populate OpenStack cloud with demo user, default images, flavors etc [y/n] (y):
-Username to use for access to OpenStack (demo):
-Password to use for access to OpenStack (mt********):
-Project network (192.168.0.0/24):
-Enable ping and SSH access to instances? [y/n] (y):
-External network’s allocation range (172.16.2.2-172.16.2.254):
-External network’s type [flat/vlan] (flat):
-Writing openrc to demo-openrc ... done
-External network’s interface [eno1/eno2] (eno1): eno2
-```
-
-Any remote hosts intending to connect to VMs on this node (remote access in first question) must have connectivity with the interface selected for external traffic (last question above).
-
 ## Launch a VM
 
 Verify the cloud by launching a VM called ‘test’ based on the ‘ubuntu’ image (Ubuntu 22.04 LTS). The launch command is used:
 
 ```bash
 sunbeam launch ubuntu --name test
-# Launching an OpenStack instance ... 
-# Access the instance by running the following command:
-ssh -i /home/brent/snap/openstack/727/sunbeam ubuntu@172.16.2.76
+Launching an OpenStack instance ... 
+Access the instance by running the following command:
+ssh -i /home/brent/snap/openstack/727/sunbeam ubuntu@172.16.2.39
 
 # this is the private key
 less /home/brent/snap/openstack/727/sunbeam
@@ -380,50 +297,19 @@ less /home/brent/snap/openstack/727/sunbeam
 
 Connect to the VM over SSH. If remote VM access has been enabled, you will need the private SSH key given in the above output from the launching node. Copy it to the connecting host. Note that the VM will not be ready instantaneously; waiting time is mostly determined by the cloud’s available resources.
 
-Actual output research21:
-
 ```bash
 # Launching an OpenStack instance ... 
 # Access the instance by running the following command:
-ssh -i /home/brent/snap/openstack/727/sunbeam ubuntu@172.16.2.76
+ssh -i /home/brent/snap/openstack/727/sunbeam ubuntu@172.16.2.39
 
-# The authenticity of host '172.16.2.76 (172.16.2.76)' can't be established.
-# ED25519 key fingerprint is SHA256:J1LeAOAsCgzh/LLXeqrRqxl+A7smLolIrF+WodI8LiQ.
-# This key is not known by any other names.
-# Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
-# Warning: Permanently added '172.16.2.76' (ED25519) to the list of known hosts.
-Welcome to Ubuntu 24.04.2 LTS (GNU/Linux 6.8.0-60-generic x86_64)
-
- * Documentation:  https://help.ubuntu.com
- * Management:     https://landscape.canonical.com
- * Support:        https://ubuntu.com/pro
-
- System information as of Mon May 19 18:50:57 UTC 2025
-
-  System load:  0.16              Processes:             93
-  Usage of /:   55.5% of 2.84GB   Users logged in:       0
-  Memory usage: 37%               IPv4 address for ens3: 192.168.0.211
-  Swap usage:   0%
-
-Expanded Security Maintenance for Applications is not enabled.
-
-0 updates can be applied immediately.
-
-Enable ESM Apps to receive additional future security updates.
-See https://ubuntu.com/esm or run: sudo pro status
-
-
-
-The programs included with the Ubuntu system are free software;
-the exact distribution terms for each program are described in the
-individual files in /usr/share/doc/*/copyright.
-
-Ubuntu comes with ABSOLUTELY NO WARRANTY, to the extent permitted by
-applicable law.
-
-To run a command as administrator (user "root"), use "sudo <command>".
-See "man sudo_root" for details.
-
+ping google.com
+PING google.com (172.217.1.110) 56(84) bytes of data.
+64 bytes from ord37s51-in-f14.1e100.net (172.217.1.110): icmp_seq=1 ttl=114 time=8.94 ms
+64 bytes from ord37s51-in-f14.1e100.net (172.217.1.110): icmp_seq=2 ttl=114 time=9.32 ms
+^C
+--- google.com ping statistics ---
+2 packets transmitted, 2 received, 0% packet loss, time 1002ms
+rtt min/avg/max/mdev = 8.942/9.133/9.324/0.191 ms
 ```
 
 ## Related how-tos
