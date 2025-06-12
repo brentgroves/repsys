@@ -139,7 +139,20 @@ The status of the snap’s services can be checked using:
 
 ```bash
 sudo systemctl status snap.openstack-hypervisor.*
-zsh: no matches found: snap.openstack-hypervisor.*
+# zsh: no matches found: snap.openstack-hypervisor.*
+● snap.openstack-hypervisor.virtlogd.service - Service for snap application openstack-hypervisor.virtlogd
+     Loaded: loaded (/etc/systemd/system/snap.openstack-hypervisor.virtlogd.service; enabled; preset: enabled)
+     Active: active (running) since Thu 2025-06-12 15:06:42 UTC; 48min ago
+   Main PID: 1025 (virtlogd)
+      Tasks: 1 (limit: 57819)
+     Memory: 24.8M (peak: 25.1M)
+        CPU: 1.990s
+     CGroup: /system.slice/snap.openstack-hypervisor.virtlogd.service
+             └─1025 /snap/openstack-hypervisor/244/usr/sbin/virtlogd --pid /var/snap/openstack-hypervisor/244/virtlogd.pid
+
+Jun 12 15:06:42 research01 systemd[1]: Started snap.openstack-hypervisor.virtlogd.service - Service for snap application openstack-hypervisor.virtlogd.
+
+● snap.openstack-hypervisor.nova-compute.service - Service for snap application openstack-hypervisor.nova-compute
 ```
 
 All log output for the services can be captured by consulting the journal:
@@ -291,6 +304,8 @@ sunbeam cluster list
 ```
 
 The MicroCluster library makes use of dqlite which provides a raft based sqlite compatible database for shared state across the Sunbeam cluster.
+
+Yes, Raft consensus protocol can be used with SQLite to create a distributed and fault-tolerant database system. Several projects leverage Raft to replicate SQLite databases, ensuring data consistency across multiple nodes, even in the face of failures.
 
 The state of the local daemon managing the nodes participation in the cluster can also be checked and the log output captured if need be:
 

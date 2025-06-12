@@ -287,9 +287,9 @@ Verify the cloud by launching a VM called ‘test’ based on the ‘ubuntu’ i
 ```bash
 sunbeam launch ubuntu --name test
 Launching an OpenStack instance ... 
+Found sunbeam key in OpenStack!
 Access the instance by running the following command:
-ssh -i /home/brent/snap/openstack/727/sunbeam ubuntu@172.16.2.39
-
+`ssh -i /home/brent/snap/openstack/727/sunbeam ubuntu@172.16.2.151`
 # this is the private key
 less /home/brent/snap/openstack/727/sunbeam
 
@@ -301,6 +301,14 @@ Connect to the VM over SSH. If remote VM access has been enabled, you will need 
 # Launching an OpenStack instance ... 
 # Access the instance by running the following command:
 ssh -i /home/brent/snap/openstack/727/sunbeam ubuntu@172.16.2.39
+
+openstack server list 
++--------------------------------------+------+--------+-----------------------------------------+--------+---------+
+| ID                                   | Name | Status | Networks                                | Image  | Flavor  |
++--------------------------------------+------+--------+-----------------------------------------+--------+---------+
+| 70842ca8-5296-499e-88cd-dd7f3ee1899e | test | ACTIVE | demo-network=172.16.2.39, 192.168.0.166 | ubuntu | m1.tiny |
++--------------------------------------+------+--------+-----------------------------------------+--------+---------+
+openstack server delete test
 
 ping google.com
 PING google.com (172.217.1.110) 56(84) bytes of data.
