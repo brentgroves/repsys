@@ -57,6 +57,9 @@ source demo-openrc
 
 openstack keypair create mykey > mykey.pem 
 chmod 600 mykey.pem 
+openstack server ssh command: openstack server ssh --login cloud-user --identity ~/.ssh/<keypair>.pem --private <instance>. 
+
+openstack server ssh --login cloud-user --identity ~/.ssh/<keypair>.pem --private <instance>. 
 ```
 
 Launch the VM:

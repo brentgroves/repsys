@@ -264,6 +264,18 @@ Enable ping and SSH access to instances? [y/n] (y):
 ⠸ Generating openrc for cloud admin usage ... Writing openrc to demo-openrc ... done
 The cloud has been configured for sample usage.
 You can start using the OpenStack client or access the OpenStack dashboard at http://172.16.1.204:80/openstack-horizon
+nmap -sP 192.168.0.0/24
+nmap -sP 172.16.2.0/24
+Starting Nmap 7.94SVN ( https://nmap.org ) at 2025-06-12 21:23 UTC
+Nmap done: 256 IP addresses (0 hosts up) scanned in 103.19 seconds
+nmap -sP 172.16.1.0/24
+Starting Nmap 7.94SVN ( https://nmap.org ) at 2025-06-12 21:21 UTC
+Nmap scan report for 172.16.1.204
+Host is up (0.0018s latency).
+Nmap scan report for 172.16.1.205
+Host is up (0.0030s latency).
+Nmap done: 256 IP addresses (2 hosts up) scanned in 28.94 seconds
+
 ```
 
 The --openrc option specifies a regular user (non-admin) cloud init file (demo-openrc here).
@@ -292,6 +304,11 @@ Access the instance by running the following command:
 `ssh -i /home/brent/snap/openstack/727/sunbeam ubuntu@172.16.2.151`
 # this is the private key
 less /home/brent/snap/openstack/727/sunbeam
+# openstack server ssh command: openstack server ssh --login cloud-user --identity ~/.ssh/<keypair>.pem --private <instance>. 
+openstack server ssh --login ubuntu --identity /home/brent/snap/openstack/727/sunbeam --private 172.16.2.151
+
+https://docs.redhat.com/en/documentation/red_hat_openstack_platform/10/html/command-line_interface_reference_guide/openstackclient_subcommand_server_ssh
+
 
 ```
 
@@ -301,6 +318,7 @@ Connect to the VM over SSH. If remote VM access has been enabled, you will need 
 # Launching an OpenStack instance ... 
 # Access the instance by running the following command:
 ssh -i /home/brent/snap/openstack/727/sunbeam ubuntu@172.16.2.39
+ssh -vvv -i /home/brent/snap/openstack/727/sunbeam ubuntu@172.16.2.151
 
 openstack server list 
 +--------------------------------------+------+--------+-----------------------------------------+--------+---------+

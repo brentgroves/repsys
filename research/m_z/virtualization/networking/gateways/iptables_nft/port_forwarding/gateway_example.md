@@ -176,6 +176,8 @@ iptables -A FORWARD -p tcp -s 10.188.50.202 --sport 8080 -j ACCEPT
 # sudo iptables -t nat -s 10.0.2.0/24 -A POSTROUTING -j MASQUERADE
 sudo iptables -t nat -s 192.168.2.0/24 -A POSTROUTING -j MASQUERADE
 
+sudo iptables -t nat -s 192.168.2.0/24 -A POSTROUTING -j MASQUERADE
+
 ```
 
 Note
