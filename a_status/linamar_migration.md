@@ -2,10 +2,10 @@
 
 ## summary
 
-- 6 of 8 scripts and work tables validated.
-- Found more missing procedures in the Azure SQL database that I recreated for our Azure SQL MI.
-- We could delete account_activity_summary records after each TB script is set to save a lot of storage space.
-- Created an archive schema to backup hard-to-replace tables.
+- 8 of 8 scripts and work tables validated.
+- Checked 200 of 4000 result set values by hand.
+todo:
+- Complete diff of result set.
 
 ## Azure SQL database changes made
 
@@ -19,6 +19,8 @@ The Azure SQL database was created from a Linux SQL server backup of an Azure SQ
 |id   |pcn    |start_period|end_period|start_open_period|end_open_period|no_update|
 |-----|-------|------------|----------|-----------------|---------------|---------|
 |1,739|123,681|202401      |202410    |202411           |202,501        |0        |
+
+We could delete account_activity_summary records after each TB script is set to save a lot of storage space.
 
 When we run the 13-period TB script set now, it will delete the accounting_balance records from 202406 to 202504 and repopulate with the current Plex account balances.
 

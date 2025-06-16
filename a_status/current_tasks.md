@@ -18,9 +18,15 @@ Carl Stangland, Desktop and System Support Technician, Indiana
 Lucas Tuma, IT Administrator, Strakonice
 Aleksandar Gavrilov, IT Administrator, Skopje
 
-```bash
-az sql server firewall-rule create --resource-group $RESOURCE_GROUP --server $SERVER -n AllowSam6Ip --start-ip-address $START_SAM6_IP --end-ip-address $END_SAM6_IP
-```
+## Links
+
+- The **[Fabric Analyst in a Day (FAIAD)](https://aka.ms/LearnFAIAD)**
+- **[Fabric user panel](https://learn.microsoft.com/en-us/fabric/fundamentals/feedback#fabric-user-panel)**
+- **[SQL database in Microsoft Fabric (Preview)](https://learn.microsoft.com/en-us/fabric/database/sql/overview)**
+
+The **[Fabric Analyst in a Day (FAIAD)](https://aka.ms/LearnFAIAD)** workshop is a free, hands-on training designed for analysts working with Power BI and Microsoft Fabric. You can get hands-on experience on how to analyze data, build reports, using Fabric. It covers key concepts like working with lakehouses, creating reports, and analyzing data in the Fabric environment.
+
+Join our new Microsoft Fabric user panel to share your feedback and help shape Fabric and Power BI. Participate in surveys and 1:1 sessions with the product team. Learn more and sign up **[Fabric user panel](https://learn.microsoft.com/en-us/fabric/fundamentals/feedback#fabric-user-panel)**.
 
 - Help access APIs from Plex
   - <https://plex.my.site.com/community/s/question/0D52T00005b6l1YSAQ/calling-a-plex-http-api-from-powerbi-pure-mquery>
