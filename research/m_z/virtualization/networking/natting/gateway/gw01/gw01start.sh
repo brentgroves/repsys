@@ -26,7 +26,7 @@ exec 2>&1 4>>log
 # someVar=$(/path/to/script -infile "$(ls -1tr 202312[0-9][0-9]*.txt | tail -n 1)" -print0)
 
 now=$(date)
-printf "Starting moto service using motostart.sh at %s\n" "$now" >&4
+printf "Starting gw01 service using gw01start.sh at %s\n" "$now" >&4
 
 # The logging levels are defined in sd-daemon(3):
 
@@ -70,17 +70,28 @@ iptables -A FORWARD -j ACCEPT
 # -P OUTPUT ACCEPT
 
 # allow NAT over all traffic
-iptables -t nat -D POSTROUTING -j MASQUERADE
-iptables -t nat -A POSTROUTING -j MASQUERADE
-# iptables -t nat -S
+# iptables -t nat -D POSTROUTING -j MASQUERADE
+# iptables -t nat -A POSTROUTING -j MASQUERADE
+# sudo iptables -t nat -S
 # -P PREROUTING ACCEPT
 # -P INPUT ACCEPT
 # -P OUTPUT ACCEPT
 # -P POSTROUTING ACCEPT
 # -A POSTROUTING -j MASQUERADE
 
+# Allow NAT over a subnet
+iptables -t nat -s 172.16.2.0/24 -D POSTROUTING -j MASQUERADE
+iptables -t nat -s 172.16.2.0/24 -A POSTROUTING -j MASQUERADE
+
+# sudo iptables -t nat -S
+# -P PREROUTING ACCEPT
+# -P INPUT ACCEPT
+# -P OUTPUT ACCEPT
+# -P POSTROUTING ACCEPT
+# -A POSTROUTING -s 172.16.2.0/24 -j MASQUERADE
+
 now=$(date)
-printf "Successfully started moto service using motostart.sh at %s\n" "$now" >&4
+printf "Successfully started gw01 service using gw01start.sh at %s\n" "$now" >&4
 
 # # Close FD
 exec 4>&-

@@ -24,9 +24,10 @@ exec 2>&1 4>>log
 # e.g.
 # Bash:
 # someVar=$(/path/to/script -infile "$(ls -1tr 202312[0-9][0-9]*.txt | tail -n 1)" -print0)
+# The bash variable $EUID shows the effective UID the script is running at, if you want to make sure the script runs as root, check wether $EUID contains the value 0 or not:
 
 now=$(date)
-printf "Stopping moto service using motostop.sh at %s\n" "$now" >&4
+printf "Stopping gw01 service using gw01stop.sh at %s\n" "$now" >&4
 
 # The logging levels are defined in sd-daemon(3):
 
@@ -61,22 +62,30 @@ printf "<5>Ending the stop script...\n"
 
 # accept everything. don't change anything
 # iptables -A FORWARD -j ACCEPT
-# iptables -D FORWARD -j ACCEPT
+iptables -D FORWARD -j ACCEPT
 # iptables -S
 # -P INPUT ACCEPT
 # -P FORWARD ACCEPT
 # -P OUTPUT ACCEPT
 
-# allow NAT over all traffic
-# iptables -t nat -A POSTROUTING -j MASQUERADE
-# iptables -t nat -S
+# sudo iptables -t nat -S
 # -P PREROUTING ACCEPT
 # -P INPUT ACCEPT
 # -P OUTPUT ACCEPT
 # -P POSTROUTING ACCEPT
-# -A POSTROUTING -j MASQUERADE
+# -A POSTROUTING -s 172.16.2.0/24 -j MASQUERADE
 
-iptables -t nat -D POSTROUTING -j MASQUERADE
+# NAT over a subnet
+iptables -t nat -s 172.16.2.0/24 -D POSTROUTING -j MASQUERADE
+
+# sudo iptables -t nat -S
+# -P PREROUTING ACCEPT
+# -P INPUT ACCEPT
+# -P OUTPUT ACCEPT
+# -P POSTROUTING ACCEPT
+
+# NAT over all traffic
+# iptables -t nat -D POSTROUTING -j MASQUERADE
 # iptables -t nat -S
 # -P PREROUTING ACCEPT
 # -P INPUT ACCEPT
@@ -84,7 +93,7 @@ iptables -t nat -D POSTROUTING -j MASQUERADE
 # -P POSTROUTING ACCEPT
 
 now=$(date)
-printf "Successfully Stopped moto service using motostop.sh at %s\n" "$now" >&4
+printf "Successfully Stopped gw01 service using gw01stop.sh at %s\n" "$now" >&4
 
 # # Close FD
 exec 4>&- 

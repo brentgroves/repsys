@@ -1,13 +1,13 @@
 [Unit]
-Description=Iptables rules to make moto a gateway for 172.16.2.0/24. 
+Description=Iptables rules to make gw01 a gateway for 172.16.2.0/24. 
 After=network.target
 
 [Service]
 Type=oneshot
 Environment=PATH=/home/brent/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
-WorkingDirectory=/etc/rules/moto
-ExecStart=/etc/rules/moto/motostart.sh
-ExecStop=/etc/rules/moto/motostop.sh
+WorkingDirectory=/etc/rules/gw01
+ExecStart=/etc/rules/gw01/gw01start.sh
+ExecStop=/etc/rules/gw01/gw01stop.sh
 # https://unix.stackexchange.com/questions/694357/how-to-invoke-iptables-from-systemd-unit-file
 CapabilityBoundingSet=CAP_SETGID CAP_SETUID CAP_SYS_RESOURCE CAP_NET_ADMIN CAP_NET_RAW
 # User=brent

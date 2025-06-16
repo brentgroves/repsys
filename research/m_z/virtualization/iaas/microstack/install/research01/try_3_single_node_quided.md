@@ -207,30 +207,21 @@ Note that proxy settings can also be supplied by using a manifest (see **[Deploy
 When prompted, enter the CIDR and the address range for the control plane networking. Here we use the values given earlier:
 
 ```bash
-# try 1
 sunbeam cluster bootstrap
-Management network should be available on every node of the deployment. It is used for communication between the nodes of the deployment. Requires CIDR format, can be a comma-separated list.
-Management network (192.168.1.0/24): 172.16.1.0/24
+Management network should be available on every node of the deployment. It is used for communication between the nodes of the deployment. Requires CIDR format, can be a 
+comma-separated list.
+Management network (192.168.1.0/24): 
 This will configure the proxy settings for the deployment. Resources will be fetched from the internet via the proxy.
 Use proxy to access external network resources? [y/n] (n): 
-
-An unexpected error has occurred. Please see https://canonical-openstack.readthedocs-hosted.com/en/latest/how-to/troubleshooting/inspecting-the-cluster/ for troubleshooting information.
-Error: No local IP address found for CIDR 172.16.1.0/24
-
-# try 2
-sunbeam cluster bootstrap
-# Management network should be available on every node of the deployment. It is used for communication between the nodes of the deployment. Requires CIDR format, can be a comma-separated list.
-Management network (192.168.1.0/24): 
-# This will configure the proxy settings for the deployment. Resources will be fetched from the internet via the proxy.
-Use proxy to access external network resources? [y/n] (n): 
-# This will configure number of databases, single for entire cluster or multiple databases with one per openstack service.
+This will configure number of databases, single for entire cluster or multiple databases with one per openstack service.
 Enter database topology: single/multi (cannot be changed later) (single): 
-# A region is general division of OpenStack services. It cannot be changed once set.
+A region is general division of OpenStack services. It cannot be changed once set.
 Enter a region name (cannot be changed later) (RegionOne): 
-# OpenStack services are exposed via virtual IP addresses. This range should contain at least ten addresses and must not overlap with external network CIDR. To access APIs from a remote host, the range must
-# reside within the subnet that the primary network interface is on.
-# On multi-node deployments, the range must be addressable from all nodes in the deployment.
+OpenStack services are exposed via virtual IP addresses. This range should contain at least ten addresses and must not overlap with external network CIDR. To access APIs from a 
+remote host, the range must reside within the subnet that the primary network interface is on.
+On multi-node deployments, the range must be addressable from all nodes in the deployment.
 OpenStack APIs IP ranges (172.16.1.201-172.16.1.240): 
+Error: Failed to get k8s nodes to update
 
 ```
 

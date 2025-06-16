@@ -30,7 +30,7 @@ In this example:
 - Restart: Configures the service to restart on failure.
 - WantedBy: Specifies that the service should be enabled for multi-user targets.
 
-## Albion Mach2 port forwarding
+## port forwarding
 
 Tried to run as iptables commands as User=brent but it did not work even with CAP_NET_RAW set.
 
@@ -43,10 +43,10 @@ CapabilityBoundingSet=CAP_SETGID CAP_SETUID CAP_SYS_RESOURCE CAP_NET_ADMIN CAP_N
 # Group=brent
 ```
 
-## Moto gateway test
+## gw01 gateway test
 
 ```bash
-ssh brent@research01
+ssh brent@gw01
 ping 172.16.2.1
 # from a vm on the 172.16.2.0/24 ping the internet with gateway set to 172.16.2.1.
 ssh brent@172.16.2.2
@@ -56,7 +56,28 @@ ping google.com
 ## deploy service
 
 ```bash
-journalctl -u moto.service -f 
+ssh brent@gw01
+sudo mkdir -p /etc/rules/moto/
+exit
+
+cd ~/src/repsys/research/m_z/virtualization/networking/natting/gateway/gw01/
+lftp brent@gw01
+cd /etc/rules/gw01
+mput *.sh 
+cd /etc/systemd/system/
+mput gw01.service
+exit
+ssh brent@gw01
+sudo chmod 777 /etc/systemd/system/gw01.service
+ls -alh /etc/systemd/system/gw01.service
+sudo chmod 777 /etc/rules/gw01/*
+ls -alh /etc/rules/gw01/
+
+# sudo systemctl daemon-reload
+sudo systemctl start gw01
+
+
+journalctl -u gw01.service -f 
 # or if there were issues starting service
 journalctl -f 
 
