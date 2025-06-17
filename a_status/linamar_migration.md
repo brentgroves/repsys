@@ -2,10 +2,11 @@
 
 ## summary
 
+- done.
 - 8 of 8 scripts and work tables validated.
 - Checked 200 of 4000 result set values by hand.
 todo:
-- Complete diff of result set.
+- Completed diff of result set.
 
 ## Azure SQL database changes made
 
