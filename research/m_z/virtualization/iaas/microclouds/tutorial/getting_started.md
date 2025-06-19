@@ -786,6 +786,9 @@ An error in an LXC (Linux Containers) virtual machine (VM) can manifest in vario
 ```bash
 lxc info u3 --show-log
 Error: Missing event connection with target cluster member
+lxc exec micro2 bash
+sudo systemctl restart snap.lxd.daemon
+
 ```
 
 ```bash
