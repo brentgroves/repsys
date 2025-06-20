@@ -11,11 +11,17 @@ Hayley Rymer, IT Supervisor, Mills River
 Mitch Harper, Desktop and Systems Support Technician, Mills River
 Thomas.Creal, Desktop and Systems Support Technician, Mills River
 Matthew Bump, Muscle Shoals, Engineering Supervisor II / IT
-Carlos Morales, IT Administrator, Muscle Shoals
 Sam Jackson, Information Systems Developer, Southfield
 Matt Irey, Desktop and System Support Technician, Fruitport
 David Maitner,  Desktop and System Support Technician, Fruitport
 Carl Stangland, Desktop and System Support Technician, Indiana
 Lucas Tuma, IT Administrator, Strakonice
 Aleksandar Gavrilov, IT Administrator, Skopje
+Pat Baxter, General Manager
+Michael Percell, Manufacturing Engineering Manager
+Ron James, Quality Manager
+Dan Martin, Plant Controller Southfield
+Jami Pyle, MP&L Manager
+Nancy Swank, Material Planner
+
 Emmanuel Munoz Diaz - Microsoft Data and AI specialist - <emunozdias@microsoft.com>

@@ -1,7 +1,7 @@
 # **[Copy data from Azure SQL Managed Instance DB to Azure SQL Server DB](https://stackoverflow.com/questions/69410984/copy-data-from-azure-sql-managed-instance-db-to-azure-sql-server-db)**
 
-**[Current Status](../../../development/status/weekly/current_status.md)**\
-**[Research List](../../../research_list.md)**\
+**[Current Status](../../../a_status/current_tasks.md)**\
+**[Research List](../../research_list.md)**\
 **[Back Main](../../../README.md)**
 
 ## Note
