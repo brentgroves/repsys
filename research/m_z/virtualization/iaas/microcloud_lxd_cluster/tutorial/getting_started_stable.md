@@ -1,4 +1,6 @@
-# **[Getting Started](https://documentation.ubuntu.com/microcloud/stable/microcloud/tutorial/get_started/#get-started)**
+# **[Getting Started stable](https://documentation.ubuntu.com/microcloud/stable/microcloud/tutorial/get_started/#get-started)**
+
+## **[Getting Started latest](https://documentation.ubuntu.com/microcloud/latest/microcloud/tutorial/get_started/)**
 
 MicroCloud is quick to set up. Once **[installed](https://documentation.ubuntu.com/microcloud/stable/microcloud/how-to/install/#howto-install)**, you can start using MicroCloud in the same way as a regular LXD cluster.
 
@@ -68,6 +70,9 @@ Name of the storage backend to use (ceph, dir, lvm, powerflex, zfs, btrfs) [defa
 Create a new ZFS pool? (yes/no) [default=yes]: 
 Would you like to use an existing empty block device (e.g. a disk or partition)? (yes/no) [default=no]: 
 Size in GiB of the new loop device (1GiB minimum) [default=30GiB]: 40GiB
+
+# In LXD, a loop device is a virtual block device that allows a file to be treated as if it were a physical storage device. Essentially, it allows you to mount a regular file as a file system, enabling access to its contents as if it were a disk partition. LXD uses loop devices to manage storage for containers, either by creating loop files on the host system or by using existing loop devices passed through from the host. 
+
 Would you like to connect to a MAAS server? (yes/no) [default=no]: 
 Would you like to create a new local network bridge? (yes/no) [default=yes]: 
 What should the new bridge be called? [default=lxdbr0]: 
@@ -123,9 +128,82 @@ Complete the following steps to create the required disks in a LXD storage
 
 1. Create a ZFS storage pool called disks:
 
+ZFS is a powerful, advanced file system and logical volume manager that combines features like RAID, data integrity checks, and snapshotting into a single, unified system. It's known for its scalability, reliability, and ease of administration, particularly in enterprise server environments.
+
 ```bash
-lxc storage create disks zfs size=100GiB
+# create disks loop file storage pool
+lxc storage create disks zfs size=500GiB
 Storage pool disks created
+
+sudo ls -alh /var/snap/lxd/common/lxd/disks
+total 18G
+drwx------  2 root root 4.0K Jun 20 00:06 .
+drwx--x--x 17 root root 4.0K Jun 21 18:19 ..
+-rw-------  1 root root  40G Jun 21 19:43 default.img
+-rw-------  1 root root 500G Jun 21 19:40 disks.img
+
+sudo zpool list
+NAME      SIZE  ALLOC   FREE  CKPOINT  EXPANDSZ   FRAG    CAP  DEDUP    HEALTH  ALTROOT
+default  39.5G  4.57G  34.9G        -         -    19%    11%  1.00x    ONLINE  -
+disks     496G  13.1G   483G        -         -     0%     2%  1.00x    ONLINE  -
+
+zpool status -P disks
+sudo zpool status -P disks
+  pool: disks
+ state: ONLINE
+config:
+
+        NAME                                        STATE     READ WRITE CKSUM
+        disks                                       ONLINE       0     0     0
+          /var/snap/lxd/common/lxd/disks/disks.img  ONLINE       0     0     0
+
+errors: No known data errors
+
+sudo zfs list
+NAME                                                                                            USED  AVAIL  REFER  MOUNTPOINT
+default                                                                                        4.54G  33.7G    24K  legacy
+default/buckets                                                                                  24K  33.7G    24K  legacy
+default/containers                                                                               24K  33.7G    24K  legacy
+default/custom                                                                                   24K  33.7G    24K  legacy
+default/deleted                                                                                 800M  33.7G    24K  legacy
+default/deleted/buckets                                                                          24K  33.7G    24K  legacy
+default/deleted/containers                                                                       24K  33.7G    24K  legacy
+default/deleted/custom                                                                           24K  33.7G    24K  legacy
+default/deleted/images                                                                          800M  33.7G    24K  legacy
+default/deleted/images/8f5c1382df05f355311a84c0f15de77cb52399aaf66f18f86e1af941c98a7b83        26.5K   100M  25.5K  legacy
+default/deleted/images/8f5c1382df05f355311a84c0f15de77cb52399aaf66f18f86e1af941c98a7b83.block   799M  33.7G   799M  -
+default/deleted/virtual-machines                                                                 24K  33.7G    24K  legacy
+default/images                                                                                  800M  33.7G    24K  legacy
+default/images/293da0a379e57234c03a35e95465a99da99a9900ec2e1fc30b70c4cbbb092caa                25.5K   100M  25.5K  legacy
+default/images/293da0a379e57234c03a35e95465a99da99a9900ec2e1fc30b70c4cbbb092caa.block           800M  33.7G   800M  -
+default/virtual-machines                                                                       2.95G  33.7G    24K  legacy
+default/virtual-machines/micro1                                                                7.23M  92.8M  7.24M  legacy
+default/virtual-machines/micro1.block                                                           814M  33.7G  1.53G  -
+default/virtual-machines/micro2                                                                7.23M  92.8M  7.24M  legacy
+default/virtual-machines/micro2.block                                                           752M  33.7G  1.47G  -
+default/virtual-machines/micro3                                                                7.23M  92.8M  7.24M  legacy
+default/virtual-machines/micro3.block                                                           752M  33.7G  1.47G  -
+default/virtual-machines/micro4                                                                7.23M  92.8M  7.24M  legacy
+default/virtual-machines/micro4.block                                                           680M  33.7G  1.40G  -
+disks                                                                                          13.1G   468G    24K  legacy
+disks/buckets                                                                                    24K   468G    24K  legacy
+disks/containers                                                                                 24K   468G    24K  legacy
+disks/custom                                                                                   13.1G   468G    24K  legacy
+disks/custom/default_local1                                                                    1.03G   468G  1.03G  -
+disks/custom/default_local2                                                                    1.81G   468G  1.81G  -
+disks/custom/default_local3                                                                    1.03G   468G  1.03G  -
+disks/custom/default_local4                                                                     880M   468G   880M  -
+disks/custom/default_remote1                                                                   2.77G   468G  2.77G  -
+disks/custom/default_remote2                                                                   2.77G   468G  2.77G  -
+disks/custom/default_remote3                                                                   2.77G   468G  2.77G  -
+disks/deleted                                                                                   144K   468G    24K  legacy
+disks/deleted/buckets                                                                            24K   468G    24K  legacy
+disks/deleted/containers                                                                         24K   468G    24K  legacy
+disks/deleted/custom                                                                             24K   468G    24K  legacy
+disks/deleted/images                                                                             24K   468G    24K  legacy
+disks/deleted/virtual-machines                                                                   24K   468G    24K  legacy
+disks/images                                                                                     24K   468G    24K  legacy
+disks/virtual-machines                                                                           24K   468G    24K  legacy
 ```
 
 ## 2. Configure the default volume size for the disks pool
@@ -156,6 +234,29 @@ lxc storage volume create disks remote2 --type block size=20GiB
 Storage volume remote2 created
 lxc storage volume create disks remote3 --type block size=20GiB
 Storage volume remote3 created
+
+sudo apt install zfsutils-linux
+sudo zpool status -v
+  pool: default
+ state: ONLINE
+config:
+
+        NAME                                          STATE     READ WRITE CKSUM
+        default                                       ONLINE       0     0     0
+          /var/snap/lxd/common/lxd/disks/default.img  ONLINE       0     0     0
+
+errors: No known data errors
+
+  pool: disks
+ state: ONLINE
+config:
+
+        NAME                                        STATE     READ WRITE CKSUM
+        disks                                       ONLINE       0     0     0
+          /var/snap/lxd/common/lxd/disks/disks.img  ONLINE       0     0     0
+
+errors: No known data errors
+
 ```
 
 ## 5. Check that the disks have been created correctly
@@ -192,6 +293,12 @@ Complete the following steps to set up this network:
 ```bash
 lxc network create microbr0
 Network microbr0 created
+
+ip link show type bridge
+4: microbr0: <NO-CARRIER,BROADCAST,MULTICAST,UP> mtu 1500 qdisc noqueue state DOWN mode DEFAULT group default qlen 1000
+    link/ether 00:16:3e:04:4e:1e brd ff:ff:ff:ff:ff:ff
+5: lxdbr0: <NO-CARRIER,BROADCAST,MULTICAST,UP> mtu 1500 qdisc noqueue state DOWN mode DEFAULT group default qlen 1000
+    link/ether 00:16:3e:63:b4:74 brd ff:ff:ff:ff:ff:ff
 ```
 
 ### 2. Enter the following commands to find out the assigned IPv4 and IPv6 addresses for the network and note them down
@@ -201,6 +308,15 @@ lxc network get microbr0 ipv4.address
 10.37.122.1/24
 lxc network get microbr0 ipv6.address
 fd42:f253:67d3:2222::1/64
+
+ip addr show microbr0
+4: microbr0: <NO-CARRIER,BROADCAST,MULTICAST,UP> mtu 1500 qdisc noqueue state DOWN group default qlen 1000
+    link/ether 00:16:3e:04:4e:1e brd ff:ff:ff:ff:ff:ff
+    inet 10.37.122.1/24 scope global microbr0
+       valid_lft forever preferred_lft forever
+    inet6 fd42:f253:67d3:2222::1/64 scope global 
+       valid_lft forever preferred_lft forever
+
 ```
 
 ## 4. Create and configure your VMs
@@ -212,6 +328,57 @@ Complete the following steps:
 ### 1. Create the VMs, but don’t start them yet
 
 ```bash
+free
+               total        used        free      shared  buff/cache   available
+Mem:        49418820     2047124    45261620        4600     2596376    47371696
+Swap:        8388604           0     8388604
+
+lscpu
+Architecture:             x86_64
+  CPU op-mode(s):         32-bit, 64-bit
+  Address sizes:          40 bits physical, 48 bits virtual
+  Byte Order:             Little Endian
+CPU(s):                   4
+  On-line CPU(s) list:    0-3
+Vendor ID:                GenuineIntel
+  Model name:             Intel(R) Xeon(R) CPU           E5503  @ 2.00GHz
+    CPU family:           6
+    Model:                26
+    Thread(s) per core:   1
+    Core(s) per socket:   2
+    Socket(s):            2
+    Stepping:             5
+    BogoMIPS:             3989.89
+    Flags:                fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ht tm pbe syscall nx rdtscp lm con
+                          stant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc cpuid aperfmperf pni dtes64 monitor ds_cpl vmx est tm2 ssse3 cx16 xtpr pd
+                          cm dca sse4_1 sse4_2 popcnt lahf_lm pti ssbd ibrs ibpb stibp tpr_shadow flexpriority ept vpid dtherm vnmi flush_l1d
+Virtualization features:  
+  Virtualization:         VT-x
+Caches (sum of all):      
+  L1d:                    128 KiB (4 instances)
+  L1i:                    128 KiB (4 instances)
+  L2:                     1 MiB (4 instances)
+  L3:                     8 MiB (2 instances)
+NUMA:                     
+  NUMA node(s):           2
+  NUMA node0 CPU(s):      0,2
+  NUMA node1 CPU(s):      1,3
+Vulnerabilities:          
+  Gather data sampling:   Not affected
+  Itlb multihit:          KVM: Mitigation: VMX disabled
+  L1tf:                   Mitigation; PTE Inversion; VMX conditional cache flushes, SMT disabled
+  Mds:                    Vulnerable: Clear CPU buffers attempted, no microcode; SMT disabled
+  Meltdown:               Mitigation; PTI
+  Mmio stale data:        Unknown: No mitigations
+  Reg file data sampling: Not affected
+  Retbleed:               Not affected
+  Spec rstack overflow:   Not affected
+  Spec store bypass:      Mitigation; Speculative Store Bypass disabled via prctl
+  Spectre v1:             Mitigation; usercopy/swapgs barriers and __user pointer sanitization
+  Spectre v2:             Mitigation; Retpolines; IBPB conditional; IBRS_FW; STIBP disabled; RSB filling; PBRSB-eIBRS Not affected; BHI Not affected
+  Srbds:                  Not affected
+  Tsx async abort:        Not affected
+
 lxc init ubuntu:22.04 micro1 --vm --config limits.cpu=2 --config limits.memory=8GiB
 Creating micro1
 lxc init ubuntu:22.04 micro2 --vm --config limits.cpu=2 --config limits.memory=8GiB
@@ -236,6 +403,29 @@ lxc storage volume attach disks local4 micro4
 lxc storage volume attach disks remote1 micro1
 lxc storage volume attach disks remote2 micro2
 lxc storage volume attach disks remote3 micro3
+
+ lxc exec micro1 -- bash
+root@micro1:~# lsblk
+NAME    MAJ:MIN RM   SIZE RO TYPE MOUNTPOINTS
+loop0     7:0    0  73.9M  1 loop /snap/core22/2010
+loop1     7:1    0  63.8M  1 loop /snap/core20/2599
+loop2     7:2    0  66.8M  1 loop /snap/core24/988
+loop3     7:3    0  89.4M  1 loop /snap/lxd/31333
+loop4     7:4    0 114.4M  1 loop /snap/lxd/33110
+loop5     7:5    0 111.9M  1 loop /snap/microceph/1355
+loop6     7:6    0  10.4M  1 loop /snap/microcloud/1144
+loop7     7:7    0  21.1M  1 loop /snap/microovn/667
+loop8     7:8    0  50.9M  1 loop /snap/snapd/24671
+loop9     7:9    0  66.8M  1 loop /snap/core24/1006
+sda       8:0    0    10G  0 disk 
+├─sda1    8:1    0   9.9G  0 part /
+├─sda14   8:14   0     4M  0 part 
+└─sda15   8:15   0   106M  0 part /boot/efi
+sdb       8:16   0    10G  0 disk 
+├─sdb1    8:17   0    10G  0 part 
+└─sdb9    8:25   0     8M  0 part 
+sdc       8:32   0    20G  0 disk 
+
 ```
 
 ### 3. Create and add network interfaces that use the dedicated MicroCloud network to each VM
