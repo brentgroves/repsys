@@ -13,7 +13,7 @@ The following is in markdown format and can be viewed by copying and pasting the
 - Important data collected from our ERP, vending machines, plc, cnc, cmm, etc. all goes into the data lake.
 - Data in our data warehouse and excel spreadsheets also is mirrored to the data lake.
 - We don't have to change where or how we currently enter our data.
-- An ETL process is used to copy and transform the data.
+- An ETL process is used to copy and transform the data to a common format that is more easily reported on.
 
 ## Phase 1
 
