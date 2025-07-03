@@ -15,7 +15,8 @@ The following examples show various ways of connecting to the default instance o
 Connect to the Database Engine by specifying the instance name:
 
 ```bash
-sqlcmd -D -S repsys1 -U repsys1 -P WeDontSharePasswords1!
+sqlcmd -D -S repsys1 -U repsys1 -P xxx
+sqlcmd -D -S repsys1 -U repsys1 -P xxx
 select * from Plex.accounting_period_ranges
 go
 exit
