@@ -7,6 +7,14 @@ Here is the **[link](https://github.com/arslankhanali/Ceph-5-Playground-CNV)** t
 
 Ceph is an opensource project which is renowned for its distributed architecture, which comprises of several key components working together to provide a unified storage solution. At the heart of Ceph lies the RADOS (Reliable Autonomic Distributed Object Store) distributed storage system, which forms the foundation for its scalability and resilience. RADOS utilizes a cluster of storage nodes, each running Ceph OSD (Object Storage Daemon) software, to store data across the network in a fault-tolerant manner. This distributed approach ensures high availability and data durability by replicating data across multiple nodes and automatically recovering from failures.
 
+We have designed and implemented RADOS, a Reliable, Autonomic Distributed Object Store that seeks to leverage device intelligence to distribute the complexity surrounding
+consistent data access, redundant storage, failure detection,
+and failure recovery in clusters consisting of many thousands
+of storage devices. Built as part of the Ceph distributed file
+system [27], RADOS facilitates an evolving, balanced distribution of data and workload across a dynamic and heterogeneous storage cluster while providing applications with
+the illusion of a single logical object store with well-defined
+safety semantics and strong consistency guarantees.
+
 ## Object Storage in Ceph
 
 Object storage, facilitated through RADOS Gateway, is a fundamental component of Ceph’s storage capabilities. Object storage in Ceph adopts a RESTful interface, allowing applications to interact with storage resources via HTTP APIs. Each object is stored as a binary blob, accompanied by metadata for efficient indexing and retrieval. This architecture enables seamless scalability, as objects are distributed across the Ceph cluster and can be accessed concurrently by multiple clients.
@@ -43,19 +51,20 @@ Look at the high level design below
 Before we start
 Remember you will have different environment with different IPs and hostname. So make changes accordingly.
 
-Pre Req
-You can ssh to workstation machine from your laptop
-root user on workstation can access ceph-mon01 and ceph-node01
-root user on ceph-mon01 can access ceph-mon02 and ceph-mon03
-ceph-mon01 will be used to bootstrap cluster 1
-root user on ceph-node01 can access ceph-node02 and ceph-node03
-ceph-node01 will be used to bootstrap cluster 2
+## Pre Req
+
+- You can ssh to workstation machine from your laptop
+- root user on workstation can access ceph-mon01 and ceph-node01
+- root user on ceph-mon01 can access ceph-mon02 and ceph-mon03
+- ceph-mon01 will be used to bootstrap cluster 1
+- root user on ceph-node01 can access ceph-node02 and ceph-node03
+- ceph-node01 will be used to bootstrap cluster 2
 
 Easiest way is to create a ssh key pair on workstation and transfer both pubic and private keys to all hosts.
 
 Enables repositories on VMs. If you are on RHEL, you will need to subscribe.
 
-# To enables above repos
+## To enables above repos
 
 ```bash
 sudo dnf config-manager --set-enabled ansible-2-for-rhel-8-x86_64-rpms
@@ -69,7 +78,148 @@ sudo dnf config-manager --set-enabled rhel-8-for-x86_64-baseos-rpmspos
 
 Purpose of this is to make sure all we can login from our laptop to workstation without being prompted for password. Makes life easier :)
 
-Generate SSH key pair
-Copy the .pub key to workstation
-Login to workstation
-Open 4 SSH tunnels that will route port 8000, 8888, 9000 and 9999 traffic from workstation to our laptop.
+- Generate SSH key pair
+- Copy the .pub key to workstation
+- Login to workstation
+- Open 4 SSH tunnels that will route port 8000, 8888, 9000 and 9999 traffic from workstation to our laptop.
+
+## CEPH-CLUSTER-1
+
+- Dashboard will be available on port 8000
+- Object Storage url will be available on port 8888
+
+## CEPH-CLUSTER-2
+
+- Dashboard will be available on port 9000
+- Object Storage url will be available on port 9999
+
+```bash
+# On your local laptop
+ssh-keygen -t rsa -b 4096 -f /path/to/your/keyfile # Give your own path
+ssh-copy-id -o StrictHostKeyChecking=no -i "/path/to/your/keyfile/<id_rsa>.pub" -p 22 root@workstation # Instead of workstation, give IP or hostname for your workstation(jump host)
+
+# Login to workstation
+# It also opens 4 SSH tunnels
+ssh -L 8000:localhost:8000 -L 9000:localhost:9000 -L 8888:localhost:8888 -L 9999:localhost:9999 root@workstation -p 22
+
+# On workstation
+# Change prompt color to Green
+# I use it for ease when I am logging in and out of various machines
+# You can skip it
+echo 'export PS1="\[\e[0;32m\][\u@\h \W]\$ \[\e[m\]"' >> ~/.bashrc
+source ~/.bashrc
+```
+
+## Setup SSH on workstation to other VMs
+
+Purpose of this is to make sure ceph-mon01 and ceph-node01 can reach out to other VMs. Remember, these 2 VMs will be used to bootstrap clusters.
+
+- Generate SSH key pair
+- Create entries in /etc/hosts file
+- Copy local /etc/hosts file to all other VMs
+- Copy the private and pubic key to ceph-mon01 and ceph-node01.
+
+```bash
+# On workstation machine
+# Create a key pair at /root/.ssh/
+ssh-keygen -t rsa -b 4096
+
+# Add hosts to /etc/hosts file
+cat >> /etc/hosts << EOF
+127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4
+::1         localhost localhost.localdomain localhost6 localhost6.localdomain6
+
+192.168.99.252  workstation-9xl8z.stornet.example.com
+192.168.99.61   ceph-node01
+192.168.99.62   ceph-node02
+192.168.99.63   ceph-node03
+192.168.99.64   ceph-mon01
+192.168.99.65   ceph-mon02
+192.168.99.66   ceph-mon03
+EOF
+
+# Defining a list of all hostnames
+hosts=(
+    "ceph-mon01"
+    "ceph-mon02"
+    "ceph-mon03"
+    "ceph-node01"
+    "ceph-node02"
+    "ceph-node03"
+)
+
+# Copy ssh public key to all other VMs
+ssh-copy-id -o StrictHostKeyChecking=no root@ceph-mon01
+ssh-copy-id -o StrictHostKeyChecking=no root@ceph-mon02
+ssh-copy-id -o StrictHostKeyChecking=no root@ceph-mon03
+
+ssh-copy-id -o StrictHostKeyChecking=no root@ceph-node01
+ssh-copy-id -o StrictHostKeyChecking=no root@ceph-node02
+ssh-copy-id -o StrictHostKeyChecking=no root@ceph-node03
+
+# Copy `hosts` file to all other VMs
+for host in "${hosts[@]}"; do
+    scp -o StrictHostKeyChecking=no /etc/hosts "root@$host:/etc/hosts"
+done
+
+# Copy the SSH private and public keys from workstation to ceph-mon01 and ceph-node01.
+scp /root/.ssh/id_rsa* root@ceph-mon01:/root/.ssh
+scp /root/.ssh/id_rsa* root@ceph-node01:/root/.ssh
+```
+
+## Deploy CEPH-CLUSTER-1
+
+Login to ceph-mon01 from workstation
+2. Open 2 SSH tunnels that will route 8443 and 80 port traffic from ceph-mon01 to workstation
+
+```bash
+# Login to ceph-mon01 from workstation
+ssh -L 8000:localhost:8443 -L 8888:localhost:80 root@ceph-mon01
+
+# Change prompt color to Yellow
+echo 'export PS1="\[\e[0;33m\][\u@\h \W]\$ \[\e[m\]"' >> ~/.bashrc
+source ~/.bashrc
+```
+
+## 3. Install git and ansible
+
+```bash
+# On ceph-mon01
+
+dnf -y install git ansible
+```
+
+## 4. Clone repo
+
+`git clone <https://github.com/ceph/cephadm-ansible.git>`
+
+## 5. Create Ansible inventory file
+
+```bash
+cat > /etc/ansible/hosts << EOF
+[cluster1]
+ceph-mon01
+ceph-mon02
+ceph-mon03
+
+[cluster2]
+ceph-node01
+ceph-node02
+ceph-node03
+EOF
+```
+
+## 6. Run preflight checks on cluster 1 nodes
+
+<https://hackmd.io/@yujungcheng/Hyu623GKi>
+<https://docs.ceph.com/projects/ceph-ansible/en/stable/installation/non-containerized.html>
+
+```bash
+cd cephadm-ansible
+ansible-playbook -i /etc/ansible/hosts -l cluster1 cephadm-preflight.yml
+
+# Two new repos will be enabled: ceph_stable_noarch & ceph_stable_x86_64
+# Check with
+
+dnf repolist
+```
