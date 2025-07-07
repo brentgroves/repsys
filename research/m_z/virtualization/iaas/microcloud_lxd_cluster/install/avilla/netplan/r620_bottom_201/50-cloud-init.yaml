@@ -19,8 +19,6 @@ network:
       id: 50
       link: "eno1"    
     "eno250":
-      addresses:
-      - "10.188.50.221/24"
       id: 50
       link: "eno2"
     "eno350":
