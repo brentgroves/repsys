@@ -40,3 +40,18 @@ The OpenFlow controller maintains the OpenFlow protocol communications channels 
 A real world OpenFlow capable network may consist of only OpenFlow switches or a mixture of OpenFlow switches and traditional switches and routers. The latter network type is called an overlay network. Some OpenFlow applications will require only partial deployment of OpenFlow switches whereas others require a network consisting of only OpenFlow switches.
 
 Most of the SDN network fabrics and applications we will discuss in this blog can be introduced as overlays, and multiple applications can be introduced in a staged fashion, with new ones building on the foundations laid by the previous applications.
+
+Yes, Open vSwitch (OVS) uses the OpenFlow protocol. OpenFlow is a key component of Open vSwitch's functionality, enabling it to act as a software-defined networking (SDN) switch. OVS leverages OpenFlow to manage traffic forwarding rules and policies, making it a popular choice for virtualized environments and SDN deployments.
+
+OpenFlow as a Control Protocol:
+OpenFlow is a protocol that allows external controllers to program the forwarding behavior of network switches.
+OVS as an OpenFlow Switch:
+Open vSwitch is a virtual switch that can be controlled by an OpenFlow controller.
+Configuration and Management:
+OpenFlow enables users to configure and manage Open vSwitch flow tables, which determine how packets are forwarded.
+Key OVS Components:
+OVS includes tools like ovs-ofctl that interact with the OpenFlow protocol to manage flow entries.
+Beyond Basic Switching:
+Open vSwitch supports OpenFlow 1.0 and later versions, along with numerous extensions, enabling advanced features like tunneling and group-based forwarding.
+Flexibility and Control:
+By using OpenFlow, Open vSwitch offers greater flexibility and control over network behavior compared to traditional switches.
