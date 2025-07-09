@@ -6,10 +6,25 @@
 
 For an explanation of the benefits of using an OVN underlay network, see **[Dedicated underlay network](https://documentation.ubuntu.com/microcloud/latest/microcloud/explanation/networking/#exp-networking-ovn-underlay)**.
 
-When running microcloud init, if you chose to set up distributed networking and you have at least one network interface per cluster member with an IP address, MicroCloud asks if you want to configure an underlay network for OVN:
+When running microcloud init, if you chose to set up distributed networking and you have at least one network interface per cluster member with an **IP address**, MicroCloud asks if you want to configure an underlay network for OVN:
 
 Configure dedicated underlay networking? (yes/no) [default=no]: <answer>
 
 You can choose to skip this question (just hit Enter). MicroCloud then uses its internal network as an OVN ‘underlay’, which is the same as the OVN management network (‘overlay’ network).
 
 You could also choose to configure a dedicated underlay network for OVN by typing yes. A list of available network interfaces with an IP address will be displayed. You can then select one network interface per cluster member to be used as the interfaces for the underlay network of OVN.
+
+### physical server **[ceph network](https://documentation.ubuntu.com/microcloud/latest/microcloud/how-to/ceph_networking/#howto-ceph-networking)**
+
+How to configure Ceph networking
+When running microcloud init, you are asked if you want to provide custom subnets for the Ceph cluster. Here are the questions you will be asked:
+
+What subnet (either IPv4 or IPv6 CIDR notation) would you like your Ceph internal traffic on? [default: 203.0.113.0/24]: <answer>
+
+What subnet (either IPv4 or IPv6 CIDR notation) would you like your Ceph public traffic on? [default: 203.0.113.0/24]: <answer>
+
+You can choose to skip both questions (just hit Enter) and use the default value which is the subnet used for the internal MicroCloud traffic. This is referred to as a usual Ceph networking setup.
+
+### internal traffic (unsure)
+
+10.188.220.0/24
