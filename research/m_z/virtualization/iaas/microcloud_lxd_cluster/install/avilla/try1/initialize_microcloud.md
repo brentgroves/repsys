@@ -246,6 +246,33 @@ GitHub
 <https://github.com> › canonical › microcloud › issues
 
 <https://github.com/canonical/microcloud/issues/175>
+
+From cursory view:
+
+Error: Failed to run: ovn-nbctl --timeout=10 --db tcp:10.8.16.251:6641,tcp:10.8.16.224:6641,tcp:10.8.16.223:6641 --wait=sb ha-chassis-group-add lxd-net2: exit status 1 (ovn-nbctl: tcp:10.8.16.251:6641,tcp:10.8.16.224:6641,tcp:10.8.16.223:6641: database connection failed (End of file))
+
+## answer 1
+
+That message indicates to me that LXD thinks it should use OVN from the system and not from the MicroOVN snap. MicroOVN uses TLS by default and provides ssl:x.x.x.x:nnnn values in the connection string provided in its environment file.
+
+Does it help to install/restart LXD as the last snap to ensure it detects the presence of MicroOVN?
+
+## answer 2
+
+Interestingly I'm getting this behaviour inconsistently without changing anything on LXD when launching instances.
+
+Nevermind, the issue I was seeing is something else. I too would advise trying to install the LXD snap last, or ensuring that you restart the snap before calling microcloud init.
+
+## response 1
+
+Thanks for your responses! I'm pretty sure I installed LXD last (had to reinstall it to get the latest version), and even issued a restart before microcloud init. Will retry the process and get back with results.
+
+## answer 4
+
+Yes this sounds like at least one of the LXD members has not detected MicroOVN is installed and is still trying to use the host OVN.
+
+We are planning to add a snap content interface to MicroOVN that will allow LXD to be notified when its installed and will reconfigure itself. We had an earlier attempt of this here canonical/microovn#76 but @masnax is planning to open a new PR since we've gained experience on how to do this with the MicroCeph snap (which had the same issue with LXD).
+
 <https://discuss.linuxcontainers.org/t/ovn-cluster-ovn-nbctl-6641-database-connection-failed-connection-refused/22058>
 
 <https://mail.openvswitch.org/pipermail/ovs-discuss/2021-November/051606.html>

@@ -7,6 +7,11 @@ To install MicroCloud, install all required snaps on all machines that you want 
 To do so, enter the following commands on all machines:
 
 ```bash
+sudo snap install lxd --channel=5.21/stable --cohort="+"
+snap install microceph --channel=squid/stable --cohort="+"
+snap install microovn --channel=24.03/stable --cohort="+"
+snap install microcloud --channel=2/stable --cohort="+"
+
 sudo snap install lxd --cohort="+"
 sudo snap install microceph --cohort="+"
 sudo snap install microovn --cohort="+"
