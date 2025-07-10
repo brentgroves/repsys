@@ -21,11 +21,15 @@ network:
     "eno250":
       id: 50
       link: "eno2"
+      accept-ra: false
+      dhcp4: false
+      link-local: []      
     "eno350":
-      addresses:
-      - "10.188.50.231/24"
       id: 50
       link: "eno3"
+      accept-ra: false
+      dhcp4: false
+      link-local: []      
     "eno1220":
       addresses:
       - "10.188.220.201/24"

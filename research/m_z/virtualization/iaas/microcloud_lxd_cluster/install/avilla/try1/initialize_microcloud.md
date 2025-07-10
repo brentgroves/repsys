@@ -51,6 +51,13 @@ micro11:
   ip: "10.188.50.201"
 ```
 
+When requested enter the passphrase:
+
+xerox viperfish woolworker dibs
+
+Verify the fingerprint "d9a2b56cdc43" is displayed on joining systems.
+Waiting to detect systems ...
+
 ## 4. On all the other machines, enter the following command and repeat the address selection
 
 `sudo microcloud join`
@@ -88,6 +95,10 @@ micro13:
 
 Select whether you want to wipe any of the disks. Wiping a disk will destroy all data on it.
 
+ Using "/dev/disk/by-id/wwn-0x6c81f660dba9cd002fef43a819011d8a" on "micro11" for local storage pool
+ Using "/dev/disk/by-id/wwn-0x6c81f660dba9cc002fedeb29d615b9b9" on "micro12" for local storage pool
+ Using "/dev/disk/by-id/wwn-0x6c81f660dbaa01002fef0cd525840392" on "micro13" for local storage pool
+
 ## 7. Select whether you want to set up distributed storage (using MicroCeph)
 
 Note
@@ -118,7 +129,11 @@ micro13:
 
 You must select at least one disk.
 
-Select whether you want to wipe any of the disks. Wiping a disk will destroy all data on it. `yes`
+Select whether you want to wipe any of the disks. Wiping a disk will destroy all data on it. `no`
+
+ Using 1 disk(s) on "micro11" for remote storage pool
+ Using 1 disk(s) on "micro12" for remote storage pool
+ Using 1 disk(s) on "micro13" for remote storage pool
 
 Select whether you want to encrypt any of the disks. Encrypting a disk will store the encryption keys in the Ceph key ring inside the Ceph configuration folder.
 `no`
@@ -138,9 +153,9 @@ You can leave it empty to use the default value, which is the MicroCloud interna
 When running microcloud init, you are asked if you want to provide custom subnets for the Ceph cluster. Here are the questions you will be asked:
 
 ```bash
-What subnet (either IPv4 or IPv6 CIDR notation) would you like your Ceph internal traffic on? [default: 203.0.113.0/24]: 
+What subnet (either IPv4 or IPv6 CIDR notation) would you like your Ceph internal traffic on? [default: 10.188.50.0/24] 
 
-What subnet (either IPv4 or IPv6 CIDR notation) would you like your Ceph public traffic on? [default: 203.0.113.0/24]: 
+What subnet (either IPv4 or IPv6 CIDR notation) would you like your Ceph public traffic on? [default: 10.188.50.0/24] 
 ```
 
 You can choose to **skip both questions (just hit Enter)** and use the default value which is the subnet used for the internal MicroCloud traffic. This is referred to as a usual Ceph networking setup.
@@ -153,7 +168,29 @@ If you choose yes, configure the distributed networking: `yes`
 
 ## a: Select the network interfaces that you want to use (see **[Network interface to connect to the uplink network](https://documentation.ubuntu.com/microcloud/latest/microcloud/reference/requirements/#reference-requirements-network-interfaces-uplink)**)
 
+Select an available interface per system to provide external connectivity for distributed network(s):
+Space to select; enter to confirm; type to filter results.
+Up/down to move; right to select all; left to select none.
+       +----------+--------+----------+
+
 You must select one network interface per machine.
+
+  [ ]  | micro11  | eno3   | physical |
+  [x]  | micro11  | eno250 | vlan     |
+  [ ]  | micro11  | eno350 | vlan     |
+  [ ]  | micro11  | eno1   | physical |
+  [ ]  | micro11  | eno2   | physical |
+  [ ]  | micro12  | eno3   | physical |
+  [x]  | micro12  | eno250 | vlan     |
+  [ ]  | micro12  | eno350 | vlan     |
+  [ ]  | micro12  | eno1   | physical |
+  [ ]  | micro12  | eno2   | physical |
+  [ ]  | micro13  | eno1   | physical |
+  [ ]  | micro13  | eno2   | physical |
+  [ ]  | micro13  | eno3   | physical |
+> [x]  | micro13  | eno250 | vlan     |
+  [ ]  | micro13  | eno350 | vlan     |
+       +----------+--------+----------+
 
 ```yaml
 micro11:
@@ -171,6 +208,50 @@ micro13:
   ceph:
     uplink: eno250
 ```
+
+ Using "eno250" on "micro13" for OVN uplink
+ Using "eno250" on "micro11" for OVN uplink
+ Using "eno250" on "micro12" for OVN uplink
+
+Specify the IPv4 gateway (CIDR) on the uplink network (empty to skip IPv4):
+
+Specify the IPv4 gateway (CIDR) on the uplink network (empty to skip IPv4): 10.188.50.254/24
+
+Specify the first IPv4 address in the range to use on the uplink network: 10.188.50.206
+Specify the last IPv4 address in the range to use on the uplink network: 10.188.50.230
+Specify the IPv6 gateway (CIDR) on the uplink network (empty to skip IPv6): empty
+
+Specify the DNS addresses (comma-separated IPv4 / IPv6 addresses) for the distributed network (default: 10.188.50.254):10.225.50.203,10.224.50.203
+
+Configure dedicated OVN underlay networking? (yes/no) [default=no]:
+Initializing new services
+ Local MicroCloud is ready
+ Local MicroOVN is ready
+ Local MicroCeph is ready
+ Local LXD is ready
+Awaiting cluster formation ...
+ Peer "micro13" has joined the cluster
+ Peer "micro12" has joined the cluster
+
+ Error: Failed to notify peer micro13 at 10.188.50.203:8443: Failed getting port group UUID for network "default" setup: Failed to run: ovn-nbctl --timeout=10 --db ssl:10.188.50.201:6641,ssl:10.188.50.203:6641,ssl:10.188.50.202:6641 -c /proc/self/fd/3 -p /proc/self/fd/4 -C /proc/self/fd/5 --wait=sb --format=csv --no-headings --data=bare --colum=_uuid,name,acl find port_group name=lxd_net2: exit status 1 (2025-07-10T22:16:17Z|00001|stream_ssl|WARN|SSL_read: error:0A000412:SSL routines::sslv3 alert bad certificate
+2025-07-10T22:16:17Z|00002|jsonrpc|WARN|ssl:10.188.50.201:6641: receive error: Input/output error
+2025-07-10T22:16:17Z|00003|reconnect|WARN|ssl:10.188.50.201:6641: connection dropped (Input/output error)
+ovn-nbctl: ssl:10.188.50.201:6641,ssl:10.188.50.203:6641,ssl:10.188.50.202:6641: database connection failed (Connection refused))
+
+Failed to run: ovn-nbctl sslv3 alert bad certificate
+
+Fails to finish setting up OVN network (ovn-nbctl: database ...
+
+GitHub
+<https://github.com> › canonical › microcloud › issues
+
+<https://github.com/canonical/microcloud/issues/175>
+<https://discuss.linuxcontainers.org/t/ovn-cluster-ovn-nbctl-6641-database-connection-failed-connection-refused/22058>
+
+<https://mail.openvswitch.org/pipermail/ovs-discuss/2021-November/051606.html>
+
+openssl version
+OpenSSL 3.0.13 30 Jan 2024 (Library: OpenSSL 3.0.13 30 Jan 2024)
 
 ## b: If you want to use IPv4, specify the IPv4 gateway on the uplink network (in CIDR notation) and the first and last IPv4 address in the range that you want to use with LXD
 
