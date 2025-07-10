@@ -16,6 +16,12 @@ sudo snap install lxd --cohort="+"
 sudo snap install microceph --cohort="+"
 sudo snap install microovn --cohort="+"
 sudo snap install microcloud --cohort="+"
+
+snap list
+lxd         5.21.3-c5ae129          33110  5.21/stable    canonical✓  in-cohort,held
+microceph   19.2.0+snapab139d4a1f   1393   squid/stable   canonical✓  in-cohort,held
+microcloud  2.1.0-3e8b183           1144   2/stable       canonical✓  in-cohort,held
+microovn    24.03.2+snapa2c59c105b  667    24.03/stable   canonical✓  in-cohort,held
 ```
 
 The --cohort flag ensures that versions remain **[synchronized during later updates](https://documentation.ubuntu.com/microcloud/latest/microcloud/how-to/update_upgrade/#howto-update-sync)**.
