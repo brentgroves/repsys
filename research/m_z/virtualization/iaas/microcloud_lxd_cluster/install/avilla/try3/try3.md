@@ -1,6 +1,52 @@
-# **[try 2 - single node setup from video](https://www.youtube.com/watch?v=M0y0hQ16YuE&t=359s)**
+# **[try 3 - single node setup from video](https://www.youtube.com/watch?v=M0y0hQ16YuE&t=359s)**
 
-**[try 2 - single node setup](https://documentation.ubuntu.com/microcloud/latest/microcloud/tutorial/get_started/)**
+**[try 3 - single node setup](https://documentation.ubuntu.com/microcloud/latest/microcloud/tutorial/get_started/)**
+
+Keep it simple like try 2 but add disk encryption and change IP range so vms and containers have access to the internet.
+
+- The IP rang 10.188.50.[200-212] has access to the internet. micro11,micro12, and micro13 consume 10.188.50.[201-203] and 10.188.50.205 is in use by the dhcp server. select ip range of 10.188.50.[206-212] to be used by containers and VM.
+- Encrypt the disk
+  - The dm-crypt kernel module must be available. Note that some cloud-optimised kernels do not ship dm-crypt by default. Check by running `sudo modinfo dm-crypt`
+  - The snap dm-crypt plug has to be connected, and microceph.daemon subsequently restarted:
+
+```bash
+sudo snap connect microceph:dm-crypt
+sudo snap restart microceph.daemon
+```
+
+## mistake
+
+eno250@eno2 did not show up on this list. It must be used somehow; although `ip a` does not show any address. Maybe I should have rebooted the machine after uninstalling microcloud.
+
+Space to select; enter to confirm; type to filter results.
+Up/down to move; right to select all; left to select none.
+       +----------+--------+----------+
+       | LOCATION | IFACE  |   TYPE   |
+       +----------+--------+----------+
+  [ ]  | micro11  | eno2   | physical |
+  [ ]  | micro11  | eno3   | physical |
+> [ ]  | micro11  | eno350 | vlan     |
+  [ ]  | micro11  | eno1   | physical |
+       +----------+--------+----------+
+
+```bash
+ip a
+eno250@eno2: <BROADCAST,MULTICAST> mtu 1500 qdisc noqueue state DOWN group default qlen 1000
+    link/ether b8:ca:3a:6a:35:99 brd ff:ff:ff:ff:ff:ff
+
+sudo ip link set eno250 up
+# reboot system    
+```
+
+- Used eno350 instead for distributed network.
+
+## try 2 summary
+
+- On try 2 I selected address range 10.188.50.6 - 10.188.50.12 this is not what I wanted because these IP addresses can not access the internet.
+
+- Did not encrypt disk.
+
+Do you want to encrypt the selected disks? (yes/no) [default=no]: no
 
 - need 2 additional network interfaces
 1 for uplink, 1 for microceph, 1 for microovn
@@ -22,7 +68,6 @@ sudo -i
 
 
 snap list
-snap list
 Name        Version                 Rev    Tracking       Publisher   Notes
 core22      20250612                2045   latest/stable  canonical✓  base
 core24      20250526                1006   latest/stable  canonical✓  base
@@ -32,7 +77,6 @@ microcloud  2.1.0-3e8b183           1144   2/stable       canonical✓  in-cohor
 microovn    24.03.2+snapa2c59c105b  667    24.03/stable   canonical✓  in-cohort
 snapd       2.70                    24792  latest/stable  canonical✓  snapd
 
-snap services --global
 snap services --global
 Service                          Startup   Current   Notes
 lxd.activate                     enabled   inactive  -
@@ -65,7 +109,10 @@ Following installation, make sure to **[hold updates](https://documentation.ubun
 
 To indefinitely hold all updates to the snaps needed for MicroCloud, run:
 
-`sudo snap refresh --hold lxd microceph microovn microcloud`
+```bash
+sudo snap refresh --hold lxd microceph microovn microcloud
+General refreshes of "lxd", "microceph", "microovn", "microcloud" held indefinitely
+```
 
 ```bash
 sudo -i
@@ -82,6 +129,11 @@ Up/down to move; right to select all; left to select none.
   [ ]  | 10.188.220.201 | eno1220  |
   [ ]  | 10.187.220.201 | eno11220 |
        +----------------+----------+
+
+ Using address "10.188.50.201" for MicroCloud
+
+Gathering system information ...
+Would you like to set up local storage? (yes/no) [default=yes]: 
 
 Select exactly one disk from each cluster member:
 Space to select; enter to confirm; type to filter results.
@@ -128,18 +180,28 @@ Up/down to move; right to select all; left to select none.
 Disk configuration does not meet recommendations for fault tolerance. At least 3 systems must supply disks.
 Continuing with this configuration will inhibit MicroCloud's ability to retain data on system failure
 Change disk selection? (yes/no) [default=yes]: no
-
-# diff from tutorial. he selected yes
-Do you want to encrypt the selected disks? (yes/no) [default=no]: no
+Do you want to encrypt the selected disks? (yes/no) [default=no]: yes
 Would you like to set up CephFS remote storage? (yes/no) [default=yes]: yes
 # diff from tutorial. he selected another subnet for both internal and public traffic.
 What subnet (either IPv4 or IPv6 CIDR notation) would you like your Ceph internal traffic on? [default: 10.188.50.0/24]
+# if you change this to another network setup up will check for an existing IP address and show you it
 What subnet (either IPv4 or IPv6 CIDR notation) would you like your Ceph public traffic on? [default: 10.188.50.0/24]
 
 Configure distributed networking? (yes/no) [default=yes]: yes
 Select an available interface per system to provide external connectivity for distributed network(s):
 Space to select; enter to confirm; type to filter results.
 Up/down to move; right to select all; left to select none.
+
+       +----------+--------+----------+
+       | LOCATION | IFACE  |   TYPE   |
+       +----------+--------+----------+
+  [ ]  | micro11  | eno2   | physical |
+  [ ]  | micro11  | eno3   | physical |
+> [x]  | micro11  | eno350 | vlan     |
+  [ ]  | micro11  | eno1   | physical |
+       +----------+--------+----------+
+# Mistake uninstalling. did not set eno250 up and reboot the system before running microcloud init
+
        +----------+--------+----------+
        | LOCATION | IFACE  |   TYPE   |
        +----------+--------+----------+
@@ -155,8 +217,8 @@ nmap -sP 10.188.50.0/24
  Using "eno250" on "micro11" for OVN uplink
 
 Specify the IPv4 gateway (CIDR) on the uplink network (empty to skip IPv4): 10.188.50.254/24
-Specify the first IPv4 address in the range to use on the uplink network: 10.188.50.6
-Specify the last IPv4 address in the range to use on the uplink network: 10.188.50.12
+Specify the first IPv4 address in the range to use on the uplink network: 10.188.50.206
+Specify the last IPv4 address in the range to use on the uplink network: 10.188.50.212
 # no ipv6 on network
 Specify the IPv6 gateway (CIDR) on the uplink network (empty to skip IPv6):
 Specify the DNS addresses (comma-separated IPv4 / IPv6 addresses) for the distributed network (default: 10.188.50.254): 10.225.50.203,10.224.50.203
@@ -170,11 +232,15 @@ Awaiting cluster formation ...
 Configuring cluster-wide devices ...
 MicroCloud is ready
 
+Awaiting cluster formation ...
+Configuring cluster-wide devices ...
+MicroCloud is ready
+
 microcloud cluster list
 +---------+--------------------+-------+------------------------------------------------------------------+--------+
 |  NAME   |      ADDRESS       | ROLE  |                           FINGERPRINT                            | STATUS |
 +---------+--------------------+-------+------------------------------------------------------------------+--------+
-| micro11 | 10.188.50.201:9443 | voter | 39546f950581d217671bf58b0b990bda4da6035c48a73c2a6c7c01e07c8ebf7f | ONLINE |
+| micro11 | 10.188.50.201:9443 | voter | ab52ab70fe321d44f5d52ef6a0b04fc6abb62421d2da8b989e89103ffbaf5293 | ONLINE |
 +---------+--------------------+-------+------------------------------------------------------------------+--------+
 
 lxc cluster list
@@ -189,14 +255,13 @@ microceph cluster list
 +---------+--------------------+-------+------------------------------------------------------------------+--------+
 |  NAME   |      ADDRESS       | ROLE  |                           FINGERPRINT                            | STATUS |
 +---------+--------------------+-------+------------------------------------------------------------------+--------+
-| micro11 | 10.188.50.201:7443 | voter | cc16466a5a699f8b60beec6da73984f22acc66f78bb86b4dbab36611e0c2b387 | ONLINE |
+| micro11 | 10.188.50.201:7443 | voter | 5808ceb7f4a6495842e1631b6044869b8264b944d773c49f755b43e27c7c5a15 | ONLINE |
 +---------+--------------------+-------+------------------------------------------------------------------+--------+
-microovn cluster list
 microovn cluster list
 +---------+--------------------+-------+------------------------------------------------------------------+--------+
 |  NAME   |      ADDRESS       | ROLE  |                           FINGERPRINT                            | STATUS |
 +---------+--------------------+-------+------------------------------------------------------------------+--------+
-| micro11 | 10.188.50.201:6443 | voter | 26a367389e3bd0905b7c01a670cf777b83750e068774a250ed42f3624db38f1d | ONLINE |
+| micro11 | 10.188.50.201:6443 | voter | 96f4464e62c8244d37e77517d3faf43d63e73d33194931eaed215308cd410d9d | ONLINE |
 +---------+--------------------+-------+------------------------------------------------------------------+--------+
 
 lxc profile list
@@ -205,6 +270,9 @@ lxc profile list
 +---------+---------------------+---------+
 | default | Default LXD profile | 0       |
 +---------+---------------------+---------+
+
+configured to default ovn network and default root disk which is on the remote storage pool managed by ceph. 
+Question: Is the RBD or CephFS remote storage?
 
 lxc profile show default
 name: default
@@ -226,11 +294,134 @@ used_by: []
 
 In LXD, migration.stateful is a profile setting that controls whether a virtual machine supports stateful operations like live migration, stateful snapshots, and stateful stop/start. When enabled (set to true), it allows for these operations, but it also disables certain features like virtiofs shares and requires specific storage configurations.
 
+<!-- not necessary for single node but will need it later -->
 ```bash
 lxc profile set default migration.stateful true
 ```
 
+## launch instance
+
+retrieve the image from image server, unpack it onto the remote storage, and then create the instance root volume so lxc can launch it
+
+```bash
+lxc launch ubuntu:noble v1 --vm
+Launching v1
+
+lxc list
++------+---------+---------------------+-------------------------------------------------+-----------------+-----------+----------+
+| NAME |  STATE  |        IPV4         |                      IPV6                       |      TYPE       | SNAPSHOTS | LOCATION |
++------+---------+---------------------+-------------------------------------------------+-----------------+-----------+----------+
+| v1   | RUNNING | 10.93.23.2 (enp5s0) | fd42:4f94:2f1d:d135:216:3eff:fe75:448a (enp5s0) | VIRTUAL-MACHINE | 0         | micro11  |
++------+---------+---------------------+-------------------------------------------------+-----------------+-----------+----------+
+
+```
+
+## look at network
+
+```bash
+ip a
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+    inet6 ::1/128 scope host noprefixroute 
+       valid_lft forever preferred_lft forever
+2: enp66s0f0: <BROADCAST,MULTICAST> mtu 1500 qdisc noop state DOWN group default qlen 1000
+    link/ether 00:0a:f7:3e:f4:60 brd ff:ff:ff:ff:ff:ff
+3: enp66s0f1: <BROADCAST,MULTICAST> mtu 1500 qdisc noop state DOWN group default qlen 1000
+    link/ether 00:0a:f7:3e:f4:61 brd ff:ff:ff:ff:ff:ff
+4: enp66s0f2: <BROADCAST,MULTICAST> mtu 1500 qdisc noop state DOWN group default qlen 1000
+    link/ether 00:0a:f7:3e:f4:62 brd ff:ff:ff:ff:ff:ff
+5: eno1: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq state UP group default qlen 1000
+    link/ether b8:ca:3a:6a:35:98 brd ff:ff:ff:ff:ff:ff
+    altname enp1s0f0
+    inet6 fe80::baca:3aff:fe6a:3598/64 scope link 
+       valid_lft forever preferred_lft forever
+6: enp66s0f3: <BROADCAST,MULTICAST> mtu 1500 qdisc noop state DOWN group default qlen 1000
+    link/ether 00:0a:f7:3e:f4:63 brd ff:ff:ff:ff:ff:ff
+7: eno2: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq state UP group default qlen 1000
+    link/ether b8:ca:3a:6a:35:99 brd ff:ff:ff:ff:ff:ff
+    altname enp1s0f1
+    inet6 fe80::baca:3aff:fe6a:3599/64 scope link 
+       valid_lft forever preferred_lft forever
+8: enp65s0f0: <BROADCAST,MULTICAST> mtu 1500 qdisc noop state DOWN group default qlen 1000
+    link/ether 98:b7:85:20:18:0e brd ff:ff:ff:ff:ff:ff
+9: eno3: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq state UP group default qlen 1000
+    link/ether b8:ca:3a:6a:35:9a brd ff:ff:ff:ff:ff:ff
+    altname enp1s0f2
+    inet6 fe80::baca:3aff:fe6a:359a/64 scope link 
+       valid_lft forever preferred_lft forever
+10: eno4: <BROADCAST,MULTICAST> mtu 1500 qdisc noop state DOWN group default qlen 1000
+    link/ether b8:ca:3a:6a:35:9b brd ff:ff:ff:ff:ff:ff
+    altname enp1s0f3
+11: enp65s0f1: <BROADCAST,MULTICAST> mtu 1500 qdisc noop state DOWN group default qlen 1000
+    link/ether 98:b7:85:20:18:0f brd ff:ff:ff:ff:ff:ff
+12: eno150@eno1: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default qlen 1000
+    link/ether b8:ca:3a:6a:35:98 brd ff:ff:ff:ff:ff:ff
+    inet 10.188.50.201/24 brd 10.188.50.255 scope global eno150
+       valid_lft forever preferred_lft forever
+    inet6 fe80::baca:3aff:fe6a:3598/64 scope link 
+       valid_lft forever preferred_lft forever
+13: eno1220@eno1: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default qlen 1000
+    link/ether b8:ca:3a:6a:35:98 brd ff:ff:ff:ff:ff:ff
+    inet 10.188.220.201/24 brd 10.188.220.255 scope global eno1220
+       valid_lft forever preferred_lft forever
+    inet6 fe80::baca:3aff:fe6a:3598/64 scope link 
+       valid_lft forever preferred_lft forever
+14: eno11220@eno1: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default qlen 1000
+    link/ether b8:ca:3a:6a:35:98 brd ff:ff:ff:ff:ff:ff
+    inet 10.187.220.201/24 brd 10.187.220.255 scope global eno11220
+       valid_lft forever preferred_lft forever
+    inet6 fe80::baca:3aff:fe6a:3598/64 scope link 
+       valid_lft forever preferred_lft forever
+15: eno250@eno2: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default qlen 1000
+    link/ether b8:ca:3a:6a:35:99 brd ff:ff:ff:ff:ff:ff
+16: eno350@eno3: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue master ovs-system state UP group default qlen 1000
+    link/ether b8:ca:3a:6a:35:9a brd ff:ff:ff:ff:ff:ff
+24: ovs-system: <BROADCAST,MULTICAST> mtu 1500 qdisc noop state DOWN group default qlen 1000
+    link/ether 4e:62:9b:e2:4f:d9 brd ff:ff:ff:ff:ff:ff
+25: br-int: <BROADCAST,MULTICAST> mtu 1500 qdisc noop state DOWN group default qlen 1000
+    link/ether ca:72:e7:98:35:3b brd ff:ff:ff:ff:ff:ff
+26: lxdovn1: <BROADCAST,MULTICAST> mtu 1500 qdisc noop state DOWN group default qlen 1000
+    link/ether b8:ca:3a:6a:35:9a brd ff:ff:ff:ff:ff:ff
+27: tap494a10fe: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq master ovs-system state UP group default qlen 1000
+    link/ether 32:41:60:4d:af:38 brd ff:ff:ff:ff:ff:ff
+```
+
+## does vm have expected network access
+
+yes. same as host system. except no routes to 220 or 1220 vlans.
+
+```bash
+lxc exec v1 -- bash
+ping 10.188.50.202
+```
+
+## does storage work
+
+i think so.
+
+```bash
+touch t.txt
+root@v1:~# vi t.txt
+root@v1:~# cat t.txt
+test
+```
+
+## START HERE
+
+<https://www.youtube.com/watch?v=M0y0hQ16YuE&t=359s>
+13 MINutes into video
+
 ## questions
+
+### 1. created an instance but the ipv4 address is not in the ip address range we configured
+
+He selected an address range of 10.2.123.[100-120] on the enp75s0 ovn uplink interface. but his instance showed an ip of 10.22
+
+### 0. configured to default ovn network and default root disk which is on the remote storage pool managed by ceph
+
+Question: Is the RBD or CephFS remote storage?
 
 ### 1. why does lxc profile show eth0 network device instead of en0150 vlan interface chosen
 
