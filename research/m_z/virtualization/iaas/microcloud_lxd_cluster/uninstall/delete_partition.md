@@ -31,7 +31,8 @@ Open a terminal and use the command sudo fdisk /dev/sdX (replace 'sdX' with the 
 You will need administrator privileges (sudo) to modify the partition table.
 
 ```bash
-sudo fdisk /dev/sdc
+
+cryptsetup luksClose /dev/mapper/luksosd-1
 ```
 
 ## 3. Delete the partition

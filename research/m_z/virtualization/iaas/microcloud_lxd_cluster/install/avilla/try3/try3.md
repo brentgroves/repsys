@@ -200,7 +200,7 @@ Up/down to move; right to select all; left to select none.
 > [x]  | micro11  | eno350 | vlan     |
   [ ]  | micro11  | eno1   | physical |
        +----------+--------+----------+
-# Mistake uninstalling. did not set eno250 up and reboot the system before running microcloud init
+# Mistake uninstalling. did not set eno250 up and reboot the system before running microcloud init. so I selected eno350 instead of en0250.
 
        +----------+--------+----------+
        | LOCATION | IFACE  |   TYPE   |
@@ -297,6 +297,8 @@ In LXD, migration.stateful is a profile setting that controls whether a virtual 
 <!-- not necessary for single node but will need it later -->
 ```bash
 lxc profile set default migration.stateful true
+lxc profile get default migration.stateful
+true
 ```
 
 ## launch instance
@@ -408,6 +410,91 @@ root@v1:~# cat t.txt
 test
 ```
 
+## what does the network look like
+
+looks the same except for additional interfaces. All the newly created interfaces are down except for tap interface whos master is the  ovs-system interface.
+
+```bash
+24: ovs-system: <BROADCAST,MULTICAST> mtu 1500 qdisc noop state DOWN group default qlen 1000
+    link/ether 4e:62:9b:e2:4f:d9 brd ff:ff:ff:ff:ff:ff
+25: br-int: <BROADCAST,MULTICAST> mtu 1500 qdisc noop state DOWN group default qlen 1000
+    link/ether ca:72:e7:98:35:3b brd ff:ff:ff:ff:ff:ff
+26: lxdovn1: <BROADCAST,MULTICAST> mtu 1500 qdisc noop state DOWN group default qlen 1000
+    link/ether b8:ca:3a:6a:35:9a brd ff:ff:ff:ff:ff:ff
+27: tap494a10fe: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq master ovs-system state UP group default qlen 1000
+    link/ether 32:41:60:4d:af:38 brd ff:ff:ff:ff:ff:ff
+```
+
+```bash
+ip a
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+    inet6 ::1/128 scope host noprefixroute 
+       valid_lft forever preferred_lft forever
+2: enp66s0f0: <BROADCAST,MULTICAST> mtu 1500 qdisc noop state DOWN group default qlen 1000
+    link/ether 00:0a:f7:3e:f4:60 brd ff:ff:ff:ff:ff:ff
+3: enp66s0f1: <BROADCAST,MULTICAST> mtu 1500 qdisc noop state DOWN group default qlen 1000
+    link/ether 00:0a:f7:3e:f4:61 brd ff:ff:ff:ff:ff:ff
+4: enp66s0f2: <BROADCAST,MULTICAST> mtu 1500 qdisc noop state DOWN group default qlen 1000
+    link/ether 00:0a:f7:3e:f4:62 brd ff:ff:ff:ff:ff:ff
+5: eno1: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq state UP group default qlen 1000
+    link/ether b8:ca:3a:6a:35:98 brd ff:ff:ff:ff:ff:ff
+    altname enp1s0f0
+    inet6 fe80::baca:3aff:fe6a:3598/64 scope link 
+       valid_lft forever preferred_lft forever
+6: enp66s0f3: <BROADCAST,MULTICAST> mtu 1500 qdisc noop state DOWN group default qlen 1000
+    link/ether 00:0a:f7:3e:f4:63 brd ff:ff:ff:ff:ff:ff
+7: eno2: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq state UP group default qlen 1000
+    link/ether b8:ca:3a:6a:35:99 brd ff:ff:ff:ff:ff:ff
+    altname enp1s0f1
+    inet6 fe80::baca:3aff:fe6a:3599/64 scope link 
+       valid_lft forever preferred_lft forever
+8: enp65s0f0: <BROADCAST,MULTICAST> mtu 1500 qdisc noop state DOWN group default qlen 1000
+    link/ether 98:b7:85:20:18:0e brd ff:ff:ff:ff:ff:ff
+9: eno3: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq state UP group default qlen 1000
+    link/ether b8:ca:3a:6a:35:9a brd ff:ff:ff:ff:ff:ff
+    altname enp1s0f2
+    inet6 fe80::baca:3aff:fe6a:359a/64 scope link 
+       valid_lft forever preferred_lft forever
+10: eno4: <BROADCAST,MULTICAST> mtu 1500 qdisc noop state DOWN group default qlen 1000
+    link/ether b8:ca:3a:6a:35:9b brd ff:ff:ff:ff:ff:ff
+    altname enp1s0f3
+11: enp65s0f1: <BROADCAST,MULTICAST> mtu 1500 qdisc noop state DOWN group default qlen 1000
+    link/ether 98:b7:85:20:18:0f brd ff:ff:ff:ff:ff:ff
+12: eno150@eno1: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default qlen 1000
+    link/ether b8:ca:3a:6a:35:98 brd ff:ff:ff:ff:ff:ff
+    inet 10.188.50.201/24 brd 10.188.50.255 scope global eno150
+       valid_lft forever preferred_lft forever
+    inet6 fe80::baca:3aff:fe6a:3598/64 scope link 
+       valid_lft forever preferred_lft forever
+13: eno1220@eno1: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default qlen 1000
+    link/ether b8:ca:3a:6a:35:98 brd ff:ff:ff:ff:ff:ff
+    inet 10.188.220.201/24 brd 10.188.220.255 scope global eno1220
+       valid_lft forever preferred_lft forever
+    inet6 fe80::baca:3aff:fe6a:3598/64 scope link 
+       valid_lft forever preferred_lft forever
+14: eno11220@eno1: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default qlen 1000
+    link/ether b8:ca:3a:6a:35:98 brd ff:ff:ff:ff:ff:ff
+    inet 10.187.220.201/24 brd 10.187.220.255 scope global eno11220
+       valid_lft forever preferred_lft forever
+    inet6 fe80::baca:3aff:fe6a:3598/64 scope link 
+       valid_lft forever preferred_lft forever
+15: eno250@eno2: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default qlen 1000
+    link/ether b8:ca:3a:6a:35:99 brd ff:ff:ff:ff:ff:ff
+16: eno350@eno3: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue master ovs-system state UP group default qlen 1000
+    link/ether b8:ca:3a:6a:35:9a brd ff:ff:ff:ff:ff:ff
+24: ovs-system: <BROADCAST,MULTICAST> mtu 1500 qdisc noop state DOWN group default qlen 1000
+    link/ether 4e:62:9b:e2:4f:d9 brd ff:ff:ff:ff:ff:ff
+25: br-int: <BROADCAST,MULTICAST> mtu 1500 qdisc noop state DOWN group default qlen 1000
+    link/ether ca:72:e7:98:35:3b brd ff:ff:ff:ff:ff:ff
+26: lxdovn1: <BROADCAST,MULTICAST> mtu 1500 qdisc noop state DOWN group default qlen 1000
+    link/ether b8:ca:3a:6a:35:9a brd ff:ff:ff:ff:ff:ff
+27: tap494a10fe: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq master ovs-system state UP group default qlen 1000
+    link/ether 32:41:60:4d:af:38 brd ff:ff:ff:ff:ff:ff
+```
+
 ## START HERE
 
 <https://www.youtube.com/watch?v=M0y0hQ16YuE&t=359s>
@@ -418,6 +505,8 @@ test
 ### 1. created an instance but the ipv4 address is not in the ip address range we configured
 
 He selected an address range of 10.2.123.[100-120] on the enp75s0 ovn uplink interface. but his instance showed an ip of 10.22
+
+answer: at time 6.50 of video he says this range will be used for the virtual network.
 
 ### 0. configured to default ovn network and default root disk which is on the remote storage pool managed by ceph
 

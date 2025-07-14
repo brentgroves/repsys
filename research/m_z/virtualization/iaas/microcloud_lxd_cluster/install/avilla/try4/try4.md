@@ -1,4 +1,29 @@
-# try 3
+# try 4
+
+Failed adding 2 nodes to the cluster at the same time. This time only add one node at a time.
+
+## Network interface for intra-cluster traffic
+
+- MicroCloud's internal traffic could be on `eno1220`. Don't think it needs a connection to the internet.
+- Cephs internal network could also be on `eno1220`.
+
+## Network interface to connect to the uplink network
+
+MicroCloud requires one network interface for connecting OVN to the uplink network. This network interface must either be an unused interface that does not have an IP address configured, or a bridge.
+
+This network interface could be given select internet connectivity and cannot have an IP address. so we could use `eno250` or `eno350`. This would give clients access to Ceph storage from the 10.188.50.0/24 network.
+
+## Router IP for virtual network
+
+Noticed that the VM did not have an ip address in the range given for OVNs uplink.  The speaker said these ip addresses are used for the router ips for the virtual networks.
+
+Using "eno250" on "micro11" for OVN uplink
+
+Specify the IPv4 gateway (CIDR) on the uplink network (empty to skip IPv4): 10.188.50.254/24
+Specify the first IPv4 address in the range to use on the uplink network: 10.188.50.206
+Specify the last IPv4 address in the range to use on the uplink network: 10.188.50.212
+
+## try 3
 
 - The IP rang 10.188.50.[200-212] has access to the internet. micro11,micro12, and micro13 consume 10.188.50.[201-203] and 10.188.50.205 is in use by the dhcp server. select ip range of 10.188.50.[206-212] to be used by containers and VM.
 - Encrypt the disk
