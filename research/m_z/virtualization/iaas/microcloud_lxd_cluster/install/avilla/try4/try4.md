@@ -1,6 +1,16 @@
 # try 4
 
-Failed adding 2 nodes to the cluster at the same time. This time only add one node at a time.
+Failed adding 1 node to the cluster.
+
+## issue
+
+when joining node received an error concerning the trust certificate not valid yet. Checked the times on the initiator was 5 minutes behind the node being added. I believe the joining node creates a trust certificates with a valid date range beginning at creation time.  Since joining node was 5 minutes in the future compared to the initiator. The initiator said it could not establish a trusted connection. found that I had to change the NTP server addresses in Ubuntu so that the times could all be in sync.
+
+```bash
+Initializing new services
+Awaiting cluster formation ...
+Error: System "micro12" failed to join the cluster: Failed to update cluster status of services: Failed to join "MicroCeph" cluster: failed to request disk addition Post "<http://control.socket/1.0/services/microceph/1.0/disks>": context deadline exceeded
+```
 
 ## Network interface for intra-cluster traffic
 
