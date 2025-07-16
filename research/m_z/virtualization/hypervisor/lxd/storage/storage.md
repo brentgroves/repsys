@@ -34,10 +34,10 @@ How to manage storage pools
 
 How to create an instance in a specific storage pool
 
-Create a storage pool in a cluster
+## Create a storage pool in a cluster
+
 If you are running a LXD cluster and want to add a storage pool, you must create the storage pool for each cluster member separately. The reason for this is that the configuration, for example, the storage location or the size of the pool, might be different between cluster members.
 
-CLIUI
 To create a storage pool via the CLI, start by creating a pending storage pool on each member with the --target=<cluster_member> flag and the appropriate configuration for the member.
 
 Make sure to use the same storage pool name for all members. Then create the storage pool without specifying the --target flag to actually set it up.
