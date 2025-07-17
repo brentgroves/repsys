@@ -125,11 +125,14 @@ Yes, installing ntpsec will generally disable systemd-timesyncd. When ntpsec (or
 DONT DO THIS
 
 ```bash
-apt install ntpsec
+apt remove ntpsec
+Warning: The unit file, source configuration file or drop-ins of ntpsec-rotate-stats.timer changed on disk. Run 'systemctl daemon-reload' to reload units.
+Warning: The unit file, source configuration file or drop-ins of ntpsec-systemd-netif.path changed on disk. Run 'systemctl daemon-reload' to reload units.
+Warning: The unit file, source configuration file or drop-ins of ntpsec.service changed on disk. Run 'systemctl daemon-reload' to reload units.
+Processing triggers for man-db (2.12.0-4build2) ...
+
 ntpq -p
 ```
-
-This command provides details about the NTP peers, including their status and how closely your machine’s time aligns to those servers.
 
 Conclusion
 Setting up time synchronization on your Ubuntu 24.04 server is a straightforward process that can help ensure system reliability and accuracy. By leveraging systemd-timesyncd, you can maintain consistent time across your system, which is essential for various applications and services.
