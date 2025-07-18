@@ -1,13 +1,15 @@
 # Structures Storage Cluster
 
-The Structures Storage Cluster is one part of our MicroCloud. If you have a unique storage requirement please contact an IS team member.
+The Structures Storage Cluster in Avilla is one part of our MicroCloud. If you have a unique storage requirement, please contact an IS team member.
 
 - Thanks
+
+The following is in markdown format. You can view it better at <https://markdownlivepreview.com/> by copying and pasting the contents below.
 
 ## MicroCeph features
 
 - higher availability and fault tolerance
-- self healing
+- self-healing
 - 50 nodes max
 - Configurable network interfaces for both public and internal traffic.
 - **[s3 compatible object storage](https://docs.ceph.com/en/reef/radosgw/#object-gateway)**
@@ -31,7 +33,7 @@ Kevin Young, Information Systems Manager
 Jared Davis, IT Manager
 Hayley Rymer, IT Supervisor, Mills River
 Mitch Harper, Desktop and Systems Support Technician, Mills River
-Thomas.Creal, Desktop and Systems Support Technician, Mills River
+Thomas Creal, Desktop and Systems Support Technician, Mills River
 Matthew Bump, Muscle Shoals, Engineering Supervisor II / IT
 Skippie Muehlfeld, Controls Engineer, Indiana
 Sam Jackson, Information Systems Developer, Southfield
@@ -40,3 +42,5 @@ David Maitner,  Desktop and System Support Technician, Fruitport
 Carl Stangland, Desktop and System Support Technician, Indiana
 Lucas Tuma, IT Administrator, Strakonice
 Aleksandar Gavrilov, IT Administrator, Skopje
+Brad D. Cook, Quality Engineer, Fruitport
+Jared Eikenberry, Quality Engineer, Fruitport
