@@ -18,6 +18,15 @@ Carl Stangland, Desktop and System Support Technician, Indiana
 Lucas Tuma, IT Administrator, Strakonice
 Aleksandar Gavrilov, IT Administrator, Skopje
 
+## July 18
+
+- LXD Cluster
+- Storage cluster
+  - self healing
+- Power BI Pro and Microsoft Fabric
+  - Workspace and apps
+  - Can publish and share
+
 ## Links
 
 - The **[Fabric Analyst in a Day (FAIAD)](https://aka.ms/LearnFAIAD)**

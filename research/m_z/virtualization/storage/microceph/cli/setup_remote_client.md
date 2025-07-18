@@ -78,7 +78,7 @@ The files are located at the paths shown above on any MicroCeph node. The kernel
 Mount the filesystem:
 
 ```bash
-$ sudo mkdir /mnt/mycephfs
+sudo mkdir /mnt/mycephfs
 # $ sudo mount -t ceph :/ /mnt/mycephfs/ -o name=admin,fs=newFs
 sudo mount -t ceph :/ /mnt/mycephfs/ -o name=admin,fs=lxd_cephfs
 ls /mnt/mycephfs/

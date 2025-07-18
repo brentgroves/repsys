@@ -136,6 +136,26 @@ locations:
 - micro11
 - micro12
 - micro13
+
+# fs
+lxc storage show remote-fs
+name: remote-fs
+description: Distributed file-system storage using CephFS
+driver: cephfs
+status: Created
+config:
+  cephfs.cluster_name: ceph
+  cephfs.create_missing: "true"
+  cephfs.data_pool: lxd_cephfs_data
+  cephfs.meta_pool: lxd_cephfs_meta
+  cephfs.osd_pg_num: "32"
+  cephfs.path: lxd_cephfs
+  cephfs.user.name: admin
+used_by: []
+locations:
+- micro11
+- micro12
+- micro13
 ```
 
 To see usage information for a specific pool, run the following command:
