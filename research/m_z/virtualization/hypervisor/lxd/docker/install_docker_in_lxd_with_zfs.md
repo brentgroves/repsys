@@ -14,3 +14,11 @@ config:
   security.syscalls.intercept.mknod: "true"
   security.syscalls.intercept.setxattr: "true"
 ```
+
+There is also a FUSE implementation of ZFS on the Linux platform. This is not recommended. The native ZFS driver (ZoL) is more tested, has better performance, and is more widely used. The remainder of this document refers to the native ZoL port.
+
+## Prerequisites
+
+ZFS requires one or more dedicated block devices, preferably solid-state drives (SSDs).
+The /var/lib/docker/ directory must be mounted on a ZFS-formatted filesystem.
+Changing the storage driver makes any containers you have already created inaccessible on the local system. Use docker save to save containers, and push existing images to Docker Hub or a private repository, so that you do not need to re-create them later.

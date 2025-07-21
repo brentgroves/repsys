@@ -10,3 +10,9 @@ Images are available from remote image stores (see **[Remote image servers](http
 You can copy images from remote servers to your local image store, or copy local images to remote servers. You can also use a local image to create a remote instance.
 
 Each image is identified by a fingerprint (SHA256). To make it easier to manage images, LXD allows defining one or more aliases for each image.
+
+## all images
+
+## desktop
+
+lxc launch images:ubuntu/noble/desktop v1 --vm

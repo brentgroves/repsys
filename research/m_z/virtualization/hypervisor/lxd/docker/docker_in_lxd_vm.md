@@ -91,3 +91,21 @@ Finally, we can install Docker itself:
 sudo apt-get update
 sudo apt-get install docker-ce docker-ce-cli containerd.io
 ```
+
+## How to run Docker inside LXD containers
+
+## 4. Test your Docker container
+
+Now we have Docker up and running. Let’s test it by running an Ubuntu Docker container:
+
+docker run -it ubuntu bash
+
+And we can run the following to check that the processes are running correctly:
+
+`ps aux`
+
+And that’s it! Now you have a working Ubuntu Docker container inside of an LXD container. You can use it, or you can spin up another Docker image and proceed to use it according to your needs.
+
+## 5. Additional information
+
+Vast majority of Docker images will run fine inside LXD containers. However, few might not run properly. The reason for this is that LXD runs all its container unprivileged by default, which limits some of the actions of the user. Docker, on the other hand, runs privileged containers, and some actions might expect more privileges than LXD gives them, causing potential failures. For example, if you’re running something inside a docker container that expects to run as root, it won’t be able to do actions as a real root user but rather only as root inside of the LXD container, which is more constrained.
