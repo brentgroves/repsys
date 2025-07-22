@@ -1,4 +1,22 @@
-# **[](https://documentation.ubuntu.com/lxd/en/latest/remotes/#:~:text=The%20LXD%20command%2Dline%20client,See%20the%20following%20example%20configuration:)**
+# **[How to add remote servers](https://documentation.ubuntu.com/lxd/latest/remotes/)**
+
+Remote servers are a concept in the LXD CLI.
+
+If you are using the UI or the API, you can interact with different remotes by using their exposed UI or API addresses instead.
+
+By default, the command-line client interacts with the local LXD daemon, but you can add other servers or clusters to interact with.
+
+One use case for remote servers is to distribute images that can be used to create instances on local servers. See **[Remote image servers](https://documentation.ubuntu.com/lxd/latest/reference/remote_image_servers/#remote-image-servers)** for more information.
+
+You can also add a full LXD server as a remote server to your client. In this case, you can interact with the remote server in the same way as with your local daemon. For example, you can manage instances or update the server configuration on the remote server.
+
+## Authentication
+
+To be able to add a LXD server as a remote server, the server’s API must be exposed, which means that its **[core.https_address](https://documentation.ubuntu.com/lxd/latest/server/#server-core:core.https_address)** server configuration option must be set.
+
+When adding the server, you must then authenticate with it using the chosen method for **[Remote API authentication](https://documentation.ubuntu.com/lxd/latest/authentication/#authentication)**.
+
+See How to expose LXD to the network for more information.
 
 ## ai
 

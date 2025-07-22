@@ -1,7 +1,9 @@
-# Fabric and Power BI
+Thank you, Brent and Christian, for that clarification!
+
+# Fabric and Power BI Update
 
 Hi Team,
-I would like to discuss Power BI licenses, the move of the Azure SQL database to Microsoft Fabric, and the process of publishing visuals.
+I would like to discuss Power BI licenses cost savings, premium capacity workspaces, the move of the Azure SQL database to Microsoft Fabric, and the process of publishing visuals. A meeting has been scheduled for this Friday at 2 PM.
 
 - Thank you
 
@@ -18,7 +20,7 @@ The following is in markdown format and can be viewed by copying and pasting the
 
 ## Admins
 
-Sam Jackson and Brent Groves - **[Microsoft fabric admin rights](https://learn.microsoft.com/en-us/fabric/admin/microsoft-fabric-admin)**.
+Sam Jackson, Brent Groves, Cody Hudson - **[Microsoft fabric admin rights](https://learn.microsoft.com/en-us/fabric/admin/microsoft-fabric-admin)**.
 
 They have the right to:
 
@@ -28,6 +30,12 @@ They have the right to:
 Needed:
 
 - Publishing reports requires a Power BI Pro license.
+
+## Premium capacity workspace
+
+### LS - Linamar Structures workspace
+
+A Premium capacity workspace in Power BI is a dedicated server space, purchased by an organization, that allows for enhanced functionality and broader content sharing compared to standard workspaces. It enables users to access reports and dashboards without needing a Pro or Premium Per User (PPU) license, provided they have the necessary permissions. Premium capacities offer increased refresh rates, larger datasets, and the ability to share content with users who don't have a Pro license.
 
 ## Publish visuals flow
 
@@ -67,6 +75,7 @@ Kevin Young, Information Systems Manager
 Sam Jackson, Information Systems Developer, Southfield
 Brad D. Cook, Quality Engineer, Fruitport
 Jared Eikenberry, Quality Engineer, Fruitport
+Ricardo Baca. Senior Manufacturing Eng, Southfield
 Emmanuel Munoz Diaz - Microsoft Data and AI specialist - <emunozdias@microsoft.com>
 
 ## Links
