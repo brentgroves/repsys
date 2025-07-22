@@ -15,7 +15,15 @@ Use the following command: lxc console <vm_name> --type vga. Replace <vm_name> w
 Example:
 Code
 
-`lxc console my_vm --type vga`
+```bash
+sudo apt install virt-viewer
+lxc remote list
+lxc remote switch micro11
+# bring up virt-viewer after starting mystudio
+lxc start mystudio -- console=vga
+# or if vm is already running
+lxc console mystudio --type vga
+```
 
 This will open a graphical window displaying the console of the VM named my_vm.
 Note:

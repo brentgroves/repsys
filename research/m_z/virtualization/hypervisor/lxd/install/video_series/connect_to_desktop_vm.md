@@ -48,4 +48,6 @@ lxc remote list
 lxc remote switch micro11
 # bring up virt-viewer after starting mystudio
 lxc start mystudio -- console=vga
+# or if vm is already running
+lxc console mystudio --type vga
 ```
