@@ -20,7 +20,8 @@ sudo apt install virt-viewer
 lxc remote list
 lxc remote switch micro11
 # bring up virt-viewer after starting mystudio
-lxc start mystudio -- console=vga
+lxc start mystudio --console=vga
+lxc launch images:ubuntu/noble/desktop v1 --vm
 # or if vm is already running
 lxc console mystudio --type vga
 ```

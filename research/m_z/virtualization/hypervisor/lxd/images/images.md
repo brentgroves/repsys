@@ -16,3 +16,16 @@ Each image is identified by a fingerprint (SHA256). To make it easier to manage 
 ## desktop
 
 lxc launch images:ubuntu/noble/desktop v1 --vm
+
+## **[lxd images](https://images.lxd.canonical.com/)**
+
+```bash
+lxc launch images:ubuntu/noble/desktop v1 --vm
+Fingerprints
+ea6fa1ef943b (Virtual Machine)
+Aliases
+ubuntu/noble/desktop
+ubuntu/24.04/desktop
+Requirements
+cgroup=v2
+```
