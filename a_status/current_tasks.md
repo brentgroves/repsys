@@ -18,14 +18,33 @@ Carl Stangland, Desktop and System Support Technician, Indiana
 Lucas Tuma, IT Administrator, Strakonice
 Aleksandar Gavrilov, IT Administrator, Skopje
 
-## July 18
+## July 23
 
-- LXD Cluster
-- Storage cluster
-  - self healing
-- Power BI Pro and Microsoft Fabric
-  - Workspace and apps
-  - Can publish and share
+Semantic models hide the complex technical details behind reports so that both technical and non-technical users can concentrate on analyzing the data and answering business questions. Sharing and reusability are two stand-out features of semantic models.
+
+## What Makes Up a Semantic Model?
+
+Semantic models consist of several different elements:
+
+Data connections to one or more data sources, either imported, through DirectQuery, or as part of a composite model.
+Transformations that clean and prepare the data for reporting.
+Defined calculations and metrics based on business rules to ensure consistent reports built from the semantic model. This ensures clarity and avoids discrepancies between analyses and reports.
+Defined relationships between tables allow users to focus on designing reports without knowing the underlying database structures and data models beforehand.
+
+## power bi semantic models with stored procedures
+
+**[stored procedures](https://www.youtube.com/watch?v=N1En6_NB_dY)**
+**[call sprocs from power bi](https://www.youtube.com/watch?v=-GS3Kxvxm7A&t=247s)**
+Options:
+
+1. Allow the ETL system call stored procedures to load and transform you data and use Power BI to connect to the ETL systems result sets and use **[star schema best practices](https://www.owox.com/blog/articles/star-schema-explained)**
+2. Use Power BI direct query mode to retrieve only data needed for complete transformation. Don't know if this mode is compatible with Power Query M language and DAX functions
+
+## DirectQuery and Dynamic Parameters
+
+When you need to pass dynamic parameters (user inputs) to a stored procedure, DirectQuery mode is typically required.
+This allows for interactive reports where user selections in the report UI are passed as parameters to the stored procedure in the database.
+Example: You might have a stored procedure that filters data based on a date range selected by the user in the report.
 
 ## Links
 
