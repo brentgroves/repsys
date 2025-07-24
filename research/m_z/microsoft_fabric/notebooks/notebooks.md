@@ -1,0 +1,3 @@
+# **[](https://radacad.com/microsoft-fabric-notebook-what-and-why/#:~:text=What%20is%20Microsoft%20Fabric%20Notebook,can%20build%20the%20data%20model.)**
+
+Microsoft Fabric notebooks are web-based, interactive environments where users can write and execute code, primarily for data analysis and machine learning tasks, within the Microsoft Fabric data analytics platform. They support multiple languages like Python, Scala, Spark SQL, and Spark R, and offer features like built-in visualizations, AI-powered code completion, and seamless integration with other Fabric components like Lakehouses and pipelines.

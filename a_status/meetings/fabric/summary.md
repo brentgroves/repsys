@@ -53,7 +53,8 @@ Before mirroring, ensure you have an existing Azure SQL Database (single or elas
 
 ### Azure SQL database to Microsoft Fabric Questions
 
-Would you allow Structures to do this and if so are Fabric Admin allowed to create data items like this?
+- Instead of mirroring our current Azure SQL database I would like to create it in Fabric so that we would have uptodate info.
+- Would you allow Structures to do this and if so are Fabric Admin allowed to create data items like this?
 
 ## **[Understand the Fabric Architecture](https://learn.microsoft.com/en-us/training/modules/administer-fabric/2-fabric-architecture)**
 
@@ -63,9 +64,11 @@ Would you allow Structures to do this and if so are Fabric Admin allowed to crea
 
 - **Workspace** is a collection of items that brings together different functionality in a single tenant. It acts as a container that uses capacity for the work that is executed, and provides controls for who can access the items in it. For example, in a sales workspace, users associated with the sales organization can create a data warehouse, run notebooks, create datasets, create reports, and more.
 
-LS - Linamar Structures workspace
+**Access Control:** Workspaces have roles (Admin, Member, Contributor, Viewer) that define the level of access and permissions for users.
 
-A Premium capacity workspace in Power BI is a dedicated server space, purchased by an organization, that allows for enhanced functionality and broader content sharing compared to standard workspaces. It enables users to access reports and dashboards without needing a Pro or Premium Per User (PPU) license, provided they have the necessary permissions. Premium capacities offer increased refresh rates, larger datasets, and the ability to share content with users who don't have a Pro license.
+**Two Types:** There are "My Workspace" for personal use and "regular workspaces" for collaboration.
+
+**LS - Linamar Structures workspace** A Premium capacity workspace in Power BI is a dedicated server space, purchased by an organization, that allows for enhanced functionality and broader content sharing compared to standard workspaces. It enables users to access reports and dashboards without needing a Pro or Premium Per User (PPU) license, provided they have the necessary permissions. Premium capacities offer increased refresh rates, larger datasets, and the ability to share content with users who don't have a Pro license.
 
 - **Items** are the building blocks of the Fabric platform. They're the objects that you create and manage in Fabric. There are different types of items, such as data warehouses, data pipelines, datasets, reports, and dashboards.
 
@@ -73,6 +76,10 @@ A Premium capacity workspace in Power BI is a dedicated server space, purchased 
   - **Security:** Row-level security (RLS) rules that control which users can see specific data.
 
 ### Understand the Fabric Architecture Questions
+
+- Is there any way to divide items in a workspace by locations since premium capacity workspaces are expensive:
+
+A Microsoft Fabric Premium capacity workspace's cost is tied to the chosen capacity SKU, measured in Compute Units (CUs). For example, an F64 capacity SKU, which provides 64 CUs, costs approximately $8,410 USD per month on a pay-as-you-go basis. Premium capacity subscriptions start at $7,475 USD per month
 
 - Is the LS - Linamar Structures workspace going to change in the near future?
 - Should we have more domains or workspaces security?
