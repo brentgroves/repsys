@@ -20,6 +20,8 @@ Aleksandar Gavrilov, IT Administrator, Skopje
 
 ## July 23
 
+Check if Plex supports **[OData](https://www.odata.org/)**
+
 Semantic models hide the complex technical details behind reports so that both technical and non-technical users can concentrate on analyzing the data and answering business questions. Sharing and reusability are two stand-out features of semantic models.
 
 ## What Makes Up a Semantic Model?
