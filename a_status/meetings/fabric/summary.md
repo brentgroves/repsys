@@ -1,5 +1,18 @@
 # Microsoft Fabric OneLake, Azure SQL database mirroring, Structures Work Space, Storage, and Power BI
 
+## todo
+
+### connect Plex to OneLake
+
+From Azure Fabric we can connect to IFS through a RESTful API.  Find out the specifics.  Does it connect via **[OData](https://www.odata.org/)**?
+From Azure Fabric can we connect to Plex ERP through its RESTful API like IFS?
+
+### connect PLC sensors, scales, etc. to OneLake
+
+### connect vending machines to OneLake
+
+### Reports access OneLake. OneLake is the one data source we should use
+
 Hi Team,
 
 I would like to discuss OneLake, Azure SQL database mirroring, Fabric Workspaces and Items, Security, and Power BI report management. There are several questions below I would like to pose to the group. Finally, a meeting has been scheduled for this Friday at 2 PM. I hope you can attend.
@@ -78,9 +91,12 @@ Before mirroring, ensure you have an existing Azure SQL Database (single or elas
 
 1. Would you allow Structures to do this and if so are Fabric Admin allowed to create data items like this?
 
+**[how to mirror Azure SQL database](https://learn.microsoft.com/en-us/fabric/database/mirrored-database/azure-sql-database-tutorial)**
+
 ## **[Understand the Fabric Architecture](https://learn.microsoft.com/en-us/training/modules/administer-fabric/2-fabric-architecture)**
 
 - **Capacity** A Microsoft Fabric capacity resides on a tenant. Each capacity that sits under a specific tenant is a distinct pool of resources allocated to Microsoft Fabric. The size of the capacity determines the amount of computation power available.
+**f64**
 
 - **Domain** is a logical grouping of workspaces. Domains are used to organize items in a way that makes sense for your organization. You can group things together in a way that makes it easier for the groups of people to have access to workspaces. For example, you might have a domain for sales, another for marketing, and another for finance.
 

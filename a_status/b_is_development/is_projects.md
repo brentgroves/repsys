@@ -10,15 +10,15 @@ This is a revised project summary and timeline for the Automated **[ETL](https:/
 
 Team:
 
-- Pat Baxter, General Manager
-- Christian. Trujillo, IT Structures Manager
-- Kevin Young, Information Systems Manager
-- Jared Davis, IT Manager
-- Michael Percell, Manufacturing Engineering Manager
-- Dan Martin, Plant Controller Southfield
-- Jami Pyle, MP&L Manager
-- Nancy Swank, Material Planner
-- Hayley Rymer, IT Supervisor
+Pat Baxter, General Manager
+Christian. Trujillo, IT Structures Manager
+Kevin Young, Information Systems Manager
+Jared Davis, IT Manager
+Michael Percell, Manufacturing Engineering Manager
+Dan Martin, Plant Controller Southfield
+Jami Pyle, MP&L Manager
+Nancy Swank, Material Planner
+Hayley Rymer, IT Supervisor
 
 The following is in markdown format. It can be viewed better at <https://markdownlivepreview.com/>> by copying and pasting the contents below.
 

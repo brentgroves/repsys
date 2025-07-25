@@ -6,6 +6,8 @@ Ron James, Quality Manager
 Dan Martin, Plant Controller Southfield
 Jami Pyle, MP&L Manager
 Nancy Swank, Material Planner
+Dennis Brach, Maintenance Group Leader
+Brian Hobbs,TS/ISO Coordinator / Safety & Health Administrator Quality
 Christian Trujillo, IT Structures Manager
 Brent Hall, System Administrator Senior
 Kevin Young, Information Systems Manager
@@ -14,6 +16,8 @@ Hayley Rymer, IT Supervisor, Mills River
 Mitch Harper, Desktop and Systems Support Technician, Mills River
 Thomas Creal, Desktop and Systems Support Technician, Mills River
 Matthew Bump, Muscle Shoals, Engineering Supervisor II / IT
+Angelina Shadder, Muscle Shoals, Cyber Securtity, Desktop and Systems Support Technician
+Skippie Muehlfeld, Controls Engineer, Indiana
 Sam Jackson, Information Systems Developer, Southfield
 Brad D. Cook, Quality Engineer, Fruitport
 Jared Eikenberry, Quality Engineer, Fruitport
