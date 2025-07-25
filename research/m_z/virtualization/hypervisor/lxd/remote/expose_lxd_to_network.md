@@ -8,6 +8,9 @@ For example, allow access to the LXD server on port 8443:
 
 ```bash
 lxc config set core.https_address :8443
+# lxc config set core.https_address 10.188.50.201
+lxc config set core.https_address 10.188.50.201:8443
+
 lxc config get core.https_address
 ```
 
@@ -38,4 +41,18 @@ To allow access through a specific IP address, use ip addr to find an available 
 ~$lxc config set core.https_address 10.68.216.12
 ```
 
+## AI overview
+
 All remote clients can then connect to LXD and access any image that is marked for public use.
+
+The command lxc config set core.https_address is used to configure the address on which the LXD daemon listens for incoming HTTPS connections from clients. This effectively exposes the LXD server to the network, allowing remote clients to connect and manage containers and images.
+How it works:
+Binding Address:
+The value provided after core.https_address specifies the IP address and optional port number on which LXD will bind.
+For example, `lxc config set core.https_address 0.0.0.0:8443` would make LXD listen on all available IPv4 interfaces on port 8443.
+lxc config set core.https_address [::]:8443 would make LXD listen on all available IPv4 and IPv6 interfaces on port 8443.
+Specifying a specific IP address, like lxc config set core.https_address 192.168.1.100:8443, would limit LXD to listening only on that particular IP address.
+Default Port:
+If no port is specified, LXD defaults to port 8443.
+Network Exposure:
+By default, LXD only listens on a local Unix socket. Setting core.https_address enables network access to the LXD server.
