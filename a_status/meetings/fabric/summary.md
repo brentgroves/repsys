@@ -10,8 +10,10 @@ The following is in markdown format and can be viewed by copying and pasting the
 
 ## OneLake
 
-- Delta Parquet as its default format for storing all tabular data.
-- Delta Lake builds upon the Parquet file format, adding features like transaction logs for managing data changes and versions, ensuring data integrity and enabling features like time travel.
+![i3](https://dataninjago.com/wp-content/uploads/2021/12/capture-1.png)
+
+- Delta Parquet as its default format for storing all tabular data.
+- Delta Lake builds upon the Parquet file format, adding features like transaction logs for managing data changes and versions, ensuring data integrity and enabling features like time travel.
 - Parquet is a columnar storage file format designed for efficient data storage and retrieval, particularly in big data processing and analytics.
 
 ## Storage
@@ -19,19 +21,20 @@ The following is in markdown format and can be viewed by copying and pasting the
 ![i1](https://docs.ceph.com/en/reef/_images/stack.png)
 
 ![i2](https://docs.ceph.com/en/reef/_images/ditaa-db39e087bb6fb671969d38bd44c9e71ff716334d.png)
-- OneLake
+
+- OneLake
 Built on ADLS.
-- Azure Data Lake Storage Gen2 (ADLS)
+- Azure Data Lake Storage Gen2 (ADLS)
 Adds Hierarchical and Object storage and HDFS drivers
 
 - **[hierarchical namespace feature](https://docs.azure.cn/en-us/storage/blobs/data-lake-storage-namespace)**.
 - **[Atomic directory manipulation](https://docs.azure.cn/en-us/storage/blobs/data-lake-storage-namespace#the-benefits-of-a-hierarchical-namespace)**
-- Azure Blob Storage
+-  Azure Blob Storage
 Object Storage for the Distributed storage cluster
-- Distributed Storage Cluster like Posix compliant Ceph
-- Reads and Writes to disks
-- snapshots
-- replication
+-  Distributed Storage Cluster like Posix compliant Ceph
+- Reads and Writes to disks
+- snapshots
+- replication
 
 **[Azure Data Lake Storage Gen2 (ADLS)](https://learn.microsoft.com/en-us/azure/storage/blobs/data-lake-storage-introduction#:~:text=Azure%20Data%20Lake%20Storage%20offers,%2C%20account%2C%20and%20file%20levels.)**
 
@@ -46,11 +49,9 @@ We have several schemas at present or coming shortly in our Azure SQL database s
 The Structures Azure SQL database is the Structures data warehouse.
 
 - Check if Plex supports **[OData](https://www.odata.org/)**
-
-- Structures ETL service destination for the following data sources:
-- Non-Microsoft ODBC connections to Plex Cloud ERP
-- SOAP and RESTful API live access to Plex ERP
-
+- Structures ETL service destination for the following data sources:
+- Non-Microsoft ODBC connections to Plex Cloud ERP
+- SOAP and RESTful API live access to Plex ERP
 - **[Mach2 Manufacturing Execution System](https://www.ibm.com/think/topics/mes-system)** reportable events.
 - **[Serial device server](https://www.moxa.com/en/products/industrial-edge-connectivity/serial-device-servers)** CNC data.
 
@@ -58,11 +59,12 @@ The Structures Azure SQL database is the Structures data warehouse.
 
 The most direct way to bring your Azure SQL Database into Microsoft Fabric is through Mirroring. This enables continuous replication of your existing Azure SQL Database data directly into Fabric's OneLake, enabling analysis and integration with other Fabric workloads.
 
-- zero compute cost to mirror
-- free storage based on your fabric capacity
-- incremental replication of ddl changes and all inserts/update/deletes at near real-time
-- creates an analytics endpoint for queries against power bi, lake house, and all the other engines
--
+## features
+
+- zero compute cost to mirror
+- free storage based on your fabric capacity
+- incremental replication of ddl changes and all inserts/update/deletes at near real-time
+-  creates an analytics endpoint for queries against power bi, lake house, and all the other engines
 
 ### Prerequisites for mirroring Azure SQL Databases
 
@@ -70,11 +72,11 @@ Before mirroring, ensure you have an existing Azure SQL Database (single or elas
 
 ### Azure SQL database to Microsoft Fabric Questions
 
-Mirroring an Azure SQL database to Microsoft Fabric is free up to a certain capacity-based limit. Specifically, the compute used to replicate the data into OneLake is free, and so is the OneLake storage for the replica, up to a limit based on your purchased capacity,
+- Mirroring an Azure SQL database to Microsoft Fabric is free up to a certain capacity-based limit. Specifically, the compute used to replicate the data into OneLake is free, and so is the OneLake storage for the replica, up to a limit based on your purchased capacity,
 
-**[Mirroring](https://learn.microsoft.com/en-us/fabric/database/mirrored-database/azure-sql-database)** Mirror happens in real time.
+- **[Mirroring](https://learn.microsoft.com/en-us/fabric/database/mirrored-database/azure-sql-database)** Mirror happens in real time.
 
-- Would you allow Structures to do this and if so are Fabric Admin allowed to create data items like this?
+1. Would you allow Structures to do this and if so are Fabric Admin allowed to create data items like this?
 
 ## **[Understand the Fabric Architecture](https://learn.microsoft.com/en-us/training/modules/administer-fabric/2-fabric-architecture)**
 
@@ -97,14 +99,14 @@ Mirroring an Azure SQL database to Microsoft Fabric is free up to a certain capa
 
 ### Understand the Fabric Architecture Questions
 
-- Is there any way to divide items in a workspace by locations since premium capacity workspaces are expensive:
+1. Is there any way to divide items in a workspace by locations?
 
-A Microsoft Fabric Premium capacity workspace's cost is tied to the chosen capacity SKU, measured in Compute Units (CUs). For example, an F64 capacity SKU, which provides 64 CUs, costs approximately $8,410 USD per month on a pay-as-you-go basis. Premium capacity subscriptions start at $7,475 USD per month
+  since premium capacity workspaces are expensive:
+  A Microsoft Fabric Premium capacity workspace's cost is tied to the chosen capacity SKU, measured in Compute Units (CUs). For example, an F64 capacity SKU, which provides 64 CUs, costs approximately $8,410 USD per month on a pay-as-you-go basis. Premium capacity subscriptions start at $7,475 USD per month
 
-- Is the LS - Linamar Structures workspace going to change in the near future?
-- Should we have more domains or workspaces security?
-- Is Row-level security managed by the Fabric Admin?
-- What is our Fabric capacity **[SKU](https://learn.microsoft.com/en-us/fabric/enterprise/licenses)**?
+2. Is the LS - Linamar Structures workspace going to change in the near future?
+3. Is Row-level security managed by the Fabric Admin?
+4. What is our Fabric capacity **[SKU](https://learn.microsoft.com/en-us/fabric/enterprise/licenses)**?
 
 ## Power BI Pro License
 
@@ -114,13 +116,12 @@ Needed to publish and share reports.
 
 Should we limit Power BI Pro licenses or simply give each license owner the contributor role?
 
-- Limited
-- Each fabric admin has one
-- Send reports to fabric admin to publish and share
-
-- Contributor role
-- Anyone with a Power BI Pro license is given the contributor role.
-- contributor can publish and share their own reports.
+- Limited
+- Each fabric admin has one
+- Send reports to fabric admin to publish and share
+- Contributor role
+- Anyone with a Power BI Pro license is given the contributor role.
+- contributor can publish and share their own reports.
 
 Team:
 
