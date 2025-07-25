@@ -16,6 +16,9 @@ The following is in markdown format and can be viewed by copying and pasting the
 
 ## Storage
 
+![i1](https://docs.ceph.com/en/reef/_images/stack.png)
+
+![i2](https://docs.ceph.com/en/reef/_images/ditaa-db39e087bb6fb671969d38bd44c9e71ff716334d.png)
 - OneLake
 Built on ADLS.
 - Azure Data Lake Storage Gen2 (ADLS)
