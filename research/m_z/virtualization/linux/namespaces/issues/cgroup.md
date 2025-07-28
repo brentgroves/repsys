@@ -33,6 +33,8 @@ cat /proc/self/cgroup
 0::/user.slice/user-1000.slice/user@1000.service/app.slice/app-org.kde.yakuake-93dfbf7d91b44295bf8ca397d8bd220f.scope
 ```
 
+The dmesg command in Linux is used to display and manage the kernel ring buffer. This buffer stores messages produced by the kernel and device drivers during system startup and throughout operation. These messages are crucial for troubleshooting and understanding system behavior.
+
 ```bash
 sudo dmesg | grep DENIED 
 ```

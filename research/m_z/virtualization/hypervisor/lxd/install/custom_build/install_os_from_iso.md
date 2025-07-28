@@ -43,3 +43,5 @@ Once you’re done in the serial console, disconnect from the console using Ctrl
 ## if lxd system is server use virt-viewer
 
 uses **[spice](https://spice-space.org)** protocol for remotely controlling systems. It is like vnc or rdp but it is implemented by lxd. Since lxd implements spice you can see vm as it boots.
+
+Basically this means that a process has full privileges for operations inside its current user namespace, but is unprivileged outside of it.

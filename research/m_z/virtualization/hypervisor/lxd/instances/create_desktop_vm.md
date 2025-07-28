@@ -182,7 +182,11 @@ Resources:
 lxc console v1 --type vga
 unshare: write failed /proc/self/uid_map: Operation not permitted
 https://tbhaxor.com/exploiting-linux-capabilities-part-1/
+https://blog.quarkslab.com/digging-into-linux-namespaces-part-2.html
 ```
+<https://bugs.launchpad.net/ubuntu/+source/lxd/+bug/2057927#:~:text=When%20trying%20to%20attach%20a%20vga%20console,It%20seems%20to%20be%20related%20to%20apparmor>.
+
+The "lxd write fail uid_map" error in LXD (or Incus, its successor) usually indicates an issue with user namespace ID mapping, specifically when trying to write to the /proc/self/uid_map file. This file is used to map user IDs inside a container to user IDs on the host system, and the error suggests that LXD is unable to create or modify these mappings, according to the Linux Containers Forum. This can prevent containers from starting or functioning correctly, particularly when dealing with nested containers or when the host system's ID mapping configuration is insufficient.
 
 This will open a graphical window displaying the console of the VM named my_vm.
 Note:
