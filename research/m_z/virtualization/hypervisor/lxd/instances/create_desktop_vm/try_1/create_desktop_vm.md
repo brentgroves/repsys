@@ -5,14 +5,24 @@
 To create a virtual machine with an Ubuntu 24.04 LTS image from the ubuntu server using the instance name ubuntu-vm:
 
 ```bash
-lxc init images:ubuntu/noble/desktop v1 --vm
+lxc init images:ubuntu/noble/desktop v2 --vm -c limits.cpu=4 -c limits.memory=4GiB
+lxc launch images:ubuntu/noble/desktop v2 --vm -c limits.cpu=4 -c limits.memory=4GiB 
+lxc launch images:ubuntu/noble/desktop v2 --vm
+
+https://askubuntu.com/questions/932976/what-are-root-and-ubuntu-password-in-lxc-ubuntu16-04-container
+# https://www.youtube.com/watch?v=pEUsTMiq4B4
+lxc launch images:ubuntu/noble/desktop v1 --vm -c limits.cpu=4 limits.memory=4GiB --console=vga
 lxc config show v1 --expanded
 ```
 
 Start the VM and **[connect to the VGA console](https://documentation.ubuntu.com/lxd/latest/howto/instances_console/#instances-console)** locally using the following command:
 
 ```bash
-lxc console iso-vm --type=vga
+lxc start <instance_name> --console
+lxc start v1 --console
+
+lxc exec <instance_name> -- /bin/bash
+lxc console v2 --type=vga
 ```
 
 ## Connect to the VM's VGA console remotely
@@ -184,6 +194,7 @@ unshare: write failed /proc/self/uid_map: Operation not permitted
 https://tbhaxor.com/exploiting-linux-capabilities-part-1/
 https://blog.quarkslab.com/digging-into-linux-namespaces-part-2.html
 ```
+
 <https://bugs.launchpad.net/ubuntu/+source/lxd/+bug/2057927#:~:text=When%20trying%20to%20attach%20a%20vga%20console,It%20seems%20to%20be%20related%20to%20apparmor>.
 
 The "lxd write fail uid_map" error in LXD (or Incus, its successor) usually indicates an issue with user namespace ID mapping, specifically when trying to write to the /proc/self/uid_map file. This file is used to map user IDs inside a container to user IDs on the host system, and the error suggests that LXD is unable to create or modify these mappings, according to the Linux Containers Forum. This can prevent containers from starting or functioning correctly, particularly when dealing with nested containers or when the host system's ID mapping configuration is insufficient.
