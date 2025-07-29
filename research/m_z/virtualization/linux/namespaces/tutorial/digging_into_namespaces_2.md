@@ -1,9 +1,15 @@
 # **[](https://blog.quarkslab.com/digging-into-linux-namespaces-part-2.html)**
 
+Process isolation is a key component for containers. One of the key underlying mechanisms are namespaces. In this second (and last) part of the series we examine the USER, MNT, UTS, IPC and CGROUP namespaces, and finally we combine everything to build a fully isolated environment for a process.
+
+In the **[previous episode](https://blog.quarkslab.com/digging-into-linux-namespaces-part-1.html)**, we introduced what are namespaces, and why they are so useful nowadays. Then we looked at the PID and NET namespaces. Let's explore the rest of the namespaces now, before we leverage them to build a fully isolated process.
+
 Starting with Linux 3.8 (and unlike the flags used for creating other types of namespaces), on some Linux distributions, no privilege is required to create a user namespace. Let’s try it out!
 
 cryptonite@cryptonite:~ $uname -a
 Linux qb 5.11.0-25-generic #27~20.04.1-Ubuntu SMP Tue Jul 13 17:41:23 UTC 2021 x86_64 x86_64 x86_64 GNU/Linux
+
+The uname command in Linux is a command-line utility used to display system information. It provides details about the operating system and the hardware platform on which the system is running.
 
 ```bash
 # root user namespace
