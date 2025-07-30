@@ -127,3 +127,17 @@ nobody@cryptonite:~/test$ ls -l
 ```
 
 The "lxd write fail uid_map" error in LXD (or Incus, its successor) usually indicates an issue with user namespace ID mapping, specifically when trying to write to the /proc/self/uid_map file. This file is used to map user IDs inside a container to user IDs on the host system, and the error suggests that LXD is unable to create or modify these mappings, according to the Linux Containers Forum. This can prevent containers from starting or functioning correctly, particularly when dealing with nested containers or when the host system's ID mapping configuration is insufficient.
+
+## shell 1
+
+echo "0 1000 65335" | sudo tee /proc/15320/uid_map
+
+## shell 2
+
+bash - 15320
+echo "200 1000 65335" | sudo tee /proc/33160/uid_map
+cat /proc/33160/uid_map
+
+## shell 3
+
+sh - 33160
