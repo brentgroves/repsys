@@ -18,9 +18,17 @@ Carl Stangland, Desktop and System Support Technician, Indiana
 Lucas Tuma, IT Administrator, Strakonice
 Aleksandar Gavrilov, IT Administrator, Skopje
 
+## July 31
+
+Check if Plex supports **[OData](https://www.odata.org/)**
+developers.plex.com
+email,password
+
 ## July 23
 
 Check if Plex supports **[OData](https://www.odata.org/)**
+developers.plex.com
+email,password
 
 Semantic models hide the complex technical details behind reports so that both technical and non-technical users can concentrate on analyzing the data and answering business questions. Sharing and reusability are two stand-out features of semantic models.
 
@@ -73,7 +81,7 @@ Join our new Microsoft Fabric user panel to share your feedback and help shape F
 3. Make quantity used change per period set by calculating difference between consecutive quantity used values.
 
 In data analysis, "direction fields" (also called slope fields) are a visual representation of the solutions to a differential equation. They help understand the behavior of the equation by showing the direction (slope) of the solutions at various points on a graph.
-
+OData
 <https://stackoverflow.com/questions/9084761/how-to-calculate-the-slope-in-sql>
 
 ```sql
