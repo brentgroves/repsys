@@ -18,6 +18,17 @@ Carl Stangland, Desktop and System Support Technician, Indiana
 Lucas Tuma, IT Administrator, Strakonice
 Aleksandar Gavrilov, IT Administrator, Skopje
 
+## Aug 4th
+
+Config request for Fabric Gateway Windows Server with 64GB ram.
+
+- Read access to 001-Global Data
+  - view naming conventions and directory structures.
+- Data Process Flow
+  - Add raw data to Lakehouse
+  - Golden data to Warehouse with SQL joins from Lakehouse raw
+  data.
+
 ## July 31
 
 Check if Plex supports **[OData](https://www.odata.org/)**
