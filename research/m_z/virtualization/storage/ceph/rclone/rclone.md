@@ -1,4 +1,6 @@
-# **[](https://rclone.org/install/)
+# **[use ceph with rclone](https://www.youtube.com/watch?v=L9O9bDIvx28)**
+
+**[](https://rclone.org/install/)
 
 <https://forum.rclone.org/t/mount-bucket-as-network-drive-using-rclone-ceph-object-gateway/43825/15>
 

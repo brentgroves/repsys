@@ -1,4 +1,4 @@
-# **[use ceph with rcloen](https://www.youtube.com/watch?v=L9O9bDIvx28)**
+# **[use ceph with rclone](https://www.youtube.com/watch?v=L9O9bDIvx28)**
 
 **[](https://ceph.io/en/news/blog/2025/rgw-multisite-replication_part8/)**
 

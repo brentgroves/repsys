@@ -2,6 +2,8 @@
 
 **[Great mount s3fs youtube](https://www.youtube.com/watch?v=0xS1lBgHDX8)** explains k8s usage
 
+**[ceph series](https://www.youtube.com/watch?v=Uvbp3mtOltw&list=PLP2v7zU48xOJf5FMYrQepGkEwKHD7m7QA)**
+
 <https://s3fs.readthedocs.io/en/latest/>
 
 s3fs mount s3 bucket
