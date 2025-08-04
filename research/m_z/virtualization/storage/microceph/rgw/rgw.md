@@ -201,6 +201,15 @@ check_ssl_hostname = False
 use_https = False
 EOF
 
+    # [default]
+    # access_key = your_access_key
+    # secret_key = your_secret_key
+    # host_base = microceph_cluster_ip_or_hostname
+    # host_bucket = microceph_cluster_ip_or_hostname/%(bucket)
+    # check_ssl_certificate = False  ; Set to True if using HTTPS with a valid certificate
+    # check_ssl_hostname = False     ; Set to True if using HTTPS with a valid certificate
+    # use_https = False              ; Set to True to use HTTPS
+
 cat > ~/.s3cfg <<EOF
 [default]
 access_key = foo
@@ -237,7 +246,8 @@ You have verified that your cluster is accessible via RGW. Now, let’s create a
 ```bash
 s3cmd mb -P s3://mybucket
 Bucket 's3://mybucket/' created
-
+s3cmd mb -P s3://mybucket2
+Bucket 's3://mybucket2/' created
 ```
 
 Note
@@ -254,12 +264,31 @@ Our bucket is successfully created.
 Upload an image into the bucket
 
 ```bash
+s3cmd put -P ~/Downloads/TB-202305_to_202405_on_06-07_DM.xlsx s3://mybucket2
 s3cmd put -P ~/Downloads/cat.jpg s3://mybucket
 upload: '/home/brent/Downloads/cat.jpg' -> 's3://mybucket/cat.jpg'  [1 of 1]
  21439 of 21439   100% in    2s     6.99 KB/s  done
 Public URL of the object is: http://micro11/mybucket/cat.jpg
 
+curl http://10.188.50.201/mybucket2/TB-202305_to_202405_on_06-07_DM.xlsx
+curl http://10.188.50.201/mybucket2/TB-202305_to_202405_on_06-07_DM.xlsx
+
 http://10.188.50.201/mybucket/cat.jpg
+http://10.188.50.201/mybucket/tb.xlsx
+
+s3cmd put -P ~/Downloads/t3.txt s3://mybucket
+s3cmd put -P ~/Downloads/tb.xlsx s3://mybucket
+s3cmd put -P ~/Downloads/t4.txt s3://mybucket
+
+s3cmd put ~/Downloads/t6.txt s3://mybucket/my-folder/my-file.txt
+
+http://10.188.50.201/mybucket/t1.txt
+http://10.188.50.201/mybucket/t3.txt
+http://10.188.50.201/mybucket/t4.txt
+http://10.188.50.201/mybucket/t5.txt
+http://10.188.50.201/mybucket/t6.txt
+http://10.188.50.201/mybucket/test.txt
+
 ```
 
 The output shows that your image is stored in a publicly accessible S3 bucket. You can now click on the public object URL in the output to view the image in your browser.

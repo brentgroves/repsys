@@ -147,6 +147,8 @@ Mount the filesystem:
 $ sudo mkdir /mnt/mycephfs
 # $ sudo mount -t ceph :/ /mnt/mycephfs/ -o name=admin,fs=newFs
 sudo mount -t ceph :/ /mnt/mycephfs/ -o name=admin,fs=lxd_cephfs
+# or
+sudo mount -t ceph :/ /mnt/mycephfs/ -o name=admin,fs=indFs
 ls /mnt/mycephfs/
 custom  custom-snapshots
 ```
