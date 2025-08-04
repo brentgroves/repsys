@@ -282,6 +282,8 @@ s3cmd put -P ~/Downloads/t4.txt s3://mybucket
 
 s3cmd put ~/Downloads/t6.txt s3://mybucket/my-folder/my-file.txt
 
+http://10.188.50.201/mybucket/my-folder/tb.xlsx
+http://10.188.50.201/mybucket/my-folder/my-file.txt
 http://10.188.50.201/mybucket/t1.txt
 http://10.188.50.201/mybucket/t3.txt
 http://10.188.50.201/mybucket/t4.txt
