@@ -9,34 +9,37 @@ All commands are also available through my **[GitHub repository](https://github.
 Basic Ceph RGW Setup and S3 Access with AWS CLI
 The foundational steps for setting up a Ceph RADOS Gateway (RGW). The deployment of the RGW service using the Ceph Orchestrator. Furthermore, covers the creation of a basic RGW user and the process of connecting to the RGW endpoint utilizing the AWS Command Line Interface (CLI). Finally, indicates it will explain how to upload, list, and generally manage objects within this environment.
 
-Deploy RGW service
+## Deploy RGW service
+
 The initial setup and deployment of a RADOS Gateway (RGW) instance within a Ceph storage cluster using the Ceph Orchestrator
 
 ## Deploy a basic RADOS Gateway (RGW) instance using Ceph Orchestrator
 
-# Deploy a basic RADOS Gateway (RGW) instance using Ceph Orchestrator
+`ceph orch apply rgw rgw-basic`
 
-ceph orch apply rgw rgw-basic
+## Verify that the RGW service is up and running correctly
 
-# Verify that the RGW service is up and running correctly
-
+```bash
 ceph -s | grep rgw
 ceph orch ls | grep rgw
 ceph orch ps | grep rgw
+```
 
-# See the default pools automatically created for RGW
+## See the default pools automatically created for RGW
 
 ```bash
 ceph osd pool ls | grep rgw
 ```
 
-# TODO How seperate rgw pools
+## TODO How seperate rgw pools
 
-Create a simple RGW user
+## Create a simple RGW user
+
 The process of creating a basic user account specifically for accessing the RGW service, with associated credentials and permissions
 
-# Create a user account for accessing RGW S3-compatible storage
+## Create a user account for accessing RGW S3-compatible storage
 
+```bash
 radosgw-admin user create --uid={username} --display-name="{display-name}"
 
 radosgw-admin user create --uid=rgwuser-basic --display-name="RGWuser Basic"
@@ -88,11 +91,15 @@ radosgw-admin user info --uid rgwuser-basic
     "tags": [],
     "group_ids": []
 }
-Connect to RGW endpoint using AWS CLI
+```
+
+## Connect to RGW endpoint using AWS CLI
+
 How to configure and utilize the aws Command Line Interface (AWS CLI) to establish a connection with the deployed RGW endpoint, enabling interaction with the Ceph object storage
 
-# Set up AWS CLI to interact with the Ceph RGW endpoint
+## Set up AWS CLI to interact with the Ceph RGW endpoint
 
+```bash
 aws configure --profile=rgwuser-basic
 access_key: # PAST ACCESS_KEY
 secret_key: # PAST SECRET_KEY
@@ -101,15 +108,16 @@ output format: json
 cat ~/.aws/config
 cat ~/.aws/credentials
 
-aws --profile rgwuser-basic --endpoint-url  <http://10.188.50.201> s3 ls
+aws --profile rgwuser-basic --endpoint-url  http://10.188.50.201 s3 ls
+```
 
-# Create buckets and upload files to Ceph RGW via AWS CLI
+## Create buckets and upload files to Ceph RGW via AWS CLI
 
 ```bash
 aws --profile rgwuser-basic --endpoint-url  http://micro11 s3 mb s3://buckebasic --region default
 ```
 
-# Run on ceph cluster to Confirm that the bucket and objects exist in Ceph directly
+## Run on ceph cluster to Confirm that the bucket and objects exist in Ceph directly
 
 `radosgw-admin bucket list`
 
@@ -121,7 +129,7 @@ the subsequent steps after establishing a connection, including performing commo
 BUCKET_NAME=buckebasic
 RGW_ENDPOINT=http://10.188.50.201
 
-https://docs.aws.amazon.com/cli/latest/reference/s3api/put-object.html
+# https://docs.aws.amazon.com/cli/latest/reference/s3api/put-object.html
 
 aws --profile rgwuser-basic --endpoint-url ${RGW_ENDPOINT}  s3api put-object --bucket ${BUCKET_NAME} --key testfile --body /etc/services
 
@@ -139,12 +147,17 @@ aws --profile rgwuser-basic --endpoint-url ${RGW_ENDPOINT} s3api list-objects --
 time aws s3 cp largefile s3://${BUCKET_NAME}/ --endpoint-url=${RGW_ENDPOINT}
 ```
 
-# Run on ceph cluster to verify
+## **[Get pool values](https://docs.ceph.com/en/mimic/rados/operations/pools/#get-pool-values)**
 
-ceph osd pool get cluster.rgw.buckets.data all
+```bash
+ceph osd lspools
+
+ceph osd pool get default.rgw.buckets.data all
 
 radosgw-admin bucket stats | grep num_objects
 dd if=/dev/zero of=100mb.file bs=1M count=100
+
+# Run on ceph cluster to verify
 
 BUCKET_NAME=buckebasic
 RGW_ENDPOINT=<http://192.168.1.1>
@@ -159,8 +172,11 @@ ceph -s | grep objects
 for num in {1..50}: do aws --profile rgwuser-basic --endpoint-url  <http://192.168.1.1> s3api delete-object --bucket buckebasic --key testfile"${num}" ; done
 ceph osd pool ls | grep replicated
 
-eph osd pool ls detail
-python boto3
+ceph osd pool ls detail
+```
+
+## python boto3
+
 demonstrates how to interact with the Ceph Object Gateway Storage (RGW) using the boto3 library after the S3 client has been initialized practical ways to manage objects within your Ceph RGW storage programmatically using Python and the boto3 library utilizing the "AWS S3 CLI for Ceph Object Gateway Storage" for managing your object storage. While this example uses Python, the underlying concepts of uploading, listing, and generating pre-signed URLs are analogous to operations performed using the AWS S3 command-line interface.
 
 ```python
