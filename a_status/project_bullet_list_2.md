@@ -22,7 +22,7 @@ Time: 1 to 3 months
 
 ## Set up an automated and on-demand ETL pipeline in K8s
 
-We manually run scripts to update the data warehouse and data lake that Power BI reports use as their raw and golden data sources.  The Automated and on-demand [ETL pipeline](https://www.informatica.com/resources/articles/what-is-etl-pipeline.html)** runs these scripts automatically or on demand.
+We manually run scripts to update the data warehouse and data lake that Power BI reports use as raw and golden data sources.  The Automated and on-demand **[ETL pipeline](https://www.informatica.com/resources/articles/what-is-etl-pipeline.html)** runs these scripts automatically or on demand.
 
 time: 6 months to 1 year
 
@@ -36,9 +36,11 @@ Structures **[MicroCloud](https://canonical.com/microcloud)** has the following 
 
 **[MicroCloud Demo](https://www.youtube.com/watch?v=M0y0hQ16YuE&t=409s)**
 
+This is the base for running the data gateway and Kubernetes services.
+
 Time: ongoing
 
-### Manage Structures Storage Cluster
+## Manage Structures Storage Cluster
 
 ![i1](https://docs.ceph.com/en/reef/_images/stack.png)
 
@@ -53,3 +55,17 @@ Time: ongoing
 - **[CephFS POSIX-compliant file system](https://docs.ceph.com/en/squid/cephfs/)**.
 
 Time: ongoing
+
+## Administer Structures on-prem and cloud-based Kubernetes services
+
+- **[MicroK8s](https://www.sysdig.com/learn-cloud-native/what-is-microk8s)**
+- **[Azure AKS](https://learn.microsoft.com/en-us/azure/architecture/reference-architectures/containers/aks-microservices/aks-microservices)**
+
+The Kubernetes services will run and manage the software lifecycle for the following projects, under development. The on-prem cluster is for development, and Azure AKS is meant for production.
+
+- Automated and on-demand **[ETL pipeline](https://www.informatica.com/resources/articles/what-is-etl-pipeline.html)**
+- **Tool Management System** Move from managing CNC tooling in Excel and the Legacy Busche Tool List system to a modern, more robust, easy-to-use platform.
+- Tool Tracker Focused **[Manufacturing Execution System:](https://www.ibm.com/think/topics/mes-system)** Automatically collect and report on CNC, job, and start/end tool operation times for problematic tooling.
+- CNC tool adjustment app: used to record and report all tool adjustments for quality purposes.
+
+Time: 6 months.
