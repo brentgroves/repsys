@@ -2,7 +2,7 @@
 # /// script
 # requires-python = ">=3.12"
 # dependencies = [
-#     "boto",
+#     "boto3",
 # ]
 # ///
 import logging

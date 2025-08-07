@@ -6,7 +6,7 @@ Here's a breakdown:
 
 1. Install ceph-common:
 On the non-cluster host, install the ceph-common package, which includes the Ceph CLI tools (like ceph, rbd, etc.).
-For example, on Debian/Ubuntu: sudo apt update && sudo apt install ceph-common
+For example, on Debian/Ubuntu: `sudo apt update && sudo apt install ceph-common`
 And on Red Hat/CentOS: sudo yum install ceph-common
 
 ```bash

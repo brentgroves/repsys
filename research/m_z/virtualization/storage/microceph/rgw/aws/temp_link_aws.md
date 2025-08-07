@@ -1,4 +1,4 @@
-s3 create temporary bucket link
+# s3 create temporary bucket link
 
 AI Overview
 To create a temporary link for an Amazon S3 object, you use a presigned URL. This URL grants temporary access to a specific S3 object without requiring the recipient to have AWS credentials or direct S3 permissions.
@@ -14,13 +14,25 @@ Code
 aws s3 presign s3://your-bucket-name/your-object-key --expires-in 3600
 aws s3 presign s3://your-bucket-name/your-object-key --expires-in 3600
 
-aws --profile rgwuser-basic --endpoint-url ${RGW_ENDPOINT} s3 presign s3://buckebasic/testfile
+BUCKET_NAME=buckebasic
+RGW_ENDPOINT=http://10.188.50.201
+
+aws --profile rgwuser-basic --endpoint-url ${RGW_ENDPOINT} s3 presign s3://buckebasic/testfile --expires-in 3600
+
 
 BUCKET_NAME=buckebasic
 RGW_ENDPOINT=http://10.188.50.201
 
 
 aws --profile rgwuser-basic --endpoint-url ${RGW_ENDPOINT} s3api list-objects --bucket ${BUCKET_NAME}
+
+aws --profile rgwuser-basic --endpoint-url http://10.188.50.201 s3 ls buckebasic
+
+aws --profile user --endpoint-url http://10.188.50.201 s3 ls
+2025-07-18 18:19:25 mybucket
+2025-08-04 15:22:37 mybucket2
+
+aws --profile user --endpoint-url http://10.188.50.201 s3 ls mybucket
 
 ```
 

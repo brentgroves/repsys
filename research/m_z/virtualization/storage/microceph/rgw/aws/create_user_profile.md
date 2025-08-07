@@ -18,6 +18,8 @@ radosgw-admin user create --uid={username} --display-name="{display-name}"
 radosgw-admin user create --uid=rgwuser-basic --display-name="RGWuser Basic"
 
 radosgw-admin user list
+radosgw-admin user info --uid user
+
 radosgw-admin user info --uid rgwuser-basic
 {
     "user_id": "rgwuser-basic",

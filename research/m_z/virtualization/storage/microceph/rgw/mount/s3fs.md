@@ -92,7 +92,8 @@ Let’s mount the bucket. Use the following command to set the bucket name, the 
 ```bash
 # s3fs bucket-name /path/to/mountpoint -o passwd_file=/path/passwd-s3fs
 
-s3fs mybucket ~/s3-bucket -o passwd_file=~/.passwd-s3fs
+s3fs mybucket /home/brent/s3-bucket -o sigv2 -o use_path_request_style -o passwd_file=/home/brent/.passwd-s3fs -o url=http://micro11 -d
+
 
 ```
 
@@ -104,7 +105,7 @@ s3fs mybucket ~/s3-bucket -o passwd_file=~/.passwd-s3fs
 sudo mkdir /mnt/my-object-storage
 sudo mkdir /mnt/mybucket
 
-sudo s3fs mybucket /mnt/my-object-storage -o passwd_file=/home/brent/.passwd-s3fs -o allow_other -o url=https://10.188.50.201
+s3fs mybucket /home/brent/s3-bucket -o sigv2 -o use_path_request_style -o passwd_file=/home/brent/.passwd-s3fs -o url=http://micro11 -d
 
 ```
 
@@ -112,6 +113,8 @@ sudo s3fs mybucket /mnt/my-object-storage -o passwd_file=/home/brent/.passwd-s3f
 # echo ACCESS_KEY_ID:SECRET_ACCESS_KEY > ${HOME}/.passwd-s3fs
 
 # s3fs mybucket /path/to/mountpoint -o passwd_file=${HOME}/.passwd-s3fs -o dbglevel=info -f -o curldbg
+s3fs mybucket /home/brent/s3-bucket -o sigv2 -o use_path_request_style -o passwd_file=/home/brent/.passwd-s3fs -o url=http://micro11 -d
+
 s3fs mybucket /path/to/mountpoint -o passwd_file=${HOME}/.passwd-s3fs -o url=<https://url.to.s3/> -o use_path_request_style
 
 s3fs mybucket /mnt/mybucket -o passwd_file=/home/brent/.passwd-s3fs -o url=https://micro11/ -o use_path_request_style -o dbglevel=info

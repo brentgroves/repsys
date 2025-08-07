@@ -13,6 +13,8 @@ How to configure and utilize the aws Command Line Interface (AWS CLI) to establi
 ## Set up AWS CLI to interact with the Ceph RGW endpoint
 
 ```bash
+aws configure --profile=user
+
 aws configure --profile=rgwuser-basic
 access_key: # PAST ACCESS_KEY
 secret_key: # PAST SECRET_KEY
@@ -32,17 +34,26 @@ aws --profile rgwuser-basic --endpoint-url  http://micro11 s3 mb s3://buckebasic
 
 ## Run on ceph cluster to Confirm that the bucket and objects exist in Ceph directly
 
-`radosgw-admin bucket list`
+```bash
+radosgw-admin bucket list
+radosgw-admin bucket list --bucket=mybucket
+
+```
 
 ## Upload, list, and manage objects
 
 the subsequent steps after establishing a connection, including performing common object storage operations such as uploading data, listing the stored objects, and other management tasks using the AWS CLI against the Ceph RGW
 
 ```bash
-BUCKET_NAME=buckebasic
+BUCKET_NAME=mybucket
 RGW_ENDPOINT=http://10.188.50.201
 
-https://docs.aws.amazon.com/cli/latest/reference/s3api/put-object.html
+# https://docs.aws.amazon.com/cli/latest/reference/s3api/put-object.html
+
+aws --profile user --endpoint-url ${RGW_ENDPOINT}  s3api put-object --bucket ${BUCKET_NAME} --key TrialBalanceLinamar.xlsx --body ~/Downloads/TrialBalanceLinamar.xlsx
+
+BUCKET_NAME=buckebasic
+RGW_ENDPOINT=http://10.188.50.201
 
 aws --profile rgwuser-basic --endpoint-url ${RGW_ENDPOINT}  s3api put-object --bucket ${BUCKET_NAME} --key testfile --body /etc/services
 
@@ -55,7 +66,16 @@ aws s3api put-object \
     --key my-dir/MySampleImage.png \
     --body MySampleImage.png
 
-aws --profile rgwuser-basic --endpoint-url ${RGW_ENDPOINT} s3api list-objects --bucket ${BUCKET_NAME}
+# aws s3 ls s3://your-bucket-name
+# aws --profile rgwuser-basic --endpoint-url ${RGW_ENDPOINT} s3 ls --bucket ${BUCKET_NAME}
+
+## both work
+aws --profile rgwuser-basic --endpoint-url http://10.188.50.201 s3 ls s3://buckebasic
+aws --profile rgwuser-basic --endpoint-url http://10.188.50.201 s3 ls buckebasic
+
+# aws s3 ls s3://your-bucket-name --recursive
+aws --profile rgwuser-basic --endpoint-url http://10.188.50.201 s3 ls buckebasic --recursive
+
 
 time aws s3 cp largefile s3://${BUCKET_NAME}/ --endpoint-url=${RGW_ENDPOINT}
 ```

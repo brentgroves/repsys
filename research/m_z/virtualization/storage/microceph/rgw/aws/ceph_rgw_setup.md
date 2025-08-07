@@ -43,6 +43,8 @@ The process of creating a basic user account specifically for accessing the RGW 
 radosgw-admin user create --uid={username} --display-name="{display-name}"
 
 radosgw-admin user create --uid=rgwuser-basic --display-name="RGWuser Basic"
+Default region name [None]: 
+Default output format [None]: json
 
 radosgw-admin user list
 radosgw-admin user info --uid rgwuser-basic
@@ -106,7 +108,12 @@ secret_key: # PAST SECRET_KEY
 output format: json
 
 cat ~/.aws/config
+[profile rgwuser-basic]
+output = json
 cat ~/.aws/credentials
+[rgwuser-basic]
+aws_access_key_id = JOHR9NY712UOTW6DYYMX
+aws_secret_access_key = ImHtGdxMDQH7PRAkLvheCsKr4VjQr4HKUfblGBA7
 
 aws --profile rgwuser-basic --endpoint-url  http://10.188.50.201 s3 ls
 ```
