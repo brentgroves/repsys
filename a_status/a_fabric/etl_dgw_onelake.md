@@ -1,5 +1,7 @@
 The Structures K8S Clusters are used to run our ETL pipeline microservices. The ETL pipeline collects data from the Plex ERP is highly available.
 
+<https://www.mermaidchart.com/>
+
 ```mermaid
 flowchart TD
         A(["Virtual IP - 10.188.50.204"])
