@@ -20,6 +20,7 @@ Some basic command-line knowledge
 ## 2. Prepare your Windows image
 
 To start, we need to **[download a Windows 11 Disk Image (ISO)](https://www.microsoft.com/software-download/windows11)** from the official website.
+**[server version](https://www.microsoft.com/en-us/evalcenter/download-windows-server-2022)**
 
 To proceed with the installation, we need to prepare the downloaded image, by repackaging it with a tool called lxd-imagebuilder. lxd-imagebuilder is an image-building tool for LXC and LXD, used to build all our official images.
 
@@ -32,13 +33,18 @@ Then we need to locate our downloads directory and find our Windows 11 ISO file
 ```bash
 cd Downloads/
 ls Win11_24H2_English_x64.iso
+ls SERVER_EVAL_x64FRE_en-us.iso
 ```
 
 We can then repackage the file, and give it a new file name (let’s call it “win11.lxd.iso”)
 
 This needs to be run as root
 
-`sudo lxd-imagebuilder repack-windows Win11_24H2_English_x64.iso win11.lxd.iso`
+```bash
+sudo lxd-imagebuilder repack-windows Win11_24H2_English_x64.iso win11.lxd.iso
+
+sudo lxd-imagebuilder repack-windows SERVER_EVAL_x64FRE_en-us.iso wins22.lxd.iso
+```
 
 ⓘYou might get a message “Required tool “hivexregedit” is missing” and “Required tool “wimlib-imagex” is missing”. You can easily install all the needed dependencies using the following command: `sudo apt-get install -y --no-install-recommends genisoimage libwin-hivex-perl rsync wimtools`
 
@@ -48,7 +54,12 @@ The result is a new ISO image that will work seamlessly with LXD.
 
 We can now locate the new ISO file
 
-`ls -lh win11.lxd.iso`
+```bash
+ls -lh win11.lxd.iso
+ls -lh wins22.lxd.iso          
+-rw-r--r-- 1 root root 4.8G Aug 11 18:21 wins22.lxd.iso
+
+```
 
 ## 3. Create a new VM
 
