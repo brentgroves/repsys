@@ -1,5 +1,9 @@
 # **[How to initialize Microcloud](https://documentation.ubuntu.com/microcloud/latest/microcloud/how-to/initialize/)**
 
+## ISSUE
+
+There was a time sync issue between the physical servers because the Linamar NTP servers: 10.225.50.203,10.224.0.204,10.224.50.203, were not configured.
+
 The **[initialization process](https://documentation.ubuntu.com/microcloud/latest/microcloud/explanation/initialization/#explanation-initialization)** bootstraps the MicroCloud cluster. You run the initialization on one of the machines, and it configures the required services on all of the machines that have been joined.
 
 ## Pre-initialization requirements
@@ -232,6 +236,10 @@ Initializing new services
 Awaiting cluster formation ...
  Peer "micro13" has joined the cluster
  Peer "micro12" has joined the cluster
+
+## REAL ISSUE
+
+There was a time sync issue between the physical servers because the Linamar NTP servers: 10.225.50.203,10.224.0.204,10.224.50.203, were not configured.
 
  Error: Failed to notify peer micro13 at 10.188.50.203:8443: Failed getting port group UUID for network "default" setup: Failed to run: ovn-nbctl --timeout=10 --db ssl:10.188.50.201:6641,ssl:10.188.50.203:6641,ssl:10.188.50.202:6641 -c /proc/self/fd/3 -p /proc/self/fd/4 -C /proc/self/fd/5 --wait=sb --format=csv --no-headings --data=bare --colum=_uuid,name,acl find port_group name=lxd_net2: exit status 1 (2025-07-10T22:16:17Z|00001|stream_ssl|WARN|SSL_read: error:0A000412:SSL routines::sslv3 alert bad certificate
 2025-07-10T22:16:17Z|00002|jsonrpc|WARN|ssl:10.188.50.201:6641: receive error: Input/output error

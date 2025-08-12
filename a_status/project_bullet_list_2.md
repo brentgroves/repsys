@@ -10,7 +10,7 @@ The following is in markdown format and can be viewed by copying and pasting the
 
 ## Set up and administer the Structures Microsoft Fabric workspace
 
-The Structures Information Systems group is setting up and administering the Structures Microsoft Fabric workspace. This workspace will help us achieve the goal of centralizing our business data to give us previously impossible insights.  
+The Structures Information Systems group is setting up and administering the Structures Microsoft Fabric workspace. This workspace will help us achieve the goal of centralizing our business data to give us previously impossible insights.  directive is to improve its decision-making capabilities by analyzing data in various formats across multiple sources
 
 Time: ongoing
 

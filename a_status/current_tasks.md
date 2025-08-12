@@ -18,6 +18,8 @@ Carl Stangland, Desktop and System Support Technician, Indiana
 Lucas Tuma, IT Administrator, Strakonice
 Aleksandar Gavrilov, IT Administrator, Skopje
 
+- charmed kubernetes  <https://ubuntu.com/kubernetes/charmed-k8s/docs/install-local>
+- <https://ubuntu.com/kubernetes/charmed-k8s/docs/quickstart>
 - Encryption with Ceph/Bitlocker
 
 ## Aug 4th
