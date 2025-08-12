@@ -18,6 +18,8 @@ Carl Stangland, Desktop and System Support Technician, Indiana
 Lucas Tuma, IT Administrator, Strakonice
 Aleksandar Gavrilov, IT Administrator, Skopje
 
+- Encryption with Ceph/Bitlocker
+
 ## Aug 4th
 
 - Setup Fabric Gateway Windows Server with 64GB ram with ODBC connection to Plex.
