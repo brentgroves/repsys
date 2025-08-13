@@ -1,6 +1,11 @@
 # **[](https://tecadmin.net/setup-ip-failover-on-ubuntu-with-keepalived/)**
 
-## **[docs](https://keepalived.readthedocs.io/en/latest/configuration_synopsis.html)**
+## reference
+
+- **[docs](https://keepalived.readthedocs.io/en/latest/configuration_synopsis.html)**
+- **[arch](https://wiki.archlinux.org/title/Keepalived)**
+- **[configuring](https://louwrentius.com/configuring-attacking-and-securing-vrrp-on-linux.html)**
+<https://kifarunix.com/how-to-install-keepalived-on-ubuntu-24-04/>
 
 How to Setup IP Failover with KeepAlived on Ubuntu & Debian
 
@@ -164,3 +169,25 @@ vrrp_instance VI_1 {
 ## NOTE
 
 Maybe I should configure VIP to eno150 instead?
+
+## Step 5 – Start KeepAlived Service
+
+Start keepalived service using the following command and also configure to autostart on system boot.
+
+```bash
+sudo snap stop keepalived
+sudo snap run keepalived
+sudo snap restart keepalived
+sudo snap start --enable [service_name]
+snap services
+Service                          Startup   Current   Notes
+keepalived.daemon                enabled   inactive  -
+```
+
+## Step 6 – Check Virtual IPs
+
+By default virtual IP will be assigned to the master server, In the case of master gets down, it will automatically assign to the slave server. Use the following command to show assigned virtual IP on the interface.
+
+```bash
+ip addr show eno350
+```
