@@ -5,6 +5,9 @@
 - **[docs](https://keepalived.readthedocs.io/en/latest/configuration_synopsis.html)**
 - **[arch](https://wiki.archlinux.org/title/Keepalived)**
 - **[configuring](https://louwrentius.com/configuring-attacking-and-securing-vrrp-on-linux.html)**
+- **[keepalived](https://www.youtube.com/watch?v=hPfk0qd4xEY&t=9s)**
+- **[haproxy with keepalived](https://www.youtube.com/watch?v=EdjR6BcUe7g)**
+
 <https://kifarunix.com/how-to-install-keepalived-on-ubuntu-24-04/>
 
 How to Setup IP Failover with KeepAlived on Ubuntu & Debian
