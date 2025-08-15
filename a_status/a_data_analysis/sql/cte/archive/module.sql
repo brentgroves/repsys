@@ -37,7 +37,39 @@ Plexus_Customer_No
 Plexus_Customer_No	Plexus_Customer_No
 Customer_Group_No
 IX_Unique_Customer_Group_Member	Plexus_Customer_No
-
+;with module_revision
+as
+(
+select
+MR.PCN, -- PK
+MR.Application_Key, -- PK
+MR.Identity_Key, -- PK
+MR.revision_Key, -- PK
+MR.Module_Key, -- FK
+MR.Revision_Date, -- IX
+MR.Revision_By,
+MR.Original_Text,
+MR.Revision_Text
+--CAST(MR.Original_Text AS VARCHAR(5)) AS Original_Text
+--SUBSTRING(MR.Original_Text, 1, 5) AS TruncatedText
+--STUFF(MR.Original_Text, 101, LEN(YourTextColumn) - 100, '') AS TruncatedText
+FROM Plexus_Control_v_Module_Revision_e AS MR
+where MR.PCN = @PCN -- 2801630
+and MR.Revision_Date between 
+)
+select count(*) cnt from module_revision MR -- 2801724
+@End_Ship_Date datetime = '20200228',
+@PCNList varchar(max) = '123681,300758'
+@Plexus_Customer_No INT = 123681,
+@Account_No VARCHAR(20) = '',  
+@Account_Name VARCHAR(50) = '',
+@Sort_By VARCHAR(15) = '' ,
+@Purchasing SMALLINT = -1,
+@Sub_Category_No INT=0,
+@Work_Log SMALLINT = -1,
+@Format_Type_No INT = 0, 
+@Active TINYINT = 2,
+@Limit INT = 0
 */
 
 
@@ -67,7 +99,6 @@ IX_Unique_Customer_Group_Member	Plexus_Customer_No
 --  AND MR.PCN = PU.Plexus_Customer_No
 
 --JOIN Plexus_Control_v_Module AS M
-
 SELECT
 --  MR.PCN,
   cgm.Plexus_Customer_Code,
