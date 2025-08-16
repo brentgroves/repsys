@@ -187,6 +187,7 @@ root@node02:~# ip address show eno150
 
 # set link up on primary node
 
+ip link set down eno150
 root@node01:~# ip link set up eno150
 root@node01:~# ip address show eno150
 2: enp1s0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc fq_codel state UP group default qlen 1000
