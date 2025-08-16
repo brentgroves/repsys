@@ -20,6 +20,12 @@ Aleksandar Gavrilov, IT Administrator, Skopje
 
 - Encryption with Ceph/Bitlocker
 
+## Aug 16th
+
+- If you filter columns and records in CTEs prior to the final select statement no noticable change in run time is noticed.  If you run queries several times a huge performance increase occurs.
+- Foriegn key constraints prevent records from being deleted that are referenced in tables. Many foriegn key constraints are missing in Plex, so be careful to use outer joins so you do not drop records.
+- Using a virtual router using the VRRP protocol allows us to keep network sessions alive during reboots of storage clusters and microservices.
+
 ## Aug 4th
 
 - Setup Fabric Gateway Windows Server with 64GB ram with ODBC connection to Plex.
