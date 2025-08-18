@@ -47,10 +47,13 @@ the subsequent steps after establishing a connection, including performing commo
 ```bash
 BUCKET_NAME=mybucket
 RGW_ENDPOINT=http://10.188.50.201
+RGW_ENDPOINT=http://10.188.50.200
 
 # https://docs.aws.amazon.com/cli/latest/reference/s3api/put-object.html
 
 aws --profile user --endpoint-url ${RGW_ENDPOINT}  s3api put-object --bucket ${BUCKET_NAME} --key TrialBalanceLinamar.xlsx --body ~/Downloads/TrialBalanceLinamar.xlsx
+
+aws --profile rgwuser-basic --endpoint-url ${RGW_ENDPOINT}  s3api put-object --bucket ${BUCKET_NAME} --key TB3.xlsx --body ~/Downloads/TB3.xlsx
 
 BUCKET_NAME=buckebasic
 RGW_ENDPOINT=http://10.188.50.201
@@ -70,7 +73,7 @@ aws s3api put-object \
 # aws --profile rgwuser-basic --endpoint-url ${RGW_ENDPOINT} s3 ls --bucket ${BUCKET_NAME}
 
 ## both work
-aws --profile rgwuser-basic --endpoint-url http://10.188.50.201 s3 ls s3://buckebasic
+aws --profile rgwuser-basic --endpoint-url http://10.188.50.200 s3 ls s3://buckebasic
 aws --profile rgwuser-basic --endpoint-url http://10.188.50.201 s3 ls buckebasic
 
 # aws s3 ls s3://your-bucket-name --recursive

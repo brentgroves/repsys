@@ -22,4 +22,6 @@ cat ~/.aws/config
 cat ~/.aws/credentials
 
 aws --profile rgwuser-basic --endpoint-url  http://10.188.50.201 s3 ls
+2025-08-05 18:10:30 buck1
+2025-08-05 18:15:13 buckebasic
 ```
