@@ -160,8 +160,25 @@ Aug 14 21:07:48 micro12 systemd[1]: Started keepalived.service - Keepalive Daemo
 ## test
 
 ```bash
+ip route show
+default via 10.188.50.254 dev eno150 proto static metric 100 
+default via 10.188.50.254 dev eno350 proto static metric 200 
+10.187.70.0/24 via 10.187.220.254 dev eno11220 proto static 
+10.187.220.0/24 dev eno11220 proto kernel scope link src 10.187.220.201 
+10.188.50.0/24 dev eno350 proto kernel scope link src 10.188.50.197 
+10.188.50.0/24 dev eno150 proto kernel scope link src 10.188.50.201 
+10.188.73.0/24 via 10.188.220.254 dev eno1220 proto static 
+10.188.220.0/24 dev eno1220 proto kernel scope link src 10.188.220.201
+
+ tracepath 10.188.50.200                     
+ 1?: [LOCALHOST]                      pmtu 1500
+ 1:  _gateway                                              0.807ms 
+ 1:  _gateway                                              1.641ms 
+ 2:  10.188.249.1                                          1.774ms 
+ 3:  10.188.50.200                                         0.941ms reached
+
 ping 10.188.50.200
-root@node01:~# ip address show eno150
+ip address show eno150
 14: eno150@eno1: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default qlen 1000
     link/ether b8:ca:3a:6a:35:98 brd ff:ff:ff:ff:ff:ff
     inet 10.188.50.201/24 brd 10.188.50.255 scope global eno150
@@ -172,31 +189,32 @@ root@node01:~# ip address show eno150
        valid_lft forever preferred_lft forever
 
 # set link down on primary node
-root@node01:~# ip link set down eno150
+ip link set down eno150
 
 # on backup node
-root@node02:~# ip address show eno150
+ssh brent@micro12fb
+ip address show eno150
 13: eno150@eno1: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default qlen 1000
     link/ether b8:ca:3a:6a:38:7c brd ff:ff:ff:ff:ff:ff
     inet 10.188.50.202/24 brd 10.188.50.255 scope global eno150
        valid_lft forever preferred_lft forever
+    inet 10.188.50.200/24 scope global secondary eno150
+       valid_lft forever preferred_lft forever
     inet6 fe80::baca:3aff:fe6a:387c/64 scope link 
        valid_lft forever preferred_lft forever
-
-# virtual IP address is assigned
-
+exit
 # set link up on primary node
-
-ip link set down eno150
-root@node01:~# ip link set up eno150
-root@node01:~# ip address show eno150
-2: enp1s0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc fq_codel state UP group default qlen 1000
-    link/ether 52:54:00:35:69:7c brd ff:ff:ff:ff:ff:ff
-    inet 10.0.0.51/24 brd 10.0.0.255 scope global enp1s0
+ssh brent@micro11fb
+ip link set up eno150
+ip address show eno150
+# after a minute
+13: eno150@eno1: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default qlen 1000
+    link/ether b8:ca:3a:6a:38:7c brd ff:ff:ff:ff:ff:ff
+    inet 10.188.50.202/24 brd 10.188.50.255 scope global eno150
        valid_lft forever preferred_lft forever
-    inet 10.0.0.30/24 scope global secondary enp1s0
+    inet 10.188.50.200/24 scope global secondary eno150
        valid_lft forever preferred_lft forever
-    inet6 fe80::5054:ff:fe35:697c/64 scope link
+    inet6 fe80::baca:3aff:fe6a:387c/64 scope link 
        valid_lft forever preferred_lft forever
 
 # failback automatically
