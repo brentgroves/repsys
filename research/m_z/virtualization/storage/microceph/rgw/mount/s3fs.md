@@ -92,7 +92,9 @@ Let’s mount the bucket. Use the following command to set the bucket name, the 
 ```bash
 # s3fs bucket-name /path/to/mountpoint -o passwd_file=/path/passwd-s3fs
 
-s3fs mybucket /home/brent/s3-bucket -o sigv2 -o use_path_request_style -o passwd_file=/home/brent/.passwd-s3fs -o url=http://micro11 -d
+s3fs mybucket /home/brent/s3-bucket -o sigv2 -o use_path_request_style -o passwd_file=/home/brent/.passwd-s3fs -o url=http://microcloud -d
+
+s3cmd -c ~/.s3cfg ls s3://mybucket
 
 
 ```

@@ -1,6 +1,44 @@
 # **[](https://canonical-microceph.readthedocs-hosted.com/latest/tutorial/get-started/#enable-rgw)**
 
-Enable RGW
+## Add storage
+
+Let’s add storage disk devices to the node.
+
+We will use loop files, which are file-backed Object Storage Daemons (OSDs) convenient for setting up small test and development clusters. Three OSDs are required to form a minimal Ceph cluster.
+
+Execute the following command:
+
+```bash
+sudo microceph disk add loop,4G,3
+user@host:~$
++-----------+---------+
+|   PATH    | STATUS  |
++-----------+---------+
+| loop,4G,3 | Success |
++-----------+---------+
+Success! You have added three OSDs with 4GiB storage to your node.
+```
+
+Recheck the cluster status:
+
+```bash
+sudo microceph status
+MicroCeph deployment summary:
+- micro11 (10.188.50.201)
+  Services: mds, mgr, mon, rgw, osd
+  Disks: 1
+- micro12 (10.188.50.202)
+  Services: mds, mgr, mon, rgw, osd
+  Disks: 1
+- micro13 (10.188.50.203)
+  Services: mds, mgr, mon, osd
+  Disks: 1
+```
+  
+Remember that we had three services running when the cluster was bootstrapped. Note that we now have four services running, including the newly added osd service.
+
+## Enable RGW
+
 As mentioned before, we will use the Ceph Object Gateway to interact with the object storage cluster we just deployed.
 
 Enable the RGW daemon on your node
@@ -8,17 +46,16 @@ Enable the RGW daemon on your node
 ```bash
 microceph enable rgw
 root@micro11:~# microceph status
-MicroCeph deployment summary:
 - micro11 (10.188.50.201)
   Services: mds, mgr, mon, rgw, osd
   Disks: 1
 - micro12 (10.188.50.202)
-  Services: mds, mgr, mon, osd
+  Services: mds, mgr, mon, rgw, osd
   Disks: 1
 - micro13 (10.188.50.203)
   Services: mds, mgr, mon, osd
   Disks: 1
-```
+ ```
 
 Note
 
@@ -76,6 +113,12 @@ radosgw-admin user create --uid=user --display-name=user
     "tags": [],
     "group_ids": []
 }
+
+radosgw-admin user list
+[
+    "user",
+    "rgwuser-basic"
+]
 ```
 
 ## Set user secrets
@@ -142,19 +185,21 @@ radosgw-admin key create --uid=user --key-type=s3 --access-key=foo --secret-key=
 
 ## Consuming the storage
 
-Access RGW
+## Access RGW
+
 Before attempting to consume the object storage in the cluster, validate that you can access RGW by running curl on your node.
 
 Find the IP address of the node running the rgw service:
 
 ```bash
 microceph status
+sudo microceph status
 MicroCeph deployment summary:
 - micro11 (10.188.50.201)
   Services: mds, mgr, mon, rgw, osd
   Disks: 1
 - micro12 (10.188.50.202)
-  Services: mds, mgr, mon, osd
+  Services: mds, mgr, mon, rgw, osd
   Disks: 1
 - micro13 (10.188.50.203)
   Services: mds, mgr, mon, osd
@@ -248,6 +293,9 @@ s3cmd mb -P s3://mybucket
 Bucket 's3://mybucket/' created
 s3cmd mb -P s3://mybucket2
 Bucket 's3://mybucket2/' created
+s3cmd -c ~/.s3cfg ls
+2025-07-18 22:19  s3://mybucket
+2025-08-04 19:22  s3://mybucket2
 ```
 
 Note
@@ -270,8 +318,6 @@ upload: '/home/brent/Downloads/cat.jpg' -> 's3://mybucket/cat.jpg'  [1 of 1]
  21439 of 21439   100% in    2s     6.99 KB/s  done
 Public URL of the object is: http://micro11/mybucket/cat.jpg
 
-curl http://10.188.50.201/mybucket2/TB-202305_to_202405_on_06-07_DM.xlsx
-curl http://10.188.50.201/mybucket2/TB-202305_to_202405_on_06-07_DM.xlsx
 
 http://10.188.50.201/mybucket/cat.jpg
 http://10.188.50.201/mybucket/tb.xlsx
@@ -282,15 +328,22 @@ s3cmd put -P ~/Downloads/t4.txt s3://mybucket
 
 s3cmd put ~/Downloads/t6.txt s3://mybucket/my-folder/my-file.txt
 
-http://10.188.50.201/mybucket/my-folder/tb.xlsx
-http://10.188.50.201/mybucket/my-folder/my-file.txt
-http://10.188.50.201/mybucket/t1.txt
-http://10.188.50.201/mybucket/t3.txt
-http://10.188.50.201/mybucket/t4.txt
-http://10.188.50.201/mybucket/t5.txt
-http://10.188.50.201/mybucket/t6.txt
-http://10.188.50.201/mybucket/test.txt
+s3cmd -c ~/.s3cfg ls s3://mybucket
+                          DIR  s3://mybucket/.Trash-1000/
+                          DIR  s3://mybucket/my-folder/
+2025-08-07 22:48           97  s3://mybucket/.~lock.TrialBalanceLinamar.xlsx#
+2025-08-07 22:41        12370  s3://mybucket/Workspace Migration Plan.xlsx
+2025-07-18 22:23        21439  s3://mybucket/cat.jpg
+2025-08-04 22:24            6  s3://mybucket/t1.txt
+2025-08-04 22:26            3  s3://mybucket/t2.txt
+2025-08-04 22:28            0  s3://mybucket/t3.txt
+2025-08-04 22:43            4  s3://mybucket/t4.txt
+2025-08-04 22:49            4  s3://mybucket/t5.txt
+2025-08-04 22:52            5  s3://mybucket/t6.txt
+2025-08-04 22:55            5  s3://mybucket/t7.txt
+2025-08-07 22:58      2598092  s3://mybucket/tb2.xlsx
 
+s3cmd del s3://mybucket/.~lock.TrialBalanceLinamar.xlsx#
 ```
 
 The output shows that your image is stored in a publicly accessible S3 bucket. You can now click on the public object URL in the output to view the image in your browser.

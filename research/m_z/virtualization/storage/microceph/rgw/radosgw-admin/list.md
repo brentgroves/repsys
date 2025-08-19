@@ -7,6 +7,6 @@ radosgw-admin bucket list --bucket=buckebasic
 radosgw-admin bucket list --bucket=mybucket
 radosgw-admin bucket list --bucket=mybucket2
 
-
+radosgw-admin user list
 
 ```

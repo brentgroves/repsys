@@ -47,5 +47,10 @@ List the contents of the bucket
    Bucket 'logix.cz-test':
    ~$
 It's empty, indeed.
+```
 
+## deleting object
 
+```bash
+s3cmd del s3://mybucket/.~lock.TrialBalanceLinamar.xlsx#
+```
