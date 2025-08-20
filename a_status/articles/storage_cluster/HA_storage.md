@@ -1,4 +1,9 @@
-# HA Storage Cluster
+# HA Storage Demo
+
+1. mount POSIX-compliant distributed file system.
+2. mount s3 compatable object storage bucket.
+3. view from file explorer
+4. down network interface on storage cluster.
 
 Ceph’s RADOS Gateway, S3-compatible object storage service
 
