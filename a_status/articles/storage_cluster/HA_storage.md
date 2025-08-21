@@ -1,11 +1,54 @@
 # HA Storage Demo
 
-1. mount POSIX-compliant distributed file system.
-2. mount s3 compatable object storage bucket.
+1. POSIX-compliant distributed file system.
+
+Ceph, the leading open-source distributed storage system, has been ported to Windows, including RBD and CephFS. This opens new interoperability scenarios where both Linux and Windows systems can benefit from a unified distributed storage strategy, without performance compromises.
+
+Supported Windows versions:
+Windows Server 2022
+Windows Server 2019
+Works on Windows 10 (LTSC) and Windows 11 as well for development/testing purposes.
+
+- make a storage pool for each department.
+- give user read/write access to pool.
+
+```bash
+ceph osd lspools
+# Create data/metadata pools for CephFs:
+ceph osd pool create ind_cephfs_meta
+ceph osd pool create ind_cephfs_data
+ceph osd lspools
+# Create CephFs share:
+ceph fs new indFs ind_cephfs_meta ind_cephfs_data
+ceph fs ls
+```
+
+Mount the filesystem:
+
+```bash
+mkdir /mnt/mycephfs
+mount -t ceph :/ /mnt/mycephfs/ -o name=admin,fs=indFs
+```
+
+2. s3 compatable object storage.
+
+- great for giving tempory links.
+run python app to give temp link.
+- ok if just one person is writing to files.
+- good support for backups.
+- not good for concurrent file access.
+S3's nature: S3 is an object storage service, not a traditional filesystem. It offers strong read-after-write consistency, meaning a successful write will immediately be reflected in subsequent reads. However, it doesn't provide built-in object locking for concurrent writers.
+
 3. view from file explorer
 4. down network interface on storage cluster.
 5. view from file explorer
 6. copy from one drive to ceph
+7. backup bucket
+
+```bash
+# rclone sync remote_name:remote_path /path/to/local/directory
+rclone sync mybucket:mybucket /home/brent/backups/rclone/mybucket
+```
 
 Ceph’s RADOS Gateway, S3-compatible object storage service
 

@@ -26,25 +26,46 @@ sudo ufw route allow out on lxdbr0
 sudo ufw disable && sudo ufw enable
 From the directory where the Windows ISO file has been downloaded
 
+```bash
 sudo lxd-imagebuilder repack-windows Win11_24H2_English_x64.iso win11.lxd.iso
+```
+
 Create the empty vm
 
+```bash
 lxc init win11c --vm --empty
+```
+
 Using 80GiB here instead of 50GiB
 
-lxc config device override win11c root size=80GiB
+```bash
+lxc config device override win11c root size=100GiB
+```
+
 Set CPU and RAM
 
+```bash
 lxc config set win11c limits.cpu=4 limits.memory=8GiB
+```
+
 Set TPM
 
+```bash
 lxc config device add win11c vtpm tpm path=/dev/tpm0
+```
+
 Insert the ISO
 
-lxc config device add win11c install disk source=/home/chris/win11.lxd.iso boot.priority=10
+```bash
+lxc config device add win11c install disk source=/home/brent/Downloads/win11.lxd.iso boot.priority=10
+```
+
 Start the container. Hit Enter key (immediately) inside the console (on this first occasion only) to boot from the ISO
 
+```bash
 lxc start win11c --console=vga
+```
+
 Reconnect via the console, each time Windows reboots
 
 lxc console win11c --type vga

@@ -70,3 +70,19 @@ ceph fs ls
 name: lxd_cephfs, metadata pool: lxd_cephfs_meta, data pools: [lxd_cephfs_data ]
 name: indFs, metadata pool: ind_cephfs_meta, data pools: [ind_cephfs_data ]
 ```
+
+Mount the filesystem:
+
+```bash
+mkdir /mnt/mycephfs
+mount -t ceph :/ /mnt/mycephfs/ -o name=admin,fs=indFs
+umount /mnt/mycephfs
+ls -alh /mnt/mycephfs
+total 4.5K
+drwxrwxrwx 2 root  root     4 Jul 18 17:26 .
+drwxr-xr-x 6 root  root  4.0K Aug  4 18:01 ..
+-rw-r--r-- 1 root  root     0 Jul 18 17:13 test2.md
+-rw-rw-r-- 1 brent brent   16 Jul 18 17:25 test3.md
+-rw-r--r-- 1 root  root     0 Jul 18 17:15 test4.md
+-rw-rw-r-- 1 brent brent    0 Jul 18 17:09 test.md
+```

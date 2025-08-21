@@ -1,6 +1,7 @@
 # AI Overview
 
 <https://www.youtube.com/watch?v=ff8Ogk8NIPU>
+<https://www.youtube.com/watch?v=we17KOJKySY>
 <https://www.youtube.com/watch?v=MwxbX6PNiWA>
 
 ## windows
