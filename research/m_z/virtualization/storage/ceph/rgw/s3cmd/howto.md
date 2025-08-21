@@ -39,6 +39,8 @@ Bucket 'logix.cz-test' created
 Now you should see your freshly created bucket
 
 ```bash
+s3cmd -c ~/.s3cfg ls s3://mybucket/my-folder/ 
+
 s3cmd ls
    2007-01-19 01:41  s3://logix.cz-test
 

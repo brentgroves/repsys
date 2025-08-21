@@ -4,6 +4,8 @@
 2. mount s3 compatable object storage bucket.
 3. view from file explorer
 4. down network interface on storage cluster.
+5. view from file explorer
+6. copy from one drive to ceph
 
 Ceph’s RADOS Gateway, S3-compatible object storage service
 
@@ -12,6 +14,8 @@ Ceph’s RADOS Gateway, S3-compatible object storage service
 
 ## Summary
 
+- Linux Administrator
+- Security
 - **[20 years old](https://thenewstack.io/ceph-20-years-of-cutting-edge-storage-at-the-edge/#:~:text=Ceph:%2020%20Years%20of%20Cutting,of%20Use%20and%20Privacy%20Policy.)**
 - Its one of the most thoroughly documented peices of software I have ever seen.
 - It has a dedicated **[foundation](https://ceph.io/en/foundation/)** made up commercial, government, and educational stakeholders.

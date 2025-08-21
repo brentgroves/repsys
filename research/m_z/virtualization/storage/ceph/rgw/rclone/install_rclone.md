@@ -1,5 +1,23 @@
 # **[](https://rclone.org/install/)**
 
+##
+
+## update
+
+```bash
+# https://rclone.org/commands/rclone_selfupdate/
+rclone selfupdate
+
+cat ~/.config/rclone/rclone.conf
+[mybucket]
+type = s3
+provider = Ceph
+access_key_id = foo
+secret_access_key = bar
+endpoint = http://microcloud
+acl = public-read-write
+```
+
 ## Install
 
 Rclone is a Go program and comes as a single binary file.

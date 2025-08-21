@@ -1,3 +1,9 @@
+# **[s3fs](https://github.com/s3fs-fuse/s3fs-fuse)**
+
+# **[](https://upcloud.com/resources/tutorials/mount-object-storage-cloud-server-s3fs-fuse/)**
+
+**[Great mount s3fs youtube](https://www.youtube.com/watch?v=0xS1lBgHDX8)** explains k8s usage
+
 # **[](https://www.nakivo.com/blog/mount-amazon-s3-as-a-drive-how-to-guide/)**
 
 **[](https://upcloud.com/resources/tutorials/mount-object-storage-cloud-server-s3fs-fuse/)**
@@ -141,6 +147,9 @@ sudo umount /mnt/s3root
 s3fs mybucket /mnt/ceph-s3 -o sigv2 -o use_path_request_style -o passwd_file=/home/brent/.passwd-s3fs -o url=http://micro11 -d
 
 sudo umount /mnt/ceph-s3
+
+s3fs mybucket /home/brent/s3-bucket -o umask=000 -o allow_other -o sigv2 -o use_path_request_style -o passwd_file=/home/brent/.passwd-s3fs -o url=<http://microcloud> -d
+umount /home/brent/s3-bucket
 ```
 
 <https://canlogger.csselectronics.com/canedge-getting-started/ce1/transfer-data/server-tools/mount-s3-linux/>
