@@ -9,6 +9,19 @@ Windows Server 2022
 Windows Server 2019
 Works on Windows 10 (LTSC) and Windows 11 as well for development/testing purposes.
 
+## Secure Boot
+
+**Function:** Prevents unauthorized software, like malware, from loading during the boot process by verifying the digital signatures of boot components.
+**Implementation:** Relies on digital signatures stored in the UEFI firmware.
+**Benefit:** Protects against bootkit and rootkit attacks, ensuring a trusted operating system environment.
+**Does not require TPM:** Secure Boot can operate independently of a TPM chip.
+
+Key Differences:
+Secure Boot is a feature of UEFI firmware, while TPM is a hardware component.
+Secure Boot primarily focuses on preventing malware from loading during boot, while TPM focuses on providing a secure environment for cryptographic operations and platform integrity.
+Secure Boot can function without a TPM, but TPM enhances the overall security posture when used with Secure Boot.
+This video explains how secure boot and TPM work together to enhance security:
+
 - make a storage pool for each department.
 - give user read/write access to pool.
 
