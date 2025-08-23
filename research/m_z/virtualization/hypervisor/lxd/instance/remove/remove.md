@@ -1,19 +1,30 @@
+# remove
+
 Stop the VM: Before deleting, you need to stop the virtual machine. Use the following command, replacing <vm_name> with the actual name of your VM:
-Code
 
-   lxc stop <vm_name>
-Delete the VM: Once the VM is stopped, you can delete it using:
-Code
+```bash
+# lxc stop <vm_name>
+lxc stop win11c
+```
 
-   lxc delete <vm_name>
+```bash
+# lxc delete <vm_name>
+lxc delete win11c
+```
+
 Force Deletion (Optional): If you need to delete a running VM, use the --force flag:
-Code
 
-   lxc delete <vm_name> --force
+```bash
+lxc info --show-log win11c  
+# lxc delete <vm_name> --force
+lxc delete win11c --force
+```
+
 Important Notes:
-The lxc delete command permanently deletes the instance and its snapshots, according to the LXD documentation.
-Be absolutely sure you want to delete the VM before executing the command, as this action is irreversible.
-If you are removing LXD entirely, you'll need to remove containers, images, storage volumes, and networks first, then remove LXD itself, according to the Linux Containers forum.
+
+- The lxc delete command permanently deletes the instance and its snapshots, according to the LXD documentation.
+- Be absolutely sure you want to delete the VM before executing the command, as this action is irreversible.
+- If you are removing LXD entirely, you'll need to remove containers, images, storage volumes, and networks first, then remove LXD itself, according to the Linux Containers forum.
 
 If an LXD VM won't stop, it's likely due to a pending operation or a stuck process. To resolve this, you can try cancelling pending tasks or forcefully stopping the VM. If the issue persists, killing the relevant lxc-start process or the monitor process might be necessary.
 Here's a breakdown of potential solutions:

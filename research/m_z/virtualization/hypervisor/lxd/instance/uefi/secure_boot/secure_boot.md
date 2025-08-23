@@ -46,27 +46,32 @@ Use this method only for debugging purposes. LXD provides the security.secureboo
 The following command checks the secure boot state:
 
 ```bash
+# lxc config set <instance_name> <option_key>=<option_value> <option_key>=<option_value> ...
+
+# lxc config set win11 security.secureboot=<option_value> 
+
+lxc config set win11 security.secureboot=<option_value> 
+lxc config get win11 security.secureboot
+
+lxc config set VM-name security.secureboot=false
+lxc config set VM-name security.secureboot=true
+
+```
+
+```
+
+See **[Instance options](https://documentation.ubuntu.com/lxd/latest/reference/instance_options/#instance-security:security.secureboot)**
+
+A value of 01 indicates that secure boot is active. You can then turn it off with the following command:
+
+```bash
 lxc config uefi show <instance_name>
-lxc config uefi show win11c
+lxc config uefi show win11
 ...
+# No SecureBootEnable before Windows installation
 SecureBootEnable-f0a30bc7-af08-4556-99c4-001009c93a44:
     data: "01"
     attr: 3
     timestamp: ""
     digest: ""
-```
-
-```bash
-lxc config uefi get win11c SecureBootEnable-f0a30bc7-af08-4556-99c4-001009c93a44
-
-01
-lxc config uefi get win11 SecureBootEnable-f0a30bc7-af08-4556-99c4-001009c93a44 
-
-00
-```
-
-A value of 01 indicates that secure boot is active. You can then turn it off with the following command:
-
-```bash
-lxc config uefi set v1 SecureBootEnable-f0a30bc7-af08-4556-99c4-001009c93a44=00
 ```

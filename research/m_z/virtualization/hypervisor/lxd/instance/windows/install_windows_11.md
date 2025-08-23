@@ -65,7 +65,9 @@ ls -lh wins22.lxd.iso
 
 After we create the Windows image, We can create a new empty VM that we can call ”win11”
 
-`lxc init win11 --vm --empty`
+```bash
+lxc init win11 --vm --empty
+```
 
 The default storage/disk provided to new VMs is 10GB, which is not enough for Windows so we need to increase the size of the disk to 50GB with the following command before proceeding
 
@@ -83,7 +85,7 @@ tmpfs          tmpfs     1.0M     0  1.0M   0% /var/snap/lxd/common/ns
 
 
 # lxc config device override win11 root size=50GiB
-lxc config device override win11 root size=100GiB
+lxc config device override win11 root size=120GiB
 Device root overridden for win11
 
 We should also increase the CPU limits for optimal performance
@@ -100,6 +102,22 @@ lxc config device add win11 vtpm tpm path=/dev/tpm0
 Device vtpm added to win11
 ```
 
+To install ceph driver we need to disable secure boot.
+
+```bash
+lxc config set win11 security.secureboot=false
+lxc config get win11 security.secureboot
+false
+lxc config uefi show win11
+# no uefi variables yet
+...
+SecureBootEnable-f0a30bc7-af08-4556-99c4-001009c93a44:
+    data: "01"
+    attr: 3
+    timestamp: ""
+    digest: ""
+```
+
 The last thing we need to do is add the install media Itself and make it a boot priority (so it boots automatically).
 
 If you are doing this in a cluster, make sure to launch this commands on the same member where the targeted instance is placed. You can check this with lxc info win11
@@ -113,7 +131,13 @@ Now we can start the installer.
 
 ⓘYou will need to manually provide a VGA console access by installing either remote-viewer or spicy. If neither of these is found in the system, you will get a message instructing you to install them.
 
-`lxc start win11 --console=vga`
+```bash
+# quickly press any to boot from cd
+lxc start win11 --console=vga
+# start install process
+# we disconnect several times during process run lxc console
+lxc console win11c --type=vga 
+```
 
 If needed, install a Spice client as prompted:
 

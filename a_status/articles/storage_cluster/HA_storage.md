@@ -1,5 +1,14 @@
 # HA Storage Demo
 
+# **[SUSE Enterprise Storage Driver for Windows](https://www.suse.com/betaprogram/suse-enterprise-storage-windows-driver-beta/)**
+
+## Ceph in a Windows World
+
+We are bringing a new block driver (WNBD) and Ceph CLI tools to Microsoft Windows Server 2016 and 2019 platforms. These tools provide native connectivity to SUSE Enterprise Storage clusters version 6 and 7. This native I/O model may increase performance, and eliminate the complexities and single points of failure commonly associated with the iSCSI and Samba gateway configurations. Ceph is a highly-resilient software-defined-storage offering, which has only been available to Microsoft Windows environments through the use of iSCSI or CIFS gateways. This gateway architecture introduces a single point of contact and limits fault-tolerance and bandwidth, in comparison to the native I/O paths of Ceph with RADOS. In order to bring the benefits of native Ceph to Microsoft Windows environments, SUSE partnered with Cloudbase Solutions to port Ceph to the Microsoft Windows platform. This work is nearing completion, and provides the following functionality:
+
+- RADOS Block Device (RBD)
+- CephFS
+
 1. POSIX-compliant distributed file system.
 
 Ceph, the leading open-source distributed storage system, has been ported to Windows, including RBD and CephFS. This opens new interoperability scenarios where both Linux and Windows systems can benefit from a unified distributed storage strategy, without performance compromises.

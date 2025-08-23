@@ -6,13 +6,18 @@ Windows Server 2019 and Windows Server 2016 are supported. Previous Windows Serv
 
 Windows Server 2016 does not provide Unix sockets, in which case some commands might be unavailable.
 
-Ceph MS Windows Client
+## Ceph MS Windows Client
 
 Ceph’s MS Windows native client support is “best effort”. There is no full-time maintainer. As of July 2025 there are no plans to remove this client but the future is uncertain.
 
 ## Secure boot
 
-The WNBD driver hasn’t been signed by Microsoft, which means that Secure Boot must be disabled.
+**[SUSU Enterprise Driver for Windows](https://www.suse.com/betaprogram/suse-enterprise-storage-windows-driver-beta/)**
+The **[WNBD driver](https://github.com/cloudbase/wnbd)** hasn’t been **[signed CloudBase](https://docs.ceph.com/en/reef/install/windows-install)** but not by Microsoft, which means that Secure Boot must be disabled.
+
+# **[](https://www.suse.com/betaprogram/suse-enterprise-storage-windows-driver-beta/)**
+
+**[crashes](https://ask.cloudbase.it/question/3679/ceph-for-windows-driver-crashes/)**
 
 ## Dokany
 

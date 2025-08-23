@@ -19,6 +19,7 @@ Set the configuration key using the lxc config set command:
 ```bash
 lxc config get win11c security.secureboot
 lxc config set VM-name security.secureboot=false
+
 ```
 
 This command modifies the security configuration for the existing VM.
