@@ -22,6 +22,13 @@ Aleksandar Gavrilov, IT Administrator, Skopje
 - <https://ubuntu.com/kubernetes/charmed-k8s/docs/quickstart>
 - Encryption with Ceph/Bitlocker
 
+## Aug 25th
+
+- Setup Fabric Gateway for data sources not accessible from Fabric directly.
+- Research managing/publishing Power BI reports.
+- HA Storage to include object storage.
+-
+
 ## Aug 16th
 
 - If you filter columns and records in CTEs prior to the final select statement no noticable change in run time is noticed.  If you run queries several times a huge performance increase occurs.
