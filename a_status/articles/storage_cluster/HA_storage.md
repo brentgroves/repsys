@@ -69,6 +69,18 @@ Supported Windows versions:
 - It has a dedicated **[foundation](https://ceph.io/en/foundation/)** made up commercial, government, and educational stakeholders.
 - **[Ceph, I’ve never seen a data loss on properly managed clusters, even when there are major failures.](https://www.linkedin.com/posts/markus-wendland-clyso-ceph-abassador-kubernetes-opensource_ceph-20-years-of-cutting-edge-storage-at-activity-7239343394622234624-jMeX/)**
 
+## Windows Byte-Range Locks
+
+When an application uses standard file I/O (read/write) APIs, Windows enforces byte-range locks on the NTFS file system. These are mandatory in that they are enforced by the file system and prevent other clients from writing to locked sections of the file, though they are not mandatory in the sense of a system-wide, unbypassable policy.
+
+## Unix Advisory Locks
+
+In Unix systems, advisory locks are cooperative; the kernel tracks them, but applications must obey them to avoid issues like deadlocks.
+
+## Ceph's Cooperative Locking
+
+While Ceph's locking is cooperative, it includes enforcement mechanisms like the **[blocklisting process](https://docs.ceph.com/en/latest/cephfs/eviction/)** for failed clients, making it more robust than pure advisory locking.
+
 ## references
 
 - **[Ceph Architecture](https://docs.ceph.com/en/reef/architecture/)**
