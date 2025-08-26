@@ -42,7 +42,11 @@ Supported Windows versions:
 
 - **[high availability and fault tolerance](https://sysadmins.co.za/achieving-high-availability-with-haproxy-and-keepalived-building-a-redundant-load-balancer/)**
 - **[Full Disk Encryption](https://ceph.io/en/news/blog/2023/ceph-encryption-performance/)**
+- Replication or **[Erasure Coding](https://docs.ceph.com/en/reef/rados/operations/erasure-code)**
 - self-healing
+- **[Block storage (RBD) mirroring](https://docs.ceph.com/en/mimic/rbd/rbd-mirroring/)**
+- **[Ceph Object Storage Multisite Replication](https://ceph.io/en/news/blog/2025/rgw-multisite-replication_part1/)**
+![i1](https://ceph.io/en/news/blog/2025/rgw-multisite-replication_part1/images/image1.png)
 - Configurable network interfaces for both public and internal traffic.
 - **[Ceph’s RADOS Gateway, S3-compatible object storage service](https://docs.ceph.com/en/reef/radosgw/)**
   - great for giving tempory links.
