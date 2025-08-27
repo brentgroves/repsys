@@ -5,7 +5,10 @@
 - secure boot disabled
 - set HELLO piin
 - `lxc config device remove win11 install` before restarting vm
+- Did not install virtio drivers
 
 ## result
 
-After shutdown would not restart
+works so far. Was the issue with the virtio driver?
+
+## install ceph
