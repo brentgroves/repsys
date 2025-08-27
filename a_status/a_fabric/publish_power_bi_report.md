@@ -1,3 +1,15 @@
+# Publish Power BI report
+
+Hi team,
+Structures Information Systems is working with Corporate to establish a way to publish and secure Power BI reports using Microsoft Fabric. If you would like a Power BI report to be made please contact myself or someone in Information Systems.
+
+Ricardo,
+This is my first time to publish a Power BI report in the Linamar Fabric workspace, so please bear with me. I will keep you posted as to my progress.
+
+- Thank you,
+
+## team
+
 Tarek Mohamed, Data and Analytics IT, Supervisor
 Cody Hudson, Fabric Administrator
 Ricardo Baca, Sr. Manufacturing Engineer, Southfield
@@ -5,13 +17,11 @@ Heather Luttrell, Group Controller, Finance
 Pat Baxter, General Manager
 Michael Percell, Manufacturing Engineering Manager
 Ron James, Quality Manager
-Dan Martin, Plant Controller Southfield
 Jami Pyle, MP&L Manager
 Nancy Swank, Material Planner
 Dennis Brach, Maintenance Group Leader
 Brian Hobbs,TS/ISO Coordinator / Safety & Health Administrator Quality
 Christian Trujillo, IT Structures Manager
-Brent Hall, System Administrator Senior
 Kevin Young, Information Systems Manager
 Jared Davis, IT Manager
 Hayley Rymer, IT Supervisor, Mills River
@@ -30,8 +40,3 @@ Carl Stangland, Desktop and System Support Technician, Indiana
 Lucas Tuma, IT Administrator, Strakonice
 Aleksandar Gavrilov, IT Administrator, Skopje
 Victor Saavedra, LNA Application Architect IT
-Sadiq Basha, Data Engineer, Senior - IT - Data & Analytics
-Shawn Boyd, Controller, Group - LMGA - MBI
-Chris McConville, IT Developer - IT
-Emmanuel Munoz Diaz - Microsoft Data and AI specialist - <emunozdias@microsoft.com>
-Oscar Zamora, <oszamora@microsoft.com>

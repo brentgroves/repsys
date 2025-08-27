@@ -26,3 +26,7 @@ All data in Fabric is stored in OneLake, which is built on Azure Data Lake Stora
 - **Items** are the building blocks of the Fabric platform. They're the objects that you create and manage in Fabric. There are different types of items, such as data warehouses, data pipelines, datasets, reports, and dashboards.
 
 Understanding Fabric concepts is important for you as an admin, because it helps you understand how to manage the Fabric environment.
+
+ Note
+
+For more information, see the **[Start a Fabric trial](https://learn.microsoft.com/en-us/fabric/get-started/fabric-trial)** documentation.

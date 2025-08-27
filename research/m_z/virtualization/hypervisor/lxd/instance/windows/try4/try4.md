@@ -7,15 +7,12 @@
 - `lxc config device remove win11 install` before restarting vm
 - Did not install virtio drivers
 - waited untill windows completed installing all work software.
+
 - reboot
 
 ## result
 
 works so far. Was the issue with the virtio driver, or time sync?
-
-## enable bitlocker
-
-works
 
 ## install ceph
 

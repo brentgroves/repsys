@@ -6,25 +6,25 @@ There are several roles that work together to administer Microsoft Fabric for yo
 
 As a Fabric admin, you work primarily in the Fabric admin portal. You might also need to familiarize yourself with the following tools:
 
-Microsoft 365 admin center
-Microsoft 365 Security & Microsoft Purview compliance portal
-Microsoft Entra ID in the Azure portal
-PowerShell cmdlets
-Administrative APIs and SDK
+- **[Microsoft 365 admin center](https://learn.microsoft.com/en-us/microsoft-365/admin/admin-overview/admin-center-overview)**
+- **[Microsoft 365 Security & Microsoft Purview compliance portal](https://learn.microsoft.com/en-us/microsoft-365/compliance/microsoft-365-compliance-center)**
+- **[Microsoft Entra ID in the Azure portal](https://learn.microsoft.com/en-us/azure/active-directory/fundamentals/active-directory-whatis)**
+- **[PowerShell cmdlets](https://learn.microsoft.com/en-us/powershell/power-bi/overview)**
+- **[Administrative APIs and SDK](https://learn.microsoft.com/en-us/rest/api/power-bi/admin)**
 
 ## Describe admin tasks
 
 As an admin, you might be responsible for a wide range of tasks to keep the Fabric platform running smoothly. These tasks include:
 
-Security and access control: One of the most important aspects of Fabric administration is managing security and access control to ensure that only authorized users can access sensitive data. You can use role-based access control (RBAC) to:
+**Security and access control:** One of the most important aspects of Fabric administration is managing security and access control to ensure that only authorized users can access sensitive data. You can use role-based access control (RBAC) to:
 
 - Define who can view and edit content.
 - Set up data gateways to securely connect to on-premises data sources.
 - Manage user access with Microsoft Entra ID.
 
-Data governance: Effective Fabric administration requires a solid understanding of data governance principles. You should know how to secure inbound and outbound connectivity in your tenant and how to monitor usage and performance metrics. You should also know how to apply data governance policies to ensure data within your tenant is only accessible to authorized users.
+**Data governance:** Effective Fabric administration requires a solid understanding of data governance principles. You should know how to secure inbound and outbound connectivity in your tenant and how to monitor usage and performance metrics. You should also know how to apply data governance policies to ensure data within your tenant is only accessible to authorized users.
 
-Customization and configuration: Fabric administration also involves customizing and configuring the platform to meet the needs of your organization. You might configure private links to secure your tenant, define data classification policies, or adjust the look and feel of reports and dashboards.
+**Customization and configuration:** Fabric administration also involves customizing and configuring the platform to meet the needs of your organization. You might configure private links to secure your tenant, define data classification policies, or adjust the look and feel of reports and dashboards.
 
 Monitoring and optimization: As a Fabric admin, you need to know how to monitor the performance and usage of the platform, optimize resources, and troubleshoot issues. Examples include configuring monitoring and alerting settings, optimizing query performance, managing capacity and scaling, and troubleshooting data refresh and connectivity issues.
 
