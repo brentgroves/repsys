@@ -28,6 +28,14 @@ Supported Windows versions:
 - Windows Server 2019
 - Works on Windows 10 (LTSC) and Windows 11 as well for development/testing purposes.
 
+**[SMB Meets Squid: Introducing the New Ceph SMB Manager Module for SMB Service Management in Ceph](https://ceph.io/en/news/blog/2025/smb-manager-module/#:~:text=Introduction,enjoying%20enhanced%20control%20and%20scalability.)**
+
+Note: Some of the features described are only partially available as of Squid 19.2.3. Complete support will come with Tentacle.
+
+## Introduction
+
+SMB (Server Message Block) is a widely-used network protocol that facilitates the sharing of files, printers, and other resources across a network. To seamlessly integrate SMB services within a Ceph environment, Ceph 8.0 introduces the powerful SMB Manager module, which enables users to deploy, manage, and control Samba services for SMB access to CephFS. This module offers a user-friendly interface for managing clusters of Samba services and SMB shares, with the flexibility to choose between two management methods: imperative and declarative. By enabling the SMB Manager module using the command ceph mgr module enable smb, administrators can efficiently streamline their SMB service operations, whether through the command-line or via orchestration with YAML or JSON resource descriptions. With the new SMB Manager module, Ceph admins can effortlessly extend file services, providing robust SMB access to CephFS while enjoying enhanced control and scalability.
+
 ## **[Ceph Storage Cluster](https://docs.ceph.com/en/reef/architecture/)**
 
 ![i1](https://docs.ceph.com/en/reef/_images/stack.png)
