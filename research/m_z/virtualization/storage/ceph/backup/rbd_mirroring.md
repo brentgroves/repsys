@@ -1,4 +1,6 @@
-# AI Overview
+# **[rbd mirroring](https://docs.ceph.com/en/reef/rbd/rbd-mirroring/)**
+
+## AI Overview
 
 Block storage (RBD) mirroring is the asynchronous replication of Ceph block device images between two or more Ceph clusters to provide a disaster recovery solution. It ensures point-in-time consistency of block device changes and can be configured for one-way (active-passive) or two-way (active-active) replication using either journal-based or snapshot-based methods. The process involves the rbd-mirror daemon pulling changes from a remote primary image and writing them to a local, non-primary image to maintain replicated copies.
 

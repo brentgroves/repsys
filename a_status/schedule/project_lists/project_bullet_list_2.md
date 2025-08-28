@@ -56,6 +56,8 @@ Time: ongoing
 
 Time: ongoing
 
+- **[Ceph Object Storage Multisite Replication Series. Part One](https://ceph.io/en/news/blog/2025/rgw-multisite-replication_part1/)**
+
 ## Administer Structures on-prem and cloud-based Kubernetes services
 
 - **[MicroK8s](https://www.sysdig.com/learn-cloud-native/what-is-microk8s)**
