@@ -1,5 +1,7 @@
 Tarek Mohamed, Data and Analytics IT, Supervisor
 Cody Hudson, Fabric Administrator
+Ricardo Baca, Sr. Manufacturing Engineer, Southfield
+Heather Luttrell, Group Controller, Finance
 Pat Baxter, General Manager
 Michael Percell, Manufacturing Engineering Manager
 Ron James, Quality Manager

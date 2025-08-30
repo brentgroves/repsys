@@ -77,7 +77,15 @@ Device thedrivers added to win11
 
 Go to the CD Drive in Windows and run virtio-win-gt-x64.msi
 
+There are alot of virtio drivers installed with this msi.
+
+There is also virtio-win-guest-tools.
+
 CategoriesArticles
 Tagslxd-lxc
 Snap
 Async Await
+
+## remove disk
+
+`lxc config device remove win11 thedrivers`

@@ -25,6 +25,19 @@ Aleksandar Gavrilov, IT Administrator, Skopje
 - <https://ubuntu.com/kubernetes/charmed-k8s/docs/quickstart>
 - Encryption with Ceph/Bitlocker
 
+## Sept
+
+## Describe admin tasks
+
+As an admin, you might be responsible for a wide range of tasks to keep the Fabric platform running smoothly. These tasks include:
+
+**Security and access control:** One of the most important aspects of Fabric administration is managing security and access control to ensure that only authorized users can access sensitive data. You can use role-based access control (RBAC) to:
+
+- Define who can view and edit content.
+- Set up data gateways to securely connect to on-premises data sources.
+- Manage user access with Microsoft Entra ID.
+
+
 ## Aug 25th
 
 - Setup Fabric Gateway for data sources not accessible from Fabric directly.

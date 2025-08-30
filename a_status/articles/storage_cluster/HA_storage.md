@@ -28,6 +28,14 @@ Supported Windows versions:
 - Windows Server 2019
 - Works on Windows 10 (LTSC) and Windows 11 as well for development/testing purposes.
 
+**[SMB Meets Squid: Introducing the New Ceph SMB Manager Module for SMB Service Management in Ceph](https://ceph.io/en/news/blog/2025/smb-manager-module/#:~:text=Introduction,enjoying%20enhanced%20control%20and%20scalability.)**
+
+Note: Some of the features described are only partially available as of Squid 19.2.3. Complete support will come with Tentacle.
+
+## Introduction
+
+SMB (Server Message Block) is a widely-used network protocol that facilitates the sharing of files, printers, and other resources across a network. To seamlessly integrate SMB services within a Ceph environment, Ceph 8.0 introduces the powerful SMB Manager module, which enables users to deploy, manage, and control Samba services for SMB access to CephFS. This module offers a user-friendly interface for managing clusters of Samba services and SMB shares, with the flexibility to choose between two management methods: imperative and declarative. By enabling the SMB Manager module using the command ceph mgr module enable smb, administrators can efficiently streamline their SMB service operations, whether through the command-line or via orchestration with YAML or JSON resource descriptions. With the new SMB Manager module, Ceph admins can effortlessly extend file services, providing robust SMB access to CephFS while enjoying enhanced control and scalability.
+
 ## **[Ceph Storage Cluster](https://docs.ceph.com/en/reef/architecture/)**
 
 ![i1](https://docs.ceph.com/en/reef/_images/stack.png)
@@ -42,7 +50,11 @@ Supported Windows versions:
 
 - **[high availability and fault tolerance](https://sysadmins.co.za/achieving-high-availability-with-haproxy-and-keepalived-building-a-redundant-load-balancer/)**
 - **[Full Disk Encryption](https://ceph.io/en/news/blog/2023/ceph-encryption-performance/)**
+- Replication or **[Erasure Coding](https://docs.ceph.com/en/reef/rados/operations/erasure-code)**
 - self-healing
+- **[Block storage (RBD) mirroring](https://docs.ceph.com/en/mimic/rbd/rbd-mirroring/)**
+- **[Ceph Object Storage Multisite Replication](https://ceph.io/en/news/blog/2025/rgw-multisite-replication_part1/)**
+![i1](https://ceph.io/en/news/blog/2025/rgw-multisite-replication_part1/images/image1.png)
 - Configurable network interfaces for both public and internal traffic.
 - **[Ceph’s RADOS Gateway, S3-compatible object storage service](https://docs.ceph.com/en/reef/radosgw/)**
   - great for giving tempory links.
@@ -64,6 +76,18 @@ Supported Windows versions:
 - Its one of the most thoroughly **[documented](https://docs.ceph.com/en/reef/start/)** peices of software I have ever seen.
 - It has a dedicated **[foundation](https://ceph.io/en/foundation/)** made up commercial, government, and educational stakeholders.
 - **[Ceph, I’ve never seen a data loss on properly managed clusters, even when there are major failures.](https://www.linkedin.com/posts/markus-wendland-clyso-ceph-abassador-kubernetes-opensource_ceph-20-years-of-cutting-edge-storage-at-activity-7239343394622234624-jMeX/)**
+
+## Windows Byte-Range Locks
+
+When an application uses standard file I/O (read/write) APIs, Windows enforces byte-range locks on the NTFS file system. These are mandatory in that they are enforced by the file system and prevent other clients from writing to locked sections of the file, though they are not mandatory in the sense of a system-wide, unbypassable policy.
+
+## Unix Advisory Locks
+
+In Unix systems, advisory locks are cooperative; the kernel tracks them, but applications must obey them to avoid issues like deadlocks.
+
+## Ceph's Cooperative Locking
+
+While Ceph's locking is cooperative, it includes enforcement mechanisms like the **[blocklisting process](https://docs.ceph.com/en/latest/cephfs/eviction/)** for failed clients, making it more robust than pure advisory locking.
 
 ## references
 

@@ -1,8 +1,7 @@
 # work setup
 
+- dell laptop vPro enterprise
 - <bgroves@linamar.com>
 - secure boot disabled
 
 ## result
-
-After shutdown would not restart
