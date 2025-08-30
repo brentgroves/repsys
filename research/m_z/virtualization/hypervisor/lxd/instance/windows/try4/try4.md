@@ -1,6 +1,6 @@
 # work setup
 
-- dell vPro laptop
+- dell Precesion T5600
 - <bgroves@linamar.com>
 - secure boot disabled
 - set HELLO piin

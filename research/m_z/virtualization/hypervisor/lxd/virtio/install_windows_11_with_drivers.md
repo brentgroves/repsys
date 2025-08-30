@@ -75,9 +75,14 @@ Device thedrivers added to win11
 
 ```
 
-Go to the CD Drive in Windows and run virtio-win-gt-x64.msi
+## virtio-win-guest-tools
 
-CategoriesArticles
-Tagslxd-lxc
-Snap
-Async Await
+installs:
+spice agent
+qemu agent
+
+Go to the CD Drive in Windows and run virtio-win-guest-tools.exe
+
+## remove disk
+
+`lxc config device remove win11 thedrivers`
