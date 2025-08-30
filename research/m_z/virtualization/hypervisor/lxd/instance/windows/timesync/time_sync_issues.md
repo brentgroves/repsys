@@ -1,5 +1,12 @@
 # **[windows vm time sync issue](https://learn.microsoft.com/en-us/troubleshoot/windows-server/virtualization/virtual-machine-time-not-synced)**
 
+## set windows time service to automatic if on vlan other than 50
+
+Restart Windows Time Service:
+Press Windows Key + R, type services.msc, and press Enter.
+Find the Windows Time service, right-click it, and select Restart.
+Ensure the Startup type is set to Automatic.
+
 AI Overview
 To resolve Windows VM time sync issues, ensure the hypervisor's time synchronization service is disabled for the guest VM, verify the guest's time zone and Windows Time service are set correctly, restart the Windows Time Service (services.msc), and manually sync the time or configure a reliable NTP server within the guest OS settings. For Hyper-V, disabling the time sync setting in the virtual machine's settings is a common first step.
 
