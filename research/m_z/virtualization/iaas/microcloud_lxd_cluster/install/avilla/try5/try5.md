@@ -17,6 +17,8 @@ Mon Jul 14 11:35:14 PM UTC 2025
 # password
 ```
 
+[text](../../../../../timesync/ubuntu_24_04/setup_timesyncd.md) [text](../../../../../timesync/ubuntu_24_04/timesyncd_linamar.conf)
+
 ```bash
 sudo snap install lxd --channel=5.21/stable --cohort="+"
 sudo snap install microceph --channel=squid/stable --cohort="+"
