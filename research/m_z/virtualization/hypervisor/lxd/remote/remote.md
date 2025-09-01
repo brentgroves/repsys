@@ -30,3 +30,20 @@ Switching remotes: To switch the default remote, use lxc remote switch <remote_n
 Listing remotes: Use lxc remote list to see all configured remotes.
 Global configuration: You can configure remotes on a system-wide basis by editing the global configuration file (e.g., /etc/lxd/config.yml or /var/snap/lxd/common/global-conf/config.yml for the snap version).
 Certificate storage: Certificates for remotes should be stored in the servercerts directory within the configuration directory (e.g., /etc/lxd/servercerts/ or /var/snap/lxd/common/global-conf/servercerts/).
+
+spice+unix:///home/brent/snap/lxd/common/config/sockets/3205655147.spice
+
+```bash
+cat ~/snap/lxd/common/config/config.yml
+default-remote: micro11
+remotes:
+  local:
+    addr: unix://
+    public: false
+  micro11:
+    addr: <https://10.188.50.201:8443>
+    auth_type: tls
+    project: default
+    protocol: lxd
+    public: false
+```

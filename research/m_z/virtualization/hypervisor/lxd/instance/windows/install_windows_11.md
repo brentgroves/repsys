@@ -67,6 +67,7 @@ After we create the Windows image, We can create a new empty VM that we can call
 
 ```bash
 lxc init win11 --vm --empty
+lxc init win11 --vm --empty --target micro11
 ```
 
 The default storage/disk provided to new VMs is 10GB, which is not enough for Windows so we need to increase the size of the disk to 50GB with the following command before proceeding
@@ -123,6 +124,8 @@ The last thing we need to do is add the install media Itself and make it a boot 
 If you are doing this in a cluster, make sure to launch this commands on the same member where the targeted instance is placed. You can check this with lxc info win11
 
 ```bash
+# turn back on after removing iso
+lxc config set win11 migration.stateful=false
 lxc config device add win11 install disk source=/home/brent/Downloads/win11.lxd.iso boot.priority=10
 Device install added to win11
 ```
@@ -179,7 +182,12 @@ Once completed, it will restart again so attach to the console again. The instal
 
 Now you have your Windows 11 VM up and running, and you can use it in any way you’d like. For faster boots, the ISO can be removed once the installation process is over.
 
-`lxc config device remove win11 install`
+```bash
+lxc config device remove win11 install
+# turn back on after removing iso
+lxc config set win11 migration.stateful=true
+
+```
 
 ## 5. can create a faster boot image
 
