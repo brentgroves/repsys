@@ -40,3 +40,54 @@ Fabric's admin portal is a web-based portal where you can manage all aspects of 
 The admin portal enables you to turn settings on and off. There are many settings located in the admin portal. One noteworthy setting is the Fabric on/off switch, located in tenant settings that lets organizations that use Power BI opt into Fabric. Here, you can enable Fabric for your tenant or allow capacity admins to enable Fabric.
 
 ![i1](https://learn.microsoft.com/en-us/training/wwl/administer-fabric/media/admin-delegation.png)
+
+PowerShell cmdlets
+Fabric provides a set of **[PowerShell cmdlets](https://learn.microsoft.com/en-us/powershell/scripting/powershell-commands)** that you can use to automate common administrative tasks. A PowerShell cmdlet is a simple command that can be executed in PowerShell.
+
+For example, you can use cmdlets in Fabric to systematically create and manage groups, configure data sources and gateways, and monitor usage and performance. You can also use the cmdlets to manage the Fabric admin APIs and SDKs.
+
+ Note
+
+See **[Microsoft Power BI Cmdlets for Windows PowerShell and PowerShell Core](https://learn.microsoft.com/en-us/powershell/power-bi/overview)** for more resources on PowerShell cmdlets that work with Fabric.
+
+## Admin APIs and SDKs
+
+An admin API and SDK are tools that allow developers to interact with a software system programmatically. An API (Application Programming Interface) is a set of protocols and tools that enable communication between different software applications. An SDK (Software Development Kit) is a set of tools and libraries that helps developers create software applications that can interact with a specific system or platform. You can use APIs and SDKs to automate common administrative tasks and integrate Fabric with other systems.
+
+For example, you can use APIs and SDKs to create and manage groups, configure data sources and gateways, and monitor usage and performance. You can also use the APIs and SDKs to manage the Fabric admin APIs and SDKs.
+
+You can make these requests using any HTTP client library that supports OAuth 2.0 authentication, such as Postman, or you can use PowerShell scripts to automate the process.
+
+## Admin monitoring workspace
+
+Fabric tenant admins have access to the admin monitoring workspace. You can choose to share access to the workspace or specific items within it with other users in your organization. The admin monitoring workspace includes the Feature Usage and Adoption dataset and report, which together provide insights on the usage and performance of your Fabric environment. You can use this information to identify trends and patterns, and troubleshoot issues.
+
+![i1](https://learn.microsoft.com/en-us/training/wwl/administer-fabric/media/admin-monitoring-report.png)
+
+ Note
+
+For more information about what is included in the Admin Monitoring Workspace, see What is the **[Fabric admin monitoring workspace](https://learn.microsoft.com/en-us/fabric/admin/monitoring-workspace).
+
+## Manage Fabric security
+
+Completed
+100 XP
+5 minutes
+As a Fabric admin, part of your role is to manage security for the Fabric environment, including managing users and groups, and how users share and distribute content in Fabric.
+
+Manage users: assign and manage licenses
+User licenses control the level of user access and functionality within the Fabric environment. Administrators ensure licensed users have the access they need to data and analytics to do their jobs effectively. They also limit access to sensitive data and ensure compliance with data protection laws and regulations.
+
+Managing licenses allows administrators to monitor and control costs by ensuring that licenses are allocated efficiently and only to users who need them. This can help to prevent unnecessary expenses and ensure that the organization is utilizing its resources effectively.
+
+Having the appropriate procedures in place to assign and manage licenses helps to control access to data and analytics, ensure compliance with regulations, and optimize costs.
+
+License management for Fabric is handled in the Microsoft 365 admin center. For more information about managing licenses, see **[Assign licenses to users](https://learn.microsoft.com/en-us/microsoft-365/admin/manage/assign-licenses-to-users?view=o365-worldwide&preserve-view=true)**.
+
+## Manage items and sharing
+
+As an admin, you can manage how users share and distribute content. You can manage how users share content with others, and how they distribute content to others. You can also manage how users interact with items, such as data warehouses, data pipelines, datasets, reports, and dashboards.
+
+Items in workspaces are best distributed through a workspace app or the workspace directly. Granting the least permissive rights is the first step in securing the data. Share the read only app for access to the reports or grant access to the workspaces for collaboration and development. Another aspect of managing and distributing items is enforcing these types of best practices.
+
+You can manage sharing and distribution both internally and outside of your organization, in compliance with your organization's policies and procedures.
