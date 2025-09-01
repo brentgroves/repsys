@@ -1,5 +1,7 @@
 # **[How to add remote servers](https://documentation.ubuntu.com/lxd/latest/remotes/)**
 
+**[ref](https://www.youtube.com/watch?v=amslKipAjxo)**
+
 Remote servers are a concept in the LXD CLI.
 
 If you are using the UI or the API, you can interact with different remotes by using their exposed UI or API addresses instead.
