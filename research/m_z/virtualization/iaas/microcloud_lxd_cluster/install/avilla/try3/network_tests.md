@@ -1,12 +1,62 @@
 # Network access tests
 
+```bash
+```bash
+lxc launch ubuntu:noble v1 --vm
+Launching v1
+
+lxc launch ubuntu:noble v3 --vm
+
+lxc launch images:ubuntu/22.04/desktop ubuntu --vm -c limits.cpu=4 -c limits.memory=4GiB --console=vga
+
+Launching ubuntu
+                                                   
+(remote-viewer:1544549): IBUS-WARNING **: 16:35:12.727: Unable to connect to ibus: Exhausted all available authentication mechanisms (tried: EXTERNAL) (available: EXTERNAL)
+Error: tls: failed to send closeNotify alert (but connection was closed anyway): write tcp 10.188.50.201:8443->10.188.40.11:37462: write: broken pipe
+
+```
+
 ## does vm have expected network access
 
 yes. same as host system. except no routes to 220 or 1220 vlans.
 
 ```bash
+brent@micro11:~$ lxc list
++-------+---------+-----------------------+--------------------------------------------------+-----------------+-----------+----------+
+| NAME  |  STATE  |         IPV4          |                       IPV6                       |      TYPE       | SNAPSHOTS | LOCATION |
++-------+---------+-----------------------+--------------------------------------------------+-----------------+-----------+----------+
+| v1    | RUNNING | 10.233.212.2 (enp5s0) | fd42:40d7:53e9:d1cc:216:3eff:fecb:cbfd (enp5s0)  | VIRTUAL-MACHINE | 0         | micro12  |
++-------+---------+-----------------------+--------------------------------------------------+-----------------+-----------+----------+
+| v2    | RUNNING | 10.233.212.3 (enp5s0) | fd42:40d7:53e9:d1cc:8b0b:4523:1c5d:c171 (enp5s0) | VIRTUAL-MACHINE | 0         | micro11  |
+|       |         |                       | fd42:40d7:53e9:d1cc:216:3eff:fe49:d43a (enp5s0)  |                 |           |          |
++-------+---------+-----------------------+--------------------------------------------------+-----------------+-----------+----------+
+| v3    | RUNNING | 10.233.212.5 (eth0)   | fd42:40d7:53e9:d1cc:216:3eff:fe6f:57f5 (eth0)    | VIRTUAL-MACHINE | 0         | micro13  |
++-------+---------+-----------------------+--------------------------------------------------+-----------------+-----------+----------+
+| win11 | RUNNING | 10.233.212.4 (eth0)   | fd42:40d7:53e9:d1cc:216:3eff:fe17:21b1 (eth0)    | VIRTUAL-MACHINE | 0         | micro11  |
++-------+---------+-----------------------+--------------------------------------------------+-----------------+-----------+----------+
+
 lxc exec v1 -- bash
 ping 10.188.50.202
+
+lxc exec v3 -- bash
+
+ping ubuntu.com
+PING ubuntu.com (185.125.190.29) 56(84) bytes of data.
+64 bytes from website-content-cache-3.ps5.canonical.com (185.125.190.29): icmp_seq=1 ttl=50 time=101 ms
+64 bytes from website-content-cache-3.ps5.canonical.com (185.125.190.29): icmp_seq=2 ttl=50 time=98.7 ms
+^C
+--- ubuntu.com ping statistics ---
+2 packets transmitted, 2 received, 0% packet loss, time 1002ms
+rtt min/avg/max/mdev = 98.694/99.733/100.773/1.039 ms
+
+root@v3:~# ping 10.233.212.2
+PING 10.233.212.2 (10.233.212.2) 56(84) bytes of data.
+64 bytes from 10.233.212.2: icmp_seq=1 ttl=64 time=4.22 ms
+64 bytes from 10.233.212.2: icmp_seq=2 ttl=64 time=1.27 ms
+^C
+--- 10.233.212.2 ping statistics ---
+2 packets transmitted, 2 received, 0% packet loss, time 1002ms
+rtt min/avg/max/mdev = 1.271/2.746/4.221/1.475 ms
 ```
 
 ## Step 5: Verify access from routable networks to the each host IP

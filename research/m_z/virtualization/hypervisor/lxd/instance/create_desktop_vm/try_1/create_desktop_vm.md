@@ -18,10 +18,12 @@ lxc config show v1 --expanded
 Start the VM and **[connect to the VGA console](https://documentation.ubuntu.com/lxd/latest/howto/instances_console/#instances-console)** locally using the following command:
 
 ```bash
-lxc start <instance_name> --console
-lxc start v1 --console
+lxc start <instance_name> --console=vga
+lxc start v2 --console=vga
 
 lxc exec <instance_name> -- /bin/bash
+lxc exec v2 -- /bin/bash
+
 lxc console v2 --type=vga
 ```
 

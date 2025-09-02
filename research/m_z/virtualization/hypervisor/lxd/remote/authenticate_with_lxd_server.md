@@ -17,6 +17,9 @@ To generate a trust token, enter the following command on the server:
 
 ```bash
 lxc config trust add
+Client research11 certificate add token:
+eyJjbGllbnRfbmFtZSI6InJlc2VhcmNoMTEiLCJmaW5nZXJwcmludCI6IjE1MGExMzBiNzM1YmQ4NDVjMWRlMjM1YTBkYWExMTcwMTA0OGYxZmI3ODE4NGRiMzRiNGFlN2MzZjFmNTJkNzgiLCJhZGRyZXNzZXMiOlsiMTAuMTg4LjUwLjIwMTo4NDQzIl0sInNlY3JldCI6ImZkZWI3MDE5ZjFhNDI5YWZjNjkwZTBmZGJhYmM1OGZjYjMyMzg5Y2UyNjUzZjcxNzU5YTk1NTcwNTBlNTAxM2YiLCJleHBpcmVzX2F0IjoiMDAwMS0wMS0wMVQwMDowMDowMFoiLCJ0eXBlIjoiIn0=
+
 ```
 
 Enter the name of the client that you want to add. The command generates and prints a token that can be used to add the client certificate.
