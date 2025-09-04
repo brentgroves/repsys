@@ -18,6 +18,8 @@ Carl Stangland, Desktop and System Support Technician, Indiana
 Lucas Tuma, IT Administrator, Strakonice
 Aleksandar Gavrilov, IT Administrator, Skopje
 
+- **[create windows image for MicroCloud](https://www.youtube.com/watch?v=DVxzGm5jIEI)**
+
 <brent.groves@linamar.com>
 <https://accounts.sap.com/ui/onbehalfupdate/submit>
 
@@ -36,7 +38,6 @@ As an admin, you might be responsible for a wide range of tasks to keep the Fabr
 - Define who can view and edit content.
 - Set up data gateways to securely connect to on-premises data sources.
 - Manage user access with Microsoft Entra ID.
-
 
 ## Aug 25th
 
