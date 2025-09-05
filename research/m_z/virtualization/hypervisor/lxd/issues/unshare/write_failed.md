@@ -4,6 +4,11 @@
 ```bash
 lxc console v1 --type vga
 unshare: write failed /proc/self/uid_map: Operation not permitted
+echo "==> Disabling Apparmor unprivileged userns mediation"
+echo 0 > /proc/sys/kernel/apparmor_restrict_unprivileged_userns
+
+echo "==> Disabling Apparmor unprivileged unconfined mediation"
+echo 0 > /proc/sys/kernel/apparmor_restrict_unprivileged_unconfined
 ```
 
 Process isolation is a key component for containers. One of the key underlying mechanisms are namespaces. In this second (and last) part of the series we examine the USER, MNT, UTS, IPC and CGROUP namespaces, and finally we combine everything to build a fully isolated environment for a process.
