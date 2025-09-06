@@ -20,6 +20,17 @@ Aleksandar Gavrilov, IT Administrator, Skopje
 
 - **[create windows image for MicroCloud](https://www.youtube.com/watch?v=DVxzGm5jIEI)**
 
+--console=vga unshare: write failed /proc/self/uid_map: Operation not permitted
+The error unshare: write failed /proc/self/uid_map: Operation not permitted indicates a failure to create a new user namespace with a User ID (UID) mapping. The unshare command is used to create new namespaces (like user, PID, network, etc.) for isolation, which is a core component of containerization.
+The uid_map is a file in the /proc filesystem that defines the mapping of user IDs inside a new user namespace to user IDs on the host system. The "Operation not permitted" error is a security-related problem where the process lacks the necessary permissions to perform this operation.
+
+1. AppArmor or SELinux restrictions
+On systems like Ubuntu, security features such as AppArmor can block the creation of unprivileged user namespaces and the writing to uid_map.
+Cause: A recent system update (e.g., to Ubuntu 24.04 "Noble") may have tightened security policies.
+Solution: You can disable the relevant AppArmor restrictions, though this may decrease security.
+sh
+sudo sysctl -w kernel.apparmor_restrict_unprivileged_userns=0
+
 <brent.groves@linamar.com>
 <https://accounts.sap.com/ui/onbehalfupdate/submit>
 
