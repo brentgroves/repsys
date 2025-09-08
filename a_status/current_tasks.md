@@ -18,6 +18,10 @@ Carl Stangland, Desktop and System Support Technician, Indiana
 Lucas Tuma, IT Administrator, Strakonice
 Aleksandar Gavrilov, IT Administrator, Skopje
 
+To skip network setup in Windows 11, press Shift+F10 at the "Let's connect you to a network" screen to open a Command Prompt. Type OOBE\BYPASSNRO and press Enter, then your computer will restart. After restarting, you will see an option for "I don't have internet" which you can select to continue with limited setup and create a local user account.
+
+<https://seanblanchfield.com/2023/05/bridge-networking-in-lxd>
+
 - **[create windows image for MicroCloud](https://www.youtube.com/watch?v=DVxzGm5jIEI)**
 
 --console=vga unshare: write failed /proc/self/uid_map: Operation not permitted

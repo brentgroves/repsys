@@ -126,7 +126,9 @@ If you are doing this in a cluster, make sure to launch this commands on the sam
 ```bash
 # turn back on after removing iso
 lxc config set win11 migration.stateful=false
-lxc config device add win11 install disk source=/home/brent/Downloads/win11.lxd.iso boot.priority=10
+# lxc config device add win11 install disk source=/home/brent/Downloads/win11.lxd.iso boot.priority=10
+lxc config device add win11 install disk source=/home/brent/Downloads/win11.incus.iso boot.priority=10
+
 Device install added to win11
 ```
 

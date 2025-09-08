@@ -40,6 +40,10 @@ Name      Version   Rev   Tracking  Publisher       Notes
 vlc       3.0.6     770   stable    videolan✓       -
 code      0dd516dd  5     stable    vscode✓         classic
 wormhole  0.11.2    112   stable    snapcrafters    -
+
+sudo snap install lxd --channel=5.21/stable --cohort="+"
+getent group lxd | grep -qwF "$USER"
+snap info --verbose lxd
 ```
 
 Interfaces and confinement
