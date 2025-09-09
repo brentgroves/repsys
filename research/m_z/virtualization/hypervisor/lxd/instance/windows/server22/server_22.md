@@ -1,5 +1,7 @@
 # **[Windows 11 Desktop or Server](https://ubuntu.com/tutorials/how-to-install-a-windows-11-vm-using-lxd#1-overview)**
 
+See **[server 2019](server2019_install.md)** for driver load instructions.
+
 ## note
 
 Run this from vendor network unless virus software is installed.
@@ -141,6 +143,9 @@ Device vtpm added to win11
 lxc config device add wins22 vtpm tpm path=/dev/tpm0
 # turn back on after removing iso
 lxc config set wins22 migration.stateful=false
+
+lxc config set wins22 security.secureboot=false
+lxc config get wins22 security.secureboot
 
 
 ```
