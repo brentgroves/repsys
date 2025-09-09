@@ -67,7 +67,7 @@ After we create the Windows image, We can create a new empty VM that we can call
 
 ```bash
 lxc init win11 --vm --empty
-lxc init win22 --vm --empty
+lxc init wins22 --vm --empty
 ```
 
 The default storage/disk provided to new VMs is 10GB, which is not enough for Windows so we need to increase the size of the disk to 50GB with the following command before proceeding
@@ -87,13 +87,46 @@ tmpfs          tmpfs     1.0M     0  1.0M   0% /var/snap/lxd/common/ns
 lxc storage volume attach disks local1 micro1
 
 # lxc config device override win11 root size=50GiB
-lxc config device override win11 root size=100GiB
+lxc config device override win11 root size=120GiB
 Device root overridden for win11
+lxc config device override wins22 root size=250GiB
 
-We should also increase the CPU limits for optimal performance
+# We should also increase the CPU limits for optimal performance
 
 lxc config set win11 limits.cpu=4 limits.memory=8GiB
 
+# windows server
+# https://learn.microsoft.com/en-us/windows-hardware/design/minimum/windows-processor-requirements
+# Windows Server memory recommendations vary significantly by role and workload, but generally, you should start with at least 16 GB for light use, 32 GB for app or web servers, 64 GB for virtualization/databases, and 128 GB or more for high-traffic or large database environments. The specific amount of RAM needed for a server depends on the applications and services running on it; always consider the individual requirements of your workload to avoid over-provisioning or under-powering the server. 
+# General Recommendations by Server Role
+# Basic File Server or Intranet: 8–16 GB is a decent starting point, depending on user count and file size. 
+# Web Server (Light Traffic): 16–32 GB is typically sufficient. 
+# E-commerce or High-Traffic Applications: 128 GB or more is recommended. 
+# Virtualization Host (e.g., Hyper-V): 64 GB or more is needed to support multiple virtual machines. 
+# Database Server: 32–64 GB is a good baseline for databases up to 50-100 GB, with larger databases requiring more memory. 
+# Large-Scale Deployments: 32 GB or more, with requirements growing based on the specific high-performance applications being used. 
+lxc config set wins22 limits.cpu=8 limits.memory=64GiB
+
+lscpu
+Architecture:             x86_64
+  CPU op-mode(s):         32-bit, 64-bit
+  Address sizes:          46 bits physical, 48 bits virtual
+  Byte Order:             Little Endian
+CPU(s):                   32
+  On-line CPU(s) list:    0-31
+Vendor ID:                GenuineIntel
+  Model name:             Intel(R) Xeon(R) CPU E5-2650 0 @ 2.00GHz
+    CPU family:           6
+    Model:                45
+    Thread(s) per core:   2
+    Core(s) per socket:   8
+    Socket(s):            2
+    Stepping:             7
+    CPU(s) scaling MHz:   45%
+    CPU max MHz:          2800.0000
+    CPU min MHz:          1200.0000
+    BogoMIPS:             3999.88
+    Flags:                fpu vme de pse tsc 
 
 ```
 
@@ -104,6 +137,12 @@ A virtual Trusted Platform Module (vTPM) is a software-based emulation of a phys
 ```bash
 lxc config device add win11 vtpm tpm path=/dev/tpm0
 Device vtpm added to win11
+
+lxc config device add wins22 vtpm tpm path=/dev/tpm0
+# turn back on after removing iso
+lxc config set wins22 migration.stateful=false
+
+
 ```
 
 The last thing we need to do is add the install media Itself and make it a boot priority (so it boots automatically).
@@ -113,13 +152,20 @@ If you are doing this in a cluster, make sure to launch this commands on the sam
 ```bash
 lxc config device add win11 install disk source=/home/brent/Downloads/win11.lxd.iso boot.priority=10
 Device install added to win11
+
+lxc config device add wins22 install disk source=/home/brent/wins22.lxd.iso boot.priority=10
+
 ```
 
 Now we can start the installer.
 
 ⓘYou will need to manually provide a VGA console access by installing either remote-viewer or spicy. If neither of these is found in the system, you will get a message instructing you to install them.
 
-`lxc start win11 --console=vga`
+```bash
+lxc start win11 --console=vga
+lxc start wins22 --console=vga
+
+```
 
 If needed, install a Spice client as prompted:
 
