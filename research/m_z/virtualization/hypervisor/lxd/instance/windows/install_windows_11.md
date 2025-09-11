@@ -108,6 +108,9 @@ To install ceph driver we need to disable secure boot.
 ```bash
 lxc config set win11 security.secureboot=false
 lxc config get win11 security.secureboot
+
+lxc config set win11 security.secureboot=false
+lxc config get win11 security.secureboot
 false
 lxc config uefi show win11
 # no uefi variables yet
@@ -188,6 +191,8 @@ Now you have your Windows 11 VM up and running, and you can use it in any way yo
 lxc config device remove win11 install
 # turn back on after removing iso
 lxc config set win11 migration.stateful=true
+
+lxc config device remove wins22 install
 
 ```
 

@@ -70,7 +70,9 @@ Add the downloaded ISO as a device to the VM
 ```bash
 # lxc config device add win11c thedrivers disk source=/home/chris/Downloads/virtio-win-0.1.271.iso
 
-lxc config device add win11 thedrivers disk source=/home/brent/Downloads/virtio-win-0.1.271.iso
+lxc config device add win11 thedrivers disk source=/home/brent/virtio-win-0.1.271.iso
+
+lxc config device add wins22 thedrivers disk source=/home/brent/virtio-win-0.1.271.iso
 Device thedrivers added to win11
 
 ```

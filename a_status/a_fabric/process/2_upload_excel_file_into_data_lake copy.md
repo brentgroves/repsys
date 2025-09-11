@@ -7,11 +7,14 @@ The following is in markdown format and can be viewed by copying and pasting the
 
 ## step 1
 
-Get data into the E055 lakehouse:
+Since the data contained in this Excel file is not in any database let's start by uploading it to our lakehouse file folder and creating a database schema for it.
 
-1. Create an ETL pipeline to get the data from the **source** database to the E055 lakehouse.
-2. Create an ETL pipeline to automate the uploading of the excel file and copying the data to the E055 Lakehouse.
-3. Upload the excel file into lakehouse files folder and run report from there?
+## schema
+
+One line has one or more machines.
+One machine has one or more oils.
+Each oils has a cost and the cost may change.
+All date,line,machine,oils,costs should be reportable in any way desired.
 
 ## references
 
