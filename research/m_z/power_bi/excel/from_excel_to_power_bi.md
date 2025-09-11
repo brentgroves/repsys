@@ -169,3 +169,69 @@ The dashboard and report are ready.
 Now it's time to share your dashboard with your manager. You can share your dashboard and underlying report with any colleague who has a Power BI account. They can interact with your report, but they can't save changes. If you allow it, they can reshare with others or build a new report based on the underlying semantic model.
 
 To share your report, at the top of the dashboard, select Share.
+
+## 1. To share your report, at the top of the dashboard, select Share
+
+![i16](https://learn.microsoft.com/en-us/power-bi/create-reports/media/service-from-excel-to-stunning-report/power-bi-share-dashboard.png)
+
+## 2. In the Share dashboard screen, enter the email addresses of the recipients in the Enter a name or email addresses field and add an optional message
+
+## 3. Select the option to Send an email notification. Choose any other options you want
+
+- Allow recipients to share this dashboard
+- Allow recipients to build content with the data associated with this dashboard
+
+![i17](https://learn.microsoft.com/en-us/power-bi/create-reports/media/service-from-excel-to-stunning-report/power-bi-share-dashboard-pane.png)
+
+## 4. Select Grant access
+
+## Share to Microsoft Teams
+
+You can also share reports and dashboards directly to your colleagues in Microsoft Teams.
+
+## 1. To share in Teams, at the top of the dashboard, select Chat in Teams
+
+![18](https://learn.microsoft.com/en-us/power-bi/create-reports/media/service-from-excel-to-stunning-report/power-bi-share-teams.png)
+
+## 2. Power BI displays the Share to Teams dialog. Enter the name of a person, group, or channel and select Share
+
+![i19](https://learn.microsoft.com/en-us/power-bi/create-reports/media/service-from-excel-to-stunning-report/power-bi-share-teams-dialog.png)
+
+## 3. The link appears in the Posts for that person, group, or channel
+
+![i20](https://learn.microsoft.com/en-us/power-bi/create-reports/media/service-from-excel-to-stunning-report/power-bi-teams-chat.png)
+
+## Related content
+
+Now that you've created a basic report in the Power BI service, how about creating a report in Power BI Desktop? Try the tutorial, **[From Excel workbook to stunning report in Power BI Desktop](https://learn.microsoft.com/en-us/power-bi/create-reports/desktop-excel-stunning-report)**.
+More questions? Try the Power BI Community.
+
+Additional resources
+Documentation
+
+Tutorial: From dimensional model to stunning report in Power BI Desktop - Power BI
+
+In this tutorial, you start with a dimensional model and build a beautiful report from start to finish in 20 minutes.
+
+Tutorial: Explore a Power BI sample - Power BI
+
+Learn to install and explore the Retail Analysis sample in the Power BI service and in Power BI Desktop.
+
+Tutorial: From Excel to stunning report in Power BI Desktop - Power BI
+
+This tutorial shows how you can quickly create a stunning report in Power BI Desktop from an Excel workbook.
+
+Show 3 more
+Training
+
+Module
+
+Create and share your first Power BI report - Training
+
+With Power BI, you can create compelling visuals and reports. In this module, you learn how to use Power BI Desktop to connect to data, build visuals, and create a report that you can share with others in your organization. You then learn how to publish the report to the Power BI service, so that others can see your insights and benefit from your work.
+
+Certification
+
+Microsoft Certified: Power BI Data Analyst Associate - Certifications
+
+Demonstrate methods and best practices that align with business and technical requirements for modeling, visualizing, and analyzing data with Microsoft Power BI.
