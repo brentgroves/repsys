@@ -1,21 +1,24 @@
-# **[getting startd](https://learn.microsoft.com/en-us/power-bi/fundamentals/fabric-get-started)**
+# **[Tutorial: Microsoft Fabric for Power BI users](https://learn.microsoft.com/en-us/power-bi/fundamentals/fabric-get-started)**
 
-Tutorial: Microsoft Fabric for Power BI users
 06/17/2025
+
 In this tutorial, you'll learn how to use Microsoft Fabric to prepare, load, and model data for Power BI reporting. You'll use Dataflows Gen2 to ingest and transform data into a Lakehouse, orchestrate data refreshes with Pipelines, and build a dimensional model using Direct Lake mode. Finally, you'll automatically generate a report to visualize the latest sales data.
 
 By the end of this tutorial, you'll be able to:
 
-Prepare and load data into a lakehouse
-Orchestrate a data pipeline to refresh data and send an email on failure
-Create a semantic model in the Lakehouse
-Automatically create a report with quick create
-Prerequisites
+- Prepare and load data into a lakehouse
+- Orchestrate a data pipeline to refresh data and send an email on failure
+- Create a semantic model in the Lakehouse
+- Automatically create a report with quick create
+
+## Prerequisites
+
 Before you begin, ensure you have the following:
 
 Enable Fabric for your organization if you haven't already.
 Sign up for a free trial if you don't have access.
 Create a new workspace and assign a Fabric capacity. You can use an existing workspace, but a nonproduction workspace is recommended for this tutorial.
+
 Download the Power Query template file containing **[sample queries](https://github.com/microsoft/pbiworkshops/raw/main/_Asset%20Library/Source_Files/ContosoSales.pqt)** for Contoso data.
 
 ## Create a lakehouse to store data
