@@ -19,6 +19,8 @@ Lucas Tuma, IT Administrator, Strakonice
 Aleksandar Gavrilov, IT Administrator, Skopje
 <https://stackoverflow.com/questions/3582108/create-windows-service-from-executable>
 <https://documentation.ubuntu.com/lxd/latest/howto/disaster_recovery/>
+<https://www.youtube.com/watch?v=CQv9VFHPRcw>
+<https://docs.ceph.com/en/reef/cephfs/ceph-dokan/#limitations>
 
 <https://discuss.linuxcontainers.org/t/issues-with-default-instance-mtu-of-1500-on-ovn-networks/23020>
 
