@@ -32,5 +32,14 @@ Check the contents of the directory:
 dir
 
 ```bash
+cat C:\rclone\rclone.conf
+cat ~/.config/rclone/rclone.conf
+[mybucket]
+type = s3
+provider = Ceph
+access_key_id = foo
+secret_access_key = bar
+endpoint = http://microcloud
+acl = public-read-write
 .\rclone mount mybucket:mybucket/ S: --links --vfs-cache-mode full
 ```

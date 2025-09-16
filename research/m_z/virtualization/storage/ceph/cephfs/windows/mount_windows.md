@@ -15,6 +15,8 @@ Run the following command to mount a Ceph file system:
 
 ```bash
 ceph-dokan.exe -c c:\ceph.conf -l x
+ceph-dokan.exe -c C:\Users\bgroves.LINAMAR\ceph\ceph.conf -l y --client_fs indFs
+
 ```
 
 This command mounts the default Ceph file system using the drive letter x. If ceph.conf is present in the default location (%ProgramData%\ceph\ceph.conf, then this argument is optional.
