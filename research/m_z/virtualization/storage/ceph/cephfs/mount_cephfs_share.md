@@ -74,9 +74,9 @@ name: indFs, metadata pool: ind_cephfs_meta, data pools: [ind_cephfs_data ]
 Mount the filesystem:
 
 ```bash
-mkdir /mnt/mycephfs
-mount -t ceph :/ /mnt/mycephfs/ -o name=admin,fs=indFs
-umount /mnt/mycephfs
+sudo mkdir /mnt/mycephfs
+sudo mount -t ceph :/ /mnt/mycephfs/ -o name=admin,fs=indFs
+sudo umount /mnt/mycephfs
 ls -alh /mnt/mycephfs
 total 4.5K
 drwxrwxrwx 2 root  root     4 Jul 18 17:26 .

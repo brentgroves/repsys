@@ -12,6 +12,7 @@ We need to deploy the RADOS Gateway (RGW) instance in the Ceph storage cluster. 
 
 ```bash
 # Deploy a basic RADOS Gateway (RGW) instance using Ceph Orchestrator.
+microceph does NOT use orch
 ceph orch apply rgw rgw-basic
 
 # Verify that the RGW service is running.

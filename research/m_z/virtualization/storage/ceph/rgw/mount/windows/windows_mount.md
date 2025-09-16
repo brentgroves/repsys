@@ -30,3 +30,7 @@ Expand-Archive -path 'c:\rclone\rclone.zip' -destinationpath '.\'
 
 Check the contents of the directory:
 dir
+
+```bash
+.\rclone mount mybucket:mybucket/ S: --links --vfs-cache-mode full
+```

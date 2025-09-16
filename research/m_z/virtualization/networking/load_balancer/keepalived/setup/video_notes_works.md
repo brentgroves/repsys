@@ -1,5 +1,16 @@
 # **[Meet keepalived - High Availability and Load Balancing in One](https://technotim.live/posts/keepalived-ha-loadbalancer/)**
 
+## issue
+
+keepalived failing on micro13 with error:
+
+Sep 15 19:37:58 micro13 systemd[1]: keepalived.service: Failed with result 'protocol'.
+Sep 15 19:37:58 micro13 systemd[1]: Failed to start keepalived.service - Keepalive Daemon (LVS and VRRP).
+
+I had installed keepalived as a snap and with apt. I deleted the snap and it worked.
+
+## start
+
 In my quest to make my services highly available I decided to use keepalived.keepalived is a framework for both load balancing and high availability that implements VRRP.This is a protocol that you see on some routers and has been implemented in keepalived. It creates a Virtual IP (or VIP, or floating IP) that acts as a gateway to route traffic to all participating hosts.This VIP that can provide a high availability setup and fail over to another host in the event that one is down. In this video, we’ll set up and configure keepalived, we’ll test our configuration to make sure it’s working, and we’ll also talk about some advanced use cases like load balancing.
 
 ## Installation
@@ -50,15 +61,25 @@ vrrp_instance VI_1 {
 ## Start and enable the service
 
 ```bash
+sudo systemctl start keepalived.service
+Job for keepalived.service failed because the service did not take the steps required by its unit configuration.
+See "systemctl status keepalived.service" and "journalctl -xeu keepalived.service" for details.
+
 sudo systemctl enable --now keepalived.service
 Synchronizing state of keepalived.service with SysV service script with /usr/lib/systemd/systemd-sysv-install.
 Executing: /usr/lib/systemd/systemd-sysv-install enable keepalived
+
+systemctl cat *.service --no-pager | grep keep
+/usr/lib/systemd/system/keepalived.service
 ```
 
 ## stopping the service
 
 ```bash
 sudo systemctl stop keepalived.service
+sudo systemctl status keepalived.service
+sudo systemctl start keepalived.service
+
 ```
 
 ## get the status
