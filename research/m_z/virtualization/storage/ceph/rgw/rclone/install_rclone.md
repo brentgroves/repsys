@@ -1,4 +1,5 @@
 # **[](https://rclone.org/install/)**
+<https://www.nakivo.com/blog/mount-amazon-s3-as-a-drive-how-to-guide/>
 
 ##
 
@@ -83,3 +84,19 @@ sudo mandb
 Run rclone config to setup. See rclone config docs for more details.
 
 rclone config
+
+## windows
+
+if on server vlan you can install winsfp from msi instead.
+
+<https://www.nakivo.com/blog/mount-amazon-s3-as-a-drive-how-to-guide/>
+
+Install Chocolately, which is a Windows package manager that can be used to install applications from online repositories:
+Set-ExecutionPolicy Bypass -Scope Process -Force; `
+
+  iex ((New-Object System.Net.WebClient).DownloadString('<https://chocolatey.org/install.ps1>'))
+
+WinFSP (Windows File System Proxy) is the Windows analog of the Linux FUSE and it is fast, stable and allows you to create user mode file systems.
+Install WinFSP from Chocolatey repositories:
+
+choco install winfsp -y
