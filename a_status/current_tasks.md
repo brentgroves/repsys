@@ -28,6 +28,12 @@ To skip network setup in Windows 11, press Shift+F10 at the "Let's connect you t
 
 <https://seanblanchfield.com/2023/05/bridge-networking-in-lxd>
 
+- can only ping containers on same host
+- can only ping internet on leader.
+
+## answer
+<https://discourse.ubuntu.com/t/cannot-connect-to-lxc-container-from-host-using-microovn-network/51503>
+
 - **[create windows image for MicroCloud](https://www.youtube.com/watch?v=DVxzGm5jIEI)**
 
 --console=vga unshare: write failed /proc/self/uid_map: Operation not permitted

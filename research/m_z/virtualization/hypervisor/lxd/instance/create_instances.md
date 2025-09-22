@@ -55,7 +55,7 @@ To create a container with an Ubuntu 24.04 LTS image from the ubuntu server usin
 lxc init images:ubuntu/noble/desktop c1
 lxc config show c1 --expanded
 
-lxc init ubuntu:24.04 ubuntu-container
+lxc init ubuntu:24.04 c1
 ```
 
 ## Create a virtual machine
