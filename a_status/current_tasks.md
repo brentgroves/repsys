@@ -17,33 +17,33 @@ David Maitner,  Desktop and System Support Technician, Fruitport
 Carl Stangland, Desktop and System Support Technician, Indiana
 Lucas Tuma, IT Administrator, Strakonice
 Aleksandar Gavrilov, IT Administrator, Skopje
-
-## Fabric
-
-Using Python to convert Ricardo's Oil add excel file into a simpler format usable by a Notebook ETL script.
-
-Uses Parquet files and the spark parallel processing compute engine to solve "time-out" problems.
-
-In a Python notebook two vCPUs are used.
-In a SparkPy notebook ten vCPUs are used.
-
-What multicore processors do for hardware the spark engine does for software.
-
-## WS22 gateway
-
 <https://stackoverflow.com/questions/3582108/create-windows-service-from-executable>
 <https://documentation.ubuntu.com/lxd/latest/howto/disaster_recovery/>
 <https://www.youtube.com/watch?v=CQv9VFHPRcw>
 <https://docs.ceph.com/en/reef/cephfs/ceph-dokan/#limitations>
 
-## OVN distributed gateway
+<https://discuss.linuxcontainers.org/t/issues-with-default-instance-mtu-of-1500-on-ovn-networks/23020>
 
-<https://developers.redhat.com/blog/2018/11/08/how-to-create-an-open-virtual-network-distributed-gateway-router#setup_details>
+To skip network setup in Windows 11, press Shift+F10 at the "Let's connect you to a network" screen to open a Command Prompt. Type OOBE\BYPASSNRO and press Enter, then your computer will restart. After restarting, you will see an option for "I don't have internet" which you can select to continue with limited setup and create a local user account.
 
-## OVN Network Forwarders
+<https://seanblanchfield.com/2023/05/bridge-networking-in-lxd>
 
-<https://documentation.ubuntu.com/lxd/latest/howto/network_forwards/>
+- can only ping containers on same host
+- can only ping internet on leader.
 
+## answer
+
+<https://discourse.ubuntu.com/t/cannot-connect-to-lxc-container-from-host-using-microovn-network/51503>
+
+In a clustered LXD environment with Open Virtual Network (OVN), the "uplink" is a network configuration rather than a fixed process running on a single host. For any given OVN network, one of the LXD cluster members acts as the active gateway chassis at a time, providing the ingress and egress point to the physical network.
+
+## research
+
+- **[installing lib in Fabric notebooks environment](https://medium.com/@grega.hren/installing-public-pypi-python-library-in-microsoft-fabric-e224ae842788)**
+- **[OVS basic usage](https://albertomolina.wordpress.com/2022/06/10/openvswitch-basic-usage/)**
+- **[A deep dive into Linux namespaces](https://ifeanyi.co/posts/linux-namespaces-part-1/)**
+- **[How to get LXD containers obtain IP from the LAN with ipvlan networking](https://blog.simos.info/how-to-get-lxd-containers-obtain-ip-from-the-lan-with-ipvlan-networking/)**
+- **[OVN inner workings](https://discuss.linuxcontainers.org/t/would-love-to-understand-the-inner-workings-of-the-ovn-network/17439)**
 - **[create windows image for MicroCloud](https://www.youtube.com/watch?v=DVxzGm5jIEI)**
 
 --console=vga unshare: write failed /proc/self/uid_map: Operation not permitted

@@ -1,4 +1,4 @@
-# **[](https://discuss.linuxcontainers.org/t/would-love-to-understand-the-inner-workings-of-the-ovn-network/17439)**
+# **[OVN inner workings](https://discuss.linuxcontainers.org/t/would-love-to-understand-the-inner-workings-of-the-ovn-network/17439)**
 
 The chart below is my current understanding.
 
