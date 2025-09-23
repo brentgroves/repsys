@@ -24,6 +24,9 @@ Using Python to convert Ricardo's Oil add excel file into a simpler format usabl
 
 Uses Parquet files and the spark parallel processing compute engine to solve "time-out" problems.
 
+In a Python notebook two vCPUs are used.
+In a SparkPy notebook ten vCPUs are used.
+
 ## WS22 gateway
 
 <https://stackoverflow.com/questions/3582108/create-windows-service-from-executable>
