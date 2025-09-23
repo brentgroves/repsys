@@ -27,6 +27,8 @@ Uses Parquet files and the spark parallel processing compute engine to solve "ti
 In a Python notebook two vCPUs are used.
 In a SparkPy notebook ten vCPUs are used.
 
+What multicore processors do for hardware the spark engine does for software.
+
 ## WS22 gateway
 
 <https://stackoverflow.com/questions/3582108/create-windows-service-from-executable>
