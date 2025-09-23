@@ -17,22 +17,21 @@ David Maitner,  Desktop and System Support Technician, Fruitport
 Carl Stangland, Desktop and System Support Technician, Indiana
 Lucas Tuma, IT Administrator, Strakonice
 Aleksandar Gavrilov, IT Administrator, Skopje
+
+## WS22 gateway
+
 <https://stackoverflow.com/questions/3582108/create-windows-service-from-executable>
 <https://documentation.ubuntu.com/lxd/latest/howto/disaster_recovery/>
 <https://www.youtube.com/watch?v=CQv9VFHPRcw>
 <https://docs.ceph.com/en/reef/cephfs/ceph-dokan/#limitations>
 
-<https://discuss.linuxcontainers.org/t/issues-with-default-instance-mtu-of-1500-on-ovn-networks/23020>
+## OVN distributed gateway
 
-To skip network setup in Windows 11, press Shift+F10 at the "Let's connect you to a network" screen to open a Command Prompt. Type OOBE\BYPASSNRO and press Enter, then your computer will restart. After restarting, you will see an option for "I don't have internet" which you can select to continue with limited setup and create a local user account.
+<https://developers.redhat.com/blog/2018/11/08/how-to-create-an-open-virtual-network-distributed-gateway-router#setup_details>
 
-<https://seanblanchfield.com/2023/05/bridge-networking-in-lxd>
+## OVN Network Forwarders
 
-- can only ping containers on same host
-- can only ping internet on leader.
-
-## answer
-<https://discourse.ubuntu.com/t/cannot-connect-to-lxc-container-from-host-using-microovn-network/51503>
+<https://documentation.ubuntu.com/lxd/latest/howto/network_forwards/>
 
 - **[create windows image for MicroCloud](https://www.youtube.com/watch?v=DVxzGm5jIEI)**
 
