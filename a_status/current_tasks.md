@@ -18,6 +18,12 @@ Carl Stangland, Desktop and System Support Technician, Indiana
 Lucas Tuma, IT Administrator, Strakonice
 Aleksandar Gavrilov, IT Administrator, Skopje
 
+## Fabric
+
+Using Python to convert Ricardo's Oil add excel file into a simpler format usable by a Notebook ETL script.
+
+Uses Parquet files and the spark parallel processing compute engine to solve "time-out" problems.
+
 ## WS22 gateway
 
 <https://stackoverflow.com/questions/3582108/create-windows-service-from-executable>
