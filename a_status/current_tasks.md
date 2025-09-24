@@ -17,6 +17,13 @@ David Maitner,  Desktop and System Support Technician, Fruitport
 Carl Stangland, Desktop and System Support Technician, Indiana
 Lucas Tuma, IT Administrator, Strakonice
 Aleksandar Gavrilov, IT Administrator, Skopje
+
+**[Set up a LXD cluster on OVN](https://documentation.ubuntu.com/lxd/latest/howto/network_ovn_setup/#set-up-a-lxd-cluster-on-ovn)**
+
+**[research/virt/net/ovs/geneva_tunnel](https://albertomolina.wordpress.com/2022/12/04/openvswitch-geneve-tunnel/)**
+
+**[research/virt/net/ovs/basic](https://albertomolina.wordpress.com/2022/06/10/openvswitch-basic-usage/)**
+
 <https://stackoverflow.com/questions/3582108/create-windows-service-from-executable>
 <https://documentation.ubuntu.com/lxd/latest/howto/disaster_recovery/>
 <https://www.youtube.com/watch?v=CQv9VFHPRcw>
