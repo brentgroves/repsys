@@ -18,6 +18,10 @@ Carl Stangland, Desktop and System Support Technician, Indiana
 Lucas Tuma, IT Administrator, Strakonice
 Aleksandar Gavrilov, IT Administrator, Skopje
 
+- **[Trigonometric operations in excel file using openpyxl](https://www.geeksforgeeks.org/python/working-with-excel-spreadsheets-in-python/geeksforgeeks.org/python-trigonometric-operations-in-excel-file-using-openpyxl/)**
+- **[How to copy data from one excel sheet to another](https://www.geeksforgeeks.org/python/python-how-to-copy-data-from-one-excel-sheet-to-another/)**
+- **[How to Automate an Excel Sheet in Python?](https://www.geeksforgeeks.org/python/how-to-automate-an-excel-sheet-in-python/)**
+
 **[Set up a LXD cluster on OVN](https://documentation.ubuntu.com/lxd/latest/howto/network_ovn_setup/#set-up-a-lxd-cluster-on-ovn)**
 
 **[research/virt/net/ovs/geneva_tunnel](https://albertomolina.wordpress.com/2022/12/04/openvswitch-geneve-tunnel/)**
