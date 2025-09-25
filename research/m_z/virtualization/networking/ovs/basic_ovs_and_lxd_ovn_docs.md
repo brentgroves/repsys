@@ -37,7 +37,15 @@ ovs-vsctl show
             Interface br1
                 type: internal
     ovs_version: "2.15.0"
+ ```
 
+Following the previous post OpenvSwitch. Basic usage, the manual management of Openflow flows with some simple examples is introduced.
+
+Flows are usually automatically managed by a software component called SDN controller or programmatically by an additional software such as OpenStack Neutron, but the manual management shown in this post allows to better understand the internals of OpenvSwitch, specifically OpenFlow.
+
+```bash
+ip a
+...
 8: ovs-system: <BROADCAST,MULTICAST> mtu 1500 qdisc noop state DOWN group default qlen 1000
     link/ether 4e:e6:18:c3:77:20 brd ff:ff:ff:ff:ff:ff
 9: br1: <BROADCAST,MULTICAST> mtu 1500 qdisc noop state DOWN group default qlen 1000
@@ -65,7 +73,253 @@ ip a show dev br1
 
 br1 shows an administrative state UP (because we have brought it up), the operational state LOWER_UP means that the link is detected at the «physical layer» (Driver signals L1 up according to **[netdevice man page](https://man7.org/linux/man-pages/man7/netdevice.7.html)**) and the state will remain UNKNOWN becase iproute2 can’t obtain ovs states.
 
+The administrative state of a network link indicates the configured intent for the interface (e.g., whether it's enabled or disabled by an administrator), while the operational state reflects the actual, real-time status of the link, which could be up or down due to physical conditions like a missing cable or a negotiation failure with a connected device. For example, an interface might be administratively "up" but operationally "down" if no network cable is plugged in.
+
+**[linux kernel states](https://docs.kernel.org/6.2/networking/operstates.html#:~:text=1.,from%20userspace%20under%20certain%20rules.)**
+
+## LXC test environment
+
+I use LXD later on but here we are using lxc which has clis with the format of lxc-*
+
+Once OVS is installed on the host machine, several virtual instances can be created to connect to OVS bridges and to interact to each other. In this case we’re going to use LXC (linux containers), but any other virtualization technology can be used.
+
+The **default bridge** used can be changed to br1 on /etc/lxc/default.conf, and the container can be easily created:
+
+`lxc-create -n test1 -t debian`
+
+Once the container is created, the corresponding config file (/var/lib/lxc/test1/config) can be modified (in this case, we’re going to add static IP address for the container and the gateway because there’s no DHCP server connected to the OVS bridge, adding the following lines):
+
+```bash
+lxc.net.0.ipv4.address = 192.168.100.2/24
+lxc.net.0.ipv4.gateway = 192.168.100.1
+```
+
+Note: Config file can be checked with lxc-checkconfig
+
+Once the container is started, a veth interface is created and added as a port to br1:
+
+```bash
+lxc-start -n test1
+
+ovs-vsctl show
+572ef28b-6429-4a71-aad8-f634d8274930
+    Bridge br1
+        Port vethrVi2DI
+            Interface vethrVi2DI
+        Port br1
+            Interface br1
+                type: internal
+    ovs_version: "2.15.0"
+
+ip l show dev vethrVi2DI
+14: vethrVi2DI@if2: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue master ovs-system state UP mode DEFAULT group default qlen 1000
+    link/ether fe:0d:8f:5c:88:f2 brd ff:ff:ff:ff:ff:ff link-netnsid 0
+```
+
+The same name is used for a ovs interface and a ovs port. The difference is that a port can contain several interfaces in a link aggregation (bond), but in this case only one interface is used for each port.
+
+lxc-attach can be initially used to access to the container, and the network configuration and external connectivity can be tested:
+
+```bash
+ip a s dev eth0
+2: eth0@if14: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default qlen 1000
+    link/ether 00:16:3e:b1:20:18 brd ff:ff:ff:ff:ff:ff link-netnsid 0
+    inet 192.168.100.2/24 brd 192.168.100.255 scope global eth0
+       valid_lft forever preferred_lft forever
+    inet6 fe80::216:3eff:feb1:2018/64 scope link
+       valid_lft forever preferred_lft forever
+```
+
+We’re using a veth interface that is a virtual Ethernet interface with interconnected pairs, in this case one pair (vethrVi2DI) is in the host and the other (eth0) is in the container, but the link between them is shown with the «@» sign:
+
+So it’s easy to know what interface in the host is connected to each container.
+
+`14: vethrVi2DI@if2 <-> 2: eth0@if14`
+
+Note: The interface number, the OVS port and the veth name is going to change on the host every time the container is restarted
+
+We can get information about different tables on the OVS database (Open_vSwitch, Bridge, Port, Datapath, Flow_Table, Port, Interface, …):
+
+```bash
+ovs-vsctl list Open_vSwitch
+_uuid               : 572ef28b-6429-4a71-aad8-f634d8274930
+bridges             : [4398764d-ef3e-44ff-a303-55bb02bd0662]
+cur_cfg             : 8
+datapath_types      : [netdev, system]
+datapaths           : {}
+db_version          : "8.2.0"
+dpdk_initialized    : false
+dpdk_version        : none
+external_ids        : {hostname=mut, rundir="/var/run/openvswitch", system-id="5c827fe2-b53d-4eb9-9f4c-541043e61294"}
+iface_types         : [bareudp, erspan, geneve, gre, gtpu, internal, ip6erspan, ip6gre, lisp, patch, stt, system, tap, vxlan]
+manager_options     : []
+next_cfg            : 8
+other_config        : {}
+ovs_version         : "2.15.0"
+ssl                 : []
+statistics          : {}
+system_type         : debian
+system_version      : "11"
+```
+
+```bash
+ovs-vsctl list Bridge
+_uuid               : 4398764d-ef3e-44ff-a303-55bb02bd0662
+auto_attach         : []
+controller          : []
+datapath_id         : "00004e769843ff44"
+datapath_type       : ""
+...
+
+ovs-vsctl list Port
+_uuid               : bce0532e-9a1f-486f-8098-4a1c180c207b
+bond_active_slave   : []
+bond_downdelay      : 0
+bond_fake_iface     : false
+...
+
+_uuid               : a2004f73-ee71-466a-a364-82ff0c5af87f
+bond_active_slave   : []
+bond_downdelay      : 0
+bond_fake_iface     : false
+...
+```
+
+```bash
+ovs-vsctl list Interface
+_uuid               : 88f9d3d0-9357-49bd-9811-d363304f2153
+admin_state         : up
+bfd                 : {}
+...
+mac_in_use          : "4e:76:98:43:ff:44"
+mtu                 : 1500
+mtu_request         : []
+name                : br1
+ofport              : 65534
+ofport_request      : []
+options             : {}
+other_config        : {}
+statistics          : {collisions=0, rx_bytes=278193, rx_crc_err=0, rx_dropped=0, rx_errors=0, rx_frame_err=0, rx_missed_errors=0, rx_over_err=0, rx_packets=4120, tx_bytes=12172817, tx_dropped=0, tx_errors=0, tx_packets=9745}
+status              : {driver_name=openvswitch}
+type                : internal
+
+_uuid               : 1830b2f7-d50b-48a3-a033-2dbda929c3f2
+admin_state         : up
+bfd                 : {}
+...
+link_speed          : 10000000000
+link_state          : up
+lldp                : {}
+mac                 : []
+mac_in_use          : "fe:0d:8f:5c:88:f2"
+mtu                 : 1500
+mtu_request         : []
+name                : vethrVi2DI
+ofport              : 4
+ofport_request      : []
+options             : {}
+other_config        : {}
+statistics          : {collisions=0, rx_bytes=333025, rx_crc_err=0, rx_dropped=0, rx_errors=0, rx_frame_err=0, rx_missed_errors=0, rx_over_err=0, rx_packets=4104, tx_bytes=12074340, tx_dropped=0, tx_errors=0, tx_packets=9291}
+status              : {driver_name=veth, driver_version="1.0", firmware_version=""}
+type                : ""
+```
+
+Other basic commands to get information:
+
+```bash
+ovs-ofctl show br1
+OFPT_FEATURES_REPLY (xid=0x2): dpid:00004e769843ff44
+n_tables:254, n_buffers:0
+capabilities: FLOW_STATS TABLE_STATS PORT_STATS QUEUE_STATS ARP_MATCH_IP
+actions: output enqueue set_vlan_vid set_vlan_pcp strip_vlan mod_dl_src mod_dl_dst mod_nw_src mod_nw_dst mod_nw_tos mod_tp_src mod_tp_dst
+ 4(vethrVi2DI): addr:fe:0d:8f:5c:88:f2
+     config:     0
+     state:      0
+     current:    10GB-FD COPPER
+     speed: 10000 Mbps now, 0 Mbps max
+ LOCAL(br1): addr:4e:76:98:43:ff:44
+     config:     0
+     state:      0
+     speed: 0 Mbps now, 0 Mbps max
+OFPT_GET_CONFIG_REPLY (xid=0x4): frags=normal miss_send_len=0
+
+ovs-dpctl show
+system@ovs-system:
+  lookups: hit:42 missed:48 lost:0
+  flows: 0
+  masks: hit:52 total:0 hit/pkt:0.58
+  port 0: ovs-system (internal)
+  port 1: br1 (internal)
+  port 4: vethrVi2DI
+```
+
+**[Introduction to Open vSwitch (OVS)](https://www.youtube.com/watch?v=rYW7kQRyUvA)**
+
 netdevice - low-level access to Linux network devices. SYNOPSIS top #include <sys/ioctl.h> #include <net/if.h> DESCRIPTION top NOTES top
+
+## these are the bridges ovn sets up
+
+```bash
+root@uvm1:~# ovs-vsctl show 
+fe406455-697a-44b0-94a2-13caf1463fab
+    Bridge lxdovn1
+        Port lxdovn1
+            Interface lxdovn1
+                type: internal
+        Port patch-lxd-net2-ls-ext-lsp-provider-to-br-int
+            Interface patch-lxd-net2-ls-ext-lsp-provider-to-br-int
+                type: patch
+                options: {peer=patch-br-int-to-lxd-net2-ls-ext-lsp-provider}
+        Port lxdovn1b
+            Interface lxdovn1b
+    Bridge br-int
+        fail_mode: secure
+        datapath_type: system
+        Port br-int
+            Interface br-int
+                type: internal
+        Port veth4338d9e7
+            Interface veth4338d9e7
+        Port patch-br-int-to-lxd-net2-ls-ext-lsp-provider
+            Interface patch-br-int-to-lxd-net2-ls-ext-lsp-provider
+                type: patch
+                options: {peer=patch-lxd-net2-ls-ext-lsp-provider-to-br-int}
+        Port vethf2db2b21
+            Interface vethf2db2b21
+    ovs_version: "3.3.4"
+```
+
+after configuring 3 containers we see 3 new interfaces. The first one is identical to the port on br-int. The third one used the lxd default network and not ovn.
+
+```bash
+ip a
+10: vethf2db2b21@if9: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue master ovs-system state UP group default qlen 1000
+    link/ether 7a:5d:0b:61:b0:ba brd ff:ff:ff:ff:ff:ff link-netnsid 0
+12: veth4338d9e7@if11: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue master ovs-system state UP group default qlen 1000
+    link/ether 6a:6f:aa:6c:87:6f brd ff:ff:ff:ff:ff:ff link-netnsid 1
+14: vethf5ba137b@if13: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue master lxdbr0 state UP group default qlen 1000
+    link/ether 56:62:97:99:b7:dc brd ff:ff:ff:ff:ff:ff link-netnsid 2
+```
+
+## continue tutorial
+
+The ovs bridge is down, the following steps are taken to bring it up, assign an IP address and set iptables rule to allow NAT access to the Internet:
+
+```bash
+ip l set br1 up
+
+ip a add 192.168.100.1/24 dev br1
+
+iptables -t nat -A POSTROUTING -s 192.168.100.0/24 ! -d 192.168.100.0/24 \
+-j MASQUERADE
+
+ip a show dev br1
+9: br1: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UNKNOWN group default qlen 1000
+    link/ether 4e:76:98:43:ff:44 brd ff:ff:ff:ff:ff:ff
+    inet 192.168.100.1/24 scope global br1
+       valid_lft forever preferred_lft forever
+    inet6 fe80::4c76:98ff:fe43:ff44/64 scope link
+       valid_lft forever preferred_lft forever
 
 ## LXC test environment
 

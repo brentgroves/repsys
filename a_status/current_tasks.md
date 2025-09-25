@@ -28,6 +28,8 @@ Aleksandar Gavrilov, IT Administrator, Skopje
 
 **[research/virt/net/ovs/basic](https://albertomolina.wordpress.com/2022/06/10/openvswitch-basic-usage/)**
 
+**[give lxd container public ip](virtualization/hypervisor/lxd/public_ip)
+
 <https://stackoverflow.com/questions/3582108/create-windows-service-from-executable>
 <https://documentation.ubuntu.com/lxd/latest/howto/disaster_recovery/>
 <https://www.youtube.com/watch?v=CQv9VFHPRcw>
