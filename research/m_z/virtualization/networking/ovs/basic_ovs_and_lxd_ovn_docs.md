@@ -362,6 +362,7 @@ To create a minimal setup with default options, you can skip the configuration s
 ```bash
 lxc exec uvm1 -- bash
 lxd init --minimal
+# this gives us lxdbr0 and its ip 10.44.173.1/
 ip a
 1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
     link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00

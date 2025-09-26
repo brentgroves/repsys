@@ -18,6 +18,8 @@ Carl Stangland, Desktop and System Support Technician, Indiana
 Lucas Tuma, IT Administrator, Strakonice
 Aleksandar Gavrilov, IT Administrator, Skopje
 
+- **[How to configure network forwards](res/virt/lxd/network/tut/forwarding_rules.md)**
+
 - **[Trigonometric operations in excel file using openpyxl](https://www.geeksforgeeks.org/python/working-with-excel-spreadsheets-in-python/geeksforgeeks.org/python-trigonometric-operations-in-excel-file-using-openpyxl/)**
 - **[How to copy data from one excel sheet to another](https://www.geeksforgeeks.org/python/python-how-to-copy-data-from-one-excel-sheet-to-another/)**
 - **[How to Automate an Excel Sheet in Python?](https://www.geeksforgeeks.org/python/how-to-automate-an-excel-sheet-in-python/)**
@@ -28,7 +30,7 @@ Aleksandar Gavrilov, IT Administrator, Skopje
 
 **[research/virt/net/ovs/basic](https://albertomolina.wordpress.com/2022/06/10/openvswitch-basic-usage/)**
 
-**[give lxd container public ip](virtualization/hypervisor/lxd/public_ip)
+**[give lxd container public ip](virtualization/hypervisor/lxd/network/public_ip)
 
 <https://stackoverflow.com/questions/3582108/create-windows-service-from-executable>
 <https://documentation.ubuntu.com/lxd/latest/howto/disaster_recovery/>

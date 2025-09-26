@@ -2,19 +2,30 @@
 
 <https://discuss.linuxcontainers.org/t/assign-external-ip-address-to-container/13875>
 
+<https://www.experts-exchange.com/questions/29196085/assign-public-IPs-for-every-lxd-container-how-to-config-in-host-system-and-routing-steps.html>
+
 <https://www.experts-exchange.com/questions/29196085/assign-public-IPs-for-every-lxd-container-how-to-config-in-host-system-and-routing-steps.html#:~:text=sir%2C%20edited%20eth0%20to%20eth1,it%20is%20working%20as%20expected>.
 
 <https://discuss.linuxcontainers.org/t/configure-lxd-container-with-public-ip-and-make-it-available-online/12215#:~:text=To%20configure%20an%20LXD%20container%20with%20a,Ubuntu%2020.04%20with%20its%20own%20public%20IP>
 
-How to make your LXD containers get IP addresses from your ...To assign a public IP to an LXD container, you can use the routed network type, which is often the most direct method for this scenario. After attaching a routed NIC to the container, you configure the container's network with the desired public IP and gateway details within the container's network configuration file, often a netplan file.
+How to make your LXD containers get IP addresses from your ...
+
+To assign a public IP to an LXD container, you can use the routed network type, which is often the most direct method for this scenario. After attaching a routed NIC to the container, you configure the container's network with the desired public IP and gateway details within the container's network configuration file, often a netplan file.
 Here's a step-by-step approach using the routed NIC type:
 
-How to make your LXD containers get IP addresses from your ...To assign a public IP to an LXD container, you can use the routed network type, which is often the most direct method for this scenario. After attaching a routed NIC to the container, you configure the container's network with the desired public IP and gateway details within the container's network configuration file, often a netplan file.
+How to make your LXD containers get IP addresses from your ...
+
+To assign a public IP to an LXD container, you can use the routed network type, which is often the most direct method for this scenario. After attaching a routed NIC to the container, you configure the container's network with the desired public IP and gateway details within the container's network configuration file, often a netplan file.
+
 Here's a step-by-step approach using the routed NIC type:
+
 Add a routed network interface to the container:
 This command attaches a virtual network interface to your container and sets the parent interface to your host's external network interface (e.g., enp2s0f0).
-bash
+
+```bash
 lxc config device add <container_name> eth0 nic nictype=routed parent=<host_network_interface> ipv4.address=<public_ip>/32
+```
+
 Replace <container_name> with the actual name of your container.
 Replace <host_network_interface> with the name of your host's external network interface.
 Replace <public_ip> with the specific public IP address you want to assign to the container.
