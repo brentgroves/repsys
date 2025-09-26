@@ -8,18 +8,23 @@ if 2nd dash in machine_id column
 ## delete all sheets except oam
 
 ```python
-import openpyxl
-
-# Load the workbook
-wb = openpyxl.load_workbook("oam.xlsx")
-
 # sheet 1 to 5
-for i in range (1, 5):
+for i in range (4, -1,-1):
   sheet_to_delete = wb.worksheets[i]
   # Get a reference to the sheet named 'Sheet1'
   # sheet_to_remove = wb["Sheet1"]
   # Remove the sheet
-  wb.remove(sheet_to_remove)
+  wb.remove(sheet_to_delete)
+  print(i)
+
+# sheet 1 to 5
+for i in range (9, 0,-1):
+  sheet_to_delete = wb.worksheets[i]
+  # Get a reference to the sheet named 'Sheet1'
+  # sheet_to_remove = wb["Sheet1"]
+  # Remove the sheet
+  wb.remove(sheet_to_delete)
+  print(i)
 
 # Save the modified workbook
 wb.save("oam0.xlsx")
@@ -31,7 +36,7 @@ wb.save("oam0.xlsx")
 import openpyxl
 
 # Load the workbook
-workbook = openpyxl.load_workbook("oam_fabric.xlsx")
+workbook = openpyxl.load_workbook("oam.xlsx")
 
 # Select the active worksheet (or specify by name: workbook["Sheet1"])
 # sheet = workbook.active

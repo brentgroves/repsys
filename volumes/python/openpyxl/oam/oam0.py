@@ -14,8 +14,8 @@ wb = openpyxl.load_workbook("oam.xlsx")
 # Example: numbers from 2 to 6
 # for i in range(2, 7):
 
-# sheet 1 to 5
-for i in range (5, -1,-1):
+# sheet 0 to 4
+for i in range (4, -1,-1):
   sheet_to_delete = wb.worksheets[i]
   # Get a reference to the sheet named 'Sheet1'
   # sheet_to_remove = wb["Sheet1"]
@@ -24,7 +24,7 @@ for i in range (5, -1,-1):
   print(i)
 
 # sheet 1 to 5
-for i in range (8, 0,-1):
+for i in range (9, 1,-1):
   sheet_to_delete = wb.worksheets[i]
   # Get a reference to the sheet named 'Sheet1'
   # sheet_to_remove = wb["Sheet1"]

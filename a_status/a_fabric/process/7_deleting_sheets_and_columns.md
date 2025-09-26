@@ -9,8 +9,8 @@ The following is in markdown format and can be viewed by copying and pasting the
 
 Used Python OpenPyXL library to transform worksheet.
 
-- replace formulas in columns D through G with values from referenced sheet.
 - delete all sheets except those for PBI data source.
+- replace formulas in columns D through G with values from referenced sheet.
 
 Please send me a copy of your PBI report.
 
