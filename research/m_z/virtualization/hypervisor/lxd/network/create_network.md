@@ -1,6 +1,5 @@
-# **[](https://documentation.ubuntu.com/lxd/stable-5.21/howto/network_create/)**
+# **[How to create a network](https://documentation.ubuntu.com/lxd/stable-5.21/howto/network_create/)**
 
-How to create a network
 To create a managed network, use the lxc network command and its subcommands. Append --help to any command to see more information about its usage and available flags.
 
 ## Network types
@@ -19,7 +18,10 @@ The following network types are available:
 
 Use the following command to create a network:
 
-`lxc network create <name> --type=<network_type> [configuration_options...]`
+```bash
+lxc network ls
+lxc network create <name> --type=<network_type> [configuration_options...]
+```
 
 See **[Network types](https://documentation.ubuntu.com/lxd/stable-5.21/howto/network_create/#network-types)** for a list of available network types and links to their configuration options.
 

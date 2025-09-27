@@ -20,6 +20,9 @@ Aleksandar Gavrilov, IT Administrator, Skopje
 
 **Might need to delete forwarding rule...**
 
+- research/virtualization/hypervisor/lxd/cluster/
+setup cluster with research11,12,r410 with zfs storage pool.
+
 - **[How to configure network forwards](res/virt/lxd/network/tut/forwarding_rules.md)**
 
 - **[Trigonometric operations in excel file using openpyxl](https://www.geeksforgeeks.org/python/working-with-excel-spreadsheets-in-python/geeksforgeeks.org/python-trigonometric-operations-in-excel-file-using-openpyxl/)**
