@@ -20,6 +20,7 @@ Aleksandar Gavrilov, IT Administrator, Skopje
 
 **Might need to delete forwarding rule...**
 
+- access to oracle star review
 - research/virtualization/hypervisor/lxd/cluster/
 setup cluster with research11,12,r410 with zfs storage pool.
 
