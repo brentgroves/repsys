@@ -32,6 +32,10 @@ setup cluster with research11,12,r410 with zfs storage pool.
 
 **[Set up a LXD cluster on OVN](https://documentation.ubuntu.com/lxd/latest/howto/network_ovn_setup/#set-up-a-lxd-cluster-on-ovn)**
 
+- **[share power bi reports](https://learn.microsoft.com/en-us/power-bi/collaborate-share/service-share-dashboards)**
+- **[sharing microsoft fabric org app](https://www.youtube.com/watch?v=7W3_9J0emKM&t=1)**
+- **[building reports in fabric](https://learn.microsoft.com/en-us/fabric/fundamentals/building-reports#:~:text=Permissions%20to%20view%20report%2C%20create,access%20on%20the%20Fabric%20item.)**
+- **[sharing fabric org app](https://www.youtube.com/watch?v=7W3_9J0emKM)**
 **[research/virt/net/ovs/geneva_tunnel](https://albertomolina.wordpress.com/2022/12/04/openvswitch-geneve-tunnel/)**
 
 **[research/virt/net/ovs/basic](https://albertomolina.wordpress.com/2022/06/10/openvswitch-basic-usage/)**
