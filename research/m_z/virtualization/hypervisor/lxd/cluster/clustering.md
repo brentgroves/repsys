@@ -37,7 +37,8 @@ Are you joining an existing cluster?
 Select no.
 
 ```bash
-~$lxd init
+~$ 
+lxd init
 Would you like to use LXD clustering? (yes/no) [default=no]: yes
 What IP address or DNS name should be used to reach this server? [default=192.0.2.101]:
 Are you joining an existing cluster? (yes/no) [default=no]: no
