@@ -23,7 +23,7 @@ Aleksandar Gavrilov, IT Administrator, Skopje
 - access to oracle star review
 - research/virtualization/hypervisor/lxd/cluster/
 setup cluster with research11,12,r410 with zfs storage pool.
-
+- [ovn setup](../research/m_z/virtualization/networking/ovn/tutorials/basic_single_node_ovn_setup.md)
 - **[How to configure network forwards](res/virt/lxd/network/tut/forwarding_rules.md)**
 
 - **[Trigonometric operations in excel file using openpyxl](https://www.geeksforgeeks.org/python/working-with-excel-spreadsheets-in-python/geeksforgeeks.org/python-trigonometric-operations-in-excel-file-using-openpyxl/)**
