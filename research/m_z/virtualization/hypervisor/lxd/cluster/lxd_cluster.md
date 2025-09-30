@@ -11,7 +11,7 @@ Note that this feature was introduced as part of the API extension “clustering
 
 ## Forming a cluster
 
-First you need to choose a bootstrap LXD node. It can be an existing LXD server or a brand new one. Then you need to initialize the bootstrap node and join further nodes to the cluster. This can be done interactively or with a preseed file.
+First you need to choose a bootstrap LXD node. It can be an existing LXD server or a brand new one. Then you need to initialize the **bootstrap node** and join further nodes to the cluster. This can be done interactively or with a preseed file.
 
 Note that all further nodes joining the cluster must have identical configuration to the bootstrap node, in terms of storage pools and networks. The only configuration that can be node-specific are the source and size keys for storage pools and the bridge.external_interfaces key for networks.
 
