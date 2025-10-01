@@ -20,6 +20,7 @@ Aleksandar Gavrilov, IT Administrator, Skopje
 
 **Might need to delete forwarding rule...**
 
+- **[Get started with org apps (preview)](https://learn.microsoft.com/en-us/power-bi/consumer/org-app-items/org-app-items)**
 - access to oracle star review
 - **[fan networking](https://wiki.ubuntu.com/FanNetworking)**
 - research/virtualization/hypervisor/lxd/cluster/

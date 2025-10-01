@@ -1,0 +1,1 @@
+# **[A data fabric is essential for enterprise AI](https://www.ibm.com/solutions/data-fabric?utm_content=SRCWW&p1=Search&p4=1303372805965&p5=p&p9=139464251890&gclsrc=aw.ds&gad_source=1&gad_campaignid=9508634543&gbraid=0AAAAAD-_QsTIL8qx-Eqb2-rAHgTyisySu&gclid=Cj0KCQjwovPGBhDxARIsAFhgkwSOBIn2jsFxjSSkVu66GEV-8jnh4YzySt6PtPMvSiBVtPKaPQFAdi8aAuCIEALw_wcB)**
