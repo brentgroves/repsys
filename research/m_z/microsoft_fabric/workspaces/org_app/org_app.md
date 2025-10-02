@@ -1,5 +1,7 @@
 # **[Get started with org apps (preview)](https://learn.microsoft.com/en-us/power-bi/consumer/org-app-items/org-app-items)**
 
+- **[good video](https://www.youtube.com/watch?v=7W3_9J0emKM&t=124s)**
+
 <https://medium.com/microsoftazure/thoughts-on-workspace-design-in-microsoft-fabric-f99f79ac6f32>
 
 01/30/2025
