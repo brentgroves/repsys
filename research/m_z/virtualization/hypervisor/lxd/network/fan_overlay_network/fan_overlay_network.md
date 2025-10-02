@@ -1,5 +1,7 @@
 # **[fan networking](https://wiki.ubuntu.com/FanNetworking)**
 
+**[](https://ubuntu.com/blog/fan-networking)**
+
 ## **[lxd with fan](https://www.youtube.com/watch?v=5cwd0vZJ5bw)**
 
 **[trevor lxd fan](https://www.youtube.com/watch?v=VhkxIY-jCjA&t=634s)**

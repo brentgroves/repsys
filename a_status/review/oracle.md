@@ -1,5 +1,22 @@
 # oracle sign in
 
+## issue
+
+HR adds you to Oracle and sometimes they do not enter all the info needed such as manager and domain EntraId account. If this is the case you will receive
+the following error: System error. "Please re-try your action. If you continue to get this error, please contact the Administrator." when clicking company single sign on button. After HR makes enters your domain user account it takes time to take effect. In my case I tried to sign in the next day.
+
+## after my domain user account was added and waiting a day for it to take affect it worked
+
+10/2/25 : I was able to sign in from edge on Windows isdev.
+
+Welcome, Brent Groves
+Home
+You have a new home page!
+Open it with the home icon or the company logo.
+You can continue to access this page by selecting the My Dashboard item in the navigation menu.
+
+Note: In the 3 dash menu on the right there is a star review menu item.
+
 ## launch Microsoft Edge from Private Window
 
 it takes me to the Linamar sign in page: <https://login.microsoftonline.com/ceadc058-fad7-4b6b-830b-00ac739654f0/oauth2/authorize?client%5Fid>...
