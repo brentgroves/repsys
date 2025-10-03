@@ -20,6 +20,9 @@ Aleksandar Gavrilov, IT Administrator, Skopje
 
 ## Weekly update
 
+- documented Structures MicroCloud servers and VMs for audit.
+That's Structures Fabric Gateway. It has Windows Server 22. I have got a license for it yet.
+
 - Added comments to star review. HR adds you to Oracle and sometimes they do not enter all the info needed such as manager and domain EntraId account. If this is the case you will receive
 the following error: System error. "Please re-try your action. If you continue to get this error, please contact the Administrator." when clicking company single sign on button. After HR makes enters your domain user account it takes time to take effect. In my case I tried to sign in the next day.
 
