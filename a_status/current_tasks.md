@@ -20,6 +20,9 @@ Aleksandar Gavrilov, IT Administrator, Skopje
 
 ## Weekly update
 
+- How to share fabric items
+  - org apps (preview) vs workspace apps
+  - can share notebooks
 - documented Structures MicroCloud servers and VMs for audit.
 That's Structures Fabric Gateway. It has Windows Server 22. I have got a license for it yet.
 
