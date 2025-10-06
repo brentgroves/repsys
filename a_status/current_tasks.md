@@ -23,6 +23,11 @@ Aleksandar Gavrilov, IT Administrator, Skopje
 - How to share fabric items
   - org apps (preview) vs workspace apps
   - can share notebooks
+- data lake read only, data warehouse r/w no primary key
+- need primary key so no duplicates
+- AOM add date to sheet so no duplicates
+- Azure SQL ETL
+- Azure Power App Jared
 - documented Structures MicroCloud servers and VMs for audit.
 That's Structures Fabric Gateway. It has Windows Server 22. I have got a license for it yet.
 
