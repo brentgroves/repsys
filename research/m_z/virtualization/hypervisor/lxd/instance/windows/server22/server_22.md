@@ -4,7 +4,11 @@ See **[server 2019](server2019_install.md)** for driver load instructions.
 
 ## note
 
-Run this from vendor network unless virus software is installed.
+1. installed windows
+2. remember user name/password. username might change to svr-admin once machine joins the domain.
+3. join domain
+4. add bgroves to local administrators group.
+5. gpupdate /force
 
 If you are using a Linux environment but want to run a Windows 11 virtual machine, you can easily do so using LXD. Windows 11 is somewhat strict in its requirements (needs UEFI SecureBoot, having a TPM, and having a modern CPU), but LXD supports that out of the box, and there’s no need for any complex configuration in order to enable a Windows VM. In this tutorial, we will walk through the process of installing Windows in an LXD virtual machine. We will be installing Windows 11, but the same procedure also applies to Windows server machines.
 
