@@ -20,6 +20,8 @@ Aleksandar Gavrilov, IT Administrator, Skopje
 
 ## Weekly update
 
+- Join Structures MicroClouds Windows Server 22 Fabric Gateway VM to domain
+- Windows Server 22 licensing with corporate key management server
 - How to share fabric items
   - org apps (preview) vs workspace apps
   - can share notebooks
