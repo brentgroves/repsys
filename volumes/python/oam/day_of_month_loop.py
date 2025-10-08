@@ -9,7 +9,9 @@
 # ///
 import pandas as pd
 # from datetime import datetime, timedelta
-import datetime
+import datetime as sldt # dt.date = pandas...timestamp.date
+# import datetime # works for datetime.date()
+# from datetime import date # works for date()
 
 def get_row(df,row):
   print(f"row->{df.iloc[row]}")
@@ -42,22 +44,22 @@ def get_sheet_date(df,sheet_name):
   print(f"'{datetime_obj}' converted to: {dt_sheet_date}")
   return dt_sheet_date
 
-def days_of_month_loop(dt):
-  start_date = datetime.date(dt.year, dt.month, 1)
+def days_of_month_loop(pd_sheet_datetime):
+  start_date = sldt.date(pd_sheet_datetime.year, pd_sheet_datetime.month, 1)
 
   # Calculate the last day of the month
 
-  if dt.month == 12:
-      end_date = datetime.date(dt.year + 1, 1, 1) - datetime.timedelta(days=1)
+  if pd_sheet_datetime.month == 12:
+      end_date = sldt.date(pd_sheet_datetime.year + 1, 1, 1) - sldt.timedelta(days=1)
   else:
-      end_date = datetime.date(dt.year, dt.month + 1, 1) - datetime.timedelta(days=1)
+      end_date = sldt.date(pd_sheet_datetime.year, pd_sheet_datetime.month + 1, 1) - sldt.timedelta(days=1)
 
   current_date = start_date
   print(f"end_date={end_date}")
 
   while current_date <= end_date:
       print(current_date)
-      current_date += datetime.timedelta(days=1)
+      current_date += sldt.timedelta(days=1)
     
     # print('Month: ', dt.month) # To Get month from date
     # print('Year: ', dt.year) # To Get month from year
@@ -68,28 +70,10 @@ def main():
     sheet_name = "Aug. oil usage"
     # Call other functions or perform operations
     df=pd.read_excel('Oil adds to Machines.xlsx', sheet_name=sheet_name)
-    dt_sheet_date = get_sheet_date(df,"Aug. oil usage")
-    print(f"sheet_date' {dt_sheet_date}")
+    pd_sheet_datetime = get_sheet_date(df,"Aug. oil usage")
+    print(f"sheet_date' {pd_sheet_datetime}")
 
-# from datetime import datetime
-# import pandas as pd
-    # test = datetime(2020, 5, 11, 0, 0, 0)
-
-      # consider the start date as 2021-february 1 st
-    # start_date = datetime(2021, 2, 1)
-
-    # # consider the end date as 2021-march 1 st
-    # end_date = datetime.date(2021, 3, 1)
-
-    # # delta time
-    # delta = datetime.timedelta(days=1)
-
-    # # iterate over range of dates
-    # while (start_date <= end_date):
-    #     print(start_date, end="\n")
-    #     start_date += delta
-
-    days_of_month_loop(dt_sheet_date)
+    days_of_month_loop(pd_sheet_datetime)
 
 
     # Define the number of days to add
