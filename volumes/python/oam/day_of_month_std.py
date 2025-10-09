@@ -64,6 +64,7 @@ def days_of_month_loop(pd_sheet_datetime):
     # print('Month: ', dt.month) # To Get month from date
     # print('Year: ', dt.year) # To Get month from year
 
+def timeser
 def main():
     # Your main program logic goes here
     print("This is the main function.")
@@ -75,18 +76,6 @@ def main():
 
     days_of_month_loop(pd_sheet_datetime)
 
-
-    # Define the number of days to add
-    # days_to_add = 7
-
-    # # Create a timedelta object
-    # delta = timedelta(days=days_to_add)
-
-    # # Add the timedelta to the datetime object
-    # future_datetime = dt_sheet_date + delta
-    # print(f"Datetime after adding {days_to_add} days: {future_datetime}")
-
-    
     # # get_row(df,1)
     # value = get_row_col(df,1,3) # 0.00
     # print(f"col 3 value is {value}")
