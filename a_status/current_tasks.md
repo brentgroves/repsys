@@ -18,6 +18,11 @@ Carl Stangland, Desktop and System Support Technician, Indiana
 Lucas Tuma, IT Administrator, Strakonice
 Aleksandar Gavrilov, IT Administrator, Skopje
 
+## next
+
+**[Planar_Graphs](../research/m_z/virtualization/networking/graph_theory/libretexts/planar_graphs.md)**
+**[Real World Applications of A Spanning Tree:](../research/m_z/virtualization/networking/graph_theory/spanning_tree.md)**
+
 ## Weekly update
 
 - Join Structures MicroClouds Windows Server 22 Fabric Gateway VM to domain
