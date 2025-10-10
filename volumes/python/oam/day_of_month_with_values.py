@@ -18,8 +18,8 @@ import datetime as sldt # dt.date = pandas...timestamp.date
 def get_row(df,row):
   print(f"row->{df.iloc[row]}")
 
-def get_row_col(df,row,col):
-  print(f"row={row},col={col}->{df.iloc[row,col]}")
+def get_row_col(df:pd.DataFrame,row:int,col:int)->float:
+  # print(f"row={row},col={col}->{df.iloc[row,col]}")
   
   if df.isnull().iloc[row,col]:
     value =  0.00
@@ -46,27 +46,27 @@ def get_sheet_date(df,sheet_name):
   print(f"'{datetime_obj}' converted to: {dt_sheet_date}")
   return dt_sheet_date
 
-def days_of_month_std(pd_sheet_datetime):
-  start_date = sldt.date(pd_sheet_datetime.year, pd_sheet_datetime.month, 1)
 
-  # Calculate the last day of the month
+def day_of_month_quantity(df: pd.DataFrame, daily_dates: pd.DatetimeIndex):
+  print(f"days of month with values")
+  # get_row_col(df,1,3)
+  row=1
+  col=3
+  tot=0.0
+  for day in daily_dates:
+      value=get_row_col(df,row,col)
+      tot+=value
+      print(f"day: {day.strftime("%Y-%m-%d")},col={col},value={value}")
+      col+=1
+  # Get the month names from the DatetimeIndex
+  month_name = daily_dates[1].month_name()
+  # print("\nMonth name from DatetimeIndex:")
+  # print(month_name)
+  year = daily_dates[1].year    
+  print(f"{month_name} {year} Total: {tot}")
+  # print(f"{daily_dates[0].month_name} {daily_dates[0].year} Total: {tot}")
 
-  if pd_sheet_datetime.month == 12:
-      end_date = sldt.date(pd_sheet_datetime.year + 1, 1, 1) - sldt.timedelta(days=1)
-  else:
-      end_date = sldt.date(pd_sheet_datetime.year, pd_sheet_datetime.month + 1, 1) - sldt.timedelta(days=1)
-
-  current_date = start_date
-  print(f"end_date={end_date}")
-
-  while current_date <= end_date:
-      print(current_date)
-      current_date += sldt.timedelta(days=1)
-    
-    # print('Month: ', dt.month) # To Get month from date
-    # print('Year: ', dt.year) # To Get month from year
-
-def days_of_month_pandas(pd_sheet_datetime):
+def days_of_month_pandas(pd_sheet_datetime)->pd.DatetimeIndex:
   # Create a date range for the month:
   # Use pd.date_range to generate a sequence of dates. The start parameter defines the first day of the month, and freq='D' ensures a daily frequency. The MonthEnd(1) offset from pandas.tseries.offsets is used to determine the last day of the month dynamically.
   start_date = pd.Timestamp(pd_sheet_datetime.year, pd_sheet_datetime.month, 1)
@@ -74,10 +74,10 @@ def days_of_month_pandas(pd_sheet_datetime):
   end_date = start_date + MonthEnd(1)
 
   daily_dates = pd.date_range(start=start_date, end=end_date, freq='D')
-
-  print(f"Days in {pd.Timestamp(pd_sheet_datetime.year, pd_sheet_datetime.month, 1).strftime('%B %Y')}:")
-  for day in daily_dates:
-      print(day.strftime("%Y-%m-%d"))
+  return daily_dates
+  # print(f"Days in {pd.Timestamp(pd_sheet_datetime.year, pd_sheet_datetime.month, 1).strftime('%B %Y')}:")
+  # for day in daily_dates:
+  #     print(day.strftime("%Y-%m-%d"))
 
 def main():
     # Your main program logic goes here
@@ -88,8 +88,9 @@ def main():
     pd_sheet_datetime = get_sheet_date(df,"Aug. oil usage")
     print(f"sheet_date' {pd_sheet_datetime}")
 
-    days_of_month_pandas(pd_sheet_datetime)
+    daily_dates = days_of_month_pandas(pd_sheet_datetime)
 
+    day_of_month_quantity(df,daily_dates)
     # # get_row(df,1)
     # value = get_row_col(df,1,3) # 0.00
     # print(f"col 3 value is {value}")
