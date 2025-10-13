@@ -25,6 +25,11 @@ from IPython.display import display
 df = pd.read_csv('https://raw.githubusercontent.com/m-mehdi/pandas_tutorials/main/server_util.csv', parse_dates=['datetime'])
 # print(df.head())
 
+# Slicing Time Series
+# To make Timestamp slicing possible, we need to set the datetime column as the index of the DataFrame. To set a column as an index of a DataFrame, use the set_index method:
+
+df.set_index('datetime', inplace=True)
+
 # Set time column as index
 df = df.set_index('datetime')
 
