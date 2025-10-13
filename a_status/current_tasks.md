@@ -28,8 +28,8 @@ Aleksandar Gavrilov, IT Administrator, Skopje
 - Join Structures MicroClouds Windows Server 22 Fabric Gateway VM to domain
 - Windows Server 22 licensing with corporate key management server
 - How to share fabric items
-  - org apps (preview) vs workspace apps
-  - can share notebooks
+- org apps (preview) vs workspace apps
+- can share notebooks
 - data lake read only, data warehouse r/w no primary key
 - need primary key so no duplicates
 - AOM add date to sheet so no duplicates
