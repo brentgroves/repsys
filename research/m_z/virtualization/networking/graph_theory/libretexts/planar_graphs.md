@@ -44,18 +44,72 @@ For any (connected) planar graph with
 
 Why is Euler's formula true? One way to convince yourself of its validity is to draw a planar graph step by step. Start with the graph
 
+![i1](https://math.libretexts.org/@api/deki/files/12854/image-105.svg?revision=1&size=bestfit&width=81&height=77)
+
 Any connected graph (besides just a single isolated vertex) must contain this subgraph. Now build up to your graph by adding edges and vertices. Each step will consist of either adding a new vertex connected by a new edge to part of your graph (so creating a new “spike”) or by connecting two vertices already in the graph with a new edge (completing a circuit).
 
 ![i3](https://math.libretexts.org/@api/deki/files/12855/image-106.svg?revision=1&size=bestfit&width=187&height=127)
 
-What do these “moves” do? When adding the spike, the number of edges increases by 1, the number of vertices increases by one, and the number of faces remains the same. But this means that
- does not change. Completing a circuit adds one edge, adds one face, and keeps the number of vertices the same. So again,
- does not change.
+What do these “moves” do? When adding the spike, the number of edges increases by 1, the number of vertices increases by one, and the number of faces remains the same. But this means that $v-e+f=2$ does not change. Completing a circuit adds one edge, adds one face, and keeps the number of vertices the same. So again, $v-e+f=2$ does not change.
 
-Since we can build any graph using a combination of these two moves, and doing so never changes the quantity
- that quantity will be the same for all graphs. But notice that our starting graph
- has  
-  
- and  
- so
- This argument is essentially a proof by induction. A good exercise would be to rewrite it as a formal induction proof.
+Since we can build any graph using a combination of these two moves, and doing so never changes the quantity $v-e+f=2$, that quantity will be the same for all graphs. But notice that our starting graph has $v=2$,$e=2$, and $f=1$, so $v-e+2=2$. This argument is essentially a **proof by induction**. A good exercise would be to rewrite it as a formal induction proof.
+
+## Process of Proof by Induction
+
+There are two types of induction: regular and strong. The steps start the same but vary at the end. Here are the steps. In mathematics, we start with a statement of our assumptions and intent:
+
+Let $p(n), \forall n \geq n_0, \, n, \, n_0 \in \mathbb{Z_+}$ be a statement. We would show that p(n) is true for all possible values of n.
+
+1. Show that p(n) is true for the smallest possible value of n: In our case $p(n_0)$
+
+    Start with the graph
+    ![i1](https://math.libretexts.org/@api/deki/files/12854/image-105.svg?revision=1&size=bestfit&width=81&height=77)
+
+    Let p(n) be p(v,e) is: $v-e+f=2$
+
+    Any connected graph (besides just a single isolated vertex) must contain this subgraph.
+
+    So we can say this is our starting graph which has the smallest possible values for $v$ and $n$. Here our starting graph has $v=2$\, $e=1$, and $f=1$, so $v-e+f=2$.
+
+2. **For Regular Induction:** Assume that the statement is true for some $p(v,e)$. Then show that the statement is true for the next possible $p(v,e)$ planar graph.
+
+    Each step will consist of either adding a new vertex connected by a new edge to part of your graph (so creating a new “spike”) or by connecting two vertices already in the graph with a new edge (completing a circuit).
+
+    ![i3](https://math.libretexts.org/@api/deki/files/12855/image-106.svg?revision=1&size=bestfit&width=187&height=127)
+
+    - When adding the spike, the number of edges increases by 1, the number of vertices increases by one, and the number of faces remains the same. But this means that $v-e+f=2$ does not change.
+    - Completing a circuit adds one edge, adds one face, and keeps the number of vertices the same. So again, $v-e+f=2$ does not change.
+
+    Since we can build any graph using a combination of these two moves, and doing so never changes the quantity $v-e+f=2$, that quantity will be the same for all graphs. But notice that our starting graph has $v=2$,$e=1$, and $f=1$, so $v-e+f=2$.
+
+## Non-planar Graphs
+
+<div class="boxBorder">
+Your text here...
+</div>
+
+<div>
+    This is a **bold** text inside an HTML div.
+    Markdown formatting *will not* be processed here by default.
+</div>
+
+<h1>Inline HTML heading</h1>
+
+> **Note:** Your text here...
+You can use <span style="color:red;">inline HTML</span> within Markdown text.
+
+Investigate!
+
+For the complete graphs $k_n$  we would like to be able to say something about the number of vertices, edges, and (if the graph is planar) faces. Let's first consider $k_3$
+
+1. How many vertices does $k_3$  have? How many edges?
+2. If $k_3$ is planar, how many faces should it have?
+
+Repeat parts (1) and (2) for $k_4,\,k_5,and\,k_{23}$.
+
+What about complete bipartite graphs? How many vertices, edges, and faces (if it were planar) does
+ have? For which values of
+ and
+ are
+ and
+ planar?
