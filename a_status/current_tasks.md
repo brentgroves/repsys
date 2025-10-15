@@ -18,6 +18,24 @@ Carl Stangland, Desktop and System Support Technician, Indiana
 Lucas Tuma, IT Administrator, Strakonice
 Aleksandar Gavrilov, IT Administrator, Skopje
 
+## SQL Server vs Pandas
+
+In SQL Server 22+ and many other SQL dialects we can now generate a time series, but when you are working with a time series Python's Pandas library is the defacto standard for financial and economic analysis.
+
+"In essence, Pandas has become an indispensable tool in the Python data science ecosystem due to its efficiency, flexibility, and comprehensive features for handling and analyzing structured data."
+
+### Business Year Start anchored to April
+
+bys_april = pd.date_range(start='2020-01-01', periods=4, freq='BYS-APR')
+print("Business Year Start (BYS) - Fiscal Year ending in March:")
+print(bys_april)r
+
+### Business Year End anchored to Mach
+
+bye_march = pd.date_range(start='2020-01-01', periods=4, freq='BYE-MAR')
+print("\nBusiness Year End (BYE) - Fiscal Year ending in March:")
+print(bye_march)
+
 ## next
 
 **[Planar_Graphs](../research/m_z/virtualization/networking/graph_theory/libretexts/planar_graphs.md)**
