@@ -84,22 +84,27 @@ Let $p(n), \forall n \geq n_0, \, n, \, n_0 \in \mathbb{Z_+}$ be a statement. We
 
 ## Non-planar Graphs
 
-<div class="boxBorder">
-Your text here...
-</div>
+  <!DOCTYPE html>
+  <html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+  </head>
+  <body>
+<table>
+  <caption>
+    Non-planar graphs
+  </caption>
+  <thead>
+    <tr>
+      <th>Investigate</th>
+    </tr>
+  </thead>
 
-<div>
-    This is a **bold** text inside an HTML div.
-    Markdown formatting *will not* be processed here by default.
-</div>
-
-<h1>Inline HTML heading</h1>
-
-> **Note:** Your text here...
-You can use <span style="color:red;">inline HTML</span> within Markdown text.
-
-Investigate!
-
+  <tbody>
+    <tr>
+<td>
 For the complete graphs $k_n$  we would like to be able to say something about the number of vertices, edges, and (if the graph is planar) faces. Let's first consider $k_3$
 
 1. How many vertices does $k_3$  have? How many edges?
@@ -107,9 +112,47 @@ For the complete graphs $k_n$  we would like to be able to say something about t
 
 Repeat parts (1) and (2) for $k_4,\,k_5,and\,k_{23}$.
 
-What about complete bipartite graphs? How many vertices, edges, and faces (if it were planar) does
- have? For which values of
- and
- are
- and
- planar?
+What about complete bipartite graphs? How many vertices, edges, and faces (if it were planar) does $v_{7,4}$ have? For which values of $m$ and $n$ are $K_n$ and $K_{m,n}$ planar?
+
+</td>
+</tr>
+</tbody>
+</table>
+
+  </body>
+  </html>
+
+Not all graphs are planar. If there are too many edges and too few vertices, then some of the edges will need to intersect. The first time this happens is in
+
+![i1](https://math.libretexts.org/@api/deki/files/12930/image-108.svg?revision=1&size=bestfit&width=135&height=128)
+
+If you try to redraw this without edges crossing, you quickly get into trouble. There seems to be one edge too many. In fact, we can prove that no matter how you draw it, $k_5$ will always have edges crossing.
+
+## Theorem 5.3.1
+
+$k_5$ is not planar
+
+Proof
+The proof is by contradiction. So assume that $K_5$ is planar. Then the graph must satisfy Euler's formula for planar graphs.
+$K_5$ has 5 vertices and 10 edges, so we get
+
+$$5-10+f=2$$
+
+which says that if the graph is drawn without any edges crossing, there would be $7$ faces.
+
+Now consider how many edges surround each face. Each face must be surrounded by at least 3 edges. Let $B$ be the total number of boundaries around all the faces in the graph. Thus we have that $B \ge 3f$. But also $B=2e$, **since each edge is used as a boundary exactly twice**. Putting this together we get
+
+$$3f<=2e$$
+
+But this is impossible, since we have already determined that $f=7$ and $e=10$ and $21 \not \le 20$. This is a contradiction so in fact $K_5$ is not planar.
+
+## AI in a planar graph is each edge used a boundary exactly twice
+
+Yes, in a planar graph with a valid embedding, each edge is part of the boundary of exactly two faces (or regions). An edge is traversed once for the boundary of each of the two faces it borders. This is sometimes referred to as the "sum of face degrees" being equal to twice the number of edges (\(2e\)).
+
+- Why edges are counted twice: Imagine walking along the boundary of a face. To get from one face to the next, you must cross an edge. When you return to a face, you have traversed that edge a second time, but in the opposite direction.
+
+![i2](https://math.libretexts.org/@api/deki/files/12851/image-102.svg?revision=1&size=bestfit&width=200&height=160)
+
+- The 2e relationship: The sum of the lengths (number of edges) of all face boundaries is exactly twice the total number of edges in the graph. This is because each edge is shared by two faces, so it's counted once for each of them.
+- Exception (special cases): Some edge cases, like "cut edges" that connect only one face (like a spike), are sometimes handled differently depending on the context. However, for the standard "handshaking theorem" for faces in a planar graph, each edge is counted twice.
