@@ -15,3 +15,16 @@ Enabling the Linamar Structures to utilize the corporate data lake, using Micros
 
 Financial – Investment of Choice
 Keep costs of the reporting system down by using low cost and open source software.
+
+## Goals
+
+- Get time series data to data lake using KepServerEx
+- Analyze with Notebooks
+- Create PBI reports/dashboards using TS data
+- Create group oriented org apps with Notebooks and PBI reports/dashboards
+- Setup Fabric Gateway
+- Setup MicroCloud
+- Setup Charmed K8s
+- Publish Fabric Process
+- Collect CNC tooling data from CNC
+- Create Tool Management System (TMS)

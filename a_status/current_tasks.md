@@ -18,6 +18,19 @@ Carl Stangland, Desktop and System Support Technician, Indiana
 Lucas Tuma, IT Administrator, Strakonice
 Aleksandar Gavrilov, IT Administrator, Skopje
 
+## Goals
+
+- Get time series data to data lake using KepServerEx
+- Analyze with Notebooks
+- Create PBI reports/dashboards using TS data
+- Create group oriented org apps with Notebooks and PBI reports/dashboards
+- Setup Fabric Gateway
+- Setup MicroCloud
+- Setup Charmed K8s
+- Publish Fabric Process
+- Collect CNC tooling data from CNC
+- Create Tool Management System (TMS)
+
 ## SQL Server vs Pandas
 
 In SQL Server 22+ and many other SQL dialects we can now generate a time series, but when you are working with a time series Python's Pandas library is the defacto standard for financial and economic analysis.
