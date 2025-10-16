@@ -79,6 +79,28 @@ def day_of_month_quantity(df: pd.DataFrame, daily_dates: pd.DatetimeIndex):
   print(f"{month_name} {year} Total: {tot}")
   # print(f"{daily_dates[0].month_name} {daily_dates[0].year} Total: {tot}")
 
+def machine_oil_quantity(df: pd.DataFrame, row: int, daily_dates: pd.DatetimeIndex):
+  print(f"days of month with values")
+  # get_row_col(df,1,3)
+  col=3
+  tot=0.0
+  machine=get_row_col(df,row,0)
+  oil=get_row_col(df,row,1)
+  line=get_row_col(df,row,2)
+
+  for day in daily_dates:
+      value=get_row_col(df,row,col)
+      tot+=value
+      print(f"machine:{machine},oil:{oil},line:{line},day: {day.strftime("%Y-%m-%d")},col={col},value={value}")
+      col+=1
+  # Get the month names from the DatetimeIndex
+  month_name = daily_dates[1].month_name()
+  # print("\nMonth name from DatetimeIndex:")
+  # print(month_name)
+  year = daily_dates[1].year    
+  print(f"{month_name} {year} Total: {tot}")
+  # print(f"{daily_dates[0].month_name} {daily_dates[0].year} Total: {tot}")
+
 def main():
     # Your main program logic goes here
     print("This is the main function.")
@@ -90,14 +112,9 @@ def main():
 
     daily_dates = days_of_month_pandas(pd_sheet_datetime)
 
-    day_of_month_quantity(df,daily_dates)
-    # # get_row(df,1)
-    # value = get_row_col(df,1,3) # 0.00
-    # print(f"col 3 value is {value}")
-    # value = get_row_col(df,1,4) # blank
-    # print(f"col 4 value is {value}")
-    # value = get_row_col(df,1,12) # 5
-    # print(f"col 12 value is {value}")
+    # day_of_month_quantity(df,daily_dates)
+    row=1
+    machine_oil_quantity(df,row,daily_dates)
 
 if __name__ == "__main__":
     main()
