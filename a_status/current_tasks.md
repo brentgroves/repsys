@@ -18,6 +18,22 @@ Carl Stangland, Desktop and System Support Technician, Indiana
 Lucas Tuma, IT Administrator, Strakonice
 Aleksandar Gavrilov, IT Administrator, Skopje
 
+## tips
+
+**[Basic Semantic Model](https://www.youtube.com/watch?v=uioqDxQQrfY)**
+<https://learn.microsoft.com/en-us/power-bi/create-reports/service-from-excel-to-stunning-report>
+
+## Beth Schaus
+
+Group Office Reports/Structures Group Tarrifs/
+
+What is the semantic model
+
+- intermediary between data source and reports
+
+- Data Source is several Excel files.
+- Errors occur when there are duplicate records.
+
 ## Goals
 
 - Get time series data to data lake using KepServerEx
@@ -31,11 +47,22 @@ Aleksandar Gavrilov, IT Administrator, Skopje
 - Collect CNC tooling data from CNC
 - Create Tool Management System (TMS)
 
-## SQL Server vs Pandas
+## SQL Server vs Pandas vs M Code
 
 In SQL Server 22+ and many other SQL dialects we can now generate a time series, but when you are working with a time series Python's Pandas library is the defacto standard for financial and economic analysis.
 
 "In essence, Pandas has become an indispensable tool in the Python data science ecosystem due to its efficiency, flexibility, and comprehensive features for handling and analyzing structured data."
+
+M Code is a Power BI Desktop and Excel Microsoft 365 data mashup language
+
+M Code (Power Query Language):
+
+- Strength: Designed specifically for data extraction, transformation, and loading (ETL) within the Microsoft ecosystem (Excel, Power BI, Fabric). It excels at connecting to diverse data sources, cleaning, shaping, and merging data, often with a user-friendly graphical interface that generates M code.
+- Limitations: While powerful for its intended purpose, M Code is not a general-purpose programming language. It lacks the broader capabilities of a full-blown language for tasks like advanced statistical analysis, machine learning, web development, or building complex applications.
+
+M Code is compatible with: Power BI Service Power BI Desktop Excel Microsoft 365 and it has functions similar to Pandas such as List.Dates:
+
+List.Dates is a Power Query M function that generates a list of date values with a specified size, starting point, and step increment. The function returns a list of date values incremented by the given duration value.
 
 ### Business Year Start anchored to April
 
