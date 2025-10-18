@@ -25,8 +25,12 @@ Aleksandar Gavrilov, IT Administrator, Skopje
 
 ## Change in ETL
 
-- Semantic Model is needed for not redoing fact calculations
+- Semantic Model is needed for reusable fact calculations
 - If Semantic Model uses excel files as data sources duplicates occur.
+- In Tarrifs reports there are multiple excel files and if a duplicate is entered the semantic model based report fails.
+- In the Excel based Oil report there is a worksheet for every month.
+- Use Excel as an input of a notebook to update the data lake, warehouse, or database. Primary keys ensure no duplicates and a single table can grow as large as necessary.  
+- Notebook cleans Excel data source.
 
 ## Beth Schaus
 
