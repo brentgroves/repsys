@@ -23,6 +23,11 @@ Aleksandar Gavrilov, IT Administrator, Skopje
 **[Basic Semantic Model](https://www.youtube.com/watch?v=uioqDxQQrfY)**
 <https://learn.microsoft.com/en-us/power-bi/create-reports/service-from-excel-to-stunning-report>
 
+## Change in ETL
+
+- Semantic Model is needed for not redoing fact calculations
+- If Semantic Model uses excel files as data sources duplicates occur.
+
 ## Beth Schaus
 
 Group Office Reports/Structures Group Tarrifs/
