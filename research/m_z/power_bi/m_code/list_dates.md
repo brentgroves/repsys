@@ -36,3 +36,16 @@ Start Date: The first argument, #date(2024, 1, 1), sets the start date as Januar
 Count: The second argument, 4, indicates that the function should generate a total of 4 dates.
 Step: The third argument, #duration(1, 0, 0, 0), specifies the increment for each step in the sequence. Here, the duration is set to one day.
 The output demonstrates that each date in the sequence increases by one day, beginning from January 1, 2024, and continuing daily until January 4, 2024.
+
+You can see the three arguments of the function. A start date (as date), the number of intervals to add (as number) and the size of each interval (as duration).
+
+Tip
+If the #duration() syntax is new to you, it is good to know it takes 4 arguments as input: days, hours, minutes and seconds. The above formula, therefore, increments with 1-day intervals. Changing the duration from 1 day to 2 days, creates a list that increments with 2 days per step.
+
+Next, you can try to make this formula more dynamic. Instead of hardcoding a start date, adjust the original formula and include the parameter called StartDate:
+
+List.Dates(
+     StartDate,               // Uses start date parameter
+     5,
+     #duration( 1, 0, 0, 0 )
+  )
