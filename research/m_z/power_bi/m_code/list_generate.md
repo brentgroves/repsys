@@ -186,3 +186,48 @@ Number.Tan, Number.Tanh: returns the (hyperbolic) tangent of a number
 Number.Cos, Number.Cosh: returns the (hyperbolic) cosine of a number
 Number.Atan: returns the arctangent of a number
 Number.Sqrt: returns the square root of a number
+
+For functions that require more arguments, like Number.Power, you can adapt your function like:
+
+= List.Generate(
+   () => [x = 1, y = 1],                 // x = increasing series, y = factorial
+    each [x] <= 10,                      // as long as x <= 10
+    each [x = [x] + 1,                   // increment x by 1 in each step
+          y = Number.Power( [x], 2 ) ],  // Turn into factorial
+    each [y]                             // Return factorial
+)
+
+## 2.5. List of Month Names
+
+You can also create a list of names by using List.Generate. How does that work? There are several ways to approach it. I will show three methods.
+
+The value 28 represents a date in January. Adding 28 in each step and transforming the underlying value and transforming the value to a date is the first method.
+The second method starts with a date and uses the Date.AddMonths value to increase the date by a month in each step.
+Thirdly, I show a method using variables. Variable x is an increasing sequence up to 5. Variable y is a date starting in January, increasing 1 month with each variable 1 increment. After generating the variables, as a result in argument 4, you return the month name by using the Date.MonthName Function.
+
+= List.Generate(
+     () => 28,                // start with the value 28
+     each _< 364,            // as long as series < 364
+     each_ + 28 ,           // increase the base value by 28
+     each Date.MonthName( _ ) // return the Month Name
+)
+// Returns a list of month names January up to December
+// Method suggested by Rick Rothstein
+
+= List.Generate(
+       () => #date( 2021, 1, 1 ),   // start with date 1 Jan 2021
+        each Date.Year(_) < 2022,   //  as long as year < 2022
+        each Date.AddMonths(_, 1), // add 1 month per step
+        each Date.MonthName( _ )    // return the month name
+)
+// Returns a list of month names January up to December
+
+= List.Generate(
+   () => [x = 1,                         // x is an increasing list
+          y = #date( 2021, 1, 1) ],      // y returns date
+    each [x] <= 12,                      // as long as next value <= 5
+    each [x = [x] + 1,                   // Increment x with 1 each step
+          y = Date.AddMonths( [y], 1) ], // Add 1 month each step
+    each Date.MonthName( [y] )           // Return month name of Y
+)
+// Returns a list of month names January up to December
