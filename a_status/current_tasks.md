@@ -34,6 +34,7 @@ Aleksandar Gavrilov, IT Administrator, Skopje
 
 ## Beth Schaus
 
+Still working on it. Cody can probably fix the problem right away, but I think we need to look at a more reliable data source for this report.  I have added you to a Fabric email that was sent out. I apologize for the delay.
 Group Office Reports/Structures Group Tarrifs/
 
 What is the semantic model

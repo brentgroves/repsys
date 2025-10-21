@@ -16,3 +16,5 @@
 - Jared Eikenberry, Quality Engineer, Fruitport
 - Carl Stangland, Desktop and System Support Technician, Indiana
 - Ricardo Baca, Sr. Manufacturing Engineer
+- Beth Schaus, Accounting Finance
+- Cody Hudson, Accounting Associate
