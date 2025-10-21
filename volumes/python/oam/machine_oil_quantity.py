@@ -27,10 +27,10 @@ def get_row_col(df:pd.DataFrame,row:int,col:int)->float:
     value =  df.iloc[row,col]
   return value
 
-def get_sheet_date(df,sheet_name):
+def get_sheet_date(df):
 
   column_names_list = df.columns.tolist()
-  # print(column_names_list[1])
+  # print(column_names_list)
 
   sheet_date= column_names_list[1]
 
@@ -43,7 +43,7 @@ def get_sheet_date(df,sheet_name):
   # print('Year: ', datetime_obj.year) # To Get month from year
   # print('Day: ', datetime_obj.day) # To Get month from year
 
-  print(f"'{datetime_obj}' converted to: {dt_sheet_date}")
+  # print(f"'{datetime_obj}' converted to: {dt_sheet_date}")
   return dt_sheet_date
 
 
@@ -104,16 +104,15 @@ def machine_oil_quantity(df: pd.DataFrame, row: int, daily_dates: pd.DatetimeInd
 def main():
     # Your main program logic goes here
     print("This is the main function.")
-    sheet_name = "Aug. oil usage"
     # Call other functions or perform operations
-    df=pd.read_excel('Oil adds to Machines.xlsx', sheet_name=sheet_name)
-    pd_sheet_datetime = get_sheet_date(df,"Aug. oil usage")
+    df=pd.read_excel('OAMForMonth.xlsx',sheet_name=1)
+    pd_sheet_datetime = get_sheet_date(df)
     print(f"sheet_date' {pd_sheet_datetime}")
 
     daily_dates = days_of_month_pandas(pd_sheet_datetime)
 
-    # day_of_month_quantity(df,daily_dates)
-    row=1
+    # # day_of_month_quantity(df,daily_dates)
+    row=2
     machine_oil_quantity(df,row,daily_dates)
 
 if __name__ == "__main__":
