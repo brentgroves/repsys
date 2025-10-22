@@ -18,9 +18,15 @@ Carl Stangland, Desktop and System Support Technician, Indiana
 Lucas Tuma, IT Administrator, Strakonice
 Aleksandar Gavrilov, IT Administrator, Skopje
 
-## tips
+## Data Warehouse Structure
 
-<https://www.ventoy.net/en/index.html>
+**[Slowly Changing Dimensions](https://www.geeksforgeeks.org/software-testing/slowly-changing-dimensions/)**
+
+In a typical data warehouse, dimension data such as customer information, product details, or employee records can change. Managing these changes efficiently and effectively is where Slowly Changing Dimensions (SCD) come into play. There are several types of SCDs, each providing a different way to handle changes, ensuring that historical data is preserved and accurately reflected.
+
+In conclusion, there is nothing as important in a data warehouse as Keeping Slowly Changing Dimensions (SCDs) if the organization intends to track past performance accurately, and not make analysis a herculean task. Different types of SCDs and intricate methods like the Hybrid SCDs and Temporal Tables let organizations handle all sorts of data change transactions and become data-driven. When these strategies are well designed and properly used, they result in the accuracy of the data, beyond which the results provide a means for historical review, and support the overall quality of business intelligence.
+
+**[Master Data Modeling in Power BI - Beginner to Pro Full Course](https://www.youtube.com/watch?v=air7T8wCYkU)**
 
 **[Basic Semantic Model](https://www.youtube.com/watch?v=uioqDxQQrfY)**
 <https://learn.microsoft.com/en-us/power-bi/create-reports/service-from-excel-to-stunning-report>
