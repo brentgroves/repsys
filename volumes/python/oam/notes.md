@@ -2,7 +2,14 @@
 
 ## Goal
 
-Use the easily updated "Oil adds to Machines.xlsx" spreadsheet which has one row with machine/oil_type/line and oil quantity for each day of the month to update the Structures OAM data lake table with a PySpark notebook.
+Use the easily updated "Oil adds to Machines.xlsx" spreadsheet which has one row with machine/oil_type/line and oil quantity for each day of the month to update the Structures OAM data lake or warehouse table with a PySpark notebook.
+
+## Warehouse Data Model
+
+- created excel star schema diagram
+- created CSV fact table
+- no dim tables yet
+- optional cost slowly changing dimension
 
 ## CSV creation overview
 

@@ -84,14 +84,14 @@ def machine_oil_quantity(df: pd.DataFrame, row: int, daily_dates: pd.DatetimeInd
   # get_row_col(df,1,3)
   col=3
   tot=0.0
-  machine=get_row_col(df,row,0)
-  oil=get_row_col(df,row,1)
-  line=get_row_col(df,row,2)
+  line_id=get_row_col(df,row,2)
+  machine_id=get_row_col(df,row,0)
+  oil_type=get_row_col(df,row,1)
 
   for day in daily_dates:
       value=get_row_col(df,row,col)
       tot+=value
-      print(f"machine:{machine},oil:{oil},line:{line},day: {day.strftime("%Y-%m-%d")},col={col},value={value}")
+      print(f"date:{day.strftime("%Y-%m-%d")},line_id:{line_id},machine_id:{machine_id},oil_type:{oil_type},col={col},value={value}")
       col+=1
   # Get the month names from the DatetimeIndex
   month_name = daily_dates[1].month_name()
