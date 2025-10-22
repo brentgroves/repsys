@@ -20,6 +20,8 @@ Aleksandar Gavrilov, IT Administrator, Skopje
 
 ## tips
 
+<https://www.ventoy.net/en/index.html>
+
 **[Basic Semantic Model](https://www.youtube.com/watch?v=uioqDxQQrfY)**
 <https://learn.microsoft.com/en-us/power-bi/create-reports/service-from-excel-to-stunning-report>
 
