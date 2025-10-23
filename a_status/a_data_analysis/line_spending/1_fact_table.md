@@ -11,7 +11,9 @@ Goal: How much are we spending on each line.
 
 Step 1: Create a fact table.
 
-The data that is needed to determine line spending. This could be a simple excel file with column headings of all the information we need to collect to calculate line spending. There is an example of a simple sales fact table below.
+This is the data that is needed to determine line spending. This could be a simple excel file with column headings of all the information we need to collect to calculate line spending. There is an example of a simple sales fact table below.
+
+Suggest we collect and combine line data costs from each department. The cost can be pulled from anywhere: Plex, Vending machines, or even a simple Excel spreadsheet.
 
 Next:  Create dimension tables.
 The dimension tables contain information to filter on and are linked to the fact tables. One very important dimension table is the date table. We need a date table specifically designed so that we can do all the kinds line spending analysis we want to do. For example year over year, year, year to date, prior year, rolling totals, etc.
@@ -46,6 +48,11 @@ The following is in markdown format and can be viewed by copying and pasting the
 - Pat Baxter, General Manager
 - Randy Kerrigan, Plant Controller - Indiana
 Accounting
+- Michael Percell, Manufacturing Engineering Manager
+- Ron James, Quality Manager
+- Jami Pyle, MP&L Manager
+- Nancy Swank, Material Planner
+- Dennis Brach, Maintenance Group Leader
 - Tarek Mohamed, IT Supervisor - Data & Analytics
 - Cody Hudson, Fabric Administrator
 - Christian Trujillo, IT Structures Manager
