@@ -26,6 +26,12 @@ Aleksandar Gavrilov, IT Administrator, Skopje
 
 Work with Randy Albion controller.
 
+## Data Flow
+
+# Data Flow
+
+![df](https://res.cloudinary.com/dwwq4fbhq/image/upload/v1761250282/data_flow.drawio_x2btyk.png)
+
 ## Data Warehouse Structure
 
 **[Slowly Changing Dimensions](https://www.geeksforgeeks.org/software-testing/slowly-changing-dimensions/)**
