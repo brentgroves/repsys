@@ -18,6 +18,10 @@ Carl Stangland, Desktop and System Support Technician, Indiana
 Lucas Tuma, IT Administrator, Strakonice
 Aleksandar Gavrilov, IT Administrator, Skopje
 
+## Next
+
+- **[Master Data Modeling in Power BI - Beginner to Pro Full Course](https://www.youtube.com/watch?v=air7T8wCYkU)** get and transform data using power query using the Kimball approach.
+
 ## How much are we spending on each line
 
 Work with Randy Albion controller.
