@@ -18,6 +18,10 @@ Carl Stangland, Desktop and System Support Technician, Indiana
 Lucas Tuma, IT Administrator, Strakonice
 Aleksandar Gavrilov, IT Administrator, Skopje
 
+## How much are we spending on each line
+
+Work with Randy Albion controller.
+
 ## Data Warehouse Structure
 
 **[Slowly Changing Dimensions](https://www.geeksforgeeks.org/software-testing/slowly-changing-dimensions/)**
