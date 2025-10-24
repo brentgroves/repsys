@@ -1,5 +1,11 @@
 # **[Slowly Changing Dimensions](https://www.geeksforgeeks.org/software-testing/slowly-changing-dimensions/)**
 
+## My notes
+
+A price can change and will be different over time and possibly different for every fact record.
+
+Where an OnHand quantity changes with every withdrawal.  You could keep a snapshot of OH quantities every night. If you wanted the change in inventory or you could store the entire transaction history file if it could be linked with the current quantity.
+
 Last Updated : 06 Aug, 2024
 Slowly Changing Dimensions (SCD) are a critical concept in data warehousing and business intelligence. They refer to the methods used to manage and track changes in dimension data over time. This is essential for maintaining historical accuracy and ensuring data integrity in a data warehouse.
 
