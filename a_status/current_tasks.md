@@ -20,6 +20,9 @@ Aleksandar Gavrilov, IT Administrator, Skopje
 
 ## Next
 
+- **[Design MICROSOFT FABRIC Data Project with Medallion Architecture | Lakehouse + Spark + Power BI](https://www.youtube.com/watch?v=qG65DUcSjws)**
+- **[Lakehouse end-to-end scenario: overview and architecture](https://learn.microsoft.com/en-us/fabric/data-engineering/tutorial-lakehouse-introduction)**
+
 - **[Master Data Modeling in Power BI - Beginner to Pro Full Course](https://www.youtube.com/watch?v=air7T8wCYkU)** get and transform data using power query using the Kimball approach.
 
 ## How much are we spending on each line
