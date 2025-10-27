@@ -22,9 +22,10 @@ Aleksandar Gavrilov, IT Administrator, Skopje
 
 ## Next
 
+- **[Building Power BI semantic models with Direct Lake in Microsoft Fabric](https://www.youtube.com/watch?v=ACbBgCwTXSg)**
 - **[Create dataframe using Python Dictionaries](https://www.w3schools.com/python/python_dictionaries.asp)**
 - **[Design MICROSOFT FABRIC Data Project with Medallion Architecture | Lakehouse + Spark + Power BI](https://www.youtube.com/watch?v=qG65DUcSjws)**
-- **[Lakehouse end-to-end scenario: overview and architecture](https://learn.microsoft.com/en-us/fabric/data-engineering/tutorial-lakehouse-introduction)**
+- **[04-Module Topic 2-Introduction to Measures and Calculated Columns(PowerBI file included)](https://www.youtube.com/watch?v=8oK2CJJ3fDg)**
 
 - **[Master Data Modeling in Power BI - Beginner to Pro Full Course](https://www.youtube.com/watch?v=air7T8wCYkU)** get and transform data using power query using the Kimball approach.
 

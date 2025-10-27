@@ -82,6 +82,7 @@ def day_of_month_quantity(df: pd.DataFrame, daily_dates: pd.DatetimeIndex):
 def machine_oil_quantity(df: pd.DataFrame, row: int, daily_dates: pd.DatetimeIndex):
   print(f"days of month with values")
   # get_row_col(df,1,3)
+  row=2
   col=3
   tot=0.0
   line_id=get_row_col(df,row,2)
