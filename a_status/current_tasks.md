@@ -18,8 +18,11 @@ Carl Stangland, Desktop and System Support Technician, Indiana
 Lucas Tuma, IT Administrator, Strakonice
 Aleksandar Gavrilov, IT Administrator, Skopje
 
+## **[jupyter lab](https://jupyter.org/try-jupyter/lab/)**
+
 ## Next
 
+- **[Create dataframe using Python Dictionaries](https://www.w3schools.com/python/python_dictionaries.asp)**
 - **[Design MICROSOFT FABRIC Data Project with Medallion Architecture | Lakehouse + Spark + Power BI](https://www.youtube.com/watch?v=qG65DUcSjws)**
 - **[Lakehouse end-to-end scenario: overview and architecture](https://learn.microsoft.com/en-us/fabric/data-engineering/tutorial-lakehouse-introduction)**
 
