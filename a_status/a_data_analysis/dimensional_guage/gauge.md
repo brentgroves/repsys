@@ -10,7 +10,7 @@ Brent
 
 ## CSV PROS
 
-- Marposs gauage is a full computer and is already connected to the network via a network cable.
+- Marposs gauage is a full computer and is connected to the network via a network cable but no testing was done on it yet. Config request to connect it to a shared folder.
 - data is formatted and available in a CSV file on a network drive.
 
 ## CSV CONS
