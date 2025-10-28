@@ -2,6 +2,8 @@
 
 ## workflow
 
+![i1](https://res.cloudinary.com/dwwq4fbhq/image/upload/v1761677540/powerbi_workflow_qpbrid.jpg)
+
 First examine your data in Excel or DBeaver.
 
 ## Power BI desktop

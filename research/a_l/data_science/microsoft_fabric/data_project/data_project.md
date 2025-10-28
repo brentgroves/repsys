@@ -22,4 +22,9 @@ created by databricks now industry standard
 
 - ![med](https://blog.bismart.com/hs-fs/hubfs/Arquitectura_Medallion_Pasos.jpg?width=1754&height=656&name=Arquitectura_Medallion_Pasos.jpg)
 
+## ShoppingMartAnalytics Workspace
+
+- select medallion task flow
+Organize data in your lakehouse or warehouse while progressively improving its structure and quality in each layer from Bronze to silver to gold. resulting in quality data that is easy to analyze.
+
 **[lakehouse](https://learn.microsoft.com/en-us/fabric/data-engineering/lakehouse-overview)**

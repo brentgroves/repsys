@@ -2,29 +2,31 @@
 
 **[playlist](https://www.youtube.com/watch?v=8oK2CJJ3fDg&list=PLtCzYvIWNgJE-NsGuUXbjYyJgQMSOFp3A)**
 
+![i1](https://res.cloudinary.com/dwwq4fbhq/image/upload/v1761677540/powerbi_workflow_qpbrid.jpg)
+
 ## measures
 
-- total sales
-- average sales
-- total quantity sold
+dynamic calculations
+sales report: total sales, average sales, total quantity sold
 
 ## Calculated Columns
 
 - add new columns to your existing table
 
-## create measures and calculated columns using Data Analysis Expression (dax)
+## Data Analysis Expression (DAX)
 
-## workflow
+create measures and calculated columns using Data Analysis Expression (dax)
 
-## Power BI desktop
+## Measures to create
 
-- Get Data
-- Transform
-- Model
-- Caculate
-- visualize
+create new measure from fact table.
 
-## Power BI Service
+- total number of orders
+  - distinctcount(orderid)
+- total number of pizzas sold
 
-- Publish and Share
-- Manage
+Pizza Category = SWITCH(TRUE(),CONTAINSSTRING(dim_pizza[pizza_name_id],"pepperoni"),"Single Cheese",CONTAINSSTRING(dim_pizza[pizza_name_id],"cheese"),"Cheese","Multi-Cheese Specials","Other")
+
+Pizza Category = SWITCH(TRUE(),CONTAINSSTRING(dim_pizza[pizza_name_id],"pepperoni"),"Single Cheese","Other")
+
+Pizza Category = SWITCH(TRUE(),CONTAINSSTRING(dim_pizza[pizza_name_id],"pepperoni"),"Single Cheese",CONTAINSSTRING(dim_pizza[pizza_name_id],"cheese"),"Cheese","Other")
