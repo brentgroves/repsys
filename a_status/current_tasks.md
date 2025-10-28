@@ -41,6 +41,8 @@ replication happens every 30 minutes.
 
 ## Next
 
+cannon eos rebel t3
+
 - **[Building Power BI semantic models with Direct Lake in Microsoft Fabric](https://www.youtube.com/watch?v=ACbBgCwTXSg)**
 - **[Create dataframe using Python Dictionaries](https://www.w3schools.com/python/python_dictionaries.asp)**
 - **[Design MICROSOFT FABRIC Data Project with Medallion Architecture | Lakehouse + Spark + Power BI](https://www.youtube.com/watch?v=qG65DUcSjws)**
