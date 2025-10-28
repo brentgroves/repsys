@@ -20,6 +20,25 @@ Aleksandar Gavrilov, IT Administrator, Skopje
 
 ## **[jupyter lab](https://jupyter.org/try-jupyter/lab/)**
 
+## MFA Authentication
+
+Authentication and
+
+- Entra Admin unit
+OU in Active Directory
+Management Responsibility
+group owners are going to manage membership
+- Authentication administrator role
+- Entra portal access
+- disable accounts
+replication happens every 30 minutes.
+- can see deleted users
+- see roles, groups, cloud groups, active directory groups
+- see user licenses
+- Power BI report is 24 hours behind.
+- Reset MFA for users. Too much work for corporate
+- Reset password
+
 ## Next
 
 - **[Building Power BI semantic models with Direct Lake in Microsoft Fabric](https://www.youtube.com/watch?v=ACbBgCwTXSg)**
@@ -34,6 +53,8 @@ Aleksandar Gavrilov, IT Administrator, Skopje
 Work with Randy Albion controller.
 
 ## Setup Fabric/Data Lake/Power BI Fabric WorkFlow process training
+
+- transcript and recording
 
 - Data Modeling - Kimball/Star Schema
 
