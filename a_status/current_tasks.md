@@ -33,7 +33,7 @@ Aleksandar Gavrilov, IT Administrator, Skopje
 
 Work with Randy Albion controller.
 
-## Setup Power BI Fabric WorkFlow training
+## Setup Fabric/Data Lake/Power BI Fabric WorkFlow process training
 
 - Data Modeling - Kimball/Star Schema
 
