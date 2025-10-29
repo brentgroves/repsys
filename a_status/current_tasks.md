@@ -41,7 +41,8 @@ replication happens every 30 minutes.
 
 ## Next
 
-cannon eos rebel t3
+cannon eos rebel t3/1100d
+<https://en.canon-me.com/support/consumer/products/cameras/eos/eos-1000d.html?type=software&detailId=tcm:60-1309830&os=Windows%2010%20%2864-bit%29&language=&productTcmUri=tcm:60-555789>
 
 - **[Building Power BI semantic models with Direct Lake in Microsoft Fabric](https://www.youtube.com/watch?v=ACbBgCwTXSg)**
 - **[Create dataframe using Python Dictionaries](https://www.w3schools.com/python/python_dictionaries.asp)**
