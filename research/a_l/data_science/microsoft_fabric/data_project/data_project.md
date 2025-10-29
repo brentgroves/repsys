@@ -28,3 +28,82 @@ created by databricks now industry standard
 Organize data in your lakehouse or warehouse while progressively improving its structure and quality in each layer from Bronze to silver to gold. resulting in quality data that is easy to analyze.
 
 **[lakehouse](https://learn.microsoft.com/en-us/fabric/data-engineering/lakehouse-overview)**
+
+abfss://fad2d397-2419-4518-aa81-b0d383e4f42d@onelake.dfs.fabric.microsoft.com/fd2ba9a3-abca-409b-8b9b-7ae15489deae/Files/ShoppingMartBronze
+E055-Linamar Structures/E055_Linamar_Structures_Bronze_Lakehouse/Files/
+
+E055-Linamar Structures/E055_Linamar_Structures_Bronze_Lakehouse/Files/ShoppingMartBronze/
+
+Files/ShoppingMartBronze/FactBudget.csv
+
+StagingLakehouseForDataflows_20250724193311.FolderPath
+
+Connect to data destination
+
+Connection
+E055_Linamar_Structures_Bronze_Lakehouse
+
+Copy data into Lakehouse
+If the identity you use to access the data store only has permission to subdirectory instead of the entire account, specify the path to browse.
+
+/E055-Linamar Structures/E055_Linamar_Structures_Bronze_Lakehouse/Files/
+
+DelimitedText
+Source
+Connection name
+orders bGroves
+DelimitedText
+Destination
+Connection name
+E055_Linamar_Structures_Bronze_Lakehouse
+File name
+test2.csv
+Folder path
+E055-Linamar Structures/E055_Linamar_Structures_Bronze_Lakehouse/Files
+
+## Steps
+
+ 1. go to E055-Linamar Structures workspace
+ 2. new item: copy job
+ 3. choose data source: http
+    base url: <https://raw.githubusercontent.com/nextgendatahub/MedallionLakehouseFabric/>
+    path: refs/heads/main/ShoppingMart_StructuredData/Orders_Data.csv
+    preview data works.
+ 4. data destination: E055_Linamar_Structures_Bronze_Lakehouse
+copy mode: full copy
+map to destination: files
+Clicked the browse button for each folder path:
+
+- blank,
+- Files
+- \Files
+- \Files\
+- /Files
+- E055_Linamar_Structures_Bronze_Lakehouse
+- \E055_Linamar_Structures_Bronze_Lakehouse
+- /E055_Linamar_Structures_Bronze_Lakehouse
+- E055-Linamar Structures/
+- E055-Linamar Structures/E055_Linamar_Structures_Bronze_Lakehouse/Files/
+- /E055-Linamar Structures/E055_Linamar_Structures_Bronze_Lakehouse/Files/
+If the identity you use to access the data store only has permission to subdirectory instead of the entire account, specify the path to browse.
+**Error:**
+Root folder
+Failed to load
+Internal error has occurred. Activity ID: 0bc325f0-2b0f-4c4e-9572-cf14570dc3aa
+
+File name: test.csv
+Copy behavior: flatten hierarchy
+File format: delimitted text
+
+SQL connection string: ldak3twx7jvuxaylacwhhfsu6a-s7j5f6qzeqmelkubwdjyhzhufu.datawarehouse.fabric.microsoft.com
+
+Goal: Data Pipeline/Copy Data activity
+
+Lakehouse: E055_Linamar_Structures_Bronze_Lakehouse
+Root Folder: Files
+File Path: E055-Linamar Structures/E055_Linamar_Structures_Bronze_Lakehouse/Files/test.csv
+File Format: Delimited Text
+
+Failed to load
+Internal error has occurred. Activity ID: fff2c811-564d-41e7-8e8f-a81b575612c7
+How helpful or unhelpful was this
