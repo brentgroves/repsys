@@ -8,6 +8,15 @@ Marposs dimensional guage options: We can either capture serial data or read dim
 Thanks,
 Brent
 
+## Oct 30 Meeting
+
+- meeting with Marposs techical support.
+- get recommended serial device server.
+- configure Marposs
+  - output data to serial port
+  - output csv file to windows share
+  - Include if there was a tool change in output
+  
 ## CSV PROS
 
 - Marposs gauage is a full computer and is connected to the network via a network cable but no testing was done on it yet. Config request to connect it to a shared folder.
