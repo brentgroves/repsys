@@ -45,6 +45,21 @@ cannon eos rebel t3/1100d
 <https://en.canon-me.com/support/consumer/products/cameras/eos/eos-1000d.html?type=software&detailId=tcm:60-1309830&os=Windows%2010%20%2864-bit%29&language=&productTcmUri=tcm:60-555789>
 <https://www.youtube.com/watch?v=VTLISryqbSc>
 
+- **[PySpark Tutorial](https://www.geeksforgeeks.org/python/pyspark-tutorial/)**
+
+Last Updated : 18 Jul, 2025
+PySpark is the Python API for Apache Spark, designed for big data processing and analytics. It lets Python developers use Spark's powerful distributed computing to efficiently process large datasets across clusters. It is widely used in data analysis, machine learning and real-time processing.
+
+![i](https://media.geeksforgeeks.org/wp-content/uploads/20250718112356343916/statistics_key_concepts.webp)
+
+- **[online pyspark compiler](https://www.sparkplayground.com/pyspark-online-compiler)**
+- **[PySpark Tutorial for Beginners - Jupyter Notebooks](https://github.com/coder2j/pyspark-tutorial)**
+- **[GraphFrames](https://medium.com/@krthiak/graph-based-data-and-graphframes-in-pyspark-day-32-of-100-days-of-data-engineering-ai-and-azure-449da4a628e7)**
+- **[Resilient Distributed Datasets](https://www.tutorialspoint.com/apache_spark/apache_spark_rdd.htm)**
+
+The main abstraction Spark provides is a resilient distributed dataset (RDD), which is a collection of elements partitioned across the nodes of the cluster that ...
+
+- **[Tarek's update on Fabric channel:From Query to Conversation: Microsoft Fabric’s Data Agents Explained (youtube.com)](<https://www.youtube.com/watch?v=mFoSVcj6tLw>)**
 - **[Building Power BI semantic models with Direct Lake in Microsoft Fabric](https://www.youtube.com/watch?v=ACbBgCwTXSg)**
 - **[Create dataframe using Python Dictionaries](https://www.w3schools.com/python/python_dictionaries.asp)**
 - **[Design MICROSOFT FABRIC Data Project with Medallion Architecture | Lakehouse + Spark + Power BI](https://www.youtube.com/watch?v=qG65DUcSjws)**
