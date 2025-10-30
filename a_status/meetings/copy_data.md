@@ -8,6 +8,19 @@ Would you please help me copy data to a data lake folder? Any help you could giv
 
 The following is in markdown format and can be viewed by copying and pasting the contents below into an online markdown viewer, such as at <https://markdownlivepreview.com/>>.
 
+## Background
+
+Trying to change PBI data source from Excel to data lake. Want to clean/validate  Excel data while copying rows into the data lake. Was thinking to upload Excel/CSV files to the data lake folder and then using a pipeline/notebook to copy data to the data lake. The issue is my account does not seem to have permission to copy to/from the data lake folder or don't have the path correct. No matter how I try to access the data lake folder from a pipeline the following error occurs in the "Copy data to/from Lakehouse folder" step:
+
+Copy data to/from Lakehouse folder.
+
+**Error:**
+Root folder
+Failed to load
+Internal error has occurred. Activity ID: 0bc325f0-2b0f-4c4e-9572-cf14570dc3aa
+
+Note above this step says: If the identity you use to access the data store only has permission to subdirectory instead of the entire account, specify the path to browse.
+
 ## Goal: Copy Data to Data Lake folder
 
 ## Steps
