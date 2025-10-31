@@ -45,6 +45,8 @@ cannon eos rebel t3/1100d
 <https://en.canon-me.com/support/consumer/products/cameras/eos/eos-1000d.html?type=software&detailId=tcm:60-1309830&os=Windows%2010%20%2864-bit%29&language=&productTcmUri=tcm:60-555789>
 <https://www.youtube.com/watch?v=VTLISryqbSc>
 
+I can setup the Serial device server and help configure the Marposs dimensional guage. Jared has had previous experience working the Marposs so he is taking a look at it also.
+
 - **[PySpark Tutorial](https://www.geeksforgeeks.org/python/pyspark-tutorial/)**
 
 Last Updated : 18 Jul, 2025

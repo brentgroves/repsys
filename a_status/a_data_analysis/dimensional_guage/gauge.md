@@ -3,7 +3,7 @@
 
 Hi Team,
 
-Marposs dimensional guage options: We can either capture serial data or read dimensional timestamped data from a csv.
+Happy Friday! I can setup the Serial device server and help configure the Marposs dimensional guage. Jared has had previous experience working the Marposs so he is taking a look at it also.
 
 Thanks,
 Brent
