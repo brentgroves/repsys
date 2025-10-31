@@ -82,9 +82,14 @@ Clicked the browse button for each folder path:
 - E055_Linamar_Structures_Bronze_Lakehouse
 - \E055_Linamar_Structures_Bronze_Lakehouse
 - /E055_Linamar_Structures_Bronze_Lakehouse
+- Data Consolidation/Lakehouse/E055_Linamar_Structures_Bronze_Lakehouse/Files/
+- E055-Linamar Structures/Data Consolidation/Lakehouse/E055_Linamar_Structures_Bronze_Lakehouse/Files/
 - E055-Linamar Structures/
 - E055-Linamar Structures/E055_Linamar_Structures_Bronze_Lakehouse/Files/
 - /E055-Linamar Structures/E055_Linamar_Structures_Bronze_Lakehouse/Files/
+- E055-Linamar Structures/test/Files/
+10.188.50.83
+nutanix/
 If the identity you use to access the data store only has permission to subdirectory instead of the entire account, specify the path to browse.
 **Error:**
 Root folder
