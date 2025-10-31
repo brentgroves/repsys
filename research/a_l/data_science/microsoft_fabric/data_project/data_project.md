@@ -107,3 +107,5 @@ File Format: Delimited Text
 Failed to load
 Internal error has occurred. Activity ID: fff2c811-564d-41e7-8e8f-a81b575612c7
 How helpful or unhelpful was this
+
+**[error](https://community.fabric.microsoft.com/t5/Fabric-platform/Error-Opening-List-of-Files-in-Lakehouse-during-copy-Data-job/m-p/4859891)**
