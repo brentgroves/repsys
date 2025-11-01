@@ -39,6 +39,12 @@ replication happens every 30 minutes.
 - Reset MFA for users. Too much work for corporate
 - Reset password
 
+## Task Management
+
+Jira is a project management and issue-tracking tool used by teams, especially in software development, to plan, track, and manage their work. It helps teams organize projects, track bugs and issues, and streamline their workflows through customizable boards like Kanban and Scrum, allowing them to manage tasks and monitor progress from start to finish.
+
+## Deploy Charmed K8s and gitlab
+
 ## Next
 
 cannon eos rebel t3/1100d
