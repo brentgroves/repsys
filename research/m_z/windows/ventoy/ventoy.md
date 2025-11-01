@@ -111,3 +111,86 @@ And paste the hash from the website you got the ISO file in the Check field, the
 As you can see, it shows a green signal 🟢 meaning, the hash matched!
 
 ## Boot Using Ventoy USB Drive
+
+Before I walk you through the boot process, there are two modes that you should consider if the ISO doesn't boot.
+
+- GRUB2: If any of your Linux distros doesn't boot, you may enable the GRUB2 mode by pressing Ctrl + r. Remember, it will only work with distros having a grub2 config file.
+- WIMBOOT: If you run into problems while booting Windows ISO, you can enable the wimboot mode by pressing Ctrl + w.
+
+📋
+You should only be using any of the given modes if the default settings do not work for you.
+While you can reboot your system and press F12, del, F2, or other respective keys to get into the BIOS, you can also choose to use the terminal if you like.
+
+To get into the BIOS of your system while using Linux, all you have to do is use the following command in your terminal:
+
+`systemctl reboot --firmware-setup`
+
+If you want to boot from Ventoy every time you start your system with the flash drive, head to the boot menu and change the boot priorities with Ventoy's USB drive as the first.
+
+If not, you can simply use the boot menu every time and select to boot from it Ventoy manually (overriding the defaults).
+
+![i](https://itsfoss.com/content/images/size/w1000/2023/07/Change-boot-order-in-BIOS-1.jpg)
+
+Now, save changes and exit from the BIOS (as per your preferences), and you will see a Ventoy screen with one or multiple distros:
+
+![i](https://itsfoss.com/content/images/size/w1000/2023/07/Ventoy-boot-screen.png)
+
+Here's how it looks like with multiple distros onboard:
+
+![i](https://itsfoss.com/content/images/size/w1000/2023/07/use-multiple-ISO-in-Ventoy.png)
+
+You can use the arrow keys to navigate through the multiple options.
+
+And if you choose the Linux distro as I did, then by pressing the enter key on the distro option, you will see the following options:
+
+![i](https://itsfoss.com/content/images/size/w1000/2023/07/Boot-options-in-Ventoy.png)
+
+## Boot from the normal mode (selected by default); if it doesn't work, you can boot from the grub2
+
+## Create a Windows bootable USB
+
+The process for creating a bootable Windows USB remains the same, but this time, you have to copy the Windows ISO file to the Ventoy drive. But let me walk you through it so that you can avoid any confusion.
+
+![i](https://itsfoss.com/content/images/2023/07/Create-Windows-bootable-drive-with-ventoy.gif)
+
+So, now if you will boot from Ventoy, you will see a Windows ISO file. I went with Windows 10, so mine looks like this:
+
+![i](https://itsfoss.com/content/images/size/w1000/2023/07/Create-bootable-drive-of-Windows-using-Ventoy.png)
+
+Once you press enter, you will see a little different boot menu compared to what it displayed with Linux distros on the flash drive:
+
+![i](https://itsfoss.com/content/images/size/w1000/2023/07/Booting-up-Windows-from-Ventoy-in-Linux.png)
+
+If you notice carefully, it added Boot in wimboot mode an option.
+
+First, try with the normal mode and if it does not work, use the wimboot mode.
+
+## Use multiple Linux distros in a single USB
+
+To use the multiple distros on a single USB, all you have to do is copy multiple ISO files in the Ventoy disk drive:
+
+![i](https://itsfoss.com/content/images/2023/07/Use-multiple-distros-in-Ventoy.gif)
+
+Yes. It's that simple. Want more details? This detailed article will help you with that.
+
+## Use Linux and Windows ISOs in the same USB
+
+By far this is the most realistic implementation where you can boot from Windows and your favorite Linux distros.
+
+The method remains the same. All you have to do is copy the Windows ISO and Linux ISO to Ventoy.
+
+Here, I have copied the ISO of LinuxMint and Windows, but you can do more as per the drive size:
+
+![e](https://itsfoss.com/content/images/2023/08/Copy-Linux-and-Windows-ISO-to-Ventoy.gif)
+
+Once done, you boot from Ventoy and you'd see ISO of Windows ISO and Linux:
+
+![i](https://itsfoss.com/content/images/size/w1000/2023/08/Boot-from-Windows-and-Linux-ISOs-in-Ventoy.png)
+
+And there you have it!
+
+## Wrapping Up
+
+I've been using Ventoy for the past two years and I can't recall any situation where it backfired! It works like a charm. Some people, like my colleague Ankush, prefer Etcher for creating live USBs. That too is a good tool but I prefer Ventoy.
+
+But I'm curious to know how you utilize Ventoy and your experiences 🤔
