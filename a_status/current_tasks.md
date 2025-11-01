@@ -43,6 +43,10 @@ replication happens every 30 minutes.
 
 Jira is a project management and issue-tracking tool used by teams, especially in software development, to plan, track, and manage their work. It helps teams organize projects, track bugs and issues, and streamline their workflows through customizable boards like Kanban and Scrum, allowing them to manage tasks and monitor progress from start to finish.
 
+Many modern project management and development tools are designed to run in containerized environments:
+GitLab: A popular option that combines project management, source code management, and CI/CD pipelines and offers extensive documentation for Kubernetes deployment.
+Redmine / Jira: Self-hosted instances of these tools can be containerized and deployed on K8s, often with community-maintained Helm charts available.
+
 ## Deploy Charmed K8s and gitlab
 
 ## Next
