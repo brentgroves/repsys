@@ -49,6 +49,11 @@ Redmine / Jira: Self-hosted instances of these tools can be containerized and de
 
 ## Deploy Charmed K8s and gitlab
 
+### Oil adds
+
+- copy user friendly excel into data lake oam folder
+- notebook transforms excel to easily digestable csv file format and copies rows into datalake oam table
+
 ## Next
 
 cannon eos rebel t3/1100d
