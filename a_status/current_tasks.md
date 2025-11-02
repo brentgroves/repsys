@@ -20,24 +20,14 @@ Aleksandar Gavrilov, IT Administrator, Skopje
 
 ## **[jupyter lab](https://jupyter.org/try-jupyter/lab/)**
 
-## MFA Authentication
+## Reporting Work Flow
 
-Authentication and
+Meeting for get data.
 
-- Entra Admin unit
-OU in Active Directory
-Management Responsibility
-group owners are going to manage membership
-- Authentication administrator role
-- Entra portal access
-- disable accounts
-replication happens every 30 minutes.
-- can see deleted users
-- see roles, groups, cloud groups, active directory groups
-- see user licenses
-- Power BI report is 24 hours behind.
-- Reset MFA for users. Too much work for corporate
-- Reset password
+1. model
+2. get data
+    - notebooks
+    - pipeline
 
 ## Task Management
 
