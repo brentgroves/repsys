@@ -1,5 +1,9 @@
 # **[Design MICROSOFT FABRIC Data Project with Medallion Architecture | Lakehouse + Spark + Power BI](https://www.youtube.com/watch?v=qG65DUcSjws)**
 
+## next
+
+29m52s
+
 ## code
 
 - **[](https://github.com/nextgendatahub/MedallionLakehouseFabric)**
