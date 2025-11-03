@@ -8,6 +8,10 @@ Happy Friday! I can setup the Serial device server and help configure the Marpos
 Thanks,
 Brent
 
+## Tasks
+
+- Set up serial device server on research11 with server VLAN IP.
+
 ## Oct 30 Meeting
 
 - meeting with Marposs techical support.

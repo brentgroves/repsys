@@ -22,6 +22,13 @@ created by databricks now industry standard
 
 - ![med](https://blog.bismart.com/hs-fs/hubfs/Arquitectura_Medallion_Pasos.jpg?width=1754&height=656&name=Arquitectura_Medallion_Pasos.jpg)
 
+## raw data
+
+`https://raw.githubusercontent.com/nextgendatahub/MedallionLakehouseFabric/refs/heads/main/ShoppingMart_StructuredMetaData.json`
+`refs/heads/main/ShoppingMart_StructuredMetaData.json`
+`https://raw.githubusercontent.com/nextgendatahub/MedallionLakehouseFabric/refs/heads/main/ShoppingMart_StructuredData/Orders_Data.csv`
+`https://raw.githubusercontent.com/nextgendatahub/MedallionLakehouseFabric/refs/heads/main/ShoppingMart_StructuredData/products.csv`
+
 ## ShoppingMartAnalytics Workspace
 
 - select medallion task flow
