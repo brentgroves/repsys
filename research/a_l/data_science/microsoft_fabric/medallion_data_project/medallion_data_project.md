@@ -2,7 +2,7 @@
 
 ## next
 
-29m52s
+55m26s
 
 ## code
 
@@ -28,6 +28,7 @@ created by databricks now industry standard
 
 ## raw data
 
+OrderID,OrderDate,CustomerID,ProductID,Quantity,TotalAmount,PaymentMethod
 `https://raw.githubusercontent.com/nextgendatahub/MedallionLakehouseFabric/refs/heads/main/ShoppingMart_StructuredMetaData.json`
 `refs/heads/main/ShoppingMart_StructuredMetaData.json`
 `https://raw.githubusercontent.com/nextgendatahub/MedallionLakehouseFabric/refs/heads/main/ShoppingMart_StructuredData/Orders_Data.csv`
