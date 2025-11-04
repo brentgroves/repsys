@@ -20,6 +20,8 @@ Aleksandar Gavrilov, IT Administrator, Skopje
 
 ## **[jupyter lab](https://jupyter.org/try-jupyter/lab/)**
 
+## **[dell usb install](https://www.youtube.com/watch?v=r-LcJ0OHYsI)**
+
 ## Reporting Work Flow
 
 Meeting for get data.
