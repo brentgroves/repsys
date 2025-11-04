@@ -41,8 +41,15 @@ Redmine / Jira: Self-hosted instances of these tools can be containerized and de
 
 ## Deploy Charmed K8s and gitlab
 
-### Oil adds
+## Dimensional Gage - Marposs
 
+- It is constantly being used. Need one to work on.
+
+## Oil adds
+
+- Medallian layer tutorial at silver layer parquet file.
+- Need to install Fabric Gateway to access Plex from Fabric.
+- made parquet file from csv using pyspark.
 - copy user friendly excel into data lake oam folder
 - notebook transforms excel to easily digestable csv file format and copies rows into datalake oam table
 
