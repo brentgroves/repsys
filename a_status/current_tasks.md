@@ -41,6 +41,10 @@ Redmine / Jira: Self-hosted instances of these tools can be containerized and de
 
 ## Deploy Charmed K8s and gitlab
 
+## Hearing test
+
+- Nov 14th, at Avilla @ 4:20pm
+
 ## Dimensional Gage - Marposs
 
 - It is constantly being used. Need one to work on.
