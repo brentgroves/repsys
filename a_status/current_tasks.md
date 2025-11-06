@@ -22,7 +22,11 @@ Aleksandar Gavrilov, IT Administrator, Skopje
 
 ## moxa
 
+- get docs for gauge.
+
 - <https://stackoverflow.com/questions/26803825/python-read-serial-rs-232-data-over-tcp-ip>
+
+<https://github.com/mdavidsaver/nport-toys>
 
 ```python
 from pymodbus.client import ModbusTcpClient
