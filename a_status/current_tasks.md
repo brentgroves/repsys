@@ -68,6 +68,8 @@ Meeting for get data.
     - notebooks
     - pipeline
 
+Hi Cody. Sorry for the delay in responding. I am currently working on a Fabric/PowerBI/datalake workflow from a video describing the medallion bronze/silver/gold process and will record these steps for anyone interested. The plan is to use the process for making Plex reports. After the process is complete will install a Fabric Gateway and connect to Plex using ODBC from this Windows 22 server. I apologize for the delay and will keep you posted. **[Design MICROSOFT FABRIC Data Project with Medallion Architecture | Lakehouse + Spark + Power BI](https://www.youtube.com/watch?v=qG65DUcSjws)**
+
 ## Task Management
 
 Jira is a project management and issue-tracking tool used by teams, especially in software development, to plan, track, and manage their work. It helps teams organize projects, track bugs and issues, and streamline their workflows through customizable boards like Kanban and Scrum, allowing them to manage tasks and monitor progress from start to finish.

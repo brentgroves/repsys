@@ -321,6 +321,7 @@ The last thing we need to do is add the install media Itself and make it a boot 
 
 ```bash
 lxc config device add win11 install disk source=/home/brent/Downloads/win11.lxd.iso boot.priority=10
+lxc config show win11 --expanded
 ```
 
 ⓘReplace /home/mionaalex/Downloads/ with your own path to the repackaged file

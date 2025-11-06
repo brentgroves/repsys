@@ -2,7 +2,7 @@
 
 ## next
 
-55m26s
+1h00
 
 ## code
 
@@ -33,6 +33,10 @@ OrderID,OrderDate,CustomerID,ProductID,Quantity,TotalAmount,PaymentMethod
 `refs/heads/main/ShoppingMart_StructuredMetaData.json`
 `https://raw.githubusercontent.com/nextgendatahub/MedallionLakehouseFabric/refs/heads/main/ShoppingMart_StructuredData/Orders_Data.csv`
 `https://raw.githubusercontent.com/nextgendatahub/MedallionLakehouseFabric/refs/heads/main/ShoppingMart_StructuredData/products.csv`
+
+## Silver layer
+
+- insert bronze layer raw data into parquet file
 
 ## ShoppingMartAnalytics Workspace
 
