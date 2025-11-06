@@ -20,7 +20,38 @@ Aleksandar Gavrilov, IT Administrator, Skopje
 
 ## **[jupyter lab](https://jupyter.org/try-jupyter/lab/)**
 
-## **[backup cd/dvd to iso](https://www.youtube.com/watch?v=ZSsxaL5ZzJE)**
+## moxa
+
+- <https://stackoverflow.com/questions/26803825/python-read-serial-rs-232-data-over-tcp-ip>
+
+```python
+from pymodbus.client import ModbusTcpClient
+
+# Configure the client with the Moxa device's IP address and Modbus port (default is 502)
+client = ModbusTcpClient('MOXA_IP_ADDRESS', port=502)
+
+# Connect to the Moxa device
+if client.connect():
+    print("Connected to Moxa device via Modbus/TCP")
+
+    # Example: Read holding registers (adjust address and count as per your device's Modbus map)
+    result = client.read_holding_registers(address=0x00, count=10, unit=1) # unit is often 1 for Modbus/TCP gateways
+
+    if not result.isError():
+        print(f"Read registers: {result.registers}")
+    else:
+        print(f"Error reading registers: {result}")
+
+    # Example: Write a single coil (adjust address and value as needed)
+    # client.write_coil(address=0x00, value=True, unit=1)
+
+    # Close the connection
+    client.close()
+else:
+    print("Failed to connect to Moxa device")
+```
+
+- **[backup cd/dvd to iso](https://www.youtube.com/watch?v=ZSsxaL5ZzJE)**
 
 ## **[dell usb install](https://www.youtube.com/watch?v=r-LcJ0OHYsI)**
 
