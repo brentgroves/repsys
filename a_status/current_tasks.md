@@ -20,6 +20,8 @@ Aleksandar Gavrilov, IT Administrator, Skopje
 
 ## **[jupyter lab](https://jupyter.org/try-jupyter/lab/)**
 
+## **[backup cd/dvd to iso](https://www.youtube.com/watch?v=ZSsxaL5ZzJE)**
+
 ## **[dell usb install](https://www.youtube.com/watch?v=r-LcJ0OHYsI)**
 
 ## Reporting Work Flow
