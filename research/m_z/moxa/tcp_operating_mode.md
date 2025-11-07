@@ -3,32 +3,31 @@
 ## Serial Device Server
 
 ```yaml
-ip: 10.188.74.11
-gw: 10.188.74.254
-ns: none
-mask: 255.255.255.0
-admin:admin
-moxa:moxa
-servername: NPP5150A_9693
-
-
+admin: admin
+moxa: moxa
 IP address: 10.188.74.11
-Netmask: 255.255.252.0
+Netmask: 255.255.255.0
 Gateway: 10.188.74.254
 IP configuration: Static
 DNS server 1: 10.225.50.203
 DNS server 2: 10.224.50.203
-
-
 Model: NPort P5150A
 Name: NPP5150A_9693
 Serial NO.: 9693
 Firmware 1.5 Build: 19032122
 IP: 10.188.74.11
-Mac Address" 00:90:E8:85:C7:B3
+Mac Address: 00:90:E8:85:C7:B3
 Up Time: 0 days 00h:02m:46s
 Serial Port 1: 9600,None,8,1
+```
 
+## IP Address Report
+
+```yaml
+Auto report to UDP port: 4002
+Auto report period: 10 (0~99 secs)
+LLDP Settings: enabled
+Message Transmit Interval: 30 (5~32768 secs)
 ```
 
 ```yaml
@@ -36,9 +35,33 @@ Baud Rate: 9600
 Data Bits: 8
 Stop Bits: 1 
 Parity: none
-Flow Control: XON/XOFF
+Flow Control: XON/XOFF - rts/cts (hardware flow control is recommended)
 Fifo: enabled
 interface: rs-232
+```
+
+## tcp server mode
+
+```yaml
+Operation mode: TCP Server
+TCP alive check time: 7 (0 - 99 min)
+Inactivity time: 0 (0 - 65535 ms)
+Max connection: 2 (1 - 8)
+Ignore jammed IP: No
+Allow driver control: No
+Local TCP port: 4065
+Command port: 966
+```
+
+Data Packing
+
+```yaml
+Packing length: 0 (0 - 1024)
+Delimiter 1: 00 (Hex)  not Enabled
+Delimiter 2: 00 (Hex)  not Enabled
+Delimiter process 
+Do Nothing:  (Processed only when packing length is 0)
+Force transmit: 0 (0 - 65535 ms)
 ```
 
 ## udp
