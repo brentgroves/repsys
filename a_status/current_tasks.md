@@ -61,6 +61,10 @@ else:
 
 ## Reporting Work Flow
 
+Use the easily updated "Oil adds to Machines.xlsx" spreadsheet which has one row with machine/oil_type/line and oil quantity for each day of the month to update the Structures OAM data lake table with a PySpark notebook.
+
+Secondary goal: Document the Fabric/PowerBI/Datalake process and record it for the team.
+
 Meeting for get data.
 
 1. model
