@@ -20,7 +20,29 @@ Aleksandar Gavrilov, IT Administrator, Skopje
 
 ## **[jupyter lab](https://jupyter.org/try-jupyter/lab/)**
 
-## moxa
+## fabric gateway
+
+- reboot micro13
+- lxd forwarder ton wins22
+- connect to Plex from wins22
+- create chat or email group to keep team informed
+- Southfield, Cody Hudson, and other Plex reports.
+
+## moxa serial device server
+
+- udp
+  - udp mode broadcasts to multiple ips
+  - no connections/faster/less error prone
+- tcp
+  - tcp mode allows multiple connections upto 8
+  - connections made/slower/more error prone
+- KepServerEx - OPC UA data points
+  - create udp/tcp connection to moxa serial device server for trouble shooting
+  - OPC UA ensures secure data exchange through encryption and certificate-based authentication, protecting the data as it travels from KEPServerEX to the client.
+- Mach2
+  - could connect to KepServerEx OCP UA data point or directly to Moxa Serial device server via a socket.
+- Python
+the ip address will be 10.188.74.11 but we must wait for corporate to setup vlan and Jared to configure edge switch
 
 - get docs for gauge.
 
