@@ -20,6 +20,10 @@ Aleksandar Gavrilov, IT Administrator, Skopje
 
 ## **[jupyter lab](https://jupyter.org/try-jupyter/lab/)**
 
+## carl
+
+- swap vehicles for a night
+
 ## fabric gateway
 
 - reboot micro13
@@ -46,7 +50,7 @@ Aleksandar Gavrilov, IT Administrator, Skopje
 - Python
   - use for testing
   - could also install on gauge and send records of file through serial port with pyserial.
-  
+
 the ip address will be 10.188.74.11 but we must wait for corporate to setup vlan and Jared to configure edge switch
 
 - get docs for gauge.
