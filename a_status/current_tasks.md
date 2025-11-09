@@ -30,6 +30,8 @@ Aleksandar Gavrilov, IT Administrator, Skopje
 
 ## moxa serial device server
 
+- db9 serial cable from gauge to moxa
+- POE network cable to cell
 - udp
   - udp mode broadcasts to multiple ips
   - no connections/faster/less error prone
