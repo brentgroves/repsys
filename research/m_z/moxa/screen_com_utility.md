@@ -63,11 +63,9 @@ You can now type into the terminal to send data or read output from the connecte
 
 To exit screen, press Ctrl+a, then press k, and then y when prompted to kill the session.
 
-```
-
 ## Step 4: Troubleshooting Permissions
 
-If you receive a "Permission denied" error, your user account likely needs to be added to the dialout group to access serial ports. 
+If you receive a "Permission denied" error, your user account likely needs to be added to the dialout group to access serial ports.
 Add your user to the dialout group:
 
 ```bash
