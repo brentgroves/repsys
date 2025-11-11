@@ -150,3 +150,12 @@ For example:
 ```bash
 tcpdump -vv -i eth0
 ```
+
+##
+
+<!-- tcpdump -i eth0 -n 'dst host <server_ip> and src host <your_ip> and tcp and src port <server_port> and dst port <your_port>' -->
+
+tcpdump -n 'dst host 10.188.50.254'
+tcpdump -n 'src host 10.188.40.252'
+
+tcpdump -n 'src host 10.188.40.252 and dst host 10.188.50.254'
