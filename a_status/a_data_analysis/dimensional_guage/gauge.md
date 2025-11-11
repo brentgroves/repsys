@@ -8,6 +8,48 @@ Happy Friday! I can setup the Serial device server and help configure the Marpos
 Thanks,
 Brent
 
+Status:
+
+The serial device server is now running on socket 10.188.74.11/4065.  Thank you Jared for creating the VLAN!
+
+Currently, it is connected to a computer and not a gauge.  A program is sending a number from 1 to 10 every 2 seconds.
+
+Next I need to configure Merlin with qualities help.
+
+We also will need another network drop for the long term but we could test with the one that is there already.
+
+Thank you Carl for ordering a db9 F/F cable!
+
+- A new VLAN is being created for JT Fronts
+- After VLAN has been created the edge switches need to be configured for it.
+- The Moxa serial device server has an IP of 10.188.74.11 and is being tested from Avilla IT office using a test switch not connected to the network.
+- Need time on the Marposs gauge with quality eng/tech.
+
+Choices:
+
+1. Do we use Moxa serial device server in UDP/TCP server mode
+
+    - UDP
+      - Moxa UDP mode broadcasts to multiple IPs
+      - connectionless/faster
+      - less phone calls
+      - Don't know if Mach2 can listen for UDP datagrams on a specific socket.
+    - TCP
+      - Moxa TCP mode allows multiple connections upto 8
+      - connections made/slower
+      - if connection is lost someone may have to intervene or reset something.
+
+2. Should we connect Mach2 to KepServerEx OCP UA data point or directly to Moxa serial device server via a socket.
+
+## KepServerEx - OPC UA data points
+
+- create UDP/TCP listener/connection to moxa serial device server for trouble shooting
+- Using OPC UA ensures secure data exchange through encryption and certificate-based authentication, protecting the data as it travels from KEPServerEX to Mach2.
+
+## Trouble Shooting
+
+No matter how Mach2 connects, UDP/TCP, to the Moxa serial device server we could also connect to it from KepServerEx so we can have an OPC UA data point available to monitor the Moxa serial device server and Marposs gauge independantly from Mach2. KepServerEx can listen for UDP datagrams on a socket so that is not an issue with it.
+
 ## Tasks
 
 - Set up serial device server on research11 with server VLAN IP.
