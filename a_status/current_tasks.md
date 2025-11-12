@@ -32,6 +32,10 @@ Aleksandar Gavrilov, IT Administrator, Skopje
 - create chat or email group to keep team informed
 - Southfield, Cody Hudson, and other Plex reports.
 
+## Corporate IT Data Team
+
+I wanted to share an update on the recent issue we encountered in Fabric related to latency during Lakehouse-to-SQL Endpoint synchronization, along with the steps we’ve taken so far.
+
 ## moxa serial device server
 
 - db9 serial cable from gauge to moxa
@@ -58,33 +62,6 @@ the ip address will be 10.188.74.11 but we must wait for corporate to setup vlan
 - <https://stackoverflow.com/questions/26803825/python-read-serial-rs-232-data-over-tcp-ip>
 
 <https://github.com/mdavidsaver/nport-toys>
-
-```python
-from pymodbus.client import ModbusTcpClient
-
-# Configure the client with the Moxa device's IP address and Modbus port (default is 502)
-client = ModbusTcpClient('MOXA_IP_ADDRESS', port=502)
-
-# Connect to the Moxa device
-if client.connect():
-    print("Connected to Moxa device via Modbus/TCP")
-
-    # Example: Read holding registers (adjust address and count as per your device's Modbus map)
-    result = client.read_holding_registers(address=0x00, count=10, unit=1) # unit is often 1 for Modbus/TCP gateways
-
-    if not result.isError():
-        print(f"Read registers: {result.registers}")
-    else:
-        print(f"Error reading registers: {result}")
-
-    # Example: Write a single coil (adjust address and value as needed)
-    # client.write_coil(address=0x00, value=True, unit=1)
-
-    # Close the connection
-    client.close()
-else:
-    print("Failed to connect to Moxa device")
-```
 
 - **[backup cd/dvd to iso](https://www.youtube.com/watch?v=ZSsxaL5ZzJE)**
 
