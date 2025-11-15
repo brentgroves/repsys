@@ -2,6 +2,8 @@
 
 ## next
 
+- **[medallion lakehouse](https://www.youtube.com/watch?v=bSJWR5CFwmU)**
+
 1h00
 
 ## code
