@@ -20,9 +20,35 @@ Aleksandar Gavrilov, IT Administrator, Skopje
 
 ## **[jupyter lab](https://jupyter.org/try-jupyter/lab/)**
 
-## carl
+## **[web assembly tutorial](https://marcoselvatici.github.io/WASM_tutorial/)**
 
-- swap vehicles for a night
+## **[authentik](https://goauthentik.io/)**
+
+A self-hosted, open source identity provider means prioritizing security and taking control of your most sensitive data.
+
+## **[eBPF Documentation](https://ebpf.io/what-is-ebpf/)**
+
+eBPF is a revolutionary technology with origins in the Linux kernel that can run sandboxed programs in a privileged context such as the operating system kernel. It is used to safely and efficiently extend the capabilities of the kernel without requiring to change kernel source code or load kernel modules.
+
+### Service Mesh Features, Without the Sidecars
+
+When people talk about a service mesh like Istio or Linkerd, they usually mean:
+
+- mTLS for encrypting service-to-service traffic
+- Traffic routing for canary or blue-green deployments
+- Detailed observability of service calls
+
+Traditionally, this requires sidecars (tiny proxies in every pod), which add complexity and overhead. Cilium does it differently. Using eBPF in the kernel, it delivers:
+
+- Built-in mTLS
+- L7-aware traffic routing (e.g., “send 20% of /checkout to v2”).
+- Hubble-powered observability.
+
+## Multi-Cluster Networking with ClusterMesh
+
+One of **Cilium’s** most powerful features is how easily it connects multiple clusters, as if they were one.
+
+Want your homelab to talk to your cloud Kubernetes cluster? No VPNs. No DNS hacks. Just seamless pod-to-pod communication.
 
 ## fabric gateway
 
