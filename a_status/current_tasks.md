@@ -22,6 +22,8 @@ Aleksandar Gavrilov, IT Administrator, Skopje
 
 ## **[web assembly tutorial](https://marcoselvatici.github.io/WASM_tutorial/)**
 
+## **[charmed k8s install](../k8s/charmed_k8s/charmed_k8s.md)**
+
 ## **[authentik](https://goauthentik.io/)**
 
 A self-hosted, open source identity provider means prioritizing security and taking control of your most sensitive data.
