@@ -14,6 +14,8 @@ from pandas.tseries.offsets import MonthEnd
 import datetime as sldt # dt.date = pandas...timestamp.date
 # import datetime # works for datetime.date()
 # from datetime import date # works for date()
+from collections import defaultdict
+
 
 def get_row(df,row):
   print(f"row->{df.iloc[row]}")
@@ -79,7 +81,7 @@ def day_of_month_quantity(df: pd.DataFrame, daily_dates: pd.DatetimeIndex):
   print(f"{month_name} {year} Total: {tot}")
   # print(f"{daily_dates[0].month_name} {daily_dates[0].year} Total: {tot}")
 
-def machine_oil_quantity(df: pd.DataFrame, row: int, daily_dates: pd.DatetimeIndex):
+def machine_oil_quantity(df: pd.DataFrame, row: int, daily_dates: pd.DatetimeIndex)->pd.DataFrame:
   print(f"days of month with values")
   # get_row_col(df,1,3)
   # row=2
@@ -88,12 +90,35 @@ def machine_oil_quantity(df: pd.DataFrame, row: int, daily_dates: pd.DatetimeInd
   line_id=get_row_col(df,row,2)
   machine_id=get_row_col(df,row,0)
   oil_type=get_row_col(df,row,1)
+  # data = {'date': day.strftime("%Y-%m-%d"),
+  #         'machine': machine_id,
+  #         'oil_type': oil_type,
+  #         'line_id': line_id,
+  #         'value': value}
+
+  my_dict_of_lists = defaultdict(list)
 
   for day in daily_dates:
       value=get_row_col(df,row,col)
       tot+=value
-      print(f"date:{day.strftime("%Y-%m-%d")},machine_id:{machine_id},oil_type:{oil_type},line_id:{line_id},col={col},value={value}")
+      # print(f"date:{day.strftime("%Y-%m-%d")},machine_id:{machine_id},oil_type:{oil_type},line_id:{line_id},col={col},value={value}")
+      my_dict_of_lists["date"].append(day.strftime("%Y-%m-%d"))
+      my_dict_of_lists["machine"].append(machine_id)
+      my_dict_of_lists["oil_type"].append(oil_type)
+      my_dict_of_lists["line_id"].append(line_id)
+      my_dict_of_lists["value"].append(value)
       col+=1
+
+  # for category, items_list in my_dict_of_lists.items():
+  #     print(f"Category: {category}")
+  #     for item in items_list:
+  #         print(f"  - {item}")
+
+  # Create DataFrame
+
+  df = pd.DataFrame(my_dict_of_lists)
+  # print(df)
+
   # Get the month names from the DatetimeIndex
   month_name = daily_dates[1].month_name()
   # print("\nMonth name from DatetimeIndex:")
@@ -101,6 +126,7 @@ def machine_oil_quantity(df: pd.DataFrame, row: int, daily_dates: pd.DatetimeInd
   year = daily_dates[1].year    
   print(f"{month_name} {year} Total: {tot}")
   # print(f"{daily_dates[0].month_name} {daily_dates[0].year} Total: {tot}")
+  return df
 
 def main():
     # Your main program logic goes here
@@ -114,7 +140,10 @@ def main():
 
     # # day_of_month_quantity(df,daily_dates)
     row=2
-    machine_oil_quantity(df,row,daily_dates)
+    new_df = machine_oil_quantity(df,row,daily_dates)
+    new_df.to_csv('output.csv', index=False,header=True)
+    new_df = pd.read_csv('output.csv')
+    print(new_df)
 
 if __name__ == "__main__":
     main()
