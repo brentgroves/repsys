@@ -18,15 +18,14 @@ Carl Stangland, Desktop and System Support Technician, Indiana
 Lucas Tuma, IT Administrator, Strakonice
 Aleksandar Gavrilov, IT Administrator, Skopje
 
-## **[jupyter lab](https://jupyter.org/try-jupyter/lab/)**
+-
+- **[jupyter lab](https://jupyter.org/try-jupyter/lab/)**
 
-## **[web assembly tutorial](https://marcoselvatici.github.io/WASM_tutorial/)**
+- **[web assembly tutorial](https://marcoselvatici.github.io/WASM_tutorial/)**
 
-## **[charmed k8s install](../k8s/charmed_k8s/charmed_k8s.md)**
+- **[charmed k8s install](../k8s/charmed_k8s/charmed_k8s.md)**
 
-## **[authentik](https://goauthentik.io/)**
-
-A self-hosted, open source identity provider means prioritizing security and taking control of your most sensitive data.
+- **[Graph Theory](../research/a_l/computer_science/data_structures/graph_theory/w3schools/graphs.md)**
 
 ## **[eBPF Documentation](https://ebpf.io/what-is-ebpf/)**
 
@@ -51,6 +50,11 @@ Traditionally, this requires sidecars (tiny proxies in every pod), which add com
 One of **Cilium’s** most powerful features is how easily it connects multiple clusters, as if they were one.
 
 Want your homelab to talk to your cloud Kubernetes cluster? No VPNs. No DNS hacks. Just seamless pod-to-pod communication.
+
+## Fabric Medallion Workflow
+
+- finished Bronze Layer and starting Silver Layer
+- receiving approval Fabric approval requests from Structures employees
 
 ## fabric gateway
 

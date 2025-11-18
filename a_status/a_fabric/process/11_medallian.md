@@ -1,11 +1,18 @@
-# Create Fabric Org App to run Oil Adds Machine report
+# Structures Microsoft Fabric Workflow Status
 
-Ricardo,
-This is my first time to use the Linamar Fabric workspace Org App feature to publish a Power BI report with a data lake data source, so please bear with me. I will keep you posted as to my progress.
+Hi Team,
+This is Structures Information Systems first time to use the Linamar Fabric workspace Org App feature to publish Power BI reports with a data lake data source, so please bear with us.
+
+We noticed that requests are coming in for access appoval for the Structures Fabric workspace. We will start approving these requests when we finish creating the Fabric/PowerBI/Datalake process.
+
+We will keep you posted as to our progress. Thank you for your patience.
+
+Brent
+Structures - Information Systems
 
 The following is in markdown format and can be viewed by copying and pasting the contents below into an online markdown viewer, such as at <https://markdownlivepreview.com/>.
 
-## Goal
+## Goals
 
 Use the easily updated "Oil adds to Machines.xlsx" spreadsheet which has one row with machine/oil_type/line and oil quantity for each day of the month to update the Structures OAM data lake table with a PySpark notebook.
 
@@ -59,3 +66,5 @@ Further clean and refine silver layer data.
 - Katerina Lallouet, HR Manager, Corporate
 - Vicente Ontiveros, Director, Program Management
 Engineering, McLaren
+- Jose Pardo, Maintainence Manager
+- Mikael Boire, Operation Manager

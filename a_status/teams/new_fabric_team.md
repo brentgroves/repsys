@@ -1,12 +1,6 @@
-## team
+# team
 
-- Kristian Smith: Global Directory IT
 - Tarek Mohamed, IT Supervisor - Data & Analytics
-- Adrian Wise: System Admin, Technical Services Manager.
-- Brent Hall, System Administrator Senior
-- Ramarao Guttikonda, Senior System Administrator
-- Deza Birhan - Senior Database Administrator
-- Aamir Ghaffar: IT Systems Architect
 - Christian Trujillo, IT Structures Manager
 - Kevin Young, Information Systems Manager
 - Jared Davis, IT Manager
@@ -18,3 +12,10 @@
 - Jared Eikenberry, Quality Engineer, Fruitport
 - Carl Stangland, Desktop and System Support Technician, Indiana
 - Ricardo Baca, Sr. Manufacturing Engineer
+- Beth Schaus, Accounting Finance
+- Cody Hudson, Accounting Associate
+- Katerina Lallouet, HR Manager, Corporate
+- Vicente Ontiveros, Director, Program Management
+Engineering, McLaren
+- Jose Pardo, Maintainence Manager
+- Mikael Boire, Operation Manager
