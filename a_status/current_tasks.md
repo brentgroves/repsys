@@ -18,14 +18,15 @@ Carl Stangland, Desktop and System Support Technician, Indiana
 Lucas Tuma, IT Administrator, Strakonice
 Aleksandar Gavrilov, IT Administrator, Skopje
 
--
+- **[Process Capability Analysis Cp, Cpk, Pp, Ppk - A Guide](https://www.1factory.com/quality-academy/guide-process-capability.html)**
+
 - **[jupyter lab](https://jupyter.org/try-jupyter/lab/)**
 
 - **[web assembly tutorial](https://marcoselvatici.github.io/WASM_tutorial/)**
 
 - **[charmed k8s install](../k8s/charmed_k8s/charmed_k8s.md)**
 
-- **[Graph Theory](../research/a_l/computer_science/data_structures/graph_theory/w3schools/graphs.md)**
+- **[Graph Theory](../research/a_l/computer_science/data_structures/graph_theory/geeksforgeeks/adjacency_list.md)**
 
 ## **[eBPF Documentation](https://ebpf.io/what-is-ebpf/)**
 
