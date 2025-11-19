@@ -18,6 +18,8 @@ Use the easily updated "Oil adds to Machines.xlsx" spreadsheet which has one row
 
 Secondary goal: Document the Fabric/PowerBI/Datalake process and record it for the team.
 
+![i](https://res.cloudinary.com/dwwq4fbhq/image/upload/v1761677540/powerbi_workflow_qpbrid.jpg)
+
 ## **[Design MICROSOFT FABRIC Data Project with Medallion Architecture | Lakehouse + Spark + Power BI](https://www.youtube.com/watch?v=qG65DUcSjws)**
 
 The next step in the medallion process is to convert the CSV file to a parquet file.
@@ -68,3 +70,8 @@ Further clean and refine silver layer data.
 Engineering, McLaren
 - Jose Pardo, Maintainence Manager
 - Mikael Boire, Operation Manager
+- Ron James, Quality Manager, Quality
+- Pat Baxter, General Manager
+- Michael Percell, Manufacturing Engineering Manager
+- Jami Pyle, MP&L Manager
+- Nancy Swank, Material Planner
