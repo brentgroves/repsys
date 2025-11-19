@@ -18,8 +18,6 @@ Carl Stangland, Desktop and System Support Technician, Indiana
 Lucas Tuma, IT Administrator, Strakonice
 Aleksandar Gavrilov, IT Administrator, Skopje
 
-- **[Process Capability Analysis Cp, Cpk, Pp, Ppk - A Guide](https://www.1factory.com/quality-academy/guide-process-capability.html)**
-
 - **[jupyter lab](https://jupyter.org/try-jupyter/lab/)**
 
 - **[web assembly tutorial](https://marcoselvatici.github.io/WASM_tutorial/)**
@@ -59,8 +57,7 @@ Want your homelab to talk to your cloud Kubernetes cluster? No VPNs. No DNS hack
 
 ## fabric gateway
 
-- reboot micro13
-- lxd forwarder ton wins22
+- **[lxd forwarder](../research/m_z/virtualization/hypervisor/lxd/network/forwarders.md)** to wins22
 - connect to Plex from wins22
 - create chat or email group to keep team informed
 - Southfield, Cody Hudson, and other Plex reports.
@@ -69,7 +66,26 @@ Want your homelab to talk to your cloud Kubernetes cluster? No VPNs. No DNS hack
 
 I wanted to share an update on the recent issue we encountered in Fabric related to latency during Lakehouse-to-SQL Endpoint synchronization, along with the steps we’ve taken so far.
 
-## moxa serial device server
+## Marposs gage project
+
+- Marposs coming down soon to help
+- Serial device server configured
+- JT Front VLAN created
+- Switch ports for JT Front VLAN configured
+- 1 Cable ran probably need 2
+- Data import to minitab for CPK and PPK
+Basically, what I need from you is a way to capture the data and and put it in a run chart.  
+It would be great if the data and chart could show 30 day CPK and 90 day PPK.
+
+- **[Process Capability Analysis Cp, Cpk, Pp, Ppk - A Guide](https://www.1factory.com/quality-academy/guide-process-capability.html)**
+
+Hi Ron,
+I know you have minitab but we could probably add the data from the gage to our Structures datalake, make these calcs in python, and present it in a Power BI report. Here's how **[A Comprehensive Guide to Performing Capability Analysis in Python](https://medium.com/@chenchungwai/a-comprehensive-guide-to-performing-capability-analysis-in-python-e46ac74a69b5)**
+
+Thanks
+Brent
+
+### moxa serial device server
 
 - db9 serial cable from gauge to moxa
 - POE network cable to cell
