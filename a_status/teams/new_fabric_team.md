@@ -4,7 +4,6 @@
 - Christian Trujillo, IT Structures Manager
 - Kevin Young, Information Systems Manager
 - Jared Davis, IT Manager
-- Hayley Rymer, IT Supervisor, Mills River
 - Matthew Bump, Muscle Shoals, Engineering Supervisor II / IT
 - Angelina Shadder, Muscle Shoals, Cyber Securtity, Desktop and Systems Support Technician
 - Sam Jackson, Information Systems Developer, Southfield
@@ -19,3 +18,10 @@
 Engineering, McLaren
 - Jose Pardo, Maintainence Manager
 - Mikael Boire, Operation Manager
+- Ron James, Quality Manager, Quality
+- Pat Baxter, General Manager
+- Michael Percell, Manufacturing Engineering Manager
+- Jami Pyle, MP&L Manager
+- Nancy Swank, Material Planner
+- Erin Williams, Manufacturing Engineer, Engineering
+- April Sumner, Quality Engineer
