@@ -18,3 +18,8 @@
 - Ricardo Baca, Sr. Manufacturing Engineer
 - Beth Schaus, Accounting Finance
 - Cody Hudson, Accounting Associate
+- Ron James, Quality Manager, Quality
+- Pat Baxter, General Manager
+- Michael Percell, Manufacturing Engineering Manager
+- Jami Pyle, MP&L Manager
+- Nancy Swank, Material Planner

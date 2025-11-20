@@ -50,19 +50,26 @@ One of **Cilium’s** most powerful features is how easily it connects multiple 
 
 Want your homelab to talk to your cloud Kubernetes cluster? No VPNs. No DNS hacks. Just seamless pod-to-pod communication.
 
-## Fabric Medallion Workflow
+## Fabric/Power BI/Notebooks/Data Lake Medallion Workflow
 
-- finished Bronze Layer and starting Silver Layer
+- finished Bronze Layer and starting Silver Layer of Medallion Workflow
 - receiving approval Fabric approval requests from Structures employees
+- fabric gateway
+  - **[lxd forwarder](../research/m_z/virtualization/hypervisor/lxd/network/forwarders/forwarders.md)** to wins22
+  - connect to Plex from wins22
+  - create chat or email group to keep team informed
+  - Southfield, Cody Hudson, and other Plex reports.
 
-## fabric gateway
+## Marposs gage project
 
-- **[lxd forwarder](../research/m_z/virtualization/hypervisor/lxd/network/forwarders/forwarders.md)** to wins22
-<https://www.youtube.com/watch?v=B-Uzo9WldMs>
-
-- connect to Plex from wins22
-- create chat or email group to keep team informed
-- Southfield, Cody Hudson, and other Plex reports.
+- Marposs coming down soon to help
+- Serial device server configured
+- JT Front VLAN created
+- Switch ports for JT Front VLAN configured
+- 1 Network Cable ran probably need 2
+- Data import to Minitab for CPK and PPK.
+  - Instead of Minitab we can use a Fabric Notebook.
+  - **[Process Capability Analysis Cp, Cpk, Pp, Ppk - A Guide](https://www.1factory.com/quality-academy/guide-process-capability.html)**
 
 ## Corporate IT Data Team
 
