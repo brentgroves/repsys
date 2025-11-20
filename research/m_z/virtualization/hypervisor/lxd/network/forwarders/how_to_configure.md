@@ -15,20 +15,6 @@ I followed the tutorial Get started with MicroCloud (very helpful btw, thank you
 I’ve looked in the command cheat sheet at the “Expose an instance on an external IP” section. This doesn’t seem to work for me (is there a syntax error here?). Following the links to the documentation How to configure network forwards it seems like the syntax is different. Unfortunately, I still can’t get it working and I suspect this is due to something to do with routes and/or my lack of understanding. Here’s details on the cluster, what I’ve tried, and what errors I’m running into (thanks in advance for your time/help):
 
 ```bash
-lxc network ls
-
-+----------+----------+---------+-----------------+---------------------------+-------------+---------+---------+
-|   NAME   |   TYPE   | MANAGED |      IPV4       |           IPV6            | DESCRIPTION | USED BY |  STATE  |
-+----------+----------+---------+-----------------+---------------------------+-------------+---------+---------+
-| ens3     | physical | NO      |                 |                           |             | 0       |         |
-+----------+----------+---------+-----------------+---------------------------+-------------+---------+---------+
-| lxdbr0   | bridge   | YES     | 10.190.176.1/24 | fd42:acf7:f1d6:1d8b::1/64 |             | 4       | CREATED |
-+----------+----------+---------+-----------------+---------------------------+-------------+---------+---------+
-| microbr0 | bridge   | YES     | 10.38.122.1/24  | fd42:86ee:ffe1:1529::1/64 |             | 3       | CREATED |
-+----------+----------+---------+-----------------+---------------------------+-------------+---------+---------+
-```
-
-```bash
 lxc cluster ls
 
 +---------------+-----------------------------+-----------------+--------------+----------------+-------------+--------+-------------------+
@@ -187,6 +173,7 @@ So, I suspect I need to add a route or something like a **[routing relationship]
 
 From my MicroCloud set up
 
+```bash
 root@micro-node-01:~# microcloud init
 Waiting for LXD to start...
 Select an address for MicroCloud's internal traffic:
@@ -243,11 +230,14 @@ Awaiting cluster formation ...
  Peer "micro-node-03" has joined the cluster
 Configuring cluster-wide devices ...
 MicroCloud is ready
+```
+
 To me it seems like the range 10.38.122.100-10.38.122.254 would be my “floating-ips” and this is how I’d configure external access to my MicroCloud instances. Is this correct?
 
 I hope this is sufficient background/information. Please let me know if you need anything else.
 
-Questions
+## Questions
+
 Am I on the right track to configuring external access to instances?
 What am I missing or what are my misconcerptions?
 Is there a toy example I can follow to configure external access to one of the instances?
@@ -281,3 +271,32 @@ ipv4.routes: 10.188.50.207/32
 To me it seems like the range 10.38.122.100-10.38.122.254 would be my “floating-ips” and this is how I’d configure external access to my MicroCloud instances. Is this correct?
 
 LXD doesn’t support ranges for ipv4.routes, but you can use CIDR format to delegate an entire subnet for use by OVN networks.
+
+## create forward
+
+### external
+
+Now the ovn network is allowed to add a listener to UPLINK.
+
+```bash
+lxc network set UPLINK ipv4.routes=10.188.50.207/32
+lxc network show UPLINK
+lxc network forward create default 10.188.50.207
+lxc network show default
+```
+
+## internal
+
+Could not get this to work.
+
+```bash
+lxc network set UPLINK ipv4.routes=10.188.50.207/32,10.233.212.200/32
+lxc network show UPLINK
+lxc network forward create default 10.233.212.200
+lxc network forward ls default
+
+lxc network forward edit default 10.233.212.200
+lxc network forward show default 10.233.212.200
+```
+
+Configure static IPs for containers (if needed): If your containers have dynamic IPs, it's best to configure them with static IPs using lxc config device set <instance> ipv4.address=<ip_address> to ensure the forward always points to the correct instance.

@@ -59,6 +59,7 @@ Want your homelab to talk to your cloud Kubernetes cluster? No VPNs. No DNS hack
   - connect to Plex from wins22
   - create chat or email group to keep team informed
   - Southfield, Cody Hudson, and other Plex reports.
+<https://learn.microsoft.com/en-us/data-integration/gateway/service-gateway-install>
 
 ## Marposs gage project
 
