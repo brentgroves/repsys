@@ -1,5 +1,9 @@
 # **[Process Capability Analysis Cp, Cpk, Pp, Ppk - A Guide](https://www.1factory.com/quality-academy/guide-process-capability.html)**
 
+**[Python Process Capability Analysis (Cp & Cpk) | Normal Data](https://www.youtube.com/watch?v=YLn3YaMs4CQ)**
+
+**[Python programs in process capability Cp, Cpk, PPM, sigma level](https://www.youtube.com/watch?v=-HFs7Sd73o4)**
+
 ## 01. What is Process Capability Analysis?
 
 A process capability study uses data from an initial run of parts to predict whether a manufacturing process can repeatably produce parts that meet specifications.
@@ -33,7 +37,7 @@ Before we get into the detailed statistical calculations, let's review the high-
 
 **1: Plot the Data:** Record the measurement data, and plot this data on a run-chart and on a histogram as shown in the picture on the right.
 
-2: Calculate the Spec Width: Plot the Upper Spec Limit (USL) and Lower Spec Limit (LSL) on the histogram, and calculate the Spec Width as shown below.
+**2: Calculate the Spec Width:** Plot the Upper Spec Limit (USL) and Lower Spec Limit (LSL) on the histogram, and calculate the Spec Width as shown below.
 
 Spec Width = USL — LSL
 
