@@ -52,6 +52,8 @@ Want your homelab to talk to your cloud Kubernetes cluster? No VPNs. No DNS hack
 
 ## Fabric/Power BI/Notebooks/Data Lake Medallion Workflow
 
+- make config request for data gateway
+<https://www.youtube.com/watch?v=dz4bM_NzQQg>
 - finished Bronze Layer and starting Silver Layer of Medallion Workflow
 - receiving approval Fabric approval requests from Structures employees
 - fabric gateway
