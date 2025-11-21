@@ -57,9 +57,9 @@ Want your homelab to talk to your cloud Kubernetes cluster? No VPNs. No DNS hack
 - fabric gateway
   - **[lxd forwarder](../research/m_z/virtualization/hypervisor/lxd/network/forwarders/forwarders.md)** to wins22
   - connect to Plex from wins22
+  - **[Integrating On-Premises Data into Microsoft Fabric Using Data Pipelines in Data Factory](../research/m_z/microsoft_fabric/data_gateway/data_gateway.md)**
   - create chat or email group to keep team informed
   - Southfield, Cody Hudson, and other Plex reports.
-<https://learn.microsoft.com/en-us/data-integration/gateway/service-gateway-install>
 
 ## Marposs gage project
 
