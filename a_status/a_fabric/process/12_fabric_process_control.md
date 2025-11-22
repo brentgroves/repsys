@@ -20,6 +20,11 @@ Make Power BI and Notebooks from Microsoft Fabric Data Lake Medallion Workflow t
 - Mach2 will insert this data directly into the Plex ERP.
 - While the SQL server data will be used by Microsoft Fabric to report on our process capability by generating Cp, Cpk, Pp, Ppk Power Bi dashboards and Notebooks.
 
+## Variables
+
+- feature dimension
+- tool(s) count/tool life
+
 1. collect data
 
     ![collect data](https://www.1factory.com/assets/img/the-objective-of-process-capability-analysis-1factory.png)

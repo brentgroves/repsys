@@ -73,7 +73,6 @@ Want your homelab to talk to your cloud Kubernetes cluster? No VPNs. No DNS hack
 - Data import to Minitab for CPK and PPK.
   - Instead of Minitab we can use a Fabric Notebook.
   - **[Process Capability Analysis Cp, Cpk, Pp, Ppk - A Guide](https://www.1factory.com/quality-academy/guide-process-capability.html)**
-  - **[Python Process Capability Analysis (Cp & Cpk) | Normal Data](https://www.youtube.com/watch?v=YLn3YaMs4CQ)**
 
 ## Corporate IT Data Team
 

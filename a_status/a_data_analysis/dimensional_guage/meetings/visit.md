@@ -1,7 +1,11 @@
 # Marposs visit
 
-Hi Brian,
-I would like to ask a Marposs or Pride Gage representive to come to Avilla to review our current configuration and show us how to perform the admin tasks listed below. If you could give us an estimate we would appreciate.
+Hi Team,
+Bill Gstalder, the Pride Gage representive, said he will talk with Brian Segro, the Marposs rep, when he returns from Italy this week about a visit to our Avilla facility.
+
+## Questions
+
+- Should we collect the CNC# and tool counts along with the dimensional values? If so maybe we could ask the Marposs rep to update the program to do this.
 
 Thanks,
 Brent
@@ -9,10 +13,12 @@ Brent
 
 The following is in markdown format and can be viewed by copying and pasting the contents below into an online markdown viewer, such as at <https://markdownlivepreview.com/>>.
 
+## Marposs/Pride Gage Visit
+
 ## Prelim
 
 - At least one network cable at JT Fronts cell that is setup to access JT Fronts VLAN from an edge switch POE enabled untagged port. (IT)
-- 1 straight-through serial cable with DB9 F/F ends. (On order)
+- 1 straight-through serial cable with DB9 F/F ends. (Still needs order)
 
 ## Setup
 
