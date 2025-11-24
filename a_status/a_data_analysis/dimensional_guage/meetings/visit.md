@@ -7,6 +7,14 @@ Bill Gstalder, the Pride Gage representive, said he will talk with Brian Segro, 
 
 - Should we collect the CNC# and tool counts along with the dimensional values? If so maybe we could ask the Marposs rep to update the program to do this.
 
+## Marposs gage program modification
+
+- The tool setter could enter the CNC and tool number that was changed as part of the tool change process.
+- After that the CNC operator/gager, would identify the CNC that is being gaged.
+- The marposs gage would increment the tool counts and display the counts when each part is gaged.
+- If the tool counts displayed is not correct the CNC operator/gager could change it.
+- The feature measurement along with the CNC and tool counts is recorded and output to the CSV file and serial port.
+
 Thanks,
 Brent
 260.564.4868
