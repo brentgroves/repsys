@@ -37,6 +37,10 @@ Before we get into the detailed statistical calculations, let's review the high-
 
 **1: Plot the Data:** Record the measurement data, and plot this data on a run-chart and on a histogram as shown in the picture on the right.
 
+A run chart in statistical process control (SPC) is a line graph that displays data points over time, with a horizontal axis representing time and a vertical axis representing the measured variable. It typically includes a centerline at the median of the data to help identify trends, shifts, or patterns in a process.
+
+A histogram in statistical process control (SPC) is a bar chart that visually represents the frequency distribution of numeric data from a process. It shows the shape, central location (like mean or median), and spread of the data, helping to determine if a process is stable and capable of meeting specifications. By showing where data points cluster, a histogram reveals the process's performance and variation over a specific period.
+
 **2: Calculate the Spec Width:** Plot the Upper Spec Limit (USL) and Lower Spec Limit (LSL) on the histogram, and calculate the Spec Width as shown below.
 
 Spec Width = USL — LSL
@@ -50,3 +54,28 @@ Process Width = UCL — LCL
 Cp = Spec Width / Process Width
 
 ![i](https://www.1factory.com/assets/img/plot-the-data-histogram-run-chart-1factory.png)
+
+## 04. A Simple Analogy
+
+Imagine a driver trying to park a car in a garage. If the car is too wide, it won't fit. If it's narrower than the garage opening, but if it's not centered, it won't make it in - it will likely hit/scrape one of the sides. Hitting one of the sides of the garage is equivalent to producing a defective part.
+
+But if the car is narrow enough AND well centered, the car will fit. That is our goal. We want a manufacturing process width that is narrow and well centered relative to the specification limits.
+
+![i](https://www.1factory.com/assets/img/capable-vs-not-capable-1factory.png)
+
+## 05. A More Realistic Analogy
+
+Now let's assume that the car is the right width. It's narrow enough, and should always fit. It's now up to the driver's skill to park without scraping the sides. Imagine a driver arriving home after work each day, and parking his car in the garage.
+
+**The Good Driver:** A good driver will always center the car well with enough room on both sides. Over the next 30 days, his run-chart and histogram will both be very narrow. It's clear from the charts that he's very unlikely to scrape or dent the car. There's plenty of room on either side.
+
+**The Unsteady Driver:** On the other hand, an unsteady driver - someone learning to drive - may not always center the car correctly. Over the next 30 days, his run-chart and histogram are very wide. It's very likely that he could scrape or dent the car.
+
+We'll use the same idea in manufacturing. We'll record measurements for each part made, then plot a histogram and run-chart, and see how much room we have on each side. The narrower our histogram width relative to the specification width, the higher our process capability.
+
+Cp = Spec Width / Process Width
+Cpk = distance from mean to the nearest spec limit/distance from mean to the process edge
+
+![i](https://www.1factory.com/assets/img/analogy-interpreting-cp-cpk-1factory.png)
+
+## NEXT 06. Collecting Data

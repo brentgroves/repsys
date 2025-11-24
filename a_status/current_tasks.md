@@ -24,7 +24,9 @@ Aleksandar Gavrilov, IT Administrator, Skopje
 
 - **[charmed k8s install](../k8s/charmed_k8s/charmed_k8s.md)**
 
-- **[Graph Theory](../research/a_l/computer_science/data_structures/graph_theory/geeksforgeeks/adjacency_list.md)**
+- **[Graph Theory](../research/a_l/computer_science/data_structures/graph_theory/geeksforgeeks/depth_first_search.md)**
+
+- - **[Process Capability Analysis Cp, Cpk, Pp, Ppk - A Guide](https://www.1factory.com/quality-academy/guide-process-capability.html)**
 
 ## **[eBPF Documentation](https://ebpf.io/what-is-ebpf/)**
 
