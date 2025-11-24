@@ -18,15 +18,15 @@ Carl Stangland, Desktop and System Support Technician, Indiana
 Lucas Tuma, IT Administrator, Strakonice
 Aleksandar Gavrilov, IT Administrator, Skopje
 
-- **[jupyter lab](https://jupyter.org/try-jupyter/lab/)**
+**[Required Ports for the gateway to function](../research/m_z/microsoft_fabric/data_gateway/docs/public_domains_and_ports_used_by_the_gateway.md)**
+
+- - **[Process Capability Analysis Cp, Cpk, Pp, Ppk - A Guide](https://www.1factory.com/quality-academy/guide-process-capability.html)**
 
 - **[web assembly tutorial](https://marcoselvatici.github.io/WASM_tutorial/)**
 
 - **[charmed k8s install](../k8s/charmed_k8s/charmed_k8s.md)**
 
 - **[Graph Theory](../research/a_l/computer_science/data_structures/graph_theory/geeksforgeeks/depth_first_search.md)**
-
-- - **[Process Capability Analysis Cp, Cpk, Pp, Ppk - A Guide](https://www.1factory.com/quality-academy/guide-process-capability.html)**
 
 ## **[eBPF Documentation](https://ebpf.io/what-is-ebpf/)**
 
