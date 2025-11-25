@@ -1,4 +1,4 @@
-# **[Required Ports for the gateway to function](https://learn.microsoft.com/en-us/data-integration/gateway/service-gateway-communication)**
+# **[Required Ports for the gateway to function](https://learn.microsoft.com/en-us/data-integration/gateway/service-gateway-communication#required-ports-for-the-gateway-to-function)**
 
 The gateway communicates on the following outbound ports: TCP 443, 433, 5671, 5672, and from 9350 through 9354. The gateway doesn't require inbound ports.
 

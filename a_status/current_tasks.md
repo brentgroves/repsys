@@ -20,6 +20,8 @@ Aleksandar Gavrilov, IT Administrator, Skopje
 
 **[Required Ports for the gateway to function](../research/m_z/microsoft_fabric/data_gateway/docs/public_domains_and_ports_used_by_the_gateway.md)**
 
+- **[Azure Relay](https://learn.microsoft.com/en-us/azure/azure-relay/relay-hybrid-connections-python-get-started)**
+
 - - **[Process Capability Analysis Cp, Cpk, Pp, Ppk - A Guide](https://www.1factory.com/quality-academy/guide-process-capability.html)**
 
 - **[web assembly tutorial](https://marcoselvatici.github.io/WASM_tutorial/)**

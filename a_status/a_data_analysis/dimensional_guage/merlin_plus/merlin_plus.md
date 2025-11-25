@@ -3,6 +3,8 @@
 <Brian.segro@us.marposs.com>
 <bgstalder@pridegage.com>
 
+<https://www.marposs.com/eng/product/measuring-software-with-basic-statistical-process-control-spc>
+
 Page 171 begins the data export tab part of the manual.
 
 Merlin Plus Software gives the opportunity to collect measure data with the purpose of optimizing
