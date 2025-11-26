@@ -26,6 +26,10 @@ Aleksandar Gavrilov, IT Administrator, Skopje
 
 - **[web assembly tutorial](https://marcoselvatici.github.io/WASM_tutorial/)**
 can i run a webassembly from a android phone. yes.
+- run webassembly from phone and computer to web socket server on public ip.
+- use web socket server as a message server
+- parse messages with compiler
+
 - **[charmed k8s install](../k8s/charmed_k8s/charmed_k8s.md)**
 
 - **[Graph Theory](../research/a_l/computer_science/data_structures/graph_theory/geeksforgeeks/depth_first_search.md)**
