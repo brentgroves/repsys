@@ -25,7 +25,7 @@ Aleksandar Gavrilov, IT Administrator, Skopje
 - - **[Process Capability Analysis Cp, Cpk, Pp, Ppk - A Guide](https://www.1factory.com/quality-academy/guide-process-capability.html)**
 
 - **[web assembly tutorial](https://marcoselvatici.github.io/WASM_tutorial/)**
-
+can i run a webassembly from a android phone. yes.
 - **[charmed k8s install](../k8s/charmed_k8s/charmed_k8s.md)**
 
 - **[Graph Theory](../research/a_l/computer_science/data_structures/graph_theory/geeksforgeeks/depth_first_search.md)**
