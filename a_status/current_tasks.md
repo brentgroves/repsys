@@ -18,6 +18,12 @@ Carl Stangland, Desktop and System Support Technician, Indiana
 Lucas Tuma, IT Administrator, Strakonice
 Aleksandar Gavrilov, IT Administrator, Skopje
 
+## Can't access this php file from VLAN 40
+
+<https://10.188.50.212/fog/service/ipxe/boot.php>
+
+Make a config request for this.
+
 **[Required Ports for the gateway to function](../research/m_z/microsoft_fabric/data_gateway/docs/public_domains_and_ports_used_by_the_gateway.md)**
 
 - **[Azure Relay](https://learn.microsoft.com/en-us/azure/azure-relay/relay-hybrid-connections-python-get-started)**

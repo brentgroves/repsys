@@ -38,4 +38,60 @@ Briefly, the steps to get your WASM WebApp working are:
 
 ## Browser environment
 
-It is really important to understand that WASM binaries are run in the same sandbox as JavaScript (in a nutshell, a sandbox is an isolated environment where your code is executed for security reasons).
+It is really important to understand that WASM binaries are run in the same **[sandbox](https://www.howtogeek.com/169139/sandboxes-explained-how-theyre-already-protecting-you-and-how-to-sandbox-any-program/)** as JavaScript (in a nutshell, a sandbox is an isolated environment where your code is executed for security reasons).
+
+![i](https://marcoselvatici.github.io/WASM_tutorial/ref/sandbox.gif)
+
+Therefore, you will be able to access only the data that are also accessible with JavaScript. This means, for example, that you will not be able to access a file like this (unless you preload it at compile time):
+
+```c
+// "standard" C code to open a file
+FILE *fp;
+fp = fopen("/path/to/file/file.txt", "r");
+```
+
+Instead, you will have to read them via JavaScript and then use them with WASM, but we will return on this later.
+You will furthermore have some limitations in the memory you can dynamically and statically allocate, depending on the browser you are using (but these are usually pretty big, so it is unlikely that you will suffer from that).
+
+## Install Emscripten
+
+First of all, let's install the WASM compiler, Emscripten. We will focus on how to install it for Linux, but you can find documentation for other OSes here.
+
+First of all you need to have a working compiler toolchain installed (the set of tools that allows you to compile the code and get an executable) since we will build the software from the source code. Open a terminal and type:
+
+```bash
+# Update the package lists
+sudo apt-get update
+
+# Install *gcc* (and related dependencies)
+sudo apt-get install build-essential
+
+# Install cmake
+sudo apt-get install cmake
+```
+
+You also need to install:
+python 2.7
+node.js
+
+```bash
+# Install Python
+
+sudo apt-get install python2.7
+
+# Install node.js
+
+sudo apt-get install nodejs
+```
+
+Great! Now we have all the prerequisites to install the Emscripten Software Development Kit (emsdk). Just follow these steps:
+
+Don't do this.
+
+- Download and unzip the Software Development Kit (SDK) package to the directory of your choice. Here is the the **[link](https://s3.amazonaws.com/mozilla-games/emscripten/releases/emsdk-portable.tar.gz)**.
+Open a terminal inside the folder emsdk-portable you already unzipped.
+Now run the emsdk commands to obtain the latest tools from Github and set them as active:
+
+Do this instead
+
+**[emscripten_install](./emscripten/emscripten_install.md)**
