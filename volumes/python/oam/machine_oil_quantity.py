@@ -116,7 +116,12 @@ def main():
     # # day_of_month_quantity(df,daily_dates)
     # row=1
     row=121
-    col=0
+    col=3
+    for day in daily_dates:
+      value=get_row_col(df,row,col)
+      print(f"row={row},col={col},val={value}")
+      col+=1
+
     # val = get_row_col(df,row,col)
     # print(f"row={row},col={col},val={val}")
 
@@ -132,8 +137,8 @@ def main():
 # What to do when cell contains non-numeric data besides null
 
     # Iterate through each column
-    for col in df.columns:
-       print(f"col={col}")
+    # for col in df.columns:
+    #    print(f"col={col}")
     # row=29
     # col=21
     # col="18"
