@@ -30,7 +30,7 @@ Make a config request for this.
 
 - - **[Process Capability Analysis Cp, Cpk, Pp, Ppk - A Guide](https://www.1factory.com/quality-academy/guide-process-capability.html)**
 
-- **[web assembly tutorial](https://marcoselvatici.github.io/WASM_tutorial/)**
+- **[web assembly tutorial](../research/a_l/computer_science/web_assembly/web_assembly.md)**
 can i run a webassembly from a android phone. yes.
 - run webassembly from phone and computer to web socket server on public ip.
 - use web socket server as a message server

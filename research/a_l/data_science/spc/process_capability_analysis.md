@@ -45,11 +45,11 @@ A histogram in statistical process control (SPC) is a bar chart that visually re
 
 Spec Width = USL — LSL
 
-3: Calculate the Process Width: Similarly, we will also calculate the Process Width. The simplest way to think about the process width is "the difference between the largest value and the smallest value this process could create".
+**3: Calculate the Process Width:** Similarly, we will also calculate the Process Width. The simplest way to think about the process width is "the difference between the largest value and the smallest value this process could create".
 
 Process Width = UCL — LCL
 
-4: Calculate Cp: Calculate the capability index as the ratio of the spec width to the process width.
+**4: Calculate Cp:** Calculate the **capability index** as the ratio of the spec width to the process width.
 
 Cp = Spec Width / Process Width
 

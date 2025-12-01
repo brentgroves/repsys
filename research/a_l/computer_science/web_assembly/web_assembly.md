@@ -95,3 +95,111 @@ Now run the emsdk commands to obtain the latest tools from Github and set them a
 Do this instead
 
 **[emscripten_install](./emscripten/emscripten_install.md)**
+
+## Your first WASM webapp
+
+Once Emscripten is installed, we are ready to create our first WASM app!
+
+1. Create a folder wherever you want that contains a C file with this simple code:
+
+      ```bash
+      cd ~/src/repsys/volumes/wasm/first
+      ```
+
+      Create main.c
+
+      ```c
+      #include <stdio.h>
+
+      int main(){
+          printf("Hello world!\n");
+          return 0;
+      }
+      ```
+
+2. With your previous terminal, move in to the new directory and compile the C code to WASM using Emscripten
+
+    `emcc hello.c -o hello.html -s WASM=1`
+
+Explanation:
+
+- emcc is the program you call to compile your C code (similar to call gcc or g++ when you compile your C/C++ files "normally").
+- -o hello.html tells the compiler to create the hello.html file so you can visualize the results of the WASM code.
+- -s WASM=1 tells the compiler to create a separated .wasm file. You can omit this and the everything will work the same, just your hello.js (see next point) will contain also the WASM binary.
+
+Note that since this is the first time you use the stdio.h library, Emscripten needs to compile it to WASM binary before it can actually compile your code. This may take some moments.
+
+Now you should be able to see other three files in the same directory: hello.html, hello.js and hello.wasm.
+
+- hello.wasm is the file that contains the Webassembly code (the compiled code).
+- hello.js is the "glue code" needed to allow JavaScript to call and "communicate" with WASM compiled code. Emscripten generates this automatically and it is absolutely needed in order to run WASM modules. If you compile without the -s WASM=1 flag this file will contain also the content of hello.wasm (but makes no difference in reality).
+- hello.html is just a web page automatically generated that shows the result of your Webassembly code in a user friendly way. You don't actually need this file, but it is a cool way to quickly visualize what are you doing. You can tell Emscripten not to generate it by just using -o hello.js instead of -o hello.html (everything else remains as before).
+
+If you haven't tried to open the file hello.html file yet, do it with the browser of your choice. You should see something like this:
+
+![i](https://marcoselvatici.github.io/WASM_tutorial/ref/helloworld.png)
+
+If you open it with certain browsers (like Chrome) you may get an error message instead of the words "Hello World!".
+That is because the operation of loading of the WASM module is asynchronous, and some browsers (for security reasons) do not allow you to do this if the URL is of the kind file://path/to/file/file.html.
+In order to solve that issue you can both change the browser you use for testing (Firefox will work) or run a local server this way:
+
+1. open a terminal in the directory containing the file .html you want to run, and control your python version by typing:
+    `python -V`
+
+2. and then run:
+
+    ```bash
+    # if your version is 2.x
+
+    python -m SimpleHTTPServer 8080
+
+    # if your version is 3.x
+
+    python -m http.server 8080
+    ```
+
+3. At this point go in the browser and open (type in the URL) localhost:8080. Note that the number 8080 is the same as the one you typed in the terminal previously (you can change it if you want, but be careful since not all the ports are for http).
+
+Let's return talking about WASM.
+The first thing that WASM does is execute the main of your code (if there is one). That is why you immediately see "Hello world!" printed in that pseudo-console.
+Note that you don't actually need that pretty interface: try to open the console (press F12 or Ctrl+Shift+C). You should be able to see the words "Hello World!" printed there as well. Indeed, all your prints are printed in that console, and you can use them to debug your C/C++ code.
+
+copy contents of first to second.
+
+You can now try to create your own web page and run your short WASM-compiled code on that. Create a file .html and copy this simple code:
+
+```html
+<script src="hello.js"></script>
+<p>Open the console to see the result!</p>
+```
+
+and open it in the browser.
+You may see these warnings:
+
+![i](https://marcoselvatici.github.io/WASM_tutorial/ref/warning.png)
+
+Just don't worry about them, we are not using that method to create our WASM instance.
+
+Important:
+everything we did in this section is perfectly transferable on a C++ code. Try changing hello.c to hello.cpp:
+
+copy contents of second to thirds
+
+and compile it with:
+
+```bash
+# note that also emcc will work as well
+
+em++ hello.cpp -o hello.html
+```
+
+Important:
+You can also compile your code using optimizations using -Ox, try them out:
+
+copy contents of second to fourth
+
+```bash
+# -O2 is already a pretty high level of optimization
+
+emcc hello.c -o hello.js -O2 -s WASM=1
+```
