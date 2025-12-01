@@ -28,7 +28,7 @@ Make a config request for this.
 
 - **[Azure Relay](https://learn.microsoft.com/en-us/azure/azure-relay/relay-hybrid-connections-python-get-started)**
 
-- - **[Process Capability Analysis Cp, Cpk, Pp, Ppk - A Guide](https://www.1factory.com/quality-academy/guide-process-capability.html)**
+- - **[Process Capability Analysis Cp, Cpk, Pp, Ppk - A Guide](../research/a_l/data_science/spc/process_capability_analysis.md#next-08-short-term--long-term-process-behaviour)**
 
 - **[web assembly tutorial](../research/a_l/computer_science/web_assembly/web_assembly.md)**
 can i run a webassembly from a android phone. yes.
@@ -42,7 +42,7 @@ can i run a webassembly from a android phone. yes.
 
 ## **[eBPF Documentation](https://ebpf.io/what-is-ebpf/)**
 
-eBPF is a revolutionary technology with origins in the Linux kernel that can run sandboxed programs in a privileged context such as the operating system kernel. It is used to safely and efficiently extend the capabilities of the kernel without requiring to change kernel source code or load kernel modules.
+eBPF is a revolutionary technology with origins in the Linux kernel that can run sandboxed programs in a privileged context such as the operating system kernel. It is used to safely and efficiently extend the capabilities of the kernel without requiring to change kernel source code or load kernel modules. Calium cni supports eBPF.
 
 ### Service Mesh Features, Without the Sidecars
 

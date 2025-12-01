@@ -78,4 +78,34 @@ Cpk = distance from mean to the nearest spec limit/distance from mean to the pro
 
 ![i](https://www.1factory.com/assets/img/analogy-interpreting-cp-cpk-1factory.png)
 
-## NEXT 06. Collecting Data
+## 06. Collecting Data
+
+Your measurements must follow the rules below:
+
+**Gage Resolution:** Gages should be calibrated and gage resolution should be at least 1/10th the specification. E.g. 0.565 +/-0.005" implies a total tolerance of 0.010, and requires a gage with resolution 0.001" or smaller.
+**Production Order:** To calculate Cpk, parts must be measured and recorded in production order. If parts are not recorded in production order, you may miss trends and periodic fluctuations.
+**Record All Data:** Always record data for parts that pass, as well as for parts that fail.
+**Ensure Traceability:** Make sure all measurements are traceable back to Man (Operator), Machine (Operation), Method, Material, Measurement System, and Environmental Conditions (5Ms, 1E) to enable process improvement. Record Unit Number or Serial Number for each part.
+**Homogenous Data:** Keep data populations separate. A change in one of the 5M, 1E values may result in non-homogenous data. For example, do not mix the measurements made with two different types of equipment (e.g. CMM, caliper) into a single data-set.
+
+## 07. Process Stability
+
+Before you begin a process capability analysis, you must check to ensure your process is stable. If your process is stable, the short-term behaviour of the process (during the initial run), will be a good predictor of the long-term behavior of the process (i.e. you can predict future performance with confidence).
+
+Process behavior - both short-term and long-term - is characterized by the average and the standard deviation. A process will be considered stable when it's average and standard deviation are constant over time.
+
+![i](https://www.1factory.com/assets/img/stable-and-unstable-process.png)
+
+## NEXT 08. Short-Term & Long-Term Process Behaviour
+
+For a stable process, the run chart should look relatively flat, without an upward or downward trend, and without periodic fluctuations.
+
+Short-Term Standard Deviation:
+
+To calculate short-term average and standard deviation, we create sub-groups of the data. Sub-groups can be created in two ways: you can either record consecutive measurements on an individuals chart and treat every two consecutive parts as a sub-group of size 2, or you can record measurements for 3 to 5 samples at a fixed interval (e.g. 5 parts every hour) on an x-bar chart.
+
+The average and standard deviation of these sub-group measurements are called the short-term-average and short-term-standard-deviation or within-sub-group average and standard deviation.
+
+Long-Term Standard Deviation:
+
+Calculating long-term average and standard deviation is much simpler. We take all the measurements from the individuals charts, or from the x-bar charts, and calculate the average and standard deviation for the entire data-set.
