@@ -18,6 +18,7 @@ import datetime as sldt # dt.date = pandas...timestamp.date
 def get_row(df,row):
   print(f"row->{df.iloc[row]}")
 
+# The first line of the spreadsheet containing the date is not part of the dataframe. The second line containing the column headings is row 0 of the data frame.
 def get_row_col(df:pd.DataFrame,row:int,col:int)->float:
   # print(f"row={row},col={col}->{df.iloc[row,col]}")
   
@@ -85,9 +86,9 @@ def machine_oil_quantity(df: pd.DataFrame, row: int, daily_dates: pd.DatetimeInd
   # row=2
   col=3
   tot=0.0
-  line_id=get_row_col(df,row,2)
   machine_id=get_row_col(df,row,0)
   oil_type=get_row_col(df,row,1)
+  line_id=get_row_col(df,row,2)
 
   for day in daily_dates:
       value=get_row_col(df,row,col)
@@ -113,8 +114,61 @@ def main():
     daily_dates = days_of_month_pandas(pd_sheet_datetime)
 
     # # day_of_month_quantity(df,daily_dates)
-    row=2
-    machine_oil_quantity(df,row,daily_dates)
+    # row=1
+    row=121
+    col=0
+    # val = get_row_col(df,row,col)
+    # print(f"row={row},col={col},val={val}")
 
+
+    # for row in range(1, len(df)-1):
+    # for row in range(1, 9):
+    # for row in range(29, 30):
+    #   # If the first column is not a machine name then skip that row
+    #   val = get_row_col(df,row,col)
+    #   if val!=0.0:
+    #     machine_oil_quantity(df,row,daily_dates)
+
+# What to do when cell contains non-numeric data besides null
+
+    # Iterate through each column
+    for col in df.columns:
+       print(f"col={col}")
+    # row=29
+    # col=21
+    # col="18"
+    # # Attempt to convert the column to numeric, coercing errors to NaN
+    # numeric_col = pd.to_numeric(df[col], errors='coerce')
+    # # Find the indices where the conversion resulted in NaN (non-numeric values)
+    # non_numeric_indices = numeric_col.isnull()
+
+    # # Filter the original column to show only the non-numeric values
+    # non_numeric_values = df.loc[non_numeric_indices, col]
+
+    
+    # # Print the non-numeric values and their corresponding row indices
+    # if not non_numeric_values.empty:
+    #     for index, value in non_numeric_values.items():
+    #         print(f"Column: '{col}', Row Index: {index}, Value: '{value}'")
+
+    # val = get_row_col(df,row,col)
+    # if 
+    # if df.isnull().iloc[row,col]:
+    #   value =  0.00
+    # else:
+    #   value =  df.iloc[row,col]
+    # print(f"row={row},col={col},val={val}")
+
+
+# How many rows in the dataframe
+    # num_rows = len(df)
+    # print(num_rows)
+
+# How to handle blank lines. Line 7 is blank
+    # The first line of the spreadsheet containing the date is not part of the dataframe. The second line containing the column headings is row 0 of the data frame.
+    # row=7
+    # col=0
+    # val = get_row_col(df,row,col)
+    # print(f"row={row},col={col},val={val}")
 if __name__ == "__main__":
     main()

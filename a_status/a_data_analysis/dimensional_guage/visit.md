@@ -1,21 +1,19 @@
 # Marposs visit
 
 Hi Team,
-Bill Gstalder, the Pride Gage representive, said he will talk with Brian Segro, the Marposs rep, when he returns from Italy this week about a visit to our Avilla facility.
+I have scheduled a meeting for tomorrow to discuss the Marposs gage project and hope you can attend.
+
+Thank you
 
 ## Questions
 
 - Should we collect the CNC# and tool counts along with the dimensional values? If so maybe we could ask the Marposs rep to update the program to do this.
 
-## ## 06. Collecting Data
+## 06. Collecting Data
 
-Your measurements must follow the rules below:
-
-**Gage Resolution:** Gages should be calibrated and gage resolution should be at least 1/10th the specification. E.g. 0.565 +/-0.005" implies a total tolerance of 0.010, and requires a gage with resolution 0.001" or smaller.
-**Production Order:** To calculate Cpk, parts must be measured and recorded in production order. If parts are not recorded in production order, you may miss trends and periodic fluctuations.
-**Record All Data:** Always record data for parts that pass, as well as for parts that fail.
+...
 **Ensure Traceability:** Make sure all measurements are traceable back to Man (Operator), Machine (Operation), Method, Material, Measurement System, and Environmental Conditions (5Ms, 1E) to enable process improvement. Record Unit Number or Serial Number for each part.
-**Homogenous Data:** Keep data populations separate. A change in one of the 5M, 1E values may result in non-homogenous data. For example, do not mix the measurements made with two different types of equipment (e.g. CMM, caliper) into a single data-set.
+...
 
 ## Marposs gage program modification
 

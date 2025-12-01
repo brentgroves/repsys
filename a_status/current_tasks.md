@@ -40,30 +40,6 @@ can i run a webassembly from a android phone. yes.
 
 - **[Graph Theory](../research/a_l/computer_science/data_structures/graph_theory/geeksforgeeks/depth_first_search.md)**
 
-## **[eBPF Documentation](https://ebpf.io/what-is-ebpf/)**
-
-eBPF is a revolutionary technology with origins in the Linux kernel that can run sandboxed programs in a privileged context such as the operating system kernel. It is used to safely and efficiently extend the capabilities of the kernel without requiring to change kernel source code or load kernel modules. Calium cni supports eBPF.
-
-### Service Mesh Features, Without the Sidecars
-
-When people talk about a service mesh like Istio or Linkerd, they usually mean:
-
-- mTLS for encrypting service-to-service traffic
-- Traffic routing for canary or blue-green deployments
-- Detailed observability of service calls
-
-Traditionally, this requires sidecars (tiny proxies in every pod), which add complexity and overhead. Cilium does it differently. Using eBPF in the kernel, it delivers:
-
-- Built-in mTLS
-- L7-aware traffic routing (e.g., “send 20% of /checkout to v2”).
-- Hubble-powered observability.
-
-## Multi-Cluster Networking with ClusterMesh
-
-One of **Cilium’s** most powerful features is how easily it connects multiple clusters, as if they were one.
-
-Want your homelab to talk to your cloud Kubernetes cluster? No VPNs. No DNS hacks. Just seamless pod-to-pod communication.
-
 ## Fabric/Power BI/Notebooks/Data Lake Medallion Workflow
 
 - make config request for data gateway
@@ -88,61 +64,9 @@ Want your homelab to talk to your cloud Kubernetes cluster? No VPNs. No DNS hack
   - Instead of Minitab we can use a Fabric Notebook.
   - **[Process Capability Analysis Cp, Cpk, Pp, Ppk - A Guide](https://www.1factory.com/quality-academy/guide-process-capability.html)**
 
-## Corporate IT Data Team
-
-I wanted to share an update on the recent issue we encountered in Fabric related to latency during Lakehouse-to-SQL Endpoint synchronization, along with the steps we’ve taken so far.
-
-## Marposs gage project
-
-- Marposs coming down soon to help
-- Serial device server configured
-- JT Front VLAN created
-- Switch ports for JT Front VLAN configured
-- 1 Cable ran probably need 2
-- Data import to minitab for CPK and PPK
-Basically, what I need from you is a way to capture the data and and put it in a run chart.  
-It would be great if the data and chart could show 30 day CPK and 90 day PPK.
-
-- **[Process Capability Analysis Cp, Cpk, Pp, Ppk - A Guide](https://www.1factory.com/quality-academy/guide-process-capability.html)**
-
-Hi Ron,
-I know you have minitab but we could probably add the data from the gage to our Structures datalake, make these calcs in python, and present it in a Power BI report. Here's how **[A Comprehensive Guide to Performing Capability Analysis in Python](https://medium.com/@chenchungwai/a-comprehensive-guide-to-performing-capability-analysis-in-python-e46ac74a69b5)**
-
-Thanks
-Brent
-
-### moxa serial device server
-
-- db9 serial cable from gauge to moxa
-- POE network cable to cell
-- udp
-  - udp mode broadcasts to multiple ips
-  - no connections/faster/less error prone
-- tcp
-  - tcp mode allows multiple connections upto 8
-  - connections made/slower/more error prone
-- KepServerEx - OPC UA data points
-  - create udp/tcp connection to moxa serial device server for trouble shooting
-  - OPC UA ensures secure data exchange through encryption and certificate-based authentication, protecting the data as it travels from KEPServerEX to the client.
-- Mach2
-  - could connect to KepServerEx OCP UA data point or directly to Moxa Serial device server via a socket.
-- Python
-  - use for testing
-  - could also install on gauge and send records of file through serial port with pyserial.
-
-the ip address will be 10.188.74.11 but we must wait for corporate to setup vlan and Jared to configure edge switch
-
-- get docs for gauge.
-
-- <https://stackoverflow.com/questions/26803825/python-read-serial-rs-232-data-over-tcp-ip>
-
-<https://github.com/mdavidsaver/nport-toys>
-
-- **[backup cd/dvd to iso](https://www.youtube.com/watch?v=ZSsxaL5ZzJE)**
-
-## **[dell usb install](https://www.youtube.com/watch?v=r-LcJ0OHYsI)**
-
 ## Reporting Work Flow
+
+**[todo](../volumes/python/oam/TODO.md)**
 
 Use the easily updated "Oil adds to Machines.xlsx" spreadsheet which has one row with machine/oil_type/line and oil quantity for each day of the month to update the Structures OAM data lake table with a PySpark notebook.
 
@@ -154,8 +78,6 @@ Meeting for get data.
 2. get data
     - notebooks
     - pipeline
-
-Hi Cody. Sorry for the delay in responding. I am currently working on a Fabric/PowerBI/datalake workflow from a video describing the medallion bronze/silver/gold process and will record these steps for anyone interested. The plan is to use the process for making Plex reports. After the process is complete will install a Fabric Gateway and connect to Plex using ODBC from this Windows 22 server. I apologize for the delay and will keep you posted. **[Design MICROSOFT FABRIC Data Project with Medallion Architecture | Lakehouse + Spark + Power BI](https://www.youtube.com/watch?v=qG65DUcSjws)**
 
 ## Task Management
 
