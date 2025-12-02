@@ -64,6 +64,12 @@ can i run a webassembly from a android phone. yes.
   - Instead of Minitab we can use a Fabric Notebook.
   - **[Process Capability Analysis Cp, Cpk, Pp, Ppk - A Guide](https://www.1factory.com/quality-academy/guide-process-capability.html)**
 
+**Cp** measures whether the process spread is narrower than the specification width
+
+**Cpk** measures both the centering of the process as well as the spread of the process relative to the specification width
+
+![i](https://www.1factory.com/assets/img/visual-cp-cpk-1factory.png)
+
 ## Reporting Work Flow
 
 **[todo](../volumes/python/oam/TODO.md)**

@@ -88,6 +88,8 @@ Your measurements must follow the rules below:
 **Ensure Traceability:** Make sure all measurements are traceable back to Man (Operator), Machine (Operation), Method, Material, Measurement System, and Environmental Conditions (5Ms, 1E) to enable process improvement. Record Unit Number or Serial Number for each part.
 **Homogenous Data:** Keep data populations separate. A change in one of the 5M, 1E values may result in non-homogenous data. For example, do not mix the measurements made with two different types of equipment (e.g. CMM, caliper) into a single data-set.
 
+The 5M 1E values refer to the six categories in a Ishikawa or fishbone diagram used for root cause analysis: Manpower, Machines, Materials, Methods, Measurements, and Environment. These values represent the different areas to investigate when trying to understand why a problem occurred. The "1E" stands for Environment, which is added to the standard "5M" categories to provide a more comprehensive analysis.
+
 ## 07. Process Stability
 
 Before you begin a process capability analysis, you must check to ensure your process is stable. If your process is stable, the short-term behaviour of the process (during the initial run), will be a good predictor of the long-term behavior of the process (i.e. you can predict future performance with confidence).

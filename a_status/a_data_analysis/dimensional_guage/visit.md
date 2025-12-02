@@ -7,6 +7,7 @@ Thank you
 
 ## Questions
 
+- Are we ready for a visit?
 - Should we collect the CNC# and tool counts along with the dimensional values? If so maybe we could ask the Marposs rep to update the program to do this.
 
 ## 06. Collecting Data
@@ -35,23 +36,25 @@ The following is in markdown format and can be viewed by copying and pasting the
 
 - At least one network cable at JT Fronts cell that is setup to access JT Fronts VLAN from an edge switch POE enabled untagged port. (IT)
 - 1 straight-through serial cable with DB9 F/F ends. (Still needs order)
+- Moxa serial device server configured for JT Front VLAN.
+- Add Network file share to the gage computer.
+- Reaction plan manager could have capabilites <https://www.beckerqualitysolutions.com/products/ReactionPlanManager>, Larry Becker, quality solutions LLC. <www.beckerqualitysolutions.com>. Larry wrote the program.
 
 ## Setup
 
 - The Marposs gage computer is powered by a 36V DC converter plugged into a standard 120VAC outlet.
 - One of the two Marposs gage computer USB ports is connected to a 10 port USB hub.
-- One model B6871250050 Easy Box U8I/O with 8 INPUT/OUTPUT which is not being used.
+- One model B6871250050 Easy Box U8I/O with 8 INPUT/OUTPUT which is not being used. Good/Bad part indicator column light.
 - Three **[EasyBox U4F-HR, U4H, or U4T transducers](https://www.marposs.com/media/4263/d-1/t-file/D6D02000G0.pdf)** to connect up to 4 MARPOSS standard full-bridge or half-bridge transducers
 
 ## Windows
 
-- There are two USB ports on the Marposs Gage computer. 1 USB port is connected to a 10 port USB hub and the other may be being used by a thumb drive. The USB hub is being used to power four EasyBox units.
-- Identify Windows edition and version.
+- There are two USB ports on the Marposs Gage computer. 1 USB port is connected to a 10 port USB hub and the other may be being used by a dongle licensing. The USB hub is being used to power four EasyBox units.
+- Identify Windows edition and version. Important for network file sharing.
 - How to safely exit and restart the Merlin UI and Windows.
-- Are the 2 serial ports recognized by Windows.
+- Are the 2 serial ports recognized by Windows for serial device server.
 - Are the 2 network ports functional.
-- What is the Windows username/password.
-- Does the user have admin rights.
+- No Windows username/password, Merlin username/password, Administrator/251170. Upper right hand corner user name, programmer/user.
 - Config the Marposs gauge computers serial port. (Brent)
   - To configure a serial port in Windows 10, open Device Manager, expand Ports (COM & LPT), right-click the desired serial port, select Properties, and then go to the Port Settings tab to adjust parameters like baud rate, data bits, and parity.
   - Serial Port Settings:
@@ -76,6 +79,12 @@ The following is in markdown format and can be viewed by copying and pasting the
 - Create and load simple test program.
 - From test program output to serial port.
 - Connect to serial device server's TCP socket from the IT ofice and verify the test program data is being sent. (Brent)
+
+**Cp** measures whether the process spread is narrower than the specification width
+
+**Cpk** measures both the centering of the process as well as the spread of the process relative to the specification width
+
+![i](https://www.1factory.com/assets/img/visual-cp-cpk-1factory.png)
 
 ## Quality Team
 

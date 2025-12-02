@@ -7,7 +7,7 @@ With the additional zero-trust security measure of not allowing access to the se
 Brent
 Structures - Information Systems
 
-The following is in markdown format and can be viewed by copying and pasting the contents below into an online markdown viewer, such as at <https://markdownlivepreview.dev>.
+The following is in markdown format and can be viewed by copying and pasting the contents below into an online markdown viewer, such as at <https://markdownlivepreview.com/>.
 
 ## AI Overview
 
