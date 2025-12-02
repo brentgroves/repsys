@@ -28,6 +28,7 @@ def get_row_col(df:pd.DataFrame,row:int,col:int)->float:
     value =  df.iloc[row,col]
   return value
 
+  
 def get_sheet_date(df):
 
   column_names_list = df.columns.tolist()
@@ -103,6 +104,34 @@ def machine_oil_quantity(df: pd.DataFrame, row: int, daily_dates: pd.DatetimeInd
   print(f"{month_name} {year} Total: {tot}")
   # print(f"{daily_dates[0].month_name} {daily_dates[0].year} Total: {tot}")
 
+def isValid(df:pd.DataFrame,row:int,col:int)->bool:
+  # print(f"row={row},col={col}->{df.iloc[row,col]}")
+  if df.isnull().iloc[row,col]:
+    return False
+  elif isinstance(df.iloc[row,col], (int, float)):
+    return True
+  else:
+    return None
+
+def isValid2(df:pd.DataFrame,row:int,col:int):
+  data = [
+      ['Alice',None,'New York'],
+      ['Bob', 30, 'London'],
+      ['Charlie', 22, 'Paris']
+  ]
+  df = pd.DataFrame(data, columns=['Name', 'Age', 'City'])
+  print(df)
+
+def isValid3(df:pd.DataFrame,row:int,col:int):
+
+  # print(f"row={row},col={col}->{df.iloc[row,col]}")
+  if df.isnull().iloc[row,col]:
+    return 1
+  elif isinstance(df.iloc[row,col], (int, float)):
+    return 2
+  else:
+    return 3
+
 def main():
     # Your main program logic goes here
     print("This is the main function.")
@@ -112,10 +141,9 @@ def main():
     print(f"sheet_date' {pd_sheet_datetime}")
 
     daily_dates = days_of_month_pandas(pd_sheet_datetime)
-
 # Find all non-numeric oil quantities
-    # # day_of_month_quantity(df,daily_dates)
-    # row=1
+    # day_of_month_quantity(df,daily_dates)
+    row=1
     for row in range(1, len(df)-1):
       # skip blank lines
       col=0
@@ -128,10 +156,15 @@ def main():
         oil_type=get_row_col(df,row,1)
         line_id=get_row_col(df,row,2)
         for day in daily_dates:
-          value=get_row_col(df,row,col)
-          if not isinstance(value, (int, float, complex)):
-              print(f"'{value}' is not a number.")
-              print(f"date:{day.strftime("%Y-%m-%d")},machine_id:{machine_id},oil_type:{oil_type},line_id:{line_id},col={col},value={value}")
+          value=isValid3(df,row,col)
+          if value == 1:
+              # print(f"Null: date:{day.strftime("%Y-%m-%d")},machine_id:{machine_id},oil_type:{oil_type},line_id:{line_id},col={col},val={value}")
+              i=1
+          elif value == 2:
+              # print(f"OK: date:{day.strftime("%Y-%m-%d")},machine_id:{machine_id},oil_type:{oil_type},line_id:{line_id},col={col},value={value}")
+              i=2
+          elif value == 3:
+              print(f"Other: date:{day.strftime("%Y-%m-%d")},machine_id:{machine_id},oil_type:{oil_type},line_id:{line_id},col={col},value={value}")
           col+=1
 
     # val = get_row_col(df,row,col)
