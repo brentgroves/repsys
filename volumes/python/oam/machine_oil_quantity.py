@@ -164,7 +164,7 @@ def main():
               # print(f"OK: date:{day.strftime("%Y-%m-%d")},machine_id:{machine_id},oil_type:{oil_type},line_id:{line_id},col={col},value={value}")
               i=2
           elif value == 3:
-              print(f"Other: date:{day.strftime("%Y-%m-%d")},machine_id:{machine_id},oil_type:{oil_type},line_id:{line_id},col={col},value={value}")
+              print(f"Other: date:{day.strftime("%Y-%m-%d")},machine_id:{machine_id},oil_type:{oil_type},line_id:{line_id},col={col},value={df.iloc[row,col]}")
           col+=1
 
     # val = get_row_col(df,row,col)
