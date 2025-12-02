@@ -30,7 +30,7 @@ Make a config request for this.
 
 - - **[Process Capability Analysis Cp, Cpk, Pp, Ppk - A Guide](../research/a_l/data_science/spc/process_capability_analysis.md#next-08-short-term--long-term-process-behaviour)**
 
-- **[web assembly tutorial](../research/a_l/computer_science/web_assembly/web_assembly.md)**
+- **[web assembly tutorial](../research/a_l/computer_science/web_assembly/web_assembly.md#next)**
 can i run a webassembly from a android phone. yes.
 - run webassembly from phone and computer to web socket server on public ip.
 - use web socket server as a message server
@@ -54,6 +54,8 @@ can i run a webassembly from a android phone. yes.
   - Southfield, Cody Hudson, and other Plex reports.
 
 ## Marposs gage project
+
+**[outlier detection](../research/a_l/data_science/spc/outlier_detection.md)**
 
 - Marposs coming down soon to help
 - Serial device server configured

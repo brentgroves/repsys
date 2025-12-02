@@ -1,5 +1,7 @@
 # **[Webassembly Tutorial](https://marcoselvatici.github.io/WASM_tutorial/)**
 
+**[code](../../../../volumes/wasm)**
+
 Introduction
 Webassembly (WASM) is an innovative low-level language that can run on all modern browsers. As the name suggests, this is an assembly-like language that have a very compact binary format (thus suitable to be loaded on web pages) and can run with near-native performance.
 Thanks to this technology, there is now the possibility to compile high-level languages and run them on the browser. Currently the only languages that can be compiled to WASM binaries are C and C++, but in future the list will probably grow a lot.
@@ -203,3 +205,115 @@ copy contents of second to fourth
 
 emcc hello.c -o hello.js -O2 -s WASM=1
 ```
+
+## Functions
+
+So far we learnt how to build a simple WASM project. Let's make things more interesting by introducing functions.
+Edit the hello.c code by adding a function to calculate the ith number in the Fibonacci sequence:
+
+Copy fourth directory to the fifth directory.
+
+```c
+#include <stdio.h>
+
+int fib(int n){
+    if(n == 0 || n == 1)
+        return 1;
+    else
+        return fib(n - 1) + fib(n - 2);
+}
+
+int main(){
+    printf("Hello world!\n");
+    int res = fib(5);
+    printf("fib(5) = %d\n", res);
+    return 0;
+}
+```
+
+Try to compile and run it on the broswer. You should see the result in the console.
+
+```bash
+cd fifth
+emcc hello.c -o hello.html -s WASM=1
+```
+
+Nothing special so far. But what if we want to call this function not just at the beginning (when main is executed) but when, for example, you press a button on the webpage?
+This question basically translates to: how do I call C/C++ functions from the JavaScript of my web page?
+
+The easiest ways to do this are to use two functions provided by the Emscripten "glue code":
+
+- **ccall:** calls a compiled C function with the specified variables and return the result.
+- **cwrap:** "wraps" a compiled C function and returns a JavaScript function you can call normally. That is, by far, more useful and we will focus on this method.
+
+You can call it as follows:
+
+```bash
+var js_wrapped_fib = Module.cwrap("fib", "number", ["number"]);
+```
+
+and then you will be able to call the the C compiled fib function just with:
+
+`var result = js_wrapped_fib(parameter);`
+
+Let's focus a bit on the parameters we need to pass to cwrap:
+
+- **name of the function:** name of the function in the C source code.
+- **return type:** the return type of the function. This can be "number", "string" or "array", which correspond to the appropriate JavaScript types (use number for any C pointer), or for a void function it can be null (note: the JavaScript null value, not a string containing the word "null").
+- **list of parameter's types (optional):** within square brackets. An array of the types of arguments for the function (if there are no arguments, this can be omitted). Types are as in return type, except that array is not supported as there is no way for us to know the length of the array.
+
+Another important thing to notice is that Emscripten, during compilation, ignore all the functions that seem unused in order to get a smaller .wasm file. Thus, we need to let it know that we want to keep that functions "alive".
+Again, there are two ways to do this:
+
+copy fifth to sixth directory.
+
+- You can add EMSCRIPTEN_KEEPALIVE to your C functions in the code as shown below:
+
+```c
+#include <stdio.h>
+#include <emscripten.h> // note we added the emscripten header
+
+int EMSCRIPTEN_KEEPALIVE fib(int n){
+    if(n == 0 || n == 1)
+        return 1;
+    else
+        return fib(n - 1) + fib(n - 2);
+}
+
+int main(){
+    printf("Hello world!\n");
+    int res = fib(5);
+    printf("fib(5) = %d\n", res);
+    return 0;
+}
+```
+
+In order to test it, compile the C code again, but this time tell the compiler to add cwrap as an extra exported runtime method by using this command:
+
+<https://emscripten.org/docs/getting_started/FAQ.html#why-do-i-get-typeerror-module-something-is-not-a-function>
+
+```bash
+cd sixth
+emcc hello.c -o hello.js -s WASM=1 -s EXPORTED_RUNTIME_METHODS=cwrap -s EXPORTED_FUNCTIONS=_main,_fib
+
+# emcc hello.c -o hello.js -s WASM=1 -sEXPORTED_RUNTIME_METHODS=['cwrap']
+
+```
+
+Then edit and run your custom .html file as below:
+
+```html
+<script src="hello.js"></script>
+<script>
+var js_wrapped_fib = Module.cwrap("fib", "number", ["number"]);
+
+function pressBtn(){
+    console.log("The result of fib(5) is:", js_wrapped_fib(5));
+}
+</script>
+
+<button onclick="pressBtn()">Click me!</button>
+<p>Open the console to see the result!</p>
+```
+
+## next
