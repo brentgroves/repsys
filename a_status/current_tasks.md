@@ -36,6 +36,8 @@ can i run a webassembly from a android phone. yes.
 - use web socket server as a message server
 - parse messages with compiler
 
+- **[Circuit Python](https://learn.adafruit.com/circuitpython-with-jupyter-notebooks/using-jupyter-notebooks)**
+
 - **[charmed k8s install](../k8s/charmed_k8s/charmed_k8s.md)**
 
 - **[Graph Theory](../research/a_l/computer_science/data_structures/graph_theory/geeksforgeeks/depth_first_search.md)**
@@ -55,7 +57,11 @@ can i run a webassembly from a android phone. yes.
 
 ## Marposs gage project
 
+**[Improve Process Capability and Performance with PpK](../research/a_l/data_science/spc/ppk/ppk.md)**
+
 **[outlier detection](../research/a_l/data_science/spc/outlier_detection.md)**
+
+**[capability analysis for process improvement](https://www.6sigma.us/process-improvement/capability-analysis-for-process-improvement/)**
 
 - Marposs coming down soon to help
 - Serial device server configured
