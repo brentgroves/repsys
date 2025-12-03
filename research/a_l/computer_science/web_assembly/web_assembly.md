@@ -316,4 +316,14 @@ function pressBtn(){
 <p>Open the console to see the result!</p>
 ```
 
-## next
+Each time you press the "Click me!" button you should see "The result of fib(5) is: 8" appearing on your console.
+
+Alternatively, you can just tell the compiler that you need that functions by using this command (this way you don't need to add anything to your C code):
+
+```bash
+# dont think this works
+emcc hello.c -o hello.js -s WASM=1 -s EXPORTED_FUNCTIONS='["_fib"]' -s EXTRA_EXPORTED_RUNTIME_METHODS='["cwrap"]'
+# this works
+emcc hello.c -o hello.js -s WASM=1 -s EXPORTED_RUNTIME_METHODS=cwrap -s EXPORTED_FUNCTIONS=_main,_fib
+
+```
