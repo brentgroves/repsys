@@ -14,6 +14,7 @@ from pandas.tseries.offsets import MonthEnd
 import datetime as sldt # dt.date = pandas...timestamp.date
 # import datetime # works for datetime.date()
 # from datetime import date # works for date()
+from pandas.io.formats import style
 
 def get_row(df,row):
   print(f"row->{df.iloc[row]}")
@@ -144,49 +145,31 @@ def main():
     ts_sheet_datetime = get_sheet_date(df)
     print(f"sheet_date' {ts_sheet_datetime}")
 
-    # Rename all 35 columns
+    # Rename all 35 columns the sheet date. get_sheet_date will not work after this because it relies on the columns data to work.
     df.columns = ['c1','c2','c3','c4','c5','c6','c7','c8','c9','c10',
                   'c11','c12','c13','c14','c15','c16','c17','c18','c19','c20',
                   'c21','c22','c23','c24','c25','c26','c27','c28','c29','c30',
                   'c31','c32','c33','c34','c35']
 
-    column_names_index = df.columns
-    print(column_names_index)
-
-    column_names_list = df.columns.tolist()
+    # column_names_index = df.columns
+    # print(column_names_index)
+    # column_names_list = df.columns.tolist()
     # print(column_names_list)
 
-    # remove date row
-    df_nodate_row = df.drop(0)
-    new_zero=get_row_col(df_nodate_row,0,0)
-    print(f"new zero row, col 0 value: {new_zero}")
-    new_34=get_row_col(df_nodate_row,0,34)
-    print(f"new zero row, col 34 value: {new_34}")
-    new_one=get_row_col(df_nodate_row,1,0)
-    print(f"new one row, col 0 value: {new_one}")
-    new_34=get_row_col(df_nodate_row,1,34)
-    print(f"new one row, col 34 value: {new_34}")
+    # After renaming the columns, the sheet date is not accessible.
+    # print(f'get_row_col(df,0,0)={get_row_col(df,0,0)}\nget_row_col(df,0,1)={get_row_col(df,0,1)}')
 
-    # # column_names_list = df_date_row.columns.tolist()
-    # # print(column_names_list)
+    # remove date row. it does not represent the column names so we don't need it.
+    print(df.head(5))
+    df_dropped_header_row = df.drop(0)
+    # verify header row is dropped and column headings are good.
+    # print(df_dropped_header_row.head(5))
+    # print(df_dropped_header_row.tail(5))
 
-    # datetime_obj = pd.to_datetime(sheet_date, format='%Y/%m/%d')
-  # print(f"'{sheet_date}' converted to: {datetime_obj}")
-
-    # ts_sheet_datetime = get_sheet_date(df)
-    # print(f"sheet_date' {ts_sheet_datetime}")
-    # old_zero=get_row_col(df,0,0)
-    # print(f"old zero row, col 0 value: {old_zero}")
-    # # remove date row
-    # df_nodate_row = df.drop(0)
-    # new_zero=get_row_col(df_nodate_row,0,0)
-    # print(f"new zero row, col 0 value: {new_zero}")
-    # # column_names_list = df_date_row.columns.tolist()
-    # # print(column_names_list)
-
-    # column_names_index = df_nodate_row.columns
-    # print(column_names_index)
-
+    # Drop rows with null values in column 'c1'
+    df_cleaned = df_dropped_header_row.dropna(subset=['c1'])
+    print(df_cleaned.head(15))
+    print(df_cleaned.tail(15))
 
     # Remove blank lines from dataframe
     # for row in range(1, len(df)-1):
