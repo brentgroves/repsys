@@ -18,6 +18,14 @@ Carl Stangland, Desktop and System Support Technician, Indiana
 Lucas Tuma, IT Administrator, Strakonice
 Aleksandar Gavrilov, IT Administrator, Skopje
 
+## CARL
+
+Apache Log4j SEoL (<= 1.x) (182252)
+IP Address: 10.188.50.13 ( TCP )
+DNS: pd-avi-sql01.linamar.com
+Steps to Remediate
+Upgrade to a version of Apache Log4j that is currently supported:
+
 ## Can't access this php file from VLAN 40
 
 <https://10.188.50.212/fog/service/ipxe/boot.php>

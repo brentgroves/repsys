@@ -330,6 +330,8 @@ Main is now automatically executed at the beginning. You can also call it from J
 var js_wrapped_main = Module.cwrap("main", "number");
 ```
 
+## next pass array
+
 At this point you may are wondering, how do I pass an array to a WASM function from JavaScript?
 This will be covered in the section regarding the memory.
 
