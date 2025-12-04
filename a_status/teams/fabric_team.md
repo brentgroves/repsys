@@ -23,3 +23,5 @@
 - Michael Percell, Manufacturing Engineering Manager
 - Jami Pyle, MP&L Manager
 - Nancy Swank, Material Planner
+- Nickolas Dekoninck, Quality Engineer
+- Chelsea Prill, Quality Engineer
