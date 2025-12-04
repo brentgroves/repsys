@@ -29,7 +29,7 @@ def get_row_col(df:pd.DataFrame,row:int,col:int)->float:
   return value
 
   
-def get_sheet_date(df):
+def get_sheet_date(df)->pd.Timestamp:
 
   column_names_list = df.columns.tolist()
   # print(column_names_list)
@@ -40,13 +40,13 @@ def get_sheet_date(df):
   # print(f"'{sheet_date}' converted to: {datetime_obj}")
 
   # make sure it is 1st day of month
-  dt_sheet_date = datetime_obj.replace(day=1)
+  ts_sheet_date = datetime_obj.replace(day=1)
   # print('Month: ', datetime_obj.month) # To Get month from date
   # print('Year: ', datetime_obj.year) # To Get month from year
   # print('Day: ', datetime_obj.day) # To Get month from year
 
   # print(f"'{datetime_obj}' converted to: {dt_sheet_date}")
-  return dt_sheet_date
+  return ts_sheet_date
 
 
 def days_of_month_pandas(pd_sheet_datetime)->pd.DatetimeIndex:
@@ -122,7 +122,14 @@ def isValid2(df:pd.DataFrame,row:int,col:int):
   df = pd.DataFrame(data, columns=['Name', 'Age', 'City'])
   print(df)
 
-def isValid3(df:pd.DataFrame,row:int,col:int):
+def isBlankLine(df:pd.DataFrame,row:int,col:int)->bool:
+
+  if df.isnull().iloc[row,col]:
+    return True
+  else:
+    return False
+
+def isOilValueValid(df:pd.DataFrame,row:int,col:int):
 
   # print(f"row={row},col={col}->{df.iloc[row,col]}")
   if df.isnull().iloc[row,col]:
@@ -133,39 +140,109 @@ def isValid3(df:pd.DataFrame,row:int,col:int):
     return 3
 
 def main():
-    # Your main program logic goes here
-    print("This is the main function.")
-    # Call other functions or perform operations
     df=pd.read_excel('OAMForMonth.xlsx',sheet_name=1)
-    pd_sheet_datetime = get_sheet_date(df)
-    print(f"sheet_date' {pd_sheet_datetime}")
+    ts_sheet_datetime = get_sheet_date(df)
+    print(f"sheet_date' {ts_sheet_datetime}")
 
-    daily_dates = days_of_month_pandas(pd_sheet_datetime)
-# Find all non-numeric oil quantities
-    # day_of_month_quantity(df,daily_dates)
-    row=1
-    for row in range(1, len(df)-1):
-      # skip blank lines
-      col=0
-      machine_id = get_row_col(df,row,col)
-      if machine_id == 0.0:
-        print(f"machine_id is null in row={row}")
-      else:
-      # row=29
-        col=3
-        oil_type=get_row_col(df,row,1)
-        line_id=get_row_col(df,row,2)
-        for day in daily_dates:
-          value=isValid3(df,row,col)
-          if value == 1:
-              # print(f"Null: date:{day.strftime("%Y-%m-%d")},machine_id:{machine_id},oil_type:{oil_type},line_id:{line_id},col={col},val={value}")
-              i=1
-          elif value == 2:
-              # print(f"OK: date:{day.strftime("%Y-%m-%d")},machine_id:{machine_id},oil_type:{oil_type},line_id:{line_id},col={col},value={value}")
-              i=2
-          elif value == 3:
-              print(f"Other: date:{day.strftime("%Y-%m-%d")},machine_id:{machine_id},oil_type:{oil_type},line_id:{line_id},col={col},value={df.iloc[row,col]}")
-          col+=1
+    # Rename all 35 columns
+    df.columns = ['c1','c2','c3','c4','c5','c6','c7','c8','c9','c10',
+                  'c11','c12','c13','c14','c15','c16','c17','c18','c19','c20',
+                  'c21','c22','c23','c24','c25','c26','c27','c28','c29','c30',
+                  'c31','c32','c33','c34','c35']
+
+    column_names_index = df.columns
+    print(column_names_index)
+
+    column_names_list = df.columns.tolist()
+    # print(column_names_list)
+
+    # remove date row
+    df_nodate_row = df.drop(0)
+    new_zero=get_row_col(df_nodate_row,0,0)
+    print(f"new zero row, col 0 value: {new_zero}")
+    new_34=get_row_col(df_nodate_row,0,34)
+    print(f"new zero row, col 34 value: {new_34}")
+    new_one=get_row_col(df_nodate_row,1,0)
+    print(f"new one row, col 0 value: {new_one}")
+    new_34=get_row_col(df_nodate_row,1,34)
+    print(f"new one row, col 34 value: {new_34}")
+
+    # # column_names_list = df_date_row.columns.tolist()
+    # # print(column_names_list)
+
+    # datetime_obj = pd.to_datetime(sheet_date, format='%Y/%m/%d')
+  # print(f"'{sheet_date}' converted to: {datetime_obj}")
+
+    # ts_sheet_datetime = get_sheet_date(df)
+    # print(f"sheet_date' {ts_sheet_datetime}")
+    # old_zero=get_row_col(df,0,0)
+    # print(f"old zero row, col 0 value: {old_zero}")
+    # # remove date row
+    # df_nodate_row = df.drop(0)
+    # new_zero=get_row_col(df_nodate_row,0,0)
+    # print(f"new zero row, col 0 value: {new_zero}")
+    # # column_names_list = df_date_row.columns.tolist()
+    # # print(column_names_list)
+
+    # column_names_index = df_nodate_row.columns
+    # print(column_names_index)
+
+
+    # Remove blank lines from dataframe
+    # for row in range(1, len(df)-1):
+    #   # skip blank lines
+    #   col=0
+    #   machine_id = get_row_col(df,row,col)
+    #   if machine_id == 0.0:
+    #     print(f"machine_id is null in row={row}")
+    #     # don't include in new dataframe
+    #   else:
+    #   # row=29
+    #     col=3
+    #     oil_type=get_row_col(df,row,1)
+    #     line_id=get_row_col(df,row,2)
+    #     for day in daily_dates:
+    #       value=isValid3(df,row,col)
+    #       if value == 1:
+    #           # print(f"Null: date:{day.strftime("%Y-%m-%d")},machine_id:{machine_id},oil_type:{oil_type},line_id:{line_id},col={col},val={value}")
+    #           i=1
+    #       elif value == 2:
+    #           # print(f"OK: date:{day.strftime("%Y-%m-%d")},machine_id:{machine_id},oil_type:{oil_type},line_id:{line_id},col={col},value={value}")
+    #           i=2
+    #       elif value == 3:
+    #           print(f"Other: date:{day.strftime("%Y-%m-%d")},machine_id:{machine_id},oil_type:{oil_type},line_id:{line_id},col={col},value={df.iloc[row,col]}")
+    #       col+=1
+
+
+    # daily_dates = days_of_month_pandas(pd_sheet_datetime)
+
+ 
+    # print("Checking for non-numeric oil quantities...")
+    # # Find all non-numeric oil quantities
+    # # day_of_month_quantity(df,daily_dates)
+    # row=1
+    # for row in range(1, len(df)-1):
+    #   # skip blank lines
+    #   col=0
+    #   machine_id = get_row_col(df,row,col)
+    #   if machine_id == 0.0:
+    #     print(f"machine_id is null in row={row}")
+    #   else:
+    #   # row=29
+    #     col=3
+    #     oil_type=get_row_col(df,row,1)
+    #     line_id=get_row_col(df,row,2)
+    #     for day in daily_dates:
+    #       value=isValid3(df,row,col)
+    #       if value == 1:
+    #           # print(f"Null: date:{day.strftime("%Y-%m-%d")},machine_id:{machine_id},oil_type:{oil_type},line_id:{line_id},col={col},val={value}")
+    #           i=1
+    #       elif value == 2:
+    #           # print(f"OK: date:{day.strftime("%Y-%m-%d")},machine_id:{machine_id},oil_type:{oil_type},line_id:{line_id},col={col},value={value}")
+    #           i=2
+    #       elif value == 3:
+    #           print(f"Other: date:{day.strftime("%Y-%m-%d")},machine_id:{machine_id},oil_type:{oil_type},line_id:{line_id},col={col},value={df.iloc[row,col]}")
+    #       col+=1
 
     # val = get_row_col(df,row,col)
     # print(f"row={row},col={col},val={val}")
