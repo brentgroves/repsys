@@ -8,6 +8,7 @@ int fib(int n){
 }
 
 int main(){
+  // in this example main is not exported so it cannot be called from JS
     printf("Hello world!\n");
     int res = fib(5);
     printf("fib(5) = %d\n", res);

@@ -1,0 +1,18 @@
+<script src="hello.js"></script>
+<script>
+  var js_wrapped_fib = Module.cwrap("fib", "number", ["number"]);
+  var js_wrapped_main = Module.cwrap("main", "number");
+  function pressFibBtn() {
+    console.log("The result of fib(5) is:", js_wrapped_fib(5));
+  }
+
+  function pressMainBtn() {
+    console.log("The result of main() is:", js_wrapped_main());
+  }
+
+</script>
+
+<button onclick="pressMainBtn()">Main Click me!</button>
+<button onclick="pressFibBtn()">Fib Click me!</button>
+
+<p>Open the console to see the result!</p>

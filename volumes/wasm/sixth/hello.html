@@ -1,7 +1,7 @@
 <script src="hello.js"></script>
 <script>
   var js_wrapped_fib = Module.cwrap("fib", "number", ["number"]);
-
+  // var js_wrapped_main = Module.cwrap("main", "number");
   function pressBtn() {
     console.log("The result of fib(5) is:", js_wrapped_fib(5));
   }

@@ -267,13 +267,10 @@ Again, there are two ways to do this:
 
 copy fifth to sixth directory.
 
-- You can add EMSCRIPTEN_KEEPALIVE to your C functions in the code as shown below:
-
 ```c
 #include <stdio.h>
-#include <emscripten.h> // note we added the emscripten header
 
-int EMSCRIPTEN_KEEPALIVE fib(int n){
+int fib(int n){
     if(n == 0 || n == 1)
         return 1;
     else
@@ -294,11 +291,13 @@ In order to test it, compile the C code again, but this time tell the compiler t
 
 ```bash
 cd sixth
-emcc hello.c -o hello.js -s WASM=1 -s EXPORTED_RUNTIME_METHODS=cwrap -s EXPORTED_FUNCTIONS=_main,_fib
-
-# emcc hello.c -o hello.js -s WASM=1 -sEXPORTED_RUNTIME_METHODS=['cwrap']
-
+emcc hello.c -o hello.js -s WASM=1 -s EXPORTED_RUNTIME_METHODS=cwrap -s EXPORTED_FUNCTIONS=_fib
+emcc: warning: `main` is defined in the input files, but `_main` is not in `EXPORTED_FUNCTIONS`. Add it to this list if you want `main` to run. [-Wunused-main]
 ```
+
+Note that underscore before the function name, you will always have to add it.
+
+In this example main is not executed automatically, indeed, it is not even exported.
 
 Then edit and run your custom .html file as below:
 
@@ -318,12 +317,38 @@ function pressBtn(){
 
 Each time you press the "Click me!" button you should see "The result of fib(5) is: 8" appearing on your console.
 
-Alternatively, you can just tell the compiler that you need that functions by using this command (this way you don't need to add anything to your C code):
+copy sixth to seventh directory
 
 ```bash
-# dont think this works
-emcc hello.c -o hello.js -s WASM=1 -s EXPORTED_FUNCTIONS='["_fib"]' -s EXTRA_EXPORTED_RUNTIME_METHODS='["cwrap"]'
-# this works
+cd seventh
 emcc hello.c -o hello.js -s WASM=1 -s EXPORTED_RUNTIME_METHODS=cwrap -s EXPORTED_FUNCTIONS=_main,_fib
+```
 
+Main is now automatically executed at the beginning. You can also call it from JS whenever you want if you wrap it by adding (note that there are no input parameters):
+
+```python
+var js_wrapped_main = Module.cwrap("main", "number");
+```
+
+At this point you may are wondering, how do I pass an array to a WASM function from JavaScript?
+This will be covered in the section regarding the memory.
+
+Important:
+Exported functions need to be C functions (to avoid C++ name mangling). In order to solve that issue you can write in your C++ code:
+
+```c++
+extern "C"{
+
+int my_func(/* ... */){
+    // do stuffs
+}
+
+}
+```
+
+copy sixth to seventh directory
+
+```bash
+# this works and main is exported
+emcc hello.c -o hello.js -s WASM=1 -s EXPORTED_RUNTIME_METHODS=cwrap -s EXPORTED_FUNCTIONS=_main,_fib
 ```
