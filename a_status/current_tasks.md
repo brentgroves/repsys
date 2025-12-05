@@ -18,7 +18,7 @@ Carl Stangland, Desktop and System Support Technician, Indiana
 Lucas Tuma, IT Administrator, Strakonice
 Aleksandar Gavrilov, IT Administrator, Skopje
 
-##
+## **[running python in browser with pyodide and webassembly](https://medium.com/@ccpythonprogramming/running-python-in-the-browser-with-pyodide-and-webassembly-729e4df6e287)**
 
 ## Can't access this php file from VLAN 40
 
@@ -102,10 +102,6 @@ GitLab: A popular option that combines project management, source code managemen
 Redmine / Jira: Self-hosted instances of these tools can be containerized and deployed on K8s, often with community-maintained Helm charts available.
 
 ## Deploy Charmed K8s and gitlab
-
-## Hearing test
-
-- Nov 14th, at Avilla @ 4:20pm
 
 ## Dimensional Gage - Marposs
 

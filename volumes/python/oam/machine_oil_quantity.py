@@ -171,6 +171,11 @@ def main():
     print(df_cleaned.head(15))
     print(df_cleaned.tail(15))
 
+    ## mispellings of machine names
+
+    To check if values in a Pandas DataFrame column exist within a given list, 
+    the Series.isin() method is the most efficient and recommended approach.
+Here's how to use it:
     # Remove blank lines from dataframe
     # for row in range(1, len(df)-1):
     #   # skip blank lines
