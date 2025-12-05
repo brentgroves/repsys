@@ -348,9 +348,54 @@ int my_func(/* ... */){
 }
 ```
 
-copy sixth to seventh directory
+copy seventh to eighth directory
+
+## Call JavaScript from C/C++
+
+You can even call JavaScript functions from C/C++ code!
+The easiest way to do this is to use the emscripten_run_script function. Edit your hello.c to:
+
+```c
+#include <stdio.h>
+#include <emscripten.h>
+
+int main(){
+    printf("WASM is running!");
+    emscripten_run_script("alert('I have been called from C!')");
+    return 0;
+}
+```
+
+Compile and run it and you should see an alert on the browser as soon as the WASM instance is ready.
 
 ```bash
 # this works and main is exported
-emcc hello.c -o hello.js -s WASM=1 -s EXPORTED_RUNTIME_METHODS=cwrap -s EXPORTED_FUNCTIONS=_main,_fib
+emcc hello.c -o hello.js -s WASM=1 -s EXPORTED_RUNTIME_METHODS=cwrap -s EXPORTED_FUNCTIONS=_main
+```
+
+You can also call your custom functions and even pass parameters! Edit your call in hello.c to:
+`emscripten_run_script("set_background_color(1)");`
+
+and your custom.html to:
+
+```html
+<script src="hello.js"></script>
+<script>
+function set_background_color(color_idx){
+    var color = "red";
+    if(color_idx == 1)   color = "blue";
+    else if(color_idx == 2) color = "green";
+
+    document.body.style.backgroundColor = color; // set the new background color
+}
+</script>
+```
+
+```bash
+# this works and main is exported
+emcc hello.c -o hello.js -s WASM=1 -s EXPORTED_RUNTIME_METHODS=cwrap -s EXPORTED_FUNCTIONS=_main,_fib,_set_background_color_from_c
+
+emcc hello.c -o hello.js -s WASM=1 -s FORCE_FILESYSTEM -s EXPORTED_RUNTIME_METHODS=cwrap -s EXPORTED_FUNCTIONS=_main,_fib,_set_background_color_from_c
+
+-s FORCE_FILESYSTEM
 ```
