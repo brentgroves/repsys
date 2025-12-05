@@ -18,10 +18,11 @@ Carl Stangland, Desktop and System Support Technician, Indiana
 Lucas Tuma, IT Administrator, Strakonice
 Aleksandar Gavrilov, IT Administrator, Skopje
 
+##
+
 ## Can't access this php file from VLAN 40
 
 <https://10.188.50.212/fog/service/ipxe/boot.php>
-
 
 **[Required Ports for the gateway to function](../research/m_z/microsoft_fabric/data_gateway/docs/public_domains_and_ports_used_by_the_gateway.md)**
 
@@ -117,14 +118,6 @@ Redmine / Jira: Self-hosted instances of these tools can be containerized and de
 - made parquet file from csv using pyspark.
 - copy user friendly excel into data lake oam folder
 - notebook transforms excel to easily digestable csv file format and copies rows into datalake oam table
-
-## Next
-
-cannon eos rebel t3/1100d
-<https://en.canon-me.com/support/consumer/products/cameras/eos/eos-1000d.html?type=software&detailId=tcm:60-1309830&os=Windows%2010%20%2864-bit%29&language=&productTcmUri=tcm:60-555789>
-<https://www.youtube.com/watch?v=VTLISryqbSc>
-
-I can setup the Serial device server and help configure the Marposs dimensional guage. Jared has had previous experience working the Marposs so he is taking a look at it also.
 
 - **[PySpark Tutorial](https://www.geeksforgeeks.org/python/pyspark-tutorial/)**
 
