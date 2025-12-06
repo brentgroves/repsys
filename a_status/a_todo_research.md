@@ -1,4 +1,15 @@
-# Current Tasks
+# Research
+
+## ToDo
+
+- Change forwarded data gateway IP from 10.188.50.207 to something in the range of 10.188.50.[190-199].
+
+## Gage Research
+
+- Plug SDS into network cable ran to gage and verify power and access from research 21.
+- Team data collection update
+- Track serial cable order.
+- Verify data from one part at a time is recorded and not two parts, ie. (R/L).
 
 ## General Research
 
