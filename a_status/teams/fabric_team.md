@@ -1,27 +1,32 @@
-- Kristian Smith: Global Directory IT
+# team
+
+## Tech Fabric Team
+
 - Tarek Mohamed, IT Supervisor - Data & Analytics
-- Adrian Wise: System Admin, Technical Services Manager.
-- Brent Hall, System Administrator Senior
-- Ramarao Guttikonda, Senior System Administrator
-- Deza Birhan - Senior Database Administrator
-- Aamir Ghaffar: IT Systems Architect
 - Christian Trujillo, IT Structures Manager
-- Kevin Young, Information Systems Manager
 - Jared Davis, IT Manager
-- Hayley Rymer, IT Supervisor, Mills River
+- Kevin Young, Information Systems Manager
+- Sam Jackson, Information Systems Developer, Southfield
+- Pat Baxter, General Manager
+- Ron James, Quality Manager, Quality
+- Michael Percell, Manufacturing Engineering Manager
+- Jami Pyle, MP&L Manager
 - Matthew Bump, Muscle Shoals, Engineering Supervisor II / IT
 - Angelina Shadder, Muscle Shoals, Cyber Securtity, Desktop and Systems Support Technician
-- Sam Jackson, Information Systems Developer, Southfield
 - Brad D. Cook, Quality Engineer, Fruitport
 - Jared Eikenberry, Quality Engineer, Fruitport
 - Carl Stangland, Desktop and System Support Technician, Indiana
 - Ricardo Baca, Sr. Manufacturing Engineer
 - Beth Schaus, Accounting Finance
 - Cody Hudson, Accounting Associate
-- Ron James, Quality Manager, Quality
-- Pat Baxter, General Manager
-- Michael Percell, Manufacturing Engineering Manager
-- Jami Pyle, MP&L Manager
+- Katerina Lallouet, HR Manager, Corporate
+- Vicente Ontiveros, Director, Program Management
+Engineering, McLaren
+- Jose Pardo, Maintainence Manager
+- Mikael Boire, Operation Manager
 - Nancy Swank, Material Planner
-- Nickolas Dekoninck, Quality Engineer
-- Chelsea Prill, Quality Engineer
+- Erin Williams, Manufacturing Engineer, Engineering
+- April Sumner, Quality Engineer
+- Skippie Muehlfeld, Controls Engineer
+- Josh Williams, Program Manager, Engineering
+- Dennis Brach, Maintenance Manager
