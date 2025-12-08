@@ -3,6 +3,7 @@
 ## ToDo
 
 - Change forwarded data gateway IP from 10.188.50.207 to something in the range of 10.188.50.[190-199].
+- **[listen to Linus](https://www.youtube.com/watch?v=NjGHrDnPxwI&pp=ugUHEgVlbi1VUw%3D%3D)**
 
 ## Gage Research
 
