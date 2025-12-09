@@ -392,7 +392,68 @@ function set_background_color(color_idx){
 ```
 
 ```bash
-# this works and main is exported
+emcc hello.c -o hello.js -s WASM=1 -s EXPORTED_RUNTIME_METHODS=cwrap -s EXPORTED_FUNCTIONS=_main,_fib,_set_background_color_from_c
+
+# Live reload enabled.
+# hello.js:916 stdio streams had content in them that was not flushed. you should set EXIT_RUNTIME to 1 (see the Emscripten FAQ), or make sure to emit a newline when you printf etc.
+# warnOnce @ hello.js:916Understand this error
+# hello.js:916 (this may also be due to not including full filesystem support - try building with -sFORCE_FILESYSTEM)
+# warnOnce @ hello.js:916Understand this error
+
+emcc hello.c -o hello.js -s WASM=1 -s FORCE_FILESYSTEM -s EXPORTED_RUNTIME_METHODS=cwrap -s EXPORTED_FUNCTIONS=_main,_fib,_set_background_color_from_c
+
+-s FORCE_FILESYSTEM
+```
+
+copy eighth to nineth
+
+You may noticed that to pass parameters this way is not very easy.
+Luckily, the function EM_ASM (and its variants) allows you to write JS code, call JS functions, pass parameters and even get return values, in a much more flexible way. Have a look at the following example (you don't need to change anything in the your .html code):
+
+```python
+#include <time.h>   // for time
+#include <stdlib.h> // for rand
+#include <stdio.h>
+#include <emscripten.h>
+
+int main(){
+    printf("WASM is running!\n");
+    
+    srand(time(NULL));       // initialize random seed
+    int color_idx = rand() % 3; // could be 0, 1 or 2
+    
+    EM_ASM(
+        // here you can write inline javascript code!
+        console.log("(1) I have been printed from inline JavaScript!");
+        console.log("I have no parameters and I do not return anything :(");
+        // end of javascript code
+    );
+        
+    // note the underscore and the curly brackets (to pass one or more parameters)
+    EM_ASM_({
+        console.log("(2) I have received a parameter! It is:", $0);
+        console.log("Setting the background to that color index!");
+        set_background_color($0);
+    }, color_idx);
+        
+    // note that you have to specify the return type after EM_ASM_
+    int result = EM_ASM_INT({
+        console.log("(3) I received two parameters! They are:", $0, $1);
+        console.log("Let's return their sum!");
+        return sum($0, $1);
+    
+        function sum(a, b){
+            return a + b;
+        }
+    }, 13, 10);
+    
+    printf("(4) The C code received %d as result!\n", result);
+    
+    return 0;
+}
+```
+
+```bash
 emcc hello.c -o hello.js -s WASM=1 -s EXPORTED_RUNTIME_METHODS=cwrap -s EXPORTED_FUNCTIONS=_main,_fib,_set_background_color_from_c
 
 emcc hello.c -o hello.js -s WASM=1 -s FORCE_FILESYSTEM -s EXPORTED_RUNTIME_METHODS=cwrap -s EXPORTED_FUNCTIONS=_main,_fib,_set_background_color_from_c

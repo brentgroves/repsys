@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Web Page</title>
+  <link rel="stylesheet" type="text/css" href="style.css">
+  <script src="hello.js"></script>
+  <script>
+    var js_wrapped_fib = Module.cwrap("fib", "number", ["number"]);
+    function pressFibBtn() {
+      console.log("The result of fib(5) is:", js_wrapped_fib(5));
+    }
+    var js_wrapped_main = Module.cwrap("main", "number");
+    function pressMainBtn() {
+      console.log("The result of main() is:", js_wrapped_main());
+    }
+    var js_wrapped_set_background_color_from_c = Module.cwrap("set_background_color_from_c", "number", ["number"]);
+    function pressSetBackgroundColorFromCBtn(color_idx) {
+      console.log("The result of set_background_color_from_c() is:", js_wrapped_set_background_color_from_c(color_idx));
+      // console.log("The result of set_background_color_from_c(" + color_idx + ") is:", js_wrapped_set_background_color_from_c(color_idx));
+    }
+    function set_background_color(color_idx) {
+      var color = "red";
+      if (color_idx == 1) color = "blue";
+      else if (color_idx == 2) color = "green";
+      else if (color_idx == 3) color = "grey";
+
+      document.body.style.backgroundColor = color; // set the new background color
+    }    
+    </script>
+</head>
+
+<body>
+  <h1>Welcome to My Page</h1>
+  <p>This is some content styled with external CSS.</p>
+  <div class="button-container">
+    <button onclick="pressMainBtn()">Main Click me!</button>
+    <button onclick="pressFibBtn()">Fib Click me!</button>
+    <button onclick="js_wrapped_set_background_color_from_c(0)">Red</button>
+    <button onclick="js_wrapped_set_background_color_from_c(1)">Blue</button>
+    <button onclick="js_wrapped_set_background_color_from_c(2)">Green</button>
+    <button onclick="js_wrapped_set_background_color_from_c(3)">Grey</button>
+  </div>
+  <p>Open the console to see the result!</p>
+
+</body>
+
+</html>

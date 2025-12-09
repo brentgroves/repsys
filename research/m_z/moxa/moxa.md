@@ -3,6 +3,66 @@
 There is an ISO image of the software CD and we can mount it to the laptop's Win11 VM.
 We can also connect to the web server of the SDS to perform configuration tasks. If the IP address needs to be changed to a different subnet you can connect both the laptop and SDS to small isolated switch.
 
+## Test from Laptop
+
+- plug network cable from switch configured for the JT Front VLAN into laptop or desktop PC.
+- configure the network interface as:
+
+```yaml
+ip: 10.188.74.200
+gw: 10.188.74.254
+ns: none
+mask: 255.255.255.0
+```
+
+- verify laptop/desktop's new IP
+
+```bash
+ip a
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+    inet6 ::1/128 scope host noprefixroute
+       valid_lft forever preferred_lft forever
+3: wlp114s0f0: <BROADCAST,MULTICAST> mtu 1500 qdisc noop state DOWN group default qlen 1000
+    link/ether e0:8f:4c:51:6f:17 brd ff:ff:ff:ff:ff:ff
+4: enx6c6e071c5198: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc fq_codel state UP group default qlen 1000
+    link/ether 6c:6e:07:1c:51:98 brd ff:ff:ff:ff:ff:ff
+    inet 10.188.74.200/24 brd 10.188.74.255 scope global noprefixroute enx6c6e071c5198
+```
+
+- scan network for SDS
+
+```bash
+# scan JT Front VLAN.
+nmap -sP 10.188.74.0/24
+
+Starting Nmap 7.95 ( https://nmap.org ) at 2025-12-09 15:18 EST
+Nmap scan report for 10.188.74.11
+Host is up (0.015s latency).
+Nmap scan report for isdev (10.188.74.200)
+Host is up (0.00019s latency).
+Nmap done: 256 IP addresses (2 hosts up) scanned in 7.09 seconds
+
+# scan Avilla OT network
+nmap -sP 10.188.220.0/24
+Starting Nmap 7.95 ( https://nmap.org ) at 2025-12-09 15:17 EST
+Nmap scan report for 10.188.220.50
+Host is up (0.0022s latency).
+Nmap scan report for 10.188.220.201
+Host is up (0.0053s latency).
+Nmap scan report for 10.188.220.202
+Host is up (0.0070s latency).
+Nmap scan report for 10.188.220.203
+Host is up (0.0053s latency).
+Nmap done: 256 IP addresses (4 hosts up) scanned in 7.07 seconds
+```
+
+- connect to SDS with browser
+
+`http://10.188.74.11/`
+
 ## Serial Device Server
 
 ```yaml

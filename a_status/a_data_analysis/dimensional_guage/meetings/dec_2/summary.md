@@ -34,8 +34,6 @@ No. We are recording dimensions for two of the same part. The parts are identifi
 4. Can these parameters be exported along with dimensional values to the serial port and CSV file.
 5. Who would modify the program? I believe Brian Segro or Bill Gstalder could help us to add CNC and tool change parameters. For advanced modifications Larry Becker from quality solutions could help us.
 
-## Notes
-
 ## Requirements
 
 1. Capture the data and and put it in a run chart and histogram.
