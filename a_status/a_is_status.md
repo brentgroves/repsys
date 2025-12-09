@@ -28,6 +28,7 @@ The MiiNe was created to provide manufacturers with a competitive embedded seria
 ### Questions
 
 - Can Plex collect CNC# and 9 tool counts along with the run data?
+- At first I was trying to scan from Plex and noticed Plex to not recognize the Xerox scanner and there was an option to install a Twain driver.
 
 ## Platform Engineering
 
