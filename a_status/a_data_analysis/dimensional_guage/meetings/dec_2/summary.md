@@ -25,13 +25,16 @@ To ensure traceability we should add CNC and tool change parameters to the progr
 
 **Ensure Traceability:** Make sure all measurements are traceable back to Man (Operator), Machine (Operation), Method, Material, Measurement System, and Environmental Conditions (5Ms, 1E) to enable process improvement. Record Unit Number or Serial Number for each part. I don't think we have serial numbers for each part but we can identify the CNC and tool changes.
 
-## Questions
+## Questions/Answers
 
 1. Are we recording the dimensions of left and right hand parts separately?
+No. We are recording dimensions for two of the same part. The parts are identified as station 1 and 2 and from the same CNC.
 2. Does Merlin support selecting parameters from a predefined list for the case of CNC#?
 3. Does Merlin support selecting multiple items from a predefined set for the case of tool changes?
 4. Can these parameters be exported along with dimensional values to the serial port and CSV file.
 5. Who would modify the program? I believe Brian Segro or Bill Gstalder could help us to add CNC and tool change parameters. For advanced modifications Larry Becker from quality solutions could help us.
+
+## Notes
 
 ## Requirements
 
