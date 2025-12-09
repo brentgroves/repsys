@@ -1,5 +1,8 @@
 # **[](https://www.moxa.com/en/products/industrial-edge-connectivity/serial-device-servers/general-device-servers/nport-5100a-series/nport-5150a)**
 
+There is an ISO image of the software CD and we can mount it to the laptop's Win11 VM.
+We can also connect to the web server of the SDS to perform configuration tasks. If the IP address needs to be changed to a different subnet you can connect both the laptop and SDS to small isolated switch.
+
 ## Serial Device Server
 
 ```yaml

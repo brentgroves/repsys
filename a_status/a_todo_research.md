@@ -12,6 +12,19 @@
 - Track serial cable order.
 - Verify data from one part at a time is recorded and not two parts, ie. (R/L).
 
+- backup/disaster recovery
+
+## **[Moxa’s Second-generation SoC](../research/m_z/moxa/architecture/SoC.md)**
+
+The MiiNe was created to provide manufacturers with a competitive embedded serial-to-Ethernet solution. The MiiNePort E3, which uses the MiiNe for its SoC, is a compact embedded device server that has the lowest power consumption among similar products. The MiiNe has the following features:
+
+- Designed for serial-to-Ethernet applications
+- Uses an Arm core
+- Uses Moxa’s own advanced UART technology
+- 2 MB Flash and 4 MB SDRAM memory built in
+
+![i](https://cdn-cms-frontdoor-dfc8ebanh6bkb3hs.a02.azurefd.net/Moxa/media/PDIM/S100000221/moxa-miineport-e3-series-application-image-eng.png)
+
 ## General Research
 
 - **[SQL Server Integrates Hadoop and Spark out-of-the box: The Why?](https://www.sqlservercentral.com/articles/sql-server-integrates-hadoop-and-spark-out-of-the-box-the-why)**

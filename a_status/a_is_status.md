@@ -12,7 +12,18 @@
   - create chat or email group to keep team informed
   - Southfield, Cody Hudson, and other Plex reports.
 
-- **[Structures Data Analytics Status](../volumes/python/oam/TODO.md)**
+- **[Structures Data Analytics Status](./a_da_status.md)**
+
+## Moxa’s Second-generation SoC
+
+The MiiNe was created to provide manufacturers with a competitive embedded serial-to-Ethernet solution. The MiiNePort E3, which uses the MiiNe for its SoC, is a compact embedded device server that has the lowest power consumption among similar products. The MiiNe has the following features:
+
+- Designed for serial-to-Ethernet applications
+- Uses an Arm core
+- Uses Moxa’s own advanced UART technology
+- 2 MB Flash and 4 MB SDRAM memory built in
+
+![i](https://cdn-cms-frontdoor-dfc8ebanh6bkb3hs.a02.azurefd.net/Moxa/media/PDIM/S100000221/moxa-miineport-e3-series-application-image-eng.png)
 
 ### Questions
 
@@ -33,4 +44,4 @@
 - **[MicroCloud Recovery](https://documentation.ubuntu.com/microcloud/stable/microcloud/how-to/recover/)**
 - **[Remote Replication in MicroCeph: RBD and Beyond - Utkarsh Bhatt, Canonical](https://www.youtube.com/watch?v=Yjh8kV4ZHBM&t=226)**
 
-Business Justification:
+Business Justification: This second MicroCloud/K8s cluster built from unused Dell 410 PowerEdge servers would be an inexpensive solution for backup/disaster recovery.
