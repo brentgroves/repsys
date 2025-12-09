@@ -61,7 +61,7 @@ int main(){
     }, 13, 10);
     
     // note that you have to specify the return type after EM_ASM_
-    // THIS DOES NOT WORK!
+    // THIS DOES NOT WORK! Can't call function defined in hello.js.
     // int result2 = EM_ASM_INT({
     //     set_background_color($0)
 
