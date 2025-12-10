@@ -460,3 +460,38 @@ emcc hello.c -o hello.js -s WASM=1 -s FORCE_FILESYSTEM -s EXPORTED_RUNTIME_METHO
 
 -s FORCE_FILESYSTEM
 ```
+
+As you can see, there are many things you can do with these inline calls. Pretty cool, isn't it?
+
+There is also a way to create a C API in JavaScript, but that requires a bit more work. If you are interested, you can find a good explanation of how to do it **[here](https://kripken.github.io/emscripten-site/docs/porting/connecting_cpp_and_javascript/Interacting-with-code.html#implement-a-c-api-in-javascript)**.
+
+copy eighth to nineth
+
+## Libraries
+
+You may have noticed that we already compiled some libraries with Emscripten. However, these were all "standard" libraries. Indeed, Emscripten already provides these libraries ready to be compiled.
+But what if you wanted to compile a non-standard library with Emscripten?
+
+The process is very similar to the one we have already seen to compile the C files.
+In case your library is small and has just some source files (.c or .cpp) and some headers file (.h) you just have to compile your "main" source file and your C code binding them together.
+If you want, you can download the source and the header of this very simple **[expression parsing library](https://github.com/codeplea/tinyexpr)** (found on github):
+
+- header **[tinyexpr.h](https://marcoselvatici.github.io/WASM_tutorial/ref/tinyexpr.h)** (2 KB),
+- source **[tinyexpr.c](https://marcoselvatici.github.io/WASM_tutorial/ref/tinyexpr.c)** (20 KB).
+
+Put them in the same folder and create another C file here containing:
+
+```c
+# include <stdio.h>
+# include "tinyexpr.h"
+
+int main(){
+    // te_interp just evaluates the expression in the string and returns a float
+    printf("The result of (2+23)/5-1 is: %f\n", te_interp("(2+23)/5-1", 0));
+    return 0;
+}
+```
+
+And then compile binding yours and the library code together like this:
+
+`emcc hello.c tinyexpr.c -o hello.html -s WASM=1`

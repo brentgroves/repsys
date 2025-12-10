@@ -1,0 +1,5 @@
+# Publishing items
+
+Structures has a Power BI premium workspace which means we can add Power BI dashboards, reports, and notebooks to an **[org app](https://learn.microsoft.com/en-us/power-bi/consumer/org-app-items/org-app-items)** and any user allowed by an admin can run it. If a user has a power bi pro license and the user has been added as a contributor to Structures workspace they can add items to the departments org app. To be runnable from a department org app the data source must be visible by Microsoft Fabric.  The data source must be reachable from the cloud and ideally it should have gone through the **[Medallion process](https://learn.microsoft.com/en-us/azure/databricks/lakehouse/medallion)** and be in a gold data lake. On premise data sources or Plex will be reachable through the Microsoft data gateway which is a web socket client that connects to a Microsoft web socket server called a Microsoft relay.
+
+Another way to **[publish Power BI items](https://learn.microsoft.com/en-us/power-bi/collaborate-share/service-embed-report-microsoft-teams)** outside of Microsoft Fabric.
