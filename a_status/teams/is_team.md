@@ -13,3 +13,6 @@ Jared Eikenberry, Quality Engineer, Fruitport
 Kent Cook, IT Administrator, Fruitport
 Ricardo Baca. Senior Manufacturing Eng, Southfield
 Mikael Boire, Operation Manager, Southfield
+Michael Arney, IT
+Mikita Gaskin, Analyst, IT
+Abner Huang, IT

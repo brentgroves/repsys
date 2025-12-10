@@ -46,3 +46,22 @@ The MiiNe was created to provide manufacturers with a competitive embedded seria
 - **[Remote Replication in MicroCeph: RBD and Beyond - Utkarsh Bhatt, Canonical](https://www.youtube.com/watch?v=Yjh8kV4ZHBM&t=226)**
 
 Business Justification: This second MicroCloud/K8s cluster built from unused Dell 410 PowerEdge servers would be an inexpensive solution for backup/disaster recovery.
+
+## IS Team
+
+Sadiq Basha Sr. Data Engineer, Data & Analytics
+Tarek Mohamed, Data and Analytics IT, Supervisor
+Cody Hudson, Fabric Administrator
+Brent Hall, System Administrator Senior
+Kevin Young, Information Systems Manager
+Jared Davis, IT Manager
+Hayley Rymer, IT Supervisor, Mills River
+Sam Jackson, Information Systems Developer, Southfield
+Brad D. Cook, Quality Engineer, Fruitport
+Jared Eikenberry, Quality Engineer, Fruitport
+Kent Cook, IT Administrator, Fruitport
+Ricardo Baca. Senior Manufacturing Eng, Southfield
+Mikael Boire, Operation Manager, Southfield
+Michael Arney, IT
+Mikita Gaskin, Analyst, IT
+Abner Huang, IT
