@@ -52,6 +52,7 @@ can i run a webassembly from a android phone. yes.
 - **[Graph Theory](../research/a_l/computer_science/data_structures/graph_theory/geeksforgeeks/depth_first_search.md)**
 
 - **[Microsoft data gateway](https://www.youtube.com/watch?v=dz4bM_NzQQg)**
+  - **[Install an on-premises data gateway](https://learn.microsoft.com/en-us/data-integration/gateway/service-gateway-install)**
 
 - **[Integrating On-Premises Data into Microsoft Fabric Using Data Pipelines in Data Factory](../research/m_z/microsoft_fabric/data_gateway/data_gateway.md)**
 

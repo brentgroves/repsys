@@ -1,7 +1,13 @@
+# Structures Microsoft Data Gateway
+
 Submitted : 2025-11-25 18:30:13
 Request Number : REQ0229820
 
-# Structures Microsoft Data Gateway
+## outcome
+
+It took about 10 minutes to login to our Microsoft tenant as <bgroves@linamar.com>.
+
+- download python UV.
 
 The following is in markdown format. You can view it better at <https://markdownlivepreview.com/> by copying and pasting the contents below.
 
