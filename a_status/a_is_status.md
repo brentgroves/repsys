@@ -1,5 +1,7 @@
 # Information Systems Status
 
+- Brad Power BI training
+
 ## Fabric/Power BI/Notebooks Medallion Workflow
 
 - Finished Bronze Layer and starting Silver Layer of Medallion Workflow (clean data)
@@ -62,6 +64,6 @@ Jared Eikenberry, Quality Engineer, Fruitport
 Kent Cook, IT Administrator, Fruitport
 Ricardo Baca. Senior Manufacturing Eng, Southfield
 Mikael Boire, Operation Manager, Southfield
-Michael Arney, IT
-Mikita Gaskin, Analyst, IT
-Abner Huang, IT
+Michael Arney, Plex, IT
+Mikita Gaskin, Analyst, EDI, IT
+Abner Huang, Mach2, IT
