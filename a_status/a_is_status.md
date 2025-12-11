@@ -14,6 +14,8 @@
 
 ### Structures MicroCloud/K8S disaster recovery
 
+Business Justification: This second MicroCloud/K8s cluster built from unused Dell 410 PowerEdge servers would be an inexpensive solution for backup/disaster recovery. It is used to run automated ETL to get on-prem/non-microsoft cloud data to the Structures gold data lake in conjuction with the Microsoft data gateway.
+
 - MicroCloud Backup Cluster
 - 3 Dell R410 PowerEdge Servers
   - resources
@@ -24,8 +26,6 @@
 
 - **[MicroCloud Recovery](https://documentation.ubuntu.com/microcloud/stable/microcloud/how-to/recover/)**
 - **[Remote Replication in MicroCeph: RBD and Beyond - Utkarsh Bhatt, Canonical](https://www.youtube.com/watch?v=Yjh8kV4ZHBM&t=226)**
-
-Business Justification: This second MicroCloud/K8s cluster built from unused Dell 410 PowerEdge servers would be an inexpensive solution for backup/disaster recovery.
 
 ## Fabric/Power BI/Notebooks Medallion Workflow
 
