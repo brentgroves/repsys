@@ -2,6 +2,15 @@
 
 ## ToDo
 
+- Please complete the comments in your Oracle star review comments and Employee feedback by Friday.
+- **[Create and publish a Power BI Desktop file](https://learn.microsoft.com/en-us/power-bi/connect-data/service-gateway-sql-tutorial#create-and-publish-a-power-bi-desktop-file)**
+- For Power BI which credentials to use when connecting to a SQL server
+- **[jira](https://brentgroves-1765406338086.atlassian.net?continue=https%3A%2F%2Fbrentgroves-1765406338086.atlassian.net%2Fwelcome%2Fsoftware&atlOrigin=eyJpIjoiYWUyZGY5MGY4OGMwNGNkNzliMDk2YWU1MzkxYTBmOWEiLCJwIjoiaiJ9)**
+- Configure data gateway
+  - Create a Power BI report from on-prem data source.
+  - **[Install/configure data gateway](https://www.youtube.com/watch?v=dz4bM_NzQQg)**
+  - **[Install an on-premises data gateway](https://learn.microsoft.com/en-us/data-integration/gateway/service-gateway-install)**
+
 - Verify can login to Linamar tenant from Windows server.
 - **[scan javascript](http://direct.asprise.com/scan/scannerjs/docs/html/scannerjs-javascript-guide.html#:~:text=First%2C%20we%20check%20whether%20the,the%20images%20from%20the%20response:)**
 - Change forwarded data gateway IP from 10.188.50.207 to something in the range of 10.188.50.[190-199].
