@@ -4,6 +4,8 @@
 
 - There are good Power BI training videos on youtube but Brad Cook says that domain is blocked and he thinks a reserved IP there would cause issues so he didn't try to put in a network config request.
 
+- It seems like I just commented on a star review not to long ago. Is it already time for another one?
+
 ## Fabric/Power BI/Notebooks Medallion Workflow
 
 - Finished Bronze Layer and starting Silver Layer of Medallion Workflow (clean data)
