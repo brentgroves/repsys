@@ -6,6 +6,25 @@
 
 - It seems like I just commented on a star review not to long ago. Is it already time for another one?
 
+- Can we find a rack location to setup 3 Dell R410 PowerEdge Servers for the MicroCloud/K8s disaster recovery and secondary data gateway.
+
+## Platform Engineering
+
+### Structures MicroCloud/K8S disaster recovery
+
+- MicroCloud Backup Cluster
+- 3 Dell R410 PowerEdge Servers
+  - resources
+    - 3 sets of **[128 GB DDR3 ECC server memory](https://cloudninjas.com/collections/poweredge-r410-ram-memory-upgrade)**
+    - 6 SSD drives
+- Rack Location
+  - Albion or Southfield
+
+- **[MicroCloud Recovery](https://documentation.ubuntu.com/microcloud/stable/microcloud/how-to/recover/)**
+- **[Remote Replication in MicroCeph: RBD and Beyond - Utkarsh Bhatt, Canonical](https://www.youtube.com/watch?v=Yjh8kV4ZHBM&t=226)**
+
+Business Justification: This second MicroCloud/K8s cluster built from unused Dell 410 PowerEdge servers would be an inexpensive solution for backup/disaster recovery.
+
 ## Fabric/Power BI/Notebooks Medallion Workflow
 
 - Finished Bronze Layer and starting Silver Layer of Medallion Workflow (clean data)
@@ -35,23 +54,6 @@ The MiiNe was created to provide manufacturers with a competitive embedded seria
 
 - Can Plex collect CNC# and 9 tool counts along with the run data?
 - At first I was trying to scan from Plex and noticed Plex to not recognize the Xerox scanner and there was an option to install a Twain driver.
-
-## Platform Engineering
-
-### Structures MicroCloud/K8S disaster recovery
-
-- MicroCloud Backup Cluster
-- 3 Dell R410 PowerEdge Servers
-  - resources
-    - 3 sets of **[128 GB DDR3 ECC server memory](https://cloudninjas.com/collections/poweredge-r410-ram-memory-upgrade)**
-    - 6 SSD drives
-- Rack Location
-  - Albion or Southfield
-
-- **[MicroCloud Recovery](https://documentation.ubuntu.com/microcloud/stable/microcloud/how-to/recover/)**
-- **[Remote Replication in MicroCeph: RBD and Beyond - Utkarsh Bhatt, Canonical](https://www.youtube.com/watch?v=Yjh8kV4ZHBM&t=226)**
-
-Business Justification: This second MicroCloud/K8s cluster built from unused Dell 410 PowerEdge servers would be an inexpensive solution for backup/disaster recovery.
 
 ## IS Team
 
