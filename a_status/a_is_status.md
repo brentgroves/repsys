@@ -1,6 +1,8 @@
 # Information Systems Status
 
-- Brad Power BI training
+## Questions
+
+- There are good Power BI training videos on youtube but Brad Cook says that domain is blocked and he thinks a reserved IP there would cause issues so he didn't try to put in a network config request.
 
 ## Fabric/Power BI/Notebooks Medallion Workflow
 
