@@ -8,6 +8,8 @@
 
 - Can we find a rack location to setup 3 Dell R410 PowerEdge Servers for the MicroCloud/K8s disaster recovery and secondary data gateway.
 
+- The on-prem databases such as pd-avi-sql01 will need a service account or special username in order to be used as Power BI data sources through the data gateway.
+
 ## Platform Engineering
 
 ### Structures MicroCloud/K8S disaster recovery
