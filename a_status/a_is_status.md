@@ -2,13 +2,15 @@
 
 ## Questions
 
-- There are good Power BI training videos on youtube but Brad Cook says that domain is blocked and he thinks a reserved IP there would cause issues so he didn't try to put in a network config request.
+- Marposs gage network cable worked with the SDS, may need another cable to connect to the OT file server.
+- The on-prem databases such as pd-avi-sql01 will need a service account or special username in order to be used as Power BI data sources through the data gateway.
+
+- There are good Power BI training videos on youtube but Fruitport's Brad Cook says that domain is blocked and he thinks a reserved IP there would cause issues so he didn't try to put in a network config request.
+user access request ther is no video streams option in the drop down.
 
 - It seems like I just commented on a star review not to long ago. Is it already time for another one?
 
 - Can we find a rack location to setup 3 Dell R410 PowerEdge Servers for the MicroCloud/K8s disaster recovery and secondary data gateway.
-
-- The on-prem databases such as pd-avi-sql01 will need a service account or special username in order to be used as Power BI data sources through the data gateway.
 
 ## Platform Engineering
 
