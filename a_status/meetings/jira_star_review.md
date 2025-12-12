@@ -4,6 +4,8 @@ The following is in markdown format and can be viewed by copying and pasting the
 
 Hi Team,
 
+As you know every 3 months we are to update our star review. This is a way to add your star review goals to your daily workflow.
+
 I wanted to give a quick demo of how we can use Jira to help us manage our star review goals. If you are interested please attend.
 
 Thanks
@@ -49,3 +51,11 @@ Brent
 - Abner Huang, Mach2, IT
 - Ron James, Quality Manager, Quality
 - Michael Percell, Manufacturing Engineering Manager
+- Mitch Harper, Desktop and Systems Support Technician, Mills River
+- Thomas Creal, Desktop and Systems Support Technician, Mills River
+- Matthew Bump, Muscle Shoals, Engineering Supervisor II / IT
+- Angelina Shadder, Muscle Shoals, Cyber Securtity, Desktop and Systems Support Technician
+- Matt Irey, Desktop and System Support Technician, Fruitport
+- David Maitner,  Desktop and System Support Technician, Fruitport
+- Lucas Tuma, IT Administrator, Strakonice
+- Aleksandar Gavrilov, IT Administrator, Skopje
