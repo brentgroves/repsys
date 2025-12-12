@@ -4,9 +4,11 @@ The following is in markdown format and can be viewed by copying and pasting the
 
 Hi Team,
 
-As you know every 3 months we are to update our star review. This is a way to add your star review goals to your daily workflow.
+At first I was going to meet with Kevin alone. Then I thought that I'm probably not the only one who gets stressed out with star reviews. It's not because I wasn't working towards goals because I was but it's because I didn't remember the exact goals that I set 3 months ago.
 
-I wanted to give a quick demo of how we can use Jira to help us manage our star review goals. If you are interested please attend.
+This is a way to add your star review goals to your daily workflow. You don't have to use Jira, any project management software would do. I just chose Jira because it came up on google search as being one of the best.
+
+I wanted to give a quick demo of how we can use Jira to help us manage our star review goals. If you are interested or if you have any other ideas that you think are better and would like to share then please attend.
 
 Thanks
 Brent
