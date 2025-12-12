@@ -47,3 +47,5 @@ Brent
 - Michael Arney, Plex, IT
 - Mikita Gaskin, Analyst, EDI, IT
 - Abner Huang, Mach2, IT
+- Ron James, Quality Manager, Quality
+- Michael Percell, Manufacturing Engineering Manager
