@@ -13,6 +13,8 @@ Leadership Behaviors
 
 ## - **[Jira Tutorial for Beginners (AI-Powered Project Management Made Easy)](https://www.youtube.com/watch?v=GPOWZSxEslU)**
 
+The following is in markdown format and can be viewed by copying and pasting the entire content of this email into an online markdown viewer, such as at <https://markdownlivepreview.com/>.
+
 ## Financial – Investment of Choice
 
 Migrate off the Mobex Azure tenant fully into the Linamar tenant to allow the Mobex Azure tenant to be shut down.
