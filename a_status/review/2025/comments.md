@@ -53,3 +53,5 @@ Produce 30 day CPK and 90 day PPK.
 ## Customer – Supplier of Choice
 
 Enabling the Linamar Structures to utilize the corporate data lake, using Microsoft Fabric, to include all of data in various databases - vending machines, CMM, PLC sensor, and other reporting data. This will make more complicated reports easier to create and maintain within the Structures group.
+
+Status: In the process of creating the `Structures Microsoft Fabric Medallion Workflow` process. We are using the `Maintenance oil consumption` report as a test case to understand and document this new data analytics process. When complete Structures business data will be located in a centralized data lake enabling previously impossible insights. This process will enable us to securely manage Power BI, dashboards, and Notebooks. It will also encompass automated data collection for the management, creation, and visibility of statistical process control graphs and charts previously in the domain of Minitab.
