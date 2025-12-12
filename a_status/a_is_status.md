@@ -1,5 +1,7 @@
 # Information Systems Status
 
+The following is in markdown format and can be viewed by copying and pasting the entire content of this email into an online markdown viewer, such as at <https://markdownlivepreview.com/>.
+
 ## Questions
 
 - Marposs gage network cable worked with the SDS, may need another cable to connect to the OT file server.

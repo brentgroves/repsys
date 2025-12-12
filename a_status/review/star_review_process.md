@@ -1,5 +1,7 @@
 # oracle star review process
 
+The following is in markdown format and can be viewed by copying and pasting the entire content of this email into an online markdown viewer, such as at <https://markdownlivepreview.com/>.
+
 This is required every 3 months.
 
 ## Steps to access Oracle star review
@@ -23,7 +25,7 @@ Core Values
 Leadership Behaviors
 25% of total evaluation weight
 
-## Jira
+## - **[Jira Tutorial for Beginners (AI-Powered Project Management Made Easy)](https://www.youtube.com/watch?v=GPOWZSxEslU)**
 
 ## personal
 
