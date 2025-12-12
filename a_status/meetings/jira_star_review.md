@@ -44,3 +44,6 @@ Brent
 - Brad D. Cook, Quality Engineer, Fruitport
 - Jared Eikenberry, Quality Engineer, Fruitport
 - Carl Stangland, Desktop and System Support Technician, Indiana
+- Michael Arney, Plex, IT
+- Mikita Gaskin, Analyst, EDI, IT
+- Abner Huang, Mach2, IT
