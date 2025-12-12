@@ -36,7 +36,7 @@ No. We are recording dimensions for two of the same part. The parts are identifi
 
 ## Requirements
 
-1. Capture the data and and put it in a run chart and histogram.
+1. Capture dimensional data from a Marposs gage and put it in a run chart and histogram.
 2. Produce 30 day CPK and 90 day PPK.
 
     - **Cp** measures whether the process spread is narrower than the specification width

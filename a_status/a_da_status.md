@@ -42,7 +42,7 @@ No. We are recording dimensions for two of the same part. The parts are identifi
 4. Can these parameters be exported along with dimensional values to the serial port and CSV file.
 5. Who would modify the program? I believe Brian Segro or Bill Gstalder could help us to add CNC and tool change parameters. For advanced modifications Larry Becker from quality solutions could help us.
 
-## Oil consumption report
+## Oil Consumption Report Workflow
 
 Working on programmatically cleaning data in the Excel data source.
 
@@ -53,7 +53,7 @@ Working on programmatically cleaning data in the Excel data source.
 - Create a Power BI report using the OAM schema of the Structures gold data lake table.
 - Create Maintenance org app and add OAM report to it.
 
-## Fabric/Power BI/Notebooks/Data Lake Medallion Workflow
+## Structures Microsoft Fabric Medallion Workflow
 
 - Finished Bronze Layer and starting Silver Layer of Medallion workflow process.
 - We noticed that requests are coming in for access appoval for the Structures Fabric workspace. We will start approving these requests when we finish creating the Fabric/PowerBI/Notebook/Datalake medallian workflow.

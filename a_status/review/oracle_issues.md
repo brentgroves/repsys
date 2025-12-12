@@ -1,9 +1,13 @@
 # oracle sign in
 
-## issue
+## Will not print
+
+Tried printing PDF and HTML options.
+
+## No access
 
 HR adds you to Oracle and sometimes they do not enter all the info needed such as manager and domain EntraId account. If this is the case you will receive
-the following error: System error. "Please re-try your action. If you continue to get this error, please contact the Administrator." when clicking company single sign on button. After HR makes enters your domain user account it takes time to take effect. In my case I tried to sign in the next day.
+the following error: System error. "Please re-try your action. If you continue to get this error, please contact the Administrator." when clicking company single sign on button. After HR enters your domain user account it takes time to take effect. In my case I tried to sign in the next day.
 
 ## after my domain user account was added and waiting a day for it to take affect it worked
 

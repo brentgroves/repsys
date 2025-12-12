@@ -10,7 +10,7 @@ user access request ther is no video streams option in the drop down.
 
 - It seems like I just commented on a star review not to long ago. Is it already time for another one?
 
-- Can we find a rack location to setup 3 Dell R410 PowerEdge Servers for the MicroCloud/K8s disaster recovery and secondary data gateway.
+- Can we find a rack location to setup 3 Dell R410 PowerEdge Servers for the MicroCloud/K8s disaster recovery and secondary data gateway. Approved by Jared to locate at Albion's server rack.
 
 ## Platform Engineering
 
