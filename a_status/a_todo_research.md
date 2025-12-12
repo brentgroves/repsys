@@ -2,6 +2,7 @@
 
 ## ToDo
 
+- Statical Process Control methods to goals
 - Please complete the comments in your Oracle star review comments and Employee feedback by Friday.
 - **[Create and publish a Power BI Desktop file](https://learn.microsoft.com/en-us/power-bi/connect-data/service-gateway-sql-tutorial#create-and-publish-a-power-bi-desktop-file)**
 - For Power BI which credentials to use when connecting to a SQL server
