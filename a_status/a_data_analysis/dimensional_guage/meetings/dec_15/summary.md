@@ -4,6 +4,7 @@
 
 - create the record format in excel
 - review Ron's excel file
+- review advanced feature request
 
 ## Meeting summary
 
@@ -23,6 +24,10 @@ Are entered once at the beginning of the 18 measurement gage cycle.
     - optional
     - Use a control similar to an HTML radio button or have the operator type a comma separated list of tool numbers for tools that have just been changed.
   Tools
+
+## Advanced Features
+
+- conveyer selector for good/bad parts
 
 Record Format: Excel
 
