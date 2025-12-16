@@ -1,5 +1,7 @@
 # JT Fronts data collection and analytics
 
+Collect and analysis dimensional data along with traceability paramters to use in statistical process control for JT fronts.
+
 ## Requirements
 
 1. Capture dimensional data from a Marposs gage and put it in a run chart and histogram.
