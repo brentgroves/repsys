@@ -1,4 +1,11 @@
-# summary
+# Marposs Visit
+
+## ToDo
+
+- create the record format in excel
+- review Ron's excel file
+
+## Meeting summary
 
 - meet again on 23rd
 - larry can modify the program to collect traceability paramaters
