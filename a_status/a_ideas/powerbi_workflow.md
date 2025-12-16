@@ -12,9 +12,7 @@ The following is in markdown format and can be viewed by copying and pasting the
 
 - **[Power BI training resource](https://www.youtube.com/watch?v=vg5bwxhM2vs&list=PLtCzYvIWNgJE-NsGuUXbjYyJgQMSOFp3A)**
 
-## fabric team
-
-## Tech Fabric Team
+## Fabric Team
 
 - Tarek Mohamed, IT Supervisor - Data & Analytics
 - Christian Trujillo, IT Structures Manager
