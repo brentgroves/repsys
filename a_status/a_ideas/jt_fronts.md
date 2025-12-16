@@ -1,4 +1,24 @@
-# Marposs visit
+# JT Fronts data collection and analytics
+
+## Requirements
+
+1. Capture dimensional data from a Marposs gage and put it in a run chart and histogram.
+2. Produce 30 day CPK and 90 day PPK.
+
+    - **Cp** measures whether the process spread is narrower than the specification width
+
+    - **Cpk** measures both the centering of the process as well as the spread of the process relative to the specification width
+
+    - The Process Performance Index is known as **PpK**. It is a statistical metric that assesses how closely a process is operating within its long-term specification bounds.
+
+![i](https://www.1factory.com/assets/img/visual-cp-cpk-1factory.png)
+
+## Options for CPK/PPK
+
+- Minitab
+- Python Notebook published to Structures Microsoft Fabric workspace.
+
+"Microsoft Fabric is an all-in-one, end-to-end analytics platform that unifies data movement, data lakes, data engineering, data science, and business intelligence into a single, integrated experience. It streamlines data management by providing a unified environment for data professionals to collaborate on projects, offering a comprehensive set of AI-powered tools for the entire data lifecycle, from ingestion to visualization." from Google AI overview.
 
 Hi Team,
 We are now ready for a visit. I would like to have a meeting to discuss some outstanding questions, below, and setup a time for the visit.
@@ -35,26 +55,6 @@ No. We are recording dimensions for two of the same part. The parts are identifi
 3. Does Merlin support selecting multiple items from a predefined set for the case of tool changes?
 4. Can these parameters be exported along with dimensional values to the serial port and CSV file.
 5. Who would modify the program? I believe Brian Segro or Bill Gstalder could help us to add CNC and tool change parameters. For advanced modifications Larry Becker from quality solutions could help us.
-
-## Requirements
-
-1. Capture dimensional data from a Marposs gage and put it in a run chart and histogram.
-2. Produce 30 day CPK and 90 day PPK.
-
-    - **Cp** measures whether the process spread is narrower than the specification width
-
-    - **Cpk** measures both the centering of the process as well as the spread of the process relative to the specification width
-
-    - The Process Performance Index is known as **PpK**. It is a statistical metric that assesses how closely a process is operating within its long-term specification bounds.
-
-![i](https://www.1factory.com/assets/img/visual-cp-cpk-1factory.png)
-
-## Options for CPK/PPK
-
-- Minitab
-- Python Notebook published to Structures Microsoft Fabric workspace.
-
-"Microsoft Fabric is an all-in-one, end-to-end analytics platform that unifies data movement, data lakes, data engineering, data science, and business intelligence into a single, integrated experience. It streamlines data management by providing a unified environment for data professionals to collaborate on projects, offering a comprehensive set of AI-powered tools for the entire data lifecycle, from ingestion to visualization." from Google AI overview.
 
 ## references
 
