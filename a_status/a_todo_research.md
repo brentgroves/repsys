@@ -12,8 +12,9 @@ Your message to <Mitch.Harper@Linamar.com> couldn't be delivered.
 
 I can't update out TYE database due to this error, and it is a pretty critical excel for our product validation lab. I put in a ticket but haven't gotten any response on it more than it being assigned to someone in the last 18 hours.`
 
+- **[Jira Learning Series - Webinar 1](https://www.youtube.com/watch?v=677WjbXegXU)**
+19:57
 - Statical Process Control methods to goals
-- Please complete the comments in your Oracle star review comments and Employee feedback by Friday.
 - **[Create and publish a Power BI Desktop file](https://learn.microsoft.com/en-us/power-bi/connect-data/service-gateway-sql-tutorial#create-and-publish-a-power-bi-desktop-file)**
 - For Power BI which credentials to use when connecting to a SQL server
 - **[jira](https://brentgroves-1765406338086.atlassian.net?continue=https%3A%2F%2Fbrentgroves-1765406338086.atlassian.net%2Fwelcome%2Fsoftware&atlOrigin=eyJpIjoiYWUyZGY5MGY4OGMwNGNkNzliMDk2YWU1MzkxYTBmOWEiLCJwIjoiaiJ9)**

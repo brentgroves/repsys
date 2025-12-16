@@ -7,6 +7,8 @@ Christian. Trujillo, IT Structures Manager
 Brent Hall, System Administrator Senior
 Kevin Young, Information Systems Manager
 Jared Davis, IT Manager
+Keenan Bennett, Supervisor IT - Application Services
+Penny Pikett, Supervisor IT - EDI specialist
 Mitch Harper, Desktop and Systems Support Technician, Mills River
 Thomas Creal, Desktop and Systems Support Technician, Mills River
 Matthew Bump, Muscle Shoals, Engineering Supervisor II / IT
