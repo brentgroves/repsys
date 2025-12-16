@@ -116,6 +116,7 @@ The main abstraction Spark provides is a resilient distributed dataset (RDD), wh
 - **[04-Module Topic 2-Introduction to Measures and Calculated Columns(PowerBI file included)](https://www.youtube.com/watch?v=8oK2CJJ3fDg)**
 
 - **[Master Data Modeling in Power BI - Beginner to Pro Full Course](https://www.youtube.com/watch?v=air7T8wCYkU)** get and transform data using power query using the Kimball approach.
+- **[Power BI training resource](https://www.youtube.com/watch?v=vg5bwxhM2vs&list=PLtCzYvIWNgJE-NsGuUXbjYyJgQMSOFp3A)**.
 
 ## How much are we spending on each line
 

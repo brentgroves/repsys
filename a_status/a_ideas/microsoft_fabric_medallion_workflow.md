@@ -19,6 +19,14 @@ The following is in markdown format and can be viewed by copying and pasting the
 - In the past, we could report on static data from all of our departmental data sources, but by copying our data to the data lake, we will be able to store data indefinitely and see value changes over time.
 - The data lake is managed through role, group, and individual permissions. One copy of our data is stored in a centralized location, but shortcuts to each data item can be made to other workspaces as needed.
 
+![i2](https://miro.medium.com/v2/resize:fit:786/format:webp/1*pRD0YDKxkwCiQ6S5bVv9cw.png)
+
+## **[What is Microsoft Fabric?](https://learn.microsoft.com/en-us/fabric/fundamentals/microsoft-fabric-overview)**
+
+## **[Power BI training resource](https://www.youtube.com/watch?v=vg5bwxhM2vs&list=PLtCzYvIWNgJE-NsGuUXbjYyJgQMSOFp3A)**
+
+![i](https://res.cloudinary.com/dwwq4fbhq/image/upload/v1761677540/powerbi_workflow_qpbrid.jpg)
+
 ## Phase 1
 
 - Move Southfields ERP account data into the data lake. Only Southfield will be able to view and work with this data item.
@@ -29,7 +37,11 @@ The following is in markdown format and can be viewed by copying and pasting the
 - Collect data from our CMM reports and tool offset changes.
 - Collect CNC tool operation start and end times into the data lake.
 
-## **[What is Microsoft Fabric?](https://learn.microsoft.com/en-us/fabric/fundamentals/microsoft-fabric-overview)**
+## reference
+
+- **[Design MICROSOFT FABRIC Data Project with Medallion Architecture | Lakehouse + Spark + Power BI](https://www.youtube.com/watch?v=qG65DUcSjws)**
+- **[What is Microsoft Fabric?](https://learn.microsoft.com/en-us/fabric/fundamentals/microsoft-fabric-overview)**
+- **[Power BI training resource](https://www.youtube.com/watch?v=vg5bwxhM2vs&list=PLtCzYvIWNgJE-NsGuUXbjYyJgQMSOFp3A)**
 
 ## team
 

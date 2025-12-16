@@ -1,4 +1,18 @@
-# team
+# Power BI Workflow
+
+Publish the suggested Power BI workflow for creating Structures reports and dashboards for inclusion in Microsoft Fabric org apps. In document include suggested training series and references for report writers.
+
+The following is in markdown format and can be viewed by copying and pasting the contents below into an online markdown viewer, such as at <https://markdownlivepreview.com/>.
+
+## **[Power BI training resource](https://www.youtube.com/watch?v=vg5bwxhM2vs&list=PLtCzYvIWNgJE-NsGuUXbjYyJgQMSOFp3A)**
+
+![i](https://res.cloudinary.com/dwwq4fbhq/image/upload/v1761677540/powerbi_workflow_qpbrid.jpg)
+
+## reference
+
+- **[Power BI training resource](https://www.youtube.com/watch?v=vg5bwxhM2vs&list=PLtCzYvIWNgJE-NsGuUXbjYyJgQMSOFp3A)**
+
+## fabric team
 
 ## Tech Fabric Team
 
@@ -31,3 +45,5 @@ Engineering, McLaren
 - Skippie Muehlfeld, Controls Engineer
 - Josh Williams, Program Manager, Engineering
 - Dennis Brach, Maintenance Manager
+- Shawn Boyd, Controller, Group - LMGA - MBI, <Shawn.Boyd@Linamar.com>
+- Chris McConville, IT Developer - IT, <Chris.Mcconville@Linamar.com>
