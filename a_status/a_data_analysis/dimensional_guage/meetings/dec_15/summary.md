@@ -6,6 +6,15 @@
 - review Ron's excel file
 - review advanced feature request
 
+## Reports
+
+- Shift Bad Part
+- Part Dimension Index, $TotalDimensions/TotalParts$
+
+## Checksheet
+
+Can we display the parameters and dimensions collected on checksheet?
+
 ## Parameter Controls
 
 1. Please verify that parameters can not be selected from a **[radio button](https://formspree.io/blog/radio-button/#:~:text=Radio%20buttons%20are%20a%20type,is%20possible%20at%20a%20time.)** or a similar control.

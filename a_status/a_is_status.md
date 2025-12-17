@@ -2,19 +2,7 @@
 
 The following is in markdown format and can be viewed by copying and pasting the entire content of this email into an online markdown viewer, such as at <https://markdownlivepreview.com/>.
 
-## Reports
-
-- Shift Bad Part
-- Part Dimension Index, $TotalDimensions/TotalParts$
-
-## Q&A
-
-- Checksheet
-- Marposs gage network cable worked with the SDS, may need another cable to connect to the OT file server.
-- The on-prem databases such as pd-avi-sql01 will need a service account or special username in order to be used as Power BI data sources through the data gateway.
-- Can we find a rack location to setup 3 Dell R410 PowerEdge Servers for the MicroCloud/K8s disaster recovery and secondary data gateway. Approved by Jared to locate at Albion's server rack.
-
-## **[Gage Project](./a_da_status.md)
+## **[Data Analysis Status](./a_da_status.md)
 
 -
 

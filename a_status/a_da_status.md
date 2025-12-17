@@ -23,9 +23,12 @@ Cleaning:
 
 We started a Marposs dimensional gage project that will enable us to do a **[Process Capability Analysis Cp, Cpk, Pp, Ppk](https://www.1factory.com/quality-academy/guide-process-capability.html)** for JT Fronts. The Marposs rep has agreed to a visit but we have some prelim work:
 
-- At least one network cable at JT Fronts cell that is setup to access JT Fronts VLAN from an edge switch POE enabled untagged port. (IT)
-  - This is done and tested accessibility from laptop.
-- 1 straight-through serial cable with DB9 F/F ends. (Brent)
+## Q&A
+
+- Can we display the parameters and dimensions collected on checksheet?
+- Marposs gage network cable worked with the SDS, may need another cable to connect to the OT file server.
+- The on-prem databases such as pd-avi-sql01 will need a service account or special username in order to be used as Power BI data sources through the data gateway.
+- Can we find a rack location to setup 3 Dell R410 PowerEdge Servers for the MicroCloud/K8s disaster recovery and secondary data gateway. Approved by Jared to locate at Albion's server rack.
 
 ### Marposs gage program change
 
