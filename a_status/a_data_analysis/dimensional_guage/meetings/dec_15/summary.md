@@ -2,7 +2,7 @@
 
 ## key
 
-The last step of the Plex checksheet displays a 4-digit number for the operator to write on the part. This 4-digit number can be used to pull all of the information Mach2 has recorded in its database:
+The last step of the Plex checksheet displays a 4 or 2-digit number for the operator to write on the part. This 4-digit number can be used to pull all of the information Mach2 has recorded in its database:
 
 - CNC
 - Station
@@ -10,6 +10,8 @@ The last step of the Plex checksheet displays a 4-digit number for the operator 
 - Tool counts derived from tool changes
 - Scrap tag number
 - 9 dimension values
+
+Since there is only 4 or 2-digits the report won't uniquely identify the part but it will give all the parts with that digit in date/time order. Another alternative is to make it a 6-digit number to uniquely identify the part but then it's more work for the operator.
 
 ## ToDo
 
