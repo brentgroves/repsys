@@ -1,6 +1,10 @@
-# Structures Kubernetes Cluster
+# CNC Tool-Tracker Focused **[Manufacturing Execution System](https://www.ibm.com/think/topics/mes-system)**
 
-The Avilla Structures Kubernetes Cluster will be used run Structures Information System software such as the Automated Report System, Tool Management System, and Tool Tracker Focused **[Manufacturing Execution System](https://www.ibm.com/think/topics/mes-system)**. These projects are for Linamar Structures but are currently directed toward Southfield, Albion, Avilla, and possibly Mills River.
+The following is in markdown format, which can be viewed better at <https://markdownlivepreview.com/>> by copying and pasting the contents below.
+
+Automatically collect CNC, job, and start/end tool operation times for problematic tooling.
+
+Users: Albion Engineering and MRP
 
 ## Azure Resources
 
