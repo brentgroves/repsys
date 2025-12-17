@@ -19,6 +19,8 @@ Cleaning:
 
 ## Marposs dimensional gage Cpk/Ppk
 
+**[Marposs Visit Summary](./a_data_analysis/dimensional_guage/meetings/dec_15/summary.md)**
+
 We started a Marposs dimensional gage project that will enable us to do a **[Process Capability Analysis Cp, Cpk, Pp, Ppk](https://www.1factory.com/quality-academy/guide-process-capability.html)** for JT Fronts. The Marposs rep has agreed to a visit but we have some prelim work:
 
 - At least one network cable at JT Fronts cell that is setup to access JT Fronts VLAN from an edge switch POE enabled untagged port. (IT)

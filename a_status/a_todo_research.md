@@ -2,6 +2,7 @@
 
 ## ToDo
 
+- **[serverless webassembly app](https://www.youtube.com/watch?v=GIs01hFdzko)**
 - Add link atlassian link: <https://home.atlassian.com/o/7e27374f-6f2b-45d9-8036-053bfb376ef1/?cloudId=f636644d-48c3-44da-a6d6-ee00d8811174>
 - add site
 <https://linamar-team-cmy9xvtu.atlassian.net>
