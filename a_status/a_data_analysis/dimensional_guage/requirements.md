@@ -1,10 +1,35 @@
 # gage data analysis
 
-Basically, what I need from you is a way to capture the data and and put it in a run chart.  
-It would be great if the data and chart could show 30 day CPK and 90 day PPK.
+## key
 
-**[cpk](https://www.1factory.com/quality-academy/guide-process-capability.html#:~:text=Cpk%20measures%20both%20the%20centering,Spec%20Width%20=%20USL%20%E2%80%94%20LSL)**
+The last step of the Plex checksheet displays a 4 or 2-digit number for the operator to write on the part. This 4-digit number can be used to pull all of the information Mach2 has recorded in its database:
 
-Cpk data analysis assesses a process's ability to meet specifications by measuring both its centering and variability. A higher Cpk value indicates a more capable process, while a Cpk below \(1.0\) suggests the process is not capable and likely to produce defects. Analysis involves plotting the data, calculating the Cpk using the formula: \(Cpk=min(USL-\text{mean})/(3*\text{Stdev}),(\text{mean}-LSL)/(3*\text{Stdev})\), and interpreting the results to identify areas for improvement.  
+- CNC
+- Station
+- Operator
+- Tool counts derived from tool changes
+- Scrap tag number
+- 9 dimension values
 
-A PPk in statistical process control measures the overall capability of a process, accounting for both its variation and how well it is centered between the specification limits. It is the minimum of two one-sided capability indices: \(P_{PU}\) (upper) and \(P_{PL}\) (lower).
+Since there is only 4 or 2-digits the report won't uniquely identify the part but it will give all the parts with that digit in date/time order. Another alternative is to make it a 6-digit number to uniquely identify the part but then it's more work for the operator.
+
+## ToDo
+
+- document gage process flow chart
+- create the record format in excel
+- review Ron's excel file
+- review advanced feature request
+
+## Reports
+
+- Shift Bad Part
+- Part Dimension Index, $TotalDimensions/TotalParts$
+
+## Checksheet
+
+Can we display the parameters and dimensions collected on checksheet?
+
+## Parameter Controls
+
+1. Please verify that parameters can not be selected from a **[radio button](https://formspree.io/blog/radio-button/#:~:text=Radio%20buttons%20are%20a%20type,is%20possible%20at%20a%20time.)** or a similar control.
+2. Please verify that parameters can not select multiple items from a dropdown or similar control such as the HTML **[multi select tag](https://www.w3schools.com/tags/att_select_multiple.asp)**
