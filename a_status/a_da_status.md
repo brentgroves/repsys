@@ -23,6 +23,17 @@ Cleaning:
 
 We started a Marposs dimensional gage project that will enable us to do a **[Process Capability Analysis Cp, Cpk, Pp, Ppk](https://www.1factory.com/quality-academy/guide-process-capability.html)** for JT Fronts. The Marposs rep has agreed to a visit but we have some prelim work:
 
+## key
+
+The last step of the Plex checksheet displays a 4-digit number for the operator to write on the part. This 4-digit number can be used to pull all of the information Mach2 has recorded in its database:
+
+- CNC
+- Station
+- Operator
+- Tool counts derived from tool changes
+- Scrap tag number
+- 9 dimension values
+
 ## Q&A
 
 - Can we display the parameters, dimensions, and secondary 4-digit hash key on checksheet? Operator could write key on part for tracability.

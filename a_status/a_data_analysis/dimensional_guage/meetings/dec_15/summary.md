@@ -1,5 +1,16 @@
 # Marposs Visit
 
+## key
+
+The last step of the Plex checksheet displays a 4-digit number for the operator to write on the part. This 4-digit number can be used to pull all of the information Mach2 has recorded in its database:
+
+- CNC
+- Station
+- Operator
+- Tool counts derived from tool changes
+- Scrap tag number
+- 9 dimension values
+
 ## ToDo
 
 - create the record format in excel
