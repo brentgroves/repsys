@@ -1,6 +1,6 @@
 # 3 to 5 year goal
 
-1. What would you like to achieve in the next year?
+1. What would you like to achieve in the 3 to 5 years?
 In the process of creating the `Structures Microsoft Fabric Medallion Workflow` process. We are using the `Maintenance oil consumption` report as a test case to understand and document this new data analytics process. When complete Structures business data will be located in a centralized data lake enabling previously impossible insights. This process will enable us to securely manage Power BI, dashboards, and Notebooks. It will also encompass automated data collection for the management, creation, and visibility of statistical process control graphs and charts previously in the domain of Minitab.
 2. List all the learning and job experiences that will help you in meeting these goals
 
