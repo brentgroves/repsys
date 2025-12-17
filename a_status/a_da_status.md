@@ -25,7 +25,7 @@ We started a Marposs dimensional gage project that will enable us to do a **[Pro
 
 ## Q&A
 
-- Can we display the parameters, dimensions, and secondary 4-digit key on checksheet? Operator could write key on part for tracability.
+- Can we display the parameters, dimensions, and secondary 4-digit hash key on checksheet? Operator could write key on part for tracability.
 - Please verify that parameters can not be selected from a **[radio button](https://formspree.io/blog/radio-button/#:~:text=Radio%20buttons%20are%20a%20type,is%20possible%20at%20a%20time.)** or a similar control.
 - Please verify that parameters can not select multiple items from a dropdown or similar control such as the HTML **[multi select tag](https://www.w3schools.com/tags/att_select_multiple.asp)**
 - Marposs gage network cable worked with the SDS, may need another cable to connect to the OT file server.
