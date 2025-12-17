@@ -1,4 +1,4 @@
-# CMM Tool Adjustment App
+# CNC Tool Adjustment App
 
 Purpose: To have an electronic alternate to color printer cmm reports.
 
