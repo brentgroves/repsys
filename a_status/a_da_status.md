@@ -26,6 +26,8 @@ We started a Marposs dimensional gage project that will enable us to do a **[Pro
 ## Q&A
 
 - Can we display the parameters and dimensions collected on checksheet?
+- Please verify that parameters can not be selected from a **[radio button](https://formspree.io/blog/radio-button/#:~:text=Radio%20buttons%20are%20a%20type,is%20possible%20at%20a%20time.)** or a similar control.
+- Please verify that parameters can not select multiple items from a dropdown or similar control such as the HTML **[multi select tag](https://www.w3schools.com/tags/att_select_multiple.asp)**
 - Marposs gage network cable worked with the SDS, may need another cable to connect to the OT file server.
 - The on-prem databases such as pd-avi-sql01 will need a service account or special username in order to be used as Power BI data sources through the data gateway.
 - Can we find a rack location to setup 3 Dell R410 PowerEdge Servers for the MicroCloud/K8s disaster recovery and secondary data gateway. Approved by Jared to locate at Albion's server rack.
