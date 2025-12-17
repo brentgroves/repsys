@@ -1,0 +1,21 @@
+# Personal - Personal and/or Team Growth
+
+Begin to use modern tooling and systems to gain insights on various business unit data including big data, unstructured sensor data from machinery. Tools and systems such as academic data science fundamentals, Microsoft Fabric, and kubernetes.
+
+Status:
+
+- Cordinating an effort to capture data from the JT Front dimensional gages and create a run chart, histogram, 30 day CPK, and 90 day PPK. Previously, this was in the domain of Minitab and involved manually transferring data, but with the help of a serial device server, Mach2, Microsoft Fabric Notebooks, and Power BI we can automate this task and securely manage and publish dashboards and Notebooks containing process control statistical data that is easily viewable from the Structures Microsoft Fabric workspace in departmental org apps.
+
+Produce 30 day CPK and 90 day PPK.
+
+- **Cp** measures whether the process spread is narrower than the specification width
+
+- **Cpk** measures both the centering of the process as well as the spread of the process relative to the specification width
+
+- The Process Performance Index is known as **PpK**. It is a statistical metric that assesses how closely a process is operating within its long-term specification bounds.
+
+## Customer – Supplier of Choice
+
+Enabling the Linamar Structures to utilize the corporate data lake, using Microsoft Fabric, to include all of data in various databases - vending machines, CMM, PLC sensor, and other reporting data. This will make more complicated reports easier to create and maintain within the Structures group.
+
+Status: In the process of creating the `Structures Microsoft Fabric Medallion Workflow` process. We are using the `Maintenance oil consumption` report as a test case to understand and document this new data analytics process. When complete Structures business data will be located in a centralized data lake enabling previously impossible insights. This process will enable us to securely manage Power BI, dashboards, and Notebooks. It will also encompass automated data collection for the management, creation, and visibility of statistical process control graphs and charts previously in the domain of Minitab.
