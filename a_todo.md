@@ -1,6 +1,9 @@
-# Research
+# ToDo
 
-## ToDo
+- **[data analytics](./a_data_analytics/a_todo.md)**
+- **[DevOps](./a_devops/a_todo.md)**
+- **[Platform Engineering](./a_platform_engineering/a_todo.md)**
+- **[Miscellaneous](./b_miscellaneous/a_todo.md)**
 
 - Build OKRs and other frameworks with custom goal types
 - create research item in product discovery and link to a_todo_research

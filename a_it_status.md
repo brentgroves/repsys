@@ -2,9 +2,10 @@
 
 The following is in markdown format and can be viewed by copying and pasting the entire content of this email into an online markdown viewer, such as at <https://markdownlivepreview.com/>.
 
-## **[Data Analysis Status](./a_da_status.md)
-
--
+- **[Data Analytics](./a_data_analytics/a_it_status.md)**
+- **[DevOps](./a_devops/a_it_status.md)**
+- **[Platform Engineering](./a_platform_engineering/a_it_status.md)**
+- **[Miscellaneous](./b_miscellaneous/a_it_status.md)**
 
 ## Platform Engineering
 
