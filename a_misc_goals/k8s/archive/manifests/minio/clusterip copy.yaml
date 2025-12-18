@@ -1,0 +1,34 @@
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: "2023-10-28T21:23:52Z"
+  name: microk8s-console
+  namespace: minio-operator
+  ownerReferences:
+  - apiVersion: minio.min.io/v2
+    blockOwnerDeletion: true
+    controller: true
+    kind: Tenant
+    name: microk8s
+    uid: 49b5b277-8eb5-4c7d-9d42-5f21e1de6b8b
+  resourceVersion: "1175803"
+  uid: 3ea4b534-b941-4f8a-b908-4d03dd0a481e
+spec:
+  clusterIP: 10.152.183.221
+  clusterIPs:
+  - 10.152.183.221
+  internalTrafficPolicy: Cluster
+  ipFamilies:
+  - IPv4
+  ipFamilyPolicy: SingleStack
+  ports:
+  - name: http-console
+    port: 9090
+    protocol: TCP
+    targetPort: 9090
+  selector:
+    v1.min.io/tenant: microk8s
+  sessionAffinity: None
+  type: ClusterIP
+status:
+  loadBalancer: {}

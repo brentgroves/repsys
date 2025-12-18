@@ -1,0 +1,23 @@
+
+Starting: CronTabUpdate
+update_crontab.py: Start of update_crontab
+update_crontab.py: Current Time: 18:47:25
+update_crontab.py: username3=root
+update_crontab.py: password3=password
+1,ETLTrialBalance,10 3,7,11,15,19,23 * * *,0 was created on 15 Nov 2022
+2,DanWeeklyTrialBalance,10 19 * * 1,0 was created on 15 Nov 2022
+update_crontab.py: total time: 0:00:00.055580
+43
+InsertQueue time: 0.253
+
+ pipeline successful all scripts completed.InsertQueue time: 0.240
+
+ pipeline successful all scripts completed.InsertQueue time: 0.259
+
+ pipeline successful all scripts completed.InsertQueue time: 0.288
+
+ pipeline successful all scripts completed.CronTabUpdate time: 0.260
+
+ pipeline successful all scripts completed.CronTabUpdate time: 0.287
+
+ pipeline successful all scripts completed.

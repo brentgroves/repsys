@@ -1,0 +1,21 @@
+# This only works for azure vms which have access to the azure aks cluster
+# Use a load balancer to access with a public ip
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app.kubernetes.io/component: rabbitmq
+    app.kubernetes.io/name: resource-limits
+    app.kubernetes.io/part-of: rabbitmq
+  name: resource-limits-np
+spec:
+  ports:
+  - name: resource-limits-np
+    nodePort: 32672
+    port: 5672
+    protocol: TCP
+    targetPort: 5672
+  selector:
+    app.kubernetes.io/name: resource-limits
+  type: NodePort
+---

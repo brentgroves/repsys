@@ -1,0 +1,30 @@
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: "2023-10-23T23:41:32Z"
+  labels:
+    application: spilo
+    cluster-name: acid-minimal-cluster
+    spilo-role: master
+    team: acid
+  name: acid-minimal-cluster
+  namespace: default
+  resourceVersion: "21390"
+  uid: 07be1237-0015-4e84-9490-29cc129053ab
+spec:
+  clusterIP: 10.152.183.57
+  clusterIPs:
+  - 10.152.183.57
+  internalTrafficPolicy: Cluster
+  ipFamilies:
+  - IPv4
+  ipFamilyPolicy: SingleStack
+  ports:
+  - name: postgresql
+    port: 5432
+    protocol: TCP
+    targetPort: 5432
+  sessionAffinity: None
+  type: ClusterIP
+status:
+  loadBalancer: {}

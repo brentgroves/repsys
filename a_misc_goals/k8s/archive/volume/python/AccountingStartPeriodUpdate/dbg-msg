@@ -1,0 +1,3 @@
+AccountingStartPeriodUpdate.py: Current Time: 18:30:38
+AccountingStartPeriodUpdate.py: call Plex.accounting_start_period_update() - rowcount=-1
+AccountingStartPeriodUpdate.py: total time: 0:00:00.048871

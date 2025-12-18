@@ -1,0 +1,4 @@
+AccountingAccount.py: Current Time: current_time='15:01:09'
+AccountingAccount.py: fetch_time=0:00:08.631416
+AccountingAccount.py: delete from Plex.accounting_account where pcn in ({dellist:s}) - rowcount=8285
+AccountingAccount.py: total time: 0:00:21.089183

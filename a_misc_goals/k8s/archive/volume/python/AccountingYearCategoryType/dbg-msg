@@ -1,0 +1,30 @@
+AccountingYearCategoryType.py: Current Time: 14:03:40
+AccountingYearCategoryType.py: call sproc300758_11728751_1999909 - rowcount=-1
+AccountingYearCategoryType.py: call sproc300758_11728751_1999909 - messages=[]
+AccountingYearCategoryType.py: fetch_time=0:00:03.462332
+AccountingYearCategoryType.py: delete from Plex.accounting_account_year_category_type 
+    where year between 2022 and 2023 
+    and pcn in (123681,300758) - rowcount=16570
+AccountingYearCategoryType.py: total time: 0:00:27.039005
+AccountingYearCategoryType time: 27.398
+AccountingYearCategoryType time: 27.398
+AccountingYearCategoryType time: 27.398
+AccountingYearCategoryType time: 27.398
+AccountingYearCategoryType script failed. 
+error message:  
+debug messages: 
+AccountingYearCategoryType.py: Current Time: 14:03:40
+AccountingYearCategoryType.py: call sproc300758_11728751_1999909 - rowcount=-1
+AccountingYearCategoryType.py: call sproc300758_11728751_1999909 - messages=[]
+AccountingYearCategoryType.py: fetch_time=0:00:03.462332
+AccountingYearCategoryType.py: delete from Plex.accounting_account_year_category_type 
+    where year between 2022 and 2023 
+    and pcn in (123681,300758) - rowcount=16570
+AccountingYearCategoryType.py: total time: 0:00:27.039005
+AccountingYearCategoryType time: 27.398
+AccountingYearCategoryType time: 27.398
+AccountingYearCategoryType time: 27.398 
+time=27.398AccountingYearCategoryType time: 27.398
+AccountingYearCategoryType time: 27.398
+AccountingYearCategoryType time: 27.398
+AccountingYearCategoryType time: 27.398

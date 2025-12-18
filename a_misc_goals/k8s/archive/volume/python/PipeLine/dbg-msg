@@ -1,0 +1,35 @@
+
+$1: TB
+$2: bgroves@buschegroup.com
+$3: 202205
+$4: 202305
+$5: 0
+$6: once
+Starting: AccountPeriodBalanceRecreatePeriodRange
+script-start.py: current_time='14:50:32'
+script-start.py: total time: 0:00:00.608256
+AccountPeriodBalanceRecreatePeriodRange.py: Current Time: 14:50:33
+AccountPeriodBalanceRecreatePeriodRange.py: call Plex.account_period_balance_delete_period_range - rowcount=50787
+AccountPeriodBalanceRecreatePeriodRange.py: call Plex.account_period_balance_delete_period_range - messages=[]
+AccountPeriodBalanceRecreatePeriodRange.py: call Plex.account_period_balance_recreate_period_range - rowcount=-1
+AccountPeriodBalanceRecreatePeriodRange.py: call Plex.account_period_balance_recreate_period_range - messages=[]
+AccountPeriodBalanceRecreatePeriodRange.py: call Plex.account_period_balance_delete_period_range - rowcount=1
+AccountPeriodBalanceRecreatePeriodRange.py: call Plex.account_period_balance_recreate_period_range() - rowcount=1
+AccountPeriodBalanceRecreatePeriodRange.py: total time: 0:00:05.431366
+script-end.py: current_time='14:50:39'
+script-end.py: total time: 0:00:00.492655
+AccountPeriodBalanceRecreatePeriodRange time: 0.799
+
+Starting: AccountPeriodBalanceRecreateOpenPeriodRange
+script-start.py: current_time='14:50:39'
+script-start.py: total time: 0:00:00.443912
+AccountPeriodBalanceRecreateOpenPeriodRange.py: Current Time: 14:50:40
+AccountPeriodBalanceRecreateOpenPeriodRange.py: call Plex.account_period_balance_delete_open_period_range - rowcount=9234
+AccountPeriodBalanceRecreateOpenPeriodRange.py: call Plex.account_period_balance_delete_open_period_range - messages=[]
+AccountPeriodBalanceRecreateOpenPeriodRange.py: call Plex.account_period_balance_recreate_open_period_range - rowcount=-1
+AccountPeriodBalanceRecreateOpenPeriodRange.py: call Plex.account_period_balance_recreate_open_period_range - messages=[]
+AccountPeriodBalanceRecreateOpenPeriodRange.py: call Plex.account_period_balance_delete_open_period_range(123681) - rowcount=1
+AccountPeriodBalanceRecreateOpenPeriodRange.py: call Plex.account_period_balance_append_open_period_range(123681) - rowcount=1
+AccountPeriodBalanceRecreateOpenPeriodRange.py: total time: 0:00:01.839425
+script-end.py: current_time='14:50:42'
+script-end.py: total time: 0:00:00.427468
