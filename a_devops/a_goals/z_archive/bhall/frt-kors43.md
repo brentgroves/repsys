@@ -1,0 +1,375 @@
+# Fruitport Mach2 SSL
+
+Goal: For Wyse clients to connect to Mach2 in a secure way without having to click through any warning messages.
+
+- A few years ago it was fairly easy to generate an SSL certificate and CA that browsers would accept without giving a warning message.
+- Now there are a lot more DN, fields, that need to be added to the certificats.
+
+## references
+
+- **[Win32/Win64 OpenSSL](https://slproweb.com/products/Win32OpenSSL.html)**
+
+## Options
+
+- Figure out how to get Windows PKI to generate a certificate and CA that passes certificate validation found at **[Sectigo Certificate Linter](https://crt.sh/lintcert)**.
+- Use our existing OpenSSL based PKI which currently passes the certificate validation found at **[Sectigo Certificate Linter](https://crt.sh/lintcert)**.
+
+## Linamar PKI testing
+
+## Test Linamar Mach2 PKI
+
+PKCS#10. PKCS#10 is a standard format for requesting X.509 certificates from the certification authorities.
+
+PKCS#7 or P7B extension means one or more Base64 ASCII certificates stored in a . p7b or . p7c file (container). The P7B file contains the certificate and its chain (intermediate certificates) but does not contain the private key. P7B files are most commonly used on the Java Tomcat platform
+
+X.509 is a standard format for public key certificates, digital documents that securely associate cryptographic key pairs with identities such as websites, individuals, or organizations.
+
+### **[Validate Root Certificate](https://crt.sh/lintcert)**
+
+Mobex PKI
+
+```bash
+-----BEGIN CERTIFICATE-----
+MIIFozCCA4ugAwIBAgIUO0s2y7X7JDUBGzpuyhVGzUvc/lwwDQYJKoZIhvcNAQEL
+BQAwWTELMAkGA1UEBhMCVVMxEDAOBgNVBAgMB0luZGlhbmExDzANBgNVBAcMBkFs
+YmlvbjEVMBMGA1UECgwMTW9iZXggR2xvYmFsMRAwDgYDVQQDDAdSb290IENBMB4X
+DTIzMDgxODIzNDI1NVoXDTQzMDgxMzIzNDI1NVowWTELMAkGA1UEBhMCVVMxEDAO
+BgNVBAgMB0luZGlhbmExDzANBgNVBAcMBkFsYmlvbjEVMBMGA1UECgwMTW9iZXgg
+R2xvYmFsMRAwDgYDVQQDDAdSb290IENBMIICIjANBgkqhkiG9w0BAQEFAAOCAg8A
+MIICCgKCAgEA4RlvhbKk2o/JpErM0XWQlOah33HUFZT85fSMGqyMNvTmAF2Iv05P
+UFNgMlWIlHRDCaa1aAgZbqnDW8A5Un3SebwX03yuTVCIqOcwOw+WS1Nd5zJXCibR
+vJYUX3/LNlEaODfaGBBT/w8CafZYo78NiYHKZAR15/snicKQq7t3HBX6LEbuNWVm
+Mpv4WASPOtDfUOzH83ZSHtgFMvW0PL4FGUJovqWMwVyUq7OepW5iiRRKtlaKH9BX
+4NLUzr3bNaGQf+ev6giHpQjPLAAJTUpqYFT33Q3w1XFJs5fGYApTQnNyByBodvde
+xaHAE63XKcCsRKP36xwkr64gCDE9qiCUTmm5tjn9hV+8bZlK5df6UVdy4eheUUUL
+81aTm70CX/yqx3cc9/YoWyI2F5jAsf0Pr3o3TSHSOAGapQHQeNZLqHeU3BSuayzY
+2rHIAIIAFAo4orfhHqciYP0pbKFuSaGTmh3ZTPhY6Q7ArzAurPm9UGkHaPij7FlU
+bORjzrG3H9pxTZTv3mOP2DuTveN28shdZrJwB7NLzjp8SSzVDj1K9XStkGp7Ktl6
++KToah7V0Kp0KbrKOdO35HeZKs2P+wbfE6cmTnFXzdU77J1su3HViV+bG4ORdIpL
+EdQNVOL9aD6MHkAxu0lwoMLKKGex29BJ+MQFB3v20sqkf/IpZ+L8P38CAwEAAaNj
+MGEwHQYDVR0OBBYEFD4/yqYPDAk00sj19I8Aftb49FktMB8GA1UdIwQYMBaAFD4/
+yqYPDAk00sj19I8Aftb49FktMA8GA1UdEwEB/wQFMAMBAf8wDgYDVR0PAQH/BAQD
+AgGGMA0GCSqGSIb3DQEBCwUAA4ICAQA3w+7tfJNaG0ok2611H7GGmWiih96XodEl
+w5Lytprh57MysTq/nrIUOf9Wo2DkLBHa4HHO1v9VQQBE5K8712JMPzL8eHDPeUpQ
+Q49k1We+pUQP/1/W7K5UtNBdfPlNrwMOTnB5JpZOJxgRv9eq7U5KtzqcgT86+hDv
+iwwe0OAwWhSv3mLxQwAuSXQ5K/YeYGbu7V/u/pCdGeMfqVT0/8g+kDAXAAmGj48O
+eL+7kiTQobR+bfzYAiFSBWwibElvoxkOZj3vuDE3DBHGp6Abhfv09uhPf7g7/zCU
+qfYPXtTWLtPk5TePPmYe275q34HU8s9s5iBzXwHUXYtypTUFsDAlbn56PBxySvF8
+i0KG4/eCuUXhU9S3IKn9RZZyOJRb/Gekgj5oW7FX0GygKZH0nCTFmRBOFi+5T+oo
+HcU6/6B1s1OF/28G6uVKzIgtSqrlIQegwVRpCggrHjJLRdaYEnrNX99/+zUqXyCy
+QNjxzyReElKNuYY48Bnm3UiO9L2QsTLly91eg8nyJpCh0PyNosRn7TfI9oRTwxd5
+zoctX0bv1onfc5Wg1SQP4u4QRxc+0Cjc8+6TpyCe3b9vvo3TuoP0IX1FEbNKEKle
+6vrWEj9+AYusJqwR7nk2oF/jZa41GkxPUzURBSMnWSV5Ns+zRwI+lSXviRZucW1C
+CQ/XLWsgfg==
+-----END CERTIFICATE-----
+```
+
+Results:
+
+```bash
+cablint INFO CA certificate identified
+x509lint INFO Checking as root CA certificate
+```
+
+Linamar PKI
+
+Name: KORS43-CertChain-certnew.p7b
+
+```bash
+-----BEGIN CERTIFICATE-----
+MIIQXgYJKoZIhvcNAQcCoIIQTzCCEEsCAQExADCCBcUGCSqGSIb3DQEHAaCCBbYE
+ggWyMIIFrjCCBJagAwIBAgITNQAF06i16tqDxSKu7AADAAXTqDANBgkqhkiG9w0B
+AQsFADBGMRMwEQYKCZImiZPyLGQBGRYDY29tMRcwFQYKCZImiZPyLGQBGRYHbGlu
+YW1hcjEWMBQGA1UEAxMNbGluYW1hci1hZGNhMTAeFw0yNDA2MTExOTE5NDlaFw0y
+NjA2MTExOTE5NDlaMA0xCzAJBgNVBAYTAlVTMIIBIjANBgkqhkiG9w0BAQEFAAOC
+AQ8AMIIBCgKCAQEAjQHCmtTVXl6qs6Zera8EflD7i2k72LVU6FrphmTgsk3Ixpcf
+N0V0+q9FXnLxmBcvVYVjF1lta4NFPDuh7prxpiHtfTBMDKo0Zysvb8W/cbBX5xMZ
+5CBDp+3LTr7UTcOtTISUyWoQwuCAScYM5ip4PJ10hwZxUZJqFTLNmUw50CluCjMR
+2mhqETCvyjGAERGSfFyB+/4oS3KFB/DT9nED3mK8aeM6CJnKyFzvtxkHxqWpKING
+ZZwfBE4O5UOm65UycCPoe9DgXft1/OcCxQOWTqs0Opla07etsfHm/94QgrQB3DMn
+M8S4rSOr+SBLfFwBI8GQBSJ+d9tKEo8qdvkxtQIDAQABo4ICzDCCAsgwHQYDVR0O
+BBYEFEi+e9ooB2mCTXKZFuwKCdhC8BFJMB8GA1UdIwQYMBaAFOhKBv9Z5NaTVA2U
+vWqpnhmSUkCqMIIBFgYDVR0fBIIBDTCCAQkwggEFoIIBAaCB/oaBu2xkYXA6Ly8v
+Q049bGluYW1hci1hZGNhMSgxKSxDTj1QRC1DTy1WQ0EyMixDTj1DRFAsQ049UHVi
+bGljJTIwS2V5JTIwU2VydmljZXMsQ049U2VydmljZXMsQ049Q29uZmlndXJhdGlv
+bixEQz1saW5hbWFyLERDPWNvbT9jZXJ0aWZpY2F0ZVJldm9jYXRpb25MaXN0P2Jh
+c2U/b2JqZWN0Q2xhc3M9Y1JMRGlzdHJpYnV0aW9uUG9pbnSGPmh0dHA6Ly9QRC1D
+Ty1WQ0EyMi5saW5hbWFyLmNvbS9DZXJ0RW5yb2xsL2xpbmFtYXItYWRjYTEoMSku
+Y3JsMIIBJQYIKwYBBQUHAQEEggEXMIIBEzCBrAYIKwYBBQUHMAKGgZ9sZGFwOi8v
+L0NOPWxpbmFtYXItYWRjYTEsQ049QUlBLENOPVB1YmxpYyUyMEtleSUyMFNlcnZp
+Y2VzLENOPVNlcnZpY2VzLENOPUNvbmZpZ3VyYXRpb24sREM9bGluYW1hcixEQz1j
+b20/Y0FDZXJ0aWZpY2F0ZT9iYXNlP29iamVjdENsYXNzPWNlcnRpZmljYXRpb25B
+dXRob3JpdHkwYgYIKwYBBQUHMAKGVmh0dHA6Ly9QRC1DTy1WQ0EyMi5saW5hbWFy
+LmNvbS9DZXJ0RW5yb2xsL1BELUNPLVZDQTIyLmxpbmFtYXIuY29tX2xpbmFtYXIt
+YWRjYTEoMykuY3J0MCEGCSsGAQQBgjcUAgQUHhIAVwBlAGIAUwBlAHIAdgBlAHIw
+CwYDVR0PBAQDAgWgMBMGA1UdJQQMMAoGCCsGAQUFBwMBMA0GCSqGSIb3DQEBCwUA
+A4IBAQAYPM1BDk041ZlwNIgN4UvXQksI4yAkCrkQf5jNZFAKT+Pd2IBD9U3czFak
+sOVfinS4qQ12GWDlt/VWZMgP/1UU7Z644WH0mU8eTFkiVMK2ysVwoHWUu2JWw1+T
+jpaIbm0hJcRFwi5DiLdMmp4YkZlSyKkR56aFrX0zgMwq3JBn6Z1X7xyyNTB2jgdV
+vxneV74pTTNUddbJyUNKbdHuJwWFuNhBxEdg0xgtT0OFoMoJKKNwY797ReLOItqc
+//kNu+xZYNRUPJbkimvIIY02WClzdciREpBuz4uFBZHaoyB/h73MAbmZxW91PuLw
+A3K3hecckF6Ok5tU4FGBfHK5MeiroIIKdzCCBa4wggSWoAMCAQICEzUABdOotera
+g8UiruwAAwAF06gwDQYJKoZIhvcNAQELBQAwRjETMBEGCgmSJomT8ixkARkWA2Nv
+bTEXMBUGCgmSJomT8ixkARkWB2xpbmFtYXIxFjAUBgNVBAMTDWxpbmFtYXItYWRj
+YTEwHhcNMjQwNjExMTkxOTQ5WhcNMjYwNjExMTkxOTQ5WjANMQswCQYDVQQGEwJV
+UzCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBAI0BwprU1V5eqrOmXq2v
+BH5Q+4tpO9i1VOha6YZk4LJNyMaXHzdFdPqvRV5y8ZgXL1WFYxdZbWuDRTw7oe6a
+8aYh7X0wTAyqNGcrL2/Fv3GwV+cTGeQgQ6fty06+1E3DrUyElMlqEMLggEnGDOYq
+eDyddIcGcVGSahUyzZlMOdApbgozEdpoahEwr8oxgBERknxcgfv+KEtyhQfw0/Zx
+A95ivGnjOgiZyshc77cZB8alqSiDRmWcHwRODuVDpuuVMnAj6HvQ4F37dfznAsUD
+lk6rNDqZWtO3rbHx5v/eEIK0AdwzJzPEuK0jq/kgS3xcASPBkAUifnfbShKPKnb5
+MbUCAwEAAaOCAswwggLIMB0GA1UdDgQWBBRIvnvaKAdpgk1ymRbsCgnYQvARSTAf
+BgNVHSMEGDAWgBToSgb/WeTWk1QNlL1qqZ4ZklJAqjCCARYGA1UdHwSCAQ0wggEJ
+MIIBBaCCAQGggf6GgbtsZGFwOi8vL0NOPWxpbmFtYXItYWRjYTEoMSksQ049UEQt
+Q08tVkNBMjIsQ049Q0RQLENOPVB1YmxpYyUyMEtleSUyMFNlcnZpY2VzLENOPVNl
+cnZpY2VzLENOPUNvbmZpZ3VyYXRpb24sREM9bGluYW1hcixEQz1jb20/Y2VydGlm
+aWNhdGVSZXZvY2F0aW9uTGlzdD9iYXNlP29iamVjdENsYXNzPWNSTERpc3RyaWJ1
+dGlvblBvaW50hj5odHRwOi8vUEQtQ08tVkNBMjIubGluYW1hci5jb20vQ2VydEVu
+cm9sbC9saW5hbWFyLWFkY2ExKDEpLmNybDCCASUGCCsGAQUFBwEBBIIBFzCCARMw
+gawGCCsGAQUFBzAChoGfbGRhcDovLy9DTj1saW5hbWFyLWFkY2ExLENOPUFJQSxD
+Tj1QdWJsaWMlMjBLZXklMjBTZXJ2aWNlcyxDTj1TZXJ2aWNlcyxDTj1Db25maWd1
+cmF0aW9uLERDPWxpbmFtYXIsREM9Y29tP2NBQ2VydGlmaWNhdGU/YmFzZT9vYmpl
+Y3RDbGFzcz1jZXJ0aWZpY2F0aW9uQXV0aG9yaXR5MGIGCCsGAQUFBzAChlZodHRw
+Oi8vUEQtQ08tVkNBMjIubGluYW1hci5jb20vQ2VydEVucm9sbC9QRC1DTy1WQ0Ey
+Mi5saW5hbWFyLmNvbV9saW5hbWFyLWFkY2ExKDMpLmNydDAhBgkrBgEEAYI3FAIE
+FB4SAFcAZQBiAFMAZQByAHYAZQByMAsGA1UdDwQEAwIFoDATBgNVHSUEDDAKBggr
+BgEFBQcDATANBgkqhkiG9w0BAQsFAAOCAQEAGDzNQQ5NONWZcDSIDeFL10JLCOMg
+JAq5EH+YzWRQCk/j3diAQ/VN3MxWpLDlX4p0uKkNdhlg5bf1VmTID/9VFO2euOFh
+9JlPHkxZIlTCtsrFcKB1lLtiVsNfk46WiG5tISXERcIuQ4i3TJqeGJGZUsipEeem
+ha19M4DMKtyQZ+mdV+8csjUwdo4HVb8Z3le+KU0zVHXWyclDSm3R7icFhbjYQcRH
+YNMYLU9DhaDKCSijcGO/e0XiziLanP/5DbvsWWDUVDyW5IpryCGNNlgpc3XIkRKQ
+bs+LhQWR2qMgf4e9zAG5mcVvdT7i8ANyt4XnHJBejpObVOBRgXxyuTHoqzCCBMEw
+ggOpoAMCAQICEB0v5FRynqOzRnCCt2XnNd4wDQYJKoZIhvcNAQELBQAwRjETMBEG
+CgmSJomT8ixkARkWA2NvbTEXMBUGCgmSJomT8ixkARkWB2xpbmFtYXIxFjAUBgNV
+BAMTDWxpbmFtYXItYWRjYTEwHhcNMTEwMTI1MTg0MTQ4WhcNMzAwMzE3MTMxNTI1
+WjBGMRMwEQYKCZImiZPyLGQBGRYDY29tMRcwFQYKCZImiZPyLGQBGRYHbGluYW1h
+cjEWMBQGA1UEAxMNbGluYW1hci1hZGNhMTCCASIwDQYJKoZIhvcNAQEBBQADggEP
+ADCCAQoCggEBAMWH9lBtDKbcURj7gHQTQIviY1zTSU2sT4JOcRASI1jdylWCVpTQ
+XaZ0w11HPBGhlNKWYtlCoXRp4d8KfVDUGHKEGjb3lqIoWIKz6H1P0O/0LUUiNCY1
+YGOxVqLaark9Qrz/ta2dmZRHr8sWmmu+OFx8XVOE63tobzZPyjKgYFdjfxgPorCb
++pPFfmyO0dLfl4GnpuRLUj2uSCIdRhcKvKd4QAcEodGzskEvBQnEimD848m9bwiB
+/CzTufDhNHZ2BqygK94OyBX8+smDUsnO7zFUsIz9SXPTIHFvBqTqvx1GvFRnSA7r
+rRQAMWZM110IZVNSBEy5lLX0m2U2x+qdbLUCAwEAAaOCAakwggGlMBMGCSsGAQQB
+gjcUAgQGHgQAQwBBMAsGA1UdDwQEAwIBRjAPBgNVHRMBAf8EBTADAQH/MB0GA1Ud
+DgQWBBToSgb/WeTWk1QNlL1qqZ4ZklJAqjCCARYGA1UdHwSCAQ0wggEJMIIBBaCC
+AQGggf6GgbtsZGFwOi8vL0NOPWxpbmFtYXItYWRjYTEoMSksQ049bGluYW1hci1k
+YzgsQ049Q0RQLENOPVB1YmxpYyUyMEtleSUyMFNlcnZpY2VzLENOPVNlcnZpY2Vz
+LENOPUNvbmZpZ3VyYXRpb24sREM9bGluYW1hcixEQz1jb20/Y2VydGlmaWNhdGVS
+ZXZvY2F0aW9uTGlzdD9iYXNlP29iamVjdENsYXNzPWNSTERpc3RyaWJ1dGlvblBv
+aW50hj5odHRwOi8vbGluYW1hci1kYzgubGluYW1hci5jb20vQ2VydEVucm9sbC9s
+aW5hbWFyLWFkY2ExKDEpLmNybDASBgkrBgEEAYI3FQEEBQIDAQADMCMGCSsGAQQB
+gjcVAgQWBBS5D7MdO6UHWjUntymIEcex0XxmTDANBgkqhkiG9w0BAQsFAAOCAQEA
+fKnyKi6pkOKgBcbfWcCwIgu+TNHcCuCVeY5dcDFiMpJ3gMRsM1V2pCWRqrFHpo9P
+Ntpfo+pXNhE//Qgp5ZI71iTe4r7bdHbTbiI4mvd6bQM8ZHUOif72ngwkRvGxkVP9
+cO0WNn+27YWwZbq0mjV5MVyukA/43yLPAgnNG87zQ1i/PByr0hR6E5kwDO4TiBVd
+hZDKpblf1GB+C8OMHbeZPg+5Inejj5LYBmK+UBpPeEjf3Ckriq19YMOVK5X/+hke
+BMoXCT+KUyp4A95WFAuGE/7tt0/0T9f/3zYyzFd9dud8fbq1KeUYAypf1od1oANa
+/OL6M3EBYMrAmS6n4wzPbTEA
+-----END CERTIFICATE-----
+```
+
+cablint FATAL ASN.1 Error in Certificate: BER decoding failed at octet 4: Parse error
+cablint WARNING Cowardly refusing to run CAB check due to previous errors
+x509lint ERROR Error parsing certificate
+zlint FATAL asn1: structure error: tags don't match (16 vs {class:0 tag:6 length:9 isCompound:false}) {optional:false explicit:false application:false private:false defaultValue:<nil> tag:<nil> stringType:0 timeType:0 set:false omitEmpty:false} tbsCertificate @2
+
+### **[Validate Intermediat Certificate](https://crt.sh/lintcert)**
+
+Mobex PKI
+
+```bash
+-----BEGIN CERTIFICATE-----
+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
+qLRk/kaHCOL1tEE=
+-----END CERTIFICATE-----
+```
+
+Results:
+
+```bash
+cablint INFO CA certificate identified
+x509lint INFO Checking as intermediate CA certificate
+```
+
+### Linamar Intermediate Certificate
+
+No intermediate certificate. startup.linamar.com
+
+### **[Validate Server SAN Certificate](https://crt.sh/lintcert)**
+
+```bash
+-----BEGIN CERTIFICATE-----
+MIIFCDCCAvCgAwIBAgIUUNQ5b+Tmi/3/JbtYSdpDa6KdTiYwDQYJKoZIhvcNAQEL
+BQAwUDELMAkGA1UEBhMCVVMxEDAOBgNVBAgMB0luZGlhbmExFTATBgNVBAoMDE1v
+YmV4IEdsb2JhbDEYMBYGA1UEAwwPSW50ZXJtZWRpYXRlIENBMB4XDTIzMDgyMjE4
+MTMzN1oXDTI0MDgyMTE4MTMzN1owDTELMAkGA1UEBhMCVVMwggEiMA0GCSqGSIb3
+DQEBAQUAA4IBDwAwggEKAoIBAQDe70Zgy+Xz+RVVnc4XQ8iYyyBsoTGzAf5FBe87
+idI8HVhSHyBJvMWEeRj2uvL2ZX6vLf+wZySiw12gcagtpExtq2AqlPLu5dPPM60a
+OYPJ/PD0WB1Sw5OP7zXiIU0pVaee61Ovt0efTtmv00rP3DbB5glblMr1u/7EvxEK
+M8DZekfITrcqjrnhSZkzW+U/AYlb8jGjmGGU3oKgUaWcLUGZ7XYotkDCfqsipLPd
+tQNJcQT13Pmt4P+VcwZaif7OvOYKiRulRp5xrrXqb99B3nxYVrScWVokBWlxha9k
+vDG/edH2t+bgZOQh9e12KQ9VVEdbkq5Gq6GW0ISeI8LvUONlAgMBAAGjggEbMIIB
+FzAJBgNVHRMEAjAAMB0GA1UdDgQWBBQEH23aVZ1mv1zjKFNsWBCrxLXn+TAfBgNV
+HSMEGDAWgBSyBHshWonq/j+R8pfSRj1CqqpgZjAOBgNVHQ8BAf8EBAMCBaAwEwYD
+VR0lBAwwCgYIKwYBBQUHAwEwJAYDVR0RBB0wG4IZZnJ0LWtvcnM0My5idXNjaGUt
+Y25jLmNvbTBiBggrBgEFBQcBAQRWMFQwJwYIKwYBBQUHMAGGG2h0dHA6Ly9vY3Nw
+LmJ1c2NoZS1jbmMuY29tLzApBggrBgEFBQcwAoYdaHR0cDovL2J1c2NoZS1jbmMu
+Y29tL2NhLmh0bWwwGwYDVR0gBBQwEjAIBgZngQwBAgEwBgYEVR0gADANBgkqhkiG
+9w0BAQsFAAOCAgEA0ST58URKcVnUJ2QUod05sCWfaUvqgFMbQqqJHmKp6SgsQesx
+doQboWMh2fFfKMlEcusHAAKrMTN6bdMyQLrojbThzZs+sVsP/QQHJDWxV6teM5by
+/+q+/C1+IXDT93nhTBGJ4gy0kVzazSQnYD11jL4npQTVXaHNwnvqWIdH+ish2reQ
+m/EKQfNVCFXLoxp8+WoSSpAHPqiI8+Q7/76L8Yc4VhfLeCpnUAKfrtzKjfwJ6EXN
+9lbE6O3FAf2xB2c6tQDLPQHgi8qOWFVLOwkrYYRYmtpI9jr0ZS5MlIGiRbDBRwA/
+K4+JD+oAZXpcnPHTV/9Ci6VZ2Vq2tHU0+oJcSEVo1HiJTCcR+upf/Ej+hnUWBOE7
+dDfQo51X/O+n7mGDhZnmWSH/m39B4mjzF3laWx9XSyjlQBlQT0Qk7zf4EnN5kcS8
+iJap0Hd2zR4mqV+Sdfiq9BpaRpRtgkF5zcqDlXwoL410rGC2+bX2cFGWjictsLuI
+3LqANUCNEvc7f5aQxIaYeN/iKE7PpIQenHiLZQlPJq7hrIzroAygOmgTQLWqZTd6
+VVrsGnlrHvTn7TSMFYK6RqREhOdUc6DBIhc0i2E1IEV4uJRZx0Bt96lKu+izAyjt
+EAFvm3gv6rfwTZ4pQ/SrS+5IJNwDfrlfukUFQ/M7VuTLLj6nsluILZaiIEY=
+-----END CERTIFICATE-----
+```
+
+Results:
+
+```bash
+cablint INFO TLS Server certificate identified
+x509lint INFO Checking as leaf certificate
+zlint NOTICE Check if certificate has enough embedded SCTs to meet Apple CT Policy
+```
+
+Linamar PKI
+
+```bash
+-----BEGIN CERTIFICATE-----
+MIIFrjCCBJagAwIBAgITNQAF06i16tqDxSKu7AADAAXTqDANBgkqhkiG9w0BAQsF
+ADBGMRMwEQYKCZImiZPyLGQBGRYDY29tMRcwFQYKCZImiZPyLGQBGRYHbGluYW1h
+cjEWMBQGA1UEAxMNbGluYW1hci1hZGNhMTAeFw0yNDA2MTExOTE5NDlaFw0yNjA2
+MTExOTE5NDlaMA0xCzAJBgNVBAYTAlVTMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8A
+MIIBCgKCAQEAjQHCmtTVXl6qs6Zera8EflD7i2k72LVU6FrphmTgsk3IxpcfN0V0
++q9FXnLxmBcvVYVjF1lta4NFPDuh7prxpiHtfTBMDKo0Zysvb8W/cbBX5xMZ5CBD
+p+3LTr7UTcOtTISUyWoQwuCAScYM5ip4PJ10hwZxUZJqFTLNmUw50CluCjMR2mhq
+ETCvyjGAERGSfFyB+/4oS3KFB/DT9nED3mK8aeM6CJnKyFzvtxkHxqWpKINGZZwf
+BE4O5UOm65UycCPoe9DgXft1/OcCxQOWTqs0Opla07etsfHm/94QgrQB3DMnM8S4
+rSOr+SBLfFwBI8GQBSJ+d9tKEo8qdvkxtQIDAQABo4ICzDCCAsgwHQYDVR0OBBYE
+FEi+e9ooB2mCTXKZFuwKCdhC8BFJMB8GA1UdIwQYMBaAFOhKBv9Z5NaTVA2UvWqp
+nhmSUkCqMIIBFgYDVR0fBIIBDTCCAQkwggEFoIIBAaCB/oaBu2xkYXA6Ly8vQ049
+bGluYW1hci1hZGNhMSgxKSxDTj1QRC1DTy1WQ0EyMixDTj1DRFAsQ049UHVibGlj
+JTIwS2V5JTIwU2VydmljZXMsQ049U2VydmljZXMsQ049Q29uZmlndXJhdGlvbixE
+Qz1saW5hbWFyLERDPWNvbT9jZXJ0aWZpY2F0ZVJldm9jYXRpb25MaXN0P2Jhc2U/
+b2JqZWN0Q2xhc3M9Y1JMRGlzdHJpYnV0aW9uUG9pbnSGPmh0dHA6Ly9QRC1DTy1W
+Q0EyMi5saW5hbWFyLmNvbS9DZXJ0RW5yb2xsL2xpbmFtYXItYWRjYTEoMSkuY3Js
+MIIBJQYIKwYBBQUHAQEEggEXMIIBEzCBrAYIKwYBBQUHMAKGgZ9sZGFwOi8vL0NO
+PWxpbmFtYXItYWRjYTEsQ049QUlBLENOPVB1YmxpYyUyMEtleSUyMFNlcnZpY2Vz
+LENOPVNlcnZpY2VzLENOPUNvbmZpZ3VyYXRpb24sREM9bGluYW1hcixEQz1jb20/
+Y0FDZXJ0aWZpY2F0ZT9iYXNlP29iamVjdENsYXNzPWNlcnRpZmljYXRpb25BdXRo
+b3JpdHkwYgYIKwYBBQUHMAKGVmh0dHA6Ly9QRC1DTy1WQ0EyMi5saW5hbWFyLmNv
+bS9DZXJ0RW5yb2xsL1BELUNPLVZDQTIyLmxpbmFtYXIuY29tX2xpbmFtYXItYWRj
+YTEoMykuY3J0MCEGCSsGAQQBgjcUAgQUHhIAVwBlAGIAUwBlAHIAdgBlAHIwCwYD
+VR0PBAQDAgWgMBMGA1UdJQQMMAoGCCsGAQUFBwMBMA0GCSqGSIb3DQEBCwUAA4IB
+AQAYPM1BDk041ZlwNIgN4UvXQksI4yAkCrkQf5jNZFAKT+Pd2IBD9U3czFaksOVf
+inS4qQ12GWDlt/VWZMgP/1UU7Z644WH0mU8eTFkiVMK2ysVwoHWUu2JWw1+TjpaI
+bm0hJcRFwi5DiLdMmp4YkZlSyKkR56aFrX0zgMwq3JBn6Z1X7xyyNTB2jgdVvxne
+V74pTTNUddbJyUNKbdHuJwWFuNhBxEdg0xgtT0OFoMoJKKNwY797ReLOItqc//kN
+u+xZYNRUPJbkimvIIY02WClzdciREpBuz4uFBZHaoyB/h73MAbmZxW91PuLwA3K3
+hecckF6Ok5tU4FGBfHK5Meir
+-----END CERTIFICATE-----
+```
+
+Results:
+
+```bash
+cablint ERROR BR certificates must be 398 days in validity or less
+cablint ERROR BR certificates must have subject alternative names extension
+cablint ERROR BR certificates must include an HTTP URL of the OCSP responder
+cablint ERROR BR certificates must include certificatePolicies
+cablint WARNING Extension should be critical for KeyUsage
+cablint WARNING Microsoft extension 1.3.6.1.4.1.311.20.2 treated as opaque extension
+cablint INFO TLS Server certificate identified
+x509lint ERROR Issuer without countryName
+x509lint ERROR Issuer without organizationName
+x509lint ERROR No OCSP over HTTP
+x509lint ERROR No policy extension
+x509lint ERROR No Subject alternative name extension
+x509lint WARNING Key usage not critical
+x509lint INFO Checking as leaf certificate
+x509lint INFO Unknown validation policy
+zlint ERROR Subscriber Certificate: authorityInformationAccess MUST contain the HTTP URL of the Issuing CA's OSCP responder.
+zlint ERROR Subscriber Certificate: certificatePolicies MUST be present and SHOULD NOT be marked critical.
+zlint ERROR Subscriber certificates must contain at least one policy identifier that indicates adherence to CAB standards
+zlint ERROR Subscriber certificates MUST contain the Subject Alternate Name extension
+zlint ERROR TLS server certificates issued on or after September 1, 2020 00:00 GMT/UTC must not have a validity period greater than 398 days
+zlint WARNING Subscriber certificates authorityInformationAccess extension should contain the HTTP URL of the issuing CA’s certificate, for public certificates this should not be an internal name
+zlint WARNING The keyUsage extension SHOULD be critical
+zlint WARNING TLS server certificates issued on or after September 1, 2020 00:00 GMT/UTC should not have a validity period greater than 397 days
+zlint NOTICE Check if certificate has enough embedded SCTs to meet Apple CT Policy
+```
+
+### **[Decode Server SAN Certificate](https://www.sslshopper.com/certificate-decoder.html)**
+
+Mobex PKI
+
+```bash
+Certificate Information:
+Common Name:
+Subject Alternative Names: frt-kors43.busche-cnc.com
+Organization:
+Organization Unit:
+Locality:
+State:
+Country: US
+Valid From: August 22, 2023
+Valid To: August 21, 2024
+Issuer: Intermediate CA, Mobex Global
+Key Size: 2048 bit
+Serial Number: 50d4396fe4e68bfdff25bb5849da436ba29d4e26
+```
+
+Linamar PKI
+
+```bash
+Certificate Information:
+Common Name:
+Subject Alternative Names:
+Organization:
+Organization Unit:
+Locality:
+State:
+Country: US
+Valid From: June 11, 2024
+Valid To: June 11, 2026
+Key Size: 2048 bit
+Serial Number: 350005d3a8b5eada83c522aeec00030005d3a8
+```

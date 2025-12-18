@@ -1,0 +1,40 @@
+# IS Power BI analytics and development team
+
+- Pat Baxter, General Manager
+- Tarek Mohamed, IT Supervisor - Data & Analytics
+- Michael Percell, Manufacturing Engineering Manager
+- Ron James, Quality Manager
+- Jami Pyle, MP&L Manager
+- Nancy Swank, Material Planner
+- Ben Maynus, Tooling Specialist
+- Josh Williams, Program Manager
+- Erin Williams, Manufacturing Engineer
+- Ramuel Feijoo, Engineering Manager
+- Ricardo Baca, Sr. Manufacturing Engineer
+- Stephen Strzalkowski, Tooling Engineer Supervisor
+- Sandra Hall, CMM Programmer, Quality
+- Caleb Beam, Engineering Technician
+- Kevin Chester, Manufacturing Engineer
+- Chelsea Prill, Quality Engineer
+- Ryan Voirol, Supplier Quality Engineer
+- Skippie Muehlfeld, Controls Engineer, Indiana
+- Dennis Brach, Maintenance Group Leader
+- Brian Hobbs,TS/ISO Coordinator / Safety & Health Administrator Quality
+- Heather Luttrell, Group Controller, Finance
+- Christian Trujillo, IT Structures Manager
+- Kevin Young, Information Systems Manager
+- Jared Davis, IT Manager
+- Hayley Rymer, IT Supervisor, Mills River
+- Mitch Harper, Desktop and Systems Support Technician, Mills River
+- Thomas Creal, Desktop and Systems Support Technician, Mills River
+- Matthew Bump, Muscle Shoals, Engineering Supervisor II / IT
+- Angelina Shadder, Muscle Shoals, Cyber Securtity, Desktop and Systems Support Technician
+- Sam Jackson, Information Systems Developer, Southfield
+- Brad D. Cook, Quality Engineer, Fruitport
+- Jared Eikenberry, Quality Engineer, Fruitport
+- Matt Irey, Desktop and System Support Technician, Fruitport
+- David Maitner,  Desktop and System Support Technician, Fruitport
+- Kent Cook, IT Administrator, Fruitport
+- Carl Stangland, Desktop and System Support Technician, Indiana
+- Lucas Tuma, IT Administrator, Strakonice
+- Aleksandar Gavrilov, IT Administrator, Skopje
