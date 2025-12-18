@@ -1,14 +1,8 @@
-# OKRs with Jira
+# OKRs and Project Management with Jira
 
 The following is in markdown format and can be viewed by copying and pasting the entire content of this email into an online markdown viewer, such as at <https://markdownlivepreview.com/>.
 
 Just started using Oracle's star review app in October and wasn't quite sure how to use it. For 2026 I decided to use **[Jira (AI-Powered Project Management)](https://www.youtube.com/watch?v=GPOWZSxEslU)** to manage the Oracle's Star review goals.
-
-## **[What is Jira](https://www.tempo.io/glossary/jira)**
-
-- AI project management
-- Proprietary but includes Open Source components.
-- 10 person team free for all apps
 
 ## **[What are OKRs?](https://monday.com/blog/project-management/okr-for-project-management/#:~:text=What%20are%20OKRs?,individual%20workload%20and%20increase%20productivity)**
 
@@ -19,6 +13,22 @@ For example, say you’re running a project that focuses on improving overall cu
 - Bringing the average call waiting time under five minutes
 - Cutting churn rate in half
 - Hiring two new customer service representatives to reduce individual workload and increase productivity
+
+## **[What is Jira](https://www.tempo.io/glossary/jira)**
+
+- AI project management
+- Proprietary but includes Open Source components.
+- 10 person team free for all apps
+- **[Sign up](https://id.atlassian.com/signup)**
+
+## Goals and Projects in Jira
+
+Goals and Projects are now available in Jira with an OKR template. These platform apps help users share regular status updates and track progress toward objectives. They're free for all customers.
+
+- **[What's a goal?](https://support.atlassian.com/platform-experiences/docs/what-is-a-goal/)**  
+- **[What's a project?](https://support.atlassian.com/platform-experiences/docs/what-is-a-project/)**  
+
+You'll also find bonus new features, like topics and kudos, in Atlassian Home as part of this release. About Atlassian Home
 
 ## references
 
