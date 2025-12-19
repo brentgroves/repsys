@@ -1,4 +1,4 @@
-# OKRs and Project Management with Jira
+# OKRs and Project Management with Jira for Star Reviews
 
 The following is in markdown format and can be viewed by copying and pasting the entire content of this email into an online markdown viewer, such as at <https://markdownlivepreview.com/>.
 
