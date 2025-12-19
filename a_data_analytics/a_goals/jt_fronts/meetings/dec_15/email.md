@@ -35,6 +35,10 @@ Checkboxes allow users to select items from a list when multiple selections are 
 1. Please verify that parameters can not be selected from a **[radio button](https://formspree.io/blog/radio-button/#:~:text=Radio%20buttons%20are%20a%20type,is%20possible%20at%20a%20time.)** or a similar control.
 2. Please verify that parameters can not select multiple items from a dropdown or similar control such as the HTML **[multi select tag](https://www.w3schools.com/tags/att_select_multiple.asp)**
 
+## references
+
+- **[ui controls](https://balsamiq.com/learn/learning-tracks/intro-to-ui-design/ui-controls/#dropdown-menus-combo-boxes)**
+
 ## Quality Team
 
 - Ron James, Quality Manager
