@@ -15,6 +15,8 @@
 - Abner Huang, Mach2, IT
 - Ron James, Quality Manager, Quality
 - Michael Percell, Manufacturing Engineering Manager
+- Jami Pyle, MP&L Manager, MP&L
+- Nancy Swank, Purchasing Supervisor, MP&L
 - Mitch Harper, Desktop and Systems Support Technician, Mills River
 - Thomas Creal, Desktop and Systems Support Technician, Mills River
 - Matthew Bump, Muscle Shoals, Engineering Supervisor II / IT
