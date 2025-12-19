@@ -10,24 +10,31 @@ An OKR is a popular management strategy that defines objectives and tracks resul
 
 Introduced and popularized in the 1970s at Intel, it has since spread throughout technology companies as a way to help employees understand and be engaged in an enterprise's charter. Studies show that team members are more engaged in their work and more productive when they have a clear idea of what the team is trying to achieve, and more importantly, the significance of the task.
 
-## **[What are OKRs?](https://monday.com/blog/project-management/okr-for-project-management/#:~:text=What%20are%20OKRs?,individual%20workload%20and%20increase%20productivity)**
-
-OKR stands for Objectives and Key Results. They’re a simple project management tool that help project managers outline and meet their goals. They typically work by prompting you to set an objective and then come up with three to five key results you’re hoping to see. The OKRs should help your team members analyze and understand what role they need to play in the project and which tasks to complete.
-
 For example, say you’re running a project that focuses on improving overall customer satisfaction. One objective may be to improve your customer service department. Examples of key results might include:
 
 - Bringing the average call waiting time under five minutes
 - Cutting churn rate in half
 - Hiring two new customer service representatives to reduce individual workload and increase productivity
 
-## Linamar Objectives
-
-When creating a goal in Oracle's Star Review app we are asked to select from a list of goal categories.  These goal categories are objectives in OKR.  They help ensure are goals are aligning with those chosen by the Linamar leadership.
+## Linamars Objectives
 
 - Financial – Investment of Choice
 - Employee – Employer of Choice
 - Personal - Personal and/or Team Growth
-etc.
+- Customer – Supplier of Choice
+
+## Examples of key results
+
+“Key results” are the desired outcome after taking a set of actions. A common mistake with OKRs is confusing desired outcomes with actions used to reach objectives. For example, in the case below, the objective is to reduce the number of data errors in the system. But the specified key result is the installation of a new vendor package release. However, there’s **no mention of tracked data errors** or the future goal. There’s no way of knowing if installing the latest release made things better, worse, or had no effect.
+
+- **What NOT to do:** Mistake the actions taken to achieve an objective as the key result. For example:
+- **Objectives:** Reduce the number of data errors in the system
+- **Key results:** Installation of release 10.0 of the vendor package
+
+- **What NOT to do:** Align key result with a corporate objective.
+
+- **Objectives:** Customer – Supplier of Choice
+- **Key results:** Automate data collection for JT Fronts to give our customer a high confidence in our ability to perform.
 
 ## **[What is Jira](https://www.tempo.io/glossary/jira)**
 
@@ -36,14 +43,13 @@ etc.
 - 10 person team free for all apps
 - **[Sign up](https://id.atlassian.com/signup)**
 
-## Goals and Projects in Jira
+## How Jira Align can help
 
-Goals and Projects are now available in Jira with an OKR template. These platform apps help users share regular status updates and track progress toward objectives. They're free for all customers.
+Atlassian’s Jira Align solution helps connect your business strategy to technical execution. Where OKRs track the results of execution, Jira Align provides a clear insight into objectives, key results you track, and the work toward delivering objectives. The OKR features natively included in Jira Align help your team get aligned, stay aligned, and instantly connect work with value delivery.
 
-- **[What's a goal?](https://support.atlassian.com/platform-experiences/docs/what-is-a-goal/)**
-- **[What's a project?](https://support.atlassian.com/platform-experiences/docs/what-is-a-project/)**
+Curious to learn more about how OKRs can help focus your organizational strategy and drive alignment on an ongoing basis? Watch our **[on-demand webinar](http://go.agilecraft.com/okr)**.
 
-You'll also find bonus new features, like topics and kudos, in Atlassian Home as part of this release. About Atlassian Home
+Special thanks to Caz Gottlieb, Associate Product Manager, Jira Align for her contributions to this article.
 
 ## references
 

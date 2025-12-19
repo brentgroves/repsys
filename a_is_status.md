@@ -8,6 +8,16 @@ The following is in markdown format and can be viewed by copying and pasting the
 - **[Miscellaneous](./b_miscellaneous/a_is_status.md)**
 -
 
+- Request an **[Atlassin Premium](https://www.atlassian.com/software/confluence/pricing)** subscription at $10.44 per month to use a simple confluence template to track success with OKRs.
+
+## How Jira Align can help
+
+Atlassian’s Jira Align solution helps connect your business strategy to technical execution. Where OKRs track the results of execution, Jira Align provides a clear insight into objectives, key results you track, and the work toward delivering objectives. The OKR features natively included in Jira Align help your team get aligned, stay aligned, and instantly connect work with value delivery.
+
+Curious to learn more about how OKRs can help focus your organizational strategy and drive alignment on an ongoing basis? Watch our **[on-demand webinar](http://go.agilecraft.com/okr)**.
+
+Special thanks to Caz Gottlieb, Associate Product Manager, Jira Align for her contributions to this article.
+
 ## Platform Engineering
 
 ### Structures MicroCloud/K8S disaster recovery
