@@ -27,6 +27,7 @@ To create an SSH key pair:
 ```bash
 # ssh-keygen -t ed25519 -b 4096 -C "{<username@emaildomain.com>}" -f ~/.ssh/{ssh-key-name}
 ssh-keygen -t ed25519 -b 4096 -C "brent.groves@linamar.com" -f ~/.ssh/bitbucket_home
+ssh-keygen -t ed25519 -b 4096 -C "brent.groves@linamar.com" -f ~/.ssh/bitbucket_isdev
 
 ```
 
@@ -68,7 +69,7 @@ To add an SSH key to your user account:
 6. Copy the contents of the public key file and paste the key into the Key field of the Add SSH key dialog.
 
     Copy and paste your key with
-    `cat ~/.ssh/bitbucket_home.pub | pbcopy`
+    `cat ~/.ssh/bitbucket_home.pub | xclip -selection clipboard`
 
 7. Under Expiry, select No expiry to not set an expiry date, or select Expires on and then select the date picker to set a specific date for your SSH key to expire. Note: The default date range for expiry is set to 365 days (one year) from today’s date.
 
