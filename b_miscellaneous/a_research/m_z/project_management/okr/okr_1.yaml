@@ -1,0 +1,28 @@
+objectives:
+  - linamar: Customer - Supplier of Choice
+  - structures: Automate the JT Fronts performance index calculation process.
+key_results: We will automate the JT Fronts performance index calculation as measured by
+  - key_result: enable automated data collection
+    metric: percentage of data collection automated
+    target: 100%
+    baseline: 0%
+    due_date: 2026-6-1
+  - key_result: implement calculation algorithm
+    metric: percentage of calculation algorithm implemented
+    target: 100%
+    baseline: 0%
+    due_date: 2024-12-31
+  - key_result: validate results
+    metric: percentage of results validated
+    target: 100%
+    baseline: 0%
+    due_date: 2024-12-31
+  - key_result: deploy automated process
+    metric: percentage of deployment completed
+    target: 100%
+    baseline: 0%
+    due_date: 2024-12-31
+owners:
+  - name: Brent Groves
+    role: Project Manager
+    contact: brent.groves@linamar.com
