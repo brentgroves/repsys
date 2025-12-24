@@ -27,4 +27,9 @@ git switch main
 cd ~/src/repsys/linux
 git switch main
 
+cd ~/src/repsys
+git add -A
+git commit -m "Freshstart commit"
+git push -u origin main
+
 popd

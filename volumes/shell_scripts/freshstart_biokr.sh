@@ -12,4 +12,9 @@ git clone --recursive git@bitbucket.org-brent_groves:biokr/biokr.git
 cd ~/src/biokr/linux
 git switch main
 
+cd ~/src/biokr
+git add -A
+git commit -m "Freshstart commit"
+git push -u origin main
+
 popd

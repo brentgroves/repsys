@@ -12,4 +12,9 @@ git clone --recursive git@bitbucket.org-brent_admin:liokr/liokr.git
 cd ~/src/liokr/linux
 git switch main
 
+cd ~/src/liokr
+git add -A
+git commit -m "Freshstart commit"
+git push -u origin main
+
 popd
