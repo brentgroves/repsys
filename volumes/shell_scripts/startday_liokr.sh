@@ -7,6 +7,7 @@ pushd .
 echo "pulling linux"
 cd ~/src/liokr/linux
 git pull
+git switch main
 
 cd ~/src/liokr
 git pull --recurse-submodules
