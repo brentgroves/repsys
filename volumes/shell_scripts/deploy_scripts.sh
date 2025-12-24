@@ -18,11 +18,10 @@ rm -f ~/bin/shell_scripts/start*.sh
 rm -f ~/bin/shell_scripts/cp_*.sh 
 rm -f ~/bin/shell_scripts/freshstart*.sh 
 rm -f ~/bin/shell_scripts/scc.sh 
-cp ~/src/repsys/volumes/shell_scripts/end*.sh ~/
-cp ~/src/repsys/volumes/shell_scripts/start*.sh ~/
-cp ~/src/repsys/volumes/shell_scripts/cp_*.sh ~/
-cp ~/src/repsys/volumes/shell_scripts/freshstart*.sh ~/
-cp ~/src/repsys/volumes/shell_scripts/scc.sh ~/
-
+cp ~/src/repsys/volumes/shell_scripts/end*.sh ~/bin/shell_scripts/
+cp ~/src/repsys/volumes/shell_scripts/start*.sh ~/bin/shell_scripts/
+cp ~/src/repsys/volumes/shell_scripts/cp_*.sh ~/bin/shell_scripts/
+cp ~/src/repsys/volumes/shell_scripts/freshstart*.sh ~/bin/shell_scripts/
+cp ~/src/repsys/volumes/shell_scripts/scc.sh ~/bin/shell_scripts/
 
 popd
