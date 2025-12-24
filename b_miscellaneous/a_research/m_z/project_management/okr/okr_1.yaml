@@ -1,8 +1,8 @@
 objectives:
   - linamar: Customer - Supplier of Choice
   - structures: Operational Excellence
-  - information_systems: Automate the JT Fronts performance index calculation process.
   - themes: Data-Driven Decision Making
+  - information_systems: Automate the JT Fronts performance index calculation process.
   - description: Automate the JT Fronts performance index calculation to improve accuracy and efficiency in reporting.
   - rationale: The current manual calculation process is time-consuming and prone to errors. 
 key_results: We will automate the JT Fronts performance index calculation as measured by the following key results:
