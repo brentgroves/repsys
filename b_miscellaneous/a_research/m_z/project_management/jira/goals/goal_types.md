@@ -11,3 +11,4 @@ Goal types are tightly coupled with a few other concepts related to goals that w
 ## Success measures
 
 **[Success measures](https://support.atlassian.com/platform-experiences/docs/what-are-success-measures-and-key-results/)** represent the specific, measurable outcome that contributes toward achieving the overall goal. They’re commonly known as **Key results** (used with the Objective goal type) and offer a more robust way to track specific outcomes that contribute to a goal. A single goal can have up to 20 success measures, but 3-5 are often sufficient.
+
