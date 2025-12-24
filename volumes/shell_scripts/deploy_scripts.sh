@@ -13,11 +13,11 @@ pushd .
 # rm -f ~/end*.sh ~/start*.sh ~/cp_*.sh ~/freshstart*.sh ~/scc.sh 
 # -f zsh ignores this option so instead of having to remember to 
 # type "bash deploy_scripts.sh" I created many rm statements instead
-rm -f ~/end*.sh 
-rm -f ~/start*.sh 
-rm -f ~/cp_*.sh 
-rm -f ~/freshstart*.sh 
-rm -f ~/scc.sh 
+rm -f ~/bin/shell_scripts/end*.sh 
+rm -f ~/bin/shell_scripts/start*.sh 
+rm -f ~/bin/shell_scripts/cp_*.sh 
+rm -f ~/bin/shell_scripts/freshstart*.sh 
+rm -f ~/bin/shell_scripts/scc.sh 
 cp ~/src/repsys/volumes/shell_scripts/end*.sh ~/
 cp ~/src/repsys/volumes/shell_scripts/start*.sh ~/
 cp ~/src/repsys/volumes/shell_scripts/cp_*.sh ~/

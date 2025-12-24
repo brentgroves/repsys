@@ -43,4 +43,7 @@ git pull
 cd ~/src/repsys
 git pull --recurse-submodules
 
+cd ~/src/repsys/linux
+git switch main
+
 popd
