@@ -1,27 +1,31 @@
 objectives:
   - linamar: Customer - Supplier of Choice
-  - structures: Automate the JT Fronts performance index calculation process.
-key_results: We will automate the JT Fronts performance index calculation as measured by
-  - key_result: enable automated data collection
+  - structures: Operational Excellence
+  - information_systems: Automate the JT Fronts performance index calculation process.
+  - themes: Data-Driven Decision Making
+  - description: Automate the JT Fronts performance index calculation to improve accuracy and efficiency in reporting.
+  - rationale: The current manual calculation process is time-consuming and prone to errors. 
+key_results: We will automate the JT Fronts performance index calculation as measured by the following key results:
+  - key_result: Enable automated collection of data needed for JT Fronts performance index calculation.
     metric: percentage of data collection automated
     target: 100%
     baseline: 0%
-    due_date: 2026-6-1
-  - key_result: implement calculation algorithm
+    due_date: 2026-3-1
+  - key_result: Implement Process Capability Analysis Cp, Cpk, Pp, Ppk calculation algorithm in PySpark Notebook.
     metric: percentage of calculation algorithm implemented
     target: 100%
     baseline: 0%
-    due_date: 2024-12-31
+    due_date: 2026-5-1
   - key_result: validate results
     metric: percentage of results validated
     target: 100%
     baseline: 0%
-    due_date: 2024-12-31
+    due_date: 2026-6-1
   - key_result: deploy automated process
     metric: percentage of deployment completed
     target: 100%
     baseline: 0%
-    due_date: 2024-12-31
+    due_date: 2026-7-1
 owners:
   - name: Brent Groves
     role: Project Manager
