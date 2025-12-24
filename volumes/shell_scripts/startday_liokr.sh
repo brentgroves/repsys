@@ -7,9 +7,13 @@ pushd .
 echo "pulling linux"
 cd ~/src/liokr/linux
 git pull
-git switch main
 
 cd ~/src/liokr
 git pull --recurse-submodules
+
+# when repsys makes changes we need to switch to main after liokr pull
+cd ~/src/liokr/linux
+git pull
+git switch main
 
 popd
