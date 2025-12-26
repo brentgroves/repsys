@@ -19,6 +19,12 @@ If you have more than one Bitbucket Cloud account (such as a personal account an
 4. Add each private key to the SSH configuration, such as:
 
     ```toml
+    # git@gitlab.com-linamar:brent.groves/liokr.git
+    Host gitlab.com-linamar
+      HostName gitlab.com
+      User git
+      IdentityFile ~/.ssh/gitlab_linamar
+      IdentitiesOnly yes
     #brent_admin account
     Host bitbucket.org-brent_admin
       HostName bitbucket.org
@@ -45,4 +51,6 @@ To clone a repository, use the git clone command with the updated host bitbucket
 # git clone git@bitbucket.org-{bitbucket_username}:{workspace}/{repo}.git
 git clone git@bitbucket.org-brent_groves:biokr/biokr.git
 git clone git@bitbucket.org-brent_admin:liokr/liokr.git
+git clone git@gitlab.com-linamar:brent.groves/liokr.git
+
 ```

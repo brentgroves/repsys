@@ -29,6 +29,7 @@ To create an SSH key pair:
 ssh-keygen -t ed25519 -b 4096 -C "brent.groves@linamar.com" -f ~/.ssh/bitbucket_home
 ssh-keygen -t ed25519 -b 4096 -C "brent.groves@gmail.com" -f ~/.ssh/bitbucket_personal
 ssh-keygen -t ed25519 -b 4096 -C "brent.groves@linamar.com" -f ~/.ssh/bitbucket_isdev
+ssh-keygen -t ed25519 -b 4096 -C "brent.groves@gmail.com" -f ~/.ssh/gitlab
 
 ```
 
