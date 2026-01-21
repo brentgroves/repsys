@@ -58,25 +58,23 @@ The reason why I'm asking is the dimensional data and parameters we are collecti
 
 1. I would like to verify that it is not possible to collect parameters with a radio button or a multi select tag or a similar contol. Are parameters limited to free form text only?  Would Larry Becker be the one to ask?
 
-    The reason why I'm asking is the dimensional data and parameters we are collecting is going into a database. Then the it will be used as a data source for several Power BI reports. If the data is not entered in the correct format we will have to go through a data cleaning process and possibly loose information.
-
+    The reason why I'm asking is the dimensional data and parameters we are collecting is going into a database. Then the it will be used as a data source for several Power BI reports. If the data is not entered in the correct format we will have to go through a data cleaning process and possibly loose information. The alternative is to scan lamenated sheets for CNC station, opererator codes, etc.
 2. Are we recording the dimensions of left and right hand parts separately?
 No. We are recording dimensions for two of the same part. The parts are identified as station 1 and 2 and from the same CNC.
 3. Does Merlin support selecting parameters from a predefined list for the case of CNC#?
     1. 6 CNC, no drop down. scan it in. required parameter, lamenated sheet. (Linamar)
     2. station 1 follows station 2. we write on the inside.
-4. If we
+4. If Merlin does not support drop downs and multiple item select controls we need to use lamenated sheets:
 
-- cnc station, 280-1, laminated sheet
-- operator codes (own is initials) - laminated sheet.
-scannable bar code
+    - cnc station, 280-1, laminated sheet
+    - operator codes (own is initials) - laminated sheet.
+    scannable bar code
+    - if it fails green/red
+    - bv number scap
 
-- if it fails green/red
-- bv number scap
-
-1. Does Merlin support selecting multiple items from a predefined set for the case of tool changes?
-2. Can these parameters be exported along with dimensional values to the serial port and CSV file.
-3. Who would modify the program? I believe Brian Segro or Bill Gstalder could help us to add CNC and tool change parameters. For advanced modifications Larry Becker from quality solutions could help us.
+5. Does Merlin support selecting multiple items from a predefined set for the case of tool changes?
+6. Can these parameters be exported along with dimensional values to the serial port and CSV file.
+7. Who would modify the program? I believe Brian Segro or Bill Gstalder could help us to add CNC and tool change parameters. For advanced modifications Larry Becker from quality solutions could help us.
 
 ## Requirements
 
